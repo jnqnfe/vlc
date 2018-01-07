@@ -31,21 +31,21 @@
 #include <vlc_common.h>
 #include <vlc_es.h>
 
-#define MAX_OP_NAME_LEN 5
+#define MAX_OP_NAME_LEN 6
 #define MAX_ORIENT_NAME_LEN 5
 
 static const char* op_name(video_transform_t op)
 {
     switch (op)
     {
-        case TRANSFORM_IDENTITY:       return "T_ID";
-        case TRANSFORM_HFLIP:          return "T_HF";
-        case TRANSFORM_VFLIP:          return "T_VF";
-        case TRANSFORM_R180:           return "T_180";
-        case TRANSFORM_R270:           return "T_270";
-        case TRANSFORM_R90:            return "T_90";
-        case TRANSFORM_TRANSPOSE:      return "T_T";
-        case TRANSFORM_ANTI_TRANSPOSE: return "T_AT";
+        case TRANSFORM_NONE:       return "T_N";
+        case TRANSFORM_HFLIP:      return "T_HF";
+        case TRANSFORM_VFLIP:      return "T_VF";
+        case TRANSFORM_R180:       return "T_180";
+        case TRANSFORM_R270:       return "T_270";
+        case TRANSFORM_R90:        return "T_90";
+        case TRANSFORM_R90_HFLIP:  return "T_90H";
+        case TRANSFORM_R270_HFLIP: return "T_270H";
     }
     return NULL;
 }
@@ -78,77 +78,77 @@ typedef struct
 // Mappings between orientation pairs, with the applicable transform operation
 static const mapping_t mappings[] =
 {
-    ENTRY( ORIENT_NORMAL,           ORIENT_NORMAL,          TRANSFORM_IDENTITY ),
+    ENTRY( ORIENT_NORMAL,           ORIENT_NORMAL,          TRANSFORM_NONE ),
     ENTRY( ORIENT_NORMAL,           ORIENT_HFLIPPED,        TRANSFORM_HFLIP ),
     ENTRY( ORIENT_NORMAL,           ORIENT_ROTATED_180,     TRANSFORM_R180 ),
     ENTRY( ORIENT_NORMAL,           ORIENT_VFLIPPED,        TRANSFORM_VFLIP ),
     ENTRY( ORIENT_NORMAL,           ORIENT_ROTATED_90,      TRANSFORM_R90 ),
-    ENTRY( ORIENT_NORMAL,           ORIENT_TRANSPOSED,      TRANSFORM_TRANSPOSE ),
+    ENTRY( ORIENT_NORMAL,           ORIENT_TRANSPOSED,      TRANSFORM_R90_HFLIP ),
     ENTRY( ORIENT_NORMAL,           ORIENT_ROTATED_270,     TRANSFORM_R270 ),
-    ENTRY( ORIENT_NORMAL,           ORIENT_ANTI_TRANSPOSED, TRANSFORM_ANTI_TRANSPOSE ),
+    ENTRY( ORIENT_NORMAL,           ORIENT_ANTI_TRANSPOSED, TRANSFORM_R270_HFLIP ),
 
     ENTRY( ORIENT_HFLIPPED,         ORIENT_NORMAL,          TRANSFORM_HFLIP ),
-    ENTRY( ORIENT_HFLIPPED,         ORIENT_HFLIPPED,        TRANSFORM_IDENTITY ),
+    ENTRY( ORIENT_HFLIPPED,         ORIENT_HFLIPPED,        TRANSFORM_NONE ),
     ENTRY( ORIENT_HFLIPPED,         ORIENT_ROTATED_180,     TRANSFORM_VFLIP ),
     ENTRY( ORIENT_HFLIPPED,         ORIENT_VFLIPPED,        TRANSFORM_R180 ),
-    ENTRY( ORIENT_HFLIPPED,         ORIENT_ROTATED_90,      TRANSFORM_ANTI_TRANSPOSE ),
+    ENTRY( ORIENT_HFLIPPED,         ORIENT_ROTATED_90,      TRANSFORM_R270_HFLIP ),
     ENTRY( ORIENT_HFLIPPED,         ORIENT_TRANSPOSED,      TRANSFORM_R270 ),
-    ENTRY( ORIENT_HFLIPPED,         ORIENT_ROTATED_270,     TRANSFORM_TRANSPOSE ),
+    ENTRY( ORIENT_HFLIPPED,         ORIENT_ROTATED_270,     TRANSFORM_R90_HFLIP ),
     ENTRY( ORIENT_HFLIPPED,         ORIENT_ANTI_TRANSPOSED, TRANSFORM_R90 ),
 
     ENTRY( ORIENT_VFLIPPED,         ORIENT_NORMAL,          TRANSFORM_VFLIP ),
     ENTRY( ORIENT_VFLIPPED,         ORIENT_HFLIPPED,        TRANSFORM_R180 ),
     ENTRY( ORIENT_VFLIPPED,         ORIENT_ROTATED_180,     TRANSFORM_HFLIP ),
-    ENTRY( ORIENT_VFLIPPED,         ORIENT_VFLIPPED,        TRANSFORM_IDENTITY ),
-    ENTRY( ORIENT_VFLIPPED,         ORIENT_ROTATED_90,      TRANSFORM_TRANSPOSE ),
+    ENTRY( ORIENT_VFLIPPED,         ORIENT_VFLIPPED,        TRANSFORM_NONE ),
+    ENTRY( ORIENT_VFLIPPED,         ORIENT_ROTATED_90,      TRANSFORM_R90_HFLIP ),
     ENTRY( ORIENT_VFLIPPED,         ORIENT_TRANSPOSED,      TRANSFORM_R90 ),
-    ENTRY( ORIENT_VFLIPPED,         ORIENT_ROTATED_270,     TRANSFORM_ANTI_TRANSPOSE ),
+    ENTRY( ORIENT_VFLIPPED,         ORIENT_ROTATED_270,     TRANSFORM_R270_HFLIP ),
     ENTRY( ORIENT_VFLIPPED,         ORIENT_ANTI_TRANSPOSED, TRANSFORM_R270 ),
 
     ENTRY( ORIENT_ROTATED_180,      ORIENT_NORMAL,          TRANSFORM_R180 ),
     ENTRY( ORIENT_ROTATED_180,      ORIENT_HFLIPPED,        TRANSFORM_VFLIP ),
-    ENTRY( ORIENT_ROTATED_180,      ORIENT_ROTATED_180,     TRANSFORM_IDENTITY ),
+    ENTRY( ORIENT_ROTATED_180,      ORIENT_ROTATED_180,     TRANSFORM_NONE ),
     ENTRY( ORIENT_ROTATED_180,      ORIENT_VFLIPPED,        TRANSFORM_HFLIP ),
     ENTRY( ORIENT_ROTATED_180,      ORIENT_ROTATED_90,      TRANSFORM_R270 ),
-    ENTRY( ORIENT_ROTATED_180,      ORIENT_TRANSPOSED,      TRANSFORM_ANTI_TRANSPOSE ),
+    ENTRY( ORIENT_ROTATED_180,      ORIENT_TRANSPOSED,      TRANSFORM_R270_HFLIP ),
     ENTRY( ORIENT_ROTATED_180,      ORIENT_ROTATED_270,     TRANSFORM_R90 ),
-    ENTRY( ORIENT_ROTATED_180,      ORIENT_ANTI_TRANSPOSED, TRANSFORM_TRANSPOSE ),
+    ENTRY( ORIENT_ROTATED_180,      ORIENT_ANTI_TRANSPOSED, TRANSFORM_R90_HFLIP ),
 
-    ENTRY( ORIENT_TRANSPOSED,       ORIENT_NORMAL,          TRANSFORM_TRANSPOSE ),
+    ENTRY( ORIENT_TRANSPOSED,       ORIENT_NORMAL,          TRANSFORM_R90_HFLIP ),
     ENTRY( ORIENT_TRANSPOSED,       ORIENT_HFLIPPED,        TRANSFORM_R90 ),
-    ENTRY( ORIENT_TRANSPOSED,       ORIENT_ROTATED_180,     TRANSFORM_ANTI_TRANSPOSE ),
+    ENTRY( ORIENT_TRANSPOSED,       ORIENT_ROTATED_180,     TRANSFORM_R270_HFLIP ),
     ENTRY( ORIENT_TRANSPOSED,       ORIENT_VFLIPPED,        TRANSFORM_R270 ),
     ENTRY( ORIENT_TRANSPOSED,       ORIENT_ROTATED_90,      TRANSFORM_HFLIP ),
-    ENTRY( ORIENT_TRANSPOSED,       ORIENT_TRANSPOSED,      TRANSFORM_IDENTITY ),
+    ENTRY( ORIENT_TRANSPOSED,       ORIENT_TRANSPOSED,      TRANSFORM_NONE ),
     ENTRY( ORIENT_TRANSPOSED,       ORIENT_ROTATED_270,     TRANSFORM_VFLIP ),
     ENTRY( ORIENT_TRANSPOSED,       ORIENT_ANTI_TRANSPOSED, TRANSFORM_R180 ),
 
     ENTRY( ORIENT_ROTATED_270,      ORIENT_NORMAL,          TRANSFORM_R90 ),
-    ENTRY( ORIENT_ROTATED_270,      ORIENT_HFLIPPED,        TRANSFORM_TRANSPOSE ),
+    ENTRY( ORIENT_ROTATED_270,      ORIENT_HFLIPPED,        TRANSFORM_R90_HFLIP ),
     ENTRY( ORIENT_ROTATED_270,      ORIENT_ROTATED_180,     TRANSFORM_R270 ),
-    ENTRY( ORIENT_ROTATED_270,      ORIENT_VFLIPPED,        TRANSFORM_ANTI_TRANSPOSE ),
+    ENTRY( ORIENT_ROTATED_270,      ORIENT_VFLIPPED,        TRANSFORM_R270_HFLIP ),
     ENTRY( ORIENT_ROTATED_270,      ORIENT_ROTATED_90,      TRANSFORM_R180 ),
     ENTRY( ORIENT_ROTATED_270,      ORIENT_TRANSPOSED,      TRANSFORM_VFLIP ),
-    ENTRY( ORIENT_ROTATED_270,      ORIENT_ROTATED_270,     TRANSFORM_IDENTITY ),
+    ENTRY( ORIENT_ROTATED_270,      ORIENT_ROTATED_270,     TRANSFORM_NONE ),
     ENTRY( ORIENT_ROTATED_270,      ORIENT_ANTI_TRANSPOSED, TRANSFORM_HFLIP ),
 
     ENTRY( ORIENT_ROTATED_90,       ORIENT_NORMAL,          TRANSFORM_R270 ),
-    ENTRY( ORIENT_ROTATED_90,       ORIENT_HFLIPPED,        TRANSFORM_ANTI_TRANSPOSE ),
+    ENTRY( ORIENT_ROTATED_90,       ORIENT_HFLIPPED,        TRANSFORM_R270_HFLIP ),
     ENTRY( ORIENT_ROTATED_90,       ORIENT_ROTATED_180,     TRANSFORM_R90 ),
-    ENTRY( ORIENT_ROTATED_90,       ORIENT_VFLIPPED,        TRANSFORM_TRANSPOSE ),
-    ENTRY( ORIENT_ROTATED_90,       ORIENT_ROTATED_90,      TRANSFORM_IDENTITY ),
+    ENTRY( ORIENT_ROTATED_90,       ORIENT_VFLIPPED,        TRANSFORM_R90_HFLIP ),
+    ENTRY( ORIENT_ROTATED_90,       ORIENT_ROTATED_90,      TRANSFORM_NONE ),
     ENTRY( ORIENT_ROTATED_90,       ORIENT_TRANSPOSED,      TRANSFORM_HFLIP ),
     ENTRY( ORIENT_ROTATED_90,       ORIENT_ROTATED_270,     TRANSFORM_R180 ),
     ENTRY( ORIENT_ROTATED_90,       ORIENT_ANTI_TRANSPOSED, TRANSFORM_VFLIP ),
 
-    ENTRY( ORIENT_ANTI_TRANSPOSED,  ORIENT_NORMAL,          TRANSFORM_ANTI_TRANSPOSE ),
+    ENTRY( ORIENT_ANTI_TRANSPOSED,  ORIENT_NORMAL,          TRANSFORM_R270_HFLIP ),
     ENTRY( ORIENT_ANTI_TRANSPOSED,  ORIENT_HFLIPPED,        TRANSFORM_R270 ),
-    ENTRY( ORIENT_ANTI_TRANSPOSED,  ORIENT_ROTATED_180,     TRANSFORM_TRANSPOSE ),
+    ENTRY( ORIENT_ANTI_TRANSPOSED,  ORIENT_ROTATED_180,     TRANSFORM_R90_HFLIP ),
     ENTRY( ORIENT_ANTI_TRANSPOSED,  ORIENT_VFLIPPED,        TRANSFORM_R90 ),
     ENTRY( ORIENT_ANTI_TRANSPOSED,  ORIENT_ROTATED_90,      TRANSFORM_VFLIP ),
     ENTRY( ORIENT_ANTI_TRANSPOSED,  ORIENT_TRANSPOSED,      TRANSFORM_R180 ),
     ENTRY( ORIENT_ANTI_TRANSPOSED,  ORIENT_ROTATED_270,     TRANSFORM_HFLIP ),
-    ENTRY( ORIENT_ANTI_TRANSPOSED,  ORIENT_ANTI_TRANSPOSED, TRANSFORM_IDENTITY ),
+    ENTRY( ORIENT_ANTI_TRANSPOSED,  ORIENT_ANTI_TRANSPOSED, TRANSFORM_NONE ),
 };
 
 static void test_mappings(bool* failed)
@@ -157,9 +157,9 @@ static void test_mappings(bool* failed)
 
     video_format_t fmt = {0};
 
-    printf("───────── expected ──────┬─────────────── results ─────────────────┐\n");
-    printf("FROM    TO     TRANSFORM │ GetTransform  TransformBy   TransformTo │\n");
-    printf("─────────────────────────┴─────────────────────────────────────────┘\n");
+    printf("───────── expected ───────┬─────────────── results ──────────────────┐\n");
+    printf("FROM    TO     TRANSFORM  │ GetTransform   TransformBy   TransformTo │\n");
+    printf("──────────────────────────┴──────────────────────────────────────────┘\n");
 
     for( int i = 0; i < n; i++ )
     {
@@ -195,7 +195,7 @@ static void test_mappings(bool* failed)
         if (transform != mappings[i].transform)
             printf("FAIL (%s)%*s  ", name4, pad1, "");
         else
-            printf("pass          ");
+            printf("pass           ");
 
         if (new_orientation1 != mappings[i].orient_to)
             printf("FAIL (%s)%*s  ", name5, pad2, "");
@@ -222,14 +222,14 @@ typedef struct
 // Mappings between operation and its inverse (to undo)
 static const inverted_t inverted_ops[] =
 {
-    INV( TRANSFORM_IDENTITY,       TRANSFORM_IDENTITY ),
-    INV( TRANSFORM_HFLIP,          TRANSFORM_HFLIP ),
-    INV( TRANSFORM_VFLIP,          TRANSFORM_VFLIP ),
-    INV( TRANSFORM_R180,           TRANSFORM_R180 ),
-    INV( TRANSFORM_R270,           TRANSFORM_R90 ), //<--deliberately different!
-    INV( TRANSFORM_R90,            TRANSFORM_R270 ), //<--deliberately different!
-    INV( TRANSFORM_TRANSPOSE,      TRANSFORM_TRANSPOSE ),
-    INV( TRANSFORM_ANTI_TRANSPOSE, TRANSFORM_ANTI_TRANSPOSE ),
+    INV( TRANSFORM_NONE,       TRANSFORM_NONE ),
+    INV( TRANSFORM_HFLIP,      TRANSFORM_HFLIP ),
+    INV( TRANSFORM_VFLIP,      TRANSFORM_VFLIP ),
+    INV( TRANSFORM_R180,       TRANSFORM_R180 ),
+    INV( TRANSFORM_R270,       TRANSFORM_R90 ), //<--deliberately different!
+    INV( TRANSFORM_R90,        TRANSFORM_R270 ), //<--deliberately different!
+    INV( TRANSFORM_R90_HFLIP,  TRANSFORM_R90_HFLIP ),
+    INV( TRANSFORM_R270_HFLIP, TRANSFORM_R270_HFLIP ),
 };
 
 static void test_inversion(bool* failed)
@@ -384,6 +384,34 @@ static void test_utils(bool* failed)
 int main( void )
 {
     bool failed = false, failed_cur = false;
+
+    /* Check orientation<->transform mapping
+       These need to be so such that we can shortcut things for efficiency
+       to grab the operation from "normal" orientation for a given orientation, */
+    assert((int)TRANSFORM_NONE       == (int)ORIENT_NORMAL);
+    assert((int)TRANSFORM_HFLIP      == (int)ORIENT_HFLIPPED);
+    assert((int)TRANSFORM_R180       == (int)ORIENT_ROTATED_180);
+    assert((int)TRANSFORM_R180_HFLIP == (int)ORIENT_VFLIPPED);
+    assert((int)TRANSFORM_R90        == (int)ORIENT_ROTATED_90);
+    assert((int)TRANSFORM_R90_HFLIP  == (int)ORIENT_TRANSPOSED);
+    assert((int)TRANSFORM_R270       == (int)ORIENT_ROTATED_270);
+    assert((int)TRANSFORM_R270_HFLIP == (int)ORIENT_ANTI_TRANSPOSED);
+
+    /* Check orientation aliases */
+    assert(ORIENT_NORMAL      == ORIENT_TOP_LEFT);
+    assert(ORIENT_TRANSPOSED  == ORIENT_LEFT_TOP);
+    assert(ORIENT_ANTI_TRANSPOSED == ORIENT_RIGHT_BOTTOM);
+    assert(ORIENT_HFLIPPED    == ORIENT_TOP_RIGHT);
+    assert(ORIENT_VFLIPPED    == ORIENT_BOTTOM_LEFT);
+    assert(ORIENT_ROTATED_180 == ORIENT_BOTTOM_RIGHT);
+    assert(ORIENT_ROTATED_270 == ORIENT_LEFT_BOTTOM);
+    assert(ORIENT_ROTATED_90  == ORIENT_RIGHT_TOP);
+
+    /* Check transform aliases */
+    assert(TRANSFORM_IDENTITY       == TRANSFORM_NONE);
+    assert(TRANSFORM_VFLIP          == TRANSFORM_R180_HFLIP);
+    assert(TRANSFORM_TRANSPOSE      == TRANSFORM_R90_HFLIP);
+    assert(TRANSFORM_ANTI_TRANSPOSE == TRANSFORM_R270_HFLIP);
 
     printf("\n=========================================\n");
     printf("VIDEO ORIENTATION TRANSFORM TEST RESULTS\n");

@@ -214,21 +214,36 @@ typedef enum video_orientation_t
 #define ORIENT_ROTATE_180(orient) ((orient) ^ 3)
 
 /**
- * Orientation transformation operation.
+ * Orientation transformation operations.
  *
  * These represent a transformation operation to be performed upon any existing
- * orientation.
+ * orientation. The operations are described in terms of two possible
+ * sub-operations: clockwise rotation and horizontal flip.
+ *
+ * For operations involving both rotation and horizontal flip sub-operations,
+ * they should be interpreted as rotation first. (Order is important to achieve
+ * the correct resulting orientation in some cases).
  */
 typedef enum video_transform_t
 {
-    TRANSFORM_IDENTITY       = ORIENT_NORMAL,
-    TRANSFORM_HFLIP          = ORIENT_HFLIPPED,
-    TRANSFORM_VFLIP          = ORIENT_VFLIPPED,
-    TRANSFORM_R180           = ORIENT_ROTATED_180,
-    TRANSFORM_R270           = ORIENT_ROTATED_270,
-    TRANSFORM_R90            = ORIENT_ROTATED_90,
-    TRANSFORM_TRANSPOSE      = ORIENT_TRANSPOSED,
-    TRANSFORM_ANTI_TRANSPOSE = ORIENT_ANTI_TRANSPOSED
+    /* Note: Mapping to ORIENT_* variants is done for the purpose of allowing
+     * an efficient shortcut for calculating the operation needed to go from
+     * one orientation to another, when the starting orientation is "normal".
+     */
+    TRANSFORM_NONE       = ORIENT_NORMAL,          /**< No transformation */
+    TRANSFORM_HFLIP      = ORIENT_HFLIPPED,        /**< Flip horizontally */
+    TRANSFORM_R180       = ORIENT_ROTATED_180,     /**< Rotate 180 degrees */
+    TRANSFORM_R180_HFLIP = ORIENT_VFLIPPED,        /**< Rotate 180, then h-flip (i.e. v-flip) */
+    TRANSFORM_R90        = ORIENT_ROTATED_90,      /**< Rotate 90 degrees */
+    TRANSFORM_R90_HFLIP  = ORIENT_TRANSPOSED,      /**< Rotate 90 degrees, then h-flip (i.e. transpose) */
+    TRANSFORM_R270       = ORIENT_ROTATED_270,     /**< Rotate 270 degrees */
+    TRANSFORM_R270_HFLIP = ORIENT_ANTI_TRANSPOSED, /**< Rotate 270 degrees, then h-flip (i.e. anti-transpose) */
+
+    /* Common aliases */
+    TRANSFORM_IDENTITY       = TRANSFORM_NONE,
+    TRANSFORM_VFLIP          = TRANSFORM_R180_HFLIP,
+    TRANSFORM_TRANSPOSE      = TRANSFORM_R90_HFLIP,
+    TRANSFORM_ANTI_TRANSPOSE = TRANSFORM_R270_HFLIP,
 } video_transform_t;
 
 typedef enum video_multiview_mode_t
@@ -535,8 +550,6 @@ VLC_API void video_format_TransformTo(video_format_t *fmt, video_orientation_t d
 
 /**
  * Returns the operation required to transform from one orientation to another.
- *
- * Note that 90 and 270 degree rotations are clockwise.
  */
 VLC_API video_transform_t video_format_GetTransform(video_orientation_t from, video_orientation_t to);
 

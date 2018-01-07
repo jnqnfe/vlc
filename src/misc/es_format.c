@@ -211,19 +211,19 @@ static void transform_GetBasicOps( video_transform_t transform,
     switch ( transform )
     {
         case TRANSFORM_R90:
-        case TRANSFORM_TRANSPOSE:
+        case TRANSFORM_R90_HFLIP:
             *angle = 90;
             break;
         case TRANSFORM_R180:
-        case TRANSFORM_VFLIP:
+        case TRANSFORM_R180_HFLIP:
             *angle = 180;
             break;
         case TRANSFORM_R270:
-        case TRANSFORM_ANTI_TRANSPOSE:
+        case TRANSFORM_R270_HFLIP:
             *angle = 270;
             break;
         case TRANSFORM_HFLIP:
-        case TRANSFORM_IDENTITY:
+        case TRANSFORM_NONE:
             *angle = 0;
             break;
         default:
@@ -236,13 +236,13 @@ static video_transform_t transform_FromBasicOps( unsigned angle, bool hflip )
     switch ( angle )
     {
         case 90:
-            return hflip ? TRANSFORM_TRANSPOSE : TRANSFORM_R90;
+            return hflip ? TRANSFORM_R90_HFLIP : TRANSFORM_R90;
         case 180:
-            return hflip ? TRANSFORM_VFLIP : TRANSFORM_R180;
+            return hflip ? TRANSFORM_R180_HFLIP : TRANSFORM_R180;
         case 270:
-            return hflip ? TRANSFORM_ANTI_TRANSPOSE : TRANSFORM_R270;
+            return hflip ? TRANSFORM_R270_HFLIP : TRANSFORM_R270;
         default:
-            return hflip ? TRANSFORM_HFLIP : TRANSFORM_IDENTITY;
+            return hflip ? TRANSFORM_HFLIP : TRANSFORM_NONE;
     }
 }
 
