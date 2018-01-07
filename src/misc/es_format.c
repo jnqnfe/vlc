@@ -262,14 +262,15 @@ video_transform_t video_format_GetTransform( video_orientation_t src,
     return transform_FromBasicOps(angle, hflip);
 }
 
-void video_format_TransformBy( video_format_t *fmt, video_transform_t transform )
+video_orientation_t vlc_video_orient_Transform( video_orientation_t from,
+                                                video_transform_t transform )
 {
     /* Get destination orientation */
     unsigned angle1, angle2;
     bool hflip1, hflip2;
 
     transform_GetBasicOps( transform, &angle1, &hflip1 );
-    transform_GetBasicOps( (video_transform_t)fmt->orientation, &angle2, &hflip2 );
+    transform_GetBasicOps( (video_transform_t)from, &angle2, &hflip2 );
 
     unsigned angle = (angle2 - angle1 + 360) % 360;
     bool hflip = hflip2 ^ hflip1;
@@ -297,7 +298,7 @@ void video_format_TransformBy( video_format_t *fmt, video_transform_t transform 
             dst_orient = ORIENT_ROTATED_270;
     }
 
-    video_format_TransformTo(fmt, dst_orient);
+    return dst_orient;
 }
 
 void video_format_TransformTo( video_format_t *restrict fmt,
@@ -363,6 +364,7 @@ bool video_format_IsSimilar( const video_format_t *f1,
     }
     return true;
 }
+
 void video_format_Print( vlc_object_t *p_this,
                          const char *psz_text, const video_format_t *fmt )
 {

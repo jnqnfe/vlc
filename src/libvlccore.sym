@@ -465,12 +465,12 @@ video_format_CopyCrop
 video_format_ScaleCropAr
 video_format_FixRgb
 video_format_ApplyRotation
-video_format_TransformBy
 video_format_TransformTo
 video_format_GetTransform
 video_format_IsSimilar
 video_format_Setup
 video_format_Print
+vlc_video_orient_Transform
 vlc_actions_get_id
 vlc_actions_get_key_names
 vlc_actions_get_keycodes

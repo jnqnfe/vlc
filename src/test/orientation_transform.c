@@ -157,14 +157,17 @@ static void test_mappings(bool* failed)
 
     video_format_t fmt = {0};
 
-    printf("───────── expected ───────┬─────────────── results ──────────────────┐\n");
-    printf("FROM    TO     TRANSFORM  │ GetTransform   TransformBy   TransformTo │\n");
-    printf("──────────────────────────┴──────────────────────────────────────────┘\n");
+    printf("───────── expected ──────┬───────────────────────── results ────────────────────────┐\n");
+    printf("FROM    TO     TRANSFORM │ GetTransform   Transform      TransformBy    TransformTo │\n");
+    printf("─────────────────────────┴──────────────────────────────────────────────────────────┘\n");
 
     for( int i = 0; i < n; i++ )
     {
         video_transform_t transform = video_format_GetTransform(
             mappings[i].orient_from, mappings[i].orient_to);
+
+        video_orientation_t orientation = vlc_video_orient_Transform(
+            mappings[i].orient_from, mappings[i].transform);
 
         fmt.orientation = mappings[i].orient_from;
         video_format_TransformBy(&fmt, mappings[i].transform);
@@ -185,10 +188,12 @@ static void test_mappings(bool* failed)
         const char* name2 = orient_name(mappings[i].orient_to);
         const char* name3 = op_name(mappings[i].transform);
         const char* name4 = op_name(transform);
-        const char* name5 = orient_name(new_orientation1);
-        const char* name6 = orient_name(new_orientation2);
+        const char* name5 = orient_name(orientation);
+        const char* name6 = orient_name(new_orientation1);
+        const char* name7 = orient_name(new_orientation2);
         int pad1 = (int)(MAX_OP_NAME_LEN - strlen(name4));
         int pad2 = (int)(MAX_ORIENT_NAME_LEN - strlen(name5));
+        int pad3 = (int)(MAX_ORIENT_NAME_LEN - strlen(name6));
 
         printf("%-6s  %-5s  %-10s  ", name1, name2, name3);
 
@@ -197,13 +202,18 @@ static void test_mappings(bool* failed)
         else
             printf("pass           ");
 
-        if (new_orientation1 != mappings[i].orient_to)
-            printf("FAIL (%s)%*s  ", name5, pad2, "");
+        if (orientation != mappings[i].orient_to)
+            printf("FAIL (%s)%*s   ", name5, pad2, "");
         else
-            printf("pass          ");
+            printf("pass           ");
+
+        if (new_orientation1 != mappings[i].orient_to)
+            printf("FAIL (%s)%*s   ", name6, pad3, "");
+        else
+            printf("pass           ");
 
         if (new_orientation2 != mappings[i].orient_to)
-            printf("FAIL (%s)", name6);
+            printf("FAIL (%s)", name7);
         else
             printf("pass");
 

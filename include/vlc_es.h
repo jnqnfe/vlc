@@ -531,14 +531,9 @@ VLC_API void video_format_ApplyRotation(video_format_t * /*restrict*/ out,
                                         const video_format_t *in);
 
 /**
- * Transform fmt's orientation by the given transformation
- *
- * This is an alternative to video_format_TransformTo() for use when the new
- * orientation is not already known. It applies the given transformation
- * operation to the existing orientation to calculate it, before then actually
- * calling video_format_TransformTo().
+ * Calculates a new orientation resulting from applying a transformation.
  */
-VLC_API void video_format_TransformBy(video_format_t *fmt, video_transform_t transform);
+VLC_API video_orientation_t vlc_video_orient_Transform(video_orientation_t from, video_transform_t transform);
 
 /**
  * Transform fmt to a new orientation
@@ -547,6 +542,14 @@ VLC_API void video_format_TransformBy(video_format_t *fmt, video_transform_t tra
  * includes switching w/h, x/y, and a/r, where necessary.
  */
 VLC_API void video_format_TransformTo(video_format_t *fmt, video_orientation_t dst_orientation);
+
+/**
+ * Transform fmt's orientation by the given transformation
+ */
+static inline void video_format_TransformBy( video_format_t *fmt, video_transform_t transform )
+{
+    video_format_TransformTo(fmt, vlc_video_orient_Transform(fmt->orientation, transform));
+}
 
 /**
  * Returns the operation required to transform from one orientation to another.
