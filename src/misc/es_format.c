@@ -246,59 +246,52 @@ static video_transform_t transform_FromBasicOps( unsigned angle, bool hflip )
     }
 }
 
-video_transform_t vlc_video_orient_GetTransform( video_orientation_t src,
-                                                 video_orientation_t dst )
+video_transform_t vlc_video_orient_GetTransform( video_orientation_t from,
+                                                 video_orientation_t to )
 {
-    unsigned angle1, angle2;
-    bool hflip1, hflip2;
+    unsigned from_rot, to_rot;
+    bool from_hflip, to_hflip;
 
-    transform_GetBasicOps(  (video_transform_t)src, &angle1, &hflip1 );
-    transform_GetBasicOps( transform_Inverse( (video_transform_t)dst ),
-                           &angle2, &hflip2 );
+    /* For each orientation, get the rotation and horizontal flip operations
+       needed for a transformation from a default (normal) orientation. */
+    transform_GetBasicOps( (video_transform_t)from, &from_rot, &from_hflip );
+    transform_GetBasicOps( (video_transform_t)to, &to_rot, &to_hflip );
 
-    int angle = (angle1 + angle2) % 360;
-    bool hflip = hflip1 ^ hflip2;
+    bool hflip = from_hflip ^ to_hflip;
 
-    return transform_FromBasicOps(angle, hflip);
+    /* Calculate clockwise rotation needed (ignoring existing hflip state),
+       then if from state was horizontally flipped, apply correction. */
+    int rotation = (360 - from_rot + to_rot) % 360;
+    if (from_hflip) {
+        rotation = (360 - rotation) % 360;
+    }
+
+    return transform_FromBasicOps(rotation, hflip);
 }
 
 video_orientation_t vlc_video_orient_Transform( video_orientation_t from,
                                                 video_transform_t transform )
 {
-    /* Get destination orientation */
-    unsigned angle1, angle2;
-    bool hflip1, hflip2;
+    unsigned from_rot, op_rot;
+    bool from_hflip, op_hflip;
 
-    transform_GetBasicOps( transform, &angle1, &hflip1 );
-    transform_GetBasicOps( (video_transform_t)from, &angle2, &hflip2 );
+    /* For the existing orientation, get the rotation and horizontal flip
+       operations that represent it as a transformation from a default (normal)
+       orientation. Also, convert the to-be-applied transformation into its
+       corresponding operations. */
+    transform_GetBasicOps( (video_transform_t)from, &from_rot, &from_hflip );
+    transform_GetBasicOps( transform, &op_rot, &op_hflip );
 
-    unsigned angle = (angle2 - angle1 + 360) % 360;
-    bool hflip = hflip2 ^ hflip1;
+    /* Next we apply orientation+transformation to calculate the operations
+       which represent a cumulative transformation from "normal" (starting)
+       orientation. */
 
-    video_orientation_t dst_orient = ORIENT_NORMAL;
+    bool hflip = from_hflip ^ op_hflip;
 
-    if( hflip ) {
+    int rotation = (from_hflip) ? (360 - op_rot) % 360 : op_rot;
+    rotation = (from_rot + rotation) % 360;
 
-        if( angle == 0 )
-            dst_orient = ORIENT_HFLIPPED;
-        else if( angle == 90 )
-            dst_orient = ORIENT_ANTI_TRANSPOSED;
-        else if( angle == 180 )
-            dst_orient = ORIENT_VFLIPPED;
-        else if( angle == 270 )
-            dst_orient = ORIENT_TRANSPOSED;
-    }
-    else {
-
-        if( angle == 90 )
-            dst_orient = ORIENT_ROTATED_90;
-        else if( angle == 180 )
-            dst_orient = ORIENT_ROTATED_180;
-        else if( angle == 270 )
-            dst_orient = ORIENT_ROTATED_270;
-    }
-
-    return dst_orient;
+    return (video_orientation_t)transform_FromBasicOps(rotation, hflip);
 }
 
 void video_format_TransformTo( video_format_t *restrict fmt,
