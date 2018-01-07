@@ -64,7 +64,6 @@ typedef struct
     float      pf_gain[AUDIO_REPLAY_GAIN_MAX];
 } audio_replay_gain_t;
 
-
 /**
  * Audio channel type
  */
@@ -173,18 +172,22 @@ static const uint16_t vlc_chan_maps[] =
 
 /**
  * Picture orientation.
+ *
+ * Location (top/right/bottom/left) pairs indicate where the top and left edges
+ * respectively of a picture are moved to from normal.
  */
 typedef enum video_orientation_t
 {
-    ORIENT_TOP_LEFT = 0, /**< Top line represents top, left column left. */
-    ORIENT_TOP_RIGHT, /**< Flipped horizontally */
-    ORIENT_BOTTOM_LEFT, /**< Flipped vertically */
+    ORIENT_TOP_LEFT = 0, /**< Normal */
+    ORIENT_TOP_RIGHT,    /**< Flipped horizontally */
+    ORIENT_BOTTOM_LEFT,  /**< Flipped vertically */
     ORIENT_BOTTOM_RIGHT, /**< Rotated 180 degrees */
-    ORIENT_LEFT_TOP, /**< Transposed */
-    ORIENT_LEFT_BOTTOM, /**< Rotated 90 degrees anti-clockwise */
-    ORIENT_RIGHT_TOP, /**< Rotated 90 degrees clockwise */
+    ORIENT_LEFT_TOP,     /**< Transposed */
+    ORIENT_LEFT_BOTTOM,  /**< Rotated 90 degrees anti-clockwise */
+    ORIENT_RIGHT_TOP,    /**< Rotated 90 degrees clockwise */
     ORIENT_RIGHT_BOTTOM, /**< Anti-transposed */
 
+    /* common aliases */
     ORIENT_NORMAL      = ORIENT_TOP_LEFT,
     ORIENT_TRANSPOSED  = ORIENT_LEFT_TOP,
     ORIENT_ANTI_TRANSPOSED = ORIENT_RIGHT_BOTTOM,
@@ -194,6 +197,7 @@ typedef enum video_orientation_t
     ORIENT_ROTATED_270 = ORIENT_LEFT_BOTTOM,
     ORIENT_ROTATED_90  = ORIENT_RIGHT_TOP,
 } video_orientation_t;
+
 /** Convert EXIF orientation to enum video_orientation_t */
 #define ORIENT_FROM_EXIF(exif) ((0x57642310U >> (4 * ((exif) - 1))) & 7)
 /** Convert enum video_orientation_t to EXIF */
@@ -209,6 +213,12 @@ typedef enum video_orientation_t
 /** Applies 180 degree rotation to an orientation */
 #define ORIENT_ROTATE_180(orient) ((orient) ^ 3)
 
+/**
+ * Orientation transformation operation.
+ *
+ * These represent a transformation operation to be performed upon any existing
+ * orientation.
+ */
 typedef enum video_transform_t
 {
     TRANSFORM_IDENTITY       = ORIENT_NORMAL,
@@ -498,27 +508,37 @@ static inline void video_format_CopyCropAr(video_format_t *dst,
 VLC_API void video_format_ScaleCropAr( video_format_t *, const video_format_t * );
 
 /**
- * This function "normalizes" the formats orientation, by switching the a/r according to the orientation,
- * producing a format whose orientation is ORIENT_NORMAL. It makes a shallow copy (pallette is not alloc'ed).
+ * This function modifies out into a "normalized" form of in. It performs a
+ * shallow copy (pallette is not alloc'ed) of in to out, and changes
+ * orientation to ORIENT_NORMAL, switching w/h, x/y, and a/r as necessary.
  */
 VLC_API void video_format_ApplyRotation(video_format_t * /*restrict*/ out,
                                         const video_format_t *in);
 
 /**
- * This function applies the transform operation to fmt.
+ * Transform fmt's orientation by the given transformation
+ *
+ * This is an alternative to video_format_TransformTo() for use when the new
+ * orientation is not already known. It applies the given transformation
+ * operation to the existing orientation to calculate it, before then actually
+ * calling video_format_TransformTo().
  */
 VLC_API void video_format_TransformBy(video_format_t *fmt, video_transform_t transform);
 
 /**
- * This function applies the transforms necessary to fmt so that the resulting fmt
- * has the dst_orientation.
+ * Transform fmt to a new orientation
+ *
+ * This function modifies fmt as appropriate for a new orientation. This
+ * includes switching w/h, x/y, and a/r, where necessary.
  */
 VLC_API void video_format_TransformTo(video_format_t *fmt, video_orientation_t dst_orientation);
 
 /**
- * Returns the operation required to transform src into dst.
+ * Returns the operation required to transform from one orientation to another.
+ *
+ * Note that 90 and 270 degree rotations are clockwise.
  */
-VLC_API video_transform_t video_format_GetTransform(video_orientation_t src, video_orientation_t dst);
+VLC_API video_transform_t video_format_GetTransform(video_orientation_t from, video_orientation_t to);
 
 /**
  * This function will check if the first video format is similar
@@ -527,11 +547,13 @@ VLC_API video_transform_t video_format_GetTransform(video_orientation_t src, vid
 VLC_API bool video_format_IsSimilar( const video_format_t *, const video_format_t * );
 
 /**
- * It prints details about the given video_format_t
+ * Prints details about the given video_format_t
  */
 VLC_API void video_format_Print( vlc_object_t *, const char *, const video_format_t * );
 
-
+/**
+ * Returns the transform operation that reverses the given operation.
+ */
 static inline video_transform_t transform_Inverse( video_transform_t transform )
 {
     switch ( transform ) {
@@ -543,6 +565,7 @@ static inline video_transform_t transform_Inverse( video_transform_t transform )
             return transform;
     }
 }
+
 /**
  * subtitles format description
  */
