@@ -297,8 +297,13 @@ void video_format_TransformBy( video_format_t *fmt, video_transform_t transform 
             dst_orient = ORIENT_ROTATED_270;
     }
 
-    /* Apply transform */
-    if( ORIENT_IS_SWAP( fmt->orientation ) != ORIENT_IS_SWAP( dst_orient ) )
+    video_format_TransformTo(fmt, dst_orient);
+}
+
+void video_format_TransformTo( video_format_t *restrict fmt,
+                               video_orientation_t dst_orientation )
+{
+    if( ORIENT_IS_SWAP( fmt->orientation ) != ORIENT_IS_SWAP( dst_orientation ) )
     {
         unsigned int tmp;
         #define SWAP_INTS(a,b) tmp = a; a = b; b = tmp;
@@ -308,16 +313,7 @@ void video_format_TransformBy( video_format_t *fmt, video_transform_t transform 
         SWAP_INTS(fmt->i_sar_num, fmt->i_sar_den);
         #undef SWAP_INTS
     }
-
-    fmt->orientation = dst_orient;
-}
-
-void video_format_TransformTo( video_format_t *restrict fmt,
-                               video_orientation_t dst_orientation )
-{
-    video_transform_t transform = video_format_GetTransform(fmt->orientation,
-                                                            dst_orientation);
-    video_format_TransformBy(fmt, transform);
+    fmt->orientation = dst_orientation;
 }
 
 void video_format_ApplyRotation( video_format_t *restrict out,
