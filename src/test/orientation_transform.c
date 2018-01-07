@@ -163,7 +163,7 @@ static void test_mappings(bool* failed)
 
     for( int i = 0; i < n; i++ )
     {
-        video_transform_t transform = video_format_GetTransform(
+        video_transform_t transform = vlc_video_orient_GetTransform(
             mappings[i].orient_from, mappings[i].orient_to);
 
         video_orientation_t orientation = vlc_video_orient_Transform(

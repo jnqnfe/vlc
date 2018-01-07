@@ -500,7 +500,8 @@ static int CreateResizeChromaChain( filter_t *p_parent, const es_format_t *p_fmt
 static filter_t * AppendTransform( filter_chain_t *p_chain, const es_format_t *p_fmt1,
                                    const es_format_t *p_fmt2 )
 {
-    video_transform_t transform = video_format_GetTransform(p_fmt1->video.orientation, p_fmt2->video.orientation);
+    video_transform_t transform = vlc_video_orient_GetTransform(
+        p_fmt1->video.orientation, p_fmt2->video.orientation);
 
     const char *type;
 

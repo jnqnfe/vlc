@@ -246,8 +246,8 @@ static video_transform_t transform_FromBasicOps( unsigned angle, bool hflip )
     }
 }
 
-video_transform_t video_format_GetTransform( video_orientation_t src,
-                                             video_orientation_t dst )
+video_transform_t vlc_video_orient_GetTransform( video_orientation_t src,
+                                                 video_orientation_t dst )
 {
     unsigned angle1, angle2;
     bool hflip1, hflip2;

@@ -531,6 +531,11 @@ VLC_API void video_format_ApplyRotation(video_format_t * /*restrict*/ out,
                                         const video_format_t *in);
 
 /**
+ * Returns the operation required to transform from one orientation to another.
+ */
+VLC_API video_transform_t vlc_video_orient_GetTransform(video_orientation_t from, video_orientation_t to);
+
+/**
  * Calculates a new orientation resulting from applying a transformation.
  */
 VLC_API video_orientation_t vlc_video_orient_Transform(video_orientation_t from, video_transform_t transform);
@@ -551,10 +556,11 @@ static inline void video_format_TransformBy( video_format_t *fmt, video_transfor
     video_format_TransformTo(fmt, vlc_video_orient_Transform(fmt->orientation, transform));
 }
 
-/**
- * Returns the operation required to transform from one orientation to another.
- */
-VLC_API video_transform_t video_format_GetTransform(video_orientation_t from, video_orientation_t to);
+VLC_DEPRECATED //use vlc_video_orient_GetTransform instead
+static inline video_transform_t video_format_GetTransform(video_orientation_t from, video_orientation_t to)
+{
+    return vlc_video_orient_GetTransform(from, to);
+}
 
 /**
  * This function will check if the first video format is similar
