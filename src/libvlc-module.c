@@ -2125,8 +2125,10 @@ vlc_module_begin ()
 #if defined (LIBVLC_USE_PTHREAD)
     add_bool( "rt-priority", false, RT_PRIORITY_TEXT,
               RT_PRIORITY_LONGTEXT, true )
+        change_volatile()
     add_integer( "rt-offset", 0, RT_OFFSET_TEXT,
                  RT_OFFSET_LONGTEXT, true )
+        change_volatile()
 #endif
 
 #if defined(HAVE_DBUS)
@@ -2136,12 +2138,14 @@ vlc_module_begin ()
 #if defined(_WIN32) || defined(__OS2__)
     add_bool( "high-priority", 0, HPRIORITY_TEXT,
               HPRIORITY_LONGTEXT, false )
+        change_volatile()
 #endif
 
 #define CLOCK_SOURCE_TEXT N_("Clock source")
 #ifdef _WIN32
     add_string( "clock-source", NULL, CLOCK_SOURCE_TEXT, CLOCK_SOURCE_TEXT, true )
         change_string_cb( EnumClockSource )
+        change_volatile()
 #endif
 
 /* Playlist options */
