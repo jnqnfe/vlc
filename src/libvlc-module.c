@@ -77,10 +77,15 @@ static const char *const ppsz_snap_formats[] =
 #define CONTROL_LONGTEXT N_( \
     "You can select control interfaces for VLC.")
 
-#define VERBOSE_TEXT N_("Verbosity (0,1,2)")
+#define VERBOSE_TEXT N_("Verbosity")
 #define VERBOSE_LONGTEXT N_( \
-    "This is the verbosity level (0=only errors and " \
-    "standard messages, 1=warnings, 2=debug).")
+    "This is the verbosity level. Larger values enable additional types of log " \
+    "messages to be output.")
+
+static const int pi_verbosity_values[] =
+{ VLC_MSG_INFO, VLC_MSG_ERR, VLC_MSG_WARN, VLC_MSG_DBG };
+static const char *const ppsz_verbosity_descriptions[] =
+{ N_("Info"), N_("Errors"), N_("Warnings"), N_("Debug") };
 
 #define OPEN_TEXT N_("Default stream")
 #define OPEN_LONGTEXT N_( \
@@ -2061,8 +2066,8 @@ vlc_plugin_begin ()
     /* Interface category */
 
     set_subcategory( SUBCAT_INTERFACE_GENERAL )
-    add_integer( "verbose", 0, VERBOSE_TEXT, VERBOSE_LONGTEXT,
-                 false )
+    add_integer( "verbose", VLC_MSG_INFO, VERBOSE_TEXT, VERBOSE_LONGTEXT, false )
+        change_integer_list( pi_verbosity_values, ppsz_verbosity_descriptions )
         change_short('v')
         change_volatile ()
 #if !defined(_WIN32) && !defined(__OS2__)
