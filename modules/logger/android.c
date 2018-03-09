@@ -77,7 +77,6 @@ static const struct vlc_logger_operations *Open(vlc_object_t *obj, void **sysp)
     if (verbosity < 0)
         return NULL;
 
-    verbosity += VLC_MSG_ERR;
     *sysp = (void *)(uintptr_t)verbosity;
 
     return &ops;

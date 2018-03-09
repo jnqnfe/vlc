@@ -148,7 +148,6 @@ static const struct vlc_logger_operations *Open(vlc_object_t *obj,
     if (verbosity < 0)
         return NULL;
 
-    verbosity += VLC_MSG_ERR;
     if (verbosity > VLC_MSG_DBG)
         verbosity = VLC_MSG_DBG;
 

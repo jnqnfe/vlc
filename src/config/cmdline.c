@@ -62,7 +62,7 @@
 int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
                         const char *ppsz_argv[], int *pindex )
 {
-    int i_cmd, i_index, i_opts, i_shortopts = 0, flag, i_verbose = 0;
+    int i_cmd, i_index, i_opts, i_shortopts = 0, flag, i_verbose = VLC_MSG_ERR;
     struct vlc_option *p_longopts;
     const char **argv_copy = NULL;
     static bool printed_obs_neg_bool_warn = false;

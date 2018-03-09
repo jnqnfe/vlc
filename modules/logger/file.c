@@ -138,8 +138,6 @@ static const struct vlc_logger_operations *Open(vlc_object_t *obj,
     if (verbosity < 0)
         return NULL; /* nothing to log */
 
-    verbosity += VLC_MSG_ERR;
-
     vlc_logger_sys_t *sys = malloc(sizeof (*sys));
     if (unlikely(sys == NULL))
         return NULL;
