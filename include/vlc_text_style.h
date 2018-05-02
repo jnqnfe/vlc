@@ -425,7 +425,7 @@ static const struct {
  *
  * @param psz_value An HTML color, which can be either:
  *  - A standard HTML color (red, cyan, ...) as defined in p_html_colors
- *  - An hexadecimal color, of the form [#][AA]RRGGBB
+ *  - An hexadecimal color, of the form [#]RRGGBB[AA]
  *  - A decimal-based color, of the form rgb(RRR,GGG,BBB) or rgba(RRR,GGG,BBB,AAA)
  * @param ok If non-null, true will be stored in this pointer to signal
  *           a successful conversion
