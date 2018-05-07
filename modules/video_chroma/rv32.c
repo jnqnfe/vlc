@@ -36,7 +36,8 @@
  * Local prototypes
  ****************************************************************************/
 static int  OpenFilter ( vlc_object_t * );
-static picture_t *Filter( filter_t *, picture_t * );
+static void RV24_RV32( filter_t *, picture_t *, picture_t * );
+static picture_t *RV24_RV32_Filter( filter_t *, picture_t * );
 
 /*****************************************************************************
  * Module descriptor
@@ -67,7 +68,7 @@ static int OpenFilter( vlc_object_t *p_this )
      || p_filter->fmt_in.video.orientation != p_filter->fmt_out.video.orientation)
         return -1;
 
-    p_filter->pf_video_filter = Filter;
+    p_filter->pf_video_filter = RV24_RV32_Filter;
 
     return VLC_SUCCESS;
 }
@@ -75,28 +76,20 @@ static int OpenFilter( vlc_object_t *p_this )
 /****************************************************************************
  * Filter: the whole thing
  ****************************************************************************/
-static picture_t *Filter( filter_t *p_filter, picture_t *p_pic )
+static void RV24_RV32( filter_t *p_filter, picture_t *p_source,
+                                           picture_t *p_dest )
 {
-    picture_t *p_pic_dst;
     int i_plane, i;
     unsigned int j;
 
-    /* Request output picture */
-    p_pic_dst = filter_NewPicture( p_filter );
-    if( !p_pic_dst )
-    {
-        picture_Release( p_pic );
-        return NULL;
-    }
-
     /* Convert RV24 to RV32 */
-    for( i_plane = 0; i_plane < p_pic_dst->i_planes; i_plane++ )
+    for( i_plane = 0; i_plane < p_dest->i_planes; i_plane++ )
     {
-        uint8_t *p_src = p_pic->p[i_plane].p_pixels;
-        uint8_t *p_dst = p_pic_dst->p[i_plane].p_pixels;
+        uint8_t *p_src = p_source->p[i_plane].p_pixels;
+        uint8_t *p_dst = p_dest->p[i_plane].p_pixels;
         unsigned int i_width = p_filter->fmt_out.video.i_width;
 
-        for( i = 0; i < p_pic_dst->p[i_plane].i_lines; i++ )
+        for( i = 0; i < p_dest->p[i_plane].i_lines; i++ )
         {
             for( j = 0; j < i_width; j++ )
             {
@@ -106,14 +99,10 @@ static picture_t *Filter( filter_t *p_filter, picture_t *p_pic )
                 *(p_dst++) = 0xff;  /* Alpha */
                 p_src += 3;
             }
-            p_src += p_pic->p[i_plane].i_pitch - 3 * i_width;
-            p_dst += p_pic_dst->p[i_plane].i_pitch - 4 * i_width;
+            p_src += p_source->p[i_plane].i_pitch - 3 * i_width;
+            p_dst += p_dest->p[i_plane].i_pitch - 4 * i_width;
         }
     }
-
-    picture_CopyProperties( p_pic_dst, p_pic );
-    picture_Release( p_pic );
-
-    return p_pic_dst;
 }
+VIDEO_FILTER_WRAPPER( RV24_RV32 )
 
