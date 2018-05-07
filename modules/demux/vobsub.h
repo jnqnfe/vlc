@@ -32,7 +32,7 @@ static inline void vobsub_palette_rgb2yuv( uint32_t *pu_palette )
         y = (uint8_t) __MIN(abs(r * 2104 + g * 4130 + b * 802 + 4096 + 131072) >> 13, 235);
         u = (uint8_t) __MIN(abs(r * -1214 + g * -2384 + b * 3598 + 4096 + 1048576) >> 13, 240);
         v = (uint8_t) __MIN(abs(r * 3598 + g * -3013 + b * -585 + 4096 + 1048576) >> 13, 240);
-        pu_palette[i] = (y&0xff)<<16 | (v&0xff)<<8 | (u&0xff);
+        pu_palette[i] = (y&0xff)<<16 | (u&0xff)<<8 | (v&0xff);
     }
 }
 
