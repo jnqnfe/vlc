@@ -112,18 +112,6 @@ void Merge16BitGeneric( void *_p_dest, const void *_p_s1, const void *_p_s2,
 void MergeAltivec ( void *, const void *, const void *, size_t );
 #endif
 
-#if defined(CAN_COMPILE_MMXEXT)
-/**
- * MMXEXT routine to blend pixels from two picture lines.
- *
- * @param _p_dest Target
- * @param _p_s1 Source line A
- * @param _p_s2 Source line B
- * @param i_bytes Number of bytes to merge
- */
-void MergeMMXEXT  ( void *, const void *, const void *, size_t );
-#endif
-
 #if defined(CAN_COMPILE_3DNOW)
 /**
  * 3DNow routine to blend pixels from two picture lines.
@@ -187,7 +175,7 @@ void merge16_arm_sve(void *, const void *, const void *, size_t);
  * EndMerge routines
  *****************************************************************************/
 
-#if defined(CAN_COMPILE_MMXEXT) || defined(CAN_COMPILE_SSE)
+#if defined(CAN_COMPILE_SSE)
 /**
  * MMX merge finalization routine.
  *
