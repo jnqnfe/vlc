@@ -17,7 +17,7 @@ OPTIONS="
       --enable-caca
       --enable-qt
       --enable-skins2
-      --enable-sse --enable-mmx
+      --enable-sse
       --enable-libcddb
       --enable-zvbi --disable-telx
       --enable-nls"
