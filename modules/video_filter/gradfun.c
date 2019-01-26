@@ -73,11 +73,6 @@ vlc_module_end()
  * Local prototypes
  *****************************************************************************/
 #define FFMAX(a,b) __MAX(a,b)
-#ifdef CAN_COMPILE_MMXEXT
-#   define HAVE_MMX2 1
-#else
-#   define HAVE_MMX2 0
-#endif
 #ifdef CAN_COMPILE_SSE2
 #   define HAVE_SSE2 1
 #else
@@ -147,11 +142,6 @@ static int Open(vlc_object_t *object)
 #if HAVE_SSSE3
     if (vlc_CPU_SSSE3())
         cfg->filter_line = filter_line_ssse3;
-    else
-#endif
-#if HAVE_MMX2
-    if (vlc_CPU_MMXEXT())
-        cfg->filter_line = filter_line_mmx2;
     else
 #endif
         cfg->filter_line = filter_line_c;
