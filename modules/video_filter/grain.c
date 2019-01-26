@@ -93,7 +93,6 @@ typedef struct
     void (*blend)(uint8_t *dst, size_t dst_pitch,
                   const uint8_t *src, size_t src_pitch,
                   const int16_t *noise);
-    void (*emms)(void);
 
     struct {
         vlc_mutex_t lock;
@@ -193,10 +192,6 @@ static void BlockBlendSse2(uint8_t *dst, size_t dst_pitch,
 #   error "BLEND_SIZE unsupported"
 #endif
 }
-static void Emms(void)
-{
-    asm volatile ("emms");
-}
 #endif
 
 /**
@@ -245,8 +240,6 @@ static void PlaneFilter(filter_t *filter,
                            __MIN(w, BLEND_SIZE), __MIN(h, BLEND_SIZE));
         }
     }
-    if (sys->emms)
-        sys->emms();
 }
 
 static picture_t *Filter(filter_t *filter, picture_t *src)
@@ -407,11 +400,9 @@ static int Open(vlc_object_t *object)
     }
 
     sys->blend = BlockBlendC;
-    sys->emms  = NULL;
-#if defined(CAN_COMPILE_SSE2) && 1
+#if defined(CAN_COMPILE_SSE2)
     if (vlc_CPU_SSE2()) {
         sys->blend = BlockBlendSse2;
-        sys->emms  = Emms;
     }
 #endif
 
