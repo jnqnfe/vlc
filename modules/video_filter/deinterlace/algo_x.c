@@ -24,10 +24,6 @@
 #   include "config.h"
 #endif
 
-#ifdef CAN_COMPILE_MMXEXT
-#   include "mmx.h"
-#endif
-
 #include <stdint.h>
 
 #include <vlc_common.h>
@@ -76,9 +72,13 @@ static inline int XDeint8x8DetectC( uint8_t *src, int i_src )
 
     return fc < 1 ? false : true;
 }
-#ifdef CAN_COMPILE_MMXEXT
-VLC_MMX
-static inline int XDeint8x8DetectMMXEXT( uint8_t *src, int i_src )
+
+/* TODO: This is a simple conversion of MMX to using SSE registers,
+   without making use of their expanded width. Would that require
+   migration to a 16x16 processing model though? */
+#ifdef CAN_COMPILE_SSE
+VLC_SSE
+static inline int XDeint8x8DetectSSE( uint8_t *src, int i_src )
 {
 
     int y, x;
@@ -87,51 +87,66 @@ static inline int XDeint8x8DetectMMXEXT( uint8_t *src, int i_src )
 
     /* Detect interlacing */
     fc = 0;
-    pxor_r2r( mm7, mm7 );
+    __asm__ volatile ("pxor %%xmm7, %%xmm7" ::: "xmm7");
     for( y = 0; y < 9; y += 2 )
     {
         ff = fr = 0;
-        pxor_r2r( mm5, mm5 );
-        pxor_r2r( mm6, mm6 );
+        __asm__ volatile (
+            "pxor %%xmm5, %%xmm5\n"
+            "pxor %%xmm6, %%xmm6\n"
+            ::: "xmm5", "xmm6"
+        );
         for( x = 0; x < 8; x+=4 )
         {
-            movd_m2r( src[        x], mm0 );
-            movd_m2r( src[1*i_src+x], mm1 );
-            movd_m2r( src[2*i_src+x], mm2 );
-            movd_m2r( src[3*i_src+x], mm3 );
+            __asm__ volatile (
+                "movd %0, %%xmm0\n"
+                "movd %1, %%xmm1\n"
+                "movd %2, %%xmm2\n"
+                "movd %3, %%xmm3\n"
 
-            punpcklbw_r2r( mm7, mm0 );
-            punpcklbw_r2r( mm7, mm1 );
-            punpcklbw_r2r( mm7, mm2 );
-            punpcklbw_r2r( mm7, mm3 );
+                "punpcklbw %%xmm7, %%xmm0\n"
+                "punpcklbw %%xmm7, %%xmm1\n"
+                "punpcklbw %%xmm7, %%xmm2\n"
+                "punpcklbw %%xmm7, %%xmm3\n"
 
-            movq_r2r( mm0, mm4 );
+                "movq %%xmm0, %%xmm4\n"
 
-            psubw_r2r( mm1, mm0 );
-            psubw_r2r( mm2, mm4 );
+                "psubw %%xmm2, %%xmm4\n"
+                "psubw %%xmm1, %%xmm0\n"
+                "psubw %%xmm1, %%xmm2\n"
+                "psubw %%xmm1, %%xmm3\n"
 
-            psubw_r2r( mm1, mm2 );
-            psubw_r2r( mm1, mm3 );
+                "pmaddwd %%xmm0, %%xmm0\n"
+                "pmaddwd %%xmm2, %%xmm2\n"
+                "pmaddwd %%xmm3, %%xmm3\n"
+                "pmaddwd %%xmm4, %%xmm4\n"
+                "paddd %%xmm0, %%xmm2\n"
+                "paddd %%xmm4, %%xmm3\n"
+                "paddd %%xmm2, %%xmm5\n"
+                "paddd %%xmm3, %%xmm6\n"
 
-            pmaddwd_r2r( mm0, mm0 );
-            pmaddwd_r2r( mm4, mm4 );
-            pmaddwd_r2r( mm2, mm2 );
-            pmaddwd_r2r( mm3, mm3 );
-            paddd_r2r( mm0, mm2 );
-            paddd_r2r( mm4, mm3 );
-            paddd_r2r( mm2, mm5 );
-            paddd_r2r( mm3, mm6 );
+                :: "m" (src[        x]),
+                   "m" (src[1*i_src+x]),
+                   "m" (src[2*i_src+x]),
+                   "m" (src[3*i_src+x])
+                : "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6"
+            );
         }
 
-        movq_r2r( mm5, mm0 );
-        psrlq_i2r( 32, mm0 );
-        paddd_r2r( mm0, mm5 );
-        movd_r2m( mm5, fr );
+        __asm__ volatile (
+            "movq %%xmm5, %%xmm0\n"
+            "psrlq $32, %%xmm0\n"
+            "paddd %%xmm0, %%xmm5\n"
+            "movd %%xmm5, %0\n"
 
-        movq_r2r( mm6, mm0 );
-        psrlq_i2r( 32, mm0 );
-        paddd_r2r( mm0, mm6 );
-        movd_r2m( mm6, ff );
+            "movq %%xmm6, %%xmm0\n"
+            "psrlq $32, %%xmm0\n"
+            "paddd %%xmm0, %%xmm6\n"
+            "movd %%xmm6, %1\n"
+
+            : "=m" (fr), "=m" (ff)
+            :: "xmm0", "xmm5", "xmm6", "memory"
+        );
 
         if( ff < 6*fr/8 && fr > 32 )
             fc++;
@@ -163,9 +178,12 @@ static inline void XDeint8x8MergeC( uint8_t *dst,  int i_dst,
     }
 }
 
-#ifdef CAN_COMPILE_MMXEXT
-VLC_MMX
-static inline void XDeint8x8MergeMMXEXT( uint8_t *dst,  int i_dst,
+/* TODO: This is a simple conversion of MMX to using SSE registers,
+   without making use of their expanded width. Would that require
+   migration to a 16x16 processing model though? */
+#ifdef CAN_COMPILE_SSE
+VLC_SSE
+static inline void XDeint8x8MergeSSE( uint8_t *dst,  int i_dst,
                                          uint8_t *src1, int i_src1,
                                          uint8_t *src2, int i_src2 )
 {
@@ -173,37 +191,47 @@ static inline void XDeint8x8MergeMMXEXT( uint8_t *dst,  int i_dst,
     int y, x;
 
     /* Progressive */
-    pxor_r2r( mm7, mm7 );
+    __asm__ volatile (
+        "pxor %%xmm7, %%xmm7\n"
+        "movq %0, %%xmm6\n"
+        :: "m" (m_4) : "xmm6", "xmm7"
+    );
     for( y = 0; y < 8; y += 2 )
     {
         for( x = 0; x < 8; x +=4 )
         {
-            movd_m2r( src1[x], mm0 );
-            movd_r2m( mm0, dst[x] );
+            __asm__ volatile (
+                "movd %2, %%xmm0\n"
+                "movd %%xmm0, %0\n"
 
-            movd_m2r( src2[x], mm1 );
-            movd_m2r( src1[i_src1+x], mm2 );
+                "movd %3, %%xmm1\n"
+                "movd %4, %%xmm2\n"
 
-            punpcklbw_r2r( mm7, mm0 );
-            punpcklbw_r2r( mm7, mm1 );
-            punpcklbw_r2r( mm7, mm2 );
-            paddw_r2r( mm1, mm1 );
-            movq_r2r( mm1, mm3 );
-            paddw_r2r( mm3, mm3 );
-            paddw_r2r( mm2, mm0 );
-            paddw_r2r( mm3, mm1 );
-            paddw_m2r( m_4, mm1 );
-            paddw_r2r( mm1, mm0 );
-            psraw_i2r( 3, mm0 );
-            packuswb_r2r( mm7, mm0 );
-            movd_r2m( mm0, dst[i_dst+x] );
+                "punpcklbw %%xmm7, %%xmm0\n"
+                "punpcklbw %%xmm7, %%xmm1\n"
+                "punpcklbw %%xmm7, %%xmm2\n"
+                "paddw %%xmm1, %%xmm1\n"
+                "movq %%xmm1, %%xmm3\n"
+                "paddw %%xmm3, %%xmm3\n"
+                "paddw %%xmm2, %%xmm0\n"
+                "paddw %%xmm3, %%xmm1\n"
+                "paddw %%xmm6, %%xmm1\n"
+                "paddw %%xmm1, %%xmm0\n"
+                "psraw $3, %%xmm0\n"
+                "packuswb %%xmm7, %%xmm0\n"
+                "movd %%xmm0, %1\n"
+
+                : "=m" (dst[x]), "=m" (dst[i_dst+x])
+                : "m" (src1[x]), "m" (src2[x]), "m" (src1[i_src1+x])
+                : "xmm0", "xmm1", "xmm2", "xmm3",
+                  "memory"
+            );
         }
         dst += 2*i_dst;
         src1 += i_src1;
         src2 += i_src2;
     }
 }
-
 #endif
 
 /* XDeint8x8FieldE: Stupid deinterlacing (1,0,1) for block that miss a
@@ -229,9 +257,12 @@ static inline void XDeint8x8FieldEC( uint8_t *dst, int i_dst,
     }
 }
 
-#ifdef CAN_COMPILE_MMXEXT
-VLC_MMX
-static inline void XDeint8x8FieldEMMXEXT( uint8_t *dst, int i_dst,
+/* TODO: This is a simple conversion of MMX to using SSE registers,
+   without making use of their expanded width. Would that require
+   migration to a 16x16 processing model though? */
+#ifdef CAN_COMPILE_SSE
+VLC_SSE
+static inline void XDeint8x8FieldESSE( uint8_t *dst, int i_dst,
                                           uint8_t *src, int i_src )
 {
     int y;
@@ -239,14 +270,21 @@ static inline void XDeint8x8FieldEMMXEXT( uint8_t *dst, int i_dst,
     /* Interlaced */
     for( y = 0; y < 8; y += 2 )
     {
-        movq_m2r( src[0], mm0 );
-        movq_r2m( mm0, dst[0] );
+        __asm__ volatile (
+            "movq %1, %%xmm0\n"
+            "movq %%xmm0, %0\n"
+            : "=m" (dst[0]) : "m" (src[0])
+            : "xmm0", "memory"
+        );
         dst += i_dst;
 
-        movq_m2r( src[2*i_src], mm1 );
-        pavgb_r2r( mm1, mm0 );
-
-        movq_r2m( mm0, dst[0] );
+        __asm__ volatile (
+            "movq %1, %%xmm1\n"
+            "pavgb %%xmm1, %%xmm0\n"
+            "movq %%xmm0, %0\n"
+            : "=m" (dst[0]) : "m" (src[2*i_src])
+            : "xmm0", "xmm1", "memory"
+        );
 
         dst += 1*i_dst;
         src += 2*i_src;
@@ -301,9 +339,12 @@ static inline void XDeint8x8FieldC( uint8_t *dst, int i_dst,
     }
 }
 
-#ifdef CAN_COMPILE_MMXEXT
-VLC_MMX
-static inline void XDeint8x8FieldMMXEXT( uint8_t *dst, int i_dst,
+/* TODO: This is a simple conversion of MMX to using SSE registers,
+   without making use of their expanded width. Would that require
+   migration to a 16x16 processing model though? */
+#ifdef CAN_COMPILE_SSE
+VLC_SSE
+static inline void XDeint8x8FieldSSE( uint8_t *dst, int i_dst,
                                          uint8_t *src, int i_src )
 {
     int y, x;
@@ -319,17 +360,24 @@ static inline void XDeint8x8FieldMMXEXT( uint8_t *dst, int i_dst,
             uint8_t *src2 = &src[2*i_src];
             int32_t c0, c1, c2;
 
-            movq_m2r( src[x-2], mm0 );
-            movq_m2r( src[x-3], mm1 );
-            movq_m2r( src[x-4], mm2 );
-
-            psadbw_m2r( src2[x-4], mm0 );
-            psadbw_m2r( src2[x-3], mm1 );
-            psadbw_m2r( src2[x-2], mm2 );
-
-            movd_r2m( mm0, c2 );
-            movd_r2m( mm1, c1 );
-            movd_r2m( mm2, c0 );
+            __asm__ volatile (
+                "movq %3, %%xmm0\n"
+                "movq %4, %%xmm1\n"
+                "movq %5, %%xmm2\n"
+                "movq %6, %%xmm3\n"
+                "movq %7, %%xmm4\n"
+                "movq %8, %%xmm5\n"
+                "psadbw %%xmm3, %%xmm0\n"
+                "psadbw %%xmm4, %%xmm1\n"
+                "psadbw %%xmm5, %%xmm2\n"
+                "movd %%xmm0, %2\n"
+                "movd %%xmm1, %1\n"
+                "movd %%xmm2, %0\n"
+                : "=m" (c0), "=m" (c1), "=m" (c2)
+                : "m" (src[x-2]), "m" (src[x-3]), "m" (src[x-4]),
+                  "m" (src2[x-4]), "m" (src2[x-3]), "m" (src2[x-2])
+                : "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "memory"
+            );
 
             if( c0 < c1 && c1 <= c2 )
                 dst[x] = (src[x-1] + src2[x+1]) >> 1;
@@ -472,9 +520,9 @@ static inline void XDeintBand8x8C( uint8_t *dst, int i_dst,
         XDeintNxN( dst, i_dst, src, i_src, i_modx, 8 );
 }
 
-#ifdef CAN_COMPILE_MMXEXT
-VLC_MMX
-static inline void XDeintBand8x8MMXEXT( uint8_t *dst, int i_dst,
+#ifdef CAN_COMPILE_SSE
+VLC_SSE
+static inline void XDeintBand8x8SSE( uint8_t *dst, int i_dst,
                                         uint8_t *src, int i_src,
                                         const int i_mbx, int i_modx )
 {
@@ -484,16 +532,16 @@ static inline void XDeintBand8x8MMXEXT( uint8_t *dst, int i_dst,
     for( x = 0; x < i_mbx; x++ )
     {
         int s;
-        if( ( s = XDeint8x8DetectMMXEXT( src, i_src ) ) )
+        if( ( s = XDeint8x8DetectSSE( src, i_src ) ) )
         {
             if( x == 0 || x == i_mbx - 1 )
-                XDeint8x8FieldEMMXEXT( dst, i_dst, src, i_src );
+                XDeint8x8FieldESSE( dst, i_dst, src, i_src );
             else
-                XDeint8x8FieldMMXEXT( dst, i_dst, src, i_src );
+                XDeint8x8FieldSSE( dst, i_dst, src, i_src );
         }
         else
         {
-            XDeint8x8MergeMMXEXT( dst, i_dst,
+            XDeint8x8MergeSSE( dst, i_dst,
                                   &src[0*i_src], 2*i_src,
                                   &src[1*i_src], 2*i_src );
         }
@@ -515,8 +563,8 @@ int RenderX( filter_t *p_filter, picture_t *p_outpic, picture_t *p_pic )
 {
     VLC_UNUSED(p_filter);
     int i_plane;
-#if defined (CAN_COMPILE_MMXEXT)
-    const bool mmxext = vlc_CPU_MMXEXT();
+#if defined (CAN_COMPILE_SSE)
+    const bool sse = vlc_CPU_SSE2();
 #endif
 
     /* Copy image and skip lines */
@@ -538,9 +586,9 @@ int RenderX( filter_t *p_filter, picture_t *p_outpic, picture_t *p_pic )
             uint8_t *dst = &p_outpic->p[i_plane].p_pixels[8*y*i_dst];
             uint8_t *src = &p_pic->p[i_plane].p_pixels[8*y*i_src];
 
-#ifdef CAN_COMPILE_MMXEXT
-            if( mmxext )
-                XDeintBand8x8MMXEXT( dst, i_dst, src, i_src, i_mbx, i_modx );
+#ifdef CAN_COMPILE_SSE
+            if( sse )
+                XDeintBand8x8SSE( dst, i_dst, src, i_src, i_mbx, i_modx );
             else
 #endif
                 XDeintBand8x8C( dst, i_dst, src, i_src, i_mbx, i_modx );
@@ -565,9 +613,5 @@ int RenderX( filter_t *p_filter, picture_t *p_outpic, picture_t *p_pic )
         }
     }
 
-#ifdef CAN_COMPILE_MMXEXT
-    if( mmxext )
-        emms();
-#endif
     return VLC_SUCCESS;
 }

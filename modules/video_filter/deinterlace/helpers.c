@@ -24,8 +24,7 @@
 #   include "config.h"
 #endif
 
-#ifdef CAN_COMPILE_MMXEXT
-#   include "mmx.h"
+#ifdef CAN_COMPILE_SSE
 #   include <stdalign.h>
 #endif
 
@@ -107,9 +106,6 @@ static void FieldFromPlane( plane_t *p_dst, const plane_t *p_src, int i_field )
  * For interpretation of pi_top and pi_bot, it is assumed that the block
  * starts on an even-numbered line (belonging to the top field).
  *
- * The b_mmx parameter avoids the need to call vlc_CPU() separately
- * for each block.
- *
  * @param[in] p_pix_p Base pointer to the block in previous picture
  * @param[in] p_pix_c Base pointer to the same block in current picture
  * @param i_pitch_prev i_pitch of previous picture
@@ -173,9 +169,11 @@ static int TestForMotionInBlock( uint8_t *p_pix_p, uint8_t *p_pix_c,
     return (i_motion >= 8);
 }
 
-#ifdef CAN_COMPILE_MMXEXT
-VLC_MMX
-static int TestForMotionInBlockMMX( uint8_t *p_pix_p, uint8_t *p_pix_c,
+/* TODO: This is a simple conversion of MMX to using SSE registers,
+   without making use of their expanded width. */
+#ifdef CAN_COMPILE_SSE
+VLC_SSE
+static int TestForMotionInBlockSSE( uint8_t *p_pix_p, uint8_t *p_pix_c,
                                     int i_pitch_prev, int i_pitch_curr,
                                     int* pi_top, int* pi_bot )
 {
@@ -183,62 +181,80 @@ static int TestForMotionInBlockMMX( uint8_t *p_pix_p, uint8_t *p_pix_c,
     int32_t i_top_motion = 0;
     int32_t i_bot_motion = 0;
 
-    static alignas (8) const mmx_t bT   = { .ub = { T, T, T, T, T, T, T, T } };
-    pxor_r2r( mm6, mm6 ); /* zero, used in psadbw */
-    movq_m2r( bT,  mm5 );
+    const uint8_t bT[8] = { T, T, T, T, T, T, T, T };
+    __asm__ volatile (
+        "pxor %%xmm6, %%xmm6\n" /* zero, used in psadbw */
+        "movq %0, %%xmm5\n"
 
-    pxor_r2r( mm3, mm3 ); /* score (top field) */
-    pxor_r2r( mm4, mm4 ); /* score (bottom field) */
+        "pxor %%xmm3, %%xmm3\n" /* score (top field) */
+        "pxor %%xmm4, %%xmm4\n" /* score (bottom field) */
+
+        :: "m" (bT) : "xmm3", "xmm4", "xmm5", "xmm6"
+    );
     for( int y = 0; y < 8; y+=2 )
     {
         /* top field */
-        movq_m2r( *((uint64_t*)p_pix_c), mm0 );
-        movq_m2r( *((uint64_t*)p_pix_p), mm1 );
-        movq_r2r( mm0, mm2 );
-        psubusb_r2r( mm1, mm2 );
-        psubusb_r2r( mm0, mm1 );
+        __asm__ volatile (
+            "movq %0, %%xmm0\n"
+            "movq %1, %%xmm1\n"
+            "movq %%xmm0, %%xmm2\n"
+            "psubusb %%xmm1, %%xmm2\n"
+            "psubusb %%xmm0, %%xmm1\n"
 
-        pcmpgtb_r2r( mm5, mm2 );
-        pcmpgtb_r2r( mm5, mm1 );
-        psadbw_r2r(  mm6, mm2 );
-        psadbw_r2r(  mm6, mm1 );
+            "pcmpgtb %%xmm5, %%xmm2\n"
+            "pcmpgtb %%xmm5, %%xmm1\n"
+            "psadbw %%xmm6, %%xmm2\n"
+            "psadbw %%xmm6, %%xmm1\n"
 
-        paddd_r2r( mm2, mm1 );
-        paddd_r2r( mm1, mm3 ); /* add to top field score */
+            "paddd %%xmm2, %%xmm1\n"
+            "paddd %%xmm1, %%xmm3\n" /* add to top field score */
+
+            :: "m" (*((uint64_t*)p_pix_c)), "m" (*((uint64_t*)p_pix_p))
+            : "xmm0", "xmm1", "xmm2", "xmm3"
+        );
 
         p_pix_c += i_pitch_curr;
         p_pix_p += i_pitch_prev;
 
         /* bottom field - handling identical to top field, except... */
-        movq_m2r( *((uint64_t*)p_pix_c), mm0 );
-        movq_m2r( *((uint64_t*)p_pix_p), mm1 );
-        movq_r2r( mm0, mm2 );
-        psubusb_r2r( mm1, mm2 );
-        psubusb_r2r( mm0, mm1 );
+        __asm__ volatile (
+            /* top field */
+            "movq %0, %%xmm0\n"
+            "movq %1, %%xmm1\n"
+            "movq %%xmm0, %%xmm2\n"
+            "psubusb %%xmm1, %%xmm2\n"
+            "psubusb %%xmm0, %%xmm1\n"
 
-        pcmpgtb_r2r( mm5, mm2 );
-        pcmpgtb_r2r( mm5, mm1 );
-        psadbw_r2r(  mm6, mm2 );
-        psadbw_r2r(  mm6, mm1 );
+            "pcmpgtb %%xmm5, %%xmm2\n"
+            "pcmpgtb %%xmm5, %%xmm1\n"
+            "psadbw %%xmm6, %%xmm2\n"
+            "psadbw %%xmm6, %%xmm1\n"
 
-        paddd_r2r( mm2, mm1 );
-        paddd_r2r( mm1, mm4 ); /* ...here we add to bottom field score */
+            "paddd %%xmm2, %%xmm1\n"
+            "paddd %%xmm1, %%xmm4\n" /* ...here we add to bottom field score */
+
+            :: "m" (*((uint64_t*)p_pix_c)), "m" (*((uint64_t*)p_pix_p))
+            : "xmm0", "xmm1", "xmm2", "xmm4"
+        );
 
         p_pix_c += i_pitch_curr;
         p_pix_p += i_pitch_prev;
     }
-    movq_r2r(  mm3, mm7 ); /* score (total) */
-    paddd_r2r( mm4, mm7 );
-    movd_r2m( mm3, i_top_motion );
-    movd_r2m( mm4, i_bot_motion );
-    movd_r2m( mm7, i_motion );
+    __asm__ volatile (
+        "movq %%xmm3, %%xmm7\n" /* score (total) */
+        "paddd %%xmm4, %%xmm7\n"
+        "movd %%xmm3, %0\n"
+        "movd %%xmm4, %1\n"
+        "movd %%xmm7, %2\n"
+
+        : "=m" (i_top_motion), "=m" (i_bot_motion), "=m" (i_motion)
+        :: "xmm7", "memory"
+    );
 
     /* The loop counts actual score * 255. */
     i_top_motion /= 255;
     i_bot_motion /= 255;
     i_motion     /= 255;
-
-    emms();
 
     (*pi_top) = ( i_top_motion >= 8 );
     (*pi_bot) = ( i_bot_motion >= 8 );
@@ -396,10 +412,10 @@ int EstimateNumBlocksWithMotion( const picture_t* p_prev,
 
     int (*motion_in_block)(uint8_t *, uint8_t *, int , int, int *, int *) =
         TestForMotionInBlock;
-    /* We must tell our inline helper whether to use MMX acceleration. */
-#ifdef CAN_COMPILE_MMXEXT
-    if (vlc_CPU_MMXEXT())
-        motion_in_block = TestForMotionInBlockMMX;
+    /* We must tell our inline helper whether to use SSE2 acceleration. */
+#ifdef CAN_COMPILE_SSE
+    if (vlc_CPU_SSE2())
+        motion_in_block = TestForMotionInBlockSSE;
 #endif
 
     int i_score = 0;
@@ -451,19 +467,22 @@ int EstimateNumBlocksWithMotion( const picture_t* p_prev,
 /* Threshold (value from Transcode 1.1.5) */
 #define T 100
 
-#ifdef CAN_COMPILE_MMXEXT
-VLC_MMX
-static int CalculateInterlaceScoreMMX( const picture_t* p_pic_top,
+/* TODO: This is a simple conversion of MMX to using SSE registers,
+   without making use of their expanded width. */
+#ifdef CAN_COMPILE_SSE
+VLC_SSE
+static int CalculateInterlaceScoreSSE( const picture_t* p_pic_top,
                                        const picture_t* p_pic_bot )
 {
     assert( p_pic_top->i_planes == p_pic_bot->i_planes );
 
-    /* Amount of bits must be known for MMX, thus int32_t.
+    /* Amount of bits must be known for SSE, thus int32_t.
        Doesn't hurt the C implementation. */
-    int32_t i_score_mmx = 0; /* this must be divided by 255 when finished  */
-    int32_t i_score_c   = 0; /* this counts as-is (used for non-MMX parts) */
+    int32_t i_score_sse = 0; /* this must be divided by 255 when finished  */
+    int32_t i_score_c   = 0; /* this counts as-is (used for non-SSE parts) */
 
-    pxor_r2r( mm7, mm7 ); /* we will keep score in mm7 */
+    /* we will keep score in mm7 */
+    __asm__ volatile ("pxor %%xmm7, %%xmm7" ::: "xmm7");
 
     for( int i_plane = 0 ; i_plane < p_pic_top->i_planes ; ++i_plane )
     {
@@ -502,43 +521,51 @@ static int CalculateInterlaceScoreMMX( const picture_t* p_pic_top,
                             # of pixels < (2^32)/255
                Note: calculates score * 255
             */
-            static alignas (8) const mmx_t b0 = {
-                .uq = 0x0000000000000000ULL };
-            static alignas (8) const mmx_t b128 = {
-                .uq = 0x8080808080808080ULL };
-            static alignas (8) const mmx_t bT = {
-                .ub = { T, T, T, T, T, T, T, T } };
+            const uint64_t b128 = 0x8080808080808080ULL;
+            const uint8_t bT[8] = { T, T, T, T, T, T, T, T };
 
             for( ; x < w8; x += 8 )
             {
-                movq_m2r( *((int64_t*)p_c), mm0 );
-                movq_m2r( *((int64_t*)p_p), mm1 );
-                movq_m2r( *((int64_t*)p_n), mm2 );
+                __asm__ volatile (
+                    "movq %0, %%xmm0\n"
+                    "movq %1, %%xmm1\n"
+                    "movq %2, %%xmm2\n"
 
-                psubb_m2r( b128, mm0 );
-                psubb_m2r( b128, mm1 );
-                psubb_m2r( b128, mm2 );
+                    "movq %3, %%xmm3\n"
+                    "psubb %%xmm3, %%xmm0\n"
+                    "psubb %%xmm3, %%xmm1\n"
+                    "psubb %%xmm3, %%xmm2\n"
 
-                psubsb_r2r( mm0, mm1 );
-                psubsb_r2r( mm0, mm2 );
+                    "psubsb %%xmm0, %%xmm1\n"
+                    "psubsb %%xmm0, %%xmm2\n"
 
-                pxor_r2r( mm3, mm3 );
-                pxor_r2r( mm4, mm4 );
-                pxor_r2r( mm5, mm5 );
-                pxor_r2r( mm6, mm6 );
+                    "pxor %%xmm3, %%xmm3\n"
+                    "pxor %%xmm4, %%xmm4\n"
+                    "pxor %%xmm5, %%xmm5\n"
+                    "pxor %%xmm6, %%xmm6\n"
 
-                punpcklbw_r2r( mm1, mm3 );
-                punpcklbw_r2r( mm2, mm4 );
-                punpckhbw_r2r( mm1, mm5 );
-                punpckhbw_r2r( mm2, mm6 );
+                    "punpcklbw %%xmm1, %%xmm3\n"
+                    "punpcklbw %%xmm2, %%xmm4\n"
+                    "punpckhbw %%xmm1, %%xmm5\n"
+                    "punpckhbw %%xmm2, %%xmm6\n"
 
-                pmulhw_r2r( mm3, mm4 );
-                pmulhw_r2r( mm5, mm6 );
+                    "pmulhw %%xmm3, %%xmm4\n"
+                    "pmulhw %%xmm5, %%xmm6\n"
 
-                packsswb_r2r(mm4, mm6);
-                pcmpgtb_m2r( bT, mm6 );
-                psadbw_m2r( b0, mm6 );
-                paddd_r2r( mm6, mm7 );
+                    "movq %4, %%xmm0\n"
+                    "pxor %%xmm1, %%xmm1\n"
+
+                    "packsswb %%xmm4, %%xmm6\n"
+                    "pcmpgtb %%xmm0, %%xmm6\n"
+                    "psadbw %%xmm1, %%xmm6\n"
+                    "paddd %%xmm6, %%xmm7\n"
+
+                    :: "m" (*((int64_t*)p_c)),
+                       "m" (*((int64_t*)p_p)),
+                       "m" (*((int64_t*)p_n)),
+                       "m" (b128), "m" (bT)
+                    : "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6", "xmm7"
+                );
 
                 p_c += 8;
                 p_p += 8;
@@ -580,10 +607,9 @@ static int CalculateInterlaceScoreMMX( const picture_t* p_pic_top,
         }
     }
 
-    movd_r2m( mm7, i_score_mmx );
-    emms();
+    __asm__ volatile ("movd %%xmm7, %0\n" : "=m" (i_score_sse) :: "memory");
 
-    return i_score_mmx/255 + i_score_c;
+    return i_score_sse/255 + i_score_c;
 }
 #endif
 
@@ -607,9 +633,9 @@ int CalculateInterlaceScore( const picture_t* p_pic_top,
     if( p_pic_top->i_planes != p_pic_bot->i_planes )
         return -1;
 
-#ifdef CAN_COMPILE_MMXEXT
-    if (vlc_CPU_MMXEXT())
-        return CalculateInterlaceScoreMMX( p_pic_top, p_pic_bot );
+#ifdef CAN_COMPILE_SSE
+    if (vlc_CPU_SSE2())
+        return CalculateInterlaceScoreSSE( p_pic_top, p_pic_bot );
 #endif
 
     int32_t i_score = 0;
