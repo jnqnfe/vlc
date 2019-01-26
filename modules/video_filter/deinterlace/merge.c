@@ -194,8 +194,8 @@ void MergeAltivec( void *_p_dest, const void *_p_s1,
  *****************************************************************************/
 
 #if defined(CAN_COMPILE_SSE)
-void EndMMX( void )
+void EndSSE( void )
 {
-    __asm__ __volatile__( "emms" :: );
+    __asm__ __volatile__( "sfence" ::: "memory" );
 }
 #endif

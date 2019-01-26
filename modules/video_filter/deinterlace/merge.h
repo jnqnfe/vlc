@@ -165,15 +165,15 @@ void merge16_arm_sve(void *, const void *, const void *, size_t);
 
 #if defined(CAN_COMPILE_SSE)
 /**
- * MMX merge finalization routine.
+ * SSE merge finalization routine.
  *
- * Must be called after an MMX merge is finished.
- * This exits MMX mode (by executing the "emms" instruction).
+ * Should be called after an SSE merge is finished.
+ * This exits SSE mode (by executing the "sfence" instruction).
  *
  * The EndMerge() macro detects whether this is needed, and calls if it is,
  * so just use that.
  */
-void EndMMX       ( void );
+void EndSSE       ( void );
 #endif
 
 #endif
