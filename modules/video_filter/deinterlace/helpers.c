@@ -169,8 +169,7 @@ static int TestForMotionInBlock( uint8_t *p_pix_p, uint8_t *p_pix_c,
     return (i_motion >= 8);
 }
 
-/* TODO: This is a simple conversion of MMX to using SSE registers,
-   without making use of their expanded width. */
+/* Note: This examines an 8x8 block just like the C equivalent */
 #ifdef CAN_COMPILE_SSE
 VLC_SSE
 static int TestForMotionInBlockSSE( uint8_t *p_pix_p, uint8_t *p_pix_c,
@@ -467,8 +466,6 @@ int EstimateNumBlocksWithMotion( const picture_t* p_prev,
 /* Threshold (value from Transcode 1.1.5) */
 #define T 100
 
-/* TODO: This is a simple conversion of MMX to using SSE registers,
-   without making use of their expanded width. */
 #ifdef CAN_COMPILE_SSE
 VLC_SSE
 static int CalculateInterlaceScoreSSE( const picture_t* p_pic_top,
@@ -494,8 +491,8 @@ static int CalculateInterlaceScoreSSE( const picture_t* p_pic_top,
         const int i_lasty = p_pic_top->p[i_plane].i_visible_lines-1;
         const int w = FFMIN( p_pic_top->p[i_plane].i_visible_pitch,
                              p_pic_bot->p[i_plane].i_visible_pitch );
-        const int wm8 = w % 8;   /* remainder */
-        const int w8  = w - wm8; /* part of width that is divisible by 8 */
+        const int wm16 = w % 16;   /* remainder */
+        const int w16  = w - wm16; /* part of width that is divisible by 16 */
 
         /* Current line / neighbouring lines picture pointers */
         const picture_t *cur = p_pic_bot;
@@ -521,17 +518,20 @@ static int CalculateInterlaceScoreSSE( const picture_t* p_pic_top,
                             # of pixels < (2^32)/255
                Note: calculates score * 255
             */
-            const uint64_t b128 = 0x8080808080808080ULL;
-            const uint8_t bT[8] = { T, T, T, T, T, T, T, T };
+            const uint8_t bT[16] = { T, T, T, T, T, T, T, T,
+                                     T, T, T, T, T, T, T, T };
 
-            for( ; x < w8; x += 8 )
+            for( ; x < w16; x += 16 )
             {
                 __asm__ volatile (
-                    "movq %0, %%xmm0\n"
-                    "movq %1, %%xmm1\n"
-                    "movq %2, %%xmm2\n"
+                    "movdqu %0, %%xmm0\n"
+                    "movdqu %1, %%xmm1\n"
+                    "movdqu %2, %%xmm2\n"
 
-                    "movq %3, %%xmm3\n"
+                    "mov $0x80808080, %%eax\n"
+                    "movd %%eax, %%xmm3\n"
+                    "pshufd $0, %%xmm3, %%xmm3\n" /* 128 pattern */
+
                     "psubb %%xmm3, %%xmm0\n"
                     "psubb %%xmm3, %%xmm1\n"
                     "psubb %%xmm3, %%xmm2\n"
@@ -552,7 +552,7 @@ static int CalculateInterlaceScoreSSE( const picture_t* p_pic_top,
                     "pmulhw %%xmm3, %%xmm4\n"
                     "pmulhw %%xmm5, %%xmm6\n"
 
-                    "movq %4, %%xmm0\n"
+                    "movq %3, %%xmm0\n"
                     "pxor %%xmm1, %%xmm1\n"
 
                     "packsswb %%xmm4, %%xmm6\n"
@@ -560,16 +560,14 @@ static int CalculateInterlaceScoreSSE( const picture_t* p_pic_top,
                     "psadbw %%xmm1, %%xmm6\n"
                     "paddd %%xmm6, %%xmm7\n"
 
-                    :: "m" (*((int64_t*)p_c)),
-                       "m" (*((int64_t*)p_p)),
-                       "m" (*((int64_t*)p_n)),
-                       "m" (b128), "m" (bT)
-                    : "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6", "xmm7"
+                    :: "m" (*p_c), "m" (*p_p), "m" (*p_n), "m" (bT)
+                    : "eax", "xmm0", "xmm1", "xmm2", "xmm3",
+                      "xmm4", "xmm5", "xmm6", "xmm7"
                 );
 
-                p_c += 8;
-                p_p += 8;
-                p_n += 8;
+                p_c += 16;
+                p_p += 16;
+                p_n += 16;
             }
 
             for( ; x < w; ++x )

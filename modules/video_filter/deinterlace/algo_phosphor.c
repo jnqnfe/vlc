@@ -147,8 +147,6 @@ static void DarkenField( picture_t *p_dst,
     } /* if process_chroma */
 }
 
-/* TODO: This is a simple conversion of MMX to using SSE registers,
-   without making use of their expanded width. */
 #ifdef CAN_COMPILE_SSE
 VLC_SSE
 static void DarkenFieldSSE( picture_t *p_dst,
@@ -159,10 +157,8 @@ static void DarkenFieldSSE( picture_t *p_dst,
     assert( i_field == 0 || i_field == 1 );
     assert( i_strength >= 1 && i_strength <= 3 );
 
-    uint64_t i_strength_u64 = i_strength; /* needs to know number of bits */
     const uint8_t  remove_high_u8 = 0xFF >> i_strength;
-    const uint64_t remove_high_u64 = remove_high_u8 *
-                                            INT64_C(0x0101010101010101);
+    const uint32_t remove_high_u32 = remove_high_u8 * 0x01010101;
 
     int i_plane = Y_PLANE;
     uint8_t *p_out, *p_out_end;
@@ -175,26 +171,27 @@ static void DarkenFieldSSE( picture_t *p_dst,
     if( i_field == 1 )
         p_out += p_dst->p[i_plane].i_pitch;
 
-    int wm8 = w % 8;   /* remainder */
-    int w8  = w - wm8; /* part of width that is divisible by 8 */
+    int wm16 = w % 16;   /* remainder */
+    int w16  = w - wm16; /* part of width that is divisible by 16 */
     for( ; p_out < p_out_end ; p_out += 2*p_dst->p[i_plane].i_pitch )
     {
-        uint64_t *po = (uint64_t *)p_out;
+        uint8_t *po = p_out;
         int x = 0;
 
         __asm__ volatile (
-            "movq %0, %%xmm1\n"
-            "movq %1, %%xmm2\n"
-            :: "m" (i_strength_u64), "m" (remove_high_u64)
+            "movd %0, %%xmm1\n"
+            "movd %1, %%xmm2\n"
+            "pshufd $0, %%xmm2, %%xmm2\n" /* duplicate 32-bits across reg */
+            :: "m" (i_strength), "m" (remove_high_u32)
             : "xmm1", "xmm2"
         );
-        for( ; x < w8; x += 8 )
+        for( ; x < w16; x += 16 )
         {
             __asm__ volatile (
-                "movq %0, %%xmm0\n"
+                "movdqu %0, %%xmm0\n"
                 "psrlq %%xmm1, %%xmm0\n"
                 "pand %%xmm2, %%xmm0\n"
-                "movq %%xmm0, %0\n"
+                "movdqu %%xmm0, %0\n"
                 : "=m" (*po) :: "xmm0", "memory"
             );
             po++;
@@ -210,7 +207,7 @@ static void DarkenFieldSSE( picture_t *p_dst,
 
        The origin (black) is at YUV = (0, 128, 128) in the uint8 format.
        The chroma processing is a bit more complicated than luma,
-       and needs MMX for vectorization.
+       and needs SSE2 for vectorization.
     */
     if( process_chroma )
     {
@@ -219,8 +216,8 @@ static void DarkenFieldSSE( picture_t *p_dst,
              i_plane++ )
         {
             w = p_dst->p[i_plane].i_visible_pitch;
-            wm8 = w % 8;   /* remainder */
-            w8  = w - wm8; /* part of width that is divisible by 8 */
+            wm16 = w % 16;   /* remainder */
+            w16  = w - wm16; /* part of width that is divisible by 16 */
 
             p_out = p_dst->p[i_plane].p_pixels;
             p_out_end = p_out + p_dst->p[i_plane].i_pitch
@@ -234,25 +231,25 @@ static void DarkenFieldSSE( picture_t *p_dst,
             {
                 int x = 0;
 
-                /* See also easy-to-read C version below. */
-                const uint64_t b128 =  0x8080808080808080ULL;
-
                 __asm__ volatile (
-                    "movq %0, %%xmm5\n"
-                    "movq %1, %%xmm6\n"
-                    "movq %2, %%xmm7\n"
-                    :: "m" (b128), "m" (i_strength_u64), "m" (remove_high_u64)
-                    : "xmm5", "xmm6", "xmm7"
+                    "mov $0x80808080, %%eax\n"
+                    "movd %%eax, %%xmm5\n"
+                    "pshufd $0, %%xmm5, %%xmm5\n" /* 128 pattern */
+                    "movd %0, %%xmm6\n"
+                    "movd %1, %%xmm7\n"
+                    "pshufd $0, %%xmm7, %%xmm7\n" /* duplicate 32-bits across reg */
+                    :: "m" (i_strength), "m" (remove_high_u32)
+                    : "eax", "xmm5", "xmm6", "xmm7"
                 );
 
-                uint64_t *po8 = (uint64_t *)p_out;
-                for( ; x < w8; x += 8 )
+                uint8_t *po16 = p_out;
+                for( ; x < w16; x += 16 )
                 {
                     __asm__ volatile (
-                        "movq %0, %%xmm0\n"
+                        "movdqu %0, %%xmm0\n"
 
-                        "movq %%xmm5, %%xmm2\n" /* 128 */
-                        "movq %%xmm0, %%xmm1\n" /* copy of data */
+                        "movdqa %%xmm5, %%xmm2\n" /* 128 */
+                        "movdqa %%xmm0, %%xmm1\n" /* copy of data */
                         "psubusb %%xmm2, %%xmm1\n" /* xmm1 = max(data - 128, 0) */
                         "psubusb %%xmm0, %%xmm2\n" /* xmm2 = max(128 - data, 0) */
 
@@ -266,11 +263,11 @@ static void DarkenFieldSSE( picture_t *p_dst,
                         "psubb %%xmm2, %%xmm1\n"
                         "paddb %%xmm5, %%xmm1\n"
 
-                        "movq %%xmm1, %0\n"
+                        "movdqu %%xmm1, %0\n"
 
-                        : "=m" (*po8) :: "xmm0", "xmm1", "xmm2", "memory"
+                        : "=m" (*po16) :: "xmm0", "xmm1", "xmm2", "memory"
                     );
-                    po8++;
+                    po16++;
                 }
 
                 /* C version - handle the width remainder */

@@ -73,9 +73,6 @@ static inline int XDeint8x8DetectC( uint8_t *src, int i_src )
     return fc < 1 ? false : true;
 }
 
-/* TODO: This is a simple conversion of MMX to using SSE registers,
-   without making use of their expanded width. Would that require
-   migration to a 16x16 processing model though? */
 #ifdef CAN_COMPILE_SSE
 VLC_SSE
 static inline int XDeint8x8DetectSSE( uint8_t *src, int i_src )
@@ -178,9 +175,6 @@ static inline void XDeint8x8MergeC( uint8_t *dst,  int i_dst,
     }
 }
 
-/* TODO: This is a simple conversion of MMX to using SSE registers,
-   without making use of their expanded width. Would that require
-   migration to a 16x16 processing model though? */
 #ifdef CAN_COMPILE_SSE
 VLC_SSE
 static inline void XDeint8x8MergeSSE( uint8_t *dst,  int i_dst,
@@ -257,9 +251,6 @@ static inline void XDeint8x8FieldEC( uint8_t *dst, int i_dst,
     }
 }
 
-/* TODO: This is a simple conversion of MMX to using SSE registers,
-   without making use of their expanded width. Would that require
-   migration to a 16x16 processing model though? */
 #ifdef CAN_COMPILE_SSE
 VLC_SSE
 static inline void XDeint8x8FieldESSE( uint8_t *dst, int i_dst,
@@ -309,7 +300,7 @@ static inline void XDeint8x8FieldC( uint8_t *dst, int i_dst,
         for( x = 0; x < 8; x++ )
         {
             uint8_t *src2 = &src[2*i_src];
-            /* I use 8 pixels just to match the MMX version, but it's overkill
+            /* I use 8 pixels just to match the SIMD version, but it's overkill
              * 5 would be enough (less isn't good) */
             const int c0 = abs(src[x-4]-src2[x-2]) + abs(src[x-3]-src2[x-1]) +
                            abs(src[x-2]-src2[x+0]) + abs(src[x-1]-src2[x+1]) +
@@ -339,9 +330,6 @@ static inline void XDeint8x8FieldC( uint8_t *dst, int i_dst,
     }
 }
 
-/* TODO: This is a simple conversion of MMX to using SSE registers,
-   without making use of their expanded width. Would that require
-   migration to a 16x16 processing model though? */
 #ifdef CAN_COMPILE_SSE
 VLC_SSE
 static inline void XDeint8x8FieldSSE( uint8_t *dst, int i_dst,
