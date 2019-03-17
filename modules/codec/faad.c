@@ -171,7 +171,8 @@ static int Open( vlc_object_t *p_this )
     if( p_dec->fmt_in.audio.i_rate )
         cfg->defSampleRate = p_dec->fmt_in.audio.i_rate;
     cfg->outputFormat = HAVE_FPU ? FAAD_FMT_FLOAT : FAAD_FMT_16BIT;
-    NeAACDecSetConfiguration( p_sys->hfaad, cfg );
+    if( !NeAACDecSetConfiguration( p_sys->hfaad, cfg ) )
+        return VLC_EGENERIC;
 
     /* buffer */
     p_sys->p_block = NULL;
