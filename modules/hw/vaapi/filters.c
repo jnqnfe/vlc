@@ -1210,6 +1210,6 @@ vlc_plugin_begin()
     set_capability(VLC_CAP_VIDEO_CONVERTER, 10, vlc_vaapi_OpenChroma, vlc_vaapi_CloseChroma)
 
     set_subcategory(SUBCAT_VIDEO_VFILTER)
-    add_float_with_range("denoise-sigma", 1.f, .0f, 0.f,
+    add_float_with_range("denoise-sigma", 1.f, .0f, 2.f,
                          DENOISE_SIGMA_TEXT, NULL, false)
 vlc_plugin_end()
