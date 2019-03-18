@@ -238,6 +238,7 @@ static void combine_side_by_side_yuv420(picture_t *p_inpic, picture_t *p_outpic,
         while (y1inl < y1end)
         {
             int rl, gl, bl, rr, gr, br, r, g, b;
+            int junk;
 
             int rshift = !!((0xff0000&left) && (0xff0000&right));
             int gshift = !!((0x00ff00&left) && (0x00ff00&right));
@@ -270,7 +271,7 @@ static void combine_side_by_side_yuv420(picture_t *p_inpic, picture_t *p_outpic,
             r = ((!!(0xff0000&left))*rl + (!!(0xff0000&right))*rr)>>rshift;
             g = ((!!(0x00ff00&left))*gl + (!!(0x00ff00&right))*gr)>>gshift;
             b = ((!!(0x0000ff&left))*bl + (!!(0x0000ff&right))*br)>>bshift;
-            rgb_to_yuv(y2out, uout/*will be overwritten later, as will vout*/, vout, r, g, b);
+            rgb_to_yuv(y2out, (uint8_t*)&junk, (uint8_t*)&junk, r, g, b);
             y2out[1] = *y2out;
             y2out+=2;
             y2inl++;
@@ -281,7 +282,7 @@ static void combine_side_by_side_yuv420(picture_t *p_inpic, picture_t *p_outpic,
             r = ((!!(0xff0000&left))*rl + (!!(0xff0000&right))*rr)>>rshift;
             g = ((!!(0x00ff00&left))*gl + (!!(0x00ff00&right))*gr)>>gshift;
             b = ((!!(0x0000ff&left))*bl + (!!(0x0000ff&right))*br)>>bshift;
-            rgb_to_yuv(y2out, uout/*will be overwritten later, as will vout*/, vout, r, g, b);
+            rgb_to_yuv(y2out, (uint8_t*)&junk, (uint8_t*)&junk, r, g, b);
             y2out[1] = *y2out;
             y2out+=2;
             y2inl++;
