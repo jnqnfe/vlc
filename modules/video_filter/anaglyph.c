@@ -104,6 +104,22 @@ static int Create(vlc_object_t *p_this)
             return VLC_EGENERIC;
     }
 
+    /* Width must be divisible by 4
+       This is partly due to it being expected by a 420 based format, but
+       also is necessary for correct processing here due to 1) anaglyph
+       pictures consisting of a pair of side-by-side images which need to
+       be combined, and 2) their being one UV per pair of Ys and we work on
+       the two halfs of the line separately.
+       Any real anaglyph video should conform; any other video (to which a
+       user may casually apply this filter) if not divisible by 4, could
+       be presented with ugly green diagonals. Best to just avoid.
+       */
+    if( p_filter->fmt_in.video.i_width & 3 )
+    {
+        msg_Err(p_filter, "Unsupported width");
+        return VLC_EGENERIC;
+    }
+
     p_filter->p_sys = malloc(sizeof(filter_sys_t));
     if (!p_filter->p_sys)
         return VLC_ENOMEM;
@@ -195,6 +211,14 @@ static picture_t *Filter(filter_t *p_filter, picture_t *p_pic)
                      (char*)&(p_pic->format.i_chroma));
             picture_Release(p_pic);
             return NULL;
+    }
+
+    /* Width must be divisible by 4, as outlined above */
+    if( p_filter->fmt_in.video.i_width & 3 )
+    {
+        msg_Warn(p_filter, "Unsupported width");
+        picture_Release(p_pic);
+        return NULL;
     }
 
     return CopyInfoAndRelease(p_outpic, p_pic);
