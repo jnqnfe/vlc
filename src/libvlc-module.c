@@ -338,8 +338,6 @@ static const char *const ppsz_align_descriptions[] =
     "n milliseconds.")
 
 #define DEINTERLACE_TEXT N_("Deinterlace")
-#define DEINTERLACE_LONGTEXT N_(\
-    "Deinterlace")
 static const int pi_deinterlace[] = {
     0, -1, 1
 };
@@ -1438,9 +1436,7 @@ static const char *const mouse_wheel_texts[] = {
 #define TOGGLE_AUTOSCALE_KEY_TEXT N_("Toggle autoscaling")
 #define TOGGLE_AUTOSCALE_KEY_LONGTEXT N_("Activate or deactivate autoscaling.")
 #define SCALE_UP_KEY_TEXT N_("Increase scale factor")
-#define SCALE_UP_KEY_LONGTEXT SCALE_UP_KEY_TEXT
 #define SCALE_DOWN_KEY_TEXT N_("Decrease scale factor")
-#define SCALE_DOWN_KEY_LONGTEXT SCALE_DOWN_KEY_TEXT
 #define DEINTERLACE_KEY_TEXT N_("Toggle deinterlacing")
 #define DEINTERLACE_KEY_LONGTEXT N_("Activate or deactivate deinterlacing.")
 #define DEINTERLACE_MODE_KEY_TEXT N_("Cycle deinterlace modes")
@@ -1463,30 +1459,19 @@ static const char *const mouse_wheel_texts[] = {
 #define RANDOM_KEY_LONGTEXT N_("Toggle random playlist playback")
 
 #define ZOOM_KEY_TEXT N_("Zoom")
-#define ZOOM_KEY_LONGTEXT N_("Zoom")
-
 #define UNZOOM_KEY_TEXT N_("Un-Zoom")
-#define UNZOOM_KEY_LONGTEXT N_("Un-Zoom")
 
 #define CROP_TOP_KEY_TEXT N_("Crop one pixel from the top of the video")
-#define CROP_TOP_KEY_LONGTEXT N_("Crop one pixel from the top of the video")
 #define UNCROP_TOP_KEY_TEXT N_("Uncrop one pixel from the top of the video")
-#define UNCROP_TOP_KEY_LONGTEXT N_("Uncrop one pixel from the top of the video")
 
 #define CROP_LEFT_KEY_TEXT N_("Crop one pixel from the left of the video")
-#define CROP_LEFT_KEY_LONGTEXT N_("Crop one pixel from the left of the video")
 #define UNCROP_LEFT_KEY_TEXT N_("Uncrop one pixel from the left of the video")
-#define UNCROP_LEFT_KEY_LONGTEXT N_("Uncrop one pixel from the left of the video")
 
 #define CROP_BOTTOM_KEY_TEXT N_("Crop one pixel from the bottom of the video")
-#define CROP_BOTTOM_KEY_LONGTEXT N_("Crop one pixel from the bottom of the video")
 #define UNCROP_BOTTOM_KEY_TEXT N_("Uncrop one pixel from the bottom of the video")
-#define UNCROP_BOTTOM_KEY_LONGTEXT N_("Uncrop one pixel from the bottom of the video")
 
 #define CROP_RIGHT_KEY_TEXT N_("Crop one pixel from the right of the video")
-#define CROP_RIGHT_KEY_LONGTEXT N_("Crop one pixel from the right of the video")
 #define UNCROP_RIGHT_KEY_TEXT N_("Uncrop one pixel from the right of the video")
-#define UNCROP_RIGHT_KEY_LONGTEXT N_("Uncrop one pixel from the right of the video")
 
 /* 360° Viewpoint */
 #define VIEWPOINT_FOV_IN_KEY_TEXT N_("Shrink the viewpoint field of view (360°)")
@@ -1495,8 +1480,6 @@ static const char *const mouse_wheel_texts[] = {
 #define VIEWPOINT_ROLL_ANTICLOCK_KEY_TEXT N_("Roll the viewpoint anti-clockwise (360°)")
 
 #define WALLPAPER_KEY_TEXT N_("Toggle wallpaper mode in video output")
-#define WALLPAPER_KEY_LONGTEXT N_( \
-    "Toggle wallpaper mode in video output." )
 
 #define AUDIO_DEVICE_CYCLE_KEY_TEXT N_("Cycle through audio devices")
 #define AUDIO_DEVICE_CYCLE_KEY_LONGTEXT N_("Cycle through available audio devices")
@@ -1678,7 +1661,7 @@ vlc_module_begin ()
     add_float( "zoom", 1., ZOOM_TEXT, ZOOM_LONGTEXT, true )
         change_safe()
     add_integer( "deinterlace", -1,
-                 DEINTERLACE_TEXT, DEINTERLACE_LONGTEXT, false )
+                 DEINTERLACE_TEXT, DEINTERLACE_TEXT, false )
         change_integer_list( pi_deinterlace, ppsz_deinterlace_text )
         change_safe()
     add_string( "deinterlace-mode", "auto",
@@ -2617,9 +2600,9 @@ vlc_module_begin ()
     add_key("key-toggle-autoscale", KEY_TOGGLE_AUTOSCALE,
             TOGGLE_AUTOSCALE_KEY_TEXT, TOGGLE_AUTOSCALE_KEY_LONGTEXT)
     add_key("key-incr-scalefactor", KEY_SCALE_UP,
-            SCALE_UP_KEY_TEXT, SCALE_UP_KEY_LONGTEXT)
+            SCALE_UP_KEY_TEXT, SCALE_UP_KEY_TEXT)
     add_key("key-decr-scalefactor", KEY_SCALE_DOWN,
-            SCALE_DOWN_KEY_TEXT, SCALE_DOWN_KEY_LONGTEXT)
+            SCALE_DOWN_KEY_TEXT, SCALE_DOWN_KEY_TEXT)
     add_key("key-deinterlace", KEY_DEINTERLACE,
             DEINTERLACE_KEY_TEXT, DEINTERLACE_KEY_LONGTEXT)
     add_key("key-deinterlace-mode", KEY_DEINTERLACE_MODE,
@@ -2633,27 +2616,27 @@ vlc_module_begin ()
             INTF_POPUP_MENU_KEY_TEXT, INTF_POPUP_MENU_KEY_LONGTEXT)
     add_key("key-snapshot", KEY_SNAPSHOT, SNAP_KEY_TEXT, SNAP_KEY_LONGTEXT)
     add_key("key-record", KEY_RECORD, RECORD_KEY_TEXT, RECORD_KEY_LONGTEXT)
-    add_key("key-zoom", KEY_ZOOM, ZOOM_KEY_TEXT, ZOOM_KEY_LONGTEXT)
-    add_key("key-unzoom", KEY_UNZOOM, UNZOOM_KEY_TEXT, UNZOOM_KEY_LONGTEXT)
+    add_key("key-zoom", KEY_ZOOM, ZOOM_KEY_TEXT, ZOOM_KEY_TEXT)
+    add_key("key-unzoom", KEY_UNZOOM, UNZOOM_KEY_TEXT, UNZOOM_KEY_TEXT)
     add_key("key-wallpaper", KEY_WALLPAPER,
-            WALLPAPER_KEY_TEXT, WALLPAPER_KEY_LONGTEXT)
+            WALLPAPER_KEY_TEXT, WALLPAPER_KEY_TEXT)
 
     add_key("key-crop-top", KEY_CROP_TOP,
-             CROP_TOP_KEY_TEXT, CROP_TOP_KEY_LONGTEXT)
+             CROP_TOP_KEY_TEXT, CROP_TOP_KEY_TEXT)
     add_key("key-uncrop-top", KEY_UNCROP_TOP,
-            UNCROP_TOP_KEY_TEXT, UNCROP_TOP_KEY_LONGTEXT)
+            UNCROP_TOP_KEY_TEXT, UNCROP_TOP_KEY_TEXT)
     add_key("key-crop-left", KEY_CROP_LEFT,
-            CROP_LEFT_KEY_TEXT, CROP_LEFT_KEY_LONGTEXT)
+            CROP_LEFT_KEY_TEXT, CROP_LEFT_KEY_TEXT)
     add_key("key-uncrop-left", KEY_UNCROP_LEFT,
-            UNCROP_LEFT_KEY_TEXT, UNCROP_LEFT_KEY_LONGTEXT)
+            UNCROP_LEFT_KEY_TEXT, UNCROP_LEFT_KEY_TEXT)
     add_key("key-crop-bottom", KEY_CROP_BOTTOM,
-            CROP_BOTTOM_KEY_TEXT, CROP_BOTTOM_KEY_LONGTEXT)
+            CROP_BOTTOM_KEY_TEXT, CROP_BOTTOM_KEY_TEXT)
     add_key("key-uncrop-bottom", KEY_UNCROP_BOTTOM,
-             UNCROP_BOTTOM_KEY_TEXT, UNCROP_BOTTOM_KEY_LONGTEXT)
+             UNCROP_BOTTOM_KEY_TEXT, UNCROP_BOTTOM_KEY_TEXT)
     add_key("key-crop-right", KEY_CROP_RIGHT,
-            CROP_RIGHT_KEY_TEXT, CROP_RIGHT_KEY_LONGTEXT)
+            CROP_RIGHT_KEY_TEXT, CROP_RIGHT_KEY_TEXT)
     add_key("key-uncrop-right", KEY_UNCROP_RIGHT,
-            UNCROP_RIGHT_KEY_TEXT, UNCROP_RIGHT_KEY_LONGTEXT)
+            UNCROP_RIGHT_KEY_TEXT, UNCROP_RIGHT_KEY_TEXT)
     add_key("key-random", KEY_RANDOM, RANDOM_KEY_TEXT, RANDOM_KEY_LONGTEXT)
     add_key("key-loop", KEY_LOOP, LOOP_KEY_TEXT, LOOP_KEY_LONGTEXT)
 
