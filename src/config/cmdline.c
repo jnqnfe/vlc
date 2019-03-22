@@ -65,6 +65,7 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
     int i_cmd, i_index, i_opts, i_shortopts = 0, flag, i_verbose = 0;
     struct vlc_option *p_longopts;
     const char **argv_copy = NULL;
+    static bool printed_obs_neg_bool_warn = false;
 #define b_ignore_errors (pindex == NULL)
 
     /* Short options */
@@ -150,7 +151,7 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
                     continue;
                 p_longopts[i_index].name = psz_name;
                 p_longopts[i_index].has_arg = false;
-                p_longopts[i_index].is_obsolete = p_item->b_removed;
+                p_longopts[i_index].is_obsolete = true; /* this form is now obsolete */
                 p_longopts[i_index].flag = &flag;
                 p_longopts[i_index].val = 1;
                 i_index++;
@@ -207,13 +208,42 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
             const char *psz_full_name = p_longopts[i_index].name;
             const char *psz_name = psz_full_name;
 
+            bool old_style_neg_bool = flag && psz_name[2] != '-';
+
             /* Check if we deal with a --nofoo or --no-foo long option */
-            if( flag ) psz_name += psz_full_name[2] == '-' ? 3 : 2;
+            if( flag ) psz_name += old_style_neg_bool ? 2 : 3;
 
             /* Store the configuration option */
             p_conf = config_FindConfig( psz_name );
             if( p_conf )
             {
+                /* Warn deprecation of --nofoo style (allow them to still work however) */
+                if (old_style_neg_bool)
+                {
+                    if (!printed_obs_neg_bool_warn)
+                    {
+                        fprintf(stderr, color ?
+                                        YELLOW "%s:" TS_RESET " %s\n" :
+                                               "%s:"          " %s\n",
+                                _( "Warning" ),
+                                _( "Negative boolean flags of the form "
+                                   "`--nofoo' are now obsolete and will not "
+                                   "be supported in future. Use only the "
+                                   "`--no-foo' form now." ));
+                        printed_obs_neg_bool_warn = true;
+                    }
+                    /* don't bother printing this if obsolete anyway */
+                    if( !p_conf->b_removed )
+                    {
+                        fprintf(stderr, color ?
+                                        YELLOW "%s:" TS_RESET " --no%s %s --no-%s.\n" :
+                                               "%s:"          " --no%s %s --no-%s.\n",
+                                _( "Warning" ), psz_name,
+                                _( "is to become obsolete, in future use" ),
+                                psz_name);
+                    }
+                }
+
                 /* Check if the option is deprecated */
                 if( p_conf->b_removed )
                 {
