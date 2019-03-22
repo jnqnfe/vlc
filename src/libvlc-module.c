@@ -2117,7 +2117,6 @@ vlc_module_begin ()
     add_integer( "fetch-art-threads", 1, FETCH_ART_THREADS_TEXT,
                  FETCH_ART_THREADS_LONGTEXT, false )
 
-    add_obsolete_integer( "album-art" ) /* since 2.2.0 */
     add_bool( "metadata-network-access", false, METADATA_NETWORK_TEXT,
                  METADATA_NETWORK_TEXT, false )
 

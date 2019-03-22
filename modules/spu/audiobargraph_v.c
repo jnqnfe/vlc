@@ -80,14 +80,12 @@ vlc_module_begin ()
     set_shortname(N_("Audio Bar Graph Video"))
     add_shortcut("audiobargraph_v")
 
-    add_obsolete_string(CFG_PREFIX "i_values") /* since 2.2.0 */
     add_integer(CFG_PREFIX "x", 0, POSX_TEXT, POSX_LONGTEXT, true)
     add_integer(CFG_PREFIX "y", 0, POSY_TEXT, POSY_LONGTEXT, true)
     add_integer_with_range(CFG_PREFIX "transparency", 255, 0, 255,
         TRANS_TEXT, TRANS_LONGTEXT, false)
     add_integer(CFG_PREFIX "position", -1, POS_TEXT, POS_LONGTEXT, false)
         change_integer_list(pi_pos_values, ppsz_pos_descriptions)
-    add_obsolete_integer(CFG_PREFIX "alarm") /* since 2.2.0 */
     add_integer(CFG_PREFIX "barWidth", 10, BARWIDTH_TEXT, BARWIDTH_LONGTEXT, true)
     add_integer(CFG_PREFIX "barHeight", 400, BARHEIGHT_TEXT, BARHEIGHT_LONGTEXT, true)
 
