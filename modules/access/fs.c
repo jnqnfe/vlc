@@ -35,7 +35,7 @@ vlc_module_begin ()
     set_shortname( N_("File") )
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACCESS )
-    add_obsolete_string( "file-cat" )
+    add_obsolete_string( "file-cat" ) /* since pre-1.0.0 */
     set_capability( "access", 50 )
     add_shortcut( "file", "fd", "stream" )
     set_callbacks( FileOpen, FileClose )

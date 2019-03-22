@@ -1869,11 +1869,11 @@ vlc_module_begin ()
                 false )
     add_password("http-proxy-pwd", NULL, PROXY_PASS_TEXT, PROXY_PASS_LONGTEXT)
 #else
-    add_obsolete_string( "http-proxy" )
-    add_obsolete_string( "http-proxy-pwd" )
+    add_obsolete_string( "http-proxy" ) /* since 4.0.0 */
+    add_obsolete_string( "http-proxy-pwd" ) /* since 4.0.0 */
 
 #endif
-    add_obsolete_bool( "http-use-IE-proxy" )
+    add_obsolete_bool( "http-use-IE-proxy" ) /* since 4.0.0 */
 
     set_section( N_( "Socks proxy") , NULL )
     add_string( "socks", NULL,
@@ -2006,7 +2006,7 @@ vlc_module_begin ()
 
     set_subcategory( SUBCAT_INPUT_SCODEC )
 
-    add_obsolete_bool( "prefer-system-codecs" )
+    add_obsolete_bool( "prefer-system-codecs" ) /* since 1.2.0 */
 
     set_subcategory( SUBCAT_INPUT_STREAM_FILTER )
 
@@ -2060,7 +2060,7 @@ vlc_module_begin ()
 
 /* CPU options */
     set_category( CAT_ADVANCED )
-    add_obsolete_bool( "fpu" )
+    add_obsolete_bool( "fpu" ) /* since 1.1.0 */
 #if defined( __i386__ ) || defined( __x86_64__ )
     add_obsolete_bool( "mmx" ) /* since 2.0.0 */
     add_obsolete_bool( "3dn" ) /* since 2.0.0 */
@@ -2179,7 +2179,7 @@ vlc_module_begin ()
     add_integer( "fetch-art-threads", 1, FETCH_ART_THREADS_TEXT,
                  FETCH_ART_THREADS_LONGTEXT, false )
 
-    add_obsolete_integer( "album-art" )
+    add_obsolete_integer( "album-art" ) /* since 2.2.0 */
     add_bool( "metadata-network-access", false, METADATA_NETWORK_TEXT,
                  METADATA_NETWORK_TEXT, false )
 
@@ -2694,7 +2694,7 @@ vlc_module_begin ()
             DEINTERLACE_MODE_KEY_TEXT, DEINTERLACE_MODE_KEY_LONGTEXT)
     add_key("key-intf-show", KEY_INTF_TOGGLE_FSC,
             INTF_TOGGLE_FSC_KEY_TEXT, INTF_TOGGLE_FSC_KEY_TEXT)
-    add_obsolete_inner( "key-intf-hide", CONFIG_ITEM_KEY )
+    add_obsolete_inner( "key-intf-hide", CONFIG_ITEM_KEY ) /* since 1.2.0 */
 
     add_key("key-intf-boss", KEY_INTF_BOSS,
             INTF_BOSS_KEY_TEXT, INTF_BOSS_KEY_LONGTEXT)
@@ -2858,7 +2858,7 @@ vlc_module_begin ()
         change_volatile ()
     add_bool( "ignore-config", true, IGNORE_CONFIG_TEXT, "", false )
         change_volatile ()
-    add_obsolete_bool( "save-config" )
+    add_obsolete_bool( "save-config" ) /* since 1.1.0 */
     add_bool( "reset-config", false, RESET_CONFIG_TEXT, "", false )
         change_volatile ()
 #ifdef HAVE_DYNAMIC_PLUGINS

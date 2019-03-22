@@ -85,7 +85,7 @@ set_description(N_("VideoToolbox video decoder"))
 set_capability("video decoder",800)
 set_callbacks(OpenDecoder, CloseDecoder)
 
-add_obsolete_bool("videotoolbox-temporal-deinterlacing")
+add_obsolete_bool("videotoolbox-temporal-deinterlacing") /* since 4.0.0 */
 add_bool("videotoolbox", true, VT_ENABLE_TEXT, NULL, false)
 add_bool("videotoolbox-hw-decoder-only", true, VT_REQUIRE_HW_DEC, VT_REQUIRE_HW_DEC, false)
 add_string("videotoolbox-cvpx-chroma", "", VT_FORCE_CVPX_CHROMA, VT_FORCE_CVPX_CHROMA_LONG, true);

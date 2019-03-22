@@ -204,9 +204,9 @@ vlc_module_begin ()
                           SHADOW_DISTANCE_TEXT, NULL, false )
         change_safe()
 
-    add_obsolete_integer( "freetype-fontsize" );
-    add_obsolete_integer( "freetype-rel-fontsize" );
-    add_obsolete_integer( "freetype-effect" );
+    add_obsolete_integer( "freetype-fontsize" ); /* since 4.0.0 */
+    add_obsolete_integer( "freetype-rel-fontsize" ); /* since 4.0.0 */
+    add_obsolete_integer( "freetype-effect" ); /* since 1.2.0 */
 
     add_bool( "freetype-yuvp", false, YUVP_TEXT,
               YUVP_LONGTEXT, true )

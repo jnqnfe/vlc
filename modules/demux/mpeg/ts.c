@@ -160,7 +160,7 @@ vlc_module_begin ()
     add_bool( "ts-patfix", true, TS_PATFIX_TEXT, NULL, true )
     add_bool( "ts-pcr-offsetfix", true, TS_OFFSETFIX_TEXT, NULL, true )
 
-    add_obsolete_bool( "ts-silent" );
+    add_obsolete_bool( "ts-silent" ) /* since 2.1.0 */
 
     set_capability( "demux", 10 )
     set_callbacks( Open, Close )
