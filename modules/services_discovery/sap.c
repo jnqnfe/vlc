@@ -120,7 +120,6 @@ vlc_module_begin ()
                SAP_PARSE_TEXT,SAP_PARSE_LONGTEXT, true )
     add_bool( "sap-strict", false,
                SAP_STRICT_TEXT,SAP_STRICT_LONGTEXT, true )
-    add_obsolete_bool( "sap-timeshift" ) /* Redumdant since 1.0.0 */
 
     set_capability( "services_discovery", 0 )
     set_callbacks( Open, Close )
