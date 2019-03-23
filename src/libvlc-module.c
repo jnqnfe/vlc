@@ -2829,13 +2829,12 @@ vlc_module_begin ()
     add_category_hint(N_("Miscellaneous"), NULL)
 
 #define HELP_TEXT \
-    N_("print help for VLC (can be combined with --advanced and " \
-       "--help-verbose)")
+    N_("print help for VLC (can be combined with --help-verbose)")
 #define FULL_HELP_TEXT \
     N_("Exhaustive help for VLC and its modules")
 #define LONGHELP_TEXT \
     N_("print help for VLC and all its modules (can be combined with " \
-       "--advanced and --help-verbose)")
+       "--help-verbose)")
 #define HELP_VERBOSE_TEXT \
     N_("ask for extra verbosity when displaying help")
 #define LIST_TEXT \
@@ -2843,9 +2842,8 @@ vlc_module_begin ()
 #define LIST_VERBOSE_TEXT \
     N_("print a list of available modules with extra detail")
 #define MODULE_TEXT \
-    N_("print help on a specific module (can be combined with --advanced " \
-       "and --help-verbose). Prefix the module name with = for strict " \
-       "matches.")
+    N_("print help on a specific module (can be combined with --help-verbose). " \
+       "Prefix the module name with = for strict matches.")
 #define IGNORE_CONFIG_TEXT \
     N_("no configuration option will be loaded nor saved to config file")
 #define RESET_CONFIG_TEXT \
