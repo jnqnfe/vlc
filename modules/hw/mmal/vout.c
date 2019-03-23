@@ -76,8 +76,8 @@ vlc_module_begin()
     set_description(N_("MMAL-based vout plugin for Raspberry Pi"))
     set_capability("vout display", 90)
     add_shortcut("mmal_vout")
-    set_category( CAT_HIDDEN )
-    set_subcategory( SUBCAT_HIDDEN )
+    set_category(CAT_VIDEO)
+    set_subcategory(SUBCAT_VIDEO_VOUT)
     add_integer(MMAL_LAYER_NAME, 1, MMAL_LAYER_TEXT, MMAL_LAYER_LONGTEXT, false)
     add_bool(MMAL_BLANK_BACKGROUND_NAME, true, MMAL_BLANK_BACKGROUND_TEXT,
                     MMAL_BLANK_BACKGROUND_LONGTEXT, true);
