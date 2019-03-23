@@ -72,7 +72,7 @@ vlc_module_begin ()
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
 
-    add_category_hint("Hacks", NULL)
+    set_section("Hacks", NULL)
     add_bool( CFG_PREFIX"m4a-audioonly", false, MP4_M4A_TEXT, MP4_M4A_LONGTEXT, true )
 
     set_section( N_("HEIF demuxer"), NULL )
