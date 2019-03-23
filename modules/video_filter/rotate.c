@@ -70,7 +70,7 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )
-    add_float( FILTER_PREFIX "angle", 30., ANGLE_TEXT, ANGLE_LONGTEXT, false )
+    add_float_with_range( FILTER_PREFIX "angle", 30., 0., 360., ANGLE_TEXT, ANGLE_LONGTEXT, false )
     add_bool( FILTER_PREFIX "use-motion", false, MOTION_TEXT,
               MOTION_LONGTEXT, false )
 vlc_plugin_end ()
