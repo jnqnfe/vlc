@@ -59,8 +59,6 @@ static void Close( vlc_object_t * );
 vlc_module_begin ()
     set_shortname( N_("TY") )
     set_description(N_("TY Stream audio/video demux"))
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_DEMUX )
     set_capability("demux", 6)
     /* FIXME: there seems to be a segfault when using PVR access
      * and TY demux has a bigger priority than PS
@@ -68,6 +66,8 @@ vlc_module_begin ()
      */
     set_callbacks( Open, Close )
     add_shortcut("ty", "tivo")
+    //set_category( CAT_INPUT )
+    //set_subcategory( SUBCAT_INPUT_DEMUX )
 vlc_module_end ()
 
 /*****************************************************************************

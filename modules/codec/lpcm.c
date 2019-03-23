@@ -54,8 +54,6 @@ static block_t *EncodeFrames( encoder_t *, block_t * );
 
 vlc_module_begin ()
 
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_ACODEC )
     set_description( N_("Linear PCM audio decoder") )
     set_capability( "audio decoder", 100 )
     set_callbacks( OpenDecoder, CloseCommon )
@@ -72,6 +70,9 @@ vlc_module_begin ()
     set_callbacks( OpenEncoder, CloseEncoder )
     add_shortcut( "lpcm" )
 #endif
+
+    //set_category( CAT_INPUT )
+    //set_subcategory( SUBCAT_INPUT_ACODEC )
 
 vlc_module_end ()
 

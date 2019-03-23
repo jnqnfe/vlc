@@ -48,12 +48,12 @@ static void Close( vlc_object_t *p_this );
  *****************************************************************************/
 vlc_module_begin()
     set_shortname( N_("Global Hotkeys") )
-    set_category( CAT_INTERFACE )
-    set_subcategory( SUBCAT_INTERFACE_HOTKEYS )
     set_description( N_("Global Hotkeys interface") )
     set_capability( "interface", 0 )
     set_callbacks( Open, Close )
     add_shortcut( "globalhotkeys" )
+    //set_category( CAT_INTERFACE )
+    //set_subcategory( SUBCAT_INTERFACE_HOTKEYS )
 vlc_module_end()
 
 typedef struct

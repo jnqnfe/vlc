@@ -47,11 +47,10 @@ vlc_module_begin ()
     set_description( N_("VCD input") )
     set_capability( "access", 0 )
     set_callbacks( Open, Close )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_ACCESS )
-
     add_usage_hint( N_("[vcd:][device][#[title][,[chapter]]]") )
     add_shortcut( "vcd", "svcd" )
+    //set_category( CAT_INPUT )
+    //set_subcategory( SUBCAT_INPUT_ACCESS )
 vlc_module_end ()
 
 /*****************************************************************************

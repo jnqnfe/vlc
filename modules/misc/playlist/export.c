@@ -44,8 +44,6 @@ int xspf_export_playlist( vlc_object_t *p_intf );
  *****************************************************************************/
 vlc_module_begin ()
 
-    set_category( CAT_PLAYLIST )
-    set_subcategory( SUBCAT_PLAYLIST_EXPORT )
     add_submodule ()
         set_description( N_("M3U playlist export") )
         add_shortcut( "export-m3u" )
@@ -69,5 +67,8 @@ vlc_module_begin ()
         add_shortcut( "export-html" )
         set_capability( "playlist export", 0 )
         set_callbacks( Export_HTML, NULL )
+
+    //set_category( CAT_PLAYLIST )
+    //set_subcategory( SUBCAT_PLAYLIST_EXPORT )
 
 vlc_module_end ()

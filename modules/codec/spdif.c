@@ -31,11 +31,11 @@
 static int OpenDecoder(vlc_object_t *);
 
 vlc_module_begin()
-    set_category(CAT_INPUT)
-    set_subcategory(SUBCAT_INPUT_ACODEC)
     set_description(N_("S/PDIF pass-through decoder"))
     set_capability("audio decoder", 120)
     set_callbacks(OpenDecoder, NULL)
+    //set_category(CAT_INPUT)
+    //set_subcategory(SUBCAT_INPUT_ACODEC)
 vlc_module_end()
 
 static int

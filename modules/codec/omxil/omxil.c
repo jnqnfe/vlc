@@ -87,9 +87,6 @@ static OMX_ERRORTYPE OmxFillBufferDone( OMX_HANDLETYPE, OMX_PTR,
 #define CFG_PREFIX "omxil-"
 vlc_module_begin ()
     set_description( N_("Audio/Video decoder (using OpenMAX IL)") )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_VCODEC )
-    set_section( N_("Decoding") , NULL )
     set_capability( "video decoder", 80 )
     set_callbacks( OpenDecoder, CloseGeneric )
 #ifndef __ANDROID__
@@ -99,10 +96,14 @@ vlc_module_begin ()
 #endif
 
     add_submodule ()
-    set_section( N_("Encoding") , NULL )
     set_description( N_("Video encoder (using OpenMAX IL)") )
     set_capability( "encoder", 0 )
     set_callbacks( OpenEncoder, CloseGeneric )
+
+    //set_category( CAT_INPUT )
+    //set_subcategory( SUBCAT_INPUT_VCODEC )
+    //set_section( N_("Decoding") , NULL )
+    //set_section( N_("Encoding") , NULL )
 vlc_module_end ()
 
 /*****************************************************************************

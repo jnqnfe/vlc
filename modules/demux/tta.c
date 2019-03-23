@@ -43,12 +43,11 @@ static void Close ( vlc_object_t * );
 vlc_module_begin ()
     set_shortname( "TTA" )
     set_description( N_("TTA demuxer") )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_DEMUX )
     set_capability( "demux", 145 )
-
     set_callbacks( Open, Close )
     add_shortcut( "tta" )
+    //set_category( CAT_INPUT )
+    //set_subcategory( SUBCAT_INPUT_DEMUX )
 vlc_module_end ()
 
 #define TTA_FRAMETIME 1.04489795918367346939

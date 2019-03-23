@@ -78,10 +78,9 @@ vlc_module_begin()
     set_description( N_("Freezing interactive video filter") )
     set_shortname(   N_("Freeze" ) )
     set_capability(  "video filter", 0 )
-    set_category(    CAT_VIDEO )
-    set_subcategory( SUBCAT_VIDEO_VFILTER )
-
     set_callbacks( Open, Close )
+    //set_category(    CAT_VIDEO )
+    //set_subcategory( SUBCAT_VIDEO_VFILTER )
 vlc_module_end()
 
 /*****************************************************************************

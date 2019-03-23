@@ -46,8 +46,8 @@ vlc_module_begin ()
     set_description(N_("H.265/HEVC encoder (x265)"))
     set_capability("encoder", 200)
     set_callbacks(Open, Close)
-    set_category(CAT_INPUT)
-    set_subcategory(SUBCAT_INPUT_VCODEC)
+    //set_category(CAT_INPUT)
+    //set_subcategory(SUBCAT_INPUT_VCODEC)
 vlc_module_end ()
 
 typedef struct

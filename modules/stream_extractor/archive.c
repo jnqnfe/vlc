@@ -47,8 +47,6 @@ static  int DirectoryOpen( vlc_object_t* );
 static void DirectoryClose( vlc_object_t* );
 
 vlc_module_begin()
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_STREAM_FILTER )
     set_capability( "stream_directory", 99 )
     set_description( N_( "libarchive based stream directory" ) )
     set_callbacks( DirectoryOpen, DirectoryClose );
@@ -58,6 +56,8 @@ vlc_module_begin()
         set_capability( "stream_extractor", 99 )
         set_callbacks( ExtractorOpen, ExtractorClose );
 
+    //set_category( CAT_INPUT )
+    //set_subcategory( SUBCAT_INPUT_STREAM_FILTER )
 vlc_module_end()
 
 typedef struct libarchive_callback_t libarchive_callback_t;

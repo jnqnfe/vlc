@@ -55,9 +55,6 @@ static void CloseEncoder  ( vlc_object_t * );
 #endif
 
 vlc_module_begin ()
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_ACODEC )
-
     set_description( N_("Opus audio decoder") )
     set_capability( "audio decoder", 100 )
     set_shortname( N_("Opus") )
@@ -71,6 +68,8 @@ vlc_module_begin ()
     set_callbacks( OpenEncoder, CloseEncoder )
 #endif
 
+    //set_category( CAT_INPUT )
+    //set_subcategory( SUBCAT_INPUT_ACODEC )
 vlc_module_end ()
 
 /*****************************************************************************

@@ -42,12 +42,11 @@ vlc_module_begin ()
     set_shortname (N_("PulseAudio"))
     set_description (N_("PulseAudio input"))
     set_capability ("access", 0)
-    set_category (CAT_INPUT)
-    set_subcategory (SUBCAT_INPUT_ACCESS)
     set_help (HELP_TEXT)
-
     add_shortcut ("pulse", "pulseaudio", "pa")
     set_callbacks (Open, Close)
+    //set_category (CAT_INPUT)
+    //set_subcategory (SUBCAT_INPUT_ACCESS)
 vlc_module_end ()
 
 typedef struct

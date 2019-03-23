@@ -42,10 +42,10 @@ vlc_module_begin ()
     set_description( N_("Dummy stream output") )
     set_shortname( N_( "Dummy" ))
     set_capability( "sout access", 0 )
-    set_category( CAT_SOUT )
-    set_subcategory( SUBCAT_SOUT_ACO )
     add_shortcut( "dummy" )
     set_callbacks( Open, NULL )
+    //set_category( CAT_SOUT )
+    //set_subcategory( SUBCAT_SOUT_ACO )
 vlc_module_end ()
 
 

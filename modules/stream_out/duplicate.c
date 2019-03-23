@@ -43,9 +43,9 @@ vlc_module_begin ()
     set_description( N_("Duplicate stream output") )
     set_capability( "sout stream", 50 )
     add_shortcut( "duplicate", "dup" )
-    set_category( CAT_SOUT )
-    set_subcategory( SUBCAT_SOUT_STREAM )
     set_callbacks( Open, Close )
+    //set_category( CAT_SOUT )
+    //set_subcategory( SUBCAT_SOUT_STREAM )
 vlc_module_end ()
 
 

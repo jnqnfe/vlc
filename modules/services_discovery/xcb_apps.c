@@ -47,14 +47,14 @@ static int vlc_sd_probe_Open (vlc_object_t *);
 vlc_module_begin ()
     set_shortname (N_("Screen capture"))
     set_description (N_("Screen capture"))
-    set_category (CAT_PLAYLIST)
-    set_subcategory (SUBCAT_PLAYLIST_SD)
     set_capability ("services_discovery", 0)
     set_callbacks (Open, Close)
-
     add_shortcut ("apps", "screen")
 
     VLC_SD_PROBE_SUBMODULE
+
+    //set_category (CAT_PLAYLIST)
+    //set_subcategory (SUBCAT_PLAYLIST_SD)
 vlc_module_end ()
 
 typedef struct

@@ -60,20 +60,24 @@ struct vlc_renderer_discovery_sys
 vlc_module_begin()
     set_shortname( "Bonjour" )
     set_description( N_( "Bonjour Network Discovery" ) )
-    set_category( CAT_PLAYLIST )
-    set_subcategory( SUBCAT_PLAYLIST_SD )
     set_capability( "services_discovery", 0 )
     set_callbacks( OpenSD, CloseSD )
     add_shortcut( "mdns", "bonjour" )
+
     VLC_SD_PROBE_SUBMODULE
+
     add_submodule() \
         set_description( N_( "Bonjour Renderer Discovery" ) )
-        set_category( CAT_SOUT )
-        set_subcategory( SUBCAT_SOUT_RENDERER )
         set_capability( "renderer_discovery", 0 )
         set_callbacks( OpenRD, CloseRD )
         add_shortcut( "mdns_renderer", "bonjour_renderer" )
-        VLC_RD_PROBE_SUBMODULE
+
+    VLC_RD_PROBE_SUBMODULE
+
+    //set_category( CAT_PLAYLIST )
+    //set_subcategory( SUBCAT_PLAYLIST_SD )
+    //set_category( CAT_SOUT )
+    //set_subcategory( SUBCAT_SOUT_RENDERER )
 vlc_module_end()
 
 NSString *const VLCBonjourProtocolName          = @"VLCBonjourProtocolName";

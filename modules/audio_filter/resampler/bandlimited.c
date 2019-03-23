@@ -83,8 +83,6 @@ typedef struct
  * Module descriptor
  *****************************************************************************/
 vlc_module_begin ()
-    set_category( CAT_AUDIO )
-    set_subcategory( SUBCAT_AUDIO_RESAMPLER )
     set_description( N_("Audio filter for band-limited interpolation resampling") )
     set_capability( "audio converter", 20 )
     set_callbacks( OpenFilter, CloseFilter )
@@ -92,6 +90,9 @@ vlc_module_begin ()
     add_submodule()
     set_capability( "audio resampler", 20 )
     set_callbacks( OpenFilter, CloseFilter )
+
+    //set_category( CAT_AUDIO )
+    //set_subcategory( SUBCAT_AUDIO_RESAMPLER )
 vlc_module_end ()
 
 /*****************************************************************************

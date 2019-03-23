@@ -48,13 +48,11 @@ static void Close( vlc_object_t *p_this );
 
 vlc_module_begin ()
     set_description( N_("Vobsub subtitles parser") )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_DEMUX )
     set_capability( "demux", 1 )
-
     set_callbacks( Open, Close )
-
     add_shortcut( "vobsub", "subtitle" )
+    //set_category( CAT_INPUT )
+    //set_subcategory( SUBCAT_INPUT_DEMUX )
 vlc_module_end ()
 
 /*****************************************************************************

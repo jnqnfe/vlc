@@ -41,10 +41,10 @@ static void Close (vlc_object_t *);
 vlc_module_begin ()
     set_shortname ("GME")
     set_description ("Game Music Emu")
-    set_category (CAT_INPUT)
-    set_subcategory (SUBCAT_INPUT_DEMUX)
     set_capability ("demux", 10)
     set_callbacks (Open, Close)
+    //set_category (CAT_INPUT)
+    //set_subcategory (SUBCAT_INPUT_DEMUX)
 vlc_module_end ()
 
 #define RATE 48000

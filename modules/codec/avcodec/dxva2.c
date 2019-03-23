@@ -52,9 +52,9 @@ static void Close(vlc_va_t *, void **);
 vlc_module_begin()
     set_description(N_("DirectX Video Acceleration (DXVA) 2.0"))
     set_capability("hw decoder", 100)
-    set_category(CAT_INPUT)
-    set_subcategory(SUBCAT_INPUT_VCODEC)
     set_callbacks(Open, Close)
+    //set_category(CAT_INPUT)
+    //set_subcategory(SUBCAT_INPUT_VCODEC)
 vlc_module_end()
 
 #include <initguid.h> /* must be last included to not redefine existing GUIDs */

@@ -320,11 +320,10 @@ static void Close(vlc_object_t *obj)
 }
 
 vlc_module_begin()
-    set_category(CAT_INPUT)
-    set_subcategory(SUBCAT_INPUT_STREAM_FILTER)
     set_capability("stream_filter", 0)
     add_shortcut("cache")
-
     set_description(N_("Block stream cache"))
     set_callbacks(Open, Close)
+    //set_category(CAT_INPUT)
+    //set_subcategory(SUBCAT_INPUT_STREAM_FILTER)
 vlc_module_end()

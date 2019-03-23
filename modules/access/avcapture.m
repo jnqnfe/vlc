@@ -65,11 +65,11 @@ static int Control(demux_t *, int, va_list);
 vlc_module_begin ()
    set_shortname(N_("AVFoundation Video Capture"))
    set_description(N_("AVFoundation video capture module."))
-   set_category(CAT_INPUT)
-   set_subcategory(SUBCAT_INPUT_ACCESS)
    add_shortcut("avcapture")
    set_capability("access", 0)
    set_callbacks(Open, Close)
+   //set_category(CAT_INPUT)
+   //set_subcategory(SUBCAT_INPUT_ACCESS)
 vlc_module_end ()
 
 

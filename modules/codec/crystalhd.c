@@ -85,12 +85,12 @@ static int        OpenDecoder  ( vlc_object_t * );
 static void       CloseDecoder ( vlc_object_t * );
 
 vlc_module_begin ()
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_VCODEC )
     set_description( N_("Crystal HD hardware video decoder") )
     set_capability( "video decoder", 0 )
     set_callbacks( OpenDecoder, CloseDecoder )
     add_shortcut( "crystalhd" )
+    //set_category( CAT_INPUT )
+    //set_subcategory( SUBCAT_INPUT_VCODEC )
 vlc_module_end ()
 
 /*****************************************************************************

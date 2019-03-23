@@ -96,8 +96,6 @@ vlc_module_begin ()
     set_description(N_("TLS support for OS X and iOS"))
     set_capability("tls client", 2)
     set_callbacks(OpenClient, NULL)
-    set_category(CAT_ADVANCED)
-    set_subcategory(SUBCAT_ADVANCED_NETWORK)
 
     /*
      * The server module currently uses an OSX only API, to be compatible with 10.6.
@@ -109,10 +107,10 @@ vlc_module_begin ()
         set_description(N_("TLS server support for OS X"))
         set_capability("tls server", 2)
         set_callbacks(OpenServer, NULL)
-        set_category(CAT_ADVANCED)
-        set_subcategory(SUBCAT_ADVANCED_NETWORK)
 #endif /* !TARGET_OS_IPHONE */
 
+    //set_category(CAT_ADVANCED)
+    //set_subcategory(SUBCAT_ADVANCED_NETWORK)
 vlc_module_end ()
 
 

@@ -44,10 +44,10 @@ static void DemuxClose ( vlc_object_t * );
 
 vlc_module_begin ()
     set_description( N_("Windows Media NSC metademux") )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_DEMUX )
     set_capability( "demux", 3 )
     set_callbacks( DemuxOpen, DemuxClose )
+    //set_category( CAT_INPUT )
+    //set_subcategory( SUBCAT_INPUT_DEMUX )
 vlc_module_end ()
 
 static int Demux ( demux_t *p_demux );

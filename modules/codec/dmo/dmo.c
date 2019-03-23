@@ -71,8 +71,6 @@ vlc_module_begin ()
     add_shortcut( "dmo" )
     set_capability( "video decoder", 1 )
     set_callbacks( DecoderOpen, DecoderClose )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_VCODEC )
 
     add_submodule()
     add_shortcut("dmo")
@@ -85,6 +83,8 @@ vlc_module_begin ()
     set_capability( "encoder", 10 )
     set_callbacks( EncoderOpen, EncoderClose )
 
+    //set_category( CAT_INPUT )
+    //set_subcategory( SUBCAT_INPUT_VCODEC )
 vlc_module_end ()
 
 /*****************************************************************************

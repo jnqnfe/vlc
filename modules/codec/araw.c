@@ -49,8 +49,6 @@ vlc_module_begin ()
     /* audio decoder module */
     set_description( N_("Raw/Log Audio decoder") )
     set_capability( "audio decoder", 100 )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_ACODEC )
     set_callbacks( DecoderOpen, DecoderClose )
 
 #ifdef ENABLE_SOUT
@@ -60,6 +58,9 @@ vlc_module_begin ()
     set_capability( "encoder", 150 )
     set_callbacks( EncoderOpen, NULL )
 #endif
+
+    //set_category( CAT_INPUT )
+    //set_subcategory( SUBCAT_INPUT_ACODEC )
 vlc_module_end ()
 
 /*****************************************************************************

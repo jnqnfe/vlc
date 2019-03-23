@@ -41,8 +41,6 @@ static void Close         ( vlc_object_t * );
 
 vlc_module_begin ()
 
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_ACODEC )
     set_description( N_("AES3/SMPTE 302M audio decoder") )
     set_capability( "audio decoder", 100 )
     set_callbacks( OpenDecoder, Close )
@@ -51,6 +49,9 @@ vlc_module_begin ()
     set_description( N_("AES3/SMPTE 302M audio packetizer") )
     set_capability( "packetizer", 100 )
     set_callbacks( OpenPacketizer, Close )
+
+    //set_category( CAT_INPUT )
+    //set_subcategory( SUBCAT_INPUT_ACODEC )
 
 vlc_module_end ()
 

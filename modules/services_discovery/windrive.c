@@ -39,14 +39,14 @@ vlc_module_begin ()
     add_submodule ()
     set_shortname (N_("Discs"))
     set_description (N_("Discs"))
-    set_category (CAT_PLAYLIST)
-    set_subcategory (SUBCAT_PLAYLIST_SD)
     set_capability ("services_discovery", 0)
     set_callbacks (Open, NULL)
     add_shortcut ("disc")
 
     VLC_SD_PROBE_SUBMODULE
 
+    //set_category (CAT_PLAYLIST)
+    //set_subcategory (SUBCAT_PLAYLIST_SD)
 vlc_module_end ()
 
 /**

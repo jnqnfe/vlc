@@ -57,21 +57,20 @@ static int   FindDesignated ( addons_finder_t *p_finder );
  ****************************************************************************/
 
 vlc_module_begin ()
-    set_category(CAT_ADVANCED)
-    set_subcategory(SUBCAT_ADVANCED_MISC)
     set_shortname(N_("Videolan.org's addons finder"))
     add_shortcut(ADDONS_MODULE_SHORTCUT)
     set_description(N_("addons.videolan.org addons finder"))
     set_capability("addons finder", 100)
     set_callbacks(Open, Close)
 add_submodule ()
-    set_category(CAT_ADVANCED)
-    set_subcategory(SUBCAT_ADVANCED_MISC)
     set_shortname(N_("Videolan.org's single archive addons finder"))
     add_shortcut(ADDONS_MODULE_SHORTCUT".vlp")
     set_description(N_("single .vlp archive addons finder"))
     set_capability("addons finder", 101)
     set_callbacks(OpenDesignated, NULL)
+
+    //set_category(CAT_ADVANCED)
+    //set_subcategory(SUBCAT_ADVANCED_MISC)
 vlc_module_end ()
 
 struct addons_finder_sys_t

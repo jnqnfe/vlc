@@ -52,11 +52,10 @@ vlc_module_begin ()
     set_description( N_("Ripple video filter") )
     set_shortname( N_( "Ripple" ))
     set_capability( "video filter", 0 )
-    set_category( CAT_VIDEO )
-    set_subcategory( SUBCAT_VIDEO_VFILTER )
-
     add_shortcut( "ripple" )
     set_callbacks( Create, Destroy )
+    //set_category( CAT_VIDEO )
+    //set_subcategory( SUBCAT_VIDEO_VFILTER )
 vlc_module_end ()
 
 /*****************************************************************************

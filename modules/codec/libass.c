@@ -59,9 +59,9 @@ vlc_module_begin ()
     set_shortname( N_("Subtitles (advanced)"))
     set_description( N_("Subtitle renderers using libass") )
     set_capability( "spu decoder", 100 )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_SCODEC )
     set_callbacks( Create, Destroy )
+    //set_category( CAT_INPUT )
+    //set_subcategory( SUBCAT_INPUT_SCODEC )
 vlc_module_end ()
 
 /*****************************************************************************

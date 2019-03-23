@@ -260,8 +260,8 @@ vlc_module_begin ()
     /* demux module */
     add_submodule()
         set_description( "BluRay demuxer" )
-        set_category( CAT_INPUT )
-        set_subcategory( SUBCAT_INPUT_DEMUX )
+        //set_category( CAT_INPUT )
+        //set_subcategory( SUBCAT_INPUT_DEMUX )
         set_capability( "demux", 5 )
         set_callbacks( blurayOpen, blurayClose )
 #endif

@@ -45,10 +45,10 @@ vlc_module_begin ()
     set_shortname( "MPJPEG" )
     set_description( N_("Multipart JPEG muxer") )
     set_capability( "sout mux", 5 )
-    set_category( CAT_SOUT )
-    set_subcategory( SUBCAT_SOUT_MUX )
     set_callbacks( Open, Close )
     add_shortcut( "mpjpeg" )
+    //set_category( CAT_SOUT )
+    //set_subcategory( SUBCAT_SOUT_MUX )
 vlc_module_end ()
 
 /*****************************************************************************

@@ -44,8 +44,6 @@ static block_t *EncoderEncode( encoder_t *, block_t * );
 vlc_module_begin ()
     set_description( N_("G.711 decoder") )
     set_capability( "audio decoder", 100 )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_ACODEC )
     set_callbacks( DecoderOpen, DecoderClose )
 
 #ifdef ENABLE_SOUT
@@ -54,6 +52,9 @@ vlc_module_begin ()
     set_capability( "encoder", 150 )
     set_callbacks( EncoderOpen, NULL )
 #endif
+
+    //set_category( CAT_INPUT )
+    //set_subcategory( SUBCAT_INPUT_ACODEC )
 vlc_module_end ()
 
 typedef struct
