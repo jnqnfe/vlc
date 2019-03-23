@@ -76,7 +76,7 @@ vlc_module_begin()
     set_subcategory(SUBCAT_INPUT_ACCESS)
     add_integer("satip-buffer", 0x400000, BUFFER_TEXT, BUFFER_LONGTEXT, true)
     add_bool("satip-multicast", false, MULTICAST_TEXT, MULTICAST_LONGTEXT, true)
-    add_string("satip-host", "", SATIP_HOST_TEXT, SATIP_HOST_TEXT, true)
+    add_string("satip-host", "", SATIP_HOST_TEXT, NULL, true)
         change_safe()
 vlc_module_end()
 

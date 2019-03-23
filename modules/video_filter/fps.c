@@ -50,7 +50,7 @@ vlc_module_begin ()
 
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
-    add_string( CFG_PREFIX "fps", NULL, FPS_TEXT, FPS_TEXT, false )
+    add_string( CFG_PREFIX "fps", NULL, FPS_TEXT, NULL, false )
 vlc_module_end ()
 
 static const char *const ppsz_filter_options[] = {

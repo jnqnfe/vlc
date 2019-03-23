@@ -59,13 +59,8 @@ static void Close( vlc_object_t * );
 #define WIDTH_LONGTEXT N_("Width of the virtual room")
 
 #define WET_TEXT N_("Wet")
-#define WET_LONGTEXT NULL
-
 #define DRY_TEXT N_("Dry")
-#define DRY_LONGTEXT NULL
-
 #define DAMP_TEXT N_("Damp")
-#define DAMP_LONGTEXT NULL
 
 vlc_module_begin ()
     set_description( N_("Audio Spatializer") )
@@ -79,13 +74,13 @@ vlc_module_begin ()
     add_float_with_range( "spatializer-roomsize", 0.85, 0., 1.1,
                             ROOMSIZE_TEXT, ROOMSIZE_LONGTEXT, false )
     add_float_with_range( "spatializer-width", 1,     0.,  1.,
-                            WIDTH_TEXT,WIDTH_LONGTEXT, false )
+                            WIDTH_TEXT, WIDTH_LONGTEXT, false )
     add_float_with_range( "spatializer-wet",   0.4,   0.,  1.,
-                            WET_TEXT,WET_LONGTEXT, false )
+                            WET_TEXT, NULL, false )
     add_float_with_range( "spatializer-dry",   0.5,   0.,  1.,
-                            DRY_TEXT,DRY_LONGTEXT, false )
+                            DRY_TEXT, NULL, false )
     add_float_with_range( "spatializer-damp",  0.5,   0.,  1.,
-                            DAMP_TEXT,DAMP_LONGTEXT, false )
+                            DAMP_TEXT, NULL, false )
 vlc_module_end ()
 
 /*****************************************************************************

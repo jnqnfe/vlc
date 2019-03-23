@@ -111,18 +111,18 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_INPUT_DEMUX )
         add_bool( "rtsp-tcp", false,
                   N_("Use RTP over RTSP (TCP)"),
-                  N_("Use RTP over RTSP (TCP)"), true )
+                  NULL, true )
             change_safe()
         add_integer( "rtp-client-port", -1,
                   N_("Client port"),
                   N_("Port to use for the RTP source of the session"), true )
         add_bool( "rtsp-mcast", false,
                   N_("Force multicast RTP via RTSP"),
-                  N_("Force multicast RTP via RTSP"), true )
+                  NULL, true )
             change_safe()
         add_bool( "rtsp-http", false,
                   N_("Tunnel RTSP and RTP over HTTP"),
-                  N_("Tunnel RTSP and RTP over HTTP"), true )
+                  NULL, true )
             change_safe()
         add_integer( "rtsp-http-port", 80,
                   N_("HTTP tunnel port"),

@@ -56,7 +56,6 @@ static const char *const ppsz_filter_options[] = {
  * Module descriptor
  *****************************************************************************/
 #define SEPIA_INTENSITY_TEXT N_("Sepia intensity")
-#define SEPIA_INTENSITY_LONGTEXT N_("Intensity of sepia effect" )
 
 #define CFG_PREFIX "sepia-"
 
@@ -71,8 +70,7 @@ vlc_module_begin ()
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_integer_with_range( CFG_PREFIX "intensity", 120, 0, 255,
-                           SEPIA_INTENSITY_TEXT, SEPIA_INTENSITY_LONGTEXT,
-                           false )
+                           SEPIA_INTENSITY_TEXT, NULL, false )
 vlc_module_end ()
 
 /*****************************************************************************

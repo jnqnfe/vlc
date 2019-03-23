@@ -78,9 +78,9 @@ vlc_module_begin ()
     add_rgb(CFG_PREFIX "color", 0x00FF0000, COLOR_TEXT, COLOR_LONGTEXT)
         change_integer_list( pi_color_values, ppsz_color_descriptions )
     add_integer( CFG_PREFIX "saturationthres", 20,
-                 N_("Saturation threshold"), "", false )
+                 N_("Saturation threshold"), NULL, false )
     add_integer( CFG_PREFIX "similaritythres", 15,
-                 N_("Similarity threshold"), "", false )
+                 N_("Similarity threshold"), NULL, false )
 vlc_module_end ()
 
 static const char *const ppsz_filter_options[] = {

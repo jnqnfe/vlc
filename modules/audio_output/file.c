@@ -119,7 +119,7 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_AUDIO_AOUT )
     add_savefile("audiofile-file", "audiofile.wav", FILE_TEXT, FILE_LONGTEXT)
     add_string( "audiofile-format", "s16",
-                FORMAT_TEXT, FORMAT_TEXT, true )
+                FORMAT_TEXT, NULL, true )
         change_string_list( format_list, format_list )
     add_integer( "audiofile-channels", 0,
                  CHANNELS_TEXT, CHANNELS_LONGTEXT, true )

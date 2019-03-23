@@ -717,6 +717,6 @@ vlc_module_begin()
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_string("x11-render-filter", "good", N_("Scaling mode"),
-               N_("Scaling mode"), true)
+               NULL, true)
         change_string_list(filter_names, filter_descs)
 vlc_module_end()

@@ -49,7 +49,6 @@
 
 #define MMAL_OPAQUE_NAME "mmal-opaque"
 #define MMAL_OPAQUE_TEXT N_("Decode frames directly into RPI VideoCore instead of host memory.")
-#define MMAL_OPAQUE_LONGTEXT N_("Decode frames directly into RPI VideoCore instead of host memory. This option must only be used with the MMAL video output plugin.")
 
 static int OpenDecoder(decoder_t *dec);
 static void CloseDecoder(decoder_t *dec);
@@ -63,7 +62,7 @@ vlc_module_begin()
 
     set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_VCODEC)
-    add_bool(MMAL_OPAQUE_NAME, true, MMAL_OPAQUE_TEXT, MMAL_OPAQUE_LONGTEXT, false)
+    add_bool(MMAL_OPAQUE_NAME, true, MMAL_OPAQUE_TEXT, NULL, false)
 vlc_module_end()
 
 typedef struct

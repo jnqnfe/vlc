@@ -55,7 +55,6 @@ static int  OpenScaler( vlc_object_t * );
 static void CloseScaler( vlc_object_t * );
 
 #define SCALEMODE_TEXT N_("Scaling mode")
-#define SCALEMODE_LONGTEXT N_("Scaling mode to use.")
 
 static const int pi_mode_values[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 static const char *const ppsz_mode_descriptions[] =
@@ -71,7 +70,7 @@ vlc_module_begin ()
     set_callbacks( OpenScaler, CloseScaler )
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
-    add_integer( "swscale-mode", 2, SCALEMODE_TEXT, SCALEMODE_LONGTEXT, true )
+    add_integer( "swscale-mode", 2, SCALEMODE_TEXT, NULL, true )
         change_integer_list( pi_mode_values, ppsz_mode_descriptions )
 vlc_module_end ()
 

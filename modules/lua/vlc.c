@@ -54,7 +54,6 @@
 #define PASS_LONGTEXT N_( "A single password restricts access " \
     "to this interface." )
 #define SRC_TEXT N_( "Source directory" )
-#define SRC_LONGTEXT N_( "Source directory" )
 #define INDEX_TEXT N_( "Directory index" )
 #define INDEX_LONGTEXT N_( "Allow to build directory index" )
 
@@ -138,7 +137,7 @@ vlc_module_begin ()
         add_string( "lua-config", "", CONFIG_TEXT, CONFIG_LONGTEXT, false )
     set_section( N_("Lua HTTP"), 0 )
         add_password("http-password", NULL, PASS_TEXT, PASS_LONGTEXT)
-        add_string ( "http-src",  NULL, SRC_TEXT,  SRC_LONGTEXT,  true )
+        add_string ( "http-src",  NULL, SRC_TEXT,  NULL,  true )
         add_bool   ( "http-index", false, INDEX_TEXT, INDEX_LONGTEXT, true )
     set_section( N_("Lua Telnet"), 0 )
         add_string( "telnet-host", "localhost", TELNETHOST_TEXT,

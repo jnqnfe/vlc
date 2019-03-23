@@ -41,10 +41,7 @@
 #define AOUT_VOLUME_MAX                 512
 
 #define VOLUME_TEXT N_("Audio volume")
-#define VOLUME_LONGTEXT VOLUME_TEXT
-
 #define DEVICE_TEXT N_("Last audio device")
-#define DEVICE_LONGTEXT DEVICE_TEXT
 
 static int      Open                    (vlc_object_t *);
 static void     Close                   (vlc_object_t *);
@@ -58,9 +55,9 @@ vlc_module_begin ()
     set_category(CAT_AUDIO)
     set_subcategory(SUBCAT_AUDIO_AOUT)
     add_integer("auhal-volume", AOUT_VOLUME_DEFAULT,
-                VOLUME_TEXT, VOLUME_LONGTEXT, true)
+                VOLUME_TEXT, NULL, true)
         change_integer_range(0, AOUT_VOLUME_MAX)
-    add_string("auhal-audio-device", "", DEVICE_TEXT, DEVICE_LONGTEXT, true)
+    add_string("auhal-audio-device", "", DEVICE_TEXT, NULL, true)
     add_string("auhal-warned-devices", "", NULL, NULL, true)
 vlc_module_end ()
 

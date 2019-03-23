@@ -431,7 +431,7 @@ vlc_module_begin ()
     add_integer( SRT_PARAM_PAYLOAD_SIZE, SRT_DEFAULT_PAYLOAD_SIZE,
             N_( "SRT maximum payload size (bytes)" ), NULL, true )
     add_integer( SRT_PARAM_KEY_LENGTH, SRT_DEFAULT_KEY_LENGTH,
-            SRT_KEY_LENGTH_TEXT, SRT_KEY_LENGTH_TEXT, false )
+            SRT_KEY_LENGTH_TEXT, NULL, false )
     change_integer_list( srt_key_lengths, srt_key_length_names )
 
     set_capability("access", 0)

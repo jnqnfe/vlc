@@ -50,25 +50,18 @@
  * Module descriptor
  *****************************************************************************/
 #define ROWS_TEXT N_("Number of puzzle rows")
-#define ROWS_LONGTEXT N_("Number of puzzle rows")
 #define COLS_TEXT N_("Number of puzzle columns")
-#define COLS_LONGTEXT N_("Number of puzzle columns")
 #define MODE_TEXT N_("Game mode")
 #define MODE_LONGTEXT N_("Select game mode variation from jigsaw puzzle to sliding puzzle.")
-#define BORDER_TEXT N_("Border")
-#define BORDER_LONGTEXT N_("Unshuffled Border width.")
-#define PREVIEW_TEXT N_("Small preview")
-#define PREVIEW_LONGTEXT N_("Show small preview.")
+#define BORDER_TEXT N_("Unshuffled border width")
+#define PREVIEW_TEXT N_("Show small preview")
 #define PREVIEWSIZE_TEXT N_("Small preview size")
 #define PREVIEWSIZE_LONGTEXT N_("Show small preview size (percent of source).")
 #define SHAPE_SIZE_TEXT N_("Piece edge shape size")
 #define SHAPE_SIZE_LONGTEXT N_("Size of the curve along the piece's edge")
-#define AUTO_SHUFFLE_TEXT N_("Auto shuffle")
-#define AUTO_SHUFFLE_LONGTEXT N_("Auto shuffle delay during game")
-#define AUTO_SOLVE_TEXT N_("Auto solve")
-#define AUTO_SOLVE_LONGTEXT N_("Auto solve delay during game")
+#define AUTO_SHUFFLE_TEXT N_("Auto shuffle delay")
+#define AUTO_SOLVE_TEXT N_("Auto solve delay")
 #define ROTATION_TEXT N_("Rotation")
-#define ROTATION_LONGTEXT N_("Rotation parameter: none;180;90-270;mirror")
 
 static const int pi_mode_values[] = { (int) 0, (int) 1, (int) 2, (int) 3 };
 static const char *const ppsz_mode_descriptions[] = { N_("jigsaw puzzle"), N_("sliding puzzle"), N_("swap puzzle"), N_("exchange puzzle") };
@@ -89,23 +82,23 @@ vlc_module_begin()
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_integer_with_range( CFG_PREFIX "rows", 4, 2, 42,
-                            ROWS_TEXT, ROWS_LONGTEXT, false )
+                            ROWS_TEXT, NULL, false )
     add_integer_with_range( CFG_PREFIX "cols", 4, 2, 42,
-                            COLS_TEXT, COLS_LONGTEXT, false )
+                            COLS_TEXT, NULL, false )
     add_integer_with_range( CFG_PREFIX "border", 3, 0, 40,
-              BORDER_TEXT, BORDER_LONGTEXT, false )
+              BORDER_TEXT, NULL, false )
     add_bool( CFG_PREFIX "preview", false,
-              PREVIEW_TEXT, PREVIEW_LONGTEXT, false )
+              PREVIEW_TEXT, NULL, false )
     add_integer_with_range( CFG_PREFIX "preview-size", 15, 0, 100,
               PREVIEWSIZE_TEXT, PREVIEWSIZE_LONGTEXT, false )
     add_integer_with_range( CFG_PREFIX "shape-size", 90, 0, 100,
               SHAPE_SIZE_TEXT, SHAPE_SIZE_LONGTEXT, false )
     add_integer_with_range( CFG_PREFIX "auto-shuffle", 0, 0, 30000,
-              AUTO_SHUFFLE_TEXT, AUTO_SHUFFLE_LONGTEXT, false )
+              AUTO_SHUFFLE_TEXT, NULL, false )
     add_integer_with_range( CFG_PREFIX "auto-solve", 0, 0, 30000,
-              AUTO_SOLVE_TEXT, AUTO_SOLVE_LONGTEXT, false )
+              AUTO_SOLVE_TEXT, NULL, false )
     add_integer( CFG_PREFIX "rotation", 0,
-              ROTATION_TEXT, ROTATION_LONGTEXT, false )
+              ROTATION_TEXT, NULL, false )
         change_integer_list(pi_rotation_values, ppsz_rotation_descriptions )
     add_integer( CFG_PREFIX "mode", 0,
               MODE_TEXT, MODE_LONGTEXT, false )

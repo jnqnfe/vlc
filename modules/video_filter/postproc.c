@@ -73,7 +73,6 @@ static int PPNameCallback( vlc_object_t *, char const *,
     "1: hb, 2-4: hb+vb, 5-6: hb+vb+dr" )
 
 #define NAME_TEXT N_("FFmpeg post processing filter chains")
-#define NAME_LONGTEXT NAME_TEXT
 
 #define FILTER_PREFIX "postproc-"
 
@@ -92,8 +91,7 @@ vlc_module_begin ()
     add_integer_with_range( FILTER_PREFIX "q", PP_QUALITY_MAX, 0,
                             PP_QUALITY_MAX, Q_TEXT, Q_LONGTEXT, false )
         change_safe()
-    add_string( FILTER_PREFIX "name", "default", NAME_TEXT,
-                NAME_LONGTEXT, true )
+    add_string( FILTER_PREFIX "name", "default", NAME_TEXT, NULL, true )
 vlc_module_end ()
 
 static const char *const ppsz_filter_options[] = {

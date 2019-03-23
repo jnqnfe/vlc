@@ -161,11 +161,9 @@ vlc_module_begin()
 
     set_category( CAT_PLAYLIST );
     set_subcategory( SUBCAT_PLAYLIST_SD );
-    add_string( "satip-channelist", "auto", SATIP_CHANNEL_LIST,
-                SATIP_CHANNEL_LIST, false )
+    add_string( "satip-channelist", "auto", SATIP_CHANNEL_LIST, NULL, false )
     change_string_list( ppsz_satip_channel_lists, ppsz_readible_satip_channel_lists )
-    add_string( "satip-channellist-url", NULL, SATIP_CHANNEL_LIST_URL,
-                SATIP_CHANNEL_LIST_URL, false )
+    add_string( "satip-channellist-url", NULL, SATIP_CHANNEL_LIST_URL, NULL, false )
 
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_ACCESS )

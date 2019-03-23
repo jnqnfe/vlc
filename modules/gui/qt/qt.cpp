@@ -272,7 +272,7 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_INTERFACE_MAIN )
 
     add_bool( "qt-minimal-view", false, QT_MINIMAL_MODE_TEXT,
-              QT_MINIMAL_MODE_TEXT, false );
+              NULL, false );
 
     add_bool( "qt-system-tray", true, SYSTRAY_TEXT, SYSTRAY_LONGTEXT, false)
 
@@ -296,20 +296,20 @@ vlc_module_begin ()
     add_bool( "qt-name-in-title", true, TITLE_TEXT,
               TITLE_LONGTEXT, false )
     add_bool( "qt-fs-controller", true, QT_FULLSCREEN_TEXT,
-              QT_FULLSCREEN_TEXT, false )
+              NULL, false )
 
     add_bool( "qt-recentplay", true, RECENTPLAY_TEXT,
-              RECENTPLAY_TEXT, false )
+              NULL, false )
     add_string( "qt-recentplay-filter", "",
                 RECENTPLAY_FILTER_TEXT, RECENTPLAY_FILTER_LONGTEXT, false )
-    add_integer( "qt-continue", 1, CONTINUE_PLAYBACK_TEXT, CONTINUE_PLAYBACK_TEXT, false )
+    add_integer( "qt-continue", 1, CONTINUE_PLAYBACK_TEXT, NULL, false )
             change_integer_list(i_continue_list, psz_continue_list_text )
 
 #ifdef UPDATE_CHECK
     add_bool( "qt-updates-notif", true, UPDATER_TEXT,
               UPDATER_LONGTEXT, false )
     add_integer_with_range( "qt-updates-days", 3, 0, 180,
-              UPDATER_DAYS_TEXT, UPDATER_DAYS_TEXT, false )
+              UPDATER_DAYS_TEXT, NULL, false )
 #endif
 
 #ifdef QT_QML_DEBUG
@@ -326,18 +326,18 @@ vlc_module_begin ()
 #endif
 
     add_bool( "qt-embedded-open", false, QT_NATIVEOPEN_TEXT,
-               QT_NATIVEOPEN_TEXT, false )
+               NULL, false )
 
 
     add_bool( "qt-advanced-pref", false, ADVANCED_PREFS_TEXT,
               ADVANCED_PREFS_LONGTEXT, false )
     add_bool( "qt-error-dialogs", true, ERROR_TEXT,
-              ERROR_TEXT, false )
+              NULL, false )
 
     add_string( "qt-slider-colours", "153;210;153;20;210;20;255;199;15;245;39;29",
                 SLIDERCOL_TEXT, SLIDERCOL_LONGTEXT, false )
 
-    add_bool( "qt-privacy-ask", true, PRIVACY_TEXT, PRIVACY_TEXT,
+    add_bool( "qt-privacy-ask", true, PRIVACY_TEXT, NULL,
               false )
         change_private ()
 
@@ -354,10 +354,10 @@ vlc_module_begin ()
 
     add_bool( "qt-icon-change", true, ICONCHANGE_TEXT, ICONCHANGE_LONGTEXT, true )
 
-    add_integer_with_range( "qt-max-volume", 125, 60, 300, VOLUME_MAX_TEXT, VOLUME_MAX_TEXT, true)
+    add_integer_with_range( "qt-max-volume", 125, 60, 300, VOLUME_MAX_TEXT, NULL, true)
 
     add_integer_with_range( "qt-fs-sensitivity", 3, 0, 4000, FULLSCREEN_CONTROL_PIXELS,
-            FULLSCREEN_CONTROL_PIXELS, true)
+            NULL, true)
 
     add_integer( "qt-auto-raise", MainInterface::RAISE_VIDEO, AUTORAISE_ON_PLAYBACK_TEXT,
                  AUTORAISE_ON_PLAYBACK_LONGTEXT, false )

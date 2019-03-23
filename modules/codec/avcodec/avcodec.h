@@ -99,7 +99,6 @@ int ffmpeg_OpenCodec( decoder_t *p_dec, AVCodecContext *, const AVCodec * );
     "(-1=None, 0=Default, 1=B-frames, 2=P-frames, 3=B+P frames, 4=all frames)." )
 
 #define DEBUG_TEXT N_( "Debug mask" )
-#define DEBUG_LONGTEXT N_( "Set FFmpeg debug mask" )
 
 #define CODEC_TEXT N_( "Codec name" )
 #define CODEC_LONGTEXT N_( "Internal libavcodec codec name" )
@@ -149,8 +148,6 @@ int ffmpeg_OpenCodec( decoder_t *p_dec, AVCodecContext *, const AVCodec * );
   "control, but will cause a delay in the stream." )
 
 #define ENC_RC_BUF_AGGR_TEXT N_( "Rate control buffer aggressiveness" )
-#define ENC_RC_BUF_AGGR_LONGTEXT N_( "Rate control "\
-  "buffer aggressiveness." )
 
 #define ENC_IQUANT_FACTOR_TEXT N_( "I quantization factor" )
 #define ENC_IQUANT_FACTOR_LONGTEXT N_(  \
@@ -181,12 +178,7 @@ int ffmpeg_OpenCodec( decoder_t *p_dec, AVCodecContext *, const AVCodec * );
   "threshold to ease the encoder's task." )
 
 #define ENC_QMIN_TEXT N_( "Minimum video quantizer scale" )
-#define ENC_QMIN_LONGTEXT N_( "Minimum video " \
-  "quantizer scale." )
-
 #define ENC_QMAX_TEXT N_( "Maximum video quantizer scale" )
-#define ENC_QMAX_LONGTEXT N_( "Maximum video " \
-  "quantizer scale." )
 
 #define ENC_TRELLIS_TEXT N_( "Trellis quantization" )
 #define ENC_TRELLIS_LONGTEXT N_( "Enable trellis " \

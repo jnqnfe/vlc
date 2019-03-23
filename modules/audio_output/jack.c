@@ -107,7 +107,7 @@ vlc_module_begin ()
               AUTO_CONNECT_LONGTEXT, false )
     add_string( CONNECT_REGEX_OPTION, "system", CONNECT_REGEX_TEXT,
                 CONNECT_REGEX_LONGTEXT, false )
-    add_string( "jack-name", "", JACK_NAME_TEXT, JACK_NAME_TEXT, false)
+    add_string( "jack-name", "", JACK_NAME_TEXT, NULL, false)
 
     add_sw_gain( )
 vlc_module_end ()

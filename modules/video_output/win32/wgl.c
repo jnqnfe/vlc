@@ -49,7 +49,7 @@ vlc_module_begin()
 
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
-    add_integer("gpu-affinity", -1, HW_GPU_AFFINITY_TEXT, HW_GPU_AFFINITY_TEXT, true)
+    add_integer("gpu-affinity", -1, HW_GPU_AFFINITY_TEXT, NULL, true)
 vlc_module_end()
 
 /*****************************************************************************

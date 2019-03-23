@@ -49,24 +49,14 @@ static picture_t *Filter( filter_t *, picture_t * );
  * Module descriptor
  *****************************************************************************/
 
-#define LOOPS_TEXT N_("Number of time to blend")
-#define LOOPS_LONGTEXT N_("The number of time the blend will be performed")
-
-#define ALPHA_TEXT N_("Alpha of the blended image")
-#define ALPHA_LONGTEXT N_("Alpha with which the blend image is blended")
-
+#define LOOPS_TEXT N_("Number of times to blend")
+#define ALPHA_TEXT N_("Alpha to blend with")
 #define BASE_IMAGE_TEXT N_("Image to be blended onto")
-#define BASE_IMAGE_LONGTEXT N_("The image which will be used to blend onto")
-
 #define BASE_CHROMA_TEXT N_("Chroma for the base image")
-#define BASE_CHROMA_LONGTEXT N_("Chroma which the base image will be loaded in")
+#define BLEND_CHROMA_TEXT N_("Chroma for the blend image")
 
 #define BLEND_IMAGE_TEXT N_("Image which will be blended")
 #define BLEND_IMAGE_LONGTEXT N_("The image blended onto the base image")
-
-#define BLEND_CHROMA_TEXT N_("Chroma for the blend image")
-#define BLEND_CHROMA_LONGTEXT N_("Chroma which the blend image will be loaded" \
-                                 " in")
 
 #define CFG_PREFIX "blendbench-"
 
@@ -80,22 +70,21 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_VIDEO_VFILTER )
 
     set_section( N_("Benchmarking"), NULL )
-    add_integer( CFG_PREFIX "loops", 1000, LOOPS_TEXT,
-              LOOPS_LONGTEXT, false )
+    add_integer( CFG_PREFIX "loops", 1000, LOOPS_TEXT, NULL, false )
     add_integer_with_range( CFG_PREFIX "alpha", 128, 0, 255, ALPHA_TEXT,
-              ALPHA_LONGTEXT, false )
+              NULL, false )
 
     set_section( N_("Base image"), NULL )
     add_loadfile(CFG_PREFIX "base-image", NULL,
-                 BASE_IMAGE_TEXT, BASE_IMAGE_LONGTEXT)
+                 BASE_IMAGE_TEXT, NULL)
     add_string( CFG_PREFIX "base-chroma", "I420", BASE_CHROMA_TEXT,
-              BASE_CHROMA_LONGTEXT, false )
+              NULL, false )
 
     set_section( N_("Blend image"), NULL )
     add_loadfile(CFG_PREFIX "blend-image", NULL,
                  BLEND_IMAGE_TEXT, BLEND_IMAGE_LONGTEXT)
     add_string( CFG_PREFIX "blend-chroma", "YUVA", BLEND_CHROMA_TEXT,
-              BLEND_CHROMA_LONGTEXT, false )
+              NULL, false )
 vlc_module_end ()
 
 static const char *const ppsz_filter_options[] = {

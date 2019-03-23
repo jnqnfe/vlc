@@ -57,7 +57,7 @@ vlc_module_begin ()
     set_callbacks(Create, Destroy)
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_SUBPIC)
-    add_integer("sapi-voice", -1, "Voice Index", "Voice index", false)
+    add_integer("sapi-voice", -1, "Voice Index", NULL, false)
 vlc_module_end ()
 
 struct filter_sys_t

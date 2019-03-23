@@ -101,7 +101,6 @@ static int getBallColor( vlc_object_t *p_this, char const *psz_newval );
 #define BALL_COLOR_TEXT N_("Ball color")
 
 #define EDGE_VISIBLE_TEXT N_("Edge visible")
-#define EDGE_VISIBLE_LONGTEXT N_("Set edge visibility.")
 
 #define BALL_SPEED_TEXT N_("Ball speed")
 #define BALL_SPEED_LONGTEXT N_("Set ball speed, the displacement value " \
@@ -135,7 +134,7 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_VIDEO_VFILTER )
 
     add_string( FILTER_PREFIX "color", "red",
-                BALL_COLOR_TEXT, BALL_COLOR_TEXT, false )
+                BALL_COLOR_TEXT, NULL, false )
     change_string_list( mode_list, mode_list_text )
 
     add_integer_with_range( FILTER_PREFIX "speed", 4, 1, 15,
@@ -148,7 +147,7 @@ vlc_module_begin ()
                             GRAD_THRESH_TEXT, GRAD_THRESH_LONGTEXT, false )
 
     add_bool( FILTER_PREFIX "edge-visible", true,
-              EDGE_VISIBLE_TEXT, EDGE_VISIBLE_LONGTEXT, true )
+              EDGE_VISIBLE_TEXT, NULL, true )
 vlc_module_end ()
 
 static const char *const ppsz_filter_options[] = {

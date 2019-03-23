@@ -56,8 +56,8 @@ vlc_module_begin()
 
     set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_STREAM )
-    add_string( SOUT_CFG_PREFIX "output", "", OUTPUT_TEXT,OUTPUT_LONGTEXT, false );
-    add_string( SOUT_CFG_PREFIX "prefix", "stats", PREFIX_TEXT,PREFIX_TEXT, false );
+    add_string( SOUT_CFG_PREFIX "output", "", OUTPUT_TEXT, OUTPUT_LONGTEXT, false );
+    add_string( SOUT_CFG_PREFIX "prefix", "stats", PREFIX_TEXT, NULL, false );
 vlc_module_end()
 
 

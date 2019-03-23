@@ -56,25 +56,15 @@ static void Close        ( vlc_object_t * );
 #define PRESET_PATH_LONGTXT N_("Path to the projectM preset directory")
 
 #define TITLE_FONT_TXT N_("Title font")
-#define TITLE_FONT_LONGTXT N_("Font used for the titles")
+#define MENU_FONT_TXT N_("Menu font")
 
-#define MENU_FONT_TXT N_("Font menu")
-#define MENU_FONT_LONGTXT N_("Font used for the menus")
+#define WIDTH_TEXT N_("Video width (pixels)")
+#define HEIGHT_TEXT N_("Video height (pixels)")
 
-#define WIDTH_TEXT N_("Video width")
-#define WIDTH_LONGTEXT N_("The width of the video window, in pixels.")
+#define MESHX_TEXT N_("Mesh width (pixels)")
+#define MESHY_TEXT N_("Mesh height (pixels)")
 
-#define HEIGHT_TEXT N_("Video height")
-#define HEIGHT_LONGTEXT N_("The height of the video window, in pixels.")
-
-#define MESHX_TEXT N_("Mesh width")
-#define MESHX_LONGTEXT N_("The width of the mesh, in pixels.")
-
-#define MESHY_TEXT N_("Mesh height")
-#define MESHY_LONGTEXT N_("The height of the mesh, in pixels.")
-
-#define TEXTURE_TEXT N_("Texture size")
-#define TEXTURE_LONGTEXT N_("The size of the texture, in pixels.")
+#define TEXTURE_TEXT N_("Texture size (pixels)")
 
 #ifdef _WIN32
 # define FONT_PATH      "C:\\WINDOWS\\Fonts\\arial.ttf"
@@ -112,20 +102,15 @@ vlc_module_begin ()
     add_directory("projectm-preset-path", PRESET_PATH,
                   PRESET_PATH_TXT, PRESET_PATH_LONGTXT)
     add_loadfile("projectm-title-font", FONT_PATH,
-                 TITLE_FONT_TXT, TITLE_FONT_LONGTXT)
+                 TITLE_FONT_TXT, NULL)
     add_loadfile("projectm-menu-font", FONT_PATH_MENU,
-                 MENU_FONT_TXT, MENU_FONT_LONGTXT)
+                 MENU_FONT_TXT, NULL)
 #endif
-    add_integer( "projectm-width", 800, WIDTH_TEXT, WIDTH_LONGTEXT,
-                 false )
-    add_integer( "projectm-height", 500, HEIGHT_TEXT, HEIGHT_LONGTEXT,
-                 false )
-    add_integer( "projectm-meshx", 32, MESHX_TEXT, MESHX_LONGTEXT,
-                 false )
-    add_integer( "projectm-meshy", 24, MESHY_TEXT, MESHY_LONGTEXT,
-                 false )
-    add_integer( "projectm-texture-size", 1024, TEXTURE_TEXT, TEXTURE_LONGTEXT,
-                 false )
+    add_integer( "projectm-width", 800, WIDTH_TEXT, NULL, false )
+    add_integer( "projectm-height", 500, HEIGHT_TEXT, NULL, false )
+    add_integer( "projectm-meshx", 32, MESHX_TEXT, NULL, false )
+    add_integer( "projectm-meshy", 24, MESHY_TEXT, NULL, false )
+    add_integer( "projectm-texture-size", 1024, TEXTURE_TEXT, NULL, false )
 vlc_module_end ()
 
 

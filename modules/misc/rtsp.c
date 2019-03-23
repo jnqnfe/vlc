@@ -81,8 +81,7 @@ vlc_module_begin ()
 
     set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_VOD )
-    add_string( "rtsp-raw-mux", "ts", RAWMUX_TEXT,
-                RAWMUX_TEXT, true )
+    add_string( "rtsp-raw-mux", "ts", RAWMUX_TEXT, NULL, true )
     add_integer( "rtsp-throttle-users", 0, THROTTLE_TEXT,
                  THROTTLE_LONGTEXT, true )
     add_integer( "rtsp-session-timeout", 5, SESSION_TIMEOUT_TEXT,

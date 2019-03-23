@@ -105,7 +105,7 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_INPUT_VCODEC )
     set_section( N_("Decoding") , NULL )
 
-    add_bool( "avcodec-dr", true, DR_TEXT, DR_TEXT, true )
+    add_bool( "avcodec-dr", true, DR_TEXT, NULL, true )
     add_bool( "avcodec-corrupted", true, CORRUPTED_TEXT, CORRUPTED_LONGTEXT, false )
     add_integer ( "avcodec-error-resilience", 1, ERROR_TEXT,
         ERROR_LONGTEXT, true )
@@ -126,8 +126,7 @@ vlc_module_begin ()
         change_safe ()
         change_integer_list( nloopf_list, nloopf_list_text )
 
-    add_integer( "avcodec-debug", 0, DEBUG_TEXT, DEBUG_LONGTEXT,
-                 true )
+    add_integer( "avcodec-debug", 0, DEBUG_TEXT, NULL, true )
     add_string( "avcodec-codec", NULL, CODEC_TEXT, CODEC_LONGTEXT, true )
     add_module("avcodec-hw", "hw decoder", "any", HW_TEXT, HW_LONGTEXT)
 #if defined(FF_THREAD_FRAME)
@@ -159,17 +158,15 @@ vlc_module_begin ()
     add_integer( ENC_CFG_PREFIX "rc-buffer-size", 0,
                  ENC_RC_BUF_TEXT, ENC_RC_BUF_LONGTEXT, true )
     add_float( ENC_CFG_PREFIX "rc-buffer-aggressivity", 1.0,
-               ENC_RC_BUF_AGGR_TEXT, ENC_RC_BUF_AGGR_LONGTEXT, true )
+               ENC_RC_BUF_AGGR_TEXT, NULL, true )
     add_float( ENC_CFG_PREFIX "i-quant-factor", 0,
                ENC_IQUANT_FACTOR_TEXT, ENC_IQUANT_FACTOR_LONGTEXT, true )
     add_integer( ENC_CFG_PREFIX "noise-reduction", 0,
                  ENC_NOISE_RED_TEXT, ENC_NOISE_RED_LONGTEXT, true )
     add_bool( ENC_CFG_PREFIX "mpeg4-matrix", false,
               ENC_MPEG4_MATRIX_TEXT, ENC_MPEG4_MATRIX_LONGTEXT, true )
-    add_integer( ENC_CFG_PREFIX "qmin", 0,
-                 ENC_QMIN_TEXT, ENC_QMIN_LONGTEXT, true )
-    add_integer( ENC_CFG_PREFIX "qmax", 0,
-                 ENC_QMAX_TEXT, ENC_QMAX_LONGTEXT, true )
+    add_integer( ENC_CFG_PREFIX "qmin", 0, ENC_QMIN_TEXT, NULL, true )
+    add_integer( ENC_CFG_PREFIX "qmax", 0, ENC_QMAX_TEXT, NULL, true )
     add_bool( ENC_CFG_PREFIX "trellis", false,
               ENC_TRELLIS_TEXT, ENC_TRELLIS_LONGTEXT, true )
     add_float( ENC_CFG_PREFIX "qscale", 3,

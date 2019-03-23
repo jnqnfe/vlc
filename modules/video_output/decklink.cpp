@@ -89,7 +89,6 @@ static const int pi_channels_maps[CHANNELS_MAX+1] =
 #define AFDLINE_INDEX_LONGTEXT N_("VBI line on which to output Active Format Descriptor.")
 
 #define NOSIGNAL_IMAGE_TEXT N_("Picture to display on input signal loss")
-#define NOSIGNAL_IMAGE_LONGTEXT NOSIGNAL_IMAGE_TEXT
 
 #define CARD_INDEX_TEXT N_("Output card")
 #define CARD_INDEX_LONGTEXT N_(\
@@ -102,11 +101,6 @@ static const int pi_channels_maps[CHANNELS_MAX+1] =
     "This value should be a FOURCC code in textual " \
     "form, e.g. \"ntsc\".")
 
-#define AUDIO_CONNECTION_TEXT N_("Audio connection")
-#define AUDIO_CONNECTION_LONGTEXT N_(\
-    "Audio connection for DeckLink output.")
-
-
 #define RATE_TEXT N_("Audio samplerate (Hz)")
 #define RATE_LONGTEXT N_(\
     "Audio sampling rate (in hertz) for DeckLink output. " \
@@ -118,8 +112,6 @@ static const int pi_channels_maps[CHANNELS_MAX+1] =
     "Must be 2, 8 or 16. 0 disables audio output.")
 
 #define VIDEO_CONNECTION_TEXT N_("Video connection")
-#define VIDEO_CONNECTION_LONGTEXT N_(\
-    "Video connection for DeckLink output.")
 
 #define VIDEO_TENBITS_TEXT N_("10 bits")
 #define VIDEO_TENBITS_LONGTEXT N_(\
@@ -268,7 +260,7 @@ vlc_module_begin()
     set_subcategory(SUBCAT_VIDEO_VOUT)
     set_section(N_("DeckLink Video Options"), NULL)
     add_string(VIDEO_CFG_PREFIX "video-connection", "sdi",
-                VIDEO_CONNECTION_TEXT, VIDEO_CONNECTION_LONGTEXT, true)
+                VIDEO_CONNECTION_TEXT, NULL, true)
                 change_string_list(ppsz_videoconns, ppsz_videoconns_text)
     add_string(VIDEO_CFG_PREFIX "mode", "",
                 MODE_TEXT, MODE_LONGTEXT, true)
@@ -279,13 +271,13 @@ vlc_module_begin()
     add_integer(VIDEO_CFG_PREFIX "afd-line", 16,
                 AFDLINE_INDEX_TEXT, AFDLINE_INDEX_LONGTEXT, true)
     add_integer_with_range(VIDEO_CFG_PREFIX "afd", 8, 0, 16,
-                AFD_INDEX_TEXT, AFD_INDEX_TEXT, true)
+                AFD_INDEX_TEXT, NULL, true)
                 change_integer_list(rgi_afd_values, rgsz_afd_text)
     add_integer_with_range(VIDEO_CFG_PREFIX "ar", 1, 0, 1,
                 AR_INDEX_TEXT, AR_INDEX_LONGTEXT, true)
                 change_integer_list(rgi_ar_values, rgsz_ar_text)
     add_loadfile(VIDEO_CFG_PREFIX "nosignal-image", NULL,
-                 NOSIGNAL_IMAGE_TEXT, NOSIGNAL_IMAGE_LONGTEXT)
+                 NOSIGNAL_IMAGE_TEXT, NULL)
 
     set_category(CAT_AUDIO)
     set_subcategory(SUBCAT_AUDIO_AOUT)
