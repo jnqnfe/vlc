@@ -350,7 +350,6 @@ static void print_item(const module_t *m, const module_config_t *item,
             switch (item->i_type)
             {
                 case CONFIG_HINT_CATEGORY:
-                case CONFIG_HINT_USAGE:
                     printf(color ? TS_GREEN_BOLD "\n %s\n" TS_RESET : "\n %s\n",
                            module_gettext(m, item->psz_text));
 
