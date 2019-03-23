@@ -97,7 +97,7 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
         {
         /* This is a category */
         case CONFIG_CATEGORY:
-            if( p_item->value.i == -1 ) break;
+            if( p_item->value.i == CAT_HIDDEN ) break;
 
             /* PrefsItemData Init */
             data = new PrefsItemData( this );
@@ -133,7 +133,7 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
 
         /* This is a subcategory */
         case CONFIG_SUBCATEGORY:
-            if( p_item->value.i == -1 ) break;
+            if( p_item->value.i == SUBCAT_HIDDEN ) break;
 
             /* Special cases: move the main subcategories to the parent cat*/
             if( data &&
@@ -189,7 +189,7 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
         if( module_is_main( p_module) ) continue;
 
         unsigned  confsize;
-        int i_subcategory = 0, i_category = 0;
+        int i_subcategory = SUBCAT_HIDDEN, i_category = CAT_HIDDEN;
 
         bool b_options = false;
         module_config_t *const p_config = module_config_get (p_module, &confsize);
@@ -207,13 +207,13 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
             if( CONFIG_ITEM(p_item->i_type) )
                 b_options = true;
 
-            if( b_options && i_category && i_subcategory )
+            if( b_options && i_category != CAT_HIDDEN && i_subcategory != SUBCAT_HIDDEN )
                 break;
         }
         module_config_free (p_config);
 
         /* Dummy item, please proceed */
-        if( !b_options || i_category == 0 || i_subcategory == 0 ) continue;
+        if( !b_options || i_category == CAT_HIDDEN || i_subcategory == SUBCAT_HIDDEN ) continue;
 
 
         // Locate the category item;

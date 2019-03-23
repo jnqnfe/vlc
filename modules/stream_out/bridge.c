@@ -94,9 +94,9 @@ vlc_module_begin ()
     set_section( N_("Bridge out"), NULL )
     set_capability( "sout stream", 50 )
     add_shortcut( "bridge-out" )
-    /* Only usable with VLM. No category so not in gui preferences
-    set_category( CAT_SOUT )
-    set_subcategory( SUBCAT_SOUT_STREAM )*/
+    /* Only usable with VLM. No category so not in gui preferences */
+    set_category( CAT_HIDDEN )
+    set_subcategory( SUBCAT_HIDDEN )
     add_integer( SOUT_CFG_PREFIX_OUT "id", 0, ID_TEXT, ID_LONGTEXT,
                  false )
     add_string( SOUT_CFG_PREFIX_OUT "in-name", "default",
@@ -107,8 +107,9 @@ vlc_module_begin ()
     set_section( N_("Bridge in"), NULL )
     set_capability( "sout stream", 50 )
     add_shortcut( "bridge-in" )
-    /*set_category( CAT_SOUT )
-    set_subcategory( SUBCAT_SOUT_STREAM )*/
+    /* Only usable with VLM. No category so not in gui preferences */
+    set_category( CAT_HIDDEN )
+    set_subcategory( SUBCAT_HIDDEN )
     add_integer( SOUT_CFG_PREFIX_IN "delay", 0, DELAY_TEXT,
                  DELAY_LONGTEXT, false )
     add_integer( SOUT_CFG_PREFIX_IN "id-offset", 8192, ID_OFFSET_TEXT,
