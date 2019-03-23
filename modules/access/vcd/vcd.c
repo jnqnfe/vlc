@@ -42,12 +42,14 @@
 static int  Open ( vlc_object_t * );
 static void Close( vlc_object_t * );
 
+#define HELP_TEXT N_("Usage hint: [vcd:][device][#[title][,[chapter]]]")
+
 vlc_module_begin ()
+    set_help (HELP_TEXT)
     set_shortname( N_("VCD"))
     set_description( N_("VCD input") )
     set_capability( "access", 0 )
     set_callbacks( Open, Close )
-    add_usage_hint( N_("[vcd:][device][#[title][,[chapter]]]") )
     add_shortcut( "vcd", "svcd" )
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_ACCESS )
