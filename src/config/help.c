@@ -486,6 +486,11 @@ static void print_item(const module_t *m, const module_config_item_t *item,
                                    : _("(default disabled)");
             break;
         }
+        case CONFIG_ITEM_CLASS_INFO:
+        {
+            bra = type = ket = "";
+            break;
+        }
         default:
             return;
     }

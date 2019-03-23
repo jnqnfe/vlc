@@ -115,10 +115,11 @@ enum vlc_module_properties
 /* Configuration item classes */
 #define CONFIG_ITEM_CLASS_INVALID    0x0000 /* For init */
 #define CONFIG_ITEM_CLASS_SPECIAL    0x0100 /* For hint/category items */
-#define CONFIG_ITEM_CLASS_BOOL       0x0200 /* Boolean flag option */
-#define CONFIG_ITEM_CLASS_FLOAT      0x0400 /* Float data-value option */
-#define CONFIG_ITEM_CLASS_INTEGER    0x0800 /* Integer data-value option */
-#define CONFIG_ITEM_CLASS_STRING     0x1000 /* String data-value option */
+#define CONFIG_ITEM_CLASS_INFO       0x0200 /* Info flag option (e.g. --help) */
+#define CONFIG_ITEM_CLASS_BOOL       0x0400 /* Boolean flag option */
+#define CONFIG_ITEM_CLASS_FLOAT      0x0800 /* Float data-value option */
+#define CONFIG_ITEM_CLASS_INTEGER    0x1000 /* Integer data-value option */
+#define CONFIG_ITEM_CLASS_STRING     0x2000 /* String data-value option */
 
 /* Configuration hint types */
 #define CONFIG_HINT_CATEGORY         (CONFIG_ITEM_CLASS_SPECIAL | 0x01) /* Set category (help output) */
@@ -128,6 +129,7 @@ enum vlc_module_properties
 
 /* Configuration item types */
 #define CONFIG_ITEM_INVALID          (CONFIG_ITEM_CLASS_INVALID | 0x00)
+#define CONFIG_ITEM_INFO             (CONFIG_ITEM_CLASS_INFO    | 0x00) /* Info request option */
 #define CONFIG_ITEM_BOOL             (CONFIG_ITEM_CLASS_BOOL    | 0x00) /* Bool option */
 #define CONFIG_ITEM_FLOAT            (CONFIG_ITEM_CLASS_FLOAT   | 0x00) /* Float option */
 #define CONFIG_ITEM_INTEGER          (CONFIG_ITEM_CLASS_INTEGER | 0x00) /* Integer option */
@@ -204,8 +206,8 @@ enum vlc_module_properties
 /**
  * Current plugin ABI version
  */
-# define MODULE_SYMBOL 4_0_5
-# define MODULE_SUFFIX "__4_0_5"
+# define MODULE_SYMBOL 4_0_6
+# define MODULE_SUFFIX "__4_0_6"
 
 /*****************************************************************************
  * Add a few defines. You do not want to read this section. Really.
@@ -447,11 +449,18 @@ VLC_METADATA_EXPORTS
     add_typename_inner(CONFIG_ITEM_BOOL, name, text, longtext) \
     if (v) vlc_config_set (VLC_CONFIG_VALUE, (int64_t)true);
 
+#define add_info( name, text, longtext ) \
+    add_typename_inner(CONFIG_ITEM_INFO, name, text, longtext) \
+    change_volatile();
+
 /* For removed option */
 #define add_obsolete_inner( name, type ) \
     add_type_inner( type ) \
     vlc_config_set (VLC_CONFIG_NAME, (const char *)(name)); \
     vlc_config_set (VLC_CONFIG_REMOVED);
+
+#define add_obsolete_info( name ) \
+        add_obsolete_inner( name, CONFIG_ITEM_INFO )
 
 #define add_obsolete_bool( name ) \
         add_obsolete_inner( name, CONFIG_ITEM_BOOL )

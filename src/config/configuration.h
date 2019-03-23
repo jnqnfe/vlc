@@ -47,7 +47,7 @@ void config_UnsortConfig (void);
     (CONFIG_CLASS(type) == CONFIG_ITEM_CLASS_STRING)
 #define IsConfigIntegerType(type) \
     (CONFIG_CLASS(type) & \
-     (CONFIG_ITEM_CLASS_INTEGER | CONFIG_ITEM_CLASS_BOOL))
+     (CONFIG_ITEM_CLASS_INTEGER | CONFIG_ITEM_CLASS_BOOL | CONFIG_ITEM_CLASS_INFO))
 #define IsConfigFloatType(type) \
     (CONFIG_CLASS(type) == CONFIG_ITEM_CLASS_FLOAT)
 

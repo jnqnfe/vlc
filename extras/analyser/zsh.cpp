@@ -183,6 +183,7 @@ static void ParseOption(const module_config_item_t *item)
     case CONFIG_ITEM_KEY:
     case CONFIG_SECTION:
     case CONFIG_ITEM_FLOAT:
+    case CONFIG_ITEM_INFO:
     default:
         break;
     }

@@ -216,6 +216,9 @@ int config_LoadConfigFile( vlc_object_t *p_this )
         const char *psz_option_value = ptr + 1;
         switch (CONFIG_CLASS(item->i_type))
         {
+            case CONFIG_ITEM_CLASS_INFO:
+                /* info options should always be unsaveable */
+                break;
             case CONFIG_ITEM_CLASS_BOOL:
             case CONFIG_ITEM_CLASS_INTEGER:
             {
@@ -445,6 +448,7 @@ int config_SaveConfigFile (vlc_object_t *p_this)
              p_item++)
         {
             if (!CONFIG_ITEM(p_item->i_type)   /* ignore hint */
+             || CONFIG_CLASS(p_item->i_type) == CONFIG_ITEM_CLASS_INFO /* ignore info request option */
              || p_item->b_removed              /* ignore deprecated option */
              || p_item->b_unsaveable)          /* ignore volatile option */
                 continue;

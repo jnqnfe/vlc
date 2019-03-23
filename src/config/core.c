@@ -62,6 +62,7 @@ int config_GetType(const char *psz_name)
         case CONFIG_ITEM_CLASS_INTEGER:
             return VLC_VAR_INTEGER;
         case CONFIG_ITEM_CLASS_BOOL:
+        case CONFIG_ITEM_CLASS_INFO:
             return VLC_VAR_BOOL;
         case CONFIG_ITEM_CLASS_STRING:
             return VLC_VAR_STRING;

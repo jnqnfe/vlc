@@ -137,7 +137,9 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
             p_longopts[i_index].val = 0;
             p_longopts[i_index].is_obsolete = p_item->b_removed;
 
-            if( CONFIG_CLASS(p_item->i_type) != CONFIG_ITEM_CLASS_BOOL )
+            if( CONFIG_CLASS(p_item->i_type) == CONFIG_ITEM_CLASS_INFO )
+                p_longopts[i_index].has_arg = false;
+            else if( CONFIG_CLASS(p_item->i_type) != CONFIG_ITEM_CLASS_BOOL )
                 p_longopts[i_index].has_arg = true;
             else
             /* Booleans also need --no-foo and --nofoo options */
@@ -172,7 +174,8 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
                 pp_shortopts[(int)p_item->i_short] = p_item;
                 psz_shortopts[i_shortopts] = p_item->i_short;
                 i_shortopts++;
-                if( p_item->i_type != CONFIG_ITEM_BOOL
+                if( CONFIG_CLASS(p_item->i_type) != CONFIG_ITEM_CLASS_BOOL
+                 && CONFIG_CLASS(p_item->i_type) != CONFIG_ITEM_CLASS_INFO
                  && p_item->i_short != 'v' )
                 {
                     psz_shortopts[i_shortopts] = ':';
@@ -280,6 +283,10 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
                         var_Create( p_this, psz_name, VLC_VAR_BOOL );
                         var_SetBool( p_this, psz_name, !flag );
                         break;
+                    case CONFIG_ITEM_CLASS_INFO:
+                        var_Create( p_this, psz_name, VLC_VAR_BOOL );
+                        var_SetBool( p_this, psz_name, true );
+                        break;
                 }
                 continue;
             }
@@ -314,6 +321,7 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
                     var_SetFloat( p_this, name, us_atof(state.arg) );
                     break;*/
                 case CONFIG_ITEM_CLASS_BOOL:
+                case CONFIG_ITEM_CLASS_INFO:
                     var_Create( p_this, name, VLC_VAR_BOOL );
                     var_SetBool( p_this, name, true );
                     break;
