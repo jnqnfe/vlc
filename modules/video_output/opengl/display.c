@@ -44,6 +44,8 @@ static void Close(vout_display_t *vd);
     "Extension through which to use the Open Graphics Library (OpenGL).")
 
 vlc_module_begin ()
+    set_category (CAT_VIDEO)
+    set_subcategory (SUBCAT_VIDEO_VOUT)
 #if defined (USE_OPENGL_ES2)
 # define API VLC_OPENGL_ES2
 # define MODULE_VARNAME "gles2"
@@ -52,8 +54,6 @@ vlc_module_begin ()
     set_capability ("vout display", 265)
     set_callbacks (Open, Close)
     add_shortcut ("opengles2", "gles2")
-    set_category( CAT_HIDDEN )
-    set_subcategory( SUBCAT_HIDDEN )
     add_module("gles2", "opengl es2", NULL, GLES2_TEXT, PROVIDER_LONGTEXT)
 
 #else
@@ -62,8 +62,6 @@ vlc_module_begin ()
 # define MODULE_VARNAME "gl"
     set_shortname (N_("OpenGL"))
     set_description (N_("OpenGL video output"))
-    set_category (CAT_VIDEO)
-    set_subcategory (SUBCAT_VIDEO_VOUT)
     set_capability ("vout display", 270)
     set_callbacks (Open, Close)
     add_shortcut ("opengl", "gl")
