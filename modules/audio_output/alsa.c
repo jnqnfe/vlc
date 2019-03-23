@@ -94,6 +94,9 @@ static const char *const passthrough_modes_text[] = {
 vlc_module_begin ()
     set_shortname( "ALSA" )
     set_description( N_("ALSA audio output") )
+    set_capability( "audio output", 150 )
+    set_callbacks( Open, Close )
+
     set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AOUT )
     add_string ("alsa-audio-device", "default",
@@ -106,8 +109,6 @@ vlc_module_begin ()
                 PASSTHROUGH_TEXT, false)
         change_integer_list(passthrough_modes, passthrough_modes_text)
     add_sw_gain ()
-    set_capability( "audio output", 150 )
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 /** Helper for ALSA -> VLC debugging output */

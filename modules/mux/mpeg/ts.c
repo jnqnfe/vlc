@@ -199,11 +199,12 @@ static const char *const ts_standards_list_text[] =
 vlc_module_begin ()
     set_description( N_("TS muxer (libdvbpsi)") )
     set_shortname( "MPEG-TS")
-    set_category( CAT_SOUT )
-    set_subcategory( SUBCAT_SOUT_MUX )
     set_capability( "sout mux", 120 )
     add_shortcut( "ts" )
+    set_callbacks( Open, Close )
 
+    set_category( CAT_SOUT )
+    set_subcategory( SUBCAT_SOUT_MUX )
     add_string( SOUT_CFG_PREFIX "standard", "dvb", STANDARD_TEXT, NULL, true )
         change_string_list( ts_standards_list, ts_standards_list_text )
     add_integer(SOUT_CFG_PREFIX "pid-video", 100, VPID_TEXT, VPID_LONGTEXT, true)
@@ -236,8 +237,6 @@ vlc_module_begin ()
     add_string( SOUT_CFG_PREFIX "csa2-ck", NULL, CK2_TEXT,  CK2_LONGTEXT,  true)
     add_string( SOUT_CFG_PREFIX "csa-use", "1",  CU_TEXT,   CU_LONGTEXT,   true)
     add_integer(SOUT_CFG_PREFIX "csa-pkt", 188,  CPKT_TEXT, CPKT_LONGTEXT, true)
-
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 /*****************************************************************************

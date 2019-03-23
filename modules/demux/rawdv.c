@@ -49,11 +49,11 @@ vlc_module_begin ()
     set_shortname( "DV" )
     set_description( N_("DV (Digital Video) demuxer") )
     set_capability( "demux", 3 )
+    set_callbacks( Open, Close )
+    add_shortcut( "rawdv" )
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
     add_bool( "rawdv-hurry-up", false, HURRYUP_TEXT, HURRYUP_LONGTEXT, false )
-    set_callbacks( Open, Close )
-    add_shortcut( "rawdv" )
 vlc_module_end ()
 
 

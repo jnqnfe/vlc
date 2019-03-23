@@ -96,6 +96,10 @@ static void Close( vlc_object_t * );
 vlc_module_begin ()
     set_description( N_("Screen Input") )
     set_shortname( N_("Screen" ))
+    set_capability( "access", 0 )
+    add_shortcut( "screen" )
+    set_callbacks( Open, Close )
+
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACCESS )
 
@@ -123,10 +127,6 @@ vlc_module_begin ()
     add_integer( "screen-display-id", 0, DISPLAY_ID_TEXT, DISPLAY_ID_LONGTEXT, true )
     add_integer( "screen-index", 0, INDEX_TEXT, INDEX_LONGTEXT, true )
 #endif
-
-    set_capability( "access", 0 )
-    add_shortcut( "screen" )
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 /*****************************************************************************

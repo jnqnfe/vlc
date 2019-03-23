@@ -94,10 +94,10 @@ vlc_module_begin ()
     set_description( N_("VBI and Teletext decoder") )
     set_shortname( N_("VBI & Teletext") )
     set_capability( "spu decoder", 51 )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_SCODEC )
     set_callbacks( Open, Close )
 
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_SCODEC )
     add_integer_with_range( "vbi-page", 100, 0, 'z' << 16,
                  PAGE_TEXT, PAGE_LONGTEXT, false )
     add_bool( "vbi-opaque", false,

@@ -737,11 +737,12 @@ error:
 vlc_module_begin()
     set_description("mock access demux")
     set_capability("access", 0)
+    set_callbacks(Open, Close)
+    add_shortcut("mock")
+
     set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_ACCESS)
-    set_callbacks(Open, Close)
     LIST_OPTIONS
-    add_shortcut("mock")
 vlc_module_end()
 
 #undef X

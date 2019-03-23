@@ -71,22 +71,22 @@ static block_t *Convert( filter_t *, block_t * );
      "processed by this filter. Enabling this setting is not recommended.")
 
 vlc_module_begin ()
+    set_help( MODULE_DESCRIPTION )
+
     set_description( N_("Headphone virtual spatialization effect") )
     set_shortname( N_("Headphone effect") )
-    set_help( MODULE_DESCRIPTION )
+    set_capability( "audio filter", 0 )
+    set_callbacks( OpenFilter, CloseFilter )
+    add_shortcut( "headphone" )
+
     set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AFILTER )
-
     add_integer( "headphone-dim", 10, HEADPHONE_DIM_TEXT,
                  HEADPHONE_DIM_LONGTEXT, false )
     add_bool( "headphone-compensate", false, HEADPHONE_COMPENSATE_TEXT,
               HEADPHONE_COMPENSATE_LONGTEXT, true )
     add_bool( "headphone-dolby", false, HEADPHONE_DOLBY_TEXT,
               HEADPHONE_DOLBY_LONGTEXT, true )
-
-    set_capability( "audio filter", 0 )
-    set_callbacks( OpenFilter, CloseFilter )
-    add_shortcut( "headphone" )
 vlc_module_end ()
 
 

@@ -110,6 +110,8 @@ vlc_module_begin ()
     set_shortname( N_("LiveHTTP" ))
     add_shortcut( "livehttp" )
     set_capability( "sout access", 0 )
+    set_callbacks( Open, Close )
+
     set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_ACO )
     add_integer( SOUT_CFG_PREFIX "seglen", 10, SEGLEN_TEXT, SEGLEN_LONGTEXT, false )
@@ -135,7 +137,6 @@ vlc_module_begin ()
                  KEYFILE_TEXT, KEYFILE_LONGTEXT)
     add_loadfile(SOUT_CFG_PREFIX "key-loadfile", NULL,
                  KEYLOADFILE_TEXT, KEYLOADFILE_LONGTEXT)
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 

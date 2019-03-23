@@ -48,26 +48,26 @@ static void Close( vlc_object_t * );
 
 vlc_module_begin ()
     set_shortname( "H264")
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_DEMUX )
     set_description( N_("H264 video demuxer" ) )
     set_capability( "demux", 6 )
-    set_section( N_("H264 video demuxer" ), NULL )
-    add_float( "h264-fps", 0.0, FPS_TEXT, FPS_LONGTEXT, true )
     set_callbacks( OpenH264, Close )
     add_shortcut( "h264" )
 
     add_submodule()
         set_shortname( "HEVC")
-        set_category( CAT_INPUT )
-        set_subcategory( SUBCAT_INPUT_DEMUX )
         set_description( N_("HEVC/H.265 video demuxer" ) )
         set_capability( "demux", 6 )
-        set_section( N_("HEVC/H.265 video demuxer" ), NULL )
-        add_float( "hevc-fps", 0.0, FPS_TEXT, FPS_LONGTEXT, true )
         set_callbacks( OpenHEVC, Close )
         add_shortcut( "hevc", "h265" )
 
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_DEMUX )
+
+    set_section( N_("H264 video demuxer" ), NULL )
+    add_float( "h264-fps", 0.0, FPS_TEXT, FPS_LONGTEXT, true )
+
+    set_section( N_("HEVC/H.265 video demuxer" ), NULL )
+    add_float( "hevc-fps", 0.0, FPS_TEXT, FPS_LONGTEXT, true )
 vlc_module_end ()
 
 /*****************************************************************************

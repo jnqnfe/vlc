@@ -244,28 +244,27 @@ static void blurayClose(vlc_object_t *);
 vlc_module_begin ()
     set_shortname(N_("Blu-ray"))
     set_description(N_("Blu-ray Disc support (libbluray)"))
-
-    set_category(CAT_INPUT)
-    set_subcategory(SUBCAT_INPUT_ACCESS)
     set_capability("access", 500)
-    add_bool("bluray-menu", true, BD_MENU_TEXT, BD_MENU_LONGTEXT, false)
-    add_string("bluray-region", ppsz_region_code[REGION_DEFAULT], BD_REGION_TEXT, BD_REGION_LONGTEXT, false)
-        change_string_list(ppsz_region_code, ppsz_region_code_text)
-
     add_shortcut("bluray", "file")
-
     set_callbacks(blurayOpen, blurayClose)
 
 #ifdef BLURAY_DEMUX
     /* demux module */
     add_submodule()
         set_description( "BluRay demuxer" )
-        //set_category( CAT_INPUT )
-        //set_subcategory( SUBCAT_INPUT_DEMUX )
         set_capability( "demux", 5 )
         set_callbacks( blurayOpen, blurayClose )
 #endif
 
+    set_category(CAT_INPUT)
+    set_subcategory(SUBCAT_INPUT_ACCESS)
+    add_bool("bluray-menu", true, BD_MENU_TEXT, BD_MENU_LONGTEXT, false)
+    add_string("bluray-region", ppsz_region_code[REGION_DEFAULT], BD_REGION_TEXT, BD_REGION_LONGTEXT, false)
+        change_string_list(ppsz_region_code, ppsz_region_code_text)
+//#ifdef BLURAY_DEMUX
+//    set_category( CAT_INPUT )
+//    set_subcategory( SUBCAT_INPUT_DEMUX )
+//#endif
 vlc_module_end ()
 
 /* libbluray's overlay.h defines 2 types of overlay (bd_overlay_plane_e). */

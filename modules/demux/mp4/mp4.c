@@ -58,27 +58,27 @@ static void Close( vlc_object_t * );
     "A negative value means an unlimited play time.")
 
 vlc_module_begin ()
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_DEMUX )
     set_description( N_("MP4 stream demuxer") )
     set_shortname( N_("MP4") )
     set_capability( "demux", 240 )
     set_callbacks( Open, Close )
 
-    add_category_hint("Hacks", NULL)
-    add_bool( CFG_PREFIX"m4a-audioonly", false, MP4_M4A_TEXT, MP4_M4A_LONGTEXT, true )
-
     add_submodule()
-        set_category( CAT_INPUT )
-        set_subcategory( SUBCAT_INPUT_DEMUX )
         set_description( N_("HEIF demuxer") )
         set_shortname( "heif" )
         set_capability( "demux", 239 )
         set_callbacks( OpenHEIF, CloseHEIF )
-        set_section( N_("HEIF demuxer"), NULL )
-        add_float( "heif-image-duration", HEIF_DEFAULT_DURATION,
-                   HEIF_DURATION_TEXT, HEIF_DURATION_LONGTEXT, false )
-            change_safe()
+
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_DEMUX )
+
+    add_category_hint("Hacks", NULL)
+    add_bool( CFG_PREFIX"m4a-audioonly", false, MP4_M4A_TEXT, MP4_M4A_LONGTEXT, true )
+
+    set_section( N_("HEIF demuxer"), NULL )
+    add_float( "heif-image-duration", HEIF_DEFAULT_DURATION,
+               HEIF_DURATION_TEXT, HEIF_DURATION_LONGTEXT, false )
+        change_safe()
 vlc_module_end ()
 
 /*****************************************************************************

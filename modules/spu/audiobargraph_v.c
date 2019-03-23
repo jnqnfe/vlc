@@ -70,16 +70,21 @@ static int  OpenVideo(vlc_object_t *);
 static void Close    (vlc_object_t *);
 
 vlc_module_begin ()
-
-    set_category(CAT_VIDEO)
-    set_subcategory(SUBCAT_VIDEO_SUBPIC)
-
     set_capability("sub source", 0)
     set_callbacks(OpenSub, Close)
     set_description(N_("Audio Bar Graph Video sub source"))
     set_shortname(N_("Audio Bar Graph Video"))
     add_shortcut("audiobargraph_v")
 
+    /* video output filter submodule */
+    add_submodule ()
+    set_capability("video filter", 0)
+    set_callbacks(OpenVideo, Close)
+    set_description(N_("Audio Bar Graph Video sub source"))
+    add_shortcut("audiobargraph_v")
+
+    set_category(CAT_VIDEO)
+    set_subcategory(SUBCAT_VIDEO_SUBPIC)
     add_integer(CFG_PREFIX "x", 0, POSX_TEXT, POSX_LONGTEXT, true)
     add_integer(CFG_PREFIX "y", 0, POSY_TEXT, POSY_LONGTEXT, true)
     add_integer_with_range(CFG_PREFIX "transparency", 255, 0, 255,
@@ -88,13 +93,6 @@ vlc_module_begin ()
         change_integer_list(pi_pos_values, ppsz_pos_descriptions)
     add_integer(CFG_PREFIX "barWidth", 10, BARWIDTH_TEXT, BARWIDTH_LONGTEXT, true)
     add_integer(CFG_PREFIX "barHeight", 400, BARHEIGHT_TEXT, BARHEIGHT_LONGTEXT, true)
-
-    /* video output filter submodule */
-    add_submodule ()
-    set_capability("video filter", 0)
-    set_callbacks(OpenVideo, Close)
-    set_description(N_("Audio Bar Graph Video sub source"))
-    add_shortcut("audiobargraph_v")
 vlc_module_end ()
 
 

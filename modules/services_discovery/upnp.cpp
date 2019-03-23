@@ -135,20 +135,10 @@ VLC_RD_PROBE_HELPER( "upnp_renderer", N_("UPnP Renderer Discovery") )
 vlc_module_begin()
     set_shortname( "UPnP" );
     set_description( N_( "Universal Plug'n'Play" ) );
-    set_category( CAT_PLAYLIST );
-    set_subcategory( SUBCAT_PLAYLIST_SD );
     set_capability( "services_discovery", 0 );
     set_callbacks( SD::OpenSD, SD::CloseSD );
 
-    add_string( "satip-channelist", "auto", SATIP_CHANNEL_LIST,
-                SATIP_CHANNEL_LIST, false )
-    change_string_list( ppsz_satip_channel_lists, ppsz_readible_satip_channel_lists )
-    add_string( "satip-channellist-url", NULL, SATIP_CHANNEL_LIST_URL,
-                SATIP_CHANNEL_LIST_URL, false )
-
     add_submodule()
-        //set_category( CAT_INPUT )
-        //set_subcategory( SUBCAT_INPUT_ACCESS )
         set_callbacks( Access::OpenAccess, Access::CloseAccess )
         set_capability( "access", 0 )
 
@@ -156,8 +146,6 @@ vlc_module_begin()
 
     add_submodule()
         set_description( N_( "UPnP Renderer Discovery" ) )
-        //set_category( CAT_SOUT )
-        //set_subcategory( SUBCAT_SOUT_RENDERER )
         set_callbacks( RD::OpenRD, RD::CloseRD )
         set_capability( "renderer_discovery", 0 )
         add_shortcut( "upnp_renderer" )
@@ -169,17 +157,31 @@ vlc_module_begin()
         set_description(N_("UPnP/DLNA stream output"))
         set_capability("sout stream", 0)
         add_shortcut("dlna")
-        set_category(CAT_SOUT)
-        set_subcategory(SUBCAT_SOUT_STREAM)
         set_callbacks(DLNA::OpenSout, DLNA::CloseSout)
 
-        add_string(SOUT_CFG_PREFIX "ip", NULL, IP_ADDR_TEXT, IP_ADDR_LONGTEXT, false)
-        add_integer(SOUT_CFG_PREFIX "port", NULL, PORT_TEXT, PORT_LONGTEXT, false)
-        add_integer(SOUT_CFG_PREFIX "http-port", HTTP_PORT, HTTP_PORT_TEXT, HTTP_PORT_LONGTEXT, false)
-        add_bool(SOUT_CFG_PREFIX "video", true, HAS_VIDEO_TEXT, HAS_VIDEO_LONGTEXT, false)
-        add_string(SOUT_CFG_PREFIX "base_url", NULL, BASE_URL_TEXT, BASE_URL_LONGTEXT, false)
-        add_string(SOUT_CFG_PREFIX "url", NULL, URL_TEXT, URL_LONGTEXT, false)
-        add_renderer_opts(SOUT_CFG_PREFIX)
+    set_category( CAT_PLAYLIST );
+    set_subcategory( SUBCAT_PLAYLIST_SD );
+    add_string( "satip-channelist", "auto", SATIP_CHANNEL_LIST,
+                SATIP_CHANNEL_LIST, false )
+    change_string_list( ppsz_satip_channel_lists, ppsz_readible_satip_channel_lists )
+    add_string( "satip-channellist-url", NULL, SATIP_CHANNEL_LIST_URL,
+                SATIP_CHANNEL_LIST_URL, false )
+
+    //set_category( CAT_INPUT )
+    //set_subcategory( SUBCAT_INPUT_ACCESS )
+
+    //set_category( CAT_SOUT )
+    //set_subcategory( SUBCAT_SOUT_RENDERER )
+
+    set_category(CAT_SOUT)
+    set_subcategory(SUBCAT_SOUT_STREAM)
+    add_string(SOUT_CFG_PREFIX "ip", NULL, IP_ADDR_TEXT, IP_ADDR_LONGTEXT, false)
+    add_integer(SOUT_CFG_PREFIX "port", NULL, PORT_TEXT, PORT_LONGTEXT, false)
+    add_integer(SOUT_CFG_PREFIX "http-port", HTTP_PORT, HTTP_PORT_TEXT, HTTP_PORT_LONGTEXT, false)
+    add_bool(SOUT_CFG_PREFIX "video", true, HAS_VIDEO_TEXT, HAS_VIDEO_LONGTEXT, false)
+    add_string(SOUT_CFG_PREFIX "base_url", NULL, BASE_URL_TEXT, BASE_URL_LONGTEXT, false)
+    add_string(SOUT_CFG_PREFIX "url", NULL, URL_TEXT, URL_LONGTEXT, false)
+    add_renderer_opts(SOUT_CFG_PREFIX)
 vlc_module_end()
 
 /*

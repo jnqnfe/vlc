@@ -52,10 +52,11 @@ vlc_module_begin()
     set_shortname(N_("MMAL deinterlace"))
     set_description(N_("MMAL-based deinterlace filter plugin"))
     set_capability("video filter", 0)
-    set_category(CAT_VIDEO)
-    set_subcategory(SUBCAT_VIDEO_VFILTER)
     set_callbacks(Open, Close)
     add_shortcut("deinterlace")
+
+    set_category(CAT_VIDEO)
+    set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_bool(MMAL_DEINTERLACE_QPU, false, MMAL_DEINTERLACE_QPU_TEXT,
                     MMAL_DEINTERLACE_QPU_LONGTEXT, true);
 vlc_module_end()

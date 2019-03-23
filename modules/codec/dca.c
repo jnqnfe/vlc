@@ -67,13 +67,14 @@ typedef struct
     "listening room.")
 
 vlc_module_begin ()
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_ACODEC )
     set_shortname( "DCA" )
     set_description( N_("DTS Coherent Acoustics audio decoder") )
-    add_bool( "dts-dynrng", true, DYNRNG_TEXT, DYNRNG_LONGTEXT, false )
     set_capability( "audio decoder", 60 )
     set_callbacks( Open, Close )
+
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_ACODEC )
+    add_bool( "dts-dynrng", true, DYNRNG_TEXT, DYNRNG_LONGTEXT, false )
 vlc_module_end ()
 
 /*

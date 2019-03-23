@@ -542,13 +542,12 @@ static void Close (vlc_object_t *obj)
 }
 
 vlc_module_begin()
-    set_category(CAT_INPUT)
-    set_subcategory(SUBCAT_INPUT_STREAM_FILTER)
-    set_capability("stream_filter", 0)
-
     set_description(N_("Stream prefetch filter"))
+    set_capability("stream_filter", 0)
     set_callbacks(Open, Close)
 
+    set_category(CAT_INPUT)
+    set_subcategory(SUBCAT_INPUT_STREAM_FILTER)
     add_integer("prefetch-buffer-size", 1 << 14, N_("Buffer size"),
                 N_("Prefetch buffer size (KiB)"), false)
         change_integer_range(4, 1 << 20)

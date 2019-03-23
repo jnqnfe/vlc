@@ -99,6 +99,8 @@ vlc_module_begin ()
     set_shortname( "JACK" )
     set_description( N_("JACK audio output") )
     set_capability( "audio output", 100 )
+    set_callbacks( Open, Close )
+
     set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AOUT )
     add_bool( AUTO_CONNECT_OPTION, true, AUTO_CONNECT_TEXT,
@@ -108,7 +110,6 @@ vlc_module_begin ()
     add_string( "jack-name", "", JACK_NAME_TEXT, JACK_NAME_TEXT, false)
 
     add_sw_gain( )
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 

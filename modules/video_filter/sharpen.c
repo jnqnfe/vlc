@@ -64,17 +64,19 @@ static int SharpenCallback( vlc_object_t *, char const *,
  * Module descriptor
  *****************************************************************************/
 vlc_module_begin ()
+    set_help(SHARPEN_HELP)
+
     set_description( N_("Sharpen video filter") )
     set_shortname( N_("Sharpen") )
-    set_help(SHARPEN_HELP)
+    set_capability( "video filter", 0 )
+    add_shortcut( "sharpen" )
+    set_callbacks( Create, Destroy )
+
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
-    set_capability( "video filter", 0 )
     add_float_with_range( FILTER_PREFIX "sigma", 0.05, 0.0, 2.0,
         SIG_TEXT, SIG_LONGTEXT, false )
     change_safe()
-    add_shortcut( "sharpen" )
-    set_callbacks( Create, Destroy )
 vlc_module_end ()
 
 static const char *const ppsz_filter_options[] = {

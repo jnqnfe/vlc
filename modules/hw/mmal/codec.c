@@ -59,10 +59,11 @@ vlc_module_begin()
     set_description(N_("MMAL-based decoder plugin for Raspberry Pi"))
     set_capability("video decoder", 90)
     add_shortcut("mmal_decoder")
+    set_callbacks(OpenDecoder, CloseDecoder)
+
     set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_VCODEC)
     add_bool(MMAL_OPAQUE_NAME, true, MMAL_OPAQUE_TEXT, MMAL_OPAQUE_LONGTEXT, false)
-    set_callbacks(OpenDecoder, CloseDecoder)
 vlc_module_end()
 
 typedef struct

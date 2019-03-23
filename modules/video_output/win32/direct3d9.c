@@ -99,20 +99,10 @@ static void GLConvClose(vlc_object_t *);
 static int FindShadersCallback(const char *, char ***, char ***);
 
 vlc_module_begin ()
+    set_help(D3D9_HELP)
+
     set_shortname("Direct3D9")
     set_description(N_("Direct3D9 video output"))
-    set_help(D3D9_HELP)
-    set_category(CAT_VIDEO)
-    set_subcategory(SUBCAT_VIDEO_VOUT)
-
-    add_bool("direct3d9-hw-blending", true, HW_BLENDING_TEXT, HW_BLENDING_LONGTEXT, true)
-    add_bool("directx-hw-yuv", true, HW_YUV_TEXT, HW_YUV_LONGTEXT, true)
-
-    add_string("direct3d9-shader", "", PIXEL_SHADER_TEXT, PIXEL_SHADER_LONGTEXT, true)
-        change_string_cb(FindShadersCallback)
-    add_loadfile("direct3d9-shader-file", NULL,
-                 PIXEL_SHADER_FILE_TEXT, PIXEL_SHADER_FILE_LONGTEXT)
-
     set_capability("vout display", 280)
     add_shortcut("direct3d9", "direct3d")
     set_callbacks(Open, Close)
@@ -123,6 +113,16 @@ vlc_module_begin ()
     set_capability("glconv", 1)
     set_callbacks(GLConvOpen, GLConvClose)
 #endif
+
+    set_category(CAT_VIDEO)
+    set_subcategory(SUBCAT_VIDEO_VOUT)
+    add_bool("direct3d9-hw-blending", true, HW_BLENDING_TEXT, HW_BLENDING_LONGTEXT, true)
+    add_bool("directx-hw-yuv", true, HW_YUV_TEXT, HW_YUV_LONGTEXT, true)
+
+    add_string("direct3d9-shader", "", PIXEL_SHADER_TEXT, PIXEL_SHADER_LONGTEXT, true)
+        change_string_cb(FindShadersCallback)
+    add_loadfile("direct3d9-shader-file", NULL,
+                 PIXEL_SHADER_FILE_TEXT, PIXEL_SHADER_FILE_LONGTEXT)
 vlc_module_end ()
 
 /*****************************************************************************

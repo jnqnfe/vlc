@@ -71,12 +71,12 @@ typedef struct
         "for automatic string conversion" )
 
 vlc_module_begin ()
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_SCODEC )
     set_capability( "text renderer", 99 )
     add_shortcut( "svg" )
-    add_string( "svg-template-file", "", TEMPLATE_TEXT, TEMPLATE_LONGTEXT, true )
     set_callbacks( Create, Destroy )
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_SCODEC )
+    add_string( "svg-template-file", "", TEMPLATE_TEXT, TEMPLATE_LONGTEXT, true )
 vlc_module_end ()
 
 static void svg_RescaletoFit  ( filter_t *, int *width, int *height, float * );

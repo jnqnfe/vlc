@@ -70,10 +70,15 @@ vlc_module_begin ()
     set_description( N_("DirectX audio output") )
     set_shortname( "DirectX" )
     set_capability( "audio output", 100 )
+    add_shortcut( "directx", "aout_directx", "directsound", "dsound" )
+    set_callbacks( Open, Close )
+
+    add_submodule()
+        set_capability( "aout stream", 30 )
+        set_callbacks( StreamStart, StreamStop )
+
     set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AOUT )
-    add_shortcut( "directx", "aout_directx", "directsound", "dsound" )
-
     add_string( "directx-audio-device", NULL,
              DEVICE_TEXT, DEVICE_LONGTEXT, false )
         change_string_cb( ReloadDirectXDevices )
@@ -85,12 +90,6 @@ vlc_module_begin ()
     add_float( "directx-volume", 1.0f,
                  VOLUME_TEXT, VOLUME_LONGTEXT, true )
         change_float_range( 0.f, 2.f )
-
-    set_callbacks( Open, Close )
-
-    add_submodule()
-        set_capability( "aout stream", 30 )
-        set_callbacks( StreamStart, StreamStop )
 vlc_module_end ()
 
 typedef struct aout_stream_sys

@@ -69,12 +69,12 @@ static const char *const ppsz_scheme_descriptions[] = {
 vlc_module_begin()
     set_description(N_("Convert 3D picture to anaglyph image video filter"));
     set_shortname(N_("Anaglyph"))
+    set_capability("video filter", 0)
+    set_callbacks(Create, Destroy)
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VFILTER)
-    set_capability("video filter", 0)
     add_string(FILTER_PREFIX "scheme", "red-cyan", SCHEME_TEXT, SCHEME_LONGTEXT, false)
         change_string_list(ppsz_scheme_values, ppsz_scheme_descriptions)
-    set_callbacks(Create, Destroy)
 vlc_module_end()
 
 static const char *const ppsz_filter_options[] = {

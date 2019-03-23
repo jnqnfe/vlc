@@ -84,9 +84,10 @@ vlc_module_begin()
     set_description( N_("Puzzle interactive game video filter") )
     set_shortname( N_( "Puzzle" ))
     set_capability( "video filter", 0 )
+    set_callbacks( Open, Close )
+
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
-
     add_integer_with_range( CFG_PREFIX "rows", 4, 2, 42,
                             ROWS_TEXT, ROWS_LONGTEXT, false )
     add_integer_with_range( CFG_PREFIX "cols", 4, 2, 42,
@@ -109,8 +110,6 @@ vlc_module_begin()
     add_integer( CFG_PREFIX "mode", 0,
               MODE_TEXT, MODE_LONGTEXT, false )
         change_integer_list(pi_mode_values, ppsz_mode_descriptions )
-
-    set_callbacks( Open, Close )
 vlc_module_end()
 
 /*****************************************************************************

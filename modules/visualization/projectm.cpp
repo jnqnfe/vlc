@@ -100,6 +100,9 @@ vlc_module_begin ()
     set_shortname( N_("projectM"))
     set_description( N_("libprojectM effect") )
     set_capability( "visualization", 0 )
+    add_shortcut( "projectm" )
+    set_callbacks( Open, Close )
+
     set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_VISUAL )
 #ifndef HAVE_PROJECTM2
@@ -123,8 +126,6 @@ vlc_module_begin ()
                  false )
     add_integer( "projectm-texture-size", 1024, TEXTURE_TEXT, TEXTURE_LONGTEXT,
                  false )
-    add_shortcut( "projectm" )
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 

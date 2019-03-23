@@ -77,6 +77,10 @@ static void Close(vout_display_t *vd);
 
 vlc_module_begin ()
     set_shortname("Framebuffer")
+    set_description(N_("GNU/Linux framebuffer video output"))
+    set_capability("vout display", 30)
+    set_callbacks(Open, Close)
+
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_loadfile(FB_DEV_VAR, "/dev/fb0", DEVICE_TEXT, DEVICE_LONGTEXT)
@@ -85,9 +89,6 @@ vlc_module_begin ()
     add_integer("fb-mode", 4, FB_MODE_TEXT, FB_MODE_LONGTEXT,
                  true)
     add_obsolete_bool("fb-hw-accel") /* since 4.0.0 */
-    set_description(N_("GNU/Linux framebuffer video output"))
-    set_capability("vout display", 30)
-    set_callbacks(Open, Close)
 vlc_module_end ()
 
 /*****************************************************************************

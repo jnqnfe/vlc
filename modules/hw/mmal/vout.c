@@ -76,6 +76,8 @@ vlc_module_begin()
     set_description(N_("MMAL-based vout plugin for Raspberry Pi"))
     set_capability("vout display", 90)
     add_shortcut("mmal_vout")
+    set_callbacks(Open, Close)
+
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_integer(MMAL_LAYER_NAME, 1, MMAL_LAYER_TEXT, MMAL_LAYER_LONGTEXT, false)
@@ -85,7 +87,6 @@ vlc_module_begin()
                     MMAL_ADJUST_REFRESHRATE_LONGTEXT, false)
     add_bool(MMAL_NATIVE_INTERLACED, false, MMAL_NATIVE_INTERLACE_TEXT,
                     MMAL_NATIVE_INTERLACE_LONGTEXT, false)
-    set_callbacks(Open, Close)
 vlc_module_end()
 
 struct dmx_region_t {

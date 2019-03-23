@@ -110,9 +110,11 @@ vlc_module_begin ()
     set_description( N_("IceCAST output") )
     set_shortname( "Shoutcast" )
     set_capability( "sout access", 0 )
+    add_shortcut( "shout" )
+    set_callbacks( Open, Close )
+
     set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_ACO )
-    add_shortcut( "shout" )
     add_string( SOUT_CFG_PREFIX "name", "VLC media player - Live stream",
                 NAME_TEXT, NAME_LONGTEXT, false )
     add_string( SOUT_CFG_PREFIX "description", "Live stream from VLC media player",
@@ -133,7 +135,6 @@ vlc_module_begin ()
                 QUALITY_TEXT, QUALITY_LONGTEXT, false )
     add_bool(   SOUT_CFG_PREFIX "public", false,
                 PUBLIC_TEXT, PUBLIC_LONGTEXT, true )
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 /*****************************************************************************

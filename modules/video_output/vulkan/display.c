@@ -388,11 +388,12 @@ static int Control(vout_display_t *vd, int query, va_list ap)
 
 vlc_module_begin () set_shortname ("Vulkan")
     set_description (N_("Vulkan video output"))
-    set_category (CAT_VIDEO)
-    set_subcategory (SUBCAT_VIDEO_VOUT)
     set_capability ("vout display", 0)
     set_callbacks (Open, Close)
     add_shortcut ("vulkan", "vk")
+
+    set_category (CAT_VIDEO)
+    set_subcategory (SUBCAT_VIDEO_VOUT)
     add_module ("vk", "vulkan", NULL, VK_TEXT, PROVIDER_LONGTEXT)
 
     set_section("Scaling", NULL)

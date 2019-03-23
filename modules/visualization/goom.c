@@ -57,17 +57,18 @@ static void Close        ( vlc_object_t * );
 vlc_module_begin ()
     set_shortname( N_("Goom"))
     set_description( N_("Goom effect") )
+    set_capability( "visualization", 0 )
+    set_callbacks( Open, Close )
+    add_shortcut( "goom" )
+
     set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_VISUAL )
-    set_capability( "visualization", 0 )
     add_integer( "goom-width", 800,
                  WIDTH_TEXT, RES_LONGTEXT, false )
     add_integer( "goom-height", 500,
                  HEIGHT_TEXT, RES_LONGTEXT, false )
     add_integer_with_range( "goom-speed", 6, 1, 10,
                  SPEED_TEXT, SPEED_LONGTEXT, false )
-    set_callbacks( Open, Close )
-    add_shortcut( "goom" )
 vlc_module_end ()
 
 /*****************************************************************************

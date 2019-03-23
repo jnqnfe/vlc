@@ -100,14 +100,15 @@ vlc_module_begin ()
     set_shortname( "RTP/RTSP")
     set_callbacks( Open, Close )
     add_shortcut( "live", "livedotcom" )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_DEMUX )
 
     add_submodule ()
         set_description( N_("RTSP/RTP access and demux") )
         add_shortcut( "rtsp", "pnm", "live", "livedotcom" )
         set_capability( "access", 300 )
         set_callbacks( Open, Close )
+
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_DEMUX )
         add_bool( "rtsp-tcp", false,
                   N_("Use RTP over RTSP (TCP)"),
                   N_("Use RTP over RTSP (TCP)"), true )

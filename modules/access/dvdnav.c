@@ -84,22 +84,24 @@ static int  DemuxOpen ( vlc_object_t * );
 vlc_module_begin ()
     set_shortname( N_("DVD with menus") )
     set_description( N_("DVDnav Input") )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_ACCESS )
-    add_integer( "dvdnav-angle", 1, ANGLE_TEXT,
-        ANGLE_LONGTEXT, false )
-    add_bool( "dvdnav-menu", true,
-        MENU_TEXT, MENU_LONGTEXT, false )
     set_capability( "access", 305 )
     add_shortcut( "dvd", "dvdnav", "file" )
     set_callbacks( AccessDemuxOpen, Close )
+
     add_submodule()
         set_description( N_("DVDnav demuxer") )
-        //set_category( CAT_INPUT )
-        //set_subcategory( SUBCAT_INPUT_DEMUX )
         set_capability( "demux", 5 )
         set_callbacks( DemuxOpen, Close )
         add_shortcut( "dvd", "iso" )
+
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_ACCESS )
+
+    add_integer( "dvdnav-angle", 1, ANGLE_TEXT, ANGLE_LONGTEXT, false )
+    add_bool( "dvdnav-menu", true, MENU_TEXT, MENU_LONGTEXT, false )
+
+    //set_category( CAT_INPUT )
+    //set_subcategory( SUBCAT_INPUT_DEMUX )
 vlc_module_end ()
 
 /* Shall we use libdvdnav's read ahead cache? */

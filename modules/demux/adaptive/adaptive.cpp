@@ -112,6 +112,8 @@ vlc_module_begin ()
         set_shortname( N_("Adaptive"))
         set_description( N_("Unified adaptive streaming for DASH/HLS") )
         set_capability( "demux", 12 )
+        set_callbacks( Open, Close )
+
         set_category( CAT_INPUT )
         set_subcategory( SUBCAT_INPUT_DEMUX )
         add_string( "adaptive-logic",  "", ADAPT_LOGIC_TEXT, NULL, false )
@@ -121,8 +123,7 @@ vlc_module_begin ()
         add_integer( "adaptive-maxheight", 0,
                      ADAPT_HEIGHT_TEXT, ADAPT_HEIGHT_TEXT, false )
         add_integer( "adaptive-bw",     250, ADAPT_BW_TEXT,     ADAPT_BW_LONGTEXT,     false )
-        add_bool   ( "adaptive-use-access", false, ADAPT_ACCESS_TEXT, ADAPT_ACCESS_LONGTEXT, true );
-        set_callbacks( Open, Close )
+        add_bool   ( "adaptive-use-access", false, ADAPT_ACCESS_TEXT, ADAPT_ACCESS_LONGTEXT, true )
 vlc_module_end ()
 
 /*****************************************************************************

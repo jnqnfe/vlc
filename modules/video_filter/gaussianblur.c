@@ -55,18 +55,19 @@ static void Destroy   ( vlc_object_t * );
 #define FILTER_PREFIX "gaussianblur-"
 
 vlc_module_begin ()
+    set_help(GAUSSIAN_HELP)
+
     set_description( N_("Gaussian blur video filter") )
     set_shortname( N_( "Gaussian Blur" ))
-    set_help(GAUSSIAN_HELP)
     set_capability( "video filter", 0 )
+    set_callbacks( Create, Destroy )
+
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
 
     add_float_with_range( FILTER_PREFIX "sigma", 2., SIGMA_MIN, SIGMA_MAX,
                           SIGMA_TEXT, SIGMA_LONGTEXT,
                           false )
-
-    set_callbacks( Create, Destroy )
 vlc_module_end ()
 
 /*****************************************************************************

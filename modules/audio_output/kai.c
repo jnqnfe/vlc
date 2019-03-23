@@ -109,6 +109,8 @@ vlc_module_begin ()
     set_shortname( "KAI" )
     set_description( N_("K Audio Interface audio output") )
     set_capability( "audio output", 100 )
+    set_callbacks( Open, Close )
+
     set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AOUT )
     add_string( "kai-audio-device", ppsz_kai_audio_device[0],
@@ -118,7 +120,6 @@ vlc_module_begin ()
     add_bool( "kai-audio-exclusive-mode", false,
               KAI_AUDIO_EXCLUSIVE_MODE_TEXT, KAI_AUDIO_EXCLUSIVE_MODE_LONGTEXT,
               true )
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 /*****************************************************************************

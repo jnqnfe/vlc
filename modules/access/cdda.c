@@ -997,9 +997,11 @@ vlc_module_begin ()
     set_shortname( N_("Audio CD") )
     set_description( N_("Audio CD input") )
     set_capability( "access", 0 )
+    set_callbacks(Open, Close)
+    add_shortcut( "cdda", "cddasimple" )
+
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACCESS )
-    set_callbacks(Open, Close)
 
     add_loadfile("cd-audio", CD_DEVICE, CDAUDIO_DEV_TEXT, CDAUDIO_DEV_LONGTEXT)
 
@@ -1021,6 +1023,4 @@ vlc_module_begin ()
             N_( "CDDB Server port to use." ), true )
         change_integer_range( 1, 65535 )
 #endif
-
-    add_shortcut( "cdda", "cddasimple" )
 vlc_module_end ()

@@ -69,17 +69,16 @@ vlc_module_begin ()
     set_description( N_("Audio part of the BarGraph function") )
     set_shortname( N_("Audiobar Graph") )
     set_capability( "audio filter", 0 )
+    set_callbacks( Open, Close )
+
     set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AFILTER )
-
     add_integer( CFG_PREFIX "bargraph", 1, BARGRAPH_TEXT, BARGRAPH_LONGTEXT, false ) // FIXME: this is a bool
     add_integer( CFG_PREFIX "bargraph_repetition", 4, BARGRAPH_REPETITION_TEXT, BARGRAPH_REPETITION_LONGTEXT, false )
     add_integer( CFG_PREFIX "silence", 1, SILENCE_TEXT, SILENCE_LONGTEXT, false ) // FIXME: this is a bool
     add_integer( CFG_PREFIX "time_window", 5000, TIME_WINDOW_TEXT, TIME_WINDOW_LONGTEXT, false )
     add_float( CFG_PREFIX "alarm_threshold", 0.02, ALARM_THRESHOLD_TEXT, ALARM_THRESHOLD_LONGTEXT, false )
     add_integer( CFG_PREFIX "repetition_time", 2000, REPETITION_TIME_TEXT, REPETITION_TIME_LONGTEXT, false )
-
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 typedef struct ValueDate_t {

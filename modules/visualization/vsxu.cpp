@@ -58,14 +58,15 @@ vlc_module_begin ()
     set_shortname( N_("vsxu"))
     set_description( N_("vsxu") )
     set_capability( "visualization", 0 )
+    add_shortcut( "vsxu" )
+    set_callbacks( Open, Close )
+
     set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_VISUAL )
     add_integer( "vsxu-width", 1280, WIDTH_TEXT, WIDTH_LONGTEXT,
                  false )
     add_integer( "vsxu-height", 800, HEIGHT_TEXT, HEIGHT_LONGTEXT,
                  false )
-    add_shortcut( "vsxu" )
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 

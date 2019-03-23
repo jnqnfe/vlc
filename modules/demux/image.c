@@ -76,6 +76,9 @@ static void Close(vlc_object_t *);
 vlc_module_begin()
     set_description(N_("Image demuxer"))
     set_shortname(N_("Image"))
+    set_capability("demux", 10)
+    set_callbacks(Open, Close)
+
     set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_DEMUX)
     add_integer("image-id", -1, ID_TEXT, ID_LONGTEXT, true)
@@ -92,8 +95,6 @@ vlc_module_begin()
         change_safe()
     add_bool("image-realtime", false, RT_TEXT, RT_LONGTEXT, true)
         change_safe()
-    set_capability("demux", 10)
-    set_callbacks(Open, Close)
 vlc_module_end()
 
 /*****************************************************************************

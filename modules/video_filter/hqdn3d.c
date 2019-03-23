@@ -62,9 +62,11 @@ vlc_module_begin()
     set_shortname(N_("HQ Denoiser 3D"))
     set_description(N_("High Quality 3D Denoiser filter"))
     set_capability("video filter", 0)
+    add_shortcut("hqdn3d")
+    set_callbacks(Open, Close)
+
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VFILTER)
-
     add_float_with_range(FILTER_PREFIX "luma-spat", 4.0, 0.0, 254.0,
             LUMA_SPAT_TEXT, LUMA_SPAT_TEXT, false)
     add_float_with_range(FILTER_PREFIX "chroma-spat", 3.0, 0.0, 254.0,
@@ -73,10 +75,6 @@ vlc_module_begin()
             LUMA_TEMP_TEXT, LUMA_TEMP_TEXT, false)
     add_float_with_range(FILTER_PREFIX "chroma-temp", 4.5, 0.0, 254.0,
             CHROMA_TEMP_TEXT, CHROMA_TEMP_TEXT, false)
-
-    add_shortcut("hqdn3d")
-
-    set_callbacks(Open, Close)
 vlc_module_end()
 
 static const char *const filter_options[] = {

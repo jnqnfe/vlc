@@ -759,8 +759,6 @@ Close(vlc_object_t *obj)
 
 vlc_module_begin()
     set_capability("video filter", 0)
-    set_category(CAT_VIDEO)
-    set_subcategory(SUBCAT_VIDEO_VFILTER)
     set_description(N_("Mac OS X hardware video filters"))
 
     add_submodule()
@@ -790,6 +788,9 @@ vlc_module_begin()
     add_submodule()
     set_callbacks(OpenCustom, Close)
     add_shortcut("ci")
+
+    set_category(CAT_VIDEO)
+    set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_string("ci-filter", "CIComicEffect", CI_CUSTOM_FILTER_TEXT, CI_CUSTOM_FILTER_LONGTEXT, true);
 vlc_module_end()
 

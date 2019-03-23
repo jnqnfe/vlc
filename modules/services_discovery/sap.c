@@ -107,18 +107,6 @@ VLC_SD_PROBE_HELPER("sap", N_("Network streams (SAP)"), SD_CAT_LAN)
 vlc_module_begin ()
     set_shortname( N_("SAP"))
     set_description( N_("Network streams (SAP)") )
-    set_category( CAT_PLAYLIST )
-    set_subcategory( SUBCAT_PLAYLIST_SD )
-
-    add_string( "sap-addr", NULL,
-                SAP_ADDR_TEXT, SAP_ADDR_LONGTEXT, true )
-    add_integer( "sap-timeout", 1800,
-                 SAP_TIMEOUT_TEXT, SAP_TIMEOUT_LONGTEXT, true )
-    add_bool( "sap-parse", true,
-               SAP_PARSE_TEXT,SAP_PARSE_LONGTEXT, true )
-    add_bool( "sap-strict", false,
-               SAP_STRICT_TEXT,SAP_STRICT_LONGTEXT, true )
-
     set_capability( "services_discovery", 0 )
     set_callbacks( Open, Close )
 
@@ -129,6 +117,17 @@ vlc_module_begin ()
         add_shortcut( "sdp" )
         set_capability( "demux", 51 )
         set_callbacks( OpenDemux, CloseDemux )
+
+    set_category( CAT_PLAYLIST )
+    set_subcategory( SUBCAT_PLAYLIST_SD )
+    add_string( "sap-addr", NULL,
+                SAP_ADDR_TEXT, SAP_ADDR_LONGTEXT, true )
+    add_integer( "sap-timeout", 1800,
+                 SAP_TIMEOUT_TEXT, SAP_TIMEOUT_LONGTEXT, true )
+    add_bool( "sap-parse", true,
+               SAP_PARSE_TEXT,SAP_PARSE_LONGTEXT, true )
+    add_bool( "sap-strict", false,
+               SAP_STRICT_TEXT,SAP_STRICT_LONGTEXT, true )
 vlc_module_end ()
 
 

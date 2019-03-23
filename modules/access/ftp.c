@@ -82,12 +82,6 @@ vlc_module_begin ()
     set_shortname( "FTP" )
     set_description( N_("FTP input") )
     set_capability( "access", 0 )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_ACCESS )
-    add_string( "ftp-user", NULL, USER_TEXT, USER_LONGTEXT, false )
-    add_string( "ftp-pwd", NULL, PASS_TEXT, PASS_LONGTEXT, false )
-    add_string( "ftp-account", "anonymous", ACCOUNT_TEXT,
-                ACCOUNT_LONGTEXT, false )
     add_shortcut( "ftp", "ftps", "ftpes" )
     set_callbacks( InOpen, InClose )
 
@@ -96,11 +90,21 @@ vlc_module_begin ()
         set_shortname( "FTP" )
         set_description( N_("FTP upload output") )
         set_capability( "sout access", 0 )
-        //set_category( CAT_SOUT )
-        //set_subcategory( SUBCAT_SOUT_ACO )
         add_shortcut( "ftp", "ftps", "ftpes" )
         set_callbacks( OutOpen, OutClose )
 #endif
+
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_ACCESS )
+    add_string( "ftp-user", NULL, USER_TEXT, USER_LONGTEXT, false )
+    add_string( "ftp-pwd", NULL, PASS_TEXT, PASS_LONGTEXT, false )
+    add_string( "ftp-account", "anonymous", ACCOUNT_TEXT,
+                ACCOUNT_LONGTEXT, false )
+//#ifdef ENABLE_SOUT
+//    set_category( CAT_SOUT )
+//    set_subcategory( SUBCAT_SOUT_ACO )
+//#endif
+
 vlc_module_end ()
 
 /*****************************************************************************

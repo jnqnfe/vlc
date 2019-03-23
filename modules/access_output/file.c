@@ -389,9 +389,11 @@ vlc_module_begin ()
     set_description( N_("File stream output") )
     set_shortname( N_("File" ))
     set_capability( "sout access", 50 )
+    add_shortcut( "file", "stream", "fd" )
+    set_callbacks( Open, Close )
+
     set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_ACO )
-    add_shortcut( "file", "stream", "fd" )
     add_bool( SOUT_CFG_PREFIX "overwrite", true, OVERWRITE_TEXT,
               OVERWRITE_LONGTEXT, true )
     add_bool( SOUT_CFG_PREFIX "append", false, APPEND_TEXT,APPEND_LONGTEXT,
@@ -402,5 +404,4 @@ vlc_module_begin ()
     add_bool( SOUT_CFG_PREFIX "sync", false, SYNC_TEXT,SYNC_LONGTEXT,
               false )
 #endif
-    set_callbacks( Open, Close )
 vlc_module_end ()

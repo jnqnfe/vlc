@@ -94,10 +94,14 @@ static void Close (vlc_object_t *);
 vlc_module_begin ()
     set_shortname (N_("RTP"))
     set_description (N_("Real-Time Protocol (RTP) input"))
-    set_category (CAT_INPUT)
-    set_subcategory (SUBCAT_INPUT_DEMUX)
     set_capability ("access", 0)
     set_callbacks (Open, Close)
+    /*add_shortcut ("sctp")*/
+    add_shortcut ("dccp", "rtptcp", /* "tcp" is already taken :( */
+                  "rtp", "udplite")
+
+    set_category (CAT_INPUT)
+    set_subcategory (SUBCAT_INPUT_DEMUX)
 
     add_integer ("rtcp-port", 0, RTCP_PORT_TEXT,
                  RTCP_PORT_LONGTEXT, false)
@@ -125,10 +129,6 @@ vlc_module_begin ()
     add_string ("rtp-dynamic-pt", NULL, RTP_DYNAMIC_PT_TEXT,
                 RTP_DYNAMIC_PT_LONGTEXT, true)
         change_string_list (dynamic_pt_list, dynamic_pt_list_text)
-
-    /*add_shortcut ("sctp")*/
-    add_shortcut ("dccp", "rtptcp", /* "tcp" is already taken :( */
-                  "rtp", "udplite")
 vlc_module_end ()
 
 /*

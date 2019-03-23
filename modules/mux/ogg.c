@@ -58,14 +58,15 @@ static void Close  ( vlc_object_t * );
 vlc_module_begin ()
     set_description( N_("Ogg/OGM muxer") )
     set_capability( "sout mux", 10 )
+    add_shortcut( "ogg", "ogm" )
+    set_callbacks( Open, Close )
+
     set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_MUX )
-    add_shortcut( "ogg", "ogm" )
     add_integer_with_range( SOUT_CFG_PREFIX "indexintvl", 1000, 0, INT_MAX,
                             INDEXINTVL_TEXT, INDEXINTVL_LONGTEXT, true )
     add_float_with_range( SOUT_CFG_PREFIX "indexratio", 1.0, 1.0, 1000,
                           INDEXRATIO_TEXT, INDEXRATIO_LONGTEXT, true )
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 

@@ -231,11 +231,11 @@ static const char *const verbosity_text[] = { N_("Default"), N_("Info"), N_("Err
 vlc_module_begin()
     set_shortname(N_("Logger"))
     set_description(N_("File logger"))
-    set_category(CAT_ADVANCED)
-    set_subcategory(SUBCAT_ADVANCED_MISC)
     set_capability("logger", 15)
     set_callbacks(Open, NULL)
 
+    set_category(CAT_ADVANCED)
+    set_subcategory(SUBCAT_ADVANCED_MISC)
     add_bool("file-logging", false, FILE_LOG_TEXT, FILE_LOG_LONGTEXT, false)
     add_savefile("logfile", NULL, LOGFILE_NAME_TEXT, LOGFILE_NAME_LONGTEXT)
     add_string("logmode", "text", LOGMODE_TEXT, LOGMODE_LONGTEXT, false)

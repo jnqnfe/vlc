@@ -150,6 +150,8 @@ vlc_module_begin ()
     set_shortname( "WaveOut" )
     set_description( N_("WaveOut audio output") )
     set_capability( "audio output", 50 )
+    set_callbacks( Open, Close )
+
     set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AOUT )
     add_string( "waveout-audio-device", "wavemapper",
@@ -161,7 +163,6 @@ vlc_module_begin ()
     add_integer ("waveout-audio-channels", 9, AUDIO_CHAN_TEXT,
                  AUDIO_CHAN_LONGTEXT, false)
         change_integer_range(1,9)
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 /*****************************************************************************

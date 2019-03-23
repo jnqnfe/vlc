@@ -62,13 +62,14 @@ vlc_module_begin ()
     set_shortname( "SFTP" )
     set_description( N_("SFTP input") )
     set_capability( "access", 0 )
+    add_shortcut( "sftp" )
+    set_callbacks( Open, Close )
+
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACCESS )
     add_integer( "sftp-port", 22, PORT_TEXT, PORT_LONGTEXT, true )
     add_string( "sftp-user", NULL, USER_TEXT, USER_LONGTEXT, false )
     add_password("sftp-pwd", NULL, PASS_TEXT, PASS_LONGTEXT)
-    add_shortcut( "sftp" )
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 

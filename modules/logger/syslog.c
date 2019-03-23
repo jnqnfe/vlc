@@ -153,11 +153,11 @@ static const struct vlc_logger_operations *Open(vlc_object_t *obj,
 vlc_module_begin()
     set_shortname(N_( "syslog" ))
     set_description(N_("System logger (syslog)"))
-    set_category(CAT_ADVANCED)
-    set_subcategory(SUBCAT_ADVANCED_MISC)
     set_capability("logger", 20)
     set_callbacks(Open, NULL)
 
+    set_category(CAT_ADVANCED)
+    set_subcategory(SUBCAT_ADVANCED_MISC)
     add_bool("syslog", false, SYSLOG_TEXT, SYSLOG_LONGTEXT,
              false)
     add_bool("syslog-debug", false, SYSLOG_DEBUG_TEXT, SYSLOG_DEBUG_LONGTEXT,

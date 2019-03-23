@@ -62,31 +62,31 @@ static void Close( vlc_object_t * );
 
 VLC_SD_PROBE_HELPER( "dsm", N_("Windows networks"), SD_CAT_LAN )
 
-#define BDSM_HELP N_("libdsm's SMB (Windows network shares) input and browser")
+#define DSM_HELP N_("libdsm's SMB (Windows network shares) input and browser")
 
 vlc_module_begin ()
+    set_help(DSM_HELP)
     set_shortname( "dsm" )
     set_description( N_("libdsm SMB input") )
-    set_help(BDSM_HELP)
     set_capability( "access", 20 )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_ACCESS )
-    add_string( "smb-user", NULL, SMB_USER_TEXT, SMB_USER_LONGTEXT, false )
-    add_password("smb-pwd", NULL, SMB_PASS_TEXT, SMB_PASS_LONGTEXT)
-    add_string( "smb-domain", NULL, SMB_DOMAIN_TEXT, SMB_DOMAIN_LONGTEXT, false )
     add_shortcut( "smb", "cifs" )
     set_callbacks( Open, Close )
 
     add_submodule()
         add_shortcut( "dsm-sd" )
         set_description( N_("libdsm NETBIOS discovery module") )
-        //set_category( CAT_PLAYLIST )
-        //set_subcategory( SUBCAT_PLAYLIST_SD )
         set_capability( "services_discovery", 0 )
         set_callbacks( bdsm_SdOpen, bdsm_SdClose )
 
-        VLC_SD_PROBE_SUBMODULE
+    VLC_SD_PROBE_SUBMODULE
 
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_ACCESS )
+    add_string( "smb-user", NULL, SMB_USER_TEXT, SMB_USER_LONGTEXT, false )
+    add_password("smb-pwd", NULL, SMB_PASS_TEXT, SMB_PASS_LONGTEXT)
+    add_string( "smb-domain", NULL, SMB_DOMAIN_TEXT, SMB_DOMAIN_LONGTEXT, false )
+    //set_category( CAT_PLAYLIST )
+    //set_subcategory( SUBCAT_PLAYLIST_SD )
 vlc_module_end ()
 
 /*****************************************************************************

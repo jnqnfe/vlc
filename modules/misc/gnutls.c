@@ -756,6 +756,14 @@ vlc_module_begin ()
     set_description( N_("GNU TLS transport layer security") )
     set_capability( "tls client", 1 )
     set_callbacks(OpenClient, NULL)
+
+#ifdef ENABLE_SOUT
+    add_submodule ()
+        set_description( N_("GNU TLS server") )
+        set_capability( "tls server", 1 )
+        set_callbacks(OpenServer, NULL)
+#endif
+
     set_category( CAT_ADVANCED )
     set_subcategory( SUBCAT_ADVANCED_NETWORK )
     add_bool("gnutls-system-trust", true, SYSTEM_TRUST_TEXT,
@@ -765,12 +773,4 @@ vlc_module_begin ()
     add_string ("gnutls-priorities", "NORMAL", PRIORITIES_TEXT,
                 PRIORITIES_LONGTEXT, false)
         change_string_list (priorities_values, priorities_text)
-#ifdef ENABLE_SOUT
-    add_submodule ()
-        set_description( N_("GNU TLS server") )
-        set_capability( "tls server", 1 )
-        set_category( CAT_ADVANCED )
-        set_subcategory( SUBCAT_ADVANCED_NETWORK )
-        set_callbacks(OpenServer, NULL)
-#endif
 vlc_module_end ()

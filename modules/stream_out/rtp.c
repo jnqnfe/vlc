@@ -188,6 +188,15 @@ vlc_module_begin ()
     set_description( N_("RTP stream output") )
     set_capability( "sout stream", 0 )
     add_shortcut( "rtp", "vod" )
+    set_callbacks( Open, Close )
+
+    add_submodule ()
+    set_shortname( N_("RTSP VoD" ) )
+    set_description( N_("RTSP VoD server") )
+    set_capability( "vod server", 10 )
+    set_callbacks( OpenVoD, CloseVoD )
+    add_shortcut( "rtsp" )
+
     set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_STREAM )
 
@@ -238,22 +247,12 @@ vlc_module_begin ()
     add_bool( SOUT_CFG_PREFIX "mp4a-latm", false, RFC3016_TEXT,
                  RFC3016_LONGTEXT, false )
 
-    set_callbacks( Open, Close )
-
-    add_submodule ()
-    set_shortname( N_("RTSP VoD" ) )
-    set_description( N_("RTSP VoD server") )
-    set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_VOD )
-    set_capability( "vod server", 10 )
-    set_callbacks( OpenVoD, CloseVoD )
-    add_shortcut( "rtsp" )
     add_integer( "rtsp-timeout", 60, RTSP_TIMEOUT_TEXT,
                  RTSP_TIMEOUT_LONGTEXT, true )
     add_string( "sout-rtsp-user", "",
                 RTSP_USER_TEXT, RTSP_USER_LONGTEXT, true )
     add_password("sout-rtsp-pwd", "", RTSP_PASS_TEXT, RTSP_PASS_LONGTEXT)
-
 vlc_module_end ()
 
 /*****************************************************************************

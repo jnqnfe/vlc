@@ -179,10 +179,10 @@ vlc_module_begin ()
     set_description(N_("SDI stream output"))
     set_capability("sout stream", 0)
     add_shortcut("sdiout")
-    set_category(CAT_SOUT)
-    set_subcategory(SUBCAT_SOUT_STREAM)
     set_callbacks(OpenSDIOutput, CloseSDIOutput)
 
+    set_category(CAT_SOUT)
+    set_subcategory(SUBCAT_SOUT_STREAM)
     set_section(N_("DeckLink General Options"), NULL)
     add_integer(CFG_PREFIX "card-index", 0,
                 CARD_INDEX_TEXT, CARD_INDEX_LONGTEXT, true)

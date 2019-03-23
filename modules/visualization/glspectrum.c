@@ -62,14 +62,13 @@ vlc_module_begin()
     set_shortname(N_("glSpectrum"))
     set_description(N_("3D OpenGL spectrum visualization"))
     set_capability("visualization", 0)
-    set_category(CAT_AUDIO)
-    set_subcategory(SUBCAT_AUDIO_VISUAL)
-
-    add_integer("glspectrum-width", 400, WIDTH_TEXT, WIDTH_LONGTEXT, false)
-    add_integer("glspectrum-height", 300, HEIGHT_TEXT, HEIGHT_LONGTEXT, false)
-
     add_shortcut("glspectrum")
     set_callbacks(Open, Close)
+
+    set_category(CAT_AUDIO)
+    set_subcategory(SUBCAT_AUDIO_VISUAL)
+    add_integer("glspectrum-width", 400, WIDTH_TEXT, WIDTH_LONGTEXT, false)
+    add_integer("glspectrum-height", 300, HEIGHT_TEXT, HEIGHT_LONGTEXT, false)
 vlc_module_end()
 
 

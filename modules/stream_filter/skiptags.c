@@ -234,8 +234,8 @@ static void Close(vlc_object_t *obj)
 }
 
 vlc_module_begin()
-    set_capability("stream_filter", 330)
     set_description(N_("APE/ID3 tags-skipping filter"))
+    set_capability("stream_filter", 330)
     set_callbacks(Open, Close)
     //set_category(CAT_INPUT)
     //set_subcategory(SUBCAT_INPUT_STREAM_FILTER)

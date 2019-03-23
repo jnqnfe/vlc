@@ -115,9 +115,14 @@ static void Close        ( vlc_object_t * );
 
 vlc_module_begin ()
     set_shortname( N_("Visualizer"))
+    set_description( N_("Visualizer filter") )
+    set_capability( "visualization", 0 )
+    set_callbacks( Open, Close )
+    add_shortcut( "visualizer")
+
     set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_VISUAL )
-    set_description( N_("Visualizer filter") )
+
     set_section( N_( "General") , NULL )
     add_string("effect-list", "spectrum",
             ELIST_TEXT, ELIST_LONGTEXT, true )
@@ -130,11 +135,13 @@ vlc_module_begin ()
         change_string_list( window_list, window_list_text )
     add_float("effect-kaiser-param", 3.0f,
             KAISER_PARAMETER_TEXT, KAISER_PARAMETER_LONGTEXT, true )
+
     set_section( N_("Spectrum analyser") , NULL )
     add_bool("visual-80-bands", true,
              NBBANDS_TEXT, NBBANDS_TEXT, true );
     add_bool("visual-peaks", true,
              PEAKS_TEXT, PEAKS_TEXT, true )
+
     set_section( N_("Spectrometer") , NULL )
     add_bool("spect-show-original", false,
              ORIG_TEXT, ORIG_LONGTEXT, true )
@@ -160,9 +167,6 @@ vlc_module_begin ()
              PEAK_WIDTH_TEXT, PEAK_WIDTH_LONGTEXT, true )
     add_integer("spect-peak-height", 1,
              PEAK_HEIGHT_TEXT, PEAK_HEIGHT_LONGTEXT, true )
-    set_capability( "visualization", 0 )
-    set_callbacks( Open, Close )
-    add_shortcut( "visualizer")
 vlc_module_end ()
 
 

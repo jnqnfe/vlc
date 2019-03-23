@@ -71,16 +71,15 @@ vlc_module_begin ()
     set_shortname( "AVI" )
     set_description( N_("AVI demuxer") )
     set_capability( "demux", 212 )
+    set_callbacks( Open, Close )
+
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
-
     add_bool( "avi-interleaved", false,
               INTERLEAVE_TEXT, INTERLEAVE_TEXT, true )
     add_integer( "avi-index", 0,
               INDEX_TEXT, INDEX_LONGTEXT, false )
         change_integer_list( pi_index, ppsz_indexes )
-
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 /*****************************************************************************

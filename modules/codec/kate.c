@@ -264,14 +264,24 @@ static const char *const ppsz_color_descriptions[] = {
     )
 
 vlc_module_begin ()
+    set_help( HELP_TEXT )
+
     set_shortname( N_("Kate"))
     set_description( N_("Kate overlay decoder") )
-    set_help( HELP_TEXT )
     set_capability( "spu decoder", 50 )
     set_callbacks( OpenDecoder, CloseDecoder )
+    add_shortcut( "kate" )
+
+#ifdef ENABLE_PACKETIZER
+    add_submodule ()
+    set_description( N_("Kate text subtitles packetizer") )
+    set_capability( "packetizer", 100 )
+    set_callbacks( OpenPacketizer, CloseDecoder )
+    add_shortcut( "kate" )
+#endif
+
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_SCODEC )
-    add_shortcut( "kate" )
 
     add_bool( "kate-formatted", true, FORMAT_TEXT, FORMAT_LONGTEXT,
               true )
@@ -316,15 +326,6 @@ vlc_module_begin ()
                             TIGER_DEFAULT_BACKGROUND_ALPHA_TEXT, TIGER_DEFAULT_BACKGROUND_ALPHA_LONGTEXT,
                             true);
 #endif
-
-#ifdef ENABLE_PACKETIZER
-    add_submodule ()
-    set_description( N_("Kate text subtitles packetizer") )
-    set_capability( "packetizer", 100 )
-    set_callbacks( OpenPacketizer, CloseDecoder )
-    add_shortcut( "kate" )
-#endif
-
 vlc_module_end ()
 
 static int OpenCommon( vlc_object_t *p_this, bool b_packetizer )

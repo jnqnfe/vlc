@@ -51,9 +51,10 @@ vlc_module_begin ()
     set_description( N_("Parametric Equalizer") )
     set_shortname( N_("Parametric Equalizer" ) )
     set_capability( "audio filter", 0 )
+    set_callbacks( Open, Close )
+
     set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AFILTER )
-
     add_float( "param-eq-lowf", 100, N_("Low freq (Hz)"),NULL, false )
     add_float_with_range( "param-eq-lowgain", 0, -20.0, 20.0,
                           N_("Low freq gain (dB)"), NULL,false )
@@ -75,8 +76,6 @@ vlc_module_begin ()
                           N_("Freq 3 gain (dB)"),NULL,false )
     add_float_with_range( "param-eq-q3", 3, 0.1, 100.0,
                           N_("Freq 3 Q"),NULL,false )
-
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 /*****************************************************************************

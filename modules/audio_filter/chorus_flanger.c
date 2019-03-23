@@ -72,12 +72,16 @@ struct filter_sys_t
 
 
 vlc_module_begin ()
+    set_help( N_("Add a delay effect to the sound") )
+
     set_description( N_("Sound Delay") )
     set_shortname( N_("Delay") )
-    set_help( N_("Add a delay effect to the sound") )
+    add_shortcut( "delay" )
+    set_capability( "audio filter", 0 )
+    set_callbacks( Open, Close )
+
     set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AFILTER )
-    add_shortcut( "delay" )
     add_float( "delay-time", 20, N_("Delay time"),
         N_("Time in milliseconds of the average delay. Note average"), true )
     add_float( "sweep-depth", 6, N_("Sweep Depth"),
@@ -92,8 +96,6 @@ vlc_module_begin ()
         N_("Wet mix"), N_("Level of delayed signal"), true )
     add_float_with_range( "dry-mix", 0.4, -0.999, 0.999,
         N_("Dry Mix"), N_("Level of input signal"), true )
-    set_capability( "audio filter", 0 )
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 /**

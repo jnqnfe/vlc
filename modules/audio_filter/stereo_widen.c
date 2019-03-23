@@ -74,14 +74,15 @@ typedef struct
  * Module descriptor
  *****************************************************************************/
 vlc_module_begin ()
+    set_help( HELP_TEXT )
+
     set_shortname( N_("Stereo Enhancer") )
     set_description( N_("Simple stereo widening effect") )
-    set_help( HELP_TEXT )
-    set_category( CAT_AUDIO )
-    set_subcategory( SUBCAT_AUDIO_AFILTER )
     set_capability( "audio filter", 0 )
     set_callbacks( Open, Close )
 
+    set_category( CAT_AUDIO )
+    set_subcategory( SUBCAT_AUDIO_AFILTER )
     add_float_with_range( CONFIG_PREFIX "delay", 20, 1, 100,
         DELAY_TEXT, DELAY_LONGTEXT, true )
     add_float_with_range( CONFIG_PREFIX "feedback", 0.3, 0.0, 0.9,

@@ -34,20 +34,20 @@ static int  Open(vlc_object_t *);
 
 vlc_module_begin ()
     set_shortname("accesstweaks")
-    set_category (CAT_INPUT)
-    set_subcategory (SUBCAT_INPUT_STREAM_FILTER)
     set_capability ("stream_filter", 301)
     /* Developers only module, no translation please */
     set_description ("Access controls tweaking")
     set_callbacks(Open, NULL)
+    add_shortcut("tweaks")
 
+    set_category (CAT_INPUT)
+    set_subcategory (SUBCAT_INPUT_STREAM_FILTER)
     add_bool("seek", true, "Expose seeking capability", NULL, false)
         change_volatile ()
     add_bool("fastseek", true, "Expose fast-seeking capability", NULL, false)
         change_volatile ()
     add_bool("stream-size", true, "Expose stream size if known", NULL, false)
         change_volatile()
-    add_shortcut("tweaks")
 vlc_module_end ()
 
 typedef struct

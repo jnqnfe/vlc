@@ -53,6 +53,8 @@ vlc_module_begin ()
     set_description( N_("Matroska stream demuxer" ) )
     set_capability( "demux", 50 )
     set_callbacks( Open, Close )
+    add_shortcut( "mka", "mkv" )
+
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
 
@@ -79,8 +81,6 @@ vlc_module_begin ()
     add_bool( "mkv-preload-clusters", false,
             N_("Preload clusters"),
             N_("Find all cluster positions by jumping cluster-to-cluster before playback"), true );
-
-    add_shortcut( "mka", "mkv" )
 vlc_module_end ()
 
 namespace mkv {

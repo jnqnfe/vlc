@@ -159,10 +159,11 @@ static const char * const present_text[] = {
 vlc_module_begin ()
     set_shortname ("Vulkan/" STR(PLATFORM_NAME))
     set_description ("Vulkan context (" STR(PLATFORM_NAME) ")")
-    set_category (CAT_VIDEO)
-    set_subcategory (SUBCAT_VIDEO_VOUT)
     set_capability ("vulkan", 10)
     set_callbacks (Open, Close)
+
+    set_category (CAT_VIDEO)
+    set_subcategory (SUBCAT_VIDEO_VOUT)
 
     set_section("Device selection", NULL)
     add_bool("vk-debug", false, DEBUG_TEXT, DEBUG_LONGTEXT, false)
@@ -182,5 +183,4 @@ vlc_module_begin ()
     add_integer("present-mode", VK_PRESENT_MODE_FIFO_KHR,
             PRESENT_MODE_TEXT, PRESENT_MODE_LONGTEXT, false)
             change_integer_list(present_values, present_text)
-
 vlc_module_end ()

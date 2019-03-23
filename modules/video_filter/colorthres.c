@@ -66,19 +66,21 @@ static const char *const ppsz_color_descriptions[] = {
 #define CFG_PREFIX "colorthres-"
 
 vlc_module_begin ()
+    set_help(COLOR_HELP)
+
     set_description( N_("Color threshold filter") )
     set_shortname( N_("Color threshold" ))
-    set_help(COLOR_HELP)
+    set_capability( "video filter", 0 )
+    set_callbacks( Create, Destroy )
+
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
-    set_capability( "video filter", 0 )
     add_rgb(CFG_PREFIX "color", 0x00FF0000, COLOR_TEXT, COLOR_LONGTEXT)
         change_integer_list( pi_color_values, ppsz_color_descriptions )
     add_integer( CFG_PREFIX "saturationthres", 20,
                  N_("Saturation threshold"), "", false )
     add_integer( CFG_PREFIX "similaritythres", 15,
                  N_("Similarity threshold"), "", false )
-    set_callbacks( Create, Destroy )
 vlc_module_end ()
 
 static const char *const ppsz_filter_options[] = {

@@ -76,10 +76,12 @@ static int AdjustCallback( vlc_object_t *p_this, char const *psz_var,
 vlc_module_begin ()
     set_description( N_("Image properties filter") )
     set_shortname( N_("Image adjust" ))
+    set_capability( "video filter", 0 )
+    add_shortcut( "adjust" )
+    set_callbacks( Create, Destroy )
+
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
-    set_capability( "video filter", 0 )
-
     add_float_with_range( "contrast", 1.0, 0.0, 2.0,
                           CONT_TEXT, CONT_LONGTEXT, false )
         change_safe()
@@ -98,9 +100,6 @@ vlc_module_begin ()
     add_bool( "brightness-threshold", false,
               THRES_TEXT, THRES_LONGTEXT, false )
         change_safe()
-
-    add_shortcut( "adjust" )
-    set_callbacks( Create, Destroy )
 vlc_module_end ()
 
 static const char *const ppsz_filter_options[] = {

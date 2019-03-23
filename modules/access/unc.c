@@ -371,15 +371,17 @@ static void Close(vlc_object_t *obj)
 }
 
 vlc_module_begin()
+    set_help(N_("Microsoft Windows networking (UNC) input"))
+
     set_shortname("UNC")
     set_description(N_("UNC input"))
-    set_help(N_("Microsoft Windows networking (UNC) input"))
     set_capability("access", 0)
+    add_shortcut("smb")
+    set_callbacks(Open, Close)
+
     set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_ACCESS)
     add_string("smb-user", NULL, SMB_USER_TEXT, SMB_USER_LONGTEXT, false)
     add_password("smb-pwd", NULL, SMB_PASS_TEXT, SMB_PASS_LONGTEXT)
     add_string("smb-domain", NULL, SMB_DOMAIN_TEXT, SMB_DOMAIN_LONGTEXT, false)
-    add_shortcut("smb")
-    set_callbacks(Open, Close)
 vlc_module_end()

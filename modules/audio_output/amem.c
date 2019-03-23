@@ -34,10 +34,10 @@ vlc_module_begin ()
     set_shortname (N_("Audio memory"))
     set_description (N_("Audio memory output"))
     set_capability ("audio output", 0)
-    set_category (CAT_AUDIO)
-    set_subcategory (SUBCAT_AUDIO_AOUT)
     set_callbacks (Open, Close)
 
+    set_category (CAT_AUDIO)
+    set_subcategory (SUBCAT_AUDIO_AOUT)
     add_string ("amem-format", "S16N",
                 N_("Sample format"), N_("Sample format"), false)
         change_private()
@@ -49,7 +49,6 @@ vlc_module_begin ()
                  N_("Channels count"), N_("Channels count"), false)
         change_integer_range (1, AOUT_CHAN_MAX)
         change_private()
-
 vlc_module_end ()
 
 typedef struct

@@ -74,15 +74,16 @@ static int BluescreenCallback( vlc_object_t *, char const *,
  * Module descriptor
  *****************************************************************************/
 vlc_module_begin ()
+    set_help( BLUESCREEN_HELP )
+
     set_description( N_("Bluescreen video filter") )
     set_shortname( N_("Bluescreen" ))
-    set_help( BLUESCREEN_HELP )
-    set_category( CAT_VIDEO )
-    set_subcategory( SUBCAT_VIDEO_VFILTER )
     set_capability( "video filter", 0 )
     add_shortcut( "bluescreen" )
     set_callbacks( Create, Destroy )
 
+    set_category( CAT_VIDEO )
+    set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_integer_with_range( CFG_PREFIX "u", 120, 0, 255,
                             BLUESCREENU_TEXT, BLUESCREENU_LONGTEXT, false )
     add_integer_with_range( CFG_PREFIX "v", 90, 0, 255,

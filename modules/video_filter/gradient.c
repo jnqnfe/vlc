@@ -77,13 +77,16 @@ static const char *const mode_list_text[] = { N_("Gradient"), N_("Edge"), N_("Ho
 #define FILTER_PREFIX "gradient-"
 
 vlc_module_begin ()
+    set_help(GRADIENT_HELP)
+
     set_description( N_("Gradient video filter") )
     set_shortname( N_( "Gradient" ))
-    set_help(GRADIENT_HELP)
     set_capability( "video filter", 0 )
+    add_shortcut( "gradient" )
+    set_callbacks( Create, Destroy )
+
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
-
     add_string( FILTER_PREFIX "mode", "gradient",
                 MODE_TEXT, MODE_LONGTEXT, false )
         change_string_list( mode_list, mode_list_text )
@@ -92,9 +95,6 @@ vlc_module_begin ()
                 GRADIENT_TEXT, GRADIENT_LONGTEXT, false )
     add_bool( FILTER_PREFIX "cartoon", true,
                 CARTOON_TEXT, CARTOON_LONGTEXT, false )
-
-    add_shortcut( "gradient" )
-    set_callbacks( Create, Destroy )
 vlc_module_end ()
 
 static const char *const ppsz_filter_options[] = {

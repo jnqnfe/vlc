@@ -67,15 +67,14 @@ vlc_module_begin ()
     set_description( N_("Rotate video filter") )
     set_shortname( N_( "Rotate" ))
     set_capability( "video filter", 0 )
+    add_shortcut( "rotate" )
+    set_callbacks( Create, Destroy )
+
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
-
     add_float( FILTER_PREFIX "angle", 30., ANGLE_TEXT, ANGLE_LONGTEXT, false )
     add_bool( FILTER_PREFIX "use-motion", false, MOTION_TEXT,
               MOTION_LONGTEXT, false )
-
-    add_shortcut( "rotate" )
-    set_callbacks( Create, Destroy )
 vlc_module_end ()
 
 static const char *const ppsz_filter_options[] = {

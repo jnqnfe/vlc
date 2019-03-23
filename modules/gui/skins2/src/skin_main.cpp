@@ -497,6 +497,16 @@ static void WindowClose( vout_window_t *pWnd )
     " to play back video even though no video tag is implemented")
 
 vlc_module_begin ()
+    set_shortname( N_("Skins"))
+    set_description( N_("Skinnable Interface") )
+    set_capability( "interface", 30 )
+    set_callbacks( Open, Close )
+    add_shortcut( "skins" )
+
+    add_submodule ()
+        set_capability( "vout window", 51 )
+        set_callbacks( WindowOpen, NULL )
+
     set_category( CAT_INTERFACE )
     set_subcategory( SUBCAT_INTERFACE_MAIN )
     add_loadfile("skins2-last", "", SKINS2_LAST, SKINS2_LAST_LONG)
@@ -516,14 +526,4 @@ vlc_module_begin ()
               SKINS2_PLAYLIST_LONG, false );
     add_bool( "skinned-video", true, SKINS2_VIDEO,
               SKINS2_VIDEO_LONG, false );
-    set_shortname( N_("Skins"))
-    set_description( N_("Skinnable Interface") )
-    set_capability( "interface", 30 )
-    set_callbacks( Open, Close )
-    add_shortcut( "skins" )
-
-    add_submodule ()
-        set_capability( "vout window", 51 )
-        set_callbacks( WindowOpen, NULL )
-
 vlc_module_end ()

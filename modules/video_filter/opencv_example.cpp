@@ -78,11 +78,10 @@ vlc_module_begin ()
     set_shortname( N_( "OpenCV example" ))
     set_capability( "opencv internal filter", 1 )
     add_shortcut( "opencv_example" )
+    set_callbacks( OpenFilter, CloseFilter )
 
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
-    set_callbacks( OpenFilter, CloseFilter )
-
     add_string( "opencv-haarcascade-file", "c:\\haarcascade_frontalface_alt.xml",
                           N_("Haar cascade filename"),
                           N_("Name of XML file containing Haar cascade description"), false);

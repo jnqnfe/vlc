@@ -157,7 +157,6 @@ static void Flush( decoder_t * );
 vlc_module_begin ()
 
     add_shortcut( "flac" )
-
     set_description( N_("Flac audio decoder") )
     set_capability( "audio decoder", 100 )
     set_callbacks( OpenDecoder, CloseDecoder )

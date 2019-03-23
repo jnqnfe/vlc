@@ -246,18 +246,26 @@ static void CloseAudio          (vlc_object_t *);
 vlc_module_begin()
     set_shortname(N_("DecklinkOutput"))
     set_description(N_("Output module to write to Blackmagic SDI card"))
-    //set_category( CAT_INPUT )
-    //set_subcategory( SUBCAT_INPUT_GENERAL )
+
+    add_submodule ()
+    set_description (N_("DeckLink Video Output module"))
+    set_capability("vout display", 0)
+    set_callbacks (OpenVideo, CloseVideo)
+
+    add_submodule ()
+    set_description (N_("DeckLink Audio Output module"))
+    set_capability("audio output", 0)
+    set_callbacks (OpenAudio, CloseAudio)
+
+    /* disabled so that all options actually appear under video */
+    //set_category(CAT_INPUT)
+    //set_subcategory(SUBCAT_INPUT_GENERAL)
     set_section(N_("DeckLink General Options"), NULL)
     add_integer(CFG_PREFIX "card-index", 0,
                 CARD_INDEX_TEXT, CARD_INDEX_LONGTEXT, true)
 
-    add_submodule ()
-    set_description (N_("DeckLink Video Output module"))
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
-    set_capability("vout display", 0)
-    set_callbacks (OpenVideo, CloseVideo)
     set_section(N_("DeckLink Video Options"), NULL)
     add_string(VIDEO_CFG_PREFIX "video-connection", "sdi",
                 VIDEO_CONNECTION_TEXT, VIDEO_CONNECTION_LONGTEXT, true)
@@ -279,13 +287,9 @@ vlc_module_begin()
     add_loadfile(VIDEO_CFG_PREFIX "nosignal-image", NULL,
                  NOSIGNAL_IMAGE_TEXT, NOSIGNAL_IMAGE_LONGTEXT)
 
-
-    add_submodule ()
-    set_description (N_("DeckLink Audio Output module"))
     set_category(CAT_AUDIO)
     set_subcategory(SUBCAT_AUDIO_AOUT)
-    set_capability("audio output", 0)
-    set_callbacks (OpenAudio, CloseAudio)
+
     set_section(N_("DeckLink Audio Options"), NULL)
     add_integer(AUDIO_CFG_PREFIX "audio-rate", 48000,
                 RATE_TEXT, RATE_LONGTEXT, true)

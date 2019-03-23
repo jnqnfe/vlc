@@ -253,12 +253,23 @@ static const char *const psz_raise_list_text[] =
 vlc_module_begin ()
     set_shortname( "Qt" )
     set_description( N_("Qt interface") )
-    set_category( CAT_INTERFACE )
-    set_subcategory( SUBCAT_INTERFACE_MAIN )
     set_capability( "interface", 151 )
     set_callbacks( OpenIntf, Close )
-
     add_shortcut("qt")
+
+    cannot_unload_broken_library()
+
+    add_submodule ()
+        set_description( "Dialogs provider" )
+        set_capability( "dialogs provider", 51 )
+        set_callbacks( OpenDialogs, Close )
+
+    add_submodule ()
+        set_capability( "vout window", 0 )
+        set_callbacks( WindowOpen, NULL )
+
+    set_category( CAT_INTERFACE )
+    set_subcategory( SUBCAT_INTERFACE_MAIN )
 
     add_bool( "qt-minimal-view", false, QT_MINIMAL_MODE_TEXT,
               QT_MINIMAL_MODE_TEXT, false );
@@ -351,19 +362,6 @@ vlc_module_begin ()
     add_integer( "qt-auto-raise", MainInterface::RAISE_VIDEO, AUTORAISE_ON_PLAYBACK_TEXT,
                  AUTORAISE_ON_PLAYBACK_LONGTEXT, false )
             change_integer_list( i_raise_list, psz_raise_list_text )
-
-    cannot_unload_broken_library()
-
-    add_submodule ()
-        set_description( "Dialogs provider" )
-        set_capability( "dialogs provider", 51 )
-
-        set_callbacks( OpenDialogs, Close )
-
-    add_submodule ()
-        set_capability( "vout window", 0 )
-        set_callbacks( WindowOpen, NULL )
-
 vlc_module_end ()
 
 /*****************************************/

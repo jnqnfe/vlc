@@ -929,10 +929,13 @@ vlc_module_begin()
     set_shortname(N_("VDPAU"))
     set_description(N_("VDPAU surface conversions"))
     set_capability("video converter", 10)
-    set_category(CAT_VIDEO)
-    set_subcategory(SUBCAT_VIDEO_VFILTER)
     set_callbacks(OutputOpen, OutputClose)
 
+    add_submodule()
+    set_callbacks(YCbCrOpen, NULL)
+
+    set_category(CAT_VIDEO)
+    set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_integer("vdpau-deinterlace",
                 VDP_VIDEO_MIXER_FEATURE_DEINTERLACE_TEMPORAL_SPATIAL,
                 N_("Deinterlace"), N_("Deinterlacing algorithm"), true)
@@ -946,7 +949,4 @@ vlc_module_begin()
         N_("Noise reduction level"), N_("Noise reduction level"), true)
     add_integer_with_range("vdpau-scaling", 0, 0, 9,
        N_("Scaling quality"), N_("High quality scaling level"), true)
-
-    add_submodule()
-    set_callbacks(YCbCrOpen, NULL)
 vlc_module_end()

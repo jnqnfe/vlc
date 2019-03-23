@@ -91,12 +91,15 @@ static void SavePicture( filter_t *, picture_t * );
 #define CFG_PREFIX "scene-"
 
 vlc_module_begin ()
+    set_help(SCENE_HELP)
+
     set_shortname( N_( "Scene filter" ) )
     set_description( N_( "Scene video filter" ) )
-    set_help(SCENE_HELP)
+    set_capability( "video filter", 0 )
+    set_callbacks( Create, Destroy )
+
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
-    set_capability( "video filter", 0 )
 
     /* General options */
     add_string(  CFG_PREFIX "format", "png",
@@ -115,8 +118,6 @@ vlc_module_begin ()
     /* Snapshot method */
     add_integer_with_range( CFG_PREFIX "ratio", 50, 1, INT_MAX,
                             RATIO_TEXT, RATIO_LONGTEXT, false )
-
-    set_callbacks( Create, Destroy )
 vlc_module_end ()
 
 static const char *const ppsz_vfilter_options[] = {

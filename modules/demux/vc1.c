@@ -44,13 +44,13 @@ static void Close( vlc_object_t * );
 
 vlc_module_begin ()
     set_shortname( "VC-1")
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_DEMUX )
     set_description( N_("VC1 video demuxer" ) )
     set_capability( "demux", 0 )
-    add_float( "vc1-fps", 25.0, FPS_TEXT, FPS_LONGTEXT, true )
     set_callbacks( Open, Close )
     add_shortcut( "vc1" )
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_DEMUX )
+    add_float( "vc1-fps", 25.0, FPS_TEXT, FPS_LONGTEXT, true )
 vlc_module_end ()
 
 /*****************************************************************************

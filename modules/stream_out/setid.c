@@ -59,28 +59,30 @@ static void Close     ( vlc_object_t * );
 
 vlc_module_begin()
     set_shortname( N_("Set ID"))
-    set_section( N_("Set ES id"), NULL )
     set_description( N_("Change the id of an elementary stream"))
     set_capability( "sout stream", 50 )
     add_shortcut( "setid" )
-    set_category( CAT_SOUT )
-    set_subcategory( SUBCAT_SOUT_STREAM )
     set_callbacks( OpenId, Close )
-    add_integer( SOUT_CFG_PREFIX_ID "id", 0, ID_TEXT, ID_LONGTEXT, false )
-    add_integer( SOUT_CFG_PREFIX_ID "new-id", 0, NEWID_TEXT, NEWID_LONGTEXT,
-                 false )
 
     add_submodule ()
-    set_section( N_("Set ES Lang"), NULL )
     set_shortname( N_("Set Lang"))
     set_description( N_("Change the language of an elementary stream"))
     set_capability( "sout stream", 50 )
     add_shortcut( "setlang" );
     set_callbacks( OpenLang, Close )
+
+    set_category( CAT_SOUT )
+    set_subcategory( SUBCAT_SOUT_STREAM )
+
+    set_section( N_("Set ES id"), NULL )
+    add_integer( SOUT_CFG_PREFIX_ID "id", 0, ID_TEXT, ID_LONGTEXT, false )
+    add_integer( SOUT_CFG_PREFIX_ID "new-id", 0, NEWID_TEXT, NEWID_LONGTEXT,
+                 false )
+
+    set_section( N_("Set ES Lang"), NULL )
     add_integer( SOUT_CFG_PREFIX_LANG "id", 0, ID_TEXT, ID_LONGTEXT, false )
     add_string( SOUT_CFG_PREFIX_LANG "lang", "eng", LANG_TEXT, LANG_LONGTEXT,
                 false );
-
 vlc_module_end()
 
 

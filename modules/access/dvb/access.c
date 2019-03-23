@@ -77,9 +77,15 @@ static void Close( vlc_object_t *p_this );
 vlc_module_begin ()
     set_shortname( N_("DVB") )
     set_description( N_("DVB input with v4l2 support") )
+    set_capability( "access", 0 )
+    add_shortcut( "dvb",                        /* Generic name */
+                  "dvb-s", "qpsk", "satellite", /* Satellite */
+                  "dvb-c", "cable",             /* Cable */
+                  "dvb-t", "terrestrial" )      /* Terrestrial */
+    set_callbacks( Open, Close )
+
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACCESS )
-
     add_bool( "dvb-probe", true, PROBE_TEXT, PROBE_LONGTEXT, true )
     /* DVB-S (satellite) */
     add_string( "dvb-satellite", NULL, SATELLITE_TEXT, SATELLITE_LONGTEXT,
@@ -87,15 +93,6 @@ vlc_module_begin ()
     add_string( "dvb-scanlist", NULL, SCANLIST_TEXT, SCANLIST_LONGTEXT,
                 true )
     add_bool( "dvb-scan-nit", true, SCAN_NIT_TEXT, NULL, true )
-
-    set_capability( "access", 0 )
-    add_shortcut( "dvb",                        /* Generic name */
-                  "dvb-s", "qpsk", "satellite", /* Satellite */
-                  "dvb-c", "cable",             /* Cable */
-                  "dvb-t", "terrestrial" )      /* Terrestrial */
-
-    set_callbacks( Open, Close )
-
 vlc_module_end ()
 
 

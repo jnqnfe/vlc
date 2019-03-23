@@ -1927,11 +1927,14 @@ static void Deactivate( vlc_object_t *p_this )
 
 vlc_module_begin()
     set_shortname(N_("RC"))
+    set_description(N_("Remote control interface"))
+    set_capability("interface", 20)
+    set_callbacks(Activate, Deactivate)
+    add_shortcut("cli", "rc", "oldrc")
+
     set_category(CAT_INTERFACE)
     set_subcategory(SUBCAT_INTERFACE_MAIN)
-    set_description(N_("Remote control interface"))
     add_bool("rc-show-pos", false, POS_TEXT, POS_LONGTEXT, true)
-
 #ifdef _WIN32
     add_bool("rc-quiet", false, QUIET_TEXT, QUIET_LONGTEXT, false)
 #else
@@ -1943,9 +1946,4 @@ vlc_module_begin()
 #endif
 #endif
     add_string("rc-host", NULL, HOST_TEXT, HOST_LONGTEXT, true)
-
-    set_capability("interface", 20)
-
-    set_callbacks(Activate, Deactivate)
-    add_shortcut("cli", "rc", "oldrc")
 vlc_module_end()

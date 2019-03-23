@@ -57,17 +57,18 @@ static void Close (vlc_object_t *);
 vlc_module_begin ()
     set_shortname (N_("SRC resampler"))
     set_description (N_("Secret Rabbit Code (libsamplerate) resampler") )
-    set_category (CAT_AUDIO)
-    set_subcategory (SUBCAT_AUDIO_RESAMPLER)
-    add_integer ("src-converter-type", SRC_SINC_FASTEST,
-                 SRC_CONV_TYPE_TEXT, SRC_CONV_TYPE_LONGTEXT, true)
-        change_integer_list (conv_type_values, conv_type_texts)
     set_capability ("audio converter", 50)
     set_callbacks (Open, Close)
 
     add_submodule ()
     set_capability ("audio resampler", 50)
     set_callbacks (OpenResampler, Close)
+
+    set_category (CAT_AUDIO)
+    set_subcategory (SUBCAT_AUDIO_RESAMPLER)
+    add_integer ("src-converter-type", SRC_SINC_FASTEST,
+                 SRC_CONV_TYPE_TEXT, SRC_CONV_TYPE_LONGTEXT, true)
+        change_integer_list (conv_type_values, conv_type_texts)
 vlc_module_end ()
 
 static block_t *Resample (filter_t *, block_t *);

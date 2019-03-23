@@ -49,16 +49,17 @@ vlc_module_begin ()
     set_description( N_("DVD subtitles decoder") )
     set_shortname( N_("DVD subtitles") )
     set_capability( "spu decoder", 75 )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_SCODEC )
     set_callbacks( DecoderOpen, Close )
 
-    add_bool( "dvdsub-transparency", false,
-              DVDSUBTRANS_DISABLE_TEXT, DVDSUBTRANS_DISABLE_LONGTEXT, true )
     add_submodule ()
     set_description( N_("DVD subtitles packetizer") )
     set_capability( "packetizer", 50 )
     set_callbacks( PacketizerOpen, Close )
+
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_SCODEC )
+    add_bool( "dvdsub-transparency", false,
+              DVDSUBTRANS_DISABLE_TEXT, DVDSUBTRANS_DISABLE_LONGTEXT, true )
 vlc_module_end ()
 
 /*****************************************************************************

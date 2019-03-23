@@ -40,6 +40,7 @@ vlc_module_begin ()
     set_shortname( N_("WEBVTT decoder"))
     set_description( N_("WEBVTT subtitles decoder") )
     set_callbacks( webvtt_OpenDecoder, webvtt_CloseDecoder )
+
     add_submodule()
         set_shortname( "WEBVTT" )
         set_description( N_("WEBVTT subtitles parser") )
@@ -58,6 +59,7 @@ vlc_module_begin ()
         set_capability( "encoder", 101 )
         set_callbacks( webvtt_OpenEncoder, webvtt_CloseEncoder )
 #endif
+
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_SCODEC )
     //set_subcategory( SUBCAT_INPUT_DEMUX )

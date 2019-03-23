@@ -274,6 +274,23 @@ static const char *const psz_tuner_audio_modes_list_text[] = {
 vlc_module_begin ()
     set_shortname( N_("V4L") )
     set_description( N_("Video4Linux input") )
+    add_shortcut( "v4l", "v4l2" )
+    set_capability( "access", 2 )
+    set_callbacks( DemuxOpen, DemuxClose )
+
+    add_submodule ()
+    add_shortcut( "v4l", "v4l2", "v4l2c" )
+    set_description( N_("Video4Linux compressed A/V input") )
+    set_capability( "access", 0 )
+    /* use these when open as access_demux fails; VLC will use another demux */
+    set_callbacks( AccessOpen, AccessClose )
+
+    add_submodule ()
+    add_shortcut ("radio" /*, "fm", "am" */)
+    set_description (N_("Video4Linux radio tuner"))
+    set_capability ("access", 1)
+    set_callbacks (RadioOpen, RadioClose)
+
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACCESS )
 
@@ -402,24 +419,6 @@ vlc_module_begin ()
     add_string( CFG_PREFIX "set-ctrls", NULL, S_CTRLS_TEXT,
               S_CTRLS_LONGTEXT, true )
         change_safe()
-
-    add_shortcut( "v4l", "v4l2" )
-    set_capability( "access", 2 )
-    set_callbacks( DemuxOpen, DemuxClose )
-
-    add_submodule ()
-    add_shortcut( "v4l", "v4l2", "v4l2c" )
-    set_description( N_("Video4Linux compressed A/V input") )
-    set_capability( "access", 0 )
-    /* use these when open as access_demux fails; VLC will use another demux */
-    set_callbacks( AccessOpen, AccessClose )
-
-    add_submodule ()
-    add_shortcut ("radio" /*, "fm", "am" */)
-    set_description (N_("Video4Linux radio tuner"))
-    set_capability ("access", 1)
-    set_callbacks (RadioOpen, RadioClose)
-
 vlc_module_end ()
 
 /**

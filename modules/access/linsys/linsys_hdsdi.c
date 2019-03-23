@@ -88,22 +88,21 @@ static void Close( vlc_object_t * );
 vlc_module_begin()
     set_description( N_("HD-SDI Input") )
     set_shortname( N_("HD-SDI") )
+    set_capability( "access", 0 )
+    add_shortcut( "linsys-hdsdi" )
+    set_callbacks( Open, Close )
+
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACCESS )
 
     add_integer( "linsys-hdsdi-link", 0,
         LINK_TEXT, LINK_LONGTEXT, true )
-
     add_integer( "linsys-hdsdi-id-video", 0,
         VIDEO_TEXT, VIDEO_LONGTEXT, true )
     add_string( "linsys-hdsdi-aspect-ratio", "",
         VIDEO_ASPECT_TEXT, VIDEO_ASPECT_LONGTEXT, true )
     add_string( "linsys-hdsdi-audio", "0=1,1",
         AUDIO_TEXT, AUDIO_LONGTEXT, true )
-
-    set_capability( "access", 0 )
-    add_shortcut( "linsys-hdsdi" )
-    set_callbacks( Open, Close )
 vlc_module_end()
 
 /*****************************************************************************

@@ -109,15 +109,11 @@ static block_t *Encode( encoder_t *p_enc, picture_t *p_pict );
 #define ENC_POSTPROCESS_TEXT N_("Post processing quality")
 
 vlc_module_begin ()
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_VCODEC )
     set_shortname( "Theora" )
     set_description( N_("Theora video decoder") )
     set_capability( "video decoder", 100 )
     set_callbacks( OpenDecoder, CloseDecoder )
     add_shortcut( "theora" )
-#   define DEC_CFG_PREFIX "theora-"
-    add_integer( DEC_CFG_PREFIX "postproc", -1, ENC_POSTPROCESS_TEXT, NULL, true )
 
     add_submodule ()
     set_description( N_("Theora video packetizer") )
@@ -131,11 +127,18 @@ vlc_module_begin ()
     set_capability( "encoder", 150 )
     set_callbacks( OpenEncoder, CloseEncoder )
     add_shortcut( "theora" )
+#endif
 
+#   define DEC_CFG_PREFIX "theora-"
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_VCODEC )
+    add_integer( DEC_CFG_PREFIX "postproc", -1, ENC_POSTPROCESS_TEXT, NULL, true )
+#ifdef ENABLE_SOUT
 #   define ENC_CFG_PREFIX "sout-theora-"
     add_integer( ENC_CFG_PREFIX "quality", 2, ENC_QUALITY_TEXT,
                  ENC_QUALITY_LONGTEXT, false )
 #endif
+
 vlc_module_end ()
 
 static const char *const ppsz_enc_options[] = {

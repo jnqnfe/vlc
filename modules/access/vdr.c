@@ -80,21 +80,20 @@ static void Close( vlc_object_t * );
     "Default frame rate for chapter import." )
 
 vlc_module_begin ()
-    set_category( CAT_INPUT )
-    set_shortname( N_("VDR") )
     set_help( HELP_TEXT )
-    set_subcategory( SUBCAT_INPUT_ACCESS )
+
+    set_shortname( N_("VDR") )
     set_description( N_("VDR recordings") )
+    set_capability( "access", 60 )
+    add_shortcut( "vdr", "directory", "dir", "file" )
+    set_callbacks( Open, Close )
+
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_ACCESS )
     add_integer( "vdr-chapter-offset", 0,
         CHAPTER_OFFSET_TEXT, CHAPTER_OFFSET_LONGTEXT, true )
     add_float_with_range( "vdr-fps", 25, 1, 1000,
         FPS_TEXT, FPS_LONGTEXT, true )
-    set_capability( "access", 60 )
-    add_shortcut( "vdr" )
-    add_shortcut( "directory" )
-    add_shortcut( "dir" )
-    add_shortcut( "file" )
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 /*****************************************************************************

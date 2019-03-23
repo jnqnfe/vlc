@@ -182,6 +182,7 @@ vlc_module_begin ()
     set_description( N_("Text subtitle decoder") )
     set_capability( "spu decoder", 50 )
     set_callbacks( OpenDecoder, CloseDecoder )
+
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_SCODEC )
 

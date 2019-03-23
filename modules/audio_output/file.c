@@ -111,9 +111,12 @@ static const int format_int[] = {
 vlc_module_begin ()
     set_description( N_("File audio output") )
     set_shortname( N_("File") )
+    set_capability( "audio output", 0 )
+    add_shortcut( "file", "audiofile" )
+    set_callbacks( Open, NULL )
+
     set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AOUT )
-
     add_savefile("audiofile-file", "audiofile.wav", FILE_TEXT, FILE_LONGTEXT)
     add_string( "audiofile-format", "s16",
                 FORMAT_TEXT, FORMAT_TEXT, true )
@@ -122,10 +125,6 @@ vlc_module_begin ()
                  CHANNELS_TEXT, CHANNELS_LONGTEXT, true )
         change_integer_range( 0, 6 )
     add_bool( "audiofile-wav", true, WAV_TEXT, WAV_LONGTEXT, true )
-
-    set_capability( "audio output", 0 )
-    add_shortcut( "file", "audiofile" )
-    set_callbacks( Open, NULL )
 vlc_module_end ()
 
 static int Start( audio_output_t *p_aout, audio_sample_format_t *restrict fmt )

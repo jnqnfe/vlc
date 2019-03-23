@@ -66,16 +66,15 @@ vlc_module_begin ()
      set_description( N_("JACK audio input") )
      set_capability( "access", 0 )
      set_shortname( N_( "JACK Input" ) )
+     add_shortcut( "jack" )
+     set_callbacks( Open, Close )
+
      set_category( CAT_INPUT )
      set_subcategory( SUBCAT_INPUT_ACCESS )
-
      add_bool( "jack-input-use-vlc-pace", false,
          PACE_TEXT, PACE_LONGTEXT, true )
      add_bool( "jack-input-auto-connect", false,
          AUTO_CONNECT_TEXT, AUTO_CONNECT_LONGTEXT, false )
-
-     add_shortcut( "jack" )
-     set_callbacks( Open, Close )
 vlc_module_end ()
 
 /*****************************************************************************

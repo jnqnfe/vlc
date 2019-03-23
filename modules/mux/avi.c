@@ -58,11 +58,12 @@ static void Close  ( vlc_object_t * );
 
 vlc_module_begin ()
     set_description( N_("AVI muxer") )
-    set_category( CAT_SOUT )
-    set_subcategory( SUBCAT_SOUT_MUX )
     set_capability( "sout mux", 5 )
     add_shortcut( "avi" )
+    set_callbacks( Open, Close )
 
+    set_category( CAT_SOUT )
+    set_subcategory( SUBCAT_SOUT_MUX )
     add_string( SOUT_CFG_PREFIX "artist", NULL,    CFG_ARTIST_TEXT, NULL, true )
     add_string( SOUT_CFG_PREFIX "date",   NULL,    CFG_DATE_TEXT, NULL, true )
     add_string( SOUT_CFG_PREFIX "genre",  NULL,    CFG_GENRE_TEXT, NULL, true )
@@ -74,8 +75,6 @@ vlc_module_begin ()
                 "VLC Media Player - " VERSION_MESSAGE,
                                                    CFG_ENCODER_TEXT, NULL, true )
     add_string( SOUT_CFG_PREFIX "keywords", NULL,  CFG_KEYWORDS_TEXT, NULL, true )
-
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 

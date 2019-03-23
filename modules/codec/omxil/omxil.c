@@ -89,6 +89,7 @@ vlc_module_begin ()
     set_description( N_("Audio/Video decoder (using OpenMAX IL)") )
     set_capability( "video decoder", 80 )
     set_callbacks( OpenDecoder, CloseGeneric )
+
 #ifndef __ANDROID__
     add_submodule()
     set_capability("audio decoder", 80)

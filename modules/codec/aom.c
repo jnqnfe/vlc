@@ -68,24 +68,25 @@ vlc_module_begin ()
     set_description(N_("AOM video decoder"))
     set_capability("video decoder", 100)
     set_callbacks(OpenDecoder, CloseDecoder)
-    set_category(CAT_INPUT)
-    set_subcategory(SUBCAT_INPUT_VCODEC)
 #ifdef ENABLE_SOUT
     add_submodule()
         set_shortname("aom")
         set_capability("encoder", 101)
         set_description(N_("AOM video encoder"))
         set_callbacks(OpenEncoder, CloseEncoder)
-        add_integer( SOUT_CFG_PREFIX "profile", 0, "Profile", NULL, true )
-            change_integer_range( 0, 3 )
-        add_integer( SOUT_CFG_PREFIX "bitdepth", 8, "Bit Depth", NULL, true )
-            change_integer_list( pi_enc_bitdepth_values_list, ppsz_enc_bitdepth_text )
-        add_integer( SOUT_CFG_PREFIX "tile-rows", 0, "Tile Rows (in log2 units)", NULL, true )
-            change_integer_range( 0, 6 ) /* 1 << 6 == MAX_TILE_ROWS */
-        add_integer( SOUT_CFG_PREFIX "tile-columns", 0, "Tile Columns (in log2 units)", NULL, true )
-            change_integer_range( 0, 6 ) /* 1 << 6 == MAX_TILE_COLS */
+
+    set_category(CAT_INPUT)
+    set_subcategory(SUBCAT_INPUT_VCODEC)
+    add_integer( SOUT_CFG_PREFIX "profile", 0, "Profile", NULL, true )
+        change_integer_range( 0, 3 )
+    add_integer( SOUT_CFG_PREFIX "bitdepth", 8, "Bit Depth", NULL, true )
+        change_integer_list( pi_enc_bitdepth_values_list, ppsz_enc_bitdepth_text )
+    add_integer( SOUT_CFG_PREFIX "tile-rows", 0, "Tile Rows (in log2 units)", NULL, true )
+        change_integer_range( 0, 6 ) /* 1 << 6 == MAX_TILE_ROWS */
+    add_integer( SOUT_CFG_PREFIX "tile-columns", 0, "Tile Columns (in log2 units)", NULL, true )
+        change_integer_range( 0, 6 ) /* 1 << 6 == MAX_TILE_COLS */
 #ifdef AOM_CTRL_AV1E_SET_ROW_MT
-        add_bool( SOUT_CFG_PREFIX "row-mt", false, "Row Multithreading", NULL, true )
+    add_bool( SOUT_CFG_PREFIX "row-mt", false, "Row Multithreading", NULL, true )
 #endif
 #endif
 vlc_module_end ()

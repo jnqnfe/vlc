@@ -50,15 +50,15 @@ vlc_module_begin ()
     set_callbacks( OpenDummy, NULL )
     add_shortcut( "dummy" )
 
-    set_category( CAT_VIDEO )
-    set_subcategory( SUBCAT_VIDEO_VOUT )
-    add_string( "dummy-chroma", NULL, CHROMA_TEXT, CHROMA_LONGTEXT, true )
-
     add_submodule ()
     set_description( N_("Statistics video output") )
     set_capability( "vout display", 0 )
     add_shortcut( "stats" )
     set_callbacks( OpenStats, NULL )
+
+    set_category( CAT_VIDEO )
+    set_subcategory( SUBCAT_VIDEO_VOUT )
+    add_string( "dummy-chroma", NULL, CHROMA_TEXT, CHROMA_LONGTEXT, true )
 vlc_module_end ()
 
 

@@ -52,11 +52,6 @@
 
 vlc_module_begin ()
     add_shortcut( "playlist" )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_DEMUX )
-
-    add_bool( "playlist-skip-ads", true,
-              SKIP_ADS_TEXT, SKIP_ADS_LONGTEXT, false )
 
     set_shortname( N_("Playlist") )
     set_description( N_("Playlist") )
@@ -128,6 +123,11 @@ vlc_module_begin ()
         add_shortcut( "wpl" )
         set_capability( "stream_filter", 310 )
         set_callbacks( Import_WPL, Close_WPL )
+
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_DEMUX )
+    add_bool( "playlist-skip-ads", true,
+              SKIP_ADS_TEXT, SKIP_ADS_LONGTEXT, false )
 vlc_module_end ()
 
 /**

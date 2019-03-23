@@ -1132,6 +1132,10 @@ vlc_module_begin ()
 
     set_shortname( N_("RIST") )
     set_description( N_("RIST input") )
+    set_capability( "access", 0 )
+    add_shortcut( "rist", "tr06" )
+    set_callbacks( Open, Close )
+
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACCESS )
 
@@ -1155,10 +1159,5 @@ vlc_module_begin ()
     add_bool( "mcast-blind-nacks", false, "Do not check for a valid rtcp message from the encoder",
         "Send nack messages even when we have not confirmed that the encoder is on our local " \
         "network.", true )
-
-    set_capability( "access", 0 )
-    add_shortcut( "rist", "tr06" )
-
-    set_callbacks( Open, Close )
 
 vlc_module_end ()

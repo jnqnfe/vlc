@@ -75,34 +75,17 @@ static int vlc_sd_probe_Open( vlc_object_t * );
 vlc_module_begin ()
         set_shortname( N_("Lua") )
         set_description( N_("Lua interpreter") )
-        set_category( CAT_INTERFACE )
-        set_subcategory( SUBCAT_INTERFACE_MAIN )
-
-        add_string( "lua-intf", "dummy", INTF_TEXT, INTF_LONGTEXT, false )
-        add_string( "lua-config", "", CONFIG_TEXT, CONFIG_LONGTEXT, false )
         set_capability( "interface", 0 )
         set_callbacks( Open_LuaIntf, Close_LuaIntf )
         add_shortcut( "luaintf" )
 
     add_submodule ()
-        set_section( N_("Lua HTTP"), 0 )
-            add_password("http-password", NULL, PASS_TEXT, PASS_LONGTEXT)
-            add_string ( "http-src",  NULL, SRC_TEXT,  SRC_LONGTEXT,  true )
-            add_bool   ( "http-index", false, INDEX_TEXT, INDEX_LONGTEXT, true )
         set_capability( "interface", 0 )
         set_callbacks( Open_LuaHTTP, Close_LuaIntf )
         add_shortcut( "luahttp", "http" )
         set_description( N_("Lua HTTP") )
 
     add_submodule ()
-        set_section( N_("Lua Telnet"), 0 )
-            add_string( "telnet-host", "localhost", TELNETHOST_TEXT,
-                        TELNETHOST_LONGTEXT, true )
-            add_integer( "telnet-port", TELNETPORT_DEFAULT, TELNETPORT_TEXT,
-                         TELNETPORT_LONGTEXT, true )
-                change_integer_range( 1, 65535 )
-            add_password("telnet-password", NULL, TELNETPWD_TEXT,
-                         TELNETPWD_LONGTEXT)
         set_capability( "interface", 0 )
         set_callbacks( Open_LuaTelnet, Close_LuaIntf )
         set_description( N_("Lua Telnet") )
@@ -144,12 +127,30 @@ vlc_module_begin ()
         set_description( N_("Lua SD Module") )
         add_shortcut( "luasd" )
         set_capability( "services_discovery", 0 )
-        add_string( "lua-sd", "", NULL, NULL, false )
-            change_volatile()
         set_callbacks( Open_LuaSD, Close_LuaSD )
 
     VLC_SD_PROBE_SUBMODULE
 
+    set_category( CAT_INTERFACE )
+    set_subcategory( SUBCAT_INTERFACE_MAIN )
+
+        add_string( "lua-intf", "dummy", INTF_TEXT, INTF_LONGTEXT, false )
+        add_string( "lua-config", "", CONFIG_TEXT, CONFIG_LONGTEXT, false )
+    set_section( N_("Lua HTTP"), 0 )
+        add_password("http-password", NULL, PASS_TEXT, PASS_LONGTEXT)
+        add_string ( "http-src",  NULL, SRC_TEXT,  SRC_LONGTEXT,  true )
+        add_bool   ( "http-index", false, INDEX_TEXT, INDEX_LONGTEXT, true )
+    set_section( N_("Lua Telnet"), 0 )
+        add_string( "telnet-host", "localhost", TELNETHOST_TEXT,
+                    TELNETHOST_LONGTEXT, true )
+        add_integer( "telnet-port", TELNETPORT_DEFAULT, TELNETPORT_TEXT,
+                     TELNETPORT_LONGTEXT, true )
+            change_integer_range( 1, 65535 )
+        add_password("telnet-password", NULL, TELNETPWD_TEXT,
+                     TELNETPWD_LONGTEXT)
+
+        add_string( "lua-sd", "", NULL, NULL, false )
+            change_volatile()
 vlc_module_end ()
 
 /*****************************************************************************

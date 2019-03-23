@@ -78,6 +78,8 @@ vlc_module_begin ()
     set_description( N_("Elementary stream output") )
     set_capability( "sout stream", 50 )
     add_shortcut( "es" )
+    set_callbacks( Open, Close )
+
     set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_STREAM )
 
@@ -104,8 +106,6 @@ vlc_module_begin ()
                 MUXV_LONGTEXT, true )
     add_string( SOUT_CFG_PREFIX "dst-video", "", DESTV_TEXT,
                 DESTV_LONGTEXT, true )
-
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 /*****************************************************************************

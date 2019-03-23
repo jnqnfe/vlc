@@ -64,17 +64,19 @@ static int Open(vlc_object_t *);
 static void Close(vlc_object_t *);
 
 vlc_module_begin()
+    set_help(N_("Samba (Windows network shares) input via libsmb2"))
+
     set_shortname("smb2")
     set_description(N_("SMB2 / SMB3 input"))
-    set_help(N_("Samba (Windows network shares) input via libsmb2"))
     set_capability("access", 21)
+    add_shortcut("smb", "smb2")
+    set_callbacks(Open, Close)
+
     set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_ACCESS)
     add_string("smb-user", NULL, SMB_USER_TEXT, SMB_USER_LONGTEXT, false)
     add_password("smb-pwd", NULL, SMB_PASS_TEXT, SMB_PASS_LONGTEXT)
     add_string("smb-domain", NULL, SMB_DOMAIN_TEXT, SMB_DOMAIN_LONGTEXT, false)
-    add_shortcut("smb", "smb2")
-    set_callbacks(Open, Close)
 vlc_module_end()
 
 struct access_sys

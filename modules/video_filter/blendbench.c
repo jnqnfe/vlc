@@ -73,9 +73,11 @@ static picture_t *Filter( filter_t *, picture_t * );
 vlc_module_begin ()
     set_description( N_("Blending benchmark filter") )
     set_shortname( N_("Blendbench" ))
+    set_capability( "video filter", 0 )
+    set_callbacks( Create, Destroy )
+
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
-    set_capability( "video filter", 0 )
 
     set_section( N_("Benchmarking"), NULL )
     add_integer( CFG_PREFIX "loops", 1000, LOOPS_TEXT,
@@ -94,8 +96,6 @@ vlc_module_begin ()
                  BLEND_IMAGE_TEXT, BLEND_IMAGE_LONGTEXT)
     add_string( CFG_PREFIX "blend-chroma", "YUVA", BLEND_CHROMA_TEXT,
               BLEND_CHROMA_LONGTEXT, false )
-
-    set_callbacks( Create, Destroy )
 vlc_module_end ()
 
 static const char *const ppsz_filter_options[] = {

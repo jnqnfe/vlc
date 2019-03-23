@@ -69,11 +69,12 @@ static void Close (vlc_object_t *);
 vlc_module_begin ()
     set_shortname (N_("Screen"))
     set_description (N_("Screen capture (with X11/XCB)"))
-    set_category (CAT_INPUT)
-    set_subcategory (SUBCAT_INPUT_ACCESS)
     set_capability ("access", 0)
     set_callbacks (Open, Close)
+    add_shortcut ("screen", "window")
 
+    set_category (CAT_INPUT)
+    set_subcategory (SUBCAT_INPUT_ACCESS)
     add_float ("screen-fps", 2.0, FPS_TEXT, FPS_LONGTEXT, true)
     add_integer ("screen-left", 0, LEFT_TEXT, LEFT_LONGTEXT, true)
         change_integer_range (-32768, 32767)
@@ -89,8 +90,6 @@ vlc_module_begin ()
         change_safe ()
     add_bool ("screen-follow-mouse", false, FOLLOW_MOUSE_TEXT,
               FOLLOW_MOUSE_LONGTEXT, true)
-
-    add_shortcut ("screen", "window")
 vlc_module_end ()
 
 /*

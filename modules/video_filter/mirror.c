@@ -76,12 +76,15 @@ static const char *const ppsz_direction_descriptions[] = {
 #define CFG_PREFIX "mirror-"
 
 vlc_module_begin ()
+    set_help( N_("Splits video in two same parts, like in a mirror") )
+
     set_description( N_("Mirror video filter") )
     set_shortname( N_("Mirror video" ))
-    set_help( N_("Splits video in two same parts, like in a mirror") )
+    set_capability( "video filter", 0 )
+    set_callbacks( Create, Destroy )
+
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
-    set_capability( "video filter", 0 )
     add_integer( CFG_PREFIX "split", 0, ORIENTATION_TEXT,
                 ORIENTATION_LONGTEXT, false )
         change_integer_list( pi_orientation_values,
@@ -89,7 +92,6 @@ vlc_module_begin ()
     add_integer( CFG_PREFIX "direction", 0, DIRECTION_TEXT,
                 DIRECTION_LONGTEXT, false )
         change_integer_list( pi_direction_values, ppsz_direction_descriptions )
-    set_callbacks( Create, Destroy )
 vlc_module_end ()
 
 /*****************************************************************************

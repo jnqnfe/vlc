@@ -58,11 +58,11 @@ static void Close(vout_display_t *vd);
 vlc_module_begin()
     set_description(N_("Video memory output"))
     set_shortname(N_("Video memory"))
+    set_capability("vout display", 0)
+    set_callbacks(Open, Close)
 
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
-    set_capability("vout display", 0)
-
     add_integer("vmem-width", 320, T_WIDTH, LT_WIDTH, false)
         change_private()
     add_integer("vmem-height", 200, T_HEIGHT, LT_HEIGHT, false)
@@ -71,8 +71,6 @@ vlc_module_begin()
         change_private()
     add_string("vmem-chroma", "RV16", T_CHROMA, LT_CHROMA, true)
         change_private()
-
-    set_callbacks(Open, Close)
 vlc_module_end()
 
 /*****************************************************************************

@@ -77,14 +77,15 @@ static void Close (vlc_object_t *);
 vlc_module_begin ()
     set_shortname( "OSS" )
     set_description (N_("Open Sound System audio output"))
+    set_capability( "audio output", 100 )
+    set_callbacks (Open, Close)
+
     set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AOUT )
     add_string ("oss-audio-device", "",
                 AUDIO_DEV_TEXT, AUDIO_DEV_LONGTEXT, false)
     add_bool("oss-spdif", false, SPDIF_TEXT, SPDIF_LONGTEXT, true)
     add_sw_gain ()
-    set_capability( "audio output", 100 )
-    set_callbacks (Open, Close)
 vlc_module_end ()
 
 static int TimeGet (audio_output_t *, vlc_tick_t *);

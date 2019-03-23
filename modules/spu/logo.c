@@ -84,15 +84,23 @@ static int  OpenVideo( vlc_object_t * );
 static void Close    ( vlc_object_t * );
 
 vlc_module_begin ()
-    set_category( CAT_VIDEO )
-    set_subcategory( SUBCAT_VIDEO_SUBPIC )
     set_help(LOGO_HELP)
+
     set_capability( "sub source", 0 )
     set_callbacks( OpenSub, Close )
     set_description( N_("Logo sub source") )
     set_shortname( N_("Logo overlay") )
     add_shortcut( "logo" )
 
+    /* video output filter submodule */
+    add_submodule ()
+    set_capability( "video filter", 0 )
+    set_callbacks( OpenVideo, Close )
+    set_description( N_("Logo video filter") )
+    add_shortcut( "logo" )
+
+    set_category( CAT_VIDEO )
+    set_subcategory( SUBCAT_VIDEO_SUBPIC )
     add_loadfile(CFG_PREFIX "file", NULL, FILE_TEXT, FILE_LONGTEXT)
     add_integer( CFG_PREFIX "x", -1, POSX_TEXT, POSX_LONGTEXT, true )
     add_integer( CFG_PREFIX "y", -1, POSY_TEXT, POSY_LONGTEXT, true )
@@ -103,13 +111,6 @@ vlc_module_begin ()
         OPACITY_TEXT, OPACITY_LONGTEXT, false )
     add_integer( CFG_PREFIX "position", -1, POS_TEXT, POS_LONGTEXT, false )
         change_integer_list( pi_pos_values, ppsz_pos_descriptions )
-
-    /* video output filter submodule */
-    add_submodule ()
-    set_capability( "video filter", 0 )
-    set_callbacks( OpenVideo, Close )
-    set_description( N_("Logo video filter") )
-    add_shortcut( "logo" )
 vlc_module_end ()
 
 

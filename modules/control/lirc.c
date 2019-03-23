@@ -56,12 +56,12 @@ static void Close   ( vlc_object_t * );
 
 vlc_module_begin ()
     set_shortname( N_("Infrared") )
-    set_category( CAT_INTERFACE )
-    set_subcategory( SUBCAT_INTERFACE_CONTROL )
     set_description( N_("Infrared remote control interface") )
     set_capability( "interface", 0 )
     set_callbacks( Open, Close )
 
+    set_category( CAT_INTERFACE )
+    set_subcategory( SUBCAT_INTERFACE_CONTROL )
     add_string( "lirc-file", NULL,
                 LIRC_TEXT, LIRC_LONGTEXT, true )
 vlc_module_end ()

@@ -63,6 +63,9 @@ vlc_module_begin ()
     set_shortname( N_("Subtitles"))
     set_description( N_("Text subtitle parser") )
     set_capability( "demux", 0 )
+    set_callbacks( Open, Close )
+    add_shortcut( "subtitle" )
+
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
     add_string( "sub-type", "auto", N_("Subtitle format"),
@@ -70,9 +73,6 @@ vlc_module_begin ()
         change_string_list( ppsz_sub_type, ppsz_sub_type )
     add_string( "sub-description", NULL, N_("Subtitle description"),
                 SUB_DESCRIPTION_LONGTEXT, true )
-    set_callbacks( Open, Close )
-
-    add_shortcut( "subtitle" )
 vlc_module_end ()
 
 /*****************************************************************************

@@ -70,10 +70,10 @@ vlc_module_begin ()
     set_description( N_("Teletext subtitles decoder") )
     set_shortname( "Teletext" )
     set_capability( "spu decoder", 50 )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_SCODEC )
     set_callbacks( Open, Close )
 
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_SCODEC )
     add_integer( "telx-override-page", -1,
                  OVERRIDE_PAGE_TEXT, OVERRIDE_PAGE_LONGTEXT, true )
     add_bool( "telx-ignore-subtitle-flag", false,

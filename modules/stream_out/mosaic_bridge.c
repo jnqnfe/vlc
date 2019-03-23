@@ -144,6 +144,7 @@ vlc_module_begin ()
     set_description(N_("Mosaic bridge stream output") )
     set_capability( "sout stream", 0 )
     add_shortcut( "mosaic-bridge" )
+    set_callbacks( Open, Close )
 
     set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_STREAM )
@@ -166,8 +167,6 @@ vlc_module_begin ()
                             ALPHA_TEXT, ALPHA_LONGTEXT, false )
     add_integer( CFG_PREFIX "x", -1, X_TEXT, X_LONGTEXT, false )
     add_integer( CFG_PREFIX "y", -1, Y_TEXT, Y_LONGTEXT, false )
-
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 static const char *const ppsz_sout_options[] = {

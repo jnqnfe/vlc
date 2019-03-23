@@ -67,18 +67,17 @@ static void Close(vlc_object_t *);
 vlc_module_begin()
     set_shortname(N_("Network Sync"))
     set_description(N_("Network synchronization"))
+    set_capability("interface", 0)
+    set_callbacks(Open, Close)
+
     set_category(CAT_ADVANCED)
     set_subcategory(SUBCAT_ADVANCED_MISC)
-
     add_bool("netsync-master", false,
               NETSYNC_TEXT, NETSYNC_LONGTEXT, true)
     add_string("netsync-master-ip", NULL, MIP_TEXT, MIP_LONGTEXT,
                 true)
     add_integer("netsync-timeout", 500,
                  NETSYNC_TIMEOUT_TEXT, NETSYNC_TIMEOUT_LONGTEXT, true)
-
-    set_capability("interface", 0)
-    set_callbacks(Open, Close)
 vlc_module_end()
 
 /*****************************************************************************

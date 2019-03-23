@@ -72,7 +72,7 @@ static void CloseDecoder( vlc_object_t* );
 static int  DecodeBlock( decoder_t*, block_t* );
 static void Flush( decoder_t * );
 
-#define MODULE_DESCRIPTION N_( "Uses GStreamer framework's plugins " \
+#define HELP_TEXT N_( "Uses GStreamer framework's plugins " \
         "to decode the media codecs" )
 
 #define USEDECODEBIN_TEXT N_( "Use DecodeBin" )
@@ -91,16 +91,18 @@ static void Flush( decoder_t * );
     "your own risk."
 
 vlc_module_begin( )
+    set_help( HELP_TEXT )
     set_shortname( "GstDecode" )
     add_shortcut( "gstdecode" )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_VCODEC )
+
     /* decoder main module */
     set_description( N_( "GStreamer Based Decoder" ) )
-    set_help( MODULE_DESCRIPTION )
     set_capability( "video decoder", 50 )
-    //set_section( N_( "Decoding" ) , NULL )
     set_callbacks( OpenDecoder, CloseDecoder )
+
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_VCODEC )
+    //set_section( N_( "Decoding" ) , NULL )
     add_bool( "use-decodebin", true, USEDECODEBIN_TEXT,
         USEDECODEBIN_LONGTEXT, false )
     add_bool( "use-vlcpool", false, USEVLCPOOL_TEXT,

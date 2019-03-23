@@ -33,14 +33,11 @@
 vlc_module_begin ()
     set_description( N_("File input") )
     set_shortname( N_("File") )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_ACCESS )
     set_capability( "access", 50 )
     add_shortcut( "file", "fd", "stream" )
     set_callbacks( FileOpen, FileClose )
 
     add_submodule()
-    set_section( N_("Directory" ), NULL )
     set_capability( "access", 55 )
 #ifndef HAVE_FDOPENDIR
     add_shortcut( "file", "directory", "dir" )
@@ -49,6 +46,9 @@ vlc_module_begin ()
 #endif
     set_callbacks( DirOpen, DirClose )
 
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_ACCESS )
+    set_section( N_("Directory" ), NULL )
     add_bool("list-special-files", false, N_("List special files"),
              N_("Include devices and pipes when listing directories"), true)
     add_obsolete_string("directory-sort") /* since 3.0.0 */

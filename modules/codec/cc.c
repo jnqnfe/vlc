@@ -62,10 +62,10 @@ vlc_module_begin ()
     set_shortname( N_("CC 608/708"))
     set_description( N_("Closed Captions decoder") )
     set_capability( "spu decoder", 50 )
-    set_category( CAT_INPUT )
-        set_subcategory( SUBCAT_INPUT_SCODEC )
     set_callbacks( Open, Close )
 
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_SCODEC )
     add_bool( "cc-opaque", true,
                  OPAQUE_TEXT, OPAQUE_LONGTEXT, false )
 vlc_module_end ()

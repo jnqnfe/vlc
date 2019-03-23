@@ -147,6 +147,7 @@ vlc_module_begin ()
     set_capability( "sout stream", 50 )
     add_shortcut( "transcode" )
     set_callbacks( Open, Close )
+
     set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_STREAM )
     set_section( N_("Video"), NULL )

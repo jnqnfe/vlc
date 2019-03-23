@@ -39,10 +39,10 @@ static int Open(vlc_object_t *);
 static void Close(vlc_object_t *);
 
 vlc_module_begin ()
+    set_help (HELP_TEXT)
     set_shortname (N_("PulseAudio"))
     set_description (N_("PulseAudio input"))
     set_capability ("access", 0)
-    set_help (HELP_TEXT)
     add_shortcut ("pulse", "pulseaudio", "pa")
     set_callbacks (Open, Close)
     //set_category (CAT_INPUT)

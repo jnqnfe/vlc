@@ -69,13 +69,13 @@ static int  Open ( vlc_object_t * );
 static void Close( vlc_object_t * );
 
 vlc_module_begin ()
-    set_category( CAT_SOUT )
-    set_subcategory( SUBCAT_SOUT_PACKETIZER )
     set_description( N_("MPEG-I/II video packetizer") )
     set_shortname( N_("MPEG Video") )
     set_capability( "packetizer", 50 )
     set_callbacks( Open, Close )
 
+    set_category( CAT_SOUT )
+    set_subcategory( SUBCAT_SOUT_PACKETIZER )
     add_bool( "packetizer-mpegvideo-sync-iframe", false, SYNC_INTRAFRAME_TEXT,
               SYNC_INTRAFRAME_LONGTEXT, true )
 vlc_module_end ()

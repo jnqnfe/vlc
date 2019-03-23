@@ -54,9 +54,10 @@ vlc_module_begin()
     set_description( N_("Delay a stream"))
     set_capability( "sout stream", 50 )
     add_shortcut( "delay" )
+    set_callbacks( Open, Close )
+
     set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_STREAM )
-    set_callbacks( Open, Close )
     add_integer( SOUT_CFG_PREFIX "id", 0, ID_TEXT, ID_LONGTEXT,
                  false )
     add_integer( SOUT_CFG_PREFIX "delay", 0, DELAY_TEXT, DELAY_LONGTEXT,

@@ -54,8 +54,6 @@ static void Close    ( vlc_object_t * );
     "playing MPEG video elementary streams.")
 
 vlc_module_begin ()
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_DEMUX )
     set_description( N_("MPEG-I/II/4 / A52 / DTS / MLP audio" ) )
     set_shortname( N_("Audio ES") )
     set_capability( "demux", 155 )
@@ -72,10 +70,13 @@ vlc_module_begin ()
     set_description( N_("MPEG-4 video" ) )
     set_capability( "demux", 5 )
     set_callbacks( OpenVideo, Close )
-    add_float( "es-fps", 25, FPS_TEXT, FPS_LONGTEXT, false )
 
     add_shortcut( "m4v" )
     add_shortcut( "mp4v" )
+
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_DEMUX )
+    add_float( "es-fps", 25, FPS_TEXT, FPS_LONGTEXT, false )
 vlc_module_end ()
 
 /*****************************************************************************

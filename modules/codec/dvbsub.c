@@ -120,14 +120,7 @@ vlc_module_begin ()
     set_description( N_("DVB subtitles decoder") )
     set_shortname( N_("DVB subtitles") )
     set_capability( "spu decoder", 80 )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_SCODEC )
     set_callbacks( Open, Close )
-
-    add_integer( DVBSUB_CFG_PREFIX "position", 8, POS_TEXT, POS_LONGTEXT, true )
-        change_integer_list( pi_pos_values, ppsz_pos_descriptions )
-    add_integer( DVBSUB_CFG_PREFIX "x", -1, POSX_TEXT, POSX_LONGTEXT, false )
-    add_integer( DVBSUB_CFG_PREFIX "y", -1, POSY_TEXT, POSY_LONGTEXT, false )
 
 #ifdef ENABLE_SOUT
 #   define ENC_CFG_PREFIX "sout-dvbsub-"
@@ -135,7 +128,15 @@ vlc_module_begin ()
     set_description( N_("DVB subtitles encoder") )
     set_capability( "encoder", 100 )
     set_callbacks( OpenEncoder, CloseEncoder )
+#endif
 
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_SCODEC )
+    add_integer( DVBSUB_CFG_PREFIX "position", 8, POS_TEXT, POS_LONGTEXT, true )
+        change_integer_list( pi_pos_values, ppsz_pos_descriptions )
+    add_integer( DVBSUB_CFG_PREFIX "x", -1, POSX_TEXT, POSX_LONGTEXT, false )
+    add_integer( DVBSUB_CFG_PREFIX "y", -1, POSY_TEXT, POSY_LONGTEXT, false )
+#ifdef ENABLE_SOUT
     add_integer( ENC_CFG_PREFIX "x", -1, ENC_POSX_TEXT, ENC_POSX_LONGTEXT, false )
     add_integer( ENC_CFG_PREFIX "y", -1, ENC_POSY_TEXT, ENC_POSY_LONGTEXT, false )
 #endif

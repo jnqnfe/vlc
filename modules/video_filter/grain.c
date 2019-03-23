@@ -60,10 +60,11 @@ static void Close(vlc_object_t *);
 #define PERIOD_MAX_LONGTEXT N_("Maximal period of the noise grain in pixel")
 
 vlc_module_begin()
+    set_help(N_("Adds filtered gaussian noise"))
     set_description(N_("Grain video filter"))
     set_shortname( N_("Grain"))
-    set_help(N_("Adds filtered gaussian noise"))
     set_capability( "video filter", 0 )
+    set_callbacks(Open, Close)
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_float_with_range(CFG_PREFIX "variance", 2.0, VARIANCE_MIN, VARIANCE_MAX,
@@ -72,7 +73,6 @@ vlc_module_begin()
                            PERIOD_MIN_TEXT, PERIOD_MIN_LONGTEXT, false)
     add_integer_with_range(CFG_PREFIX "period-max", 3*PERIOD_MAX/4, PERIOD_MIN, PERIOD_MAX,
                            PERIOD_MAX_TEXT, PERIOD_MAX_LONGTEXT, false)
-    set_callbacks(Open, Close)
 vlc_module_end()
 
 /*****************************************************************************

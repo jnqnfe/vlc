@@ -84,11 +84,12 @@ static void Close( vlc_object_t * );
 vlc_module_begin()
     set_shortname( N_("RDP") )
     add_shortcut( "rdp" )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_ACCESS )
     set_description( N_("RDP Remote Desktop") )
     set_capability( "access", 0 )
+    set_callbacks( Open, Close )
 
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_ACCESS )
     add_string( CFG_PREFIX "user", NULL, USER_TEXT, USER_LONGTEXT, false )
         change_safe()
     add_password(CFG_PREFIX "password", NULL, PASS_TEXT, PASS_LONGTEXT)
@@ -97,8 +98,6 @@ vlc_module_begin()
 
     add_bool( CFG_PREFIX "encrypt", false, RDP_ENCRYPT, RDP_ENCRYPT, true )
         change_safe()
-
-    set_callbacks( Open, Close )
 vlc_module_end()
 
 #define RDP_MAX_FD 32

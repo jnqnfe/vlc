@@ -70,14 +70,13 @@ static void Close  ( vlc_object_t * );
 
 vlc_module_begin ()
     set_description( N_("ASF muxer") )
-    set_category( CAT_SOUT )
-    set_subcategory( SUBCAT_SOUT_MUX )
     set_shortname( "ASF" )
-
     set_capability( "sout mux", 5 )
     add_shortcut( "asf", "asfh" )
     set_callbacks( Open, Close )
 
+    set_category( CAT_SOUT )
+    set_subcategory( SUBCAT_SOUT_MUX )
     add_string( SOUT_CFG_PREFIX "title", "", TITLE_TEXT, TITLE_LONGTEXT,
                                  true )
     add_string( SOUT_CFG_PREFIX "author",   "", AUTHOR_TEXT,
@@ -92,7 +91,6 @@ vlc_module_begin ()
                                  PACKETSIZE_LONGTEXT, true )
     add_integer( SOUT_CFG_PREFIX "bitrate-override", 0, BITRATE_TEXT,
                                  BITRATE_LONGTEXT, true )
-
 vlc_module_end ()
 
 /*****************************************************************************

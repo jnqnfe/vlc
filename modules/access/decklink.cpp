@@ -104,9 +104,12 @@ static const char *const ppsz_audioconns_text[] = {
 vlc_module_begin ()
     set_shortname(N_("DeckLink"))
     set_description(N_("Blackmagic DeckLink SDI input"))
+    add_shortcut("decklink")
+    set_capability("access", 0)
+    set_callbacks(Open, Close)
+
     set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_ACCESS)
-
     add_integer("decklink-card-index", 0,
                  CARD_INDEX_TEXT, CARD_INDEX_LONGTEXT, true)
     add_string("decklink-mode", NULL,
@@ -124,10 +127,6 @@ vlc_module_begin ()
     add_string("decklink-aspect-ratio", NULL,
                 ASPECT_RATIO_TEXT, ASPECT_RATIO_LONGTEXT, true)
     add_bool("decklink-tenbits", false, N_("10 bits"), N_("10 bits"), true)
-
-    add_shortcut("decklink")
-    set_capability("access", 0)
-    set_callbacks(Open, Close)
 vlc_module_end ()
 
 static int Control(demux_t *, int, va_list);

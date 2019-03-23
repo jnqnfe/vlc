@@ -64,12 +64,7 @@ vlc_module_begin()
     set_shortname("Spatialaudio")
     set_description(N_("Ambisonics renderer and binauralizer"))
     set_capability("audio renderer", 1)
-    set_category(CAT_AUDIO)
-    set_subcategory(SUBCAT_AUDIO_AFILTER)
     set_callbacks(Open, Close)
-    add_bool(CFG_PREFIX "headphones", false,
-             HEADPHONES_TEXT, HEADPHONES_LONGTEXT, true)
-    add_loadfile("hrtf-file", NULL, HRTF_FILE_TEXT, HRTF_FILE_LONGTEXT)
     add_shortcut("ambisonics")
 
     add_submodule()
@@ -77,6 +72,12 @@ vlc_module_begin()
     set_capability("audio filter", 0)
     set_callbacks(OpenBinauralizer, Close)
     add_shortcut("binauralizer")
+
+    set_category(CAT_AUDIO)
+    set_subcategory(SUBCAT_AUDIO_AFILTER)
+    add_bool(CFG_PREFIX "headphones", false,
+             HEADPHONES_TEXT, HEADPHONES_LONGTEXT, true)
+    add_loadfile("hrtf-file", NULL, HRTF_FILE_TEXT, HRTF_FILE_LONGTEXT)
 vlc_module_end()
 
 #define AMB_BLOCK_TIME_LEN 1024

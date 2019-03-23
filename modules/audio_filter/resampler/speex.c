@@ -41,11 +41,6 @@ static void Close (vlc_object_t *);
 vlc_module_begin ()
     set_shortname (N_("Speex resampler"))
     set_description (N_("Speex resampler") )
-    set_category (CAT_AUDIO)
-    set_subcategory (SUBCAT_AUDIO_RESAMPLER)
-    add_integer ("speex-resampler-quality", 4,
-                 QUALITY_TEXT, QUALITY_LONGTEXT, true)
-        change_integer_range (0, 10)
     set_capability ("audio converter", 0)
     set_callbacks (Open, Close)
 
@@ -53,6 +48,12 @@ vlc_module_begin ()
     set_capability ("audio resampler", 0)
     set_callbacks (OpenResampler, Close)
     add_shortcut ("speex")
+
+    set_category (CAT_AUDIO)
+    set_subcategory (SUBCAT_AUDIO_RESAMPLER)
+    add_integer ("speex-resampler-quality", 4,
+                 QUALITY_TEXT, QUALITY_LONGTEXT, true)
+        change_integer_range (0, 10)
 vlc_module_end ()
 
 static block_t *Resample (filter_t *, block_t *);

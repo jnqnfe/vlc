@@ -45,13 +45,14 @@ static int  Open (vout_display_t *, const vout_display_cfg_t *,
 static void Close(vout_display_t *);
 
 vlc_module_begin()
-    set_category(CAT_VIDEO)
-    set_subcategory(SUBCAT_VIDEO_VOUT)
     set_shortname("OpenGL")
     set_description(N_("OpenGL video output for Windows"))
     set_capability("vout display", 275)
     add_shortcut("glwin32", "opengl")
     set_callbacks(Open, Close)
+
+    set_category(CAT_VIDEO)
+    set_subcategory(SUBCAT_VIDEO_VOUT)
     add_glopts()
 vlc_module_end()
 

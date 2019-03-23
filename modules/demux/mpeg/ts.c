@@ -133,6 +133,10 @@ static const char *const ts_standards_list_text[] =
 vlc_module_begin ()
     set_description( N_("MPEG Transport Stream demuxer") )
     set_shortname ( "MPEG-TS" )
+    set_capability( "demux", 10 )
+    set_callbacks( Open, Close )
+    add_shortcut( "ts" )
+
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
 
@@ -157,10 +161,6 @@ vlc_module_begin ()
     add_bool( "ts-pmtfix-waitdata", true, TS_SKIP_GHOST_PROGRAM_TEXT, NULL, true )
     add_bool( "ts-patfix", true, TS_PATFIX_TEXT, NULL, true )
     add_bool( "ts-pcr-offsetfix", true, TS_OFFSETFIX_TEXT, NULL, true )
-
-    set_capability( "demux", 10 )
-    set_callbacks( Open, Close )
-    add_shortcut( "ts" )
 vlc_module_end ()
 
 /*****************************************************************************

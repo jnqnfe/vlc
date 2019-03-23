@@ -190,6 +190,16 @@ using namespace dshow;
 vlc_module_begin ()
     set_shortname( N_("DirectShow") )
     set_description( N_("DirectShow input") )
+    add_shortcut( "dshow" )
+    set_capability( "access", 1 )
+    set_callbacks( DemuxOpen, DemuxClose )
+
+    add_submodule ()
+    set_description( N_("DirectShow input") )
+    add_shortcut( "dshow" )
+    set_capability( "access", 0 )
+    set_callbacks( AccessOpen, AccessClose )
+
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACCESS )
     add_string( "dshow-vdev", NULL, VDEV_TEXT, VDEV_LONGTEXT, false)
@@ -251,17 +261,6 @@ vlc_module_begin ()
                  AUDIO_SAMPLERATE_LONGTEXT, true )
     add_integer( "dshow-audio-bitspersample", 0, AUDIO_BITSPERSAMPLE_TEXT,
                  AUDIO_BITSPERSAMPLE_LONGTEXT, true )
-
-    add_shortcut( "dshow" )
-    set_capability( "access", 1 )
-    set_callbacks( DemuxOpen, DemuxClose )
-
-    add_submodule ()
-    set_description( N_("DirectShow input") )
-    add_shortcut( "dshow" )
-    set_capability( "access", 0 )
-    set_callbacks( AccessOpen, AccessClose )
-
 vlc_module_end ()
 
 namespace dshow {

@@ -79,12 +79,12 @@ static void CloseDecoder(vlc_object_t *);
     By Default, the best chroma is choosen by the VT decoder."
 
 vlc_module_begin()
-set_category(CAT_INPUT)
-set_subcategory(SUBCAT_INPUT_VCODEC)
 set_description(N_("VideoToolbox video decoder"))
 set_capability("video decoder",800)
 set_callbacks(OpenDecoder, CloseDecoder)
 
+set_category(CAT_INPUT)
+set_subcategory(SUBCAT_INPUT_VCODEC)
 add_obsolete_bool("videotoolbox-temporal-deinterlacing") /* since 4.0.0 */
 add_bool("videotoolbox", true, VT_ENABLE_TEXT, NULL, false)
 add_bool("videotoolbox-hw-decoder-only", true, VT_REQUIRE_HW_DEC, VT_REQUIRE_HW_DEC, false)

@@ -113,13 +113,12 @@ static const char *const enc_chromafmt_list_text[] = {
   "Enforce a keyframe interval between 1 and 1000." )
 
 vlc_module_begin ()
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_VCODEC )
     set_shortname( "Daala" )
     set_description( N_("Daala video decoder") )
     set_capability( "video decoder", 100 )
     set_callbacks( OpenDecoder, CloseDecoder )
     add_shortcut( "daala" )
+
     add_submodule ()
     set_description( N_("Daala video packetizer") )
     set_capability( "packetizer", 100 )
@@ -132,6 +131,9 @@ vlc_module_begin ()
     set_capability( "encoder", 150 )
     set_callbacks( OpenEncoder, CloseEncoder )
     add_shortcut( "daala" )
+
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_VCODEC )
 
 #   define ENC_CFG_PREFIX "sout-daala-"
     add_integer_with_range( ENC_CFG_PREFIX "quality", 10, 0, 511,

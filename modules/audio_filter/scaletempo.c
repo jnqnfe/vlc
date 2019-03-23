@@ -59,9 +59,14 @@ vlc_module_begin ()
     set_description( MODULE_DESC )
     set_shortname( MODULES_SHORTNAME )
     set_capability( "audio filter", 0 )
+#ifdef PITCH_SHIFTER
+    set_callbacks( OpenPitch, ClosePitch )
+#else
+    set_callbacks( Open, Close )
+#endif
+
     set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AFILTER )
-
     add_integer_with_range( "scaletempo-stride", 30, 1, 2000,
         N_("Stride Length"), N_("Length in milliseconds to output each stride"), true )
     add_float_with_range( "scaletempo-overlap", .20, 0.0, 1.0,
@@ -71,9 +76,6 @@ vlc_module_begin ()
 #ifdef PITCH_SHIFTER
     add_float_with_range( "pitch-shift", 0, -12, 12,
         N_("Pitch Shift"), N_("Pitch shift in semitones."), false )
-    set_callbacks( OpenPitch, ClosePitch )
-#else
-    set_callbacks( Open, Close )
 #endif
 
 vlc_module_end ()

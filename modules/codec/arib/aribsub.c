@@ -49,14 +49,14 @@ static int Decode( decoder_t *, block_t * );
 #define USE_CORETEXT_LONGTEXT N_("Use Core Text renderer in the subtitle.")
 
 vlc_module_begin ()
-#   define ARIBSUB_CFG_PREFIX "aribsub-"
     set_description( N_("ARIB subtitles decoder") )
     set_shortname( N_("ARIB subtitles") )
     set_capability( "spu decoder", 50 )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_SCODEC )
     set_callbacks( Open, Close )
 
+#   define ARIBSUB_CFG_PREFIX "aribsub-"
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_SCODEC )
     add_bool( ARIBSUB_CFG_PREFIX "ignore-ruby", false, IGNORE_RUBY_TEXT, IGNORE_RUBY_LONGTEXT, true )
     add_bool( ARIBSUB_CFG_PREFIX "use-coretext", false, USE_CORETEXT_TEXT, USE_CORETEXT_LONGTEXT, true )
 vlc_module_end ()

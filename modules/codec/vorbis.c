@@ -191,8 +191,6 @@ vlc_module_begin ()
 #else
     set_capability( "audio decoder", 100 )
 #endif
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_ACODEC )
     set_callbacks( OpenDecoder, CloseDecoder )
 
     add_submodule ()
@@ -201,12 +199,14 @@ vlc_module_begin ()
     set_callbacks( OpenPacketizer, CloseDecoder )
 
 #ifdef HAVE_VORBIS_ENCODER
-#   define ENC_CFG_PREFIX "sout-vorbis-"
     add_submodule ()
     set_description( N_("Vorbis audio encoder") )
     set_capability( "encoder", 130 )
     set_callbacks( OpenEncoder, CloseEncoder )
 
+#   define ENC_CFG_PREFIX "sout-vorbis-"
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_ACODEC )
     add_integer( ENC_CFG_PREFIX "quality", 0, ENC_QUALITY_TEXT,
                  ENC_QUALITY_LONGTEXT, false )
         change_integer_range( 0, 10 )

@@ -475,11 +475,12 @@ static void Close(vlc_object_t *obj)
 vlc_module_begin ()
     set_shortname (N_("Screen"))
     set_description (N_("Screen capture (with Wayland)"))
-    set_category (CAT_INPUT)
-    set_subcategory (SUBCAT_INPUT_ACCESS)
     set_capability ("access", 0)
     set_callbacks (Open, Close)
+    add_shortcut ("screen")
 
+    set_category (CAT_INPUT)
+    set_subcategory (SUBCAT_INPUT_ACCESS)
     /* XXX: VLC core does not support multiple configuration items with the
      * same name. So all default values and ranges must be the same as for XCB
      * for the time being. */
@@ -496,5 +497,4 @@ vlc_module_begin ()
     add_integer ("screen-height", 0, HEIGHT_TEXT, HEIGHT_LONGTEXT, true)
         change_integer_range (0, 65535)
         change_safe ()
-    add_shortcut ("screen")
 vlc_module_end ()

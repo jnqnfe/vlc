@@ -262,11 +262,13 @@ static void SubsdelayEntryNewStopValueUpdated( subsdelay_heap_entry_t *p_entry )
  *****************************************************************************/
 
 vlc_module_begin()
+        set_help( SUBSDELAY_HELP )
+
         set_shortname( N_("Subsdelay") )
         set_description( N_("Subtitle delay") )
-        set_help( SUBSDELAY_HELP )
         set_capability( "sub filter", 0 )
         set_callbacks( SubsdelayCreate, SubsdelayDestroy )
+
         set_category( CAT_VIDEO )
         set_subcategory( SUBCAT_VIDEO_SUBPIC )
 
@@ -288,8 +290,7 @@ vlc_module_begin()
 
         add_integer( CFG_MIN_STOP_START_INTERVAL, 1000, MIN_STOP_START_INTERVAL_TEXT,
                      MIN_STOP_START_INTERVAL_LONGTEXT, false )
-
-    vlc_module_end ()
+vlc_module_end ()
 
 static const char * const ppsz_filter_options[] = { "mode", "factor", "overlap", NULL };
 

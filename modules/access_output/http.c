@@ -66,6 +66,8 @@ vlc_module_begin ()
     set_capability( "sout access", 0 )
     set_shortname( "HTTP" )
     add_shortcut( "http", "https", "mmsh" )
+    set_callbacks( Open, Close )
+
     set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_ACO )
     add_string( SOUT_CFG_PREFIX "user", "",
@@ -75,7 +77,6 @@ vlc_module_begin ()
                 MIME_TEXT, MIME_LONGTEXT, true )
     add_bool( SOUT_CFG_PREFIX "metacube", false,
               METACUBE_TEXT, METACUBE_LONGTEXT, true )
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 

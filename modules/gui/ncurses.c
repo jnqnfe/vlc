@@ -78,10 +78,11 @@ vlc_module_begin ()
     set_shortname("Ncurses")
     set_description(N_("Ncurses interface"))
     set_capability("interface", 10)
-    set_category(CAT_INTERFACE)
-    set_subcategory(SUBCAT_INTERFACE_MAIN)
     set_callbacks(Open, Close)
     add_shortcut("curses")
+
+    set_category(CAT_INTERFACE)
+    set_subcategory(SUBCAT_INTERFACE_MAIN)
     add_directory("browse-dir", NULL, BROWSE_TEXT, BROWSE_LONGTEXT)
 vlc_module_end ()
 

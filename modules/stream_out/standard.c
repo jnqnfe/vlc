@@ -92,9 +92,10 @@ vlc_module_begin ()
     set_description( N_("Standard stream output") )
     set_capability( "sout stream", 50 )
     add_shortcut( "standard", "std", "file", "http", "udp", SRT_SHORTCUT )
+    set_callbacks( Open, Close )
+
     set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_STREAM )
-
     add_string( SOUT_CFG_PREFIX "access", "", ACCESS_TEXT, ACCESS_LONGTEXT, false )
     add_string( SOUT_CFG_PREFIX "mux", "", MUX_TEXT, MUX_LONGTEXT, false )
     add_string( SOUT_CFG_PREFIX "dst", "", DEST_TEXT, DEST_LONGTEXT, false )
@@ -106,8 +107,6 @@ vlc_module_begin ()
     add_string( SOUT_CFG_PREFIX "url", "", URL_TEXT, URL_LONGTEXT, true )
     add_string( SOUT_CFG_PREFIX "email", "", EMAIL_TEXT, EMAIL_LONGTEXT, true )
     add_obsolete_string( SOUT_CFG_PREFIX "phone" ) /* since 3.0.0 */
-
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 

@@ -135,9 +135,15 @@ vlc_module_begin()
     set_description(N_("Mac OS X interface"))
     set_capability("interface", 200)
     set_callbacks(OpenIntf, CloseIntf)
+    cannot_unload_broken_library()
+
+    add_submodule()
+        set_description("Mac OS X Video Output Provider")
+        set_capability("vout window", 100)
+        set_callbacks(WindowOpen, NULL)
+
     set_category(CAT_INTERFACE)
     set_subcategory(SUBCAT_INTERFACE_MAIN)
-    cannot_unload_broken_library()
 
     set_section(N_("Appearance"), 0)
         add_bool("macosx-nativefullscreenmode", false, NATIVE_FULLSCREEN_MODE_ON_LION_TEXT, NATIVE_FULLSCREEN_MODE_ON_LION_LONGTEXT, false)
@@ -171,15 +177,12 @@ vlc_module_begin()
     add_obsolete_bool("macosx-show-playback-buttons") /* since 4.0.0 */
     add_obsolete_bool("macosx-show-effects-button") /* since 4.0.0 */
 
-    add_submodule()
-        set_description("Mac OS X Video Output Provider")
-        set_capability("vout window", 100)
-        set_callbacks(WindowOpen, NULL)
-
-        set_section(N_("Video output"), 0)
-        add_integer("macosx-vdev", 0, VDEV_TEXT, VDEV_LONGTEXT, false)
-        add_float_with_range("macosx-opaqueness", 1, 0, 1, OPAQUENESS_TEXT, OPAQUENESS_LONGTEXT, true);
-        add_bool("macosx-black", false, BLACK_TEXT, BLACK_LONGTEXT, false)
+//TODO: change category to vout?
+    /* "Mac OS X Video Output Provider" module options */
+    set_section(N_("Video output"), 0)
+    add_integer("macosx-vdev", 0, VDEV_TEXT, VDEV_LONGTEXT, false)
+    add_float_with_range("macosx-opaqueness", 1, 0, 1, OPAQUENESS_TEXT, OPAQUENESS_LONGTEXT, true);
+    add_bool("macosx-black", false, BLACK_TEXT, BLACK_LONGTEXT, false)
 vlc_module_end()
 
 /* the following is fake code to make the pseudo VLC target for the macOS module compile and link */

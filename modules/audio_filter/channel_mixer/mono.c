@@ -96,17 +96,16 @@ static const char *const ppsz_pos_descriptions[] =
 vlc_module_begin ()
     set_description( N_("Stereo to mono downmixer") )
     set_capability( "audio filter", 0 )
-    set_category( CAT_AUDIO )
-    set_subcategory( SUBCAT_AUDIO_AFILTER )
     set_callbacks( OpenFilter, CloseFilter )
     set_shortname( "Mono" )
 
+    set_category( CAT_AUDIO )
+    set_subcategory( SUBCAT_AUDIO_AFILTER )
     add_bool( MONO_CFG "downmix", true, MONO_DOWNMIX_TEXT,
               MONO_DOWNMIX_LONGTEXT, false )
     add_integer( MONO_CFG "channel", -1, MONO_CHANNEL_TEXT,
         MONO_CHANNEL_LONGTEXT, false )
         change_integer_list( pi_pos_values, ppsz_pos_descriptions )
-
 vlc_module_end ()
 
 /* Init() and ComputeChannelOperations() -

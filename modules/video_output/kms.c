@@ -779,15 +779,15 @@ static int Open(vout_display_t *vd, const vout_display_cfg_t *cfg,
  *****************************************************************************/
 vlc_module_begin ()
     set_shortname("kms")
+    set_description("Linux kernel mode setting video output")
+    set_capability("vout display", 30)
+    set_callbacks(Open, Close)
+
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_loadfile(KMS_VAR, "/dev/dri/card0", DEVICE_TEXT, DEVICE_LONGTEXT)
-
     add_string( "kms-vlc-chroma", NULL, VLC_CHROMA_TEXT, VLC_CHROMA_LONGTEXT,
                 true)
     add_string( "kms-drm-chroma", NULL, DRM_CHROMA_TEXT, DRM_CHROMA_LONGTEXT,
                 true)
-    set_description("Linux kernel mode setting video output")
-    set_capability("vout display", 30)
-    set_callbacks(Open, Close)
 vlc_module_end ()

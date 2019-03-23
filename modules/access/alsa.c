@@ -53,19 +53,19 @@ static const char *const rate_names[] = { N_("192000 Hz"), N_("176400 Hz"),
 };
 
 vlc_module_begin ()
+    set_help (HELP_TEXT)
+
     set_shortname (N_("ALSA"))
     set_description (N_("ALSA audio capture"))
     set_capability ("access", 0)
+    add_shortcut ("alsa")
+    set_callbacks (Open, Close)
+
     set_category (CAT_INPUT)
     set_subcategory (SUBCAT_INPUT_ACCESS)
-    set_help (HELP_TEXT)
-
     add_bool ("alsa-stereo", true, STEREO_TEXT, STEREO_TEXT, true)
     add_integer ("alsa-samplerate", 48000, RATE_TEXT, RATE_TEXT, true)
         change_integer_list (rate_values, rate_names)
-
-    add_shortcut ("alsa")
-    set_callbacks (Open, Close)
 vlc_module_end ()
 
 /** Helper for ALSA -> VLC debugging output */

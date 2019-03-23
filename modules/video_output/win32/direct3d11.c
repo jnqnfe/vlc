@@ -71,9 +71,14 @@ static void Close(vout_display_t *);
     "Try to use hardware acceleration for subtitle/OSD blending.")
 
 vlc_module_begin ()
+    set_help(D3D11_HELP)
+
     set_shortname("Direct3D11")
     set_description(N_("Direct3D11 video output"))
-    set_help(D3D11_HELP)
+    set_capability("vout display", 300)
+    add_shortcut("direct3d11")
+    set_callbacks(Open, Close)
+
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
 
@@ -83,10 +88,6 @@ vlc_module_begin ()
     add_integer("winrt-d3dcontext",    0x0, NULL, NULL, true) /* ID3D11DeviceContext* */
     add_integer("winrt-swapchain",     0x0, NULL, NULL, true) /* IDXGISwapChain1*     */
 #endif
-
-    set_capability("vout display", 300)
-    add_shortcut("direct3d11")
-    set_callbacks(Open, Close)
 vlc_module_end ()
 
 struct vout_display_sys_t

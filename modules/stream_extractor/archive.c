@@ -47,8 +47,8 @@ static  int DirectoryOpen( vlc_object_t* );
 static void DirectoryClose( vlc_object_t* );
 
 vlc_module_begin()
-    set_capability( "stream_directory", 99 )
     set_description( N_( "libarchive based stream directory" ) )
+    set_capability( "stream_directory", 99 )
     set_callbacks( DirectoryOpen, DirectoryClose );
 
     add_submodule()

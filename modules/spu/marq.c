@@ -136,13 +136,17 @@ static const char *const ppsz_pos_descriptions[] =
  * Module descriptor
  *****************************************************************************/
 vlc_module_begin ()
+    set_help(MARQUEE_HELP)
+
     set_capability( "sub source", 0 )
     set_shortname( N_("Marquee" ))
     set_description( N_("Marquee display") )
-    set_help(MARQUEE_HELP)
     set_callbacks( CreateFilter, DestroyFilter )
+    add_shortcut( "time" )
+
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_SUBPIC )
+
     add_string( CFG_PREFIX "marquee", "VLC", MSG_TEXT, MSG_LONGTEXT,
                 false )
     add_loadfile(CFG_PREFIX "file", NULL, FILE_TEXT, FILE_LONGTEXT)
@@ -168,8 +172,6 @@ vlc_module_begin ()
                  false )
     add_integer( CFG_PREFIX "refresh", 1000, REFRESH_TEXT,
                  REFRESH_LONGTEXT, false )
-
-    add_shortcut( "time" )
 vlc_module_end ()
 
 static const char *const ppsz_filter_options[] = {

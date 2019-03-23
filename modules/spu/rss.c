@@ -186,10 +186,14 @@ static const char *const ppsz_title_modes[] =
  * Module descriptor
  *****************************************************************************/
 vlc_module_begin ()
+    set_help(RSS_HELP)
+
     set_capability( "sub source", 1 )
     set_shortname( N_("RSS / Atom") )
-    set_help(RSS_HELP)
     set_callbacks( CreateFilter, DestroyFilter )
+    set_description( N_("RSS and Atom feed display") )
+    add_shortcut( "rss", "atom" )
+
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_SUBPIC )
     add_string( CFG_PREFIX "urls", NULL, MSG_TEXT, MSG_LONGTEXT, false )
@@ -219,9 +223,6 @@ vlc_module_begin ()
     add_integer( CFG_PREFIX "title", default_title, TITLE_TEXT, TITLE_LONGTEXT,
                  false )
         change_integer_list( pi_title_modes, ppsz_title_modes )
-
-    set_description( N_("RSS and Atom feed display") )
-    add_shortcut( "rss", "atom" )
 vlc_module_end ()
 
 static const char *const ppsz_filter_options[] = {

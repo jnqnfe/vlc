@@ -116,6 +116,15 @@ static const char *cat_texts[] = {
 vlc_module_begin()
     set_shortname(N_("Memory input"))
     set_description(N_("Memory input"))
+    add_shortcut("imem")
+    set_capability("access", 1)
+    set_callbacks(OpenDemux, CloseDemux)
+
+    add_submodule()
+        add_shortcut("imem")
+        set_capability("access", 0)
+        set_callbacks(OpenAccess, CloseAccess)
+
     set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_ACCESS)
 
@@ -169,15 +178,6 @@ vlc_module_begin()
     add_integer ("imem-size", 0, SIZE_TEXT, SIZE_LONGTEXT, true)
         change_private()
         change_safe()
-
-    add_shortcut("imem")
-    set_capability("access", 1)
-    set_callbacks(OpenDemux, CloseDemux)
-
-    add_submodule()
-        add_shortcut("imem")
-        set_capability("access", 0)
-        set_callbacks(OpenAccess, CloseAccess)
 vlc_module_end()
 
 /*****************************************************************************

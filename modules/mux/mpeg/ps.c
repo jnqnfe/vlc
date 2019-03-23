@@ -64,12 +64,12 @@ static void    Close  ( vlc_object_t * );
 vlc_module_begin ()
     set_description( N_("PS muxer") )
     set_shortname( "MPEG-PS" )
-    set_category( CAT_SOUT )
-    set_subcategory( SUBCAT_SOUT_MUX )
     set_capability( "sout mux", 50 )
     add_shortcut( "ps", "mpeg1", "dvd" )
     set_callbacks( Open, Close )
 
+    set_category( CAT_SOUT )
+    set_subcategory( SUBCAT_SOUT_MUX )
     add_integer( SOUT_CFG_PREFIX "dts-delay", 200, DTS_TEXT,
                  DTS_LONGTEXT, true )
     add_integer( SOUT_CFG_PREFIX "pes-max-size", PES_PAYLOAD_SIZE_MAX,

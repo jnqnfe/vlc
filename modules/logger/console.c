@@ -167,11 +167,11 @@ static const struct vlc_logger_operations *Open(vlc_object_t *obj,
 vlc_module_begin()
     set_shortname(N_("Console log"))
     set_description(N_("Console logger"))
-    set_category(CAT_ADVANCED)
-    set_subcategory(SUBCAT_ADVANCED_MISC)
     set_capability("logger", 10)
     set_callbacks(Open, NULL)
 
+    set_category(CAT_ADVANCED)
+    set_subcategory(SUBCAT_ADVANCED_MISC)
     add_bool("quiet", false, QUIET_TEXT, QUIET_LONGTEXT, false)
         change_short('q')
         change_volatile()

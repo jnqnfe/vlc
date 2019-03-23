@@ -1185,11 +1185,13 @@ CloseDeinterlace(vlc_object_t * obj)
  * Module descriptor *
  *********************/
 
+#define DENOISE_SIGMA_TEXT "Denoise strength (0-2)"
+#define DENOISE_SIGMA_LONGTEXT \
+    "Set the Denoise strength, between 0 and 2. Defaults to 1."
+
 vlc_module_begin()
     set_shortname(N_("VAAPI filters"))
     set_description(N_("Video Accelerated API filters"))
-    set_category(CAT_VIDEO)
-    set_subcategory(SUBCAT_VIDEO_VFILTER)
     set_capability("video filter", 0)
 
     add_submodule()
@@ -1202,11 +1204,6 @@ vlc_module_begin()
 
     add_submodule()
     set_callbacks(OpenDenoiseFilter, CloseBasicFilter)
-    add_float_with_range("denoise-sigma", 1.f, .0f, .0f,
-                         "Denoise strength (0-2)",
-                         "Set the Denoise strength, between 0 and 2. "
-                            "Defaults to 1.",
-                         false)
     add_shortcut("denoise")
 
     add_submodule()
@@ -1216,4 +1213,9 @@ vlc_module_begin()
     add_submodule()
     set_capability("video converter", 10)
     set_callbacks(vlc_vaapi_OpenChroma, vlc_vaapi_CloseChroma)
+
+    set_category(CAT_VIDEO)
+    set_subcategory(SUBCAT_VIDEO_VFILTER)
+    add_float_with_range("denoise-sigma", 1.f, .0f, 0.f,
+                         DENOISE_SIGMA_TEXT, DENOISE_SIGMA_LONGTEXT, false)
 vlc_module_end()

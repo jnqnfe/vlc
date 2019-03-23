@@ -75,10 +75,14 @@ static int  Open ( vlc_object_t * );
 static void Close( vlc_object_t * );
 
 vlc_module_begin()
+    set_help(PANORAMIX_HELP)
+
     set_description( N_("Panoramix: wall with overlap video filter") )
     set_shortname( N_("Panoramix" ))
-    set_help(PANORAMIX_HELP)
     set_capability( "video splitter", 0 )
+    add_shortcut( "panoramix" )
+    set_callbacks( Open, Close )
+
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_SPLITTER )
 
@@ -169,9 +173,6 @@ vlc_module_begin()
 #endif
 
     add_string( CFG_PREFIX "active", NULL, ACTIVE_TEXT, ACTIVE_LONGTEXT, true )
-
-    add_shortcut( "panoramix" )
-    set_callbacks( Open, Close )
 vlc_module_end()
 
 

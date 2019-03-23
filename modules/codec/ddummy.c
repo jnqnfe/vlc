@@ -46,33 +46,37 @@ vlc_module_begin ()
     set_description( N_("Dummy decoder") )
     set_capability( "spu decoder", 0 )
     set_callbacks( OpenDecoder, CloseDecoder )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_SCODEC )
-    add_bool( "dummy-save-es", false, SAVE_TEXT, SAVE_LONGTEXT, true )
     add_shortcut( "dummy" )
+
     add_submodule()
     add_shortcut( "dummy" )
     set_capability( "video decoder", 0 )
     set_callbacks( OpenDecoder, CloseDecoder )
+
     add_submodule()
     add_shortcut( "dummy" )
     set_capability( "audio decoder", 0 )
     set_callbacks( OpenDecoder, CloseDecoder )
 
     add_submodule ()
-    set_section( N_( "Dump decoder" ), NULL )
     set_description( N_("Dump decoder") )
     set_capability( "spu decoder", -1 )
     set_callbacks( OpenDecoderDump, CloseDecoder )
     add_shortcut( "dump" )
+
     add_submodule()
     add_shortcut( "dump")
     set_capability( "video decoder", 0 )
     set_callbacks( OpenDecoderDump, CloseDecoder )
+
     add_submodule()
     add_shortcut( "dump")
     set_capability( "audio decoder", 0 )
     set_callbacks( OpenDecoderDump, CloseDecoder )
+
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_SCODEC )
+    add_bool( "dummy-save-es", false, SAVE_TEXT, SAVE_LONGTEXT, true )
 vlc_module_end ()
 
 

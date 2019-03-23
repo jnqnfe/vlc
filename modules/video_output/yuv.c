@@ -56,18 +56,17 @@ static void Close(vout_display_t *vd);
 vlc_module_begin()
     set_shortname(N_("YUV output"))
     set_description(N_("YUV video output"))
+    set_capability("vout display", 0)
+    set_callbacks(Open, Close)
+
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
-    set_capability("vout display", 0)
-
     add_string(CFG_PREFIX "file", "stream.yuv",
                 YUV_FILE_TEXT, YUV_FILE_LONGTEXT, false)
     add_string(CFG_PREFIX "chroma", NULL,
                 CHROMA_TEXT, CHROMA_LONGTEXT, true)
     add_bool  (CFG_PREFIX "yuv4mpeg2", false,
                 YUV4MPEG2_TEXT, YUV4MPEG2_LONGTEXT, true)
-
-    set_callbacks(Open, Close)
 vlc_module_end()
 
 /*****************************************************************************

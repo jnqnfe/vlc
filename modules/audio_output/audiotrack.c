@@ -182,13 +182,14 @@ vlc_module_begin ()
     set_shortname( "AudioTrack" )
     set_description( "Android AudioTrack audio output" )
     set_capability( "audio output", 180 )
+    add_shortcut( "audiotrack" )
+    set_callbacks( Open, Close )
+
     set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AOUT )
     add_integer( "audiotrack-session-id", 0,
             AUDIOTRACK_SESSION_ID_TEXT, NULL, true )
         change_private()
-    add_shortcut( "audiotrack" )
-    set_callbacks( Open, Close )
 vlc_module_end ()
 
 #define THREAD_NAME "android_audiotrack"

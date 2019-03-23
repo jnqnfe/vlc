@@ -82,11 +82,12 @@ static const char *const depth_texts[] = {
 vlc_module_begin ()
     set_shortname (N_("Framebuffer input"))
     set_description (N_("Shared memory framebuffer"))
-    set_category (CAT_INPUT)
-    set_subcategory (SUBCAT_INPUT_ACCESS)
     set_capability ("access", 0)
     set_callbacks (Open, Close)
+    add_shortcut ("shm")
 
+    set_category (CAT_INPUT)
+    set_subcategory (SUBCAT_INPUT_ACCESS)
     add_float ("shm-fps", 10.0, FPS_TEXT, FPS_LONGTEXT, true)
     add_integer ("shm-depth", 0, DEPTH_TEXT, DEPTH_LONGTEXT, true)
         change_integer_list (depths, depth_texts)
@@ -107,7 +108,6 @@ vlc_module_begin ()
     add_integer ("shm-id", (int64_t)IPC_PRIVATE, ID_TEXT, ID_LONGTEXT, false)
         change_volatile ()
 #endif
-    add_shortcut ("shm")
 vlc_module_end ()
 
 typedef struct demux_sys_t demux_sys_t;

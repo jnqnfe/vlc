@@ -67,18 +67,16 @@ static const char *const enc_hq_list_text[] = {
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-#define MODULE_DESCRIPTION N_( "Various audio and video decoders/encoders " \
+#define HELP_TEXT N_( "Various audio and video decoders/encoders " \
         "delivered by the FFmpeg library. This includes (MS)MPEG4, DivX, SV1,"\
         "H261, H263, H264, WMV, WMA, AAC, AMR, DV, MJPEG and other codecs")
 
 vlc_module_begin ()
+    set_help( HELP_TEXT )
     set_shortname( "FFmpeg")
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_VCODEC )
+
     /* decoder main module */
     set_description( N_("FFmpeg audio/video decoder") )
-    set_help( MODULE_DESCRIPTION )
-    set_section( N_("Decoding") , NULL )
 
     add_shortcut("ffmpeg")
     set_capability("video decoder", 70)
@@ -93,6 +91,19 @@ vlc_module_begin ()
     add_shortcut("ffmpeg")
     set_capability("spu decoder", 70)
     set_callbacks(InitSubtitleDec, EndSubtitleDec)
+
+#ifdef ENABLE_SOUT
+    /* encoder submodule */
+    add_submodule ()
+    add_shortcut( "ffmpeg" )
+    set_description( N_("FFmpeg audio/video encoder") )
+    set_capability( "encoder", 100 )
+    set_callbacks( InitVideoEnc, EndVideoEnc )
+#endif /* ENABLE_SOUT */
+
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_VCODEC )
+    set_section( N_("Decoding") , NULL )
 
     add_bool( "avcodec-dr", true, DR_TEXT, DR_TEXT, true )
     add_bool( "avcodec-corrupted", true, CORRUPTED_TEXT, CORRUPTED_LONGTEXT, false )
@@ -124,15 +135,8 @@ vlc_module_begin ()
 #endif
     add_string( "avcodec-options", NULL, AV_OPTIONS_TEXT, AV_OPTIONS_LONGTEXT, true )
 
-
 #ifdef ENABLE_SOUT
-    /* encoder submodule */
-    add_submodule ()
-    add_shortcut( "ffmpeg" )
     set_section( N_("Encoding") , NULL )
-    set_description( N_("FFmpeg audio/video encoder") )
-    set_capability( "encoder", 100 )
-    set_callbacks( InitVideoEnc, EndVideoEnc )
 
     add_string( ENC_CFG_PREFIX "codec", NULL, CODEC_TEXT, CODEC_LONGTEXT, true )
     add_string( ENC_CFG_PREFIX "hq", "rd", ENC_HQ_TEXT,

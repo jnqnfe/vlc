@@ -106,8 +106,6 @@ static block_t *EncodeBlock(encoder_t *, picture_t *);
  * Module descriptor
  */
 vlc_module_begin()
-    set_category(CAT_INPUT)
-    set_subcategory(SUBCAT_INPUT_VCODEC)
     /* decoder main module */
     set_description(N_("JPEG image decoder"))
     set_capability("video decoder", 1000)
@@ -117,10 +115,13 @@ vlc_module_begin()
     /* encoder submodule */
     add_submodule()
     add_shortcut("jpeg")
-    set_section(N_("Encoding"), NULL)
     set_description(N_("JPEG image encoder"))
     set_capability("encoder", 1000)
     set_callbacks(OpenEncoder, CloseEncoder)
+
+    set_category(CAT_INPUT)
+    set_subcategory(SUBCAT_INPUT_VCODEC)
+    set_section(N_("Encoding"), NULL)
     add_integer_with_range(ENC_CFG_PREFIX "quality", 95, 0, 100,
                            ENC_QUALITY_TEXT, ENC_QUALITY_LONGTEXT, true)
 vlc_module_end()

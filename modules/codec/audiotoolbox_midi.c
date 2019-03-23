@@ -56,9 +56,10 @@ vlc_module_begin()
     set_description(N_("AudioToolbox MIDI synthesizer"))
     set_capability("audio decoder", 100)
     set_shortname(N_("AUMIDI"))
+    set_callbacks(Open, Close)
+
     set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_ACODEC)
-    set_callbacks(Open, Close)
     add_loadfile(CFG_PREFIX "soundfont", "",
                  SOUNDFONT_TEXT, SOUNDFONT_LONGTEXT)
 vlc_module_end()

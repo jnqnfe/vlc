@@ -197,12 +197,13 @@ static const char *const rc_method_text[] =
     { "cbr", "vbr", "qp", "avbr" };
 
 vlc_module_begin ()
-    set_category(CAT_INPUT)
-    set_subcategory(SUBCAT_INPUT_VCODEC)
     set_description(N_("Intel QuickSync Video encoder for MPEG4-Part10/MPEG2 (aka H.264/H.262)"))
     set_shortname("qsv")
     set_capability("encoder", 0)
     set_callbacks(Open, Close)
+
+    set_category(CAT_INPUT)
+    set_subcategory(SUBCAT_INPUT_VCODEC)
 
     add_bool(SOUT_CFG_PREFIX "software", false, SW_IMPL_TEXT, SW_IMPL_LONGTEXT, true)
 

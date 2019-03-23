@@ -91,9 +91,6 @@ static const char * const ppsz_enc_mode_descriptions[] = {
 };
 
 vlc_module_begin ()
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_ACODEC )
-
     set_description( N_("Speex audio decoder") )
     set_capability( "audio decoder", 100 )
     set_shortname( N_("Speex") )
@@ -110,6 +107,8 @@ vlc_module_begin ()
     set_capability( "encoder", 100 )
     set_callbacks( OpenEncoder, CloseEncoder )
 
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_ACODEC )
     add_integer( ENC_CFG_PREFIX "mode", 0, ENC_MODE_TEXT,
                  ENC_MODE_LONGTEXT, false )
         change_integer_list( pi_enc_mode_values, ppsz_enc_mode_descriptions )

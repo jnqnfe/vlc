@@ -66,15 +66,13 @@ static const signed char pi_kernel_y[3][3] = {
 };
 
 vlc_module_begin ()
-
+    set_help( EDGE_DETECTION_LONGTEXT )
     set_description( EDGE_DETECTION_DESCRIPTION )
     set_shortname( EDGE_DETECTION_TEXT )
-    set_help( EDGE_DETECTION_LONGTEXT )
     set_capability( "video filter", 0 )
     set_callbacks( Open, Close )
     //set_category( CAT_VIDEO )
     //set_subcategory( SUBCAT_VIDEO_VFILTER )
-
 vlc_module_end ()
 
 /* Store the filter chain */

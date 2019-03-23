@@ -73,15 +73,14 @@ static void Close( vlc_object_t * );
 vlc_module_begin ()
     set_description( N_("UDP stream output") )
     set_shortname( "UDP" )
-    set_category( CAT_SOUT )
-    set_subcategory( SUBCAT_SOUT_ACO )
-    add_integer( SOUT_CFG_PREFIX "caching", DEFAULT_PTS_DELAY / 1000, CACHING_TEXT, CACHING_LONGTEXT, true )
-    add_integer( SOUT_CFG_PREFIX "group", 1, GROUP_TEXT, GROUP_LONGTEXT,
-                                 true )
-
     set_capability( "sout access", 0 )
     add_shortcut( "udp" )
     set_callbacks( Open, Close )
+
+    set_category( CAT_SOUT )
+    set_subcategory( SUBCAT_SOUT_ACO )
+    add_integer( SOUT_CFG_PREFIX "caching", DEFAULT_PTS_DELAY / 1000, CACHING_TEXT, CACHING_LONGTEXT, true )
+    add_integer( SOUT_CFG_PREFIX "group", 1, GROUP_TEXT, GROUP_LONGTEXT, true )
 vlc_module_end ()
 
 /*****************************************************************************

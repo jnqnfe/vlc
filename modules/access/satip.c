@@ -70,13 +70,14 @@ vlc_module_begin()
     set_description( N_("SAT>IP Receiver Plugin") )
     set_capability("access", 201)
     set_callbacks(satip_open, satip_close)
+    add_shortcut("rtsp", "satip")
+
     set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_ACCESS)
     add_integer("satip-buffer", 0x400000, BUFFER_TEXT, BUFFER_LONGTEXT, true)
     add_bool("satip-multicast", false, MULTICAST_TEXT, MULTICAST_LONGTEXT, true)
     add_string("satip-host", "", SATIP_HOST_TEXT, SATIP_HOST_TEXT, true)
-    change_safe()
-    add_shortcut("rtsp", "satip")
+        change_safe()
 vlc_module_end()
 
 enum rtsp_state {

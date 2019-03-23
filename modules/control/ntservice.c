@@ -66,6 +66,9 @@ static void Close   ( vlc_object_t * );
 vlc_module_begin ()
     set_shortname( N_("NT Service"))
     set_description( N_("Windows Service interface") )
+    set_capability( "interface", 0 )
+    set_callbacks( Activate, Close )
+
     set_category( CAT_INTERFACE )
     set_subcategory( SUBCAT_INTERFACE_CONTROL )
     add_bool( "ntservice-install", false,
@@ -78,9 +81,6 @@ vlc_module_begin ()
                  OPTIONS_TEXT, OPTIONS_LONGTEXT, true )
     add_string ( "ntservice-extraintf", NULL,
                  EXTRAINTF_TEXT, EXTRAINTF_LONGTEXT, true )
-
-    set_capability( "interface", 0 )
-    set_callbacks( Activate, Close )
 vlc_module_end ()
 
 struct intf_sys_t

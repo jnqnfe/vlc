@@ -77,11 +77,12 @@ static void Close( vlc_object_t * );
 vlc_module_begin()
     set_shortname( N_("VNC") )
     add_shortcut( "vnc" )
-    set_category( CAT_INPUT )
-    set_subcategory( SUBCAT_INPUT_ACCESS )
     set_description( N_("VNC client access") )
     set_capability( "access", 0 )
+    set_callbacks( Open, Close )
 
+    set_category( CAT_INPUT )
+    set_subcategory( SUBCAT_INPUT_ACCESS )
     add_string( CFG_PREFIX "user", NULL, RFB_USER, RFB_USER, false )
         change_safe()
     add_password(CFG_PREFIX "password", NULL, RFB_PASSWORD, RFB_PASSWORD)
@@ -107,8 +108,6 @@ vlc_module_begin()
     add_integer( CFG_PREFIX "quality-level", 9, RFB_QUALITY, RFB_QUALITY_LONGTEXT, true )
         change_integer_range (1, 9)
         change_safe()
-
-    set_callbacks( Open, Close )
 vlc_module_end()
 
 typedef struct

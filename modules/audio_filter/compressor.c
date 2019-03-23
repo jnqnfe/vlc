@@ -176,9 +176,11 @@ vlc_module_begin()
     set_shortname( N_("Compressor") )
     set_description( N_("Dynamic range compressor") )
     set_capability( "audio filter", 0 )
+    set_callbacks( Open, Close )
+    add_shortcut( "compressor" )
+
     set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AFILTER )
-
     add_float_with_range( "compressor-rms-peak", 0.2, 0.0, 1.0,
                RMS_PEAK_TEXT, RMS_PEAK_LONGTEXT, false )
     add_float_with_range( "compressor-attack", 25.0, 1.5, 400.0,
@@ -193,8 +195,6 @@ vlc_module_begin()
                KNEE_TEXT, KNEE_LONGTEXT, false )
     add_float_with_range( "compressor-makeup-gain", 7.0, 0.0, 24.0,
                MAKEUP_GAIN_TEXT, MAKEUP_GAIN_LONGTEXT, false )
-    set_callbacks( Open, Close )
-    add_shortcut( "compressor" )
 vlc_module_end ()
 
 /*****************************************************************************

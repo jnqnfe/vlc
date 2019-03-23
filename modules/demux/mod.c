@@ -72,6 +72,9 @@ vlc_module_begin ()
     set_shortname( "MOD")
     set_description( N_("MOD demuxer (libmodplug)" ) )
     set_capability( "demux", 10 )
+    set_callbacks( Open, Close )
+    add_shortcut( "mod" )
+
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
 
@@ -98,9 +101,6 @@ vlc_module_begin ()
               N_("Surround level"), SURROUND_LEVEL_LONGTEXT, true )
     add_integer_with_range( "mod-surround-delay", 5, 0, 1000,
               N_("Surround delay (ms)"), SURROUND_DELAY_LONGTEXT, true )
-
-    set_callbacks( Open, Close )
-    add_shortcut( "mod" )
 vlc_module_end ()
 
 /*****************************************************************************
