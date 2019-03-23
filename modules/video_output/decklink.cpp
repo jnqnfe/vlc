@@ -246,6 +246,8 @@ static void CloseAudio          (vlc_object_t *);
 vlc_module_begin()
     set_shortname(N_("DecklinkOutput"))
     set_description(N_("Output module to write to Blackmagic SDI card"))
+    //set_category( CAT_HIDDEN )
+    //set_subcategory( SUBCAT_HIDDEN )
     set_section(N_("DeckLink General Options"), NULL)
     add_integer(CFG_PREFIX "card-index", 0,
                 CARD_INDEX_TEXT, CARD_INDEX_LONGTEXT, true)

@@ -52,6 +52,8 @@ vlc_module_begin ()
     set_capability ("vout display", 265)
     set_callbacks (Open, Close)
     add_shortcut ("opengles2", "gles2")
+    set_category( CAT_HIDDEN )
+    set_subcategory( SUBCAT_HIDDEN )
     add_module("gles2", "opengl es2", NULL, GLES2_TEXT, PROVIDER_LONGTEXT)
 
 #else
