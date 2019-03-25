@@ -69,12 +69,12 @@ typedef int (*vlc_integer_list_cb)(const char *, int64_t **, char ***);
 /**
  * Configuration item
  *
- * This is the internal reprensation of a configuration item.
+ * This is the internal representation of a configuration item.
  * See also config_FindConfig().
  */
 struct module_config_item_t
 {
-    uint8_t     i_type; /**< Configuration type */
+    uint16_t    i_type; /**< Item type */
     char        i_short; /**< Optional short option name */
     unsigned    b_internal:1; /**< Hidden from preferences and help */
     unsigned    b_unsaveable:1; /**< Not stored in configuration */
@@ -110,7 +110,7 @@ struct module_config_item_t
  *
  * This function checks the type of configuration item by name.
  * \param name Configuration item name
- * \return The configuration item type or 0 if not found.
+ * \return The configuration item type (VLC_VAR_*) or 0 if not found.
  */
 VLC_API int config_GetType(const char *name) VLC_USED;
 
@@ -118,7 +118,7 @@ VLC_API int config_GetType(const char *name) VLC_USED;
  * Gets an integer configuration item.
  *
  * This function retrieves the current value of a configuration item of
- * integral type (\ref CONFIG_ITEM_INTEGER and \ref CONFIG_ITEM_BOOL).
+ * integral type (\ref CONFIG_ITEM_CLASS_INTEGER and \ref CONFIG_ITEM_CLASS_BOOL).
  *
  * \warning The behaviour is undefined if the configuration item exists but is
  * not of integer or boolean type.
@@ -133,7 +133,7 @@ VLC_API int64_t config_GetInt(const char *name) VLC_USED;
  * Sets an integer configuration item.
  *
  * This function changes the current value of a configuration item of
- * integral type (\ref CONFIG_ITEM_INTEGER and \ref CONFIG_ITEM_BOOL).
+ * integral type (\ref CONFIG_ITEM_CLASS_INTEGER and \ref CONFIG_ITEM_CLASS_BOOL).
  *
  * \warning The behaviour is undefined if the configuration item exists but is
  * not of integer or boolean type.
@@ -150,7 +150,7 @@ VLC_API void config_PutInt(const char *name, int64_t val);
  * Gets an floating point configuration item.
  *
  * This function retrieves the current value of a configuration item of
- * floating point type (\ref CONFIG_ITEM_FLOAT).
+ * floating point type (\ref CONFIG_ITEM_CLASS_FLOAT).
  *
  * \warning The behaviour is undefined if the configuration item exists but is
  * not of floating point type.
@@ -166,7 +166,7 @@ VLC_API float config_GetFloat(const char *name) VLC_USED;
  * Sets an integer configuration item.
  *
  * This function changes the current value of a configuration item of
- * integral type (\ref CONFIG_ITEM_FLOAT).
+ * integral type (\ref CONFIG_ITEM_CLASS_FLOAT).
  *
  * \warning The behaviour is undefined if the configuration item exists but is
  * not of floating point type.
@@ -183,7 +183,7 @@ VLC_API void config_PutFloat(const char *name, float val);
  * Gets an string configuration item.
  *
  * This function retrieves the current value of a configuration item of
- * string type (\ref CONFIG_ITEM_STRING).
+ * string type (\ref CONFIG_ITEM_CLASS_STRING).
  *
  * \note The caller must free() the returned pointer (if non-NULL), which is a
  * duplicate of the current value. It is not safe to return a pointer to the
@@ -205,7 +205,7 @@ VLC_API char *config_GetPsz(const char *name) VLC_USED VLC_MALLOC;
  * Sets an string configuration item.
  *
  * This function changes the current value of a configuration item of
- * string type (e.g. \ref CONFIG_ITEM_STRING).
+ * string type (e.g. \ref CONFIG_ITEM_CLASS_STRING).
  *
  * \warning The behaviour is undefined if the configuration item exists but is
  * not of a string type.

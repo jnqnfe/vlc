@@ -57,13 +57,13 @@ int config_GetType(const char *psz_name)
 
     switch( CONFIG_CLASS(p_config->i_type) )
     {
-        case CONFIG_ITEM_FLOAT:
+        case CONFIG_ITEM_CLASS_FLOAT:
             return VLC_VAR_FLOAT;
-        case CONFIG_ITEM_INTEGER:
+        case CONFIG_ITEM_CLASS_INTEGER:
             return VLC_VAR_INTEGER;
-        case CONFIG_ITEM_BOOL:
+        case CONFIG_ITEM_CLASS_BOOL:
             return VLC_VAR_BOOL;
-        case CONFIG_ITEM_STRING:
+        case CONFIG_ITEM_CLASS_STRING:
             return VLC_VAR_STRING;
         default:
             return 0;

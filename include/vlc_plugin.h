@@ -108,31 +108,43 @@ enum vlc_module_properties
     /* Insert new VLC_CONFIG_* here */
 };
 
-/* Configuration hint types */
-#define CONFIG_HINT_CATEGORY                0x02  /* Start of new category */
+/* Configuration item class/subtype masks */
+#define CONFIG_ITEM_CLASS_MASK   0xFF00
+#define CONFIG_ITEM_SUBTYPE_MASK 0x00FF
 
-#define CONFIG_CATEGORY                     0x06 /* Set category */
-#define CONFIG_SUBCATEGORY                  0x07 /* Set subcategory */
-#define CONFIG_SECTION                      0x08 /* Start of new section */
+/* Configuration item classes */
+#define CONFIG_ITEM_CLASS_INVALID    0x0000 /* For init */
+#define CONFIG_ITEM_CLASS_SPECIAL    0x0100 /* For hint/category items */
+#define CONFIG_ITEM_CLASS_BOOL       0x0200 /* Boolean flag option */
+#define CONFIG_ITEM_CLASS_FLOAT      0x0400 /* Float data-value option */
+#define CONFIG_ITEM_CLASS_INTEGER    0x0800 /* Integer data-value option */
+#define CONFIG_ITEM_CLASS_STRING     0x1000 /* String data-value option */
+
+/* Configuration hint types */
+#define CONFIG_HINT_CATEGORY         (CONFIG_ITEM_CLASS_SPECIAL | 0x01) /* Set category (help output) */
+#define CONFIG_CATEGORY              (CONFIG_ITEM_CLASS_SPECIAL | 0x02) /* Set category (GUI) */
+#define CONFIG_SUBCATEGORY           (CONFIG_ITEM_CLASS_SPECIAL | 0x03) /* Set subcategory (GUI) */
+#define CONFIG_SECTION               (CONFIG_ITEM_CLASS_SPECIAL | 0x04) /* Start of new section */
 
 /* Configuration item types */
-#define CONFIG_ITEM_FLOAT                   0x20  /* Float option */
-#define CONFIG_ITEM_INTEGER                 0x40  /* Integer option */
-#define CONFIG_ITEM_RGB                     0x41  /* RGB color option */
-#define CONFIG_ITEM_BOOL                    0x60  /* Bool option */
-#define CONFIG_ITEM_STRING                  0x80  /* String option */
-#define CONFIG_ITEM_PASSWORD                0x81  /* Password option (*) */
-#define CONFIG_ITEM_KEY                     0x82  /* Hot key option */
-#define CONFIG_ITEM_MODULE                  0x84  /* Module option */
-#define CONFIG_ITEM_MODULE_CAT              0x85  /* Module option */
-#define CONFIG_ITEM_MODULE_LIST             0x86  /* Module option */
-#define CONFIG_ITEM_MODULE_LIST_CAT         0x87  /* Module option */
-#define CONFIG_ITEM_LOADFILE                0x8C  /* Read file option */
-#define CONFIG_ITEM_SAVEFILE                0x8D  /* Written file option */
-#define CONFIG_ITEM_DIRECTORY               0x8E  /* Directory option */
-#define CONFIG_ITEM_FONT                    0x8F  /* Font option */
+#define CONFIG_ITEM_INVALID          (CONFIG_ITEM_CLASS_INVALID | 0x00)
+#define CONFIG_ITEM_BOOL             (CONFIG_ITEM_CLASS_BOOL    | 0x00) /* Bool option */
+#define CONFIG_ITEM_FLOAT            (CONFIG_ITEM_CLASS_FLOAT   | 0x00) /* Float option */
+#define CONFIG_ITEM_INTEGER          (CONFIG_ITEM_CLASS_INTEGER | 0x00) /* Integer option */
+#define CONFIG_ITEM_RGB              (CONFIG_ITEM_CLASS_INTEGER | 0x01) /* RGB color option */
+#define CONFIG_ITEM_STRING           (CONFIG_ITEM_CLASS_STRING  | 0x00) /* String option */
+#define CONFIG_ITEM_PASSWORD         (CONFIG_ITEM_CLASS_STRING  | 0x01) /* Password option (*) */
+#define CONFIG_ITEM_KEY              (CONFIG_ITEM_CLASS_STRING  | 0x02) /* Hot key option */
+#define CONFIG_ITEM_MODULE           (CONFIG_ITEM_CLASS_STRING  | 0x03) /* Module option */
+#define CONFIG_ITEM_MODULE_CAT       (CONFIG_ITEM_CLASS_STRING  | 0x04) /* Module option */
+#define CONFIG_ITEM_MODULE_LIST      (CONFIG_ITEM_CLASS_STRING  | 0x05) /* Module option */
+#define CONFIG_ITEM_MODULE_LIST_CAT  (CONFIG_ITEM_CLASS_STRING  | 0x06) /* Module option */
+#define CONFIG_ITEM_LOADFILE         (CONFIG_ITEM_CLASS_STRING  | 0x07) /* Read file option */
+#define CONFIG_ITEM_SAVEFILE         (CONFIG_ITEM_CLASS_STRING  | 0x08) /* Written file option */
+#define CONFIG_ITEM_DIRECTORY        (CONFIG_ITEM_CLASS_STRING  | 0x09) /* Directory option */
+#define CONFIG_ITEM_FONT             (CONFIG_ITEM_CLASS_STRING  | 0x0A) /* Font option */
 
-#define CONFIG_ITEM(x) (((x) & ~0xF) != 0)
+#define CONFIG_ITEM(x) (((x) & CONFIG_ITEM_CLASS_MASK) != CONFIG_ITEM_CLASS_SPECIAL)
 
 /* Hidden categories and subcategories */
 /* Any options under this will be hidden in the GUI preferences, but will be
@@ -192,8 +204,8 @@ enum vlc_module_properties
 /**
  * Current plugin ABI version
  */
-# define MODULE_SYMBOL 4_0_4
-# define MODULE_SUFFIX "__4_0_4"
+# define MODULE_SYMBOL 4_0_5
+# define MODULE_SUFFIX "__4_0_5"
 
 /*****************************************************************************
  * Add a few defines. You do not want to read this section. Really.

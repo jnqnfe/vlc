@@ -347,7 +347,8 @@ static void print_item(const module_t *m, const module_config_item_t *item,
 
     switch (CONFIG_CLASS(item->i_type))
     {
-        case 0: // hint class
+        case CONFIG_ITEM_CLASS_SPECIAL:
+        {
             switch (item->i_type)
             {
                 case CONFIG_HINT_CATEGORY:
@@ -359,13 +360,18 @@ static void print_item(const module_t *m, const module_config_item_t *item,
                                module_gettext(m, item->psz_longtext));
                     break;
 
+                case CONFIG_CATEGORY:
+                case CONFIG_SUBCATEGORY:
+                    /* We ignore these here, using 'hints' instead */
+                    break;
+
                 case CONFIG_SECTION:
                     *section = item;
                     break;
             }
             return;
-
-        case CONFIG_ITEM_STRING:
+        }
+        case CONFIG_ITEM_CLASS_STRING:
         {
             type = _("string");
 
@@ -408,7 +414,7 @@ static void print_item(const module_t *m, const module_config_item_t *item,
 
             break;
         }
-        case CONFIG_ITEM_INTEGER:
+        case CONFIG_ITEM_CLASS_INTEGER:
         {
             type = _("integer");
 
@@ -459,7 +465,8 @@ static void print_item(const module_t *m, const module_config_item_t *item,
             }
             break;
         }
-        case CONFIG_ITEM_FLOAT:
+        case CONFIG_ITEM_CLASS_FLOAT:
+        {
             type = _("float");
             if (item->max.f != FLT_MAX || (item->min.f != -FLT_MAX && item->min.f != 0.0) )
             {
@@ -470,14 +477,16 @@ static void print_item(const module_t *m, const module_config_item_t *item,
                     typebuf = NULL;
             }
             break;
-
-        case CONFIG_ITEM_BOOL:
+        }
+        case CONFIG_ITEM_CLASS_BOOL:
+        {
             bra = type = ket = "";
             prefix = ", --no-";
             suffix = item->value.i ? _("(default enabled)")
                                    : _("(default disabled)");
             break;
-       default:
+        }
+        default:
             return;
     }
 
@@ -490,8 +499,8 @@ static void print_item(const module_t *m, const module_config_item_t *item,
     else
         strcpy(shortopt, "   ");
 
-    if (CONFIG_CLASS(item->i_type) == CONFIG_ITEM_BOOL)
-        printf(color ? TS_RESET_BOLD"  %s --%s"      "%s%s%s%s%s " TS_RESET
+    if (CONFIG_CLASS(item->i_type) == CONFIG_ITEM_CLASS_BOOL)
+        printf(color ? TS_RESET_BOLD "  %s --%s"      "%s%s%s%s%s " TS_RESET
                      : "  %s --%s%s%s%s%s%s ", shortopt, item->psz_name,
                prefix, item->psz_name, bra, type, ket);
     else
@@ -502,7 +511,7 @@ static void print_item(const module_t *m, const module_config_item_t *item,
     /* Wrap description */
     int offset = PADDING_SPACES - strlen(item->psz_name)
                - strlen(bra) - vlc_swidth(type) - strlen(ket) - 1;
-    if (CONFIG_CLASS(item->i_type) == CONFIG_ITEM_BOOL)
+    if (CONFIG_CLASS(item->i_type) == CONFIG_ITEM_CLASS_BOOL)
         offset -= strlen(item->psz_name) + vlc_swidth(prefix);
     if (offset < 0)
     {

@@ -137,7 +137,7 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
             p_longopts[i_index].val = 0;
             p_longopts[i_index].is_obsolete = p_item->b_removed;
 
-            if( CONFIG_CLASS(p_item->i_type) != CONFIG_ITEM_BOOL )
+            if( CONFIG_CLASS(p_item->i_type) != CONFIG_ITEM_CLASS_BOOL )
                 p_longopts[i_index].has_arg = true;
             else
             /* Booleans also need --no-foo and --nofoo options */
@@ -257,11 +257,11 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
 
                 switch( CONFIG_CLASS(p_conf->i_type) )
                 {
-                    case CONFIG_ITEM_STRING:
+                    case CONFIG_ITEM_CLASS_STRING:
                         var_Create( p_this, psz_name, VLC_VAR_STRING );
                         var_SetString( p_this, psz_name, state.arg );
                         break;
-                    case CONFIG_ITEM_INTEGER:
+                    case CONFIG_ITEM_CLASS_INTEGER:
                         var_Create( p_this, psz_name, VLC_VAR_INTEGER );
                         var_Change( p_this, psz_name, VLC_VAR_SETMINMAX,
                             (vlc_value_t){ .i_int = p_conf->min.i },
@@ -269,14 +269,14 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
                         var_SetInteger( p_this, psz_name,
                                         strtoll(state.arg, NULL, 0));
                         break;
-                    case CONFIG_ITEM_FLOAT:
+                    case CONFIG_ITEM_CLASS_FLOAT:
                         var_Create( p_this, psz_name, VLC_VAR_FLOAT );
                         var_Change( p_this, psz_name, VLC_VAR_SETMINMAX,
                             (vlc_value_t){ .f_float = p_conf->min.f },
                             (vlc_value_t){ .f_float = p_conf->max.f } );
                         var_SetFloat( p_this, psz_name, us_atof(state.arg) );
                         break;
-                    case CONFIG_ITEM_BOOL:
+                    case CONFIG_ITEM_CLASS_BOOL:
                         var_Create( p_this, psz_name, VLC_VAR_BOOL );
                         var_SetBool( p_this, psz_name, !flag );
                         break;
@@ -291,11 +291,11 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
             const char *name = pp_shortopts[i_cmd]->psz_name;
             switch( CONFIG_CLASS(pp_shortopts[i_cmd]->i_type) )
             {
-                case CONFIG_ITEM_STRING:
+                case CONFIG_ITEM_CLASS_STRING:
                     var_Create( p_this, name, VLC_VAR_STRING );
                     var_SetString( p_this, name, state.arg );
                     break;
-                case CONFIG_ITEM_INTEGER:
+                case CONFIG_ITEM_CLASS_INTEGER:
                     var_Create( p_this, name, VLC_VAR_INTEGER );
                     if( i_cmd == 'v' )
                     {
@@ -308,7 +308,12 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
                                         strtoll(state.arg, NULL, 0) );
                     }
                     break;
-                case CONFIG_ITEM_BOOL:
+                /* none currently?
+                case CONFIG_ITEM_CLASS_FLOAT:
+                    var_Create( p_this, name, VLC_VAR_FLOAT );
+                    var_SetFloat( p_this, name, us_atof(state.arg) );
+                    break;*/
+                case CONFIG_ITEM_CLASS_BOOL:
                     var_Create( p_this, name, VLC_VAR_BOOL );
                     var_SetBool( p_this, name, true );
                     break;

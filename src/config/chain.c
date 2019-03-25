@@ -291,12 +291,12 @@ void config_ChainParse( vlc_object_t *p_this, const char *psz_prefix,
         {
             switch( CONFIG_CLASS( p_conf->i_type ) )
             {
-                case CONFIG_ITEM_INTEGER:
+                case CONFIG_ITEM_CLASS_INTEGER:
                     var_Change( p_this, name, VLC_VAR_SETMINMAX,
                         (vlc_value_t){ .i_int = p_conf->min.i },
                         (vlc_value_t){ .i_int = p_conf->max.i } );
                     break;
-                case CONFIG_ITEM_FLOAT:
+                case CONFIG_ITEM_CLASS_FLOAT:
                     var_Change( p_this, name, VLC_VAR_SETMINMAX,
                         (vlc_value_t){ .f_float = p_conf->min.f },
                         (vlc_value_t){ .f_float = p_conf->max.f } );

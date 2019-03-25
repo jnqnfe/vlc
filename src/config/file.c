@@ -216,8 +216,8 @@ int config_LoadConfigFile( vlc_object_t *p_this )
         const char *psz_option_value = ptr + 1;
         switch (CONFIG_CLASS(item->i_type))
         {
-            case CONFIG_ITEM_BOOL:
-            case CONFIG_ITEM_INTEGER:
+            case CONFIG_ITEM_CLASS_BOOL:
+            case CONFIG_ITEM_CLASS_INTEGER:
             {
                 int64_t l;
 
@@ -234,13 +234,13 @@ int config_LoadConfigFile( vlc_object_t *p_this )
                 break;
             }
 
-            case CONFIG_ITEM_FLOAT:
+            case CONFIG_ITEM_CLASS_FLOAT:
                 if (!*psz_option_value)
                     break;                    /* ignore empty option */
                 item->value.f = (float)atof (psz_option_value);
                 break;
 
-            default:
+            case CONFIG_ITEM_CLASS_STRING:
                 free (item->value.psz);
                 item->value.psz = strdupnull (psz_option_value);
                 break;
@@ -453,7 +453,7 @@ int config_SaveConfigFile (vlc_object_t *p_this)
             {
                 int64_t val = p_item->value.i;
                 config_Write (file, p_item->psz_text,
-                             (CONFIG_CLASS(p_item->i_type) == CONFIG_ITEM_BOOL)
+                             (CONFIG_CLASS(p_item->i_type) == CONFIG_ITEM_CLASS_BOOL)
                                   ? N_("boolean") : N_("integer"),
                               val == p_item->orig.i,
                               p_item->psz_name, "%"PRId64, val);
