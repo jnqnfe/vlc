@@ -178,7 +178,7 @@ static int vlc_cache_load_align(size_t align, block_t *file)
     if (vlc_cache_load_align(alignof(t), file)) \
         goto error
 
-static int vlc_cache_load_config(module_config_t *cfg, block_t *file)
+static int vlc_cache_load_config(module_config_item_t *cfg, block_t *file)
 {
     LOAD_IMMEDIATE (cfg->i_type);
     LOAD_IMMEDIATE (cfg->i_short);
@@ -252,7 +252,7 @@ static int vlc_cache_load_plugin_config(vlc_plugin_t *plugin, block_t *file)
     /* Allocate memory */
     if (lines)
     {
-        plugin->conf.items = calloc(sizeof (module_config_t), lines);
+        plugin->conf.items = calloc(sizeof (module_config_item_t), lines);
         if (unlikely(plugin->conf.items == NULL))
         {
             plugin->conf.size = 0;
@@ -267,7 +267,7 @@ static int vlc_cache_load_plugin_config(vlc_plugin_t *plugin, block_t *file)
     /* Do the duplication job */
     for (size_t i = 0; i < lines; i++)
     {
-        module_config_t *item = plugin->conf.items + i;
+        module_config_item_t *item = plugin->conf.items + i;
 
         if (vlc_cache_load_config(item, file))
             return -1;
@@ -510,7 +510,7 @@ static int CacheSaveAlign(FILE *file, size_t align)
     if (CacheSaveAlign(file, alignof (t))) \
         goto error
 
-static int CacheSaveConfig (FILE *file, const module_config_t *cfg)
+static int CacheSaveConfig (FILE *file, const module_config_item_t *cfg)
 {
     SAVE_IMMEDIATE (cfg->i_type);
     SAVE_IMMEDIATE (cfg->i_short);

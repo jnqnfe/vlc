@@ -69,7 +69,7 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
 #define b_ignore_errors (pindex == NULL)
 
     /* Short options */
-    const module_config_t *pp_shortopts[256];
+    const module_config_item_t *pp_shortopts[256];
     char *psz_shortopts;
 
     /*
@@ -121,7 +121,7 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
     i_index = 0;
     for (const vlc_plugin_t *p = vlc_plugins; p != NULL; p = p->next)
     {
-        for (const module_config_t *p_item = p->conf.items,
+        for (const module_config_item_t *p_item = p->conf.items,
                                    *p_end = p_item + p->conf.size;
              p_item < p_end;
              p_item++)
@@ -204,7 +204,7 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
         /* A long option has been recognized */
         if( i_cmd == 0 )
         {
-            module_config_t *p_conf;
+            module_config_item_t *p_conf;
             const char *psz_full_name = p_longopts[i_index].name;
             const char *psz_name = psz_full_name;
 

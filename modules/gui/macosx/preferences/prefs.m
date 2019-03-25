@@ -115,13 +115,13 @@
 /* Plugin daughters */
 @interface VLCTreePluginItem : VLCTreeItem
 {
-    module_config_t * _configItems;
+    module_config_item_t * _configItems;
     unsigned int _configSize;
 }
 + (VLCTreePluginItem *)pluginTreeItemWithPlugin:(module_t *)plugin;
 - (id)initWithPlugin:(module_t *)plugin;
 
-- (module_config_t *)configItems;
+- (module_config_item_t *)configItems;
 - (unsigned int)configSize;
 @end
 
@@ -140,10 +140,10 @@
 /* individual options. */
 @interface VLCTreeLeafItem : VLCTreeItem
 {
-    module_config_t * _configItem;
+    module_config_item_t * _configItem;
 }
-- (id)initWithConfigItem:(module_config_t *)configItem;
-- (module_config_t *)configItem;
+- (id)initWithConfigItem:(module_config_item_t *)configItem;
+- (module_config_item_t *)configItem;
 @end
 
 @interface VLCTreeMainItem : VLCTreePluginItem
@@ -487,7 +487,7 @@
         VLCTreeCategoryItem * categoryItem = nil;
         VLCTreeSubCategoryItem * subCategoryItem = nil;
         VLCTreePluginItem * pluginItem = nil;
-        module_config_t *p_configs = NULL;
+        module_config_item_t *p_configs = NULL;
         int lastsubcat = 0;
         unsigned int confsize;
 
@@ -655,7 +655,7 @@
     module_config_free(_configItems);
 }
 
-- (module_config_t *)configItems
+- (module_config_item_t *)configItems
 {
     return _configItems;
 }
@@ -670,7 +670,7 @@
 #pragma mark -
 @implementation VLCTreeLeafItem
 
-- (id)initWithConfigItem: (module_config_t *) configItem
+- (id)initWithConfigItem: (module_config_item_t *) configItem
 {
     NSString *name = toNSStr(configItem->psz_name);
     self = [super initWithName:name];
@@ -680,7 +680,7 @@
     return self;
 }
 
-- (module_config_t *)configItem
+- (module_config_item_t *)configItem
 {
     return _configItem;
 }

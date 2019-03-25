@@ -72,7 +72,7 @@ typedef int (*vlc_integer_list_cb)(const char *, int64_t **, char ***);
  * This is the internal reprensation of a configuration item.
  * See also config_FindConfig().
  */
-struct module_config_t
+struct module_config_item_t
 {
     uint8_t     i_type; /**< Configuration type */
     char        i_short; /**< Optional short option name */
@@ -265,7 +265,7 @@ VLC_API void config_ResetAll(void);
  * \param name Configuration item name
  * \return The internal structure, or NULL if not found.
  */
-VLC_API module_config_t *config_FindConfig(const char *name) VLC_USED;
+VLC_API module_config_item_t *config_FindConfig(const char *name) VLC_USED;
 
 /**
  * System directory identifiers

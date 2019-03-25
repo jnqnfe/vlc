@@ -295,7 +295,7 @@ typedef NS_ENUM(NSInteger, VLCObjectType) {
 
 - (void)setupMenu:(NSMenu *)menu withIntList:(char *)psz_name andSelector:(SEL)selector
 {
-    module_config_t *p_item;
+    module_config_item_t *p_item;
 
     [menu removeAllItems];
     p_item = config_FindConfig(psz_name);

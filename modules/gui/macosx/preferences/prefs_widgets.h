@@ -25,7 +25,7 @@ static NSMenu *o_keys_menu = nil;
 
 @interface VLCConfigControl : NSView
 
-@property (readonly) module_config_t *p_item;
+@property (readonly) module_config_item_t *p_item;
 
 @property (readwrite) NSTextField *label;
 
@@ -38,12 +38,12 @@ static NSMenu *o_keys_menu = nil;
 @property (readonly) int labelSize;
 
 
-+ (VLCConfigControl *)newControl:(module_config_t *)_p_item
++ (VLCConfigControl *)newControl:(module_config_item_t *)_p_item
                         withView:(NSView *)o_parent_view;
 + (int)calcVerticalMargin:(int)i_curItem lastItem:(int)i_lastItem;
 
 - (id)initWithFrame:(NSRect)frame
-               item:(module_config_t *)p_item;
+               item:(module_config_item_t *)p_item;
 
 - (void)setYPos:(int)i_yPos;
 - (void)alignWithXPosition:(int)i_xPos;
@@ -55,21 +55,21 @@ static NSMenu *o_keys_menu = nil;
 
 @interface StringConfigControl : VLCConfigControl
 
-- (id)initWithItem:(module_config_t *)_p_item
+- (id)initWithItem:(module_config_item_t *)_p_item
           withView:(NSView *)o_parent_view;
 
 @end
 
 @interface StringListConfigControl : VLCConfigControl
 
-- (id)initWithItem:(module_config_t *)_p_item
+- (id)initWithItem:(module_config_item_t *)_p_item
           withView:(NSView *)o_parent_view;
 
 @end
 
 @interface FileConfigControl : VLCConfigControl
 
-- (id)initWithItem:(module_config_t *)_p_item
+- (id)initWithItem:(module_config_item_t *)_p_item
           withView:(NSView *)o_parent_view;
 
 - (IBAction)openFileDialog:(id)sender;
@@ -78,14 +78,14 @@ static NSMenu *o_keys_menu = nil;
 
 @interface ModuleConfigControl : VLCConfigControl
 
-- (id)initWithItem:(module_config_t *)_p_item
+- (id)initWithItem:(module_config_item_t *)_p_item
           withView:(NSView *)o_parent_view;
 
 @end
 
 @interface IntegerConfigControl : VLCConfigControl
 
-- (id)initWithItem:(module_config_t *)_p_item
+- (id)initWithItem:(module_config_item_t *)_p_item
           withView:(NSView *)o_parent_view;
 
 - (IBAction)stepperChanged:(id)sender;
@@ -94,14 +94,14 @@ static NSMenu *o_keys_menu = nil;
 
 @interface IntegerListConfigControl : VLCConfigControl
 
-- (id)initWithItem:(module_config_t *)_p_item
+- (id)initWithItem:(module_config_item_t *)_p_item
           withView:(NSView *)o_parent_view;
 
 @end
 
 @interface RangedIntegerConfigControl : VLCConfigControl
 
-- (id)initWithItem:(module_config_t *)_p_item
+- (id)initWithItem:(module_config_item_t *)_p_item
           withView:(NSView *)o_parent_view;
 
 - (IBAction)sliderChanged:(id)sender;
@@ -110,14 +110,14 @@ static NSMenu *o_keys_menu = nil;
 
 @interface BoolConfigControl : VLCConfigControl
 
-- (id)initWithItem:(module_config_t *)_p_item
+- (id)initWithItem:(module_config_item_t *)_p_item
           withView:(NSView *)o_parent_view;
 
 @end
 
 @interface FloatConfigControl : VLCConfigControl
 
-- (id)initWithItem:(module_config_t *)_p_item
+- (id)initWithItem:(module_config_item_t *)_p_item
           withView:(NSView *)o_parent_view;
 
 - (IBAction)stepperChanged:(id)sender;
@@ -126,7 +126,7 @@ static NSMenu *o_keys_menu = nil;
 
 @interface RangedFloatConfigControl : VLCConfigControl
 
-- (id)initWithItem:(module_config_t *)_p_item
+- (id)initWithItem:(module_config_item_t *)_p_item
           withView:(NSView *)o_parent_view;
 
 - (IBAction)sliderChanged:(id)sender;
@@ -135,21 +135,21 @@ static NSMenu *o_keys_menu = nil;
 
 @interface KeyConfigControl : VLCConfigControl
 
-- (id)initWithItem:(module_config_t *)_p_item
+- (id)initWithItem:(module_config_item_t *)_p_item
           withView:(NSView *)o_parent_view;
 
 @end
 
 @interface ModuleListConfigControl : VLCConfigControl
 
-- (id)initWithItem:(module_config_t *)_p_item
+- (id)initWithItem:(module_config_item_t *)_p_item
           withView:(NSView *)o_parent_view;
 
 @end
 
 @interface SectionControl : VLCConfigControl
 
-- (id)initWithItem:(module_config_t *)_p_item
+- (id)initWithItem:(module_config_item_t *)_p_item
           withView:(NSView *)o_parent_view;
 
 @end

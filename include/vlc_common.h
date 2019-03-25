@@ -349,7 +349,7 @@ typedef struct vlc_renderer_item_t vlc_renderer_item_t;
 
 /* Modules */
 typedef struct module_t module_t;
-typedef struct module_config_t module_config_t;
+typedef struct module_config_item_t module_config_item_t;
 
 typedef struct config_category_t config_category_t;
 

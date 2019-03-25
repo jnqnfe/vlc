@@ -131,7 +131,7 @@ VLC_API module_t *module_find(const char *name) VLC_USED;
  * \param psize the size of the configuration returned
  * \return the configuration as an array, or NULL if the module has no config items
  */
-VLC_API module_config_t *module_config_get(const module_t *module,
+VLC_API module_config_item_t *module_config_get(const module_t *module,
                                            unsigned *restrict psize) VLC_USED;
 
 /**
@@ -139,7 +139,7 @@ VLC_API module_config_t *module_config_get(const module_t *module,
  *
  * \param tab base address of a table returned by module_config_get()
  */
-VLC_API void module_config_free( module_config_t *tab);
+VLC_API void module_config_free( module_config_item_t *tab);
 
 VLC_API void module_list_free(module_t **);
 VLC_API module_t ** module_list_get(size_t *n) VLC_USED;

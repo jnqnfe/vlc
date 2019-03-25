@@ -84,7 +84,7 @@ public:
     void show() { changeVisibility( true ); }
     /* ConfigControl factory */
     static ConfigControl * createControl( vlc_object_t*,
-                                          module_config_t*,QWidget*,
+                                          module_config_item_t*,QWidget*,
                                           QGridLayout *, int line = 0 );
     /* Inserts control into another layout block, using a sublayout */
     void insertInto( QBoxLayout * );
@@ -92,11 +92,11 @@ public:
     void insertIntoExistingGrid( QGridLayout*, int );
     virtual void doApply() = 0;
 protected:
-    ConfigControl( vlc_object_t *_p_this, module_config_t *_p_conf ) :
+    ConfigControl( vlc_object_t *_p_this, module_config_item_t *_p_conf ) :
                             p_this (_p_this ), p_item( _p_conf ) {}
     virtual void changeVisibility( bool ) { }
     vlc_object_t *p_this;
-    module_config_t *p_item;
+    module_config_item_t *p_item;
     virtual void fillGrid( QGridLayout*, int ) {}
 signals:
     void changed();
@@ -117,7 +117,7 @@ public:
     virtual int getType() const Q_DECL_OVERRIDE;
     virtual void doApply() Q_DECL_OVERRIDE;
 protected:
-    VIntConfigControl( vlc_object_t *a, module_config_t *b ) :
+    VIntConfigControl( vlc_object_t *a, module_config_item_t *b ) :
                 ConfigControl(a,b) {}
 };
 
@@ -125,8 +125,8 @@ class IntegerConfigControl : public VIntConfigControl
 {
 Q_OBJECT
 public:
-    IntegerConfigControl( vlc_object_t *, module_config_t *, QWidget * );
-    IntegerConfigControl( vlc_object_t *, module_config_t *,
+    IntegerConfigControl( vlc_object_t *, module_config_item_t *, QWidget * );
+    IntegerConfigControl( vlc_object_t *, module_config_item_t *,
                           QLabel*, QSpinBox* );
     int getValue() const Q_DECL_OVERRIDE;
 protected:
@@ -146,10 +146,10 @@ class IntegerRangeConfigControl : public IntegerConfigControl
 {
     Q_OBJECT
 public:
-    IntegerRangeConfigControl( vlc_object_t *, module_config_t *, QWidget * );
-    IntegerRangeConfigControl( vlc_object_t *, module_config_t *,
+    IntegerRangeConfigControl( vlc_object_t *, module_config_item_t *, QWidget * );
+    IntegerRangeConfigControl( vlc_object_t *, module_config_item_t *,
                                QLabel*, QSpinBox* );
-    IntegerRangeConfigControl( vlc_object_t *, module_config_t *,
+    IntegerRangeConfigControl( vlc_object_t *, module_config_item_t *,
                                QLabel*, QSlider* );
 private:
     void finish();
@@ -159,7 +159,7 @@ class IntegerRangeSliderConfigControl : public VIntConfigControl
 {
     Q_OBJECT
 public:
-    IntegerRangeSliderConfigControl( vlc_object_t *, module_config_t *,
+    IntegerRangeSliderConfigControl( vlc_object_t *, module_config_item_t *,
                                 QLabel *, QSlider * );
     int getValue() const Q_DECL_OVERRIDE;
 protected:
@@ -178,8 +178,8 @@ class IntegerListConfigControl : public VIntConfigControl
 {
 Q_OBJECT
 public:
-    IntegerListConfigControl( vlc_object_t *, module_config_t *, QWidget *, bool );
-    IntegerListConfigControl( vlc_object_t *, module_config_t *, QLabel *,
+    IntegerListConfigControl( vlc_object_t *, module_config_item_t *, QWidget *, bool );
+    IntegerListConfigControl( vlc_object_t *, module_config_item_t *, QLabel *,
                               QComboBox*, bool );
     int getValue() const Q_DECL_OVERRIDE;
 protected:
@@ -190,7 +190,7 @@ protected:
     }
     void fillGrid( QGridLayout*, int ) Q_DECL_OVERRIDE;
 private:
-    void finish(module_config_t * );
+    void finish(module_config_item_t * );
     QLabel *label;
     QComboBox *combo;
     QList<QPushButton *> buttons;
@@ -200,8 +200,8 @@ class BoolConfigControl : public VIntConfigControl
 {
     Q_OBJECT
 public:
-    BoolConfigControl( vlc_object_t *, module_config_t *, QWidget * );
-    BoolConfigControl( vlc_object_t *, module_config_t *,
+    BoolConfigControl( vlc_object_t *, module_config_item_t *, QWidget * );
+    BoolConfigControl( vlc_object_t *, module_config_item_t *,
                        QLabel *, QAbstractButton* );
     int getValue() const Q_DECL_OVERRIDE;
     int getType() const Q_DECL_OVERRIDE;
@@ -220,8 +220,8 @@ class ColorConfigControl : public VIntConfigControl
 {
 Q_OBJECT
 public:
-    ColorConfigControl( vlc_object_t *, module_config_t *, QWidget * );
-    ColorConfigControl( vlc_object_t *, module_config_t *,
+    ColorConfigControl( vlc_object_t *, module_config_item_t *, QWidget * );
+    ColorConfigControl( vlc_object_t *, module_config_item_t *,
                         QLabel *, QAbstractButton* );
     virtual ~ColorConfigControl() { delete color_px; }
     int getValue() const Q_DECL_OVERRIDE;
@@ -253,7 +253,7 @@ public:
     int getType() const Q_DECL_OVERRIDE;
     void doApply() Q_DECL_OVERRIDE;
 protected:
-    VFloatConfigControl( vlc_object_t *a, module_config_t *b ) :
+    VFloatConfigControl( vlc_object_t *a, module_config_item_t *b ) :
                 ConfigControl(a,b) {};
 };
 
@@ -261,8 +261,8 @@ class FloatConfigControl : public VFloatConfigControl
 {
     Q_OBJECT
 public:
-    FloatConfigControl( vlc_object_t *, module_config_t *, QWidget * );
-    FloatConfigControl( vlc_object_t *, module_config_t *,
+    FloatConfigControl( vlc_object_t *, module_config_item_t *, QWidget * );
+    FloatConfigControl( vlc_object_t *, module_config_item_t *,
                         QLabel*, QDoubleSpinBox* );
     float getValue() const Q_DECL_OVERRIDE;
 
@@ -284,8 +284,8 @@ class FloatRangeConfigControl : public FloatConfigControl
 {
     Q_OBJECT
 public:
-    FloatRangeConfigControl( vlc_object_t *, module_config_t *, QWidget * );
-    FloatRangeConfigControl( vlc_object_t *, module_config_t *,
+    FloatRangeConfigControl( vlc_object_t *, module_config_item_t *, QWidget * );
+    FloatRangeConfigControl( vlc_object_t *, module_config_item_t *,
                              QLabel*, QDoubleSpinBox* );
 private:
     void finish();
@@ -302,7 +302,7 @@ public:
     int getType() const Q_DECL_OVERRIDE;
     void doApply() Q_DECL_OVERRIDE;
 protected:
-    VStringConfigControl( vlc_object_t *a, module_config_t *b ) :
+    VStringConfigControl( vlc_object_t *a, module_config_item_t *b ) :
                 ConfigControl(a,b) {}
 };
 
@@ -310,9 +310,9 @@ class StringConfigControl : public VStringConfigControl
 {
     Q_OBJECT
 public:
-    StringConfigControl( vlc_object_t *, module_config_t *,
+    StringConfigControl( vlc_object_t *, module_config_item_t *,
                          QWidget *, bool pwd );
-    StringConfigControl( vlc_object_t *, module_config_t *, QLabel *,
+    StringConfigControl( vlc_object_t *, module_config_item_t *, QLabel *,
                          QLineEdit*,  bool pwd );
     QString getValue() const Q_DECL_OVERRIDE { return text->text(); };
 protected:
@@ -332,8 +332,8 @@ class FileConfigControl : public VStringConfigControl
 {
     Q_OBJECT
 public:
-    FileConfigControl( vlc_object_t *, module_config_t *, QWidget * );
-    FileConfigControl( vlc_object_t *, module_config_t *, QLabel *,
+    FileConfigControl( vlc_object_t *, module_config_item_t *, QWidget * );
+    FileConfigControl( vlc_object_t *, module_config_item_t *, QLabel *,
                        QLineEdit *, QPushButton * );
     QString getValue() const Q_DECL_OVERRIDE { return text->text(); };
 public slots:
@@ -356,8 +356,8 @@ class DirectoryConfigControl : public FileConfigControl
 {
     Q_OBJECT
 public:
-    DirectoryConfigControl( vlc_object_t *, module_config_t *, QWidget * );
-    DirectoryConfigControl( vlc_object_t *, module_config_t *, QLabel *,
+    DirectoryConfigControl( vlc_object_t *, module_config_item_t *, QWidget * );
+    DirectoryConfigControl( vlc_object_t *, module_config_item_t *, QLabel *,
                             QLineEdit *, QPushButton * );
 public slots:
     void updateField() Q_DECL_OVERRIDE;
@@ -367,8 +367,8 @@ class FontConfigControl : public VStringConfigControl
 {
     Q_OBJECT
 public:
-    FontConfigControl( vlc_object_t *, module_config_t *, QWidget * );
-    FontConfigControl( vlc_object_t *, module_config_t *, QLabel *,
+    FontConfigControl( vlc_object_t *, module_config_item_t *, QWidget * );
+    FontConfigControl( vlc_object_t *, module_config_item_t *, QLabel *,
                        QFontComboBox *);
     QString getValue() const Q_DECL_OVERRIDE  { return font->currentFont().family(); }
 protected:
@@ -386,8 +386,8 @@ class ModuleConfigControl : public VStringConfigControl
 {
     Q_OBJECT
 public:
-    ModuleConfigControl( vlc_object_t *, module_config_t *, QWidget * );
-    ModuleConfigControl( vlc_object_t *, module_config_t *, QLabel *,
+    ModuleConfigControl( vlc_object_t *, module_config_item_t *, QWidget * );
+    ModuleConfigControl( vlc_object_t *, module_config_item_t *, QLabel *,
                          QComboBox* );
     QString getValue() const Q_DECL_OVERRIDE;
 protected:
@@ -413,8 +413,8 @@ class ModuleListConfigControl : public VStringConfigControl
     Q_OBJECT
     friend class ConfigControl;
 public:
-    ModuleListConfigControl( vlc_object_t *, module_config_t *, QWidget *, bool );
-//    ModuleListConfigControl( vlc_object_t *, module_config_t *, QLabel *,
+    ModuleListConfigControl( vlc_object_t *, module_config_item_t *, QWidget *, bool );
+//    ModuleListConfigControl( vlc_object_t *, module_config_item_t *, QLabel *,
 //                         QComboBox*, bool );
     virtual ~ModuleListConfigControl();
     QString getValue() const Q_DECL_OVERRIDE;
@@ -436,8 +436,8 @@ class StringListConfigControl : public VStringConfigControl
 {
     Q_OBJECT
 public:
-    StringListConfigControl( vlc_object_t *, module_config_t *, QWidget * );
-    StringListConfigControl( vlc_object_t *, module_config_t *, QLabel *,
+    StringListConfigControl( vlc_object_t *, module_config_item_t *, QWidget * );
+    StringListConfigControl( vlc_object_t *, module_config_item_t *, QLabel *,
                              QComboBox*, bool );
     QString getValue() const Q_DECL_OVERRIDE;
 protected:
@@ -449,7 +449,7 @@ protected:
     void fillGrid( QGridLayout*, int ) Q_DECL_OVERRIDE;
     QComboBox *combo;
 private:
-    void finish(module_config_t * );
+    void finish(module_config_item_t * );
     QLabel *label;
     QList<QPushButton *> buttons;
 private slots:
@@ -468,7 +468,7 @@ class ModuleListConfigControl : public ConfigControl
 {
     Q_OBJECT
 public:
-    StringConfigControl( vlc_object_t *, module_config_t *, QWidget *, bool
+    StringConfigControl( vlc_object_t *, module_config_item_t *, QWidget *, bool
                          bycat );
     virtual ~StringConfigControl();
     QString getValue() Q_DECL_OVERRIDE;
@@ -488,7 +488,7 @@ class KeySelectorControl : public ConfigControl
     Q_OBJECT
 
 public:
-    KeySelectorControl( vlc_object_t *, module_config_t *, QWidget * );
+    KeySelectorControl( vlc_object_t *, module_config_item_t *, QWidget * );
     int getType() const Q_DECL_OVERRIDE;
     void doApply() Q_DECL_OVERRIDE;
 
@@ -510,7 +510,7 @@ private:
     QComboBox *searchOption;
     QLabel *searchOptionLabel;
     QTreeWidget *table;
-    QList<module_config_t *> values;
+    QList<module_config_item_t *> values;
     QSet<QString> existingkeys;
     enum
     {

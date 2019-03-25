@@ -262,7 +262,7 @@ EXTERN_SYMBOL DLL_SYMBOL \
 int CDECL_SYMBOL __VLC_SYMBOL(vlc_entry) (vlc_set_cb vlc_set, void *opaque) \
 { \
     module_t *module; \
-    module_config_t *config = NULL; \
+    module_config_item_t *config = NULL; \
     if (vlc_plugin_set (VLC_MODULE_CREATE, &module)) \
         goto error; \
     if (vlc_module_set (VLC_MODULE_NAME, (MODULE_STRING))) \

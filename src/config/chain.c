@@ -286,7 +286,7 @@ void config_ChainParse( vlc_object_t *p_this, const char *psz_prefix,
                         config_GetType( name ) | VLC_VAR_DOINHERIT ) )
             return /* VLC_xxx */;
 
-        module_config_t* p_conf = config_FindConfig( name );
+        module_config_item_t* p_conf = config_FindConfig( name );
         if( p_conf )
         {
             switch( CONFIG_CLASS( p_conf->i_type ) )
@@ -311,7 +311,7 @@ void config_ChainParse( vlc_object_t *p_this, const char *psz_prefix,
         vlc_value_t val;
         bool b_yes = true;
         bool b_once = false;
-        module_config_t *p_conf;
+        module_config_item_t *p_conf;
         int i_type;
         size_t i;
 

@@ -202,7 +202,7 @@ int config_LoadConfigFile( vlc_object_t *p_this )
             continue; /* syntax error */
         *ptr = '\0';
 
-        module_config_t *item = config_FindConfig(psz_option_name);
+        module_config_item_t *item = config_FindConfig(psz_option_name);
         if (item == NULL)
             continue;
 
@@ -429,7 +429,7 @@ int config_SaveConfigFile (vlc_object_t *p_this)
     for (vlc_plugin_t *p = vlc_plugins; p != NULL; p = p->next)
     {
         module_t *p_parser = p->module;
-        module_config_t *p_item, *p_end;
+        module_config_item_t *p_item, *p_end;
 
         if (p->conf.count == 0)
             continue;

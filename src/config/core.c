@@ -47,7 +47,7 @@ static inline char *strdupnull (const char *src)
 
 int config_GetType(const char *psz_name)
 {
-    module_config_t *p_config = config_FindConfig(psz_name);
+    module_config_item_t *p_config = config_FindConfig(psz_name);
 
     /* sanity checks */
     if( !p_config )
@@ -72,13 +72,13 @@ int config_GetType(const char *psz_name)
 
 bool config_IsSafe( const char *name )
 {
-    module_config_t *p_config = config_FindConfig( name );
+    module_config_item_t *p_config = config_FindConfig( name );
     return p_config != NULL && p_config->b_safe;
 }
 
 int64_t config_GetInt(const char *psz_name)
 {
-    module_config_t *p_config = config_FindConfig( psz_name );
+    module_config_item_t *p_config = config_FindConfig( psz_name );
 
     /* sanity checks */
     assert(p_config != NULL);
@@ -94,7 +94,7 @@ int64_t config_GetInt(const char *psz_name)
 
 float config_GetFloat(const char *psz_name)
 {
-    module_config_t *p_config;
+    module_config_item_t *p_config;
 
     p_config = config_FindConfig( psz_name );
 
@@ -112,7 +112,7 @@ float config_GetFloat(const char *psz_name)
 
 char *config_GetPsz(const char *psz_name)
 {
-    module_config_t *p_config;
+    module_config_item_t *p_config;
 
     p_config = config_FindConfig( psz_name );
 
@@ -130,7 +130,7 @@ char *config_GetPsz(const char *psz_name)
 
 void config_PutPsz(const char *psz_name, const char *psz_value)
 {
-    module_config_t *p_config = config_FindConfig( psz_name );
+    module_config_item_t *p_config = config_FindConfig( psz_name );
 
 
     /* sanity checks */
@@ -154,7 +154,7 @@ void config_PutPsz(const char *psz_name, const char *psz_value)
 
 void config_PutInt(const char *psz_name, int64_t i_value )
 {
-    module_config_t *p_config = config_FindConfig( psz_name );
+    module_config_item_t *p_config = config_FindConfig( psz_name );
 
     /* sanity checks */
     assert(p_config != NULL);
@@ -173,7 +173,7 @@ void config_PutInt(const char *psz_name, int64_t i_value )
 
 void config_PutFloat(const char *psz_name, float f_value)
 {
-    module_config_t *p_config = config_FindConfig( psz_name );
+    module_config_item_t *p_config = config_FindConfig( psz_name );
 
     /* sanity checks */
     assert(p_config != NULL);
@@ -199,7 +199,7 @@ ssize_t config_GetIntChoices(const char *name,
     *values = NULL;
     *texts = NULL;
 
-    module_config_t *cfg = config_FindConfig(name);
+    module_config_item_t *cfg = config_FindConfig(name);
     assert(cfg != NULL);
 
     size_t count = cfg->list_count;
@@ -315,7 +315,7 @@ ssize_t config_GetPszChoices(const char *name,
 {
     *values = *texts = NULL;
 
-    module_config_t *cfg = config_FindConfig(name);
+    module_config_item_t *cfg = config_FindConfig(name);
     if (cfg == NULL)
     {
         errno = ENOENT;
@@ -388,21 +388,21 @@ error:
 
 static int confcmp (const void *a, const void *b)
 {
-    const module_config_t *const *ca = a, *const *cb = b;
+    const module_config_item_t *const *ca = a, *const *cb = b;
 
     return strcmp ((*ca)->psz_name, (*cb)->psz_name);
 }
 
 static int confnamecmp (const void *key, const void *elem)
 {
-    const module_config_t *const *conf = elem;
+    const module_config_item_t *const *conf = elem;
 
     return strcmp (key, (*conf)->psz_name);
 }
 
 static struct
 {
-    module_config_t **list;
+    module_config_item_t **list;
     size_t count;
 } config = { NULL, 0 };
 
@@ -417,14 +417,14 @@ int config_SortConfig (void)
     for (p = vlc_plugins; p != NULL; p = p->next)
          nconf += p->conf.size;
 
-    module_config_t **clist = vlc_alloc (nconf, sizeof (*clist));
+    module_config_item_t **clist = vlc_alloc (nconf, sizeof (*clist));
     if (unlikely(clist == NULL))
         return VLC_ENOMEM;
 
     nconf = 0;
     for (p = vlc_plugins; p != NULL; p = p->next)
     {
-        module_config_t *item, *end;
+        module_config_item_t *item, *end;
 
         for (item = p->conf.items, end = item + p->conf.size;
              item < end;
@@ -445,7 +445,7 @@ int config_SortConfig (void)
 
 void config_UnsortConfig (void)
 {
-    module_config_t **clist;
+    module_config_item_t **clist;
 
     clist = config.list;
     config.list = NULL;
@@ -454,12 +454,12 @@ void config_UnsortConfig (void)
     free (clist);
 }
 
-module_config_t *config_FindConfig(const char *name)
+module_config_item_t *config_FindConfig(const char *name)
 {
     if (unlikely(name == NULL))
         return NULL;
 
-    module_config_t *const *p;
+    module_config_item_t *const *p;
     p = bsearch (name, config.list, config.count, sizeof (*p), confnamecmp);
     return p ? *p : NULL;
 }
@@ -469,11 +469,11 @@ module_config_t *config_FindConfig(const char *name)
  * \param config start of array of items
  * \param confsize number of items in the array
  */
-void config_Free (module_config_t *tab, size_t confsize)
+void config_Free (module_config_item_t *tab, size_t confsize)
 {
     for (size_t j = 0; j < confsize; j++)
     {
-        module_config_t *p_item = &tab[j];
+        module_config_item_t *p_item = &tab[j];
 
         if (IsConfigStringType (p_item->i_type))
         {
@@ -495,7 +495,7 @@ void config_ResetAll(void)
     {
         for (size_t i = 0; i < p->conf.size; i++ )
         {
-            module_config_t *p_config = p->conf.items + i;
+            module_config_item_t *p_config = p->conf.items + i;
 
             if (IsConfigIntegerType (p_config->i_type))
                 p_config->value.i = p_config->orig.i;

@@ -166,7 +166,7 @@ static void InitLevel(filter_t *filter, struct filter_level *range, const char *
 {
     int level = 0;
 
-    module_config_t *cfg = config_FindConfig(p_name);
+    module_config_item_t *cfg = config_FindConfig(p_name);
     if (unlikely(cfg == NULL))
     {
         range->min         = 0.;

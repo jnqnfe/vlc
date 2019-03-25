@@ -400,7 +400,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
 }
 
 - (id)initWithFrame:(NSRect)frame
-               item:(module_config_t *)p_item
+               item:(module_config_item_t *)p_item
 {
     self = [super initWithFrame: frame];
 
@@ -761,7 +761,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
     return i_margin;
 }
 
-+ (VLCConfigControl *)newControl:(module_config_t *)_p_item
++ (VLCConfigControl *)newControl:(module_config_item_t *)_p_item
                         withView:(NSView *)parentView
 {
     VLCConfigControl *control = NULL;
@@ -910,7 +910,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
 @end
 
 @implementation StringConfigControl
-- (id)initWithItem:(module_config_t *)p_item
+- (id)initWithItem:(module_config_item_t *)p_item
           withView:(NSView *)parentView
 {
     NSRect mainFrame = [parentView frame];
@@ -987,7 +987,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
 @end
 
 @implementation StringListConfigControl
-- (id)initWithItem:(module_config_t *)p_item
+- (id)initWithItem:(module_config_item_t *)p_item
           withView:(NSView *)parentView
 {
     NSRect mainFrame = [parentView frame];
@@ -1088,7 +1088,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
 @end
 
 @implementation FileConfigControl
-- (id)initWithItem:(module_config_t *)p_item
+- (id)initWithItem:(module_config_item_t *)p_item
           withView:(NSView *)parentView
 {
     NSRect mainFrame = [parentView frame];
@@ -1176,7 +1176,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
 @end
 
 @implementation ModuleConfigControl
-- (id)initWithItem:(module_config_t *)p_item
+- (id)initWithItem:(module_config_item_t *)p_item
           withView:(NSView *)parentView
 {
     NSRect mainFrame = [parentView frame];
@@ -1242,9 +1242,9 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
             continue;
 
         unsigned int confsize;
-        module_config_t *p_config = module_config_get(p_parser, &confsize);
+        module_config_item_t *p_config = module_config_get(p_parser, &confsize);
         for (size_t i = 0; i < confsize; i++) {
-            module_config_t *p_cfg = p_config + i;
+            module_config_item_t *p_cfg = p_config + i;
             /* Hack: required subcategory is stored in i_min */
             if (p_cfg->i_type == CONFIG_SUBCATEGORY &&
                 p_cfg->value.i == self.p_item->min.i) {
@@ -1279,9 +1279,9 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
             continue;
         unsigned int confsize;
 
-        module_config_t *p_configlist = module_config_get(p_parser, &confsize);
+        module_config_item_t *p_configlist = module_config_get(p_parser, &confsize);
         for (size_t i = 0; i < confsize; i++) {
-            module_config_t *p_config = &p_configlist[i];
+            module_config_item_t *p_config = &p_configlist[i];
             /* Hack: required subcategory is stored in i_min */
             if (p_config->i_type == CONFIG_SUBCATEGORY &&
                 p_config->value.i == self.p_item->min.i) {
@@ -1308,7 +1308,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
 @end
 
 @implementation IntegerConfigControl
-- (id)initWithItem:(module_config_t *)p_item
+- (id)initWithItem:(module_config_item_t *)p_item
           withView:(NSView *)parentView
 {
     NSRect mainFrame = [parentView frame];
@@ -1397,7 +1397,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
 
 @implementation IntegerListConfigControl
 
-- (id)initWithItem:(module_config_t *)p_item
+- (id)initWithItem:(module_config_item_t *)p_item
           withView:(NSView *)parentView
 {
     NSRect mainFrame = [parentView frame];
@@ -1487,7 +1487,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
 @end
 
 @implementation RangedIntegerConfigControl
-- (id)initWithItem:(module_config_t *)p_item
+- (id)initWithItem:(module_config_item_t *)p_item
           withView:(NSView *)parentView
 {
     NSRect mainFrame = [parentView frame];
@@ -1599,7 +1599,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
 @end
 
 @implementation FloatConfigControl
-- (id)initWithItem:(module_config_t *)p_item
+- (id)initWithItem:(module_config_item_t *)p_item
           withView:(NSView *)parentView
 {
     NSRect mainFrame = [parentView frame];
@@ -1690,7 +1690,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
 @end
 
 @implementation RangedFloatConfigControl
-- (id)initWithItem:(module_config_t *)p_item
+- (id)initWithItem:(module_config_item_t *)p_item
           withView:(NSView *)parentView
 {
     NSRect mainFrame = [parentView frame];
@@ -1799,7 +1799,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
 
 @implementation BoolConfigControl
 
-- (id)initWithItem:(module_config_t *)p_item
+- (id)initWithItem:(module_config_item_t *)p_item
           withView:(NSView *)parentView
 {
     NSRect mainFrame = [parentView frame];
@@ -1846,7 +1846,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
 @end
 
 @implementation KeyConfigControl
-- (id)initWithItem:(module_config_t *)p_item
+- (id)initWithItem:(module_config_item_t *)p_item
           withView:(NSView *)parentView
 {
     NSRect mainFrame = [parentView frame];
@@ -1926,7 +1926,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
 @end
 
 @implementation ModuleListConfigControl
-- (id)initWithItem:(module_config_t *)p_item
+- (id)initWithItem:(module_config_item_t *)p_item
           withView:(NSView *)parentView
 {
     self = [super initWithFrame:CGRectZero item:p_item];
@@ -1956,10 +1956,10 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
 
         if (b_by_cat) {
             unsigned int confsize;
-            module_config_t *p_configlist = module_config_get(p_parser, &confsize);
+            module_config_item_t *p_configlist = module_config_get(p_parser, &confsize);
 
             for (i = 0; i < confsize; i++) {
-                module_config_t *p_config = &p_configlist[i];
+                module_config_item_t *p_config = &p_configlist[i];
                 NSString *o_modulelongname, *o_modulename;
                 NSNumber *o_moduleenabled = nil;
 
@@ -2249,7 +2249,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 
 @implementation SectionControl
 
-- (id)initWithItem:(module_config_t *)p_item
+- (id)initWithItem:(module_config_item_t *)p_item
           withView:(NSView *)parentView
 {
     NSRect mainFrame = [parentView frame];

@@ -278,7 +278,7 @@ NSString *const VLCOpenTextFieldWasClicked = @"VLCOpenTextFieldWasClicked";
 - (void)setupSubtitlesPanel
 {
     int i_index;
-    module_config_t * p_item;
+    module_config_item_t * p_item;
 
     [self initSubtitlesPanelStrings];
 
@@ -428,7 +428,7 @@ NSString *const VLCOpenTextFieldWasClicked = @"VLCOpenTextFieldWasClicked";
 
 - (void)addSubtitleOptionsToArray:(NSMutableArray *)options
 {
-    module_config_t * p_item;
+    module_config_item_t * p_item;
 
     [options addObject: [NSString stringWithFormat: @"sub-file=%@", _subPath]];
     if ([_fileSubOverrideCheckbox state] == NSOnState) {

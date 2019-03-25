@@ -83,7 +83,7 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
     PrefsItemData *data_sub = NULL;
     QTreeWidgetItem *current_item = NULL;
     unsigned confsize;
-    module_config_t *const p_config = module_config_get (p_module, &confsize);
+    module_config_item_t *const p_config = module_config_get (p_module, &confsize);
 
     /* Go through the list of conf */
     for( size_t i = 0; i < confsize; i++ )
@@ -91,7 +91,7 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
         QIcon icon;
 
         /* Work on a new item */
-        module_config_t *p_item = p_config + i;
+        module_config_item_t *p_item = p_config + i;
 
         switch( p_item->i_type )
         {
@@ -192,12 +192,12 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
         int i_subcategory = SUBCAT_HIDDEN, i_category = CAT_HIDDEN;
 
         bool b_options = false;
-        module_config_t *const p_config = module_config_get (p_module, &confsize);
+        module_config_item_t *const p_config = module_config_get (p_module, &confsize);
 
         /* Loop through the configurations items */
         for (size_t i = 0; i < confsize; i++)
         {
-            const module_config_t *p_item = p_config + i;
+            const module_config_item_t *p_item = p_config + i;
 
             if( p_item->i_type == CONFIG_CATEGORY )
                 i_category = p_item->value.i;
@@ -504,7 +504,7 @@ bool PrefsItemData::contains( const QString &text, Qt::CaseSensitivity cs )
     }
 
     unsigned confsize;
-    module_config_t *const p_config = module_config_get (p_module, &confsize),
+    module_config_item_t *const p_config = module_config_get (p_module, &confsize),
                     *p_item = p_config,
                     *p_end = p_config + confsize;
 
@@ -603,7 +603,7 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 
     unsigned confsize;
     p_config = module_config_get( p_module, &confsize );
-    module_config_t *p_item = p_config,
+    module_config_item_t *p_item = p_config,
                     *p_end = p_config + confsize;
 
     if( data->i_type == PrefsItemData::TYPE_SUBCATEGORY ||

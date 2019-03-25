@@ -254,7 +254,7 @@ audio_output_t *aout_New (vlc_object_t *parent)
     /*
      * Persistent audio output variables
      */
-    module_config_t *cfg;
+    module_config_item_t *cfg;
     char *str;
 
     /* Visualizations */

@@ -231,10 +231,10 @@ static void Help (vlc_object_t *p_this, char const *psz_help_name)
 #   define LINE_START      8
 #   define PADDING_SPACES 25
 
-static void print_section(const module_t *m, const module_config_t **sect,
+static void print_section(const module_t *m, const module_config_item_t **sect,
                           bool color, bool desc)
 {
-    const module_config_t *item = *sect;
+    const module_config_item_t *item = *sect;
 
     if (item == NULL)
         return;
@@ -332,8 +332,9 @@ static int vlc_swidth(const char *str)
     }
 }
 
-static void print_item(const module_t *m, const module_config_t *item,
-                       const module_config_t **section, bool color, bool desc)
+static void print_item(const module_t *m, const module_config_item_t *item,
+                       const module_config_item_t **section, bool color,
+                       bool desc)
 {
 #ifndef _WIN32
 # define OPTION_VALUE_SEP " "
@@ -555,7 +556,7 @@ static bool plugin_show(const vlc_plugin_t *plugin)
 {
     for (size_t i = 0; i < plugin->conf.size; i++)
     {
-        const module_config_t *item = plugin->conf.items + i;
+        const module_config_item_t *item = plugin->conf.items + i;
 
         if (!CONFIG_ITEM(item->i_type))
             continue;
@@ -588,7 +589,7 @@ static void Usage (vlc_object_t *p_this, char const *psz_search)
     for (const vlc_plugin_t *p = vlc_plugins; p != NULL; p = p->next)
     {
         const module_t *m = p->module;
-        const module_config_t *section = NULL;
+        const module_config_item_t *section = NULL;
         const char *objname = module_get_object(m);
 
         if (psz_search == NULL && p->conf.count == 0)
@@ -613,7 +614,7 @@ static void Usage (vlc_object_t *p_this, char const *psz_search)
         /* Print module options */
         for (size_t j = 0; j < p->conf.size; j++)
         {
-            const module_config_t *item = p->conf.items + j;
+            const module_config_item_t *item = p->conf.items + j;
 
             if (item->b_removed)
                 continue; /* Skip removed options */

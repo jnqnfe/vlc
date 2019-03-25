@@ -786,7 +786,7 @@ void CaptureOpenPanel::initialize()
 
     /* dshow Main */
     int line = 0;
-    module_config_t *p_config = config_FindConfig( "dshow-vdev" );
+    module_config_item_t *p_config = config_FindConfig( "dshow-vdev" );
     vdevDshowW = new StringListConfigControl(
         VLC_OBJECT(p_intf), p_config, this );
     vdevDshowW->insertIntoExistingGrid( dshowDevLayout, line );
@@ -1328,7 +1328,7 @@ void CaptureOpenPanel::advancedDialog()
 
     /* Get the confsize  */
     unsigned int i_confsize;
-    module_config_t *p_config;
+    module_config_item_t *p_config;
     p_config = module_config_get( p_module, &i_confsize );
 
     /* New Adv Prop dialog */
@@ -1351,7 +1351,7 @@ void CaptureOpenPanel::advancedDialog()
     /* Create the options inside the FrameLayout */
     for( int n = 0; n < (int)i_confsize; n++ )
     {
-        module_config_t *p_item = p_config + n;
+        module_config_item_t *p_item = p_config + n;
         QString name = p_item->psz_name;
 
         if( name.isEmpty() || configList.contains( name ) )

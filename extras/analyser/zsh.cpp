@@ -54,7 +54,7 @@ static void ReplaceChars(std::string& str)
     std::replace(str.begin(), str.end(), '`', '\'');
 }
 
-static void PrintOption(const module_config_t *item, const std::string &opt,
+static void PrintOption(const module_config_item_t *item, const std::string &opt,
                         const std::string &excl, const std::string &args)
 {
     std::string longtext = item->psz_longtext ? item->psz_longtext : "";
@@ -95,7 +95,7 @@ static void PrintOption(const module_config_t *item, const std::string &opt,
     std::cout << "\"\\\n";
 }
 
-static void ParseOption(const module_config_t *item)
+static void ParseOption(const module_config_item_t *item)
 {
     std::string excl, args;
     std::string list;
@@ -202,11 +202,11 @@ static void PrintModule(const module_t *mod)
         capabilities.insert(mpair(cap, name));
 
     unsigned int cfg_size = 0;
-    module_config_t *cfg_list = module_config_get(mod, &cfg_size);
+    module_config_item_t *cfg_list = module_config_get(mod, &cfg_size);
 
     for (unsigned int j = 0; j < cfg_size; ++j)
     {
-        const module_config_t *cfg = cfg_list + j;
+        const module_config_item_t *cfg = cfg_list + j;
         if (cfg->i_type == CONFIG_SUBCATEGORY)
             categories.insert(mcpair(cfg->value.i, name));
     }
@@ -223,11 +223,11 @@ static void PrintModule(const module_t *mod)
 static void ParseModule(const module_t *mod)
 {
     unsigned int cfg_size = 0;
-    module_config_t *cfg_list = module_config_get(mod, &cfg_size);
+    module_config_item_t *cfg_list = module_config_get(mod, &cfg_size);
 
     for (unsigned int j = 0; j < cfg_size; ++j)
     {
-        const module_config_t *cfg = cfg_list + j;
+        const module_config_item_t *cfg = cfg_list + j;
         if (CONFIG_ITEM(cfg->i_type))
             ParseOption(cfg);
     }

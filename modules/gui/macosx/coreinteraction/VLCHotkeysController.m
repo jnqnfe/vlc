@@ -57,12 +57,12 @@
     module_t *p_main = module_get_main();
     assert(p_main);
     unsigned confsize;
-    module_config_t *p_config;
+    module_config_item_t *p_config;
 
     p_config = module_config_get(p_main, &confsize);
 
     for (size_t i = 0; i < confsize; i++) {
-        module_config_t *p_item = p_config + i;
+        module_config_item_t *p_item = p_config + i;
 
         if (CONFIG_ITEM(p_item->i_type) && p_item->psz_name != NULL
             && !strncmp(p_item->psz_name , "key-", 4)

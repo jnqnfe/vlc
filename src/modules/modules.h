@@ -39,7 +39,7 @@ typedef struct vlc_plugin_t
      */
     struct
     {
-        module_config_t *items; /**< Table of configuration parameters */
+        module_config_item_t *items; /**< Table of configuration parameters */
         size_t size; /**< Size of items table */
         size_t count; /**< Number of configuration items */
         size_t booleans; /**< Number of boolean config items */

@@ -138,10 +138,10 @@ void vlc_plugin_destroy(vlc_plugin_t *plugin)
     free(plugin);
 }
 
-static module_config_t *vlc_config_create(vlc_plugin_t *plugin, int type)
+static module_config_item_t *vlc_config_create(vlc_plugin_t *plugin, int type)
 {
     unsigned confsize = plugin->conf.size;
-    module_config_t *tab = plugin->conf.items;
+    module_config_item_t *tab = plugin->conf.items;
 
     if ((confsize & 0xf) == 0)
     {
@@ -189,7 +189,7 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
 {
     vlc_plugin_t *plugin = ctx;
     module_t *module = tgt;
-    module_config_t *item = tgt;
+    module_config_item_t *item = tgt;
     va_list ap;
     int ret = 0;
 
@@ -224,7 +224,7 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
         case VLC_CONFIG_CREATE:
         {
             int type = va_arg (ap, int);
-            module_config_t **pp = va_arg (ap, module_config_t **);
+            module_config_item_t **pp = va_arg (ap, module_config_item_t **);
 
             item = vlc_config_create(plugin, type);
             if (unlikely(item == NULL))
@@ -608,7 +608,7 @@ int vlc_plugin_resolve(vlc_plugin_t *plugin, vlc_plugin_cb entry)
     /* Resolve configuration callbacks */
     for (size_t i = 0; i < plugin->conf.size; i++)
     {
-        module_config_t *item = plugin->conf.items + i;
+        module_config_item_t *item = plugin->conf.items + i;
         void *cb;
 
         if (item->list_cb_name == NULL)

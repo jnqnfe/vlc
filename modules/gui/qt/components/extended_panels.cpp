@@ -383,7 +383,7 @@ void ExtVideo::initComboBoxItems( QObject *widget )
     if( !combobox ) return;
 
     QString option = OptionFromWidgetName( widget );
-    module_config_t *p_item = config_FindConfig( qtu( option ) );
+    module_config_item_t *p_item = config_FindConfig( qtu( option ) );
     if( p_item == NULL )
     {
         msg_Err( p_intf, "Couldn't find option \"%s\".", qtu( option ) );

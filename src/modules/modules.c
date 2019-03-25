@@ -322,7 +322,8 @@ bool module_exists (const char * psz_name)
     return module_find (psz_name) != NULL;
 }
 
-module_config_t *module_config_get( const module_t *module, unsigned *restrict psize )
+module_config_item_t *module_config_get( const module_t *module,
+                                         unsigned *restrict psize )
 {
     const vlc_plugin_t *plugin = module->plugin;
 
@@ -339,14 +340,14 @@ module_config_t *module_config_get( const module_t *module, unsigned *restrict p
     if (size == 0)
         return NULL;
 
-    module_config_t *config = vlc_alloc( size, sizeof( *config ) );
+    module_config_item_t *config = vlc_alloc( size, sizeof( *config ) );
     if( !config )
         return NULL;
 
     unsigned i, j;
     for( i = 0, j = 0; i < size; i++ )
     {
-        const module_config_t *item = plugin->conf.items + i;
+        const module_config_item_t *item = plugin->conf.items + i;
         if( item->b_internal /* internal option */
          || item->b_removed /* removed option */ )
             continue;
@@ -359,7 +360,7 @@ module_config_t *module_config_get( const module_t *module, unsigned *restrict p
     return config;
 }
 
-void module_config_free( module_config_t *config )
+void module_config_free( module_config_item_t *config )
 {
     free( config );
 }

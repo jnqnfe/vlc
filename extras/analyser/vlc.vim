@@ -30,7 +30,7 @@ function VlcSyntax()
   syn keyword cType variable_t date_t
   syn keyword cType vlc_thread_t vlc_cond_t vlc_mutex_t vlc_list_t
   " Objects, modules, configurations
-  syn keyword cType module_bank_t module_t module_config_t module_symbols_t
+  syn keyword cType module_bank_t module_t module_config_item_t module_symbols_t
   syn keyword cType module_cache_t config_category_t
   " Playlist
   syn keyword cType playlist_t playlist_item_t
