@@ -298,7 +298,7 @@ typedef NS_ENUM(NSInteger, VLCObjectType) {
     module_config_item_t *p_item;
 
     [menu removeAllItems];
-    p_item = config_FindConfig(psz_name);
+    p_item = vlc_config_FindItem(psz_name);
 
     if (!p_item) {
         msg_Err(getIntf(), "couldn't create menu int list for item '%s' as it does not exist", psz_name);

@@ -194,7 +194,7 @@ static void SetLevel(struct filter_level *range, float val)
 
 static void InitLevel(filter_t *filter, struct filter_level *range, const char *p_name, float def)
 {
-    module_config_item_t *cfg = config_FindConfig(p_name);
+    module_config_item_t *cfg = vlc_config_FindItem(p_name);
     range->min = cfg->min.f;
     range->max = cfg->max.f;
     range->default_val = def;

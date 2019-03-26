@@ -286,7 +286,7 @@ NSString *const VLCOpenTextFieldWasClicked = @"VLCOpenTextFieldWasClicked";
     [[_fileSubFPSTextField formatter] setFormat:[NSString stringWithFormat:@"#,##0.000 %@", _NS("fps")]];
     self.fileSubFps = 1.0;
 
-    p_item = config_FindConfig("subsdec-encoding");
+    p_item = vlc_config_FindItem("subsdec-encoding");
 
     if (p_item) {
         for (int i = 0; i < p_item->list_count; i++) {
@@ -300,7 +300,7 @@ NSString *const VLCOpenTextFieldWasClicked = @"VLCOpenTextFieldWasClicked";
             [_fileSubEncodingPopup selectItemAtIndex:0];
     }
 
-    p_item = config_FindConfig("subsdec-align");
+    p_item = vlc_config_FindItem("subsdec-align");
 
     if (p_item) {
         for (i_index = 0; i_index < p_item->list_count; i_index++)
@@ -309,7 +309,7 @@ NSString *const VLCOpenTextFieldWasClicked = @"VLCOpenTextFieldWasClicked";
         [_fileSubAlignPopup selectItemAtIndex: p_item->value.i];
     }
 
-    p_item = config_FindConfig("freetype-rel-fontsize");
+    p_item = vlc_config_FindItem("freetype-rel-fontsize");
 
     if (p_item) {
         for (i_index = 0; i_index < p_item->list_count; i_index++) {
@@ -440,7 +440,7 @@ NSString *const VLCOpenTextFieldWasClicked = @"VLCOpenTextFieldWasClicked";
     [options addObject: [NSString stringWithFormat:
                          @"subsdec-align=%li", [_fileSubAlignPopup indexOfSelectedItem]]];
 
-    p_item = config_FindConfig("freetype-rel-fontsize");
+    p_item = vlc_config_FindItem("freetype-rel-fontsize");
 
     if (p_item) {
         [options addObject: [NSString stringWithFormat:

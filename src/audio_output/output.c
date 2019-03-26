@@ -317,7 +317,7 @@ audio_output_t *aout_New (vlc_object_t *parent)
                 VLC_VAR_STRING | VLC_VAR_DOINHERIT );
     var_Change(aout, "audio-replay-gain-mode", VLC_VAR_SETTEXT,
                _("Replay gain"));
-    cfg = config_FindConfig("audio-replay-gain-mode");
+    cfg = vlc_config_FindItem("audio-replay-gain-mode");
     if (likely(cfg != NULL))
         for (unsigned i = 0; i < cfg->list_count; i++)
         {

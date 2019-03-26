@@ -217,7 +217,7 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
             if( flag ) psz_name += old_style_neg_bool ? 2 : 3;
 
             /* Store the configuration option */
-            p_conf = config_FindConfig( psz_name );
+            p_conf = vlc_config_FindItem( psz_name );
             if( p_conf )
             {
                 /* Warn deprecation of --nofoo style (allow them to still work however) */

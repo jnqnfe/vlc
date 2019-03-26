@@ -110,7 +110,7 @@ void vout_InitInterlacingSupport(vout_thread_t *vout)
 
     var_Change(vout, "deinterlace", VLC_VAR_SETTEXT, _("Deinterlace"));
 
-    const module_config_item_t *optd = config_FindConfig("deinterlace");
+    const module_config_item_t *optd = vlc_config_FindItem("deinterlace");
     var_Change(vout, "deinterlace", VLC_VAR_CLEARCHOICES);
     if (likely(optd != NULL))
         for (unsigned i = 0; i < optd->list_count; i++) {
@@ -126,7 +126,7 @@ void vout_InitInterlacingSupport(vout_thread_t *vout)
     var_Change(vout, "deinterlace-mode", VLC_VAR_SETTEXT,
                _("Deinterlace mode"));
 
-    const module_config_item_t *optm = config_FindConfig("deinterlace-mode");
+    const module_config_item_t *optm = vlc_config_FindItem("deinterlace-mode");
     var_Change(vout, "deinterlace-mode", VLC_VAR_CLEARCHOICES);
     if (likely(optm != NULL))
         for (unsigned i = 0; i < optm->list_count; i++) {

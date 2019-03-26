@@ -266,7 +266,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
     radioGroup = NULL;
 
 #define CONFIG_GENERIC( option, type, label, qcontrol )                   \
-            p_config =  config_FindConfig( option );                      \
+            p_config =  vlc_config_FindItem( option );                    \
             if( p_config )                                                \
             {                                                             \
                 control =  new type ## ConfigControl( VLC_OBJECT(p_intf), \
@@ -278,19 +278,19 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
                 if( label ) label->setEnabled( false );                   \
             }
 
-#define CONFIG_BOOL( option, qcontrol )                           \
-            p_config =  config_FindConfig( option );                      \
+#define CONFIG_BOOL( option, qcontrol )                                   \
+            p_config =  vlc_config_FindItem( option );                    \
             if( p_config )                                                \
             {                                                             \
                 control =  new BoolConfigControl( VLC_OBJECT(p_intf),     \
-                           p_config, NULL, ui.qcontrol );          \
+                           p_config, NULL, ui.qcontrol );                 \
                 controls.append( control );                               \
             }                                                             \
             else { ui.qcontrol->setEnabled( false ); }
 
 
 #define CONFIG_GENERIC_NO_UI( option, type, label, qcontrol )             \
-            p_config =  config_FindConfig( option );                      \
+            p_config =  vlc_config_FindItem( option );                    \
             if( p_config )                                                \
             {                                                             \
                 control =  new type ## ConfigControl( VLC_OBJECT(p_intf), \
@@ -305,7 +305,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 
 
 #define CONFIG_GENERIC_NO_BOOL( option, type, label, qcontrol )           \
-            p_config =  config_FindConfig( option );                      \
+            p_config =  vlc_config_FindItem( option );                    \
             if( p_config )                                                \
             {                                                             \
                 control =  new type ## ConfigControl( VLC_OBJECT(p_intf), \
@@ -314,7 +314,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
             }
 
 #define CONFIG_GENERIC_FILE( option, type, label, qcontrol, qbutton )     \
-            p_config =  config_FindConfig( option );                      \
+            p_config =  vlc_config_FindItem( option );                    \
             if( p_config )                                                \
             {                                                             \
                 control =  new type ## ConfigControl( VLC_OBJECT(p_intf), \
@@ -376,7 +376,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
                 ui.fullscreenScreenBox->addItem( screen->name(), i_screenCount );
                 i_screenCount++;
             }
-            p_config =  config_FindConfig( "qt-fullscreen-screennumber" );
+            p_config =  vlc_config_FindItem( "qt-fullscreen-screennumber" );
             if( p_config )
             {
                 int i_defaultScreen = p_config->value.i + 1;
@@ -877,7 +877,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 
         case SPrefsHotkeys:
         {
-            p_config = config_FindConfig( "key-play" );
+            p_config = vlc_config_FindItem( "key-play" );
 
             QGridLayout *gLayout = new QGridLayout;
             panel->setLayout( gLayout );
@@ -896,7 +896,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 
             line++;
 
-            p_config = config_FindConfig( "hotkeys-y-wheel-mode" );
+            p_config = vlc_config_FindItem( "hotkeys-y-wheel-mode" );
             control = new IntegerListConfigControl( VLC_OBJECT(p_intf),
                     p_config, this, false );
             control->insertIntoExistingGrid( gLayout, line );
@@ -904,7 +904,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 
             line++;
 
-            p_config = config_FindConfig( "hotkeys-x-wheel-mode" );
+            p_config = vlc_config_FindItem( "hotkeys-x-wheel-mode" );
             control = new IntegerListConfigControl( VLC_OBJECT(p_intf),
                     p_config, this, false );
             control->insertIntoExistingGrid( gLayout, line );
@@ -913,7 +913,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 #ifdef _WIN32
             line++;
 
-            p_config = config_FindConfig( "qt-disable-volume-keys" );
+            p_config = vlc_config_FindItem( "qt-disable-volume-keys" );
             control = new BoolConfigControl( VLC_OBJECT(p_intf), p_config, this );
             control->insertIntoExistingGrid( gLayout, line );
             controls.append( control );

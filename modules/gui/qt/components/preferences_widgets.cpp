@@ -393,7 +393,7 @@ StringListConfigControl::StringListConfigControl( vlc_object_t *_p_this,
     combo->setMinimumWidth( MINWIDTH_BOX );
     combo->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Preferred );
 
-    module_config_item_t *p_module_config = config_FindConfig( p_item->psz_name );
+    module_config_item_t *p_module_config = vlc_config_FindItem( p_item->psz_name );
 
     finish( p_module_config );
 }
@@ -421,7 +421,7 @@ StringListConfigControl::StringListConfigControl( vlc_object_t *_p_this,
     combo = _combo;
     label = _label;
 
-    module_config_item_t *p_module_config = config_FindConfig( getName() );
+    module_config_item_t *p_module_config = vlc_config_FindItem( getName() );
 
     finish( p_module_config );
 }
@@ -467,7 +467,7 @@ QString StringListConfigControl::getValue() const
 
 void setfillVLCConfigCombo( const char *configname, QComboBox *combo )
 {
-    module_config_item_t *p_config = config_FindConfig( configname );
+    module_config_item_t *p_config = vlc_config_FindItem( configname );
     if( p_config == NULL )
         return;
 
@@ -866,7 +866,7 @@ IntegerListConfigControl::IntegerListConfigControl( vlc_object_t *_p_this,
     combo = new QComboBox( p );
     combo->setMinimumWidth( MINWIDTH_BOX );
 
-    module_config_item_t *p_module_config = config_FindConfig( p_item->psz_name );
+    module_config_item_t *p_module_config = vlc_config_FindItem( p_item->psz_name );
 
     finish( p_module_config );
 }
@@ -888,7 +888,7 @@ IntegerListConfigControl::IntegerListConfigControl( vlc_object_t *_p_this,
     combo = _combo;
     label = _label;
 
-    module_config_item_t *p_module_config = config_FindConfig( getName() );
+    module_config_item_t *p_module_config = vlc_config_FindItem( getName() );
 
     finish( p_module_config );
 }
