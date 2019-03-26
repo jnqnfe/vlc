@@ -76,7 +76,7 @@ struct module_config_item_t
 {
     uint16_t    i_type; /**< Item type */
     char        i_short; /**< Optional short option name */
-    unsigned    b_internal:1; /**< Hidden from preferences and help */
+    unsigned    b_internal:1; /**< Hidden from GUI preferences but not help */
     unsigned    b_unsaveable:1; /**< Not stored in configuration */
     unsigned    b_safe:1; /**< Safe for web plugins and playlist files */
     unsigned    b_removed:1; /**< Obsolete */
