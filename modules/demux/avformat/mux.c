@@ -34,6 +34,7 @@
 #include <vlc_es.h>
 
 #include <libavformat/avformat.h>
+#include <libavutil/avstring.h>
 
 #include "avformat.h"
 #include "../../codec/avcodec/avcodec.h"
@@ -89,9 +90,12 @@ int avformat_OpenMux( sout_mux_t *p_mux )
     AVOutputFormat *file_oformat;
     bool dummy = !strcmp( p_mux->p_access->psz_access, "dummy");
 
+#if (LIBAVCODEC_VERSION_MICRO < 100) \
+  || (LIBAVCODEC_VERSION_INT < AV_VERSION_INT(58, 7, 100))
     if( dummy && strlen(p_mux->p_access->psz_path)
                               >= sizeof (((AVFormatContext *)NULL)->filename) )
         return VLC_EGENERIC;
+#endif
 
     msg_Dbg( p_mux, "using %s %s", AVPROVIDER(LIBAVFORMAT), LIBAVFORMAT_IDENT );
 
@@ -126,7 +130,12 @@ int avformat_OpenMux( sout_mux_t *p_mux )
     p_sys->oc->oformat = file_oformat;
     /* If we use dummy access, let avformat write output */
     if( dummy )
+#if (LIBAVCODEC_VERSION_MICRO >= 100) \
+  && (LIBAVCODEC_VERSION_INT >= AV_VERSION_INT(58, 7, 100))
+        av_strlcpy(p_mux->p_access->psz_path, p_sys->oc->url, strlen(p_mux->p_access->psz_path));
+#else
         strcpy( p_sys->oc->filename, p_mux->p_access->psz_path );
+#endif
 
     /* Create I/O wrapper */
     p_sys->io_buffer_size = 10 * 1024 * 1024;  /* FIXME */
