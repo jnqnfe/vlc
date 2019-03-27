@@ -113,7 +113,11 @@ int InitSubtitleDec(decoder_t *dec)
     }
 
 #if LIBAVFORMAT_VERSION_MICRO >= 100
+# if (LIBAVCODEC_VERSION_INT < AV_VERSION_INT(58, 3, 102))
     av_codec_set_pkt_timebase(context, AV_TIME_BASE_Q);
+# else
+    context->pkt_timebase = AV_TIME_BASE_Q;
+# endif
 #endif
 
     /* */
