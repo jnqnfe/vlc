@@ -79,6 +79,7 @@ Stream output:
  * New SDI output with improved audio and ancillary support.
    Candidate for deprecation of decklink vout/aout modules.
  * Support for DLNA/UPNP renderers
+ * Old RTSP VoD server removed
 
 Service discovery:
  * Support Renderer discovery with avahi
