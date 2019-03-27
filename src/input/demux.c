@@ -245,7 +245,7 @@ demux_t *demux_NewAdvanced( vlc_object_t *p_obj, input_thread_t *p_input,
     if( psz_module == NULL )
         psz_module = p_demux->psz_name;
 
-    priv->module = vlc_module_load(p_demux, "demux", psz_module,
+    priv->module = vlc_module_load2(p_demux, VLC_CAP_DEMUX, psz_module,
         !strcmp(psz_module, p_demux->psz_name), demux_Probe, p_demux);
 
     if (priv->module == NULL)
@@ -428,7 +428,7 @@ decoder_t *demux_PacketizerNew( demux_t *p_demux, es_format_t *p_fmt, const char
     p_packetizer->fmt_in = *p_fmt;
     es_format_Init( &p_packetizer->fmt_out, p_fmt->i_cat, 0 );
 
-    p_packetizer->p_module = module_need( p_packetizer, "packetizer", NULL, false );
+    p_packetizer->p_module = vlc_module_need( p_packetizer, VLC_CAP_PACKETIZER, NULL, false );
     if( !p_packetizer->p_module )
     {
         es_format_Clean( p_fmt );
@@ -497,7 +497,7 @@ static demux_t *demux_FilterNew( demux_t *p_next, const char *p_name )
     p_demux->psz_filepath = NULL;
     p_demux->out          = NULL;
 
-    priv->module = module_need(p_demux, "demux_filter", p_name,
+    priv->module = vlc_module_need(p_demux, VLC_CAP_DEMUX_FILTER, p_name,
                                p_name != NULL);
     if (priv->module == NULL)
         goto error;

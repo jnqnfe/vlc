@@ -27,6 +27,7 @@
 
 #include <vlc_filter.h>
 #include <vlc_modules.h>
+#include <vlc_module_caps.h>
 #include <vlc_mouse.h>
 #include <vlc_spu.h>
 #include <libvlc.h>
@@ -59,8 +60,8 @@ struct filter_chain_t
     es_format_t fmt_in; /**< Chain input format (constant) */
     es_format_t fmt_out; /**< Chain current output format */
     bool b_allow_fmt_out_change; /**< Can the output format be changed? */
-    const char *filter_cap; /**< Filter modules capability */
-    const char *conv_cap; /**< Converter modules capability */
+    enum vlc_module_cap filter_cap; /**< Filter modules capability */
+    enum vlc_module_cap conv_cap; /**< Converter modules capability */
 };
 
 /**
@@ -69,11 +70,12 @@ struct filter_chain_t
 static void FilterDeletePictures( picture_t * );
 
 static filter_chain_t *filter_chain_NewInner( const filter_owner_t *callbacks,
-    const char *cap, const char *conv_cap, bool fmt_out_change,
+    enum vlc_module_cap cap, enum vlc_module_cap conv_cap, bool fmt_out_change,
     const filter_owner_t *owner, enum es_format_category_e cat )
 {
     assert( callbacks != NULL && callbacks->sys != NULL );
-    assert( cap != NULL );
+    assert( cap != VLC_CAP_CUSTOM );
+    assert( conv_cap != VLC_CAP_CUSTOM );
 
     filter_chain_t *chain = malloc( sizeof (*chain) );
     if( unlikely(chain == NULL) )
@@ -98,14 +100,14 @@ static filter_chain_t *filter_chain_NewInner( const filter_owner_t *callbacks,
 /**
  * Filter chain initialisation
  */
-filter_chain_t *filter_chain_New( vlc_object_t *obj, const char *cap,
+filter_chain_t *filter_chain_New( vlc_object_t *obj, enum vlc_module_cap cap,
                                   enum es_format_category_e cat )
 {
     filter_owner_t callbacks = {
         .sys = obj,
     };
 
-    return filter_chain_NewInner( &callbacks, cap, NULL, false, NULL, cat );
+    return filter_chain_NewInner( &callbacks, cap, VLC_CAP_INVALID, false, NULL, cat );
 }
 
 /** Chained filter picture allocator function */
@@ -144,8 +146,8 @@ filter_chain_t *filter_chain_NewVideo( vlc_object_t *obj, bool allow_change,
         .sys = obj,
     };
 
-    return filter_chain_NewInner( &callbacks, "video filter",
-                                  "video converter", allow_change, owner, VIDEO_ES );
+    return filter_chain_NewInner( &callbacks, VLC_CAP_VIDEO_FILTER,
+                                  VLC_CAP_VIDEO_CONVERTER, allow_change, owner, VIDEO_ES );
 }
 
 /**
@@ -183,9 +185,13 @@ void filter_chain_Reset( filter_chain_t *p_chain, const es_format_t *p_fmt_in,
 }
 
 static filter_t *filter_chain_AppendInner( filter_chain_t *chain,
-    const char *name, const char *capability, config_chain_t *cfg,
+    const char *name, enum vlc_module_cap capability, config_chain_t *cfg,
     const es_format_t *fmt_in, const es_format_t *fmt_out )
 {
+    /* custom would make no sense, we don't have the string to go with it (unless we add it) */
+    assert( capability != VLC_CAP_CUSTOM );
+    assert( capability != VLC_CAP_INVALID );
+
     vlc_object_t *parent = chain->callbacks.sys;
     chained_filter_t *chained =
         vlc_custom_create( parent, sizeof(*chained), "filter" );
@@ -214,7 +220,6 @@ static filter_t *filter_chain_AppendInner( filter_chain_t *chain,
     filter->owner = chain->callbacks;
     filter->owner.sys = chain;
 
-    assert( capability != NULL );
     if( name != NULL && filter->b_allow_fmt_out_change )
     {
         /* Append the "chain" video filter to the current list.
@@ -222,10 +227,10 @@ static filter_t *filter_chain_AppendInner( filter_chain_t *chain,
          * It will then try to add a video converter before. */
         char name_chained[strlen(name) + sizeof(",chain")];
         sprintf( name_chained, "%s,chain", name );
-        filter->p_module = module_need( filter, capability, name_chained, true );
+        filter->p_module = vlc_module_need( filter, capability, name_chained, true );
     }
     else
-        filter->p_module = module_need( filter, capability, name, name != NULL );
+        filter->p_module = vlc_module_need( filter, capability, name, name != NULL );
 
     if( filter->p_module == NULL )
         goto error;
@@ -260,9 +265,9 @@ static filter_t *filter_chain_AppendInner( filter_chain_t *chain,
 
 error:
     if( name != NULL )
-        msg_Err( parent, "Failed to create %s '%s'", capability, name );
+        msg_Err( parent, "Failed to create %s '%s'", vlc_module_cap_get_desc(capability), name );
     else
-        msg_Err( parent, "Failed to create %s", capability );
+        msg_Err( parent, "Failed to create %s", vlc_module_cap_get_desc(capability) );
     es_format_Clean( &filter->fmt_out );
     es_format_Clean( &filter->fmt_in );
     vlc_object_delete(filter);

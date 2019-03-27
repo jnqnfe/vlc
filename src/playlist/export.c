@@ -79,7 +79,7 @@ vlc_playlist_Export(struct vlc_playlist *playlist, const char *filename,
     }
 
     // this will actually export
-    module_t *module = module_need(export, "playlist export", type, true);
+    module_t *module = vlc_module_need(export, VLC_CAP_PLAYLIST_EXPORT, type, true);
 
     if (!module)
     {

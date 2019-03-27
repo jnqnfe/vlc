@@ -200,7 +200,7 @@ vlc_rd_get_names(vlc_object_t *p_obj, char ***pppsz_names,
                  char ***pppsz_longnames)
 {
     size_t i_count;
-    struct vlc_rd_probe *p_tab = vlc_probe(p_obj, "renderer probe", &i_count);
+    struct vlc_rd_probe *p_tab = vlc_probe(p_obj, VLC_CAP_RENDERER_PROBE, &i_count);
 
     if (i_count == 0)
     {
@@ -251,7 +251,7 @@ vlc_rd_new(vlc_object_t *p_obj, const char *psz_name,
     free(config_ChainCreate(&p_rd->psz_name, &p_rd->p_cfg, psz_name));
 
     p_rd->owner = *owner;
-    p_rd->p_module = module_need(p_rd, "renderer_discovery",
+    p_rd->p_module = vlc_module_need(p_rd, VLC_CAP_RENDERER_DISCOVERY,
                                  p_rd->psz_name, true);
     if (p_rd->p_module == NULL)
     {

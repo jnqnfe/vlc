@@ -280,11 +280,12 @@ StreamExtractorAttach( stream_t** source, char const* identifier,
     char const* module_name )
 {
     const bool extractor = identifier != NULL;
-    char const* capability = extractor ? "stream_extractor"
-                                       : "stream_directory";
+    enum vlc_module_cap capability = extractor ? VLC_CAP_STREAM_EXTRACTOR
+                                               : VLC_CAP_STREAM_DIRECTORY;
 
     struct stream_extractor_private* priv = vlc_custom_create(
-        vlc_object_parent(*source), sizeof( *priv ), capability );
+        vlc_object_parent(*source), sizeof( *priv ),
+        vlc_module_cap_get_textid(capability) );
 
     if( unlikely( !priv ) )
         return VLC_ENOMEM;
@@ -312,7 +313,7 @@ StreamExtractorAttach( stream_t** source, char const* identifier,
         priv->directory.source = *source;
     }
 
-    priv->module = module_need( priv->object, capability, module_name, true );
+    priv->module = vlc_module_need( priv->object, capability, module_name, true );
 
     if( !priv->module || se_AttachWrapper( priv, *source ) )
         goto error;

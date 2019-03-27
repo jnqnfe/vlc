@@ -23,6 +23,8 @@
 
 # include <stdlib.h>
 
+#include <vlc_module_caps.h>
+
 /**
  * \file
  * This file defines functions and structures to run-time probe VLC extensions
@@ -32,7 +34,7 @@
 extern "C" {
 # endif
 
-void *vlc_probe (vlc_object_t *, const char *, size_t *);
+void *vlc_probe (vlc_object_t *, enum vlc_module_cap, size_t *);
 #define vlc_probe(obj, cap, pcount) \
         vlc_probe(VLC_OBJECT(obj), cap, pcount)
 

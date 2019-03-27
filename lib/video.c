@@ -550,12 +550,12 @@ void libvlc_video_set_deinterlace( libvlc_media_player_t *p_mi, int deinterlace,
 /* ************** */
 
 static int get_filter_str( vlc_object_t *p_parent, const char *psz_name,
-                           bool b_add, const char **ppsz_filter_type,
+                           bool b_add, const char **ppsz_filter_var,
                            char **ppsz_filter_value)
 {
     char *psz_parser;
     char *psz_string;
-    const char *psz_filter_type;
+    const char *psz_filter_var;
 
     module_t *p_obj = module_find( psz_name );
     if( !p_obj )
@@ -564,17 +564,18 @@ static int get_filter_str( vlc_object_t *p_parent, const char *psz_name,
         return VLC_EGENERIC;
     }
 
-    if( module_provides( p_obj, "video filter" ) )
+    enum vlc_module_cap cap = vlc_module_get_capability( p_obj );
+    if( cap == VLC_CAP_VIDEO_FILTER )
     {
-        psz_filter_type = "video-filter";
+        psz_filter_var = "video-filter";
     }
-    else if( module_provides( p_obj, "sub source" ) )
+    else if( cap == VLC_CAP_SUB_SOURCE )
     {
-        psz_filter_type = "sub-source";
+        psz_filter_var = "sub-source";
     }
-    else if( module_provides( p_obj, "sub filter" ) )
+    else if( cap == VLC_CAP_SUB_FILTER )
     {
-        psz_filter_type = "sub-filter";
+        psz_filter_var = "sub-filter";
     }
     else
     {
@@ -582,7 +583,7 @@ static int get_filter_str( vlc_object_t *p_parent, const char *psz_name,
         return VLC_EGENERIC;
     }
 
-    psz_string = var_GetString( p_parent, psz_filter_type );
+    psz_string = var_GetString( p_parent, psz_filter_var );
 
     /* Todo : Use some generic chain manipulation functions */
     if( !psz_string ) psz_string = strdup("");
@@ -626,7 +627,7 @@ static int get_filter_str( vlc_object_t *p_parent, const char *psz_name,
         }
     }
 
-    *ppsz_filter_type = psz_filter_type;
+    *ppsz_filter_var = psz_filter_var;
     *ppsz_filter_value = psz_string;
     return VLC_SUCCESS;
 }

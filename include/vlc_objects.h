@@ -52,7 +52,7 @@ struct vlc_object_t
     /** Module probe flag
      *
      * A boolean during module probing when the probe is "forced".
-     * See \ref module_need().
+     * See \ref vlc_module_need().
      */
     bool force;
 };

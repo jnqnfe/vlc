@@ -40,7 +40,7 @@ keystore_create(vlc_object_t *p_parent, const char *psz_name)
     if (unlikely(p_keystore == NULL))
         return NULL;
 
-    p_keystore->p_module = module_need(p_keystore, "keystore", psz_name, true);
+    p_keystore->p_module = vlc_module_need(p_keystore, VLC_CAP_KEYSTORE, psz_name, true);
     if (p_keystore->p_module == NULL)
     {
         vlc_object_delete(p_keystore);

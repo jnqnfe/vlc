@@ -108,7 +108,7 @@ vlc_medialibrary_t* libvlc_MlCreate( libvlc_int_t* p_libvlc  )
     vlc_mutex_init( &p_ml->lock );
     vlc_list_init( &p_ml->cbs );
     p_ml->m.cbs = &callbacks;
-    p_ml->m.p_module = module_need( &p_ml->m, "medialibrary", NULL, false );
+    p_ml->m.p_module = vlc_module_need( &p_ml->m, VLC_CAP_MEDIALIBRARY, NULL, false );
     if ( p_ml->m.p_module == NULL )
     {
         vlc_mutex_destroy( &p_ml->lock );

@@ -162,7 +162,7 @@
             return false;
         }
 
-        p_extensions_manager->p_module = module_need(p_extensions_manager, "extension", NULL, false);
+        p_extensions_manager->p_module = vlc_module_need(p_extensions_manager, VLC_CAP_EXTENSION, NULL, false);
 
         if (!p_extensions_manager->p_module) {
             msg_Err(p_intf, "Unable to load extensions module");

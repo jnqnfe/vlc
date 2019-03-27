@@ -52,7 +52,7 @@ vlc_vk_t *vlc_vk_Create(struct vout_window_t *wnd, const char *name)
     vk->surface = (VkSurfaceKHR) NULL;
 
     vk->window = wnd;
-    vk->module = module_need(vk, "vulkan", name, true);
+    vk->module = vlc_module_need(vk, VLC_CAP_VULKAN, name, true);
     if (vk->module == NULL)
     {
         vlc_object_delete(vk);

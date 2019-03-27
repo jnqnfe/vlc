@@ -26,6 +26,7 @@
 #define VLC_FILTER_H 1
 
 #include <vlc_es.h>
+#include <vlc_module_caps.h>
 
 /**
  * \defgroup filter Filters
@@ -308,10 +309,10 @@ typedef struct filter_chain_t filter_chain_t;
  * Create new filter chain
  *
  * \param p_object pointer to a vlc object
- * \param psz_capability vlc capability of filters in filter chain
+ * \param capability vlc capability of filters in filter chain (built-in only)
  * \return pointer to a filter chain
  */
-filter_chain_t * filter_chain_New( vlc_object_t *, const char *, enum es_format_category_e )
+filter_chain_t * filter_chain_New( vlc_object_t *, enum vlc_module_cap, enum es_format_category_e )
 VLC_USED;
 #define filter_chain_New( a, b, c ) filter_chain_New( VLC_OBJECT( a ), b, c )
 

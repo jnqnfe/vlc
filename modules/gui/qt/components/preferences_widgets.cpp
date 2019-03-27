@@ -693,7 +693,7 @@ void ModuleListConfigControl::finish( bool bycat )
             }
             module_config_free (p_config);
         }
-        else if( module_provides( p_parser, p_item->psz_type ) )
+        else if( vlc_module_provides( p_parser, vlc_module_cap_from_textid( p_item->psz_type ), p_item->psz_type ) )
         {
             checkbox_lists(p_parser);
         }

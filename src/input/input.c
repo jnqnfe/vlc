@@ -2745,7 +2745,7 @@ static void InputSourceMeta( input_thread_t *p_input,
         return;
     p_demux_meta->p_item = input_priv(p_input)->p_item;
 
-    module_t *p_id3 = module_need( p_demux_meta, "meta reader", NULL, false );
+    module_t *p_id3 = vlc_module_need( p_demux_meta, VLC_CAP_META_READER, NULL, false );
     if( p_id3 )
     {
         if( p_demux_meta->p_meta )

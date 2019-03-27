@@ -65,15 +65,17 @@ vlc_gl_t *vlc_gl_Create(const struct vout_display_cfg *restrict cfg,
 {
     vout_window_t *wnd = cfg->window;
     struct vlc_gl_priv_t *glpriv;
-    const char *type;
+    enum vlc_module_cap type;
+    const char *type_name = NULL;
 
     switch (flags /*& VLC_OPENGL_API_MASK*/)
     {
         case VLC_OPENGL:
-            type = "opengl";
+            type = VLC_CAP_OPENGL;
             break;
         case VLC_OPENGL_ES2:
-            type = "opengl es2";
+            type = VLC_CAP_CUSTOM;
+            type_name = "opengl es2";
             break;
         default:
             return NULL;
@@ -85,8 +87,8 @@ vlc_gl_t *vlc_gl_Create(const struct vout_display_cfg *restrict cfg,
 
     vlc_gl_t *gl = &glpriv->gl;
     gl->surface = wnd;
-    gl->module = vlc_module_load(gl, type, name, true, vlc_gl_start, gl,
-                                 cfg->display.width, cfg->display.height);
+    gl->module = vlc_module_load_ext(gl, type, type_name, name, true, vlc_gl_start, gl,
+                                     cfg->display.width, cfg->display.height);
     if (gl->module == NULL)
     {
         vlc_object_delete(gl);

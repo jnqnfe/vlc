@@ -146,7 +146,7 @@ static stream_t *access_New(vlc_object_t *parent, input_thread_t *input,
         if (access->psz_filepath != NULL)
             msg_Dbg(access, " (path: %s)", access->psz_filepath);
 
-        priv->module = module_need(access, "access", access->psz_name, true);
+        priv->module = vlc_module_need(access, VLC_CAP_ACCESS, access->psz_name, true);
         if (priv->module != NULL) /* success */
         {
             while (redirc > 0)

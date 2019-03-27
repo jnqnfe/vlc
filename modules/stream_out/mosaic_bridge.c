@@ -314,7 +314,7 @@ static void *Add( sout_stream_t *p_stream, const es_format_t *p_fmt )
     //p_sys->p_decoder->p_cfg = p_sys->p_video_cfg;
 
     p_sys->p_decoder->p_module =
-        module_need_var( p_sys->p_decoder, "video decoder", "codec" );
+        vlc_module_need_var( p_sys->p_decoder, VLC_CAP_VIDEO_DECODER, "codec" );
 
     if( !p_sys->p_decoder->p_module )
     {

@@ -167,7 +167,7 @@ bool Dialogs::init()
     if( m_pProvider == NULL )
         return false;
 
-    m_pModule = module_need( m_pProvider, "dialogs provider", NULL, false );
+    m_pModule = vlc_module_need( m_pProvider, VLC_CAP_DIALOGS_PROVIDER, NULL, false );
     if( m_pModule == NULL )
     {
         vlc_object_delete(m_pProvider);

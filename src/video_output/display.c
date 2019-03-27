@@ -781,10 +781,10 @@ vout_display_t *vout_display_New(vlc_object_t *parent,
     vlc_video_context *video_context = osys->video_context.device ?
         &osys->video_context : NULL;
 
-    vd->module = vlc_module_load(vd, "vout display", module,
-                                 module && *module != '\0',
-                                 vout_display_start, vd, &osys->cfg,
-                                 &vd->fmt, video_context);
+    vd->module = vlc_module_load2(vd, VLC_CAP_VOUT_DISPLAY, module,
+                                  module && *module != '\0',
+                                  vout_display_start, vd, &osys->cfg,
+                                  &vd->fmt, video_context);
     if (vd->module == NULL)
         goto error;
 

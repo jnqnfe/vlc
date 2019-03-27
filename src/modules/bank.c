@@ -212,7 +212,7 @@ static const char vlc_entry_name[] = "vlc_entry" MODULE_SUFFIX;
 /**
  * Loads a dynamically-linked plug-in into memory and initialize it.
  *
- * The module can then be handled by module_need() and module_unneed().
+ * The module can then be handled by vlc_module_need() and module_unneed().
  *
  * \param path file path of the shared object
  * \param fast whether to optimize loading for speed or safety
@@ -742,7 +742,7 @@ module_t **module_list_get (size_t *n)
 }
 
 /**
- * Builds a sorted list of all VLC modules with a given capability.
+ * Gets a sorted list of all VLC modules with a given custom capability.
  * The list is sorted from the highest module score to the lowest.
  * @param list pointer to the table of modules [OUT]
  * @param name name of capability of modules to look for
@@ -853,8 +853,7 @@ static const size_t n_caps_descs =
 
 static_assert(VLC_CAP_MAX == (sizeof (cap_descriptions) / sizeof (cap_descriptions[0])) + 1, "capability description table size mismatch");
 
-/*
-enum vlc_module_cap module_cap_from_textid(const char * textid)
+enum vlc_module_cap vlc_module_cap_from_textid(const char * textid)
 {
     if (textid != NULL)
     {
@@ -866,7 +865,7 @@ enum vlc_module_cap module_cap_from_textid(const char * textid)
     }
     return VLC_CAP_CUSTOM;
 }
-*/
+
 const char *vlc_module_cap_get_textid(enum vlc_module_cap cap)
 {
     assert(cap != VLC_CAP_CUSTOM && cap != VLC_CAP_INVALID);

@@ -42,15 +42,15 @@
 #include "vlc_arrays.h"
 #include "modules/modules.h"
 
-bool module_provides (const module_t *m, const char *cap)
+bool vlc_module_provides(const module_t *m, enum vlc_module_cap cap,
+                     const char *custom_cap)
 {
-    assert(m->capability != VLC_CAP_INVALID);
-    assert(cap);
-    const char * mcap = (m->capability == VLC_CAP_CUSTOM) ?
-                            vlc_module_get_custom_capability(m) :
-                            vlc_module_cap_get_textid(m->capability);
-    assert(mcap);
-    return !strcmp(mcap, cap);
+    assert(cap != VLC_CAP_INVALID);
+    if (cap != VLC_CAP_CUSTOM)
+        return vlc_module_get_capability(m) == cap;
+    if (custom_cap == NULL)
+        return false;
+    return !strcmp(vlc_module_get_custom_capability(m), custom_cap);
 }
 
 const char *module_get_object( const module_t *m )
@@ -137,43 +137,33 @@ static int module_load(vlc_logger_t *log, module_t *m,
     return ret;
 }
 
-/**
- * Finds and instantiates the best module of a certain type.
- * All candidates modules having the specified capability and name will be
- * sorted in decreasing order of priority. Then the probe callback will be
- * invoked for each module, until it succeeds (returns 0), or all candidate
- * module failed to initialize.
- *
- * The probe callback first parameter is the address of the module entry point.
- * Further parameters are passed as an argument list; it corresponds to the
- * variable arguments passed to this function. This scheme is meant to
- * support arbitrary prototypes for the module entry point.
- *
- * \param log logger (or NULL to ignore)
- * \param capability capability, i.e. class of module
- * \param name name of the module asked, if any
- * \param strict if true, do not fallback to plugin with a different name
- *                 but the same capability
- * \param probe module probe callback
- * \return the module or NULL in case of a failure
- */
-module_t *(vlc_module_load)(struct vlc_logger *log, const char *capability,
-                            const char *name, bool strict,
-                            vlc_activate_t probe, ...)
+module_t *(vlc_module_load_ext)(struct vlc_logger *log,
+                                enum vlc_module_cap cap,
+                                const char *custom_cap,
+                                const char *name, bool strict,
+                                vlc_activate_t probe, ...)
 {
+    assert(cap != VLC_CAP_INVALID);
+
+    /* No requesting the core! */
+    assert(cap != VLC_CAP_CORE);
+
     if (name == NULL || name[0] == '\0')
         name = "any";
 
     /* Find matching modules */
     module_t **mods;
-    ssize_t total = module_list_cap (&mods, capability);
+    ssize_t total = 0;
+    const char *cap_name = (cap == VLC_CAP_CUSTOM) ? custom_cap :
+        vlc_module_cap_get_textid(cap);
+    total = module_list_cap (&mods, cap_name);
 
     vlc_debug(log, "looking for %s module matching \"%s\": %zd candidates",
-              capability, name, total);
+              cap_name, name, total);
     if (total <= 0)
     {
         module_list_free (mods);
-        vlc_debug(log, "no %s modules", capability);
+        vlc_debug(log, "no %s modules", cap_name);
         return NULL;
     }
 
@@ -239,10 +229,10 @@ done:
     module_list_free (mods);
 
     if (module != NULL)
-        vlc_debug(log, "using %s module \"%s\"", capability,
+        vlc_debug(log, "using %s module \"%s\"", cap_name,
                   module_get_object (module));
     else
-        vlc_debug(log, "no %s modules matched", capability);
+        vlc_debug(log, "no %s modules matched", cap_name);
     return module;
 }
 
@@ -280,13 +270,15 @@ static void generic_stop(void *func, va_list ap)
     deactivate(obj);
 }
 
-#undef module_need
-module_t *module_need(vlc_object_t *obj, const char *cap, const char *name,
-                      bool strict)
+#undef vlc_module_need_ext
+module_t *vlc_module_need_ext(vlc_object_t *obj, enum vlc_module_cap cap,
+                          const char *custom_cap, const char *name, bool strict)
 {
+    assert(cap != VLC_CAP_INVALID);
+
     const bool b_force_backup = obj->force; /* FIXME: remove this */
-    module_t *module = vlc_module_load(obj->logger, cap, name, strict,
-                                       generic_start, obj);
+    module_t *module = vlc_module_load_ext(obj->logger, cap, custom_cap, name,
+                                           strict, generic_start, obj);
     if (module != NULL) {
         var_Create(obj, "module-name", VLC_VAR_STRING);
         var_SetString(obj, "module-name", module_get_object(module));

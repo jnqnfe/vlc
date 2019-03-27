@@ -84,7 +84,7 @@ static int Open( vlc_object_t *p_this )
 
     p_filter->p_sys = p_sys;
     p_sys->volume.format = p_filter->fmt_in.audio.i_format;
-    p_sys->module = module_need( &p_sys->volume, "audio volume", NULL, false );
+    p_sys->module = vlc_module_need( &p_sys->volume, VLC_CAP_AUDIO_VOLUME, NULL, false );
     if( p_sys->module == NULL )
     {
         msg_Warn( p_filter, "unsupported format" );

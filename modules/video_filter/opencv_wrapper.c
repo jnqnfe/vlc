@@ -174,7 +174,7 @@ static int Create( vlc_object_t *p_this )
     p_sys->psz_inner_name = var_InheritString( p_filter, "opencv-filter-name" );
     if( p_sys->psz_inner_name )
         p_sys->p_opencv->p_module =
-            module_need( p_sys->p_opencv,
+            vlc_module_need_custom( p_sys->p_opencv,
                          "opencv internal filter",
                          p_sys->psz_inner_name,
                          true );

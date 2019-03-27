@@ -39,7 +39,7 @@ fingerprinter_thread_t *fingerprinter_Create( vlc_object_t *p_this )
         return NULL;
     }
 
-    p_fingerprint->p_module = module_need( p_fingerprint, "fingerprinter",
+    p_fingerprint->p_module = vlc_module_need( p_fingerprint, VLC_CAP_FINGERPRINTER,
                                            NULL, false );
     if( !p_fingerprint->p_module )
     {

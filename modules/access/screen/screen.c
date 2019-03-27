@@ -31,7 +31,7 @@
 
 #include <vlc_common.h>
 #include <vlc_plugin.h>
-#include <vlc_modules.h>                 /* module_need for "video blending" */
+#include <vlc_modules.h>                 /* vlc_module_need for "video blending" */
 #include <vlc_filter.h>
 #include <vlc_url.h>
 #include "screen.h"
@@ -378,7 +378,7 @@ void RenderCursor( demux_t *p_demux, int i_x, int i_y,
             p_sys->p_blend->fmt_in.video = p_sys->p_mouse->format;
             p_sys->p_blend->fmt_out = p_sys->fmt;
             p_sys->p_blend->p_module =
-                module_need( p_sys->p_blend, "video blending", NULL, false );
+                vlc_module_need( p_sys->p_blend, VLC_CAP_VIDEO_BLENDING, NULL, false );
             if( !p_sys->p_blend->p_module )
             {
                 msg_Err( p_demux, "Could not load video blending module" );

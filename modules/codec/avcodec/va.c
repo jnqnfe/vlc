@@ -127,8 +127,8 @@ vlc_va_t *vlc_va_New(vlc_object_t *obj, AVCodecContext *avctx,
     struct vlc_va_t *va = &priv->va;
     char *modlist = var_InheritString(obj, "avcodec-hw");
 
-    priv->module = vlc_module_load(va, "hw decoder", modlist, true,
-                                   vlc_va_Start, va, avctx, pix_fmt, fmt, sys);
+    priv->module = vlc_module_load2(va, VLC_CAP_HW_DECODER, modlist, true,
+                                    vlc_va_Start, va, avctx, pix_fmt, fmt, sys);
     free(modlist);
     if (priv->module == NULL)
     {

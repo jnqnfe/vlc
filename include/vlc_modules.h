@@ -42,6 +42,7 @@ struct vlc_logger;
 
 /**
  * Finds and instantiates the best module of a certain type.
+ *
  * All candidates modules having the specified capability and name will be
  * sorted in decreasing order of priority. Then the probe callback will be
  * invoked for each module, until it succeeds (returns 0), or all candidate
@@ -52,17 +53,69 @@ struct vlc_logger;
  * variable arguments passed to this function. This scheme is meant to
  * support arbitrary prototypes for the module entry point.
  *
+ * Typically you will want to use the friendlier vlc_module_load()
+ * and vlc_module_load_custom() calls, which are specific to built-in and
+ * custom capabilities respectively; This function takes both (set cap to
+ * VLC_CAP_CUSTOM and cap_custom to a string capability name if wanting to
+ * request a custom capability.
+ *
  * \param log logger for debugging (or NULL to ignore)
- * \param capability capability, i.e. class of module
+ * \param cap capability to load (set to VLC_CAP_CUSTOM for a custom string)
+ * \param custom_cap the string form of a custom capability to check
  * \param name name of the module asked, if any
  * \param strict if true, do not fallback to plugin with a different name
  *                 but the same capability
  * \param probe module probe callback
  * \return the module or NULL in case of a failure
  */
-VLC_API module_t *vlc_module_load(struct vlc_logger *log, const char *cap,
+VLC_API module_t *vlc_module_load_ext(struct vlc_logger *log,
+                                  enum vlc_module_cap cap,
+                                  const char *cap_custom,
                                   const char *name, bool strict,
-                                  vlc_activate_t probe, ... ) VLC_USED;
+                                  vlc_activate_t probe, ...) VLC_USED;
+#ifndef __cplusplus
+#define vlc_module_load_ext(ctx, cap, custom_cap, name, strict, ...) \
+    _Generic ((ctx), \
+        struct vlc_logger *: \
+            vlc_module_load_ext((void *)(ctx), cap, custom_cap, name, strict, __VA_ARGS__), \
+        void *: \
+            vlc_module_load_ext((void *)(ctx), cap, custom_cap, name, strict, __VA_ARGS__), \
+        default: \
+            vlc_module_load_ext(vlc_object_logger((vlc_object_t *)(ctx)), \
+                                cap, custom_cap, name, strict, __VA_ARGS__))
+#endif
+
+/**
+ * Finds and instantiates the best module of a certain type.
+ *
+ * This is a convenience macro for use where the capability of interest is a
+ * common ('built-in') type.
+ */
+#define vlc_module_load2( log, cap, name, strict, probe, ... ) \
+    vlc_module_load_ext( log, cap, NULL, name, strict, probe, __VA_ARGS__ )
+
+/**
+ * Finds and instantiates the best module of a certain type.
+ *
+ * This is a convenience macro for use where the capability of interest is a
+ * custom (string-based) type.
+ */
+#define vlc_module_load_custom( log, cap, name, strict, probe, ... ) \
+    vlc_module_load_ext( log, VLC_CAP_CUSTOM, cap, name, strict, probe, __VA_ARGS__ )
+
+/* deprecated */
+VLC_DEPRECATED static inline
+module_t *vlc_module_load(struct vlc_logger *log, const char *cap,
+                          const char *name, bool strict,
+                          vlc_activate_t probe, ...)
+{
+    va_list ap;
+    va_start(ap, probe);
+    enum vlc_module_cap _cap = vlc_module_cap_from_textid(cap);
+    module_t *m = (vlc_module_load_ext)(log, _cap, cap, name, strict, probe, ap);
+    va_end(ap);
+    return m;
+}
 #ifndef __cplusplus
 #define vlc_module_load(ctx, cap, name, strict, ...) \
     _Generic ((ctx), \
@@ -89,20 +142,56 @@ VLC_API module_t *vlc_module_load(struct vlc_logger *log, const char *cap,
  * \param module the module pointer as returned by vlc_module_load()
  * \param deinit deactivation callback
  */
-VLC_API void vlc_module_unload(module_t *, vlc_deactivate_t deinit, ... );
+VLC_API void vlc_module_unload( module_t *, vlc_deactivate_t deinit, ... );
 
-VLC_API module_t * module_need( vlc_object_t *, const char *, const char *, bool ) VLC_USED;
-#define module_need(a,b,c,d) module_need(VLC_OBJECT(a),b,c,d)
+VLC_API module_t * vlc_module_need_ext( vlc_object_t *obj,
+                                        enum vlc_module_cap cap,
+                                        const char *custom_cap,
+                                        const char *name,
+                                        bool strict ) VLC_USED;
+#define vlc_module_need_ext(a,b,c,d,e) vlc_module_need_ext(VLC_OBJECT(a),b,c,d,e)
+
+#define vlc_module_need(a,b,c,d)        vlc_module_need_ext(a, b, NULL, c, d)
+#define vlc_module_need_custom(a,b,c,d) vlc_module_need_ext(a, VLC_CAP_CUSTOM, b, c, d)
+
+/* deprecated */
+VLC_DEPRECATED static inline module_t *module_need( vlc_object_t *obj,
+                                                    const char *cap,
+                                                    const char *name,
+                                                    bool strict )
+{
+    enum vlc_module_cap _cap = vlc_module_cap_from_textid(cap);
+    return (_cap != VLC_CAP_CUSTOM) ? (vlc_module_need_ext)(obj, _cap, NULL, name, strict)
+                                    : (vlc_module_need_ext)(obj, VLC_CAP_CUSTOM, cap, name, strict);
+}
+#define module_need(a,b,c) module_need(VLC_OBJECT(a),b,c)
 
 VLC_USED
-static inline module_t *module_need_var(vlc_object_t *obj, const char *cap,
-                                        const char *varname)
+static inline module_t *vlc_module_need_var_ext(vlc_object_t *obj,
+                                                enum vlc_module_cap cap,
+                                                const char *custom_cap,
+                                                const char *varname)
 {
+    assert(cap != VLC_CAP_INVALID);
+
     char *list = var_InheritString(obj, varname);
-    module_t *m = module_need(obj, cap, list, false);
+    module_t *m = (vlc_module_need_ext)(obj, cap, custom_cap, list, false);
 
     free(list);
     return m;
+}
+#define vlc_module_need_var_ext(a,b,c,d) vlc_module_need_var_ext(VLC_OBJECT(a),b,c,d)
+
+#define vlc_module_need_var(a, b, c)        vlc_module_need_var_ext(a, b, NULL, c)
+#define vlc_module_need_custom_var(a, b, c) vlc_module_need_var_ext(a, VLC_CAP_CUSTOM, b, c)
+
+/* deprecated */
+VLC_DEPRECATED static inline module_t *module_need_var(vlc_object_t *obj, const char *cap,
+                                        const char *varname)
+{
+    enum vlc_module_cap _cap = vlc_module_cap_from_textid(cap);
+    return (_cap != VLC_CAP_CUSTOM) ? (vlc_module_need_var_ext)(obj, _cap, NULL, varname)
+                                    : (vlc_module_need_var_ext)(obj, VLC_CAP_CUSTOM, cap, varname);
 }
 #define module_need_var(a,b,c) module_need_var(VLC_OBJECT(a),b,c)
 
@@ -152,11 +241,18 @@ VLC_API module_t ** module_list_get(size_t *n) VLC_USED;
  * Checks whether a module implements a capability.
  *
  * \param m the module
- * \param cap the capability to check
+ * \param cap the capability to check (set to VLC_CAP_CUSTOM to check a custom string)
+ * \param custom_cap the string form of a custom capability to check
  * \retval true if the module has the capability
  * \retval false if the module has another capability
  */
-VLC_API bool module_provides(const module_t *m, const char *cap);
+VLC_API bool vlc_module_provides(const module_t *m, enum vlc_module_cap cap, const char *custom_cap);
+
+/* deprecated */
+VLC_DEPRECATED static inline bool module_provides(const module_t *m, const char *cap)
+{
+    return vlc_module_provides(m, vlc_module_cap_from_textid(cap), cap);
+}
 
 /**
  * Gets the internal name of a module.

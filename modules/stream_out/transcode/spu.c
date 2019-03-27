@@ -102,7 +102,7 @@ int transcode_spu_init( sout_stream_t *p_stream, const es_format_t *p_fmt,
     id->p_decoder->cbs = &dec_cbs;
     id->p_decoder->pf_decode = NULL;
     id->p_decoder->p_module =
-        module_need_var( id->p_decoder, "spu decoder", "codec" );
+        vlc_module_need_var( id->p_decoder, VLC_CAP_SPU_DECODER, "codec" );
 
     if( !id->p_decoder->p_module )
     {

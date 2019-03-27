@@ -122,6 +122,13 @@ enum vlc_module_cap
 };
 
 /**
+ * Converts the string ID form of a capability to its enum form
+ *
+ * If no conversion is possible, returns VLC_CAP_CUSTOM
+ */
+VLC_API enum vlc_module_cap vlc_module_cap_from_textid(const char * textid) VLC_USED;
+
+/**
  * Gives the string ID form of a given capability
  */
 VLC_API const char *vlc_module_cap_get_textid(enum vlc_module_cap cap) VLC_USED;

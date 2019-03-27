@@ -58,15 +58,15 @@ struct stream_t
          * Input stream
          *
          * Depending on the module capability:
-         * - "stream filter" or "demux": input byte stream (not NULL)
-         * - "access": a NULL pointer
-         * - "demux_filter": undefined
+         * - VLC_CAP_STREAM_FILTER or VLC_CAP_DEMUX: input byte stream (not NULL)
+         * - VLC_CAP_ACCESS: a NULL pointer
+         * - VLC_CAP_DEMUX_FILTER: undefined
          */
         stream_t    *s;
         /**
          * Input demuxer
          *
-         * If the module capability is "demux_filter", this is the upstream
+         * If the module capability is VLC_CAP_DEMUX_FILTER, this is the upstream
          * demuxer or demux filter. Otherwise, this is undefined.
          */
         demux_t *p_next;

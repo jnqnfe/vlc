@@ -484,7 +484,7 @@ static filter_t *ResamplerCreate(filter_t *p_filter)
     p_resampler->fmt_out.audio.i_rate =
         vlc_atomic_load_float( &p_sys->rate_shift );
     aout_FormatPrepare( &p_resampler->fmt_out.audio );
-    p_resampler->p_module = module_need( p_resampler, "audio resampler", NULL,
+    p_resampler->p_module = vlc_module_need( p_resampler, VLC_CAP_AUDIO_RESAMPLER, NULL,
                                          false );
 
     if( p_resampler->p_module == NULL )

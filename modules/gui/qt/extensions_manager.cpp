@@ -81,7 +81,7 @@ bool ExtensionsManager::loadExtensions()
         }
 
         p_extensions_manager->p_module =
-                module_need( p_extensions_manager, "extension", NULL, false );
+                vlc_module_need( p_extensions_manager, VLC_CAP_EXTENSION, NULL, false );
 
         if( !p_extensions_manager->p_module )
         {

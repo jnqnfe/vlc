@@ -69,10 +69,7 @@ libvlc_audio_output_t *
     {
         module_t *module = module_list[i];
 
-        if( unlikely( vlc_module_get_capability( module ) == VLC_CAP_INVALID ) )
-            continue;
-
-        if( !module_provides( module, "audio output" ) )
+        if( vlc_module_get_capability( module ) != VLC_CAP_AUDIO_OUTPUT )
             continue;
 
         libvlc_audio_output_t *item = malloc( sizeof( *item ) );

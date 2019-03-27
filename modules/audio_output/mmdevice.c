@@ -1163,8 +1163,8 @@ static int Start(audio_output_t *aout, audio_sample_format_t *restrict fmt)
         HRESULT hr;
         s->owner.device = sys->dev;
 
-        sys->module = vlc_module_load(s, "aout stream", modlist,
-                                      false, aout_stream_Start, s, fmt, &hr);
+        sys->module = vlc_module_load2(s, VLC_CAP_AOUT_STREAM, modlist,
+                                       false, aout_stream_Start, s, fmt, &hr);
         free(modlist);
 
         int ret = -1;

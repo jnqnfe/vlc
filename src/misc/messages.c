@@ -430,8 +430,8 @@ static struct vlc_logger *vlc_LogModuleCreate(vlc_object_t *parent)
         return NULL;
 
     /* TODO: module configuration item */
-    if (vlc_module_load(VLC_OBJECT(module), "logger", NULL, false,
-                        vlc_logger_load, module) == NULL) {
+    if (vlc_module_load2(VLC_OBJECT(module), VLC_CAP_LOGGER, NULL, false,
+                         vlc_logger_load, module) == NULL) {
         vlc_object_delete(VLC_OBJECT(module));
         return NULL;
     }

@@ -169,7 +169,7 @@ int intf_Create( libvlc_int_t *libvlc, const char *chain )
 
     p_intf->p_cfg = NULL;
     free( config_ChainCreate( &module, &p_intf->p_cfg, chain ) );
-    p_intf->p_module = module_need( p_intf, "interface", module, true );
+    p_intf->p_module = vlc_module_need( p_intf, VLC_CAP_INTERFACE, module, true );
     free(module);
     if( p_intf->p_module == NULL )
     {

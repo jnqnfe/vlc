@@ -60,7 +60,7 @@ int vlc_sd_probe_Add (vlc_probe_t *probe, const char *name,
 char **vlc_sd_GetNames (vlc_object_t *obj, char ***pppsz_longnames, int **pp_categories)
 {
     size_t count;
-    vlc_sd_probe_t *tab = vlc_probe (obj, "services probe", &count);
+    vlc_sd_probe_t *tab = vlc_probe (obj, VLC_CAP_SERVICES_PROBE, &count);
 
     if (count == 0)
     {
@@ -115,7 +115,7 @@ services_discovery_t *vlc_sd_Create(vlc_object_t *parent, const char *cfg,
     sd->description = NULL;
     sd->owner = *owner;
 
-    sd->p_module = module_need(sd, "services_discovery",
+    sd->p_module = vlc_module_need(sd, VLC_CAP_SERVICES_DISCOVERY,
                                sd->psz_name, true);
     if (sd->p_module == NULL)
     {

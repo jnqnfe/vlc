@@ -123,7 +123,7 @@ int transcode_audio_init( sout_stream_t *p_stream, const es_format_t *p_fmt,
     };
     id->p_decoder->cbs = &dec_cbs;
     id->p_decoder->pf_decode = NULL;
-    id->p_decoder->p_module = module_need_var( id->p_decoder, "audio decoder", "codec" );
+    id->p_decoder->p_module = vlc_module_need_var( id->p_decoder, VLC_CAP_AUDIO_DECODER, "codec" );
     if( !id->p_decoder->p_module )
     {
         msg_Err( p_stream, "cannot find audio decoder" );

@@ -256,7 +256,7 @@ static filter_t *SpuRenderCreateAndLoadText(spu_t *spu)
 
     text->pf_get_attachments = spu_get_attachments;
 
-    text->p_module = module_need_var(text, "text renderer", "text-renderer");
+    text->p_module = module_need_var(text, VLC_CAP_TEXT_RENDERER, "text-renderer");
     if (!text->p_module)
     {
         vlc_object_delete(text);
@@ -299,12 +299,7 @@ static filter_t *SpuRenderCreateAndLoadScale(vlc_object_t *object,
 
     scale->owner.video = &spu_scaler_cbs;
 
-    scale->p_module = module_need(scale, "video converter", NULL, false);
-    if (!scale->p_module)
-    {
-        vlc_object_delete(scale);
-        return NULL;
-    }
+    scale->p_module = vlc_module_need(scale, VLC_CAP_VIDEO_CONVERTER, NULL, false);
 
     return scale;
 }
@@ -1475,8 +1470,8 @@ spu_t *spu_Create(vlc_object_t *object, vout_thread_t *vout)
     sys->source_chain_update = NULL;
     sys->filter_chain_update = NULL;
     vlc_mutex_init(&sys->filter_chain_lock);
-    sys->source_chain = filter_chain_New(spu, "sub source", SPU_ES);
-    sys->filter_chain = filter_chain_New(spu, "sub filter", SPU_ES);
+    sys->source_chain = filter_chain_New(spu, VLC_CAP_SUB_SOURCE, SPU_ES);
+    sys->filter_chain = filter_chain_New(spu, VLC_CAP_SUB_FILTER, SPU_ES);
 
     /* Load text and scale module */
     sys->text = SpuRenderCreateAndLoadText(spu);

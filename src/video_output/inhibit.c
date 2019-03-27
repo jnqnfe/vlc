@@ -44,7 +44,7 @@ vlc_inhibit_t *vlc_inhibit_Create (vlc_object_t *parent)
     ih->p_sys = NULL;
     ih->inhibit = NULL;
 
-    priv->module = module_need (ih, "inhibit", NULL, false);
+    priv->module = vlc_module_need (ih, VLC_CAP_INHIBIT, NULL, false);
     if (priv->module == NULL)
     {
         vlc_object_delete(ih);

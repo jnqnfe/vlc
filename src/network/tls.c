@@ -84,8 +84,8 @@ vlc_tls_ServerCreate (vlc_object_t *obj, const char *cert_path,
     if (key_path == NULL)
         key_path = cert_path;
 
-    if (vlc_module_load(srv, "tls server", NULL, false,
-                        tls_server_load, srv, cert_path, key_path) == NULL)
+    if (vlc_module_load2(srv, VLC_CAP_TLS_SERVER, NULL, false,
+                         tls_server_load, srv, cert_path, key_path) == NULL)
     {
         msg_Err (srv, "TLS server plugin not available");
         vlc_object_delete(srv);
@@ -112,8 +112,8 @@ vlc_tls_client_t *vlc_tls_ClientCreate(vlc_object_t *obj)
     if (unlikely(crd == NULL))
         return NULL;
 
-    if (vlc_module_load(crd, "tls client", NULL, false,
-                        tls_client_load, crd) == NULL)
+    if (vlc_module_load2(crd, VLC_CAP_TLS_CLIENT, NULL, false,
+                         tls_client_load, crd) == NULL)
     {
         msg_Err (crd, "TLS client plugin not available");
         vlc_object_delete(crd);

@@ -260,7 +260,7 @@ int input_item_WriteMeta( vlc_object_t *obj, input_item_t *p_item )
     if( p_export->psz_file == NULL )
         goto error;
 
-    module_t *p_mod = module_need( p_export, "meta writer", NULL, false );
+    module_t *p_mod = vlc_module_need( p_export, VLC_CAP_META_WRITER, NULL, false );
     if( p_mod )
         module_unneed( p_export, p_mod );
     vlc_object_delete(p_export);

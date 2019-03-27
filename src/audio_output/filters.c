@@ -41,12 +41,12 @@
 #include "../video_output/vout_internal.h" /* for vout_Request */
 
 static filter_t *CreateFilter(vlc_object_t *obj, vlc_clock_t *clock,
-                              const char *type, const char *name,
+                              enum vlc_module_cap type, const char *name,
                               const audio_sample_format_t *infmt,
                               const audio_sample_format_t *outfmt,
                               config_chain_t *cfg, bool const_fmt)
 {
-    filter_t *filter = vlc_custom_create (obj, sizeof (*filter), type);
+    filter_t *filter = vlc_custom_create (obj, sizeof (*filter), vlc_module_cap_get_textid(type));
     if (unlikely(filter == NULL))
         return NULL;
 
@@ -66,7 +66,7 @@ static filter_t *CreateFilter(vlc_object_t *obj, vlc_clock_t *clock,
         assert( aout_FormatNbChannels( outfmt ) == outfmt->i_channels );
 #endif
 
-    filter->p_module = module_need (filter, type, name, false);
+    filter->p_module = vlc_module_need (filter, type, name, false);
 
 #ifndef NDEBUG
     if (filter->p_module == NULL || const_fmt)
@@ -91,7 +91,7 @@ static filter_t *FindConverter (vlc_object_t *obj,
                                 const audio_sample_format_t *infmt,
                                 const audio_sample_format_t *outfmt)
 {
-    return CreateFilter(obj, NULL, "audio converter", NULL, infmt, outfmt,
+    return CreateFilter(obj, NULL, VLC_CAP_AUDIO_CONVERTER, NULL, infmt, outfmt,
                         NULL, true);
 }
 
@@ -100,7 +100,7 @@ static filter_t *FindResampler (vlc_object_t *obj,
                                 const audio_sample_format_t *outfmt)
 {
     char *modlist = var_InheritString(obj, "audio-resampler");
-    filter_t *filter = CreateFilter(obj, NULL, "audio resampler", modlist,
+    filter_t *filter = CreateFilter(obj, NULL, VLC_CAP_AUDIO_RESAMPLER, modlist,
                                     infmt, outfmt, NULL, true);
     free(modlist);
     return filter;
@@ -199,9 +199,9 @@ static int aout_FiltersPipelineCreate(vlc_object_t *obj, filter_t **filters,
         output.i_chan_mode = outfmt->i_chan_mode;
         aout_FormatPrepare (&output);
 
-        const char *filter_type =
+        enum vlc_module_cap filter_type =
             infmt->channel_type != outfmt->channel_type ?
-            "audio renderer" : "audio converter";
+            VLC_CAP_AUDIO_RENDERER : VLC_CAP_AUDIO_CONVERTER;
 
         config_chain_t *cfg = NULL;
         if (headphones)
@@ -402,7 +402,7 @@ vout_thread_t *aout_filter_GetVout(filter_t *filter, const video_format_t *fmt)
     return vout;
 }
 
-static int AppendFilter(vlc_object_t *obj, const char *type, const char *name,
+static int AppendFilter(vlc_object_t *obj, enum vlc_module_cap type, const char *name,
                         aout_filters_t *restrict filters,
                         audio_sample_format_t *restrict infmt,
                         const audio_sample_format_t *restrict outfmt,
@@ -419,7 +419,7 @@ static int AppendFilter(vlc_object_t *obj, const char *type, const char *name,
                                     infmt, outfmt, cfg, false);
     if (filter == NULL)
     {
-        msg_Err (obj, "cannot add user %s \"%s\" (skipped)", type, name);
+        msg_Err (obj, "cannot add user %s \"%s\" (skipped)", vlc_module_cap_get_desc(type), name);
         return -1;
     }
 
@@ -427,7 +427,7 @@ static int AppendFilter(vlc_object_t *obj, const char *type, const char *name,
     if (aout_FiltersPipelineCreate (obj, filters->tab, &filters->count,
                                     max - 1, infmt, &filter->fmt_in.audio, false))
     {
-        msg_Err (filter, "cannot add user %s \"%s\" (skipped)", type, name);
+        msg_Err (filter, "cannot add user %s \"%s\" (skipped)", vlc_module_cap_get_desc(type), name);
         module_unneed (filter, filter->p_module);
         vlc_object_delete(filter);
         return -1;
@@ -474,7 +474,7 @@ static int AppendRemapFilter(vlc_object_t *obj, aout_filters_t *restrict filters
 
     free(config_ChainCreate(&name, &cfg, str));
     if (name != NULL && cfg != NULL)
-        ret = AppendFilter(obj, "audio filter", name, filters,
+        ret = AppendFilter(obj, VLC_CAP_AUDIO_FILTER, name, filters,
                            infmt, outfmt, cfg);
     else
         ret = -1;
@@ -585,7 +585,7 @@ aout_filters_t *aout_FiltersNewWithClock(vlc_object_t *obj, const vlc_clock_t *c
     /* parse user filter lists */
     if (var_InheritBool (obj, "audio-time-stretch"))
     {
-        if (AppendFilter(obj, "audio filter", "scaletempo",
+        if (AppendFilter(obj, VLC_CAP_AUDIO_FILTER, "scaletempo",
                          filters, &input_format, &output_format, NULL) == 0)
             filters->rate_filter = filters->tab[filters->count - 1];
     }
@@ -596,7 +596,7 @@ aout_filters_t *aout_FiltersNewWithClock(vlc_object_t *obj, const vlc_clock_t *c
                           cfg->remap);
 
         if (input_format.i_channels > 2 && cfg->headphones)
-            AppendFilter(obj, "audio filter", "binauralizer", filters,
+            AppendFilter(obj, VLC_CAP_AUDIO_FILTER, "binauralizer", filters,
                          &input_format, &output_format, NULL);
     }
 
@@ -607,7 +607,7 @@ aout_filters_t *aout_FiltersNewWithClock(vlc_object_t *obj, const vlc_clock_t *c
         char *p = str, *name;
         while ((name = strsep (&p, " :")) != NULL)
         {
-            AppendFilter(obj, "audio filter", name, filters,
+            AppendFilter(obj, VLC_CAP_AUDIO_FILTER, name, filters,
                          &input_format, &output_format, NULL);
         }
         free (str);
@@ -615,7 +615,7 @@ aout_filters_t *aout_FiltersNewWithClock(vlc_object_t *obj, const vlc_clock_t *c
 
     char *visual = var_InheritString(obj, "audio-visual");
     if (visual != NULL && strcasecmp(visual, "none"))
-        AppendFilter(obj, "visualization", visual, filters,
+        AppendFilter(obj, VLC_CAP_VISUALIZATION, visual, filters,
                      &input_format, &output_format, NULL);
     free(visual);
 

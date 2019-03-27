@@ -240,8 +240,8 @@ static int Start(audio_output_t *aout, audio_sample_format_t *restrict fmt)
     s->owner.activate = ActivateDevice;
 
     EnterMTA();
-    sys->module = vlc_module_load(s, "aout stream", NULL, false,
-                                  aout_stream_Start, s, fmt, &hr);
+    sys->module = vlc_module_load2(s, VLC_CAP_AOUT_STREAM, NULL, false,
+                                   aout_stream_Start, s, fmt, &hr);
     LeaveMTA();
 
     if (sys->module == NULL)

@@ -143,17 +143,17 @@ static void AddAlbumCache( input_fetcher_t* fetcher, input_item_t* item,
 }
 
 static int InvokeModule( input_fetcher_t* fetcher, input_item_t* item,
-                         int scope, char const* type )
+                         int scope, enum vlc_module_cap type )
 {
-    meta_fetcher_t* mf = vlc_custom_create( fetcher->owner,
-                                            sizeof( *mf ), type );
+    meta_fetcher_t* mf = vlc_custom_create( fetcher->owner, sizeof( *mf ),
+                                            vlc_module_cap_get_textid(type) );
     if( unlikely( !mf ) )
         return VLC_ENOMEM;
 
     mf->e_scope = scope;
     mf->p_item = item;
 
-    module_t* mf_module = module_need( mf, type, NULL, false );
+    module_t* mf_module = vlc_module_need( mf, type, NULL, false );
 
     if( mf_module )
         module_unneed( mf, mf_module );
@@ -185,7 +185,7 @@ static int CheckArt( input_item_t* item )
 
 static int SearchArt( input_fetcher_t* fetcher, input_item_t* item, int scope)
 {
-    InvokeModule( fetcher, item, scope, "art finder" );
+    InvokeModule( fetcher, item, scope, VLC_CAP_ART_FINDER );
     return CheckArt( item );
 }
 
@@ -195,7 +195,7 @@ static int SearchByScope( input_fetcher_t* fetcher,
     input_item_t* item = req->item;
 
     if( CheckMeta( item ) &&
-        InvokeModule( fetcher, req->item, scope, "meta fetcher" ) )
+        InvokeModule( fetcher, req->item, scope, VLC_CAP_META_FETCHER ) )
     {
         return VLC_EGENERIC;
     }

@@ -151,7 +151,7 @@ int filter_ConfigureBlend( filter_t *p_blend,
 
     /* */
     if( !p_blend->p_module )
-        p_blend->p_module = module_need( p_blend, "video blending", NULL, false );
+        p_blend->p_module = vlc_module_need( p_blend, VLC_CAP_VIDEO_BLENDING, NULL, false );
     if( !p_blend->p_module )
         return VLC_EGENERIC;
     return VLC_SUCCESS;
@@ -191,7 +191,7 @@ video_splitter_t *video_splitter_New( vlc_object_t *p_this,
     video_format_Copy( &p_splitter->fmt, p_fmt );
 
     /* */
-    p_splitter->p_module = module_need( p_splitter, "video splitter", psz_name, true );
+    p_splitter->p_module = vlc_module_need( p_splitter, VLC_CAP_VIDEO_SPLITTER, psz_name, true );
     if( ! p_splitter->p_module )
     {
         video_splitter_Delete( p_splitter );

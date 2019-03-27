@@ -479,11 +479,12 @@ void VLCProfileEditor::loadCapabilities()
     /* Parse the module list for capabilities and probe each of them */
     for (size_t i = 0; i < count; i++)
     {
-         module_t *p_module = p_all[i];
+        module_t *p_module = p_all[i];
 
-         if( module_provides( p_module, "sout mux" ) )
-             caps["muxers"].insert( module_get_object( p_module ) );
-//        else if ( module_provides( p_module, "encoder" ) )
+        enum vlc_module_cap cap = vlc_module_get_capability( p_module );
+        if( cap == VLC_CAP_SOUT_MUX )
+            caps["muxers"].insert( module_get_object( p_module ) );
+//        else if ( cap == VLC_CAP_ENCODER )
 //            caps["encoders"].insert( module_get_object( p_module ) );
     }
     module_list_free (p_all);

@@ -685,7 +685,7 @@ static decoder_t *CreateDecoder( image_handler_t *p_image, const es_format_t *fm
     p_dec->cbs = &dec_cbs;
 
     /* Find a suitable decoder module */
-    p_dec->p_module = module_need_var( p_dec, "video decoder", "codec" );
+    p_dec->p_module = vlc_module_need_var( p_dec, VLC_CAP_VIDEO_DECODER, "codec" );
     if( !p_dec->p_module )
     {
         msg_Err( p_dec, "no suitable decoder module for fourcc `%4.4s'. "
@@ -754,7 +754,7 @@ static encoder_t *CreateEncoder( vlc_object_t *p_this, const video_format_t *fmt
     p_enc->fmt_out.video.i_height = p_enc->fmt_in.video.i_height;
 
     /* Find a suitable decoder module */
-    p_enc->p_module = module_need( p_enc, "encoder", NULL, false );
+    p_enc->p_module = vlc_module_need( p_enc, VLC_CAP_ENCODER, NULL, false );
     if( !p_enc->p_module )
     {
         msg_Err( p_enc, "no suitable encoder module for fourcc `%4.4s'.\n"
@@ -806,7 +806,7 @@ static filter_t *CreateConverter( vlc_object_t *p_this, const es_format_t *p_fmt
     p_filter->fmt_out.video.i_y_offset = 0;
 
     p_filter->fmt_out.i_codec = p_fmt_out->i_chroma;
-    p_filter->p_module = module_need( p_filter, "video converter", NULL, false );
+    p_filter->p_module = vlc_module_need( p_filter, VLC_CAP_VIDEO_CONVERTER, NULL, false );
 
     if( !p_filter->p_module )
     {

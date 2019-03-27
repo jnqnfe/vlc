@@ -178,16 +178,16 @@ static int LoadDecoder( decoder_t *p_dec, bool b_packetizer,
     /* Find a suitable decoder/packetizer module */
     if( !b_packetizer )
     {
-        static const char caps[ES_CATEGORY_COUNT][16] = {
-            [VIDEO_ES] = "video decoder",
-            [AUDIO_ES] = "audio decoder",
-            [SPU_ES] = "spu decoder",
+        static enum vlc_module_cap caps[ES_CATEGORY_COUNT] = {
+            [VIDEO_ES] = VLC_CAP_VIDEO_DECODER,
+            [AUDIO_ES] = VLC_CAP_AUDIO_DECODER,
+            [SPU_ES] = VLC_CAP_SPU_DECODER,
         };
-        p_dec->p_module = module_need_var( p_dec, caps[p_dec->fmt_in.i_cat],
+        p_dec->p_module = vlc_module_need_var( p_dec, caps[p_dec->fmt_in.i_cat],
                                            "codec" );
     }
     else
-        p_dec->p_module = module_need_var( p_dec, "packetizer", "packetizer" );
+        p_dec->p_module = vlc_module_need_var( p_dec, VLC_CAP_PACKETIZER, "packetizer" );
 
     if( !p_dec->p_module )
     {

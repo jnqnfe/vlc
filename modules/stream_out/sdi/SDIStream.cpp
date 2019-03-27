@@ -190,11 +190,11 @@ AbstractDecodedStream::~AbstractDecodedStream()
 
 bool AbstractDecodedStream::init(const es_format_t *p_fmt)
 {
-    const char *category;
+    enum vlc_module_cap category;
     if(p_fmt->i_cat == VIDEO_ES)
-        category = "video decoder";
+        category = VLC_CAP_VIDEO_DECODER;
     else if(p_fmt->i_cat == AUDIO_ES)
-        category = "audio decoder";
+        category = VLC_CAP_AUDIO_DECODER;
     else
         return false;
 
@@ -215,10 +215,10 @@ bool AbstractDecodedStream::init(const es_format_t *p_fmt)
 
     setCallbacks();
 
-    p_decoder->p_module = module_need_var(p_decoder, category, "codec");
+    p_decoder->p_module = vlc_module_need_var(p_decoder, category, "codec");
     if(!p_decoder->p_module)
     {
-        msg_Err(p_stream, "cannot find %s for %4.4s", category, (char *)&p_fmt->i_codec);
+        msg_Err(p_stream, "cannot find %s for %4.4s", vlc_module_cap_get_desc(category), (char *)&p_fmt->i_codec);
         es_format_Clean(&p_owner->decoder_out);
         es_format_Clean(&p_owner->last_fmt_update);
         decoder_Destroy( p_decoder );

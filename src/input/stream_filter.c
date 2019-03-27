@@ -74,7 +74,7 @@ stream_t *vlc_stream_FilterNew( stream_t *p_source,
     s->s = p_source;
 
     /* */
-    priv->module = module_need(s, "stream_filter", psz_stream_filter, true);
+    priv->module = vlc_module_need(s, VLC_CAP_STREAM_FILTER, psz_stream_filter, true);
     if (priv->module == NULL)
         goto error;
 

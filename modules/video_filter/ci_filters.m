@@ -573,7 +573,7 @@ CVPX_to_CVPX_converter_Create(filter_t *filter, bool to_rgba)
 
     converter->owner.video = &image_filter_cbs;
 
-    converter->p_module = module_need(converter, "video converter", NULL, false);
+    converter->p_module = vlc_module_need(converter, VLC_CAP_VIDEO_CONVERTER, NULL, false);
     if (!converter->p_module)
     {
         vlc_object_delete(converter);

@@ -88,16 +88,16 @@ static int decoder_load(decoder_t *decoder, bool is_packetizer,
 
     if (!is_packetizer)
     {
-        static const char caps[ES_CATEGORY_COUNT][16] = {
-            [VIDEO_ES] = "video decoder",
-            [AUDIO_ES] = "audio decoder",
-            [SPU_ES] = "spu decoder",
+        static enum vlc_module_cap caps[ES_CATEGORY_COUNT] = {
+            [VIDEO_ES] = VLC_CAP_VIDEO_DECODER,
+            [AUDIO_ES] = VLC_CAP_AUDIO_DECODER,
+            [SPU_ES] = VLC_CAP_SPU_DECODER,
         };
         decoder->p_module =
-            module_need(decoder, caps[decoder->fmt_in.i_cat], NULL, false);
+            vlc_module_need(decoder, caps[decoder->fmt_in.i_cat], NULL, false);
     }
     else
-        decoder->p_module = module_need(decoder, "packetizer", NULL, false);
+        decoder->p_module = vlc_module_need(decoder, VLC_CAP_PACKETIZER, NULL, false);
 
     if (!decoder->p_module)
     {

@@ -77,13 +77,14 @@ static const char* GetVFilterType( struct intf_thread_t *p_intf, const char *psz
         return NULL;
     }
 
-    if( module_provides( p_obj, "video splitter" ) )
+    enum vlc_module_cap cap = vlc_module_get_capability( p_obj );
+    if( cap == VLC_CAP_VIDEO_SPLITTER )
         return "video-splitter";
-    else if( module_provides( p_obj, "video filter" ) )
+    else if( cap == VLC_CAP_VIDEO_FILTER )
         return "video-filter";
-    else if( module_provides( p_obj, "sub source" ) )
+    else if( cap == VLC_CAP_SUB_SOURCE )
         return "sub-source";
-    else if( module_provides( p_obj, "sub filter" ) )
+    else if( cap == VLC_CAP_SUB_FILTER )
         return "sub-filter";
     else
     {

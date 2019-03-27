@@ -157,7 +157,7 @@ void libvlc_free( void *ptr )
 }
 
 static libvlc_module_description_t *module_description_list_get(
-                libvlc_instance_t *p_instance, const char *capability )
+                libvlc_instance_t *p_instance, enum vlc_module_cap capability )
 {
     libvlc_module_description_t *p_list = NULL,
                           *p_actual = NULL,
@@ -169,10 +169,7 @@ static libvlc_module_description_t *module_description_list_get(
     {
         module_t *p_module = module_list[i];
 
-        if( unlikely( vlc_module_get_capability( p_module ) == VLC_CAP_INVALID ) )
-            continue;
-
-        if ( !module_provides( p_module, capability ) )
+        if( vlc_module_get_capability( p_module ) != capability )
             continue;
 
         p_actual = ( libvlc_module_description_t * ) malloc( sizeof( libvlc_module_description_t ) );
@@ -226,12 +223,12 @@ void libvlc_module_description_list_release( libvlc_module_description_t *p_list
 
 libvlc_module_description_t *libvlc_audio_filter_list_get( libvlc_instance_t *p_instance )
 {
-    return module_description_list_get( p_instance, "audio filter" );
+    return module_description_list_get( p_instance, VLC_CAP_AUDIO_FILTER );
 }
 
 libvlc_module_description_t *libvlc_video_filter_list_get( libvlc_instance_t *p_instance )
 {
-    return module_description_list_get( p_instance, "video filter" );
+    return module_description_list_get( p_instance, VLC_CAP_VIDEO_FILTER );
 }
 
 int64_t libvlc_clock(void)

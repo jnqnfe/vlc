@@ -303,7 +303,7 @@ sout_access_out_t *sout_AccessOutNew( vlc_object_t *p_sout,
     p_access->p_module   = NULL;
 
     p_access->p_module   =
-        module_need( p_access, "sout access", p_access->psz_access, true );
+        vlc_module_need( p_access, VLC_CAP_SOUT_ACCESS, p_access->psz_access, true );
 
     if( !p_access->p_module )
     {
@@ -411,7 +411,7 @@ sout_mux_t * sout_MuxNew( sout_instance_t *p_sout, const char *psz_mux,
     p_mux->i_add_stream_start = VLC_TICK_INVALID;
 
     p_mux->p_module =
-        module_need( p_mux, "sout mux", p_mux->psz_mux, true );
+        vlc_module_need( p_mux, VLC_CAP_SOUT_MUX, p_mux->psz_mux, true );
 
     if( p_mux->p_module == NULL )
     {
@@ -839,7 +839,7 @@ static sout_stream_t *sout_StreamNew( sout_instance_t *p_sout, char *psz_name,
     msg_Dbg( p_sout, "stream=`%s'", p_stream->psz_name );
 
     p_stream->p_module =
-        module_need( p_stream, "sout stream", p_stream->psz_name, true );
+        vlc_module_need( p_stream, VLC_CAP_SOUT_STREAM, p_stream->psz_name, true );
 
     if( !p_stream->p_module )
     {

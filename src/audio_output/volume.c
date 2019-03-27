@@ -96,7 +96,7 @@ int aout_volume_SetFormat(aout_volume_t *vol, vlc_fourcc_t format)
     }
 
     obj->format = format;
-    vol->module = module_need(obj, "audio volume", NULL, false);
+    vol->module = vlc_module_need(obj, VLC_CAP_AUDIO_VOLUME, NULL, false);
     if (vol->module == NULL)
         return -1;
     return 0;

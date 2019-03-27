@@ -507,7 +507,7 @@ static int Install( addons_storage_t *p_storage, addon_entry_t *p_entry )
     if( !p_finder )
         return VLC_ENOMEM;
 
-    module_t *p_module = module_need( p_finder, "addons finder",
+    module_t *p_module = vlc_module_need( p_finder, VLC_CAP_ADDONS_FINDER,
                                       p_entry->psz_source_module, true );
     if( p_module )
     {

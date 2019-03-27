@@ -79,8 +79,8 @@ vout_window_t *vout_window_New(vlc_object_t *obj, const char *module,
     w->fullscreen = false;
     vlc_mutex_init(&w->lock);
 
-    w->module = vlc_module_load(window, "vout window", module, false,
-                                vout_window_start, window);
+    w->module = vlc_module_load2(window, VLC_CAP_VOUT_WINDOW, module, false,
+                                 vout_window_start, window);
     if (!w->module) {
         vlc_mutex_destroy(&w->lock);
         vlc_object_delete(window);

@@ -242,6 +242,7 @@ vlc_uri_compose
 vlc_uri_resolve
 vlc_uri_fixup
 vlc_tick_now
+vlc_module_cap_from_textid
 vlc_module_cap_get_desc
 vlc_module_cap_get_textid
 module_config_free
@@ -257,10 +258,10 @@ module_get_score
 module_gettext
 module_list_free
 module_list_get
-module_need
-module_provides
+vlc_module_need_ext
+vlc_module_provides
 module_unneed
-vlc_module_load
+vlc_module_load_ext
 vlc_module_unload
 vlc_memstream_open
 vlc_memstream_flush
