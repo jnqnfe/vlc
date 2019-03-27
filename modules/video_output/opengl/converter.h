@@ -21,6 +21,7 @@
 #ifndef VLC_OPENGL_CONVERTER_H
 #define VLC_OPENGL_CONVERTER_H
 
+#include <vlc_common.h>
 #include <vlc_plugin.h>
 #include <vlc_common.h>
 #include <vlc_codec.h>
