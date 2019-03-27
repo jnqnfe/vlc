@@ -116,11 +116,16 @@ static int vlc_module_store(module_t *mod)
     if (unlikely(mod->psz_capability == NULL))
         return 0;
 
+//TODO: temp, currently always custom
+mod->capability = VLC_CAP_CUSTOM;
+    const char *name = (mod->capability == VLC_CAP_CUSTOM)
+        ? vlc_module_get_custom_capability(mod) : vlc_module_cap_get_textid(mod->capability);
+
     vlc_modcap_t *cap = malloc(sizeof (*cap));
     if (unlikely(cap == NULL))
         return -1;
 
-    cap->name = strdup(mod->psz_capability);
+    cap->name = strdup(name);
     cap->modv = NULL;
     cap->modc = 0;
 
@@ -764,4 +769,124 @@ ssize_t module_list_cap (module_t ***restrict list, const char *name)
 
     memcpy(tab, cap->modv, sizeof (*tab) * n);
     return n;
+}
+
+typedef struct {
+    enum vlc_module_cap cap; /**< Capability */
+    char textid[20];         /**< String form */
+    char name[20];           /**< Name (for interface output) */
+} cap_description_t;
+
+#define CAP(cap, textid, name) { cap, textid, name }
+
+/**
+ * Capability lookup data
+ *
+ * Used for translation between enum ID and older string-based ID form,
+ * and for getting a description for interface output.
+ */
+static const cap_description_t cap_descriptions[] = {
+    /* Stored in approximate most used order to optimise */
+    CAP(VLC_CAP_ACCESS,             "access",           N_("Access")),
+    CAP(VLC_CAP_DEMUX,              "demux",            N_("Demux")),
+    CAP(VLC_CAP_VIDEO_FILTER,       "video filter",     N_("Video filter")),
+    CAP(VLC_CAP_ENCODER,            "encoder",          N_("Encoder")),
+    CAP(VLC_CAP_VIDEO_CONVERTER,    "video converter",  N_("Video converter")),
+    CAP(VLC_CAP_AUDIO_DECODER,      "audio decoder",    N_("Audio decoder")),
+    CAP(VLC_CAP_VIDEO_DECODER,      "video decoder",    N_("Video decoder")),
+    CAP(VLC_CAP_VOUT_DISPLAY,       "vout display",     N_("Vout display")),
+    CAP(VLC_CAP_PACKETIZER,         "packetizer",       N_("Packetizer")),
+    CAP(VLC_CAP_STREAM_FILTER,      "stream_filter",    N_("Stream filter")),
+    CAP(VLC_CAP_SOUT_STREAM,        "sout stream",      N_("Sout stream")),
+    CAP(VLC_CAP_SPU_DECODER,        "spu decoder",      N_("SPU decoder")),
+    CAP(VLC_CAP_INTERFACE,          "interface",        N_("Interface")),
+    CAP(VLC_CAP_SERVICES_DISCOVERY, "services_discovery", N_("Services discovery")),
+    CAP(VLC_CAP_AUDIO_OUTPUT,       "audio output",     N_("Audio output")),
+    CAP(VLC_CAP_AUDIO_FILTER,       "audio filter",     N_("Audio filter")),
+    CAP(VLC_CAP_SOUT_ACCESS,        "sout access",      N_("Sout access")),
+    CAP(VLC_CAP_SERVICES_PROBE,     "services probe",   N_("Services probe")),
+    CAP(VLC_CAP_SOUT_MUX,           "sout mux",         N_("Sout mux")),
+    CAP(VLC_CAP_VOUT_WINDOW,        "vout window",      N_("Vout window")),
+    CAP(VLC_CAP_AUDIO_CONVERTER,    "audio converter",  N_("Audio converter")),
+    CAP(VLC_CAP_SUB_SOURCE,         "sub source",       N_("Sub source")),
+    CAP(VLC_CAP_KEYSTORE,           "keystore",         N_("Keystore")),
+    CAP(VLC_CAP_AUDIO_RESAMPLER,    "audio resampler",  N_("Audio resampler")),
+    CAP(VLC_CAP_GLCONV,             "glconv",           N_("Glconv")),
+    CAP(VLC_CAP_INHIBIT,            "inhibit",          N_("Inhibit")),
+    CAP(VLC_CAP_LOGGER,             "logger",           N_("Logger")),
+    CAP(VLC_CAP_HW_DECODER,         "hw decoder",       N_("HW decoder")),
+    CAP(VLC_CAP_HW_DECODER_DEVICE,  "decoder device",   N_("Decoder device")),
+    CAP(VLC_CAP_TEXT_RENDERER,      "text renderer",    N_("Text renderer")),
+    CAP(VLC_CAP_VISUALIZATION,      "visualization",    N_("Visualization")),
+    CAP(VLC_CAP_OPENGL,             "opengl",           N_("OpenGL")),
+    CAP(VLC_CAP_PLAYLIST_EXPORT,    "playlist export",  N_("Playlist export")),
+    CAP(VLC_CAP_RENDERER_DISCOVERY, "renderer_discovery", N_("Renderer discovery")),
+    CAP(VLC_CAP_RENDERER_PROBE,     "renderer probe",   N_("Renderer probe")),
+    CAP(VLC_CAP_AUDIO_VOLUME,       "audio volume",     N_("Audio volume")),
+    CAP(VLC_CAP_VIDEO_SPLITTER,     "video splitter",   N_("Video splitter")),
+    CAP(VLC_CAP_DEMUX_FILTER,       "demux_filter",     N_("Demux filter")),
+    CAP(VLC_CAP_ADDONS_FINDER,      "addons finder",    N_("Addons finder")),
+    CAP(VLC_CAP_ADDONS_STORAGE,     "addons storage",   N_("Addons storage")),
+    CAP(VLC_CAP_AOUT_STREAM,        "aout stream",      N_("Aout stream")),
+    CAP(VLC_CAP_ART_FINDER,         "art finder",       N_("Art finder")),
+    CAP(VLC_CAP_TLS_CLIENT,         "tls client",       N_("TLS client")),
+    CAP(VLC_CAP_TLS_SERVER,         "tls server",       N_("TLS server")),
+    CAP(VLC_CAP_AUDIO_RENDERER,     "audio renderer",   N_("Audio renderer")),
+    CAP(VLC_CAP_DIALOGS_PROVIDER,   "dialogs provider", N_("Dialogs provider")),
+    CAP(VLC_CAP_EXTENSION,          "extension",        N_("Extension")),
+    CAP(VLC_CAP_FINGERPRINTER,      "fingerprinter",    N_("Fingerprinter")),
+    CAP(VLC_CAP_MEDIALIBRARY,       "medialibrary",     N_("Medialibrary")),
+    CAP(VLC_CAP_META_FETCHER,       "meta fetcher",     N_("Meta fetcher")),
+    CAP(VLC_CAP_META_READER,        "meta reader",      N_("Meta reader")),
+    CAP(VLC_CAP_META_WRITER,        "meta writer",      N_("Meta writer")),
+    CAP(VLC_CAP_STREAM_DIRECTORY,   "stream_directory", N_("Stream directory")),
+    CAP(VLC_CAP_STREAM_EXTRACTOR,   "stream_extractor", N_("Stream extractor")),
+    CAP(VLC_CAP_SUB_FILTER,         "sub filter",       N_("Sub filter")),
+    CAP(VLC_CAP_VIDEO_BLENDING,     "video blending",   N_("Video blending")),
+    CAP(VLC_CAP_VOD_SERVER,         "vod server",       N_("VoD server")),
+    CAP(VLC_CAP_VULKAN,             "vulkan",           N_("Vulkan")),
+    CAP(VLC_CAP_XML,                "xml",              N_("XML")),
+    CAP(VLC_CAP_XML_READER,         "xml reader",       N_("XML reader")),
+    CAP(VLC_CAP_CORE,               "core",             N_("Core program")),
+};
+
+static const size_t n_caps_descs =
+    sizeof (cap_descriptions) / sizeof (cap_descriptions[0]);
+
+static_assert(VLC_CAP_MAX == (sizeof (cap_descriptions) / sizeof (cap_descriptions[0])) + 1, "capability description table size mismatch");
+
+/*
+enum vlc_module_cap module_cap_from_textid(const char * textid)
+{
+    if (textid != NULL)
+    {
+        for (size_t i = 0; i < n_caps_descs; i++)
+        {
+            if (!strcmp((const char *)&cap_descriptions[i].textid, textid))
+                return cap_descriptions[i].cap;
+        }
+    }
+    return VLC_CAP_CUSTOM;
+}
+*/
+const char *vlc_module_cap_get_textid(enum vlc_module_cap cap)
+{
+    assert(cap != VLC_CAP_CUSTOM && cap != VLC_CAP_INVALID);
+    for (size_t i = 0; i < n_caps_descs; i++)
+    {
+        if (cap_descriptions[i].cap == cap)
+            return (const char *)&cap_descriptions[i].textid;
+    }
+    vlc_assert_unreachable(); /* if reached, table is missing an entry! */
+}
+
+const char *vlc_module_cap_get_desc(enum vlc_module_cap cap)
+{
+    assert(cap != VLC_CAP_CUSTOM && cap != VLC_CAP_INVALID);
+    for (size_t i = 0; i < n_caps_descs; i++)
+    {
+        if (cap_descriptions[i].cap == cap)
+            return (const char *)&cap_descriptions[i].name;
+    }
+    vlc_assert_unreachable(); /* if reached, table is missing an entry! */
 }

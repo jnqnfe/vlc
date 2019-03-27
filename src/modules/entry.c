@@ -67,8 +67,9 @@ module_t *vlc_module_create(vlc_plugin_t *plugin)
     module->psz_help = NULL;
     module->pp_shortcuts = NULL;
     module->i_shortcuts = 0;
+    module->i_score = 0;
+    module->capability = VLC_CAP_INVALID;
     module->psz_capability = NULL;
-    module->i_score = (parent != NULL) ? parent->i_score : 1;
     module->activate_name = NULL;
     module->deactivate_name = NULL;
     module->pf_activate = NULL;
@@ -217,6 +218,8 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
 
             submodule->psz_shortname = super->psz_shortname;
             submodule->psz_longname = super->psz_longname;
+            submodule->capability = super->capability;
+            submodule->i_score = super->i_score;
             submodule->psz_capability = super->psz_capability;
             break;
         }
@@ -260,6 +263,7 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
         }
 
         case VLC_MODULE_CAPABILITY:
+            module->capability = VLC_CAP_CUSTOM;
             module->psz_capability = va_arg (ap, const char *);
             break;
 

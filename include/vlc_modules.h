@@ -23,6 +23,10 @@
 #ifndef VLC_MODULES_H
 #define VLC_MODULES_H 1
 
+#include <assert.h>
+
+#include <vlc_module_caps.h>
+
 /**
  * \file
  * This file defines functions for modules in vlc
@@ -181,12 +185,87 @@ VLC_API const char *module_get_name(const module_t *m, bool longname) VLC_USED;
 VLC_API const char *module_get_help(const module_t *m) VLC_USED;
 
 /**
- * Gets the capability string of a module.
+ * Gets the capability of a module.
+ *
+ * The returned capability is the raw `enum vlc_module_cap` property. Of the
+ * possible variants:
+ *
+ *  - Normally this will either be a variant representing a proper capability,
+ *    or VLC_CAP_CUSTOM where the module uses a custom string-form capability
+ *    (in which case use vlc_module_get_custom_capability() to get the custom
+ *    capability name if you are interested in it).
+ *  - Modules with VLC_CAP_INVALID are rare but they do exist so you may in
+ *    places want to check for this. Such modules occur where a plugin has a
+ *    module for which a capability has not been assigned; which could occur
+ *    through mistake (e.g. plugin has an unneccessary initial call to
+ *    add_submodule()), or a deliberate use of this as a "hack" regarding the
+ *    name used in help output against a plugin's options (the name of the
+ *    plugin's first module is used there). In practice, except in unexpected
+ *    error, you're only going to encounter it if you process the raw list of
+ *    all modules (they will never be returned in a capability-specific list).
+ *  - VLC_CAP_MAX will never be encountered in practice.
+ *
+ * \param m the module
+ * \return the capability
+ */
+VLC_API enum vlc_module_cap vlc_module_get_capability(const module_t *m) VLC_USED;
+
+/**
+ * Gets the custom capability string of a module.
  *
  * \param m the module
  * \return the capability, or "none" if unspecified
  */
-VLC_API const char *module_get_capability(const module_t *m) VLC_USED;
+VLC_API const char *vlc_module_get_custom_capability(const module_t *m) VLC_USED;
+
+/**
+ * Gets the string form for the capability of a module.
+ *
+ * \param m the module
+ * \return for a module with a built-in capability, the string form of the ID
+ * will be returned; for those with a custom capability, that custom capability
+ * string will be returned, or "none" if unspecified (an error).
+ */
+VLC_USED
+static inline const char *vlc_module_get_capability_str (const module_t *m)
+{
+    enum vlc_module_cap cap_id = vlc_module_get_capability(m);
+    if (cap_id == VLC_CAP_CUSTOM)
+        return vlc_module_get_custom_capability(m);
+    else
+    {
+        assert(cap_id != VLC_CAP_INVALID);
+        return vlc_module_cap_get_textid(cap_id);
+    }
+}
+
+/* deprecated */
+VLC_DEPRECATED static inline const char *module_get_capability(const module_t *m)
+{
+    return vlc_module_get_capability_str(m);
+}
+
+/**
+ * Gets a "display" name for the capability of a module.
+ *
+ * \param m the module
+ * \return for a module with a built-in capability, a descriptive display name
+ * of the capability will be returned (not the same as the string form of the
+ * ID); for those with a custom capability, that custom capability string will
+ * simply be returned, or "none" if unspecified (an error).
+ */
+VLC_USED
+static inline const char *vlc_module_get_capability_name (const module_t *m)
+{
+    enum vlc_module_cap cap_id = vlc_module_get_capability(m);
+    if (cap_id == VLC_CAP_CUSTOM)
+        return vlc_module_get_custom_capability(m);
+    else
+    {
+        assert(cap_id != VLC_CAP_INVALID);
+        return vlc_module_cap_get_desc(cap_id);
+    }
+}
 
 /**
  * Gets the precedence of a module.

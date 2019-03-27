@@ -31,11 +31,13 @@
 
 enum vlc_module_properties
 {
+    /* WARNING: MAKING ANY CHANGES, OTHER THAN INSERTING NEW ITEMS AT THE END
+     * (OF BLOCKS, WHERE MARKED) IS AN ABI BREAK, REQUIRING A BUMP TO THE BELOW
+     * DEFINED ABI NUMBER! */
+
     VLC_MODULE_CREATE,
     VLC_CONFIG_CREATE,
 
-    /* DO NOT EVER REMOVE, INSERT OR REPLACE ANY ITEM! It would break the ABI!
-     * Append new items at the end ONLY. */
     VLC_MODULE_SHORTCUT=0x100,
     VLC_MODULE_CAPABILITY,
     VLC_MODULE_SCORE,
@@ -47,10 +49,8 @@ enum vlc_module_properties
     VLC_MODULE_DESCRIPTION,
     VLC_MODULE_HELP,
     VLC_MODULE_TEXTDOMAIN,
-    /* Insert new VLC_MODULE_* here */
+    /* --> Insert new VLC_MODULE_* entries here <-- */
 
-    /* DO NOT EVER REMOVE, INSERT OR REPLACE ANY ITEM! It would break the ABI!
-     * Append new items at the end ONLY. */
     VLC_CONFIG_NAME=0x1000,
     /* command line name (args=const char *) */
 
@@ -89,7 +89,7 @@ enum vlc_module_properties
     /* callback for suggested values
      * (args=const char *, size_t (*)(vlc_object_t *, <type> **, char ***)) */
 
-    /* Insert new VLC_CONFIG_* here */
+    /* --> Insert new VLC_CONFIG_* entries here <-- */
 };
 
 /* Configuration item class/subtype masks */

@@ -72,6 +72,7 @@ pluginsinclude_HEADERS = \
 	../include/vlc_meta.h \
 	../include/vlc_meta_fetcher.h \
 	../include/vlc_mime.h \
+	../include/vlc_module_caps.h \
 	../include/vlc_modules.h \
 	../include/vlc_mouse.h \
 	../include/vlc_network.h \

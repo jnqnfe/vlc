@@ -169,6 +169,9 @@ static libvlc_module_description_t *module_description_list_get(
     {
         module_t *p_module = module_list[i];
 
+        if( unlikely( vlc_module_get_capability( p_module ) == VLC_CAP_INVALID ) )
+            continue;
+
         if ( !module_provides( p_module, capability ) )
             continue;
 

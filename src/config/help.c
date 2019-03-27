@@ -680,9 +680,10 @@ static void ListModules (vlc_object_t *p_this, bool b_verbose)
                 if( strcmp( pp_shortcuts[i], objname ) )
                     printf(color ? TS_CYAN_BOLD "   s %s\n" TS_RESET : "   s %s\n",
                            pp_shortcuts[i]);
-            if (p_parser->psz_capability != NULL)
+            const char *cap_text = vlc_module_get_capability_name(p_parser);
+            if (cap_text != NULL)
                 printf(color ? TS_MAGENTA_BOLD "   c %s (%d)\n" TS_RESET : "   c %s (%d)\n",
-                       p_parser->psz_capability, p_parser->i_score);
+                       cap_text, p_parser->i_score);
         }
     }
     module_list_free (list);

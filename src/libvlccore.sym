@@ -242,11 +242,14 @@ vlc_uri_compose
 vlc_uri_resolve
 vlc_uri_fixup
 vlc_tick_now
+vlc_module_cap_get_desc
+vlc_module_cap_get_textid
 module_config_free
 module_config_get
 module_exists
 module_find
-module_get_capability
+vlc_module_get_capability
+vlc_module_get_custom_capability
 module_get_help
 module_get_name
 module_get_object

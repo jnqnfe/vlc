@@ -23,7 +23,8 @@
 #ifndef LIBVLC_MODULES_H
 # define LIBVLC_MODULES_H 1
 
-# include <stdatomic.h>
+#include <stdatomic.h>
+#include <vlc_module_caps.h>
 
 /** VLC plugin */
 typedef struct vlc_plugin_t
@@ -88,8 +89,9 @@ struct module_t
     const char *psz_longname;                   /**< Module descriptive name */
     const char *psz_help;        /**< Long help string for "special" modules */
 
-    const char *psz_capability;                              /**< Capability */
-    int      i_score;                          /**< Score for the capability */
+    int i_score;                               /**< Score for the capability */
+    enum vlc_module_cap capability;                          /**< Capability */
+    const char *psz_capability;                       /**< Custom capability */
 
     /* Callbacks */
     const char *activate_name;

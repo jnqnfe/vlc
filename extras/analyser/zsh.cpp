@@ -197,7 +197,7 @@ static void PrintModule(const module_t *mod)
         return;
 
     const char *name = module_get_object(mod);
-    const char *cap = module_get_capability(mod);
+    const char *cap = vlc_module_get_capability_str(mod);
 
     if (strcmp(cap, "none"))
         capabilities.insert(mpair(cap, name));

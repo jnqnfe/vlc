@@ -44,7 +44,13 @@
 
 bool module_provides (const module_t *m, const char *cap)
 {
-    return !strcmp (module_get_capability (m), cap);
+    assert(m->capability != VLC_CAP_INVALID);
+    assert(cap);
+    const char * mcap = (m->capability == VLC_CAP_CUSTOM) ?
+                            vlc_module_get_custom_capability(m) :
+                            vlc_module_cap_get_textid(m->capability);
+    assert(mcap);
+    return !strcmp(mcap, cap);
 }
 
 const char *module_get_object( const module_t *m )
@@ -69,7 +75,12 @@ const char *module_get_help( const module_t *m )
     return m->psz_help;
 }
 
-const char *module_get_capability (const module_t *m)
+enum vlc_module_cap vlc_module_get_capability (const module_t *m)
+{
+    return m->capability;
+}
+
+const char *vlc_module_get_custom_capability (const module_t *m)
 {
     return (m->psz_capability != NULL) ? m->psz_capability : "none";
 }

@@ -56,7 +56,7 @@
 #ifdef HAVE_DYNAMIC_PLUGINS
 /* Sub-version number
  * (only used to avoid breakage in dev version when cache structure changes) */
-#define CACHE_SUBVERSION_NUM 35
+#define CACHE_SUBVERSION_NUM 36
 
 /* Cache filename */
 #define CACHE_NAME "plugins.dat"
@@ -309,8 +309,17 @@ static int vlc_cache_load_module(vlc_plugin_t *plugin, block_t *file)
 
     LOAD_STRING(module->activate_name);
     LOAD_STRING(module->deactivate_name);
-    LOAD_STRING(module->psz_capability);
+    LOAD_IMMEDIATE(module->capability);
     LOAD_IMMEDIATE(module->i_score);
+    if ((int)module->capability < 0 || (int)module->capability >= VLC_CAP_MAX)
+        return -1;
+    if (module->capability == VLC_CAP_CUSTOM)
+    {
+        LOAD_STRING(module->psz_capability);
+    }
+    else
+        module->psz_capability = NULL;
+
     return 0;
 error:
     return -1;
@@ -584,8 +593,12 @@ static int CacheSaveModule(FILE *file, const module_t *module)
 
     SAVE_STRING(module->activate_name);
     SAVE_STRING(module->deactivate_name);
-    SAVE_STRING(module->psz_capability);
+    SAVE_IMMEDIATE(module->capability);
     SAVE_IMMEDIATE(module->i_score);
+    if (module->capability == VLC_CAP_CUSTOM)
+    {
+        SAVE_STRING(module->psz_capability);
+    }
     return 0;
 error:
     return -1;
