@@ -187,21 +187,21 @@ vlc_module_begin ()
     set_shortname( "Vorbis" )
     set_description( N_("Vorbis audio decoder") )
 #ifdef MODULE_NAME_IS_tremor
-    set_capability( "audio decoder", 90 )
+    set_capability( VLC_CAP_AUDIO_DECODER, 90 )
 #else
-    set_capability( "audio decoder", 100 )
+    set_capability( VLC_CAP_AUDIO_DECODER, 100 )
 #endif
     set_callbacks( OpenDecoder, CloseDecoder )
 
     add_submodule ()
     set_description( N_("Vorbis audio packetizer") )
-    set_capability( "packetizer", 100 )
+    set_capability( VLC_CAP_PACKETIZER, 100 )
     set_callbacks( OpenPacketizer, CloseDecoder )
 
 #ifdef HAVE_VORBIS_ENCODER
     add_submodule ()
     set_description( N_("Vorbis audio encoder") )
-    set_capability( "encoder", 130 )
+    set_capability( VLC_CAP_ENCODER, 130 )
     set_callbacks( OpenEncoder, CloseEncoder )
 
 #   define ENC_CFG_PREFIX "sout-vorbis-"

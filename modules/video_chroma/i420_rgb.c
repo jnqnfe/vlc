@@ -71,17 +71,17 @@ vlc_module_begin ()
 #if defined (AVX2)
     set_description( N_( "AVX2 I420,IYUV,YV12 to "
                         "RV15,RV16,RV32 conversions") )
-    set_capability( "video converter", 130 )
+    set_capability( VLC_CAP_VIDEO_CONVERTER, 130 )
 # define vlc_CPU_capable() vlc_CPU_AVX2()
 #elif defined (SSE2)
     set_description( N_( "SSE2 I420,IYUV,YV12 to "
                         "RV15,RV16,RV24,RV32 conversions") )
-    set_capability( "video converter", 120 )
+    set_capability( VLC_CAP_VIDEO_CONVERTER, 120 )
 # define vlc_CPU_capable() vlc_CPU_SSE2()
 #else
     set_description( N_("I420,IYUV,YV12 to "
                        "RGB8,RV15,RV16,RV24,RV32 conversions") )
-    set_capability( "video converter", 80 )
+    set_capability( VLC_CAP_VIDEO_CONVERTER, 80 )
 # define vlc_CPU_capable() (true)
 #endif
     set_callbacks( Activate, Deactivate )

@@ -858,7 +858,7 @@ vlc_module_begin()
 
     set_shortname( N_("RIST") )
     set_description( N_("RIST stream output") )
-    set_capability( "sout access", 0 )
+    set_capability( VLC_CAP_SOUT_ACCESS, 0 )
     add_shortcut( "rist", "tr06" )
     set_callbacks( Open, Close )
 

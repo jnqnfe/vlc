@@ -56,7 +56,7 @@ static void Close(vlc_object_t *);
 vlc_module_begin()
     set_shortname(N_("NFS"))
     set_description(N_("NFS input"))
-    set_capability("access", 0)
+    set_capability(VLC_CAP_ACCESS, 0)
     add_shortcut("nfs")
     set_callbacks(Open, Close)
 

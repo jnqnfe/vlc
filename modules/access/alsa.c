@@ -57,7 +57,7 @@ vlc_module_begin ()
 
     set_shortname (N_("ALSA"))
     set_description (N_("ALSA audio capture"))
-    set_capability ("access", 0)
+    set_capability (VLC_CAP_ACCESS, 0)
     add_shortcut ("alsa")
     set_callbacks (Open, Close)
 

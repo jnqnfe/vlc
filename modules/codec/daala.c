@@ -115,20 +115,20 @@ static const char *const enc_chromafmt_list_text[] = {
 vlc_module_begin ()
     set_shortname( "Daala" )
     set_description( N_("Daala video decoder") )
-    set_capability( "video decoder", 100 )
+    set_capability( VLC_CAP_VIDEO_DECODER, 100 )
     set_callbacks( OpenDecoder, CloseDecoder )
     add_shortcut( "daala" )
 
     add_submodule ()
     set_description( N_("Daala video packetizer") )
-    set_capability( "packetizer", 100 )
+    set_capability( VLC_CAP_PACKETIZER, 100 )
     set_callbacks( OpenPacketizer, CloseDecoder )
     add_shortcut( "daala" )
 
 #ifdef ENABLE_SOUT
     add_submodule ()
     set_description( N_("Daala video encoder") )
-    set_capability( "encoder", 150 )
+    set_capability( VLC_CAP_ENCODER, 150 )
     set_callbacks( OpenEncoder, CloseEncoder )
     add_shortcut( "daala" )
 

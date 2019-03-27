@@ -66,7 +66,7 @@ static void Close   ( vlc_object_t * );
 vlc_module_begin ()
     set_shortname( N_("NT Service"))
     set_description( N_("Windows Service interface") )
-    set_capability( "interface", 0 )
+    set_capability( VLC_CAP_INTERFACE, 0 )
     set_callbacks( Activate, Close )
 
     set_category( CAT_INTERFACE )

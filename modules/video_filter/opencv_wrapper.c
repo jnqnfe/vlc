@@ -68,7 +68,7 @@ static const char *const output_list_text[] = { N_("Don't display any video"),
 vlc_module_begin ()
     set_description( N_("OpenCV video filter wrapper") )
     set_shortname( N_("OpenCV" ))
-    set_capability( "video filter", 0 )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     add_shortcut( "opencv_wrapper" )
     set_callbacks( Create, Destroy )
 

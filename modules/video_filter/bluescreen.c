@@ -78,7 +78,7 @@ vlc_module_begin ()
 
     set_description( N_("Bluescreen video filter") )
     set_shortname( N_("Bluescreen" ))
-    set_capability( "video filter", 0 )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     add_shortcut( "bluescreen" )
     set_callbacks( Create, Destroy )
 

@@ -55,7 +55,7 @@ static int Control( stream_t *, int, va_list );
 vlc_module_begin ()
     set_description( N_("Digital Video (Firewire/ieee1394) input") )
     set_shortname( N_("DV") )
-    set_capability( "access", 0 )
+    set_capability( VLC_CAP_ACCESS, 0 )
     add_shortcut( "dv", "raw1394" )
     set_callbacks( Open, Close )
     //set_category( CAT_INPUT )

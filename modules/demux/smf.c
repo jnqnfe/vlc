@@ -730,7 +730,7 @@ static void Close (vlc_object_t * p_this)
 
 vlc_module_begin ()
     set_description (N_("SMF demuxer"))
-    set_capability ("demux", 20)
+    set_capability (VLC_CAP_DEMUX, 20)
     set_callbacks (Open, Close)
     //set_category (CAT_INPUT)
     //set_subcategory (SUBCAT_INPUT_DEMUX)

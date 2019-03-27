@@ -51,7 +51,7 @@ static picture_t *Filter( filter_t *, picture_t * );
 vlc_module_begin ()
     set_description( N_("Ripple video filter") )
     set_shortname( N_( "Ripple" ))
-    set_capability( "video filter", 0 )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     add_shortcut( "ripple" )
     set_callbacks( Create, Destroy )
     //set_category( CAT_VIDEO )

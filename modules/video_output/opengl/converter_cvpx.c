@@ -280,7 +280,7 @@ Open(vlc_object_t *obj)
 
 vlc_module_begin ()
     set_description("Apple OpenGL CVPX converter")
-    set_capability("glconv", 1)
+    set_capability(VLC_CAP_GLCONV, 1)
     set_callbacks(Open, Close)
     //set_category(CAT_VIDEO)
     //set_subcategory(SUBCAT_VIDEO_VOUT)

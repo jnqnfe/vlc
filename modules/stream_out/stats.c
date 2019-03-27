@@ -50,7 +50,7 @@ static void Close   ( vlc_object_t * );
 vlc_module_begin()
     set_shortname( N_("Stats"))
     set_description( N_("Writes statistic info about stream"))
-    set_capability( "sout stream", 0 )
+    set_capability( VLC_CAP_SOUT_STREAM, 0 )
     add_shortcut( "stats" )
     set_callbacks( Open, Close )
 

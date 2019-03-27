@@ -103,14 +103,14 @@ vlc_module_begin ()
 
     set_shortname("Direct3D9")
     set_description(N_("Direct3D9 video output"))
-    set_capability("vout display", 280)
+    set_capability(VLC_CAP_VOUT_DISPLAY, 280)
     add_shortcut("direct3d9", "direct3d")
     set_callbacks(Open, Close)
 
 #ifdef HAVE_GL
     add_submodule()
     set_description("DX OpenGL surface converter for D3D9")
-    set_capability("glconv", 1)
+    set_capability(VLC_CAP_GLCONV, 1)
     set_callbacks(GLConvOpen, GLConvClose)
 #endif
 

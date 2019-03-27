@@ -84,7 +84,7 @@ vlc_module_begin ()
 
     set_shortname( N_("VDR") )
     set_description( N_("VDR recordings") )
-    set_capability( "access", 60 )
+    set_capability( VLC_CAP_ACCESS, 60 )
     add_shortcut( "vdr", "directory", "dir", "file" )
     set_callbacks( Open, Close )
 

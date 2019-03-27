@@ -499,13 +499,13 @@ inline void VLCProfileEditor::registerFilters()
         module_t *p_module = p_all[i];
         if ( module_get_score( p_module ) > 0 ) continue;
 
-        QString capability = module_get_capability( p_module );
+        enum vlc_module_cap capability = vlc_module_get_capability( p_module );
         QListWidget *listWidget = NULL;
         QListWidgetItem *item;
 
-        if ( capability == "video filter" )
+        if ( capability == VLC_CAP_VIDEO_FILTER )
             listWidget = ui.valueholder_video_filters;
-        else if ( capability == "audio filter" )
+        else if ( capability == VLC_CAP_AUDIO_FILTER )
             listWidget = ui.valueholder_audio_filters;
 
         if ( !listWidget ) continue;

@@ -66,7 +66,7 @@ static int FindMeta( vlc_object_t * );
 vlc_module_begin ()
     set_shortname( N_( "Folder" ) )
     set_description( N_("Folder meta data") )
-    set_capability( "art finder", 90 )
+    set_capability( VLC_CAP_ART_FINDER, 90 )
     set_callbacks( FindMeta, NULL )
     set_category( CAT_PLAYLIST )
     set_subcategory( SUBCAT_PLAYLIST_GENERAL )

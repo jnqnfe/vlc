@@ -75,7 +75,7 @@ vlc_module_begin ()
 
     set_shortname("Direct3D11")
     set_description(N_("Direct3D11 video output"))
-    set_capability("vout display", 300)
+    set_capability(VLC_CAP_VOUT_DISPLAY, 300)
     add_shortcut("direct3d11")
     set_callbacks(Open, Close)
 

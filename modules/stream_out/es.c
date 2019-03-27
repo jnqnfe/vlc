@@ -76,7 +76,7 @@ static void     Close   ( vlc_object_t * );
 vlc_module_begin ()
     set_shortname( "ES" )
     set_description( N_("Elementary stream output") )
-    set_capability( "sout stream", 50 )
+    set_capability( VLC_CAP_SOUT_STREAM, 50 )
     add_shortcut( "es" )
     set_callbacks( Open, Close )
 

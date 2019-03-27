@@ -71,7 +71,7 @@ static void GLESReleaseCurrent(vlc_gl_t *);
 vlc_module_begin ()
     set_shortname("iOS vout")
     set_description("iOS OpenGL video output")
-    set_capability("vout display", 300)
+    set_capability(VLC_CAP_VOUT_DISPLAY, 300)
     set_callbacks(Open, Close)
     add_shortcut("vout_ios2", "vout_ios")
 

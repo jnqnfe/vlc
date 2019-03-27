@@ -83,7 +83,7 @@ vlc_module_begin ()
     set_description( N_("Video post processing filter") )
     set_shortname( N_("Postproc" ) )
     add_shortcut( "postprocess", "pp" ) /* name is "postproc" */
-    set_capability( "video filter", 0 )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     set_callbacks( OpenPostproc, ClosePostproc )
 
     set_category( CAT_VIDEO )

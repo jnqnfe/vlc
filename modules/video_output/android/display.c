@@ -60,13 +60,13 @@ static void SubpicturePrepare(vout_display_t *vd, subpicture_t *subpicture);
 
 vlc_module_begin()
     set_description("Android video output")
-    set_capability("vout display", 260)
+    set_capability(VLC_CAP_VOUT_DISPLAY, 260)
     add_shortcut("android-display")
 
     set_callbacks(Open, Close)
     add_submodule ()
         set_description("Android opaque video output")
-        set_capability("vout display", 280)
+        set_capability(VLC_CAP_VOUT_DISPLAY, 280)
         add_shortcut("android-opaque")
         set_callbacks(OpenOpaque, Close)
 

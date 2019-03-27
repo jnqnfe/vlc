@@ -56,7 +56,7 @@ static int DecodeBlock  ( decoder_t *, block_t * );
 vlc_module_begin ()
     set_shortname( N_("SDL Image decoder"))
     set_description( N_("SDL_image video decoder") )
-    set_capability( "video decoder", 60 )
+    set_capability( VLC_CAP_VIDEO_DECODER, 60 )
     set_callbacks( OpenDecoder, CloseDecoder )
     add_shortcut( "sdl_image" )
     //set_category( CAT_INPUT )

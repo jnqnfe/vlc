@@ -63,7 +63,7 @@ static void CloseFrag  (vlc_object_t *);
 vlc_module_begin ()
     set_description(N_("MP4/MOV muxer"))
     set_shortname("MP4")
-    set_capability("sout mux", 5)
+    set_capability(VLC_CAP_SOUT_MUX, 5)
     add_shortcut("mp4", "mov", "3gp")
     set_callbacks(Open, Close)
 
@@ -71,7 +71,7 @@ add_submodule ()
     set_description(N_("Fragmented and streamable MP4 muxer"))
     set_shortname("MP4 Frag")
     add_shortcut("mp4frag", "mp4stream")
-    set_capability("sout mux", 0)
+    set_capability(VLC_CAP_SOUT_MUX, 0)
     set_callbacks(Open, CloseFrag)
 
     set_category(CAT_SOUT)

@@ -394,7 +394,7 @@ error:
 
 vlc_module_begin ()
     set_description("VA-API OpenGL surface converter")
-    set_capability("glconv", 1)
+    set_capability(VLC_CAP_GLCONV, 1)
     set_callbacks(Open, Close)
     add_shortcut("vaapi")
     //set_category(CAT_VIDEO)

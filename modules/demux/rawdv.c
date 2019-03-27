@@ -48,7 +48,7 @@ static void Close( vlc_object_t * );
 vlc_module_begin ()
     set_shortname( "DV" )
     set_description( N_("DV (Digital Video) demuxer") )
-    set_capability( "demux", 3 )
+    set_capability( VLC_CAP_DEMUX, 3 )
     set_callbacks( Open, Close )
     add_shortcut( "rawdv" )
     set_category( CAT_INPUT )

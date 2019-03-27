@@ -64,7 +64,7 @@ static void    Close  ( vlc_object_t * );
 vlc_module_begin ()
     set_description( N_("PS muxer") )
     set_shortname( "MPEG-PS" )
-    set_capability( "sout mux", 50 )
+    set_capability( VLC_CAP_SOUT_MUX, 50 )
     add_shortcut( "ps", "mpeg1", "dvd" )
     set_callbacks( Open, Close )
 

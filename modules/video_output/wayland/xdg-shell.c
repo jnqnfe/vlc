@@ -706,9 +706,9 @@ vlc_module_begin()
     set_description(N_("Wayland shell surface"))
 #endif
 #ifdef XDG_SHELL
-    set_capability("vout window", 20)
+    set_capability(VLC_CAP_VOUT_WINDOW, 20)
 #else
-    set_capability("vout window", 10)
+    set_capability(VLC_CAP_VOUT_WINDOW, 10)
 #endif
     set_callbacks(Open, NULL)
 

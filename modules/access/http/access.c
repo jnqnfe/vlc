@@ -283,7 +283,7 @@ static void Close(vlc_object_t *obj)
 vlc_module_begin()
     set_description(N_("HTTPS input"))
     set_shortname(N_("HTTPS"))
-    set_capability("access", 2)
+    set_capability(VLC_CAP_ACCESS, 2)
     add_shortcut("https", "http")
     set_callbacks(Open, Close)
 

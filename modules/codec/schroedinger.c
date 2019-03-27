@@ -360,14 +360,14 @@ static const char *const ppsz_enc_options[] = {
 vlc_module_begin ()
     set_shortname( "Schroedinger" )
     set_description( N_("Dirac video decoder using libschroedinger") )
-    set_capability( "video decoder", 200 )
+    set_capability( VLC_CAP_VIDEO_DECODER, 200 )
     set_callbacks( OpenDecoder, CloseDecoder )
     add_shortcut( "schroedinger" )
 
     /* encoder */
     add_submodule()
     set_description( N_("Dirac video encoder using libschroedinger") )
-    set_capability( "encoder", 110 )
+    set_capability( VLC_CAP_ENCODER, 110 )
     set_callbacks( OpenEncoder, CloseEncoder )
     add_shortcut( "schroedinger", "schro" )
 

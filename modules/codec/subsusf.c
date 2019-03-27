@@ -45,7 +45,7 @@ static void CloseDecoder  ( vlc_object_t * );
  "VLC partly implements this, but you can choose to disable all formatting.")
 
 vlc_module_begin ()
-    set_capability( "spu decoder", 40 )
+    set_capability( VLC_CAP_SPU_DECODER, 40 )
     set_shortname( N_("USFSubs"))
     set_description( N_("USF subtitles decoder") )
     set_callbacks( OpenDecoder, CloseDecoder )

@@ -107,7 +107,7 @@ VLC_SD_PROBE_HELPER("sap", N_("Network streams (SAP)"), SD_CAT_LAN)
 vlc_module_begin ()
     set_shortname( N_("SAP"))
     set_description( N_("Network streams (SAP)") )
-    set_capability( "services_discovery", 0 )
+    set_capability( VLC_CAP_SERVICES_DISCOVERY, 0 )
     set_callbacks( Open, Close )
 
     VLC_SD_PROBE_SUBMODULE
@@ -115,7 +115,7 @@ vlc_module_begin ()
     add_submodule ()
         set_description( N_("SDP Descriptions parser") )
         add_shortcut( "sdp" )
-        set_capability( "demux", 51 )
+        set_capability( VLC_CAP_DEMUX, 51 )
         set_callbacks( OpenDemux, CloseDemux )
 
     set_category( CAT_PLAYLIST )

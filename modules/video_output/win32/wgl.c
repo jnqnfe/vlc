@@ -43,7 +43,7 @@ static void Close(vlc_gl_t *);
 vlc_module_begin()
     set_shortname("WGL")
     set_description(N_("WGL extension for OpenGL"))
-    set_capability("opengl", 50)
+    set_capability(VLC_CAP_OPENGL, 50)
     set_callbacks(Open, Close)
     add_shortcut("wgl")
 

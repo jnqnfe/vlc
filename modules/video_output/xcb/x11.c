@@ -352,7 +352,7 @@ error:
 vlc_module_begin()
     set_shortname(N_("X11"))
     set_description(N_("X11 video output (XCB)"))
-    set_capability("vout display", 100)
+    set_capability(VLC_CAP_VOUT_DISPLAY, 100)
     set_callbacks(Open, Close)
     add_shortcut("xcb-x11", "x11")
     //set_category(CAT_VIDEO)

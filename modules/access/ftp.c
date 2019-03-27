@@ -81,7 +81,7 @@ static void OutClose( vlc_object_t * );
 vlc_module_begin ()
     set_shortname( "FTP" )
     set_description( N_("FTP input") )
-    set_capability( "access", 0 )
+    set_capability( VLC_CAP_ACCESS, 0 )
     add_shortcut( "ftp", "ftps", "ftpes" )
     set_callbacks( InOpen, InClose )
 
@@ -89,7 +89,7 @@ vlc_module_begin ()
     add_submodule ()
         set_shortname( "FTP" )
         set_description( N_("FTP upload output") )
-        set_capability( "sout access", 0 )
+        set_capability( VLC_CAP_SOUT_ACCESS, 0 )
         add_shortcut( "ftp", "ftps", "ftpes" )
         set_callbacks( OutOpen, OutClose )
 #endif

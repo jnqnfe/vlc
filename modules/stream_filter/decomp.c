@@ -56,7 +56,7 @@ static void Close (vlc_object_t *);
 
 vlc_module_begin ()
     set_description (N_("LZMA decompression"))
-    set_capability ("stream_filter", 320)
+    set_capability (VLC_CAP_STREAM_FILTER, 320)
     set_callbacks (OpenXZ, Close)
 
     add_submodule ()

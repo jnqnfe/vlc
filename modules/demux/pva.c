@@ -42,7 +42,7 @@ static void Close  ( vlc_object_t * );
 
 vlc_module_begin ()
     set_description( N_("PVA demuxer" ) )
-    set_capability( "demux", 10 )
+    set_capability( VLC_CAP_DEMUX, 10 )
     set_callbacks( Open, Close )
     add_shortcut( "pva" )
     //set_category( CAT_INPUT )

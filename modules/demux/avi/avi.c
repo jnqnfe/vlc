@@ -70,7 +70,7 @@ static const char *const ppsz_indexes[] = { N_("Ask for action"),
 vlc_module_begin ()
     set_shortname( "AVI" )
     set_description( N_("AVI demuxer") )
-    set_capability( "demux", 212 )
+    set_capability( VLC_CAP_DEMUX, 212 )
     set_callbacks( Open, Close )
 
     set_category( CAT_INPUT )

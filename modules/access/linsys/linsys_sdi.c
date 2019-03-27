@@ -92,13 +92,13 @@ static void DemuxClose( vlc_object_t * );
 vlc_module_begin()
     set_description( N_("SDI Input") )
     set_shortname( N_("SDI") )
-    set_capability( "access", 0 )
+    set_capability( VLC_CAP_ACCESS, 0 )
     add_shortcut( "linsys-sdi" )
     set_callbacks( Open, Close )
 
     add_submodule()
         set_description( N_("SDI Demux") )
-        set_capability( "demux", 0 )
+        set_capability( VLC_CAP_DEMUX, 0 )
         set_callbacks( DemuxOpen, DemuxClose )
 
     set_category( CAT_INPUT )

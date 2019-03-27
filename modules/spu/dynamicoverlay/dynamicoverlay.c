@@ -65,7 +65,7 @@ static int AdjustCallback( vlc_object_t *p_this, char const *psz_var,
 vlc_module_begin ()
     set_description( N_("Dynamic video overlay") )
     set_shortname( N_("Overlay" ))
-    set_capability( "sub source", 0 )
+    set_capability( VLC_CAP_SUB_SOURCE, 0 )
     add_shortcut( "overlay" )
     set_callbacks( Create, Destroy )
 

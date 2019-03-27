@@ -1484,6 +1484,7 @@ static const char *const mouse_wheel_texts[] = {
 
 vlc_module_begin ()
     set_description( N_("core program") )
+    set_capability( VLC_CAP_CORE, 0 )
 
 /* Audio options */
     set_category( CAT_AUDIO )

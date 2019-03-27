@@ -48,7 +48,7 @@ static void Close ( vlc_object_t * );
 
 vlc_module_begin ()
     set_description( N_("FLAC demuxer") )
-    set_capability( "demux", 155 )
+    set_capability( VLC_CAP_DEMUX, 155 )
     set_callbacks( Open, Close )
     add_shortcut( "flac" )
     //set_category( CAT_INPUT )

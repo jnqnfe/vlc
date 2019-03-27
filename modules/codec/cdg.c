@@ -83,7 +83,7 @@ static int Render( decoder_sys_t *p_cdg, picture_t *p_picture );
  *****************************************************************************/
 vlc_module_begin ()
     set_description( N_("CDG video decoder") )
-    set_capability( "video decoder", 1000 )
+    set_capability( VLC_CAP_VIDEO_DECODER, 1000 )
     set_callbacks( Open, Close )
     add_shortcut( "cdg" )
     //set_category( CAT_INPUT )

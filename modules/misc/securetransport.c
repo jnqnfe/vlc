@@ -94,7 +94,7 @@ static int  OpenClient  (vlc_tls_client_t *);
 
 vlc_module_begin ()
     set_description(N_("TLS support for OS X and iOS"))
-    set_capability("tls client", 2)
+    set_capability(VLC_CAP_TLS_CLIENT, 2)
     set_callbacks(OpenClient, NULL)
 
     /*
@@ -105,7 +105,7 @@ vlc_module_begin ()
 #if !TARGET_OS_IPHONE
     add_submodule()
         set_description(N_("TLS server support for OS X"))
-        set_capability("tls server", 2)
+        set_capability(VLC_CAP_TLS_SERVER, 2)
         set_callbacks(OpenServer, NULL)
 #endif /* !TARGET_OS_IPHONE */
 

@@ -138,7 +138,7 @@ static const char *const ppsz_pos_descriptions[] =
 vlc_module_begin ()
     set_help(MARQUEE_HELP)
 
-    set_capability( "sub source", 0 )
+    set_capability( VLC_CAP_SUB_SOURCE, 0 )
     set_shortname( N_("Marquee" ))
     set_description( N_("Marquee display") )
     set_callbacks( CreateFilter, DestroyFilter )

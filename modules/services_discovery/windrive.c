@@ -39,7 +39,7 @@ vlc_module_begin ()
     add_submodule ()
     set_shortname (N_("Discs"))
     set_description (N_("Discs"))
-    set_capability ("services_discovery", 0)
+    set_capability (VLC_CAP_SERVICES_DISCOVERY, 0)
     set_callbacks (Open, NULL)
     add_shortcut ("disc")
 

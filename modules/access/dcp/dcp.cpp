@@ -77,7 +77,7 @@ vlc_module_begin()
     set_shortname( N_( "DCP" ) )
     add_shortcut( "dcp" )
     set_description( N_( "Digital Cinema Package module" ) )
-    set_capability( "access", 0 )
+    set_capability( VLC_CAP_ACCESS, 0 )
     set_callbacks( Open, Close )
 
     set_category( CAT_INPUT )

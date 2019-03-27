@@ -57,11 +57,11 @@ static void Close (vlc_object_t *);
 vlc_module_begin ()
     set_shortname (N_("SRC resampler"))
     set_description (N_("Secret Rabbit Code (libsamplerate) resampler") )
-    set_capability ("audio converter", 50)
+    set_capability (VLC_CAP_AUDIO_CONVERTER, 50)
     set_callbacks (Open, Close)
 
     add_submodule ()
-    set_capability ("audio resampler", 50)
+    set_capability (VLC_CAP_AUDIO_RESAMPLER, 50)
     set_callbacks (OpenResampler, Close)
 
     set_category (CAT_AUDIO)

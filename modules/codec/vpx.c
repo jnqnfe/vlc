@@ -65,12 +65,12 @@ static block_t *Encode(encoder_t *p_enc, picture_t *p_pict);
 vlc_module_begin ()
     set_shortname("vpx")
     set_description(N_("WebM video decoder"))
-    set_capability("video decoder", 60)
+    set_capability(VLC_CAP_VIDEO_DECODER, 60)
     set_callbacks(OpenDecoder, CloseDecoder)
 #ifdef ENABLE_SOUT
     add_submodule()
     set_shortname("vpx")
-    set_capability("encoder", 60)
+    set_capability(VLC_CAP_ENCODER, 60)
     set_description(N_("WebM video encoder"))
     set_callbacks(OpenEncoder, CloseEncoder)
 

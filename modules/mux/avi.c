@@ -58,7 +58,7 @@ static void Close  ( vlc_object_t * );
 
 vlc_module_begin ()
     set_description( N_("AVI muxer") )
-    set_capability( "sout mux", 5 )
+    set_capability( VLC_CAP_SOUT_MUX, 5 )
     add_shortcut( "avi" )
     set_callbacks( Open, Close )
 

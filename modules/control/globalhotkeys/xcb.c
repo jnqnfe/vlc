@@ -49,7 +49,7 @@ static void Close( vlc_object_t *p_this );
 vlc_module_begin()
     set_shortname( N_("Global Hotkeys") )
     set_description( N_("Global Hotkeys interface") )
-    set_capability( "interface", 0 )
+    set_capability( VLC_CAP_INTERFACE, 0 )
     set_callbacks( Open, Close )
     add_shortcut( "globalhotkeys" )
     //set_category( CAT_INTERFACE )

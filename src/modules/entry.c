@@ -199,6 +199,14 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
     {
         case VLC_MODULE_CREATE:
         {
+            /* Note, for some plugins an add_submodule() call is made without
+               first using the implicitly declared initial module. In some
+               cases this is a mistake, however in others it is deliberate in
+               order to get a generic plugin title for help output where the
+               plugin has multiple modules. We thus do *NOT* want to reject the
+               call here for a new module when capability is not be set (as an
+               optimisation or for hygiene) as that would prevent this. */
+
             module_t *super = plugin->module;
             module_t *submodule = vlc_module_create(plugin);
             if (unlikely(submodule == NULL))
@@ -263,6 +271,11 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
         }
 
         case VLC_MODULE_CAPABILITY:
+            module->capability = va_arg (ap, enum vlc_module_cap);
+            assert(vlc_module_int_is_valid_cap((int)module->capability));
+            break;
+
+        case VLC_MODULE_CUSTOM_CAPABILITY:
             module->capability = VLC_CAP_CUSTOM;
             module->psz_capability = va_arg (ap, const char *);
             break;

@@ -60,7 +60,7 @@ static void Close( vlc_object_t * );
 vlc_module_begin()
     set_description( N_("Wall video filter") )
     set_shortname( N_("Image wall" ))
-    set_capability( "video splitter", 0 )
+    set_capability( VLC_CAP_VIDEO_SPLITTER, 0 )
     add_shortcut( "wall" )
     set_callbacks( Open, Close )
 

@@ -159,7 +159,7 @@ static const char * const present_text[] = {
 vlc_module_begin ()
     set_shortname ("Vulkan/" STR(PLATFORM_NAME))
     set_description ("Vulkan context (" STR(PLATFORM_NAME) ")")
-    set_capability ("vulkan", 10)
+    set_capability (VLC_CAP_VULKAN, 10)
     set_callbacks (Open, Close)
 
     set_category (CAT_VIDEO)

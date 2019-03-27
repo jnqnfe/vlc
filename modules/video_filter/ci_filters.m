@@ -758,7 +758,7 @@ Close(vlc_object_t *obj)
     "Example: 'CICrystallize', 'CIBumpDistortion', 'CIThermal', 'CIComicEffect'")
 
 vlc_module_begin()
-    set_capability("video filter", 0)
+    set_capability(VLC_CAP_VIDEO_FILTER, 0)
     set_description(N_("Mac OS X hardware video filters"))
 
     add_submodule()

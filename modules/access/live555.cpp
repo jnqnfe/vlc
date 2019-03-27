@@ -96,7 +96,7 @@ static void Close( vlc_object_t * );
 
 vlc_module_begin ()
     set_description( N_("RTP/RTSP/SDP demuxer (using Live555)" ) )
-    set_capability( "demux", 50 )
+    set_capability( VLC_CAP_DEMUX, 50 )
     set_shortname( "RTP/RTSP")
     set_callbacks( Open, Close )
     add_shortcut( "live", "livedotcom" )
@@ -104,7 +104,7 @@ vlc_module_begin ()
     add_submodule ()
         set_description( N_("RTSP/RTP access and demux") )
         add_shortcut( "rtsp", "pnm", "live", "livedotcom" )
-        set_capability( "access", 300 )
+        set_capability( VLC_CAP_ACCESS, 300 )
         set_callbacks( Open, Close )
 
     set_category( CAT_INPUT )

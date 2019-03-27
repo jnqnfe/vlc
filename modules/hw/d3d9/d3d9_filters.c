@@ -459,7 +459,7 @@ static void D3D9CloseAdjust(vlc_object_t *obj)
 
 vlc_module_begin()
     set_description(N_("Direct3D9 adjust filter"))
-    set_capability("video filter", 0)
+    set_capability(VLC_CAP_VIDEO_FILTER, 0)
     set_callbacks(D3D9OpenAdjust, D3D9CloseAdjust)
     add_shortcut( "adjust" )
 
@@ -469,12 +469,12 @@ vlc_module_begin()
     add_shortcut ("deinterlace")
 
     add_submodule()
-    set_capability( "video converter", 10 )
+    set_capability( VLC_CAP_VIDEO_CONVERTER, 10 )
     set_callbacks( D3D9OpenConverter, D3D9CloseConverter )
 
     add_submodule()
     set_callbacks( D3D9OpenCPUConverter, D3D9CloseCPUConverter )
-    set_capability( "video converter", 10 )
+    set_capability( VLC_CAP_VIDEO_CONVERTER, 10 )
 
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VFILTER)

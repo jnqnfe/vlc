@@ -45,7 +45,7 @@ static void Close( vlc_object_t * );
 
 vlc_module_begin ()
     set_description( N_("MLP/TrueHD parser") )
-    set_capability( "packetizer", 50 )
+    set_capability( VLC_CAP_PACKETIZER, 50 )
     set_callbacks( Open, Close )
     //set_category( CAT_SOUT )
     //set_subcategory( SUBCAT_SOUT_PACKETIZER )

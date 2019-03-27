@@ -1928,7 +1928,7 @@ static void Deactivate( vlc_object_t *p_this )
 vlc_module_begin()
     set_shortname(N_("RC"))
     set_description(N_("Remote control interface"))
-    set_capability("interface", 20)
+    set_capability(VLC_CAP_INTERFACE, 20)
     set_callbacks(Activate, Deactivate)
     add_shortcut("cli", "rc", "oldrc")
 

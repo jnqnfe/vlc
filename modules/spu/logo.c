@@ -86,7 +86,7 @@ static void Close    ( vlc_object_t * );
 vlc_module_begin ()
     set_help(LOGO_HELP)
 
-    set_capability( "sub source", 0 )
+    set_capability( VLC_CAP_SUB_SOURCE, 0 )
     set_callbacks( OpenSub, Close )
     set_description( N_("Logo sub source") )
     set_shortname( N_("Logo overlay") )
@@ -94,7 +94,7 @@ vlc_module_begin ()
 
     /* video output filter submodule */
     add_submodule ()
-    set_capability( "video filter", 0 )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     set_callbacks( OpenVideo, Close )
     set_description( N_("Logo video filter") )
     add_shortcut( "logo" )

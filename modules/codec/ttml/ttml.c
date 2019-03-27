@@ -41,7 +41,7 @@
  *****************************************************************************/
 
 vlc_module_begin ()
-    set_capability( "spu decoder", 10 )
+    set_capability( VLC_CAP_SPU_DECODER, 10 )
     set_shortname( N_("TTML decoder"))
     set_description( N_("TTML subtitles decoder") )
     set_callbacks( tt_OpenDecoder, tt_CloseDecoder )
@@ -49,7 +49,7 @@ vlc_module_begin ()
     add_submodule()
         set_shortname( N_("TTML") )
         set_description( N_("TTML demuxer") )
-        set_capability( "demux", 11 )
+        set_capability( VLC_CAP_DEMUX, 11 )
         set_callbacks( tt_OpenDemux, tt_CloseDemux )
         add_shortcut( "ttml" )
 

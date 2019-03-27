@@ -95,7 +95,7 @@ static const char *const ppsz_pos_descriptions[] =
  *****************************************************************************/
 vlc_module_begin ()
     set_description( N_("Stereo to mono downmixer") )
-    set_capability( "audio filter", 0 )
+    set_capability( VLC_CAP_AUDIO_FILTER, 0 )
     set_callbacks( OpenFilter, CloseFilter )
     set_shortname( "Mono" )
 

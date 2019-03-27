@@ -77,7 +77,7 @@ vlc_module_begin ()
     set_description( N_("Volume normalizer") )
     set_shortname( N_("Volume normalizer") )
     add_shortcut( "volnorm" )
-    set_capability( "audio filter", 0 )
+    set_capability( VLC_CAP_AUDIO_FILTER, 0 )
     set_callbacks( Open, Close )
 
     set_category( CAT_AUDIO )

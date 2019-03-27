@@ -132,7 +132,7 @@ static void Close(vlc_object_t *obj)
 
 vlc_module_begin()
     set_description(N_("VDPAU deinterlacing filter"))
-    set_capability("video filter", 0)
+    set_capability(VLC_CAP_VIDEO_FILTER, 0)
     set_callbacks(Open, Close)
     add_shortcut ("deinterlace")
     //set_category(CAT_VIDEO)

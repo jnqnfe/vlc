@@ -77,7 +77,7 @@ typedef struct
 vlc_module_begin ()
     set_shortname( "A/52" )
     set_description( N_("ATSC A/52 (AC-3) audio decoder") )
-    set_capability( "audio decoder", 60 )
+    set_capability( VLC_CAP_AUDIO_DECODER, 60 )
     set_callbacks( Open, Close )
 
     set_category( CAT_INPUT )

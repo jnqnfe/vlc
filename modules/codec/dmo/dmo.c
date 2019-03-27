@@ -69,18 +69,18 @@ static void CopyPicture( picture_t *, uint8_t * );
 vlc_module_begin ()
     set_description( N_("DirectMedia Object decoder") )
     add_shortcut( "dmo" )
-    set_capability( "video decoder", 1 )
+    set_capability( VLC_CAP_VIDEO_DECODER, 1 )
     set_callbacks( DecoderOpen, DecoderClose )
 
     add_submodule()
     add_shortcut("dmo")
-    set_capability( "audio decoder", 1 )
+    set_capability( VLC_CAP_AUDIO_DECODER, 1 )
     set_callbacks(DecoderOpen, DecoderClose)
 
     add_submodule ()
     set_description( N_("DirectMedia Object encoder") )
     add_shortcut( "dmo" )
-    set_capability( "encoder", 10 )
+    set_capability( VLC_CAP_ENCODER, 10 )
     set_callbacks( EncoderOpen, EncoderClose )
 
     //set_category( CAT_INPUT )

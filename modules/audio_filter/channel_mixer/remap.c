@@ -72,7 +72,7 @@ static const int channel_flag[] =
 
 vlc_module_begin ()
     set_description( N_("Audio channel remapper") )
-    set_capability( "audio filter", 0 )
+    set_capability( VLC_CAP_AUDIO_FILTER, 0 )
     set_callbacks( OpenFilter, CloseFilter )
     set_shortname( "Remap" )
 

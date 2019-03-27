@@ -563,7 +563,7 @@ static void Close(vlc_object_t *obj)
 }
 
 vlc_module_begin()
-    set_capability("stream_filter", 0)
+    set_capability(VLC_CAP_STREAM_FILTER, 0)
     add_shortcut("cache")
     set_description(N_("Byte stream cache"))
     set_callbacks(Open, Close)

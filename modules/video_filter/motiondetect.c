@@ -46,7 +46,7 @@ static void Destroy   ( vlc_object_t * );
 vlc_module_begin ()
     set_description( N_("Motion detect video filter") )
     set_shortname( N_( "Motion Detect" ))
-    set_capability( "video filter", 0 )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     add_shortcut( "motion" )
     set_callbacks( Create, Destroy )
     //set_category( CAT_VIDEO )

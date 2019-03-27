@@ -46,13 +46,13 @@ static int OpenStats(vout_display_t *vd, const vout_display_cfg_t *cfg,
 vlc_module_begin ()
     set_shortname( N_("Dummy") )
     set_description( N_("Dummy video output") )
-    set_capability( "vout display", 0 )
+    set_capability( VLC_CAP_VOUT_DISPLAY, 0 )
     set_callbacks( OpenDummy, NULL )
     add_shortcut( "dummy" )
 
     add_submodule ()
     set_description( N_("Statistics video output") )
-    set_capability( "vout display", 0 )
+    set_capability( VLC_CAP_VOUT_DISPLAY, 0 )
     add_shortcut( "stats" )
     set_callbacks( OpenStats, NULL )
 

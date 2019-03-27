@@ -63,7 +63,7 @@ static void Close( vlc_object_t * );
 
 vlc_module_begin ()
     set_description( N_("HTTP stream output") )
-    set_capability( "sout access", 0 )
+    set_capability( VLC_CAP_SOUT_ACCESS, 0 )
     set_shortname( "HTTP" )
     add_shortcut( "http", "https", "mmsh" )
     set_callbacks( Open, Close )

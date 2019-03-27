@@ -61,12 +61,12 @@ static void Close(vlc_object_t *);
 vlc_module_begin()
     set_description(N_("Media Foundation Transform decoder"))
     add_shortcut("mft")
-    set_capability("video decoder", 1)
+    set_capability(VLC_CAP_VIDEO_DECODER, 1)
     set_callbacks(Open, Close)
 
     add_submodule()
     add_shortcut("mft")
-    set_capability("audio decoder", 1)
+    set_capability(VLC_CAP_AUDIO_DECODER, 1)
     set_callbacks(Open, Close)
 
     //set_category(CAT_INPUT)

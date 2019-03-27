@@ -75,7 +75,7 @@ vlc_module_begin ()
     set_shortname( N_("OSS") )
     set_description( N_("OSS input") )
     add_shortcut( "oss" )
-    set_capability( "access", 0 )
+    set_capability( VLC_CAP_ACCESS, 0 )
     set_callbacks( DemuxOpen, DemuxClose )
 
     set_category( CAT_INPUT )

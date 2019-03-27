@@ -53,7 +53,7 @@ vlc_module_begin()
     set_shortname(N_("File keystore (plaintext)"))
     set_description(N_("Secrets are stored on a file without any encryption"))
     set_callbacks(Open, Close)
-    set_capability("keystore", 0)
+    set_capability(VLC_CAP_KEYSTORE, 0)
     add_shortcut("file_plaintext")
 
 #ifdef CRYPTFILE
@@ -61,7 +61,7 @@ vlc_module_begin()
         set_shortname(N_("Crypt keystore"))
         set_description(N_("Secrets are stored encrypted on a file"))
         set_callbacks(OpenCrypt, CloseCrypt)
-        set_capability("keystore", 1)
+        set_capability(VLC_CAP_KEYSTORE, 1)
         add_shortcut("file_crypt")
 #endif
 

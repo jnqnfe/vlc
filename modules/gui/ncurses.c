@@ -77,7 +77,7 @@ static void Close          (vlc_object_t *);
 vlc_module_begin ()
     set_shortname("Ncurses")
     set_description(N_("Ncurses interface"))
-    set_capability("interface", 10)
+    set_capability(VLC_CAP_INTERFACE, 10)
     set_callbacks(Open, Close)
     add_shortcut("curses")
 

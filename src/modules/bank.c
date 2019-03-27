@@ -113,11 +113,9 @@ static int vlc_module_store(module_t *mod)
        properties that apply to that group of modules as a whole, being used
        for instance in help output against the plugin's option set. We have no
        interest in recording such entries in the capability tree, so we skip it. */
-    if (unlikely(mod->psz_capability == NULL))
+    if (unlikely(mod->capability == VLC_CAP_INVALID))
         return 0;
 
-//TODO: temp, currently always custom
-mod->capability = VLC_CAP_CUSTOM;
     const char *name = (mod->capability == VLC_CAP_CUSTOM)
         ? vlc_module_get_custom_capability(mod) : vlc_module_cap_get_textid(mod->capability);
 

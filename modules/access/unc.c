@@ -375,7 +375,7 @@ vlc_module_begin()
 
     set_shortname("UNC")
     set_description(N_("UNC input"))
-    set_capability("access", 0)
+    set_capability(VLC_CAP_ACCESS, 0)
     add_shortcut("smb")
     set_callbacks(Open, Close)
 

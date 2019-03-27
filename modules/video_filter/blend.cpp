@@ -41,7 +41,7 @@ static void Close(vlc_object_t *);
 
 vlc_module_begin()
     set_description(N_("Video pictures blending"))
-    set_capability("video blending", 100)
+    set_capability(VLC_CAP_VIDEO_BLENDING, 100)
     set_callbacks(Open, Close)
 vlc_module_end()
 

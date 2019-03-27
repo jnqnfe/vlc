@@ -266,7 +266,7 @@ vlc_module_begin()
 
         set_shortname( N_("Subsdelay") )
         set_description( N_("Subtitle delay") )
-        set_capability( "sub filter", 0 )
+        set_capability( VLC_CAP_SUB_FILTER, 0 )
         set_callbacks( SubsdelayCreate, SubsdelayDestroy )
 
         set_category( CAT_VIDEO )

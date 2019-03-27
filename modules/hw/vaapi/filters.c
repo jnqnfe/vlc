@@ -1192,7 +1192,7 @@ CloseDeinterlace(vlc_object_t * obj)
 vlc_module_begin()
     set_shortname(N_("VAAPI filters"))
     set_description(N_("Video Accelerated API filters"))
-    set_capability("video filter", 0)
+    set_capability(VLC_CAP_VIDEO_FILTER, 0)
 
     add_submodule()
     set_callbacks(OpenAdjust, CloseAdjust)
@@ -1211,7 +1211,7 @@ vlc_module_begin()
     add_shortcut("sharpen")
 
     add_submodule()
-    set_capability("video converter", 10)
+    set_capability(VLC_CAP_VIDEO_CONVERTER, 10)
     set_callbacks(vlc_vaapi_OpenChroma, vlc_vaapi_CloseChroma)
 
     set_category(CAT_VIDEO)

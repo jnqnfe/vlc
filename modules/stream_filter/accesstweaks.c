@@ -34,7 +34,7 @@ static int  Open(vlc_object_t *);
 
 vlc_module_begin ()
     set_shortname("accesstweaks")
-    set_capability ("stream_filter", 301)
+    set_capability (VLC_CAP_STREAM_FILTER, 301)
     /* Developers only module, no translation please */
     set_description ("Access controls tweaking")
     set_callbacks(Open, NULL)

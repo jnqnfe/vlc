@@ -175,7 +175,7 @@ static int MakeupGainCallback   ( vlc_object_t *, char const *, vlc_value_t,
 vlc_module_begin()
     set_shortname( N_("Compressor") )
     set_description( N_("Dynamic range compressor") )
-    set_capability( "audio filter", 0 )
+    set_capability( VLC_CAP_AUDIO_FILTER, 0 )
     set_callbacks( Open, Close )
     add_shortcut( "compressor" )
 

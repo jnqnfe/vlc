@@ -97,7 +97,7 @@ vlc_module_begin( )
 
     /* decoder main module */
     set_description( N_( "GStreamer Based Decoder" ) )
-    set_capability( "video decoder", 50 )
+    set_capability( VLC_CAP_VIDEO_DECODER, 50 )
     set_callbacks( OpenDecoder, CloseDecoder )
 
     set_category( CAT_INPUT )

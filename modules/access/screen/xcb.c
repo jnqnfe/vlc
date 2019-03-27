@@ -69,7 +69,7 @@ static void Close (vlc_object_t *);
 vlc_module_begin ()
     set_shortname (N_("Screen"))
     set_description (N_("Screen capture (with X11/XCB)"))
-    set_capability ("access", 0)
+    set_capability (VLC_CAP_ACCESS, 0)
     set_callbacks (Open, Close)
     add_shortcut ("screen", "window")
 

@@ -71,7 +71,7 @@ static void *Run(void *);
 vlc_module_begin ()
     set_shortname(N_("acoustid"))
     set_description(N_("Track fingerprinter (based on Acoustid)"))
-    set_capability("fingerprinter", 10)
+    set_capability(VLC_CAP_FINGERPRINTER, 10)
     set_callbacks(Open, Close)
     //set_category(CAT_ADVANCED)
     //set_subcategory(SUBCAT_ADVANCED_MISC)

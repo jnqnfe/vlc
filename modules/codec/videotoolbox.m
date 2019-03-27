@@ -80,7 +80,7 @@ static void CloseDecoder(vlc_object_t *);
 
 vlc_module_begin()
 set_description(N_("VideoToolbox video decoder"))
-set_capability("video decoder",800)
+set_capability(VLC_CAP_VIDEO_DECODER, 800)
 set_callbacks(OpenDecoder, CloseDecoder)
 
 set_category(CAT_INPUT)

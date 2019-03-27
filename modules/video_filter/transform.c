@@ -59,7 +59,7 @@ vlc_module_begin()
 
     set_description(N_("Video transformation filter"))
     set_shortname(N_("Transformation"))
-    set_capability("video filter", 0)
+    set_capability(VLC_CAP_VIDEO_FILTER, 0)
     add_shortcut("transform")
     set_callbacks(Open, Close)
 

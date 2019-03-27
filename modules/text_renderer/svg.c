@@ -71,7 +71,7 @@ typedef struct
         "for automatic string conversion" )
 
 vlc_module_begin ()
-    set_capability( "text renderer", 99 )
+    set_capability( VLC_CAP_TEXT_RENDERER, 99 )
     add_shortcut( "svg" )
     set_callbacks( Create, Destroy )
     set_category( CAT_INPUT )

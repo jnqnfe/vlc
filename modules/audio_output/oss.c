@@ -77,7 +77,7 @@ static void Close (vlc_object_t *);
 vlc_module_begin ()
     set_shortname( "OSS" )
     set_description (N_("Open Sound System audio output"))
-    set_capability( "audio output", 100 )
+    set_capability( VLC_CAP_AUDIO_OUTPUT, 100 )
     set_callbacks (Open, Close)
 
     set_category( CAT_AUDIO )

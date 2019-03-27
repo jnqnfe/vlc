@@ -1132,7 +1132,7 @@ vlc_module_begin ()
 
     set_shortname( N_("RIST") )
     set_description( N_("RIST input") )
-    set_capability( "access", 0 )
+    set_capability( VLC_CAP_ACCESS, 0 )
     add_shortcut( "rist", "tr06" )
     set_callbacks( Open, Close )
 

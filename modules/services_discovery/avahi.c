@@ -58,7 +58,7 @@ VLC_RD_PROBE_HELPER( "avahi_renderer", "Avahi Zeroconf renderer Discovery" )
 vlc_module_begin ()
     set_shortname( "Avahi" )
     set_description( N_("Zeroconf services") )
-    set_capability( "services_discovery", 0 )
+    set_capability( VLC_CAP_SERVICES_DISCOVERY, 0 )
     set_callbacks( OpenSD, CloseSD )
     add_shortcut( "mdns", "avahi" )
 
@@ -66,7 +66,7 @@ vlc_module_begin ()
 
     add_submodule() \
         set_description( N_( "Avahi Renderer Discovery" ) )
-        set_capability( "renderer_discovery", 0 )
+        set_capability( VLC_CAP_RENDERER_DISCOVERY, 0 )
         set_callbacks( OpenRD, CloseRD )
         add_shortcut( "mdns_renderer", "avahi_renderer" )
 

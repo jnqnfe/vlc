@@ -61,7 +61,7 @@ static void Close( vlc_object_t * );
 vlc_module_begin ()
     set_shortname( N_("CC 608/708"))
     set_description( N_("Closed Captions decoder") )
-    set_capability( "spu decoder", 50 )
+    set_capability( VLC_CAP_SPU_DECODER, 50 )
     set_callbacks( Open, Close )
 
     set_category( CAT_INPUT )

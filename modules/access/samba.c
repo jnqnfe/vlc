@@ -372,7 +372,7 @@ vlc_module_begin()
 
     set_shortname("SMB")
     set_description(N_("SMB input"))
-    set_capability("access", 0)
+    set_capability(VLC_CAP_ACCESS, 0)
     add_shortcut("smb")
     set_callbacks(Open, Close)
 

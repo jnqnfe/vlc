@@ -33,12 +33,12 @@
 vlc_module_begin ()
     set_description( N_("File input") )
     set_shortname( N_("File") )
-    set_capability( "access", 50 )
+    set_capability( VLC_CAP_ACCESS, 50 )
     add_shortcut( "file", "fd", "stream" )
     set_callbacks( FileOpen, FileClose )
 
     add_submodule()
-    set_capability( "access", 55 )
+    set_capability( VLC_CAP_ACCESS, 55 )
 #ifndef HAVE_FDOPENDIR
     add_shortcut( "file", "directory", "dir" )
 #else

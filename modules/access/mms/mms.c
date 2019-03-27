@@ -60,7 +60,7 @@ static void Close( vlc_object_t * );
 vlc_module_begin ()
     set_shortname( "MMS" )
     set_description( N_("Microsoft Media Server (MMS) input") )
-    set_capability( "access", -1 )
+    set_capability( VLC_CAP_ACCESS, -1 )
     add_shortcut( "mms", "mmsu", "mmst", "mmsh" )
     set_callbacks( Open, Close )
 

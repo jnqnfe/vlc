@@ -61,7 +61,7 @@ static void Close(vlc_object_t *);
 vlc_module_begin()
     set_shortname(N_("glSpectrum"))
     set_description(N_("3D OpenGL spectrum visualization"))
-    set_capability("visualization", 0)
+    set_capability(VLC_CAP_VISUALIZATION, 0)
     add_shortcut("glspectrum")
     set_callbacks(Open, Close)
 

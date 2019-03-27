@@ -75,7 +75,7 @@ vlc_module_begin ()
 
     set_description( N_("Headphone virtual spatialization effect") )
     set_shortname( N_("Headphone effect") )
-    set_capability( "audio filter", 0 )
+    set_capability( VLC_CAP_AUDIO_FILTER, 0 )
     set_callbacks( OpenFilter, CloseFilter )
     add_shortcut( "headphone" )
 

@@ -59,7 +59,7 @@ static void Close( vlc_object_t * );
 vlc_module_begin ()
     set_shortname( N_("TY") )
     set_description(N_("TY Stream audio/video demux"))
-    set_capability("demux", 6)
+    set_capability(VLC_CAP_DEMUX, 6)
     /* FIXME: there seems to be a segfault when using PVR access
      * and TY demux has a bigger priority than PS
      * Something must be wrong.

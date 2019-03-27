@@ -69,7 +69,7 @@ static int  Decode( decoder_t *, block_t * );
 vlc_module_begin ()
     set_description( N_("Teletext subtitles decoder") )
     set_shortname( "Teletext" )
-    set_capability( "spu decoder", 50 )
+    set_capability( VLC_CAP_SPU_DECODER, 50 )
     set_callbacks( Open, Close )
 
     set_category( CAT_INPUT )

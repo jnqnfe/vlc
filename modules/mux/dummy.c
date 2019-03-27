@@ -42,7 +42,7 @@ static void Close  ( vlc_object_t * );
 
 vlc_module_begin ()
     set_description( N_("Dummy/Raw muxer") )
-    set_capability( "sout mux", 5 )
+    set_capability( VLC_CAP_SOUT_MUX, 5 )
     add_shortcut( "dummy", "raw", "es" )
     set_callbacks( Open, Close )
     //set_category( CAT_SOUT )

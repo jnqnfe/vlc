@@ -111,7 +111,7 @@ static_assert( ARRAY_SIZE( pi_logics ) == ARRAY_SIZE( ppsz_logics_values ),
 vlc_module_begin ()
         set_shortname( N_("Adaptive"))
         set_description( N_("Unified adaptive streaming for DASH/HLS") )
-        set_capability( "demux", 12 )
+        set_capability( VLC_CAP_DEMUX, 12 )
         set_callbacks( Open, Close )
 
         set_category( CAT_INPUT )

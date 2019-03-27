@@ -253,7 +253,7 @@ static const char *const psz_raise_list_text[] =
 vlc_module_begin ()
     set_shortname( "Qt" )
     set_description( N_("Qt interface") )
-    set_capability( "interface", 151 )
+    set_capability( VLC_CAP_INTERFACE, 151 )
     set_callbacks( OpenIntf, Close )
     add_shortcut("qt")
 
@@ -261,11 +261,11 @@ vlc_module_begin ()
 
     add_submodule ()
         set_description( "Dialogs provider" )
-        set_capability( "dialogs provider", 51 )
+        set_capability( VLC_CAP_DIALOGS_PROVIDER, 51 )
         set_callbacks( OpenDialogs, Close )
 
     add_submodule ()
-        set_capability( "vout window", 0 )
+        set_capability( VLC_CAP_VOUT_WINDOW, 0 )
         set_callbacks( WindowOpen, NULL )
 
     set_category( CAT_INTERFACE )

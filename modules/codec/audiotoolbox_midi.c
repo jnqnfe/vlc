@@ -54,7 +54,7 @@ static void Close (vlc_object_t *);
 
 vlc_module_begin()
     set_description(N_("AudioToolbox MIDI synthesizer"))
-    set_capability("audio decoder", 100)
+    set_capability(VLC_CAP_AUDIO_DECODER, 100)
     set_shortname(N_("AUMIDI"))
     set_callbacks(Open, Close)
 

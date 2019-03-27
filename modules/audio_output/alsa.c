@@ -94,7 +94,7 @@ static const char *const passthrough_modes_text[] = {
 vlc_module_begin ()
     set_shortname( "ALSA" )
     set_description( N_("ALSA audio output") )
-    set_capability( "audio output", 150 )
+    set_capability( VLC_CAP_AUDIO_OUTPUT, 150 )
     set_callbacks( Open, Close )
 
     set_category( CAT_AUDIO )

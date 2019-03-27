@@ -198,7 +198,7 @@ static const char *const rc_method_text[] =
 vlc_module_begin ()
     set_description(N_("Intel QuickSync Video encoder for MPEG4-Part10/MPEG2 (aka H.264/H.262)"))
     set_shortname("qsv")
-    set_capability("encoder", 0)
+    set_capability(VLC_CAP_ENCODER, 0)
     set_callbacks(Open, Close)
 
     set_category(CAT_INPUT)

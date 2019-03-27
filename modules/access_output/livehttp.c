@@ -109,7 +109,7 @@ vlc_module_begin ()
     set_description( N_("HTTP Live streaming output") )
     set_shortname( N_("LiveHTTP" ))
     add_shortcut( "livehttp" )
-    set_capability( "sout access", 0 )
+    set_capability( VLC_CAP_SOUT_ACCESS, 0 )
     set_callbacks( Open, Close )
 
     set_category( CAT_SOUT )

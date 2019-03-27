@@ -1000,7 +1000,7 @@ vlc_module_begin ()
 
     set_shortname( N_("Audio CD") )
     set_description( N_("Audio CD input") )
-    set_capability( "access", 0 )
+    set_capability( VLC_CAP_ACCESS, 0 )
     set_callbacks(Open, Close)
     add_shortcut( "cdda", "cddasimple" )
 

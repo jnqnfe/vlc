@@ -60,14 +60,14 @@ static void Close     ( vlc_object_t * );
 vlc_module_begin()
     set_shortname( N_("Set ID"))
     set_description( N_("Change the id of an elementary stream"))
-    set_capability( "sout stream", 50 )
+    set_capability( VLC_CAP_SOUT_STREAM, 50 )
     add_shortcut( "setid" )
     set_callbacks( OpenId, Close )
 
     add_submodule ()
     set_shortname( N_("Set Lang"))
     set_description( N_("Change the language of an elementary stream"))
-    set_capability( "sout stream", 50 )
+    set_capability( VLC_CAP_SOUT_STREAM, 50 )
     add_shortcut( "setlang" );
     set_callbacks( OpenLang, Close )
 

@@ -33,7 +33,7 @@ static void Close (vlc_object_t *);
 vlc_module_begin ()
     set_shortname (N_("Audio memory"))
     set_description (N_("Audio memory output"))
-    set_capability ("audio output", 0)
+    set_capability (VLC_CAP_AUDIO_OUTPUT, 0)
     set_callbacks (Open, Close)
 
     set_category (CAT_AUDIO)

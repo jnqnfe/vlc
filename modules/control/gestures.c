@@ -90,7 +90,7 @@ static const char *const button_list_text[] =
 vlc_module_begin ()
     set_shortname( N_("Gestures"))
     set_description( N_("Mouse gestures control interface") )
-    set_capability( "interface", 0 )
+    set_capability( VLC_CAP_INTERFACE, 0 )
     set_callbacks( Open, Close )
 
     set_category( CAT_INTERFACE )

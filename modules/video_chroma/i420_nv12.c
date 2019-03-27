@@ -235,6 +235,6 @@ static void Delete(vlc_object_t *p_this)
  *****************************************************************************/
 vlc_module_begin ()
     set_description( N_("YUV planar to semiplanar conversions") )
-    set_capability( "video converter", 160 )
+    set_capability( VLC_CAP_VIDEO_CONVERTER, 160 )
     set_callbacks( Create, Delete )
 vlc_module_end ()

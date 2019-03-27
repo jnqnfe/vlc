@@ -205,7 +205,7 @@ static void Close(vlc_object_t *obj)
 vlc_module_begin()
     set_shortname(N_("WinMsg"))
     set_description(N_("Windows messages interface"))
-    set_capability("interface", 0)
+    set_capability(VLC_CAP_INTERFACE, 0)
     set_callbacks(Open, Close)
 
     /* Kept so that module is found by cat-based module control */

@@ -244,7 +244,7 @@ static void blurayClose(vlc_object_t *);
 vlc_module_begin ()
     set_shortname(N_("Blu-ray"))
     set_description(N_("Blu-ray Disc support (libbluray)"))
-    set_capability("access", 500)
+    set_capability(VLC_CAP_ACCESS, 500)
     add_shortcut("bluray", "file")
     set_callbacks(blurayOpen, blurayClose)
 
@@ -252,7 +252,7 @@ vlc_module_begin ()
     /* demux module */
     add_submodule()
         set_description( "BluRay demuxer" )
-        set_capability( "demux", 5 )
+        set_capability( VLC_CAP_DEMUX, 5 )
         set_callbacks( blurayOpen, blurayClose )
 #endif
 

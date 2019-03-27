@@ -63,7 +63,7 @@ static picture_t *Filter( filter_t *, picture_t * );
 vlc_module_begin ()
     set_description( N_("Blending benchmark filter") )
     set_shortname( N_("Blendbench" ))
-    set_capability( "video filter", 0 )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     set_callbacks( Create, Destroy )
 
     set_category( CAT_VIDEO )

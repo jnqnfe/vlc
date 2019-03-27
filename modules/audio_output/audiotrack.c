@@ -181,7 +181,7 @@ typedef struct
 vlc_module_begin ()
     set_shortname( "AudioTrack" )
     set_description( "Android AudioTrack audio output" )
-    set_capability( "audio output", 180 )
+    set_capability( VLC_CAP_AUDIO_OUTPUT, 180 )
     add_shortcut( "audiotrack" )
     set_callbacks( Open, Close )
 

@@ -49,7 +49,7 @@ static void     Close                   (vlc_object_t *);
 vlc_module_begin ()
     set_shortname("auhal")
     set_description(N_("HAL AudioUnit output"))
-    set_capability("audio output", 101)
+    set_capability(VLC_CAP_AUDIO_OUTPUT, 101)
     set_callbacks(Open, Close)
 
     set_category(CAT_AUDIO)

@@ -45,7 +45,7 @@ static int DecodeBlock(decoder_t *, block_t *);
 vlc_module_begin()
     /* decoder main module */
     set_description( N_("BPG image decoder") )
-    set_capability( "video decoder", 60 )
+    set_capability( VLC_CAP_VIDEO_DECODER, 60 )
     set_callbacks( OpenDecoder, CloseDecoder )
     add_shortcut( "bpg" )
     //set_category( CAT_INPUT )

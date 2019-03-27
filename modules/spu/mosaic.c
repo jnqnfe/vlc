@@ -174,7 +174,7 @@ static const char *const ppsz_align_descriptions[] =
 vlc_module_begin ()
     set_description( N_("Mosaic video sub source") )
     set_shortname( N_("Mosaic") )
-    set_capability( "sub source", 0 )
+    set_capability( VLC_CAP_SUB_SOURCE, 0 )
     set_callbacks( CreateFilter, DestroyFilter )
 
     set_category( CAT_VIDEO )

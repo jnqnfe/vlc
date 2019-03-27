@@ -58,7 +58,7 @@ static void Close(vout_display_t *vd);
 vlc_module_begin()
     set_description(N_("Video memory output"))
     set_shortname(N_("Video memory"))
-    set_capability("vout display", 0)
+    set_capability(VLC_CAP_VOUT_DISPLAY, 0)
     set_callbacks(Open, Close)
 
     set_category(CAT_VIDEO)

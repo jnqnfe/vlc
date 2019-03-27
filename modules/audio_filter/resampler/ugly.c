@@ -46,11 +46,11 @@ static block_t *DoWork( filter_t *, block_t * );
  *****************************************************************************/
 vlc_module_begin ()
     set_description( N_("Nearest-neighbor audio resampler") )
-    set_capability( "audio converter", 2 )
+    set_capability( VLC_CAP_AUDIO_CONVERTER, 2 )
     set_callbacks( Create, NULL )
 
     add_submodule()
-    set_capability( "audio resampler", 2 )
+    set_capability( VLC_CAP_AUDIO_RESAMPLER, 2 )
     set_callbacks( CreateResampler, NULL )
 
     //set_category( CAT_AUDIO )

@@ -131,4 +131,13 @@ VLC_API const char *vlc_module_cap_get_textid(enum vlc_module_cap cap) VLC_USED;
  */
 VLC_API const char *vlc_module_cap_get_desc(enum vlc_module_cap cap) VLC_USED;
 
+/**
+ * Checks whether int maps to a valid built-in capability
+ */
+static inline bool vlc_module_int_is_valid_cap(int i)
+{
+    /* Note that this deliberately rejects VLC_CAP_CUSTOM! */
+    return (i >= 1 && i < (int)VLC_CAP_MAX);
+}
+
 #endif

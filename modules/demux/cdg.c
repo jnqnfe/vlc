@@ -39,7 +39,7 @@ static int  Open ( vlc_object_t * );
 
 vlc_module_begin ()
     set_description( N_("CDG demuxer") )
-    set_capability( "demux", 3 )
+    set_capability( VLC_CAP_DEMUX, 3 )
     set_callbacks( Open, NULL )
     add_shortcut( "cdg", "subtitle" )
     //set_category( CAT_INPUT )

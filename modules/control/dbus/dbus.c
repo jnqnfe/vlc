@@ -163,7 +163,7 @@ static void player_vout_on_fullscreen_changed(vlc_player_t *,
 vlc_module_begin ()
     set_shortname( N_("DBus"))
     set_description( N_("D-Bus control interface") )
-    set_capability( "interface", 0 )
+    set_capability( VLC_CAP_INTERFACE, 0 )
     set_callbacks( Open, Close )
     //set_category( CAT_INTERFACE )
 vlc_module_end ()

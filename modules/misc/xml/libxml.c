@@ -264,7 +264,7 @@ static void ReaderClose( vlc_object_t *p_this )
 
 vlc_module_begin ()
     set_description( N_("XML Parser (using libxml2)") )
-    set_capability( "xml", 10 )
+    set_capability( VLC_CAP_XML, 10 )
     set_callbacks( Open, Close )
 
 #ifdef _WIN32
@@ -272,7 +272,7 @@ vlc_module_begin ()
 #endif
 
     add_submodule()
-    set_capability( "xml reader", 10 )
+    set_capability( VLC_CAP_XML_READER, 10 )
     set_callbacks( ReaderOpen, ReaderClose )
 
 vlc_module_end ()

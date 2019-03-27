@@ -74,7 +74,7 @@ vlc_module_begin ()
     /* Will be loaded even without interface module. see voutgl.m */
     set_shortname ("Mac OS X")
     set_description (N_("Mac OS X OpenGL video output"))
-    set_capability ("vout display", 300)
+    set_capability (VLC_CAP_VOUT_DISPLAY, 300)
     set_callbacks (Open, Close)
     add_shortcut ("macosx", "vout_macosx")
 

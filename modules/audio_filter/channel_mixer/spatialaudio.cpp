@@ -63,13 +63,13 @@ static void Flush( filter_t * );
 vlc_module_begin()
     set_shortname("Spatialaudio")
     set_description(N_("Ambisonics renderer and binauralizer"))
-    set_capability("audio renderer", 1)
+    set_capability(VLC_CAP_AUDIO_RENDERER, 1)
     set_callbacks(Open, Close)
     add_shortcut("ambisonics")
 
     add_submodule()
     set_shortname(N_("Binauralizer"))
-    set_capability("audio filter", 0)
+    set_capability(VLC_CAP_AUDIO_FILTER, 0)
     set_callbacks(OpenBinauralizer, Close)
     add_shortcut("binauralizer")
 

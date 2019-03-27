@@ -64,7 +64,7 @@ static void Close( vlc_object_t * );
 
 vlc_module_begin ()
      set_description( N_("JACK audio input") )
-     set_capability( "access", 0 )
+     set_capability( VLC_CAP_ACCESS, 0 )
      set_shortname( N_( "JACK Input" ) )
      add_shortcut( "jack" )
      set_callbacks( Open, Close )

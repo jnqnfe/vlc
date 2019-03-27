@@ -43,7 +43,7 @@ static void Close ( vlc_object_t * );
 vlc_module_begin ()
     set_shortname("Dump")
     set_description( N_("File dumper") )
-    set_capability( "demux", 0 )
+    set_capability( VLC_CAP_DEMUX, 0 )
     set_callbacks( Open, Close )
     add_shortcut( "dump" )
 

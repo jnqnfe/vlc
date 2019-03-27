@@ -92,12 +92,12 @@ vlc_module_begin ()
     set_description( N_("Bridge stream output"))
 
     add_submodule ()
-    set_capability( "sout stream", 50 )
+    set_capability( VLC_CAP_SOUT_STREAM, 50 )
     add_shortcut( "bridge-out" )
     set_callbacks( OpenOut, CloseOut )
 
     add_submodule ()
-    set_capability( "sout stream", 50 )
+    set_capability( VLC_CAP_SOUT_STREAM, 50 )
     add_shortcut( "bridge-in" )
     set_callbacks( OpenIn, CloseIn )
 

@@ -68,7 +68,7 @@ vlc_module_begin()
 
     set_shortname("smb2")
     set_description(N_("SMB2 / SMB3 input"))
-    set_capability("access", 21)
+    set_capability(VLC_CAP_ACCESS, 21)
     add_shortcut("smb", "smb2")
     set_callbacks(Open, Close)
 

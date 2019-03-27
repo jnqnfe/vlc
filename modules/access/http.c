@@ -65,7 +65,7 @@ static void Close( vlc_object_t * );
 
 vlc_module_begin ()
     set_description( N_("HTTP input") )
-    set_capability( "access", 0 )
+    set_capability( VLC_CAP_ACCESS, 0 )
     set_shortname( N_( "HTTP(S)" ) )
     /* 'itpc' = iTunes Podcast */
     add_shortcut( "http", "unsv", "itpc", "icyx" )

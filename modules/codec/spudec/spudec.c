@@ -48,12 +48,12 @@ static void Close         ( vlc_object_t * );
 vlc_module_begin ()
     set_description( N_("DVD subtitles decoder") )
     set_shortname( N_("DVD subtitles") )
-    set_capability( "spu decoder", 75 )
+    set_capability( VLC_CAP_SPU_DECODER, 75 )
     set_callbacks( DecoderOpen, Close )
 
     add_submodule ()
     set_description( N_("DVD subtitles packetizer") )
-    set_capability( "packetizer", 50 )
+    set_capability( VLC_CAP_PACKETIZER, 50 )
     set_callbacks( PacketizerOpen, Close )
 
     set_category( CAT_INPUT )

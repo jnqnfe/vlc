@@ -135,19 +135,19 @@ VLC_RD_PROBE_HELPER( "upnp_renderer", N_("UPnP Renderer Discovery") )
 vlc_module_begin()
     set_shortname( "UPnP" );
     set_description( N_( "Universal Plug'n'Play" ) );
-    set_capability( "services_discovery", 0 );
+    set_capability( VLC_CAP_SERVICES_DISCOVERY, 0 );
     set_callbacks( SD::OpenSD, SD::CloseSD );
 
     add_submodule()
         set_callbacks( Access::OpenAccess, Access::CloseAccess )
-        set_capability( "access", 0 )
+        set_capability( VLC_CAP_ACCESS, 0 )
 
     VLC_SD_PROBE_SUBMODULE
 
     add_submodule()
         set_description( N_( "UPnP Renderer Discovery" ) )
         set_callbacks( RD::OpenRD, RD::CloseRD )
-        set_capability( "renderer_discovery", 0 )
+        set_capability( VLC_CAP_RENDERER_DISCOVERY, 0 )
         add_shortcut( "upnp_renderer" )
 
     VLC_RD_PROBE_SUBMODULE
@@ -155,7 +155,7 @@ vlc_module_begin()
     add_submodule()
         set_shortname("dlna")
         set_description(N_("UPnP/DLNA stream output"))
-        set_capability("sout stream", 0)
+        set_capability(VLC_CAP_SOUT_STREAM, 0)
         add_shortcut("dlna")
         set_callbacks(DLNA::OpenSout, DLNA::CloseSout)
 

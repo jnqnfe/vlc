@@ -63,7 +63,7 @@ typedef struct
 
 vlc_module_begin ()
     set_description("Conversions from/to CoreVideo buffers")
-    set_capability("video converter", 10)
+    set_capability(VLC_CAP_VIDEO_CONVERTER, 10)
     set_callbacks(Open, Close)
 #if !TARGET_OS_IPHONE
     add_submodule()

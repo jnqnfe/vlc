@@ -180,7 +180,7 @@ static void CloseDecoder  ( vlc_object_t * );
 vlc_module_begin ()
     set_shortname( N_("Subtitles"))
     set_description( N_("Text subtitle decoder") )
-    set_capability( "spu decoder", 50 )
+    set_capability( VLC_CAP_SPU_DECODER, 50 )
     set_callbacks( OpenDecoder, CloseDecoder )
 
     set_category( CAT_INPUT )

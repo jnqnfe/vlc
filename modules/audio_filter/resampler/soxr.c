@@ -65,11 +65,11 @@ static void Close( vlc_object_t * );
 
 vlc_module_begin ()
     set_shortname( N_("SoX Resampler") )
-    set_capability ( "audio converter", 51 )
+    set_capability ( VLC_CAP_AUDIO_CONVERTER, 51 )
     set_callbacks( OpenConverter, Close )
 
     add_submodule()
-    set_capability( "audio resampler", 51 )
+    set_capability( VLC_CAP_AUDIO_RESAMPLER, 51 )
     set_callbacks( OpenResampler, Close )
     add_shortcut( "soxr" )
 

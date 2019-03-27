@@ -41,7 +41,7 @@ VLC_SD_PROBE_HELPER("pulse", N_("Audio capture"), SD_CAT_DEVICES);
 vlc_module_begin ()
     set_shortname (N_("Audio capture"))
     set_description (N_("Audio capture (PulseAudio)"))
-    set_capability ("services_discovery", 0)
+    set_capability (VLC_CAP_SERVICES_DISCOVERY, 0)
     set_callbacks (Open, Close)
     add_shortcut ("pulse", "pa", "pulseaudio", "audio")
 

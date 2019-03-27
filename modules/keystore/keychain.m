@@ -76,7 +76,7 @@ static const char *const accessibility_list_text[] = {
 vlc_module_begin()
     set_shortname(N_("Keychain keystore"))
     set_description(N_("Keystore for iOS, macOS and tvOS"))
-    set_capability("keystore", 100)
+    set_capability(VLC_CAP_KEYSTORE, 100)
     set_callbacks(Open, NULL)
 
     set_category(CAT_ADVANCED)

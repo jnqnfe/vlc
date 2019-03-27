@@ -388,7 +388,7 @@ static void Close( vlc_object_t * p_this )
 vlc_module_begin ()
     set_description( N_("File stream output") )
     set_shortname( N_("File" ))
-    set_capability( "sout access", 50 )
+    set_capability( VLC_CAP_SOUT_ACCESS, 50 )
     add_shortcut( "file", "stream", "fd" )
     set_callbacks( Open, Close )
 

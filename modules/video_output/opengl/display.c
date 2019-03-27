@@ -49,7 +49,7 @@ vlc_module_begin ()
 # define MODULE_VARNAME "gles2"
     set_shortname (N_("OpenGL ES2"))
     set_description (N_("OpenGL for Embedded Systems 2 video output"))
-    set_capability ("vout display", 265)
+    set_capability (VLC_CAP_VOUT_DISPLAY, 265)
     set_callbacks (Open, Close)
     add_shortcut ("opengles2", "gles2")
 
@@ -63,7 +63,7 @@ vlc_module_begin ()
 # define MODULE_VARNAME "gl"
     set_shortname (N_("OpenGL"))
     set_description (N_("OpenGL video output"))
-    set_capability ("vout display", 270)
+    set_capability (VLC_CAP_VOUT_DISPLAY, 270)
     set_callbacks (Open, Close)
     add_shortcut ("opengl", "gl")
 

@@ -54,7 +54,7 @@ vlc_module_begin ()
     set_help(CLONE_HELP)
 
     set_description( N_("Clone video filter") )
-    set_capability( "video splitter", 0 )
+    set_capability( VLC_CAP_VIDEO_SPLITTER, 0 )
     set_shortname( N_("Clone" ))
     add_shortcut( "clone" )
     set_callbacks( Open, Close )

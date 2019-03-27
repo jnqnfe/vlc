@@ -79,17 +79,17 @@ vlc_module_begin ()
     set_description( N_("FFmpeg audio/video decoder") )
 
     add_shortcut("ffmpeg")
-    set_capability("video decoder", 70)
+    set_capability(VLC_CAP_VIDEO_DECODER, 70)
     set_callbacks(InitVideoDec, EndVideoDec)
 
     add_submodule()
     add_shortcut("ffmpeg")
-    set_capability("audio decoder", 70)
+    set_capability(VLC_CAP_AUDIO_DECODER, 70)
     set_callbacks(InitAudioDec, EndAudioDec)
 
     add_submodule()
     add_shortcut("ffmpeg")
-    set_capability("spu decoder", 70)
+    set_capability(VLC_CAP_SPU_DECODER, 70)
     set_callbacks(InitSubtitleDec, EndSubtitleDec)
 
 #ifdef ENABLE_SOUT
@@ -97,7 +97,7 @@ vlc_module_begin ()
     add_submodule ()
     add_shortcut( "ffmpeg" )
     set_description( N_("FFmpeg audio/video encoder") )
-    set_capability( "encoder", 100 )
+    set_capability( VLC_CAP_ENCODER, 100 )
     set_callbacks( InitVideoEnc, EndVideoEnc )
 #endif /* ENABLE_SOUT */
 

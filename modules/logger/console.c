@@ -167,7 +167,7 @@ static const struct vlc_logger_operations *Open(vlc_object_t *obj,
 vlc_module_begin()
     set_shortname(N_("Console log"))
     set_description(N_("Console logger"))
-    set_capability("logger", 10)
+    set_capability(VLC_CAP_LOGGER, 10)
     set_callbacks(Open, NULL)
 
     set_category(CAT_ADVANCED)

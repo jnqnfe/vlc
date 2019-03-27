@@ -44,7 +44,7 @@ static void Close  ( vlc_object_t * );
 vlc_module_begin ()
     set_shortname( "MPJPEG" )
     set_description( N_("Multipart JPEG muxer") )
-    set_capability( "sout mux", 5 )
+    set_capability( VLC_CAP_SOUT_MUX, 5 )
     set_callbacks( Open, Close )
     add_shortcut( "mpjpeg" )
     //set_category( CAT_SOUT )

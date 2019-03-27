@@ -47,7 +47,7 @@ static block_t *DoWork( filter_t *, block_t * );
 vlc_module_begin ()
     set_description( N_("Simple decoder for Dolby Surround encoded streams") )
     set_shortname( N_("Dolby Surround decoder") )
-    set_capability( "audio converter", 5 )
+    set_capability( VLC_CAP_AUDIO_CONVERTER, 5 )
     set_callbacks( Create, Destroy )
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_ACODEC )

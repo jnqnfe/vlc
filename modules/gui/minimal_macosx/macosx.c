@@ -53,13 +53,13 @@ vlc_module_begin ()
     set_shortname( "Minimal Macosx" )
     add_shortcut( "minimal_macosx", "miosx" )
     set_description( N_("Minimal Mac OS X interface") )
-    set_capability( "interface", 50 )
+    set_capability( VLC_CAP_INTERFACE, 50 )
     set_callbacks( OpenIntf, CloseIntf )
 
     add_submodule ()
     /* Will be loaded even without interface module. see voutgl.m */
         set_description( "Minimal Mac OS X Video Output Provider" )
-        set_capability( "vout window", 50 )
+        set_capability( VLC_CAP_VOUT_WINDOW, 50 )
         set_callbacks( WindowOpen, NULL )
 
     /* Kept so that module is found by cat-based module control */

@@ -42,7 +42,7 @@ VLC_SD_PROBE_HELPER("mtp", N_("MTP devices"), SD_CAT_DEVICES)
 vlc_module_begin()
     set_shortname( "MTP" )
     set_description( N_( "MTP devices" ) )
-    set_capability( "services_discovery", 0 )
+    set_capability( VLC_CAP_SERVICES_DISCOVERY, 0 )
     set_callbacks( Open, Close )
     cannot_unload_broken_library()
 

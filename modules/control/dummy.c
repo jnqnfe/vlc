@@ -38,7 +38,7 @@ static int Open( vlc_object_t * );
 vlc_module_begin ()
     set_shortname( N_("Dummy") )
     set_description( N_("Dummy interface") )
-    set_capability( "interface", 0 )
+    set_capability( VLC_CAP_INTERFACE, 0 )
     set_callbacks( Open, NULL )
 
     //set_category( CAT_INTERFACE )

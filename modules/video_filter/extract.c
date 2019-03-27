@@ -65,7 +65,7 @@ static const char *const ppsz_component_descriptions[] = {
 vlc_module_begin ()
     set_description( N_("Extract RGB component video filter") )
     set_shortname( N_("Extract" ))
-    set_capability( "video filter", 0 )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     add_shortcut( "extract" )
     set_callbacks( Create, Destroy )
 

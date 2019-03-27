@@ -68,14 +68,14 @@ vlc_module_begin ()
     set_help(DSM_HELP)
     set_shortname( "dsm" )
     set_description( N_("libdsm SMB input") )
-    set_capability( "access", 20 )
+    set_capability( VLC_CAP_ACCESS, 20 )
     add_shortcut( "smb", "cifs" )
     set_callbacks( Open, Close )
 
     add_submodule()
         add_shortcut( "dsm-sd" )
         set_description( N_("libdsm NETBIOS discovery module") )
-        set_capability( "services_discovery", 0 )
+        set_capability( VLC_CAP_SERVICES_DISCOVERY, 0 )
         set_callbacks( bdsm_SdOpen, bdsm_SdClose )
 
     VLC_SD_PROBE_SUBMODULE

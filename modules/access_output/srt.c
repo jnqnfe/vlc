@@ -428,6 +428,10 @@ static void Close( vlc_object_t * p_this )
 vlc_module_begin()
     set_shortname( N_( "SRT" ) )
     set_description( N_( "SRT stream output" ) )
+    set_capability( VLC_CAP_SOUT_ACCESS, 0 )
+    add_shortcut( "srt" )
+    set_callbacks( Open, Close )
+
     set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_ACO )
 
@@ -448,9 +452,4 @@ vlc_module_begin()
     add_integer( SRT_PARAM_KEY_LENGTH, SRT_DEFAULT_KEY_LENGTH, SRT_KEY_LENGTH_TEXT,
             NULL, false )
     change_integer_list( srt_key_lengths, srt_key_length_names )
-
-    set_capability( "sout access", 0 )
-    add_shortcut( "srt" )
-
-    set_callbacks( Open, Close )
 vlc_module_end ()

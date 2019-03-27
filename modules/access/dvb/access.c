@@ -77,7 +77,7 @@ static void Close( vlc_object_t *p_this );
 vlc_module_begin ()
     set_shortname( N_("DVB") )
     set_description( N_("DVB input with v4l2 support") )
-    set_capability( "access", 0 )
+    set_capability( VLC_CAP_ACCESS, 0 )
     add_shortcut( "dvb",                        /* Generic name */
                   "dvb-s", "qpsk", "satellite", /* Satellite */
                   "dvb-c", "cable",             /* Cable */

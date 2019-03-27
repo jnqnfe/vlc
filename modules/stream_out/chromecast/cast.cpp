@@ -213,18 +213,18 @@ vlc_module_begin ()
 
     set_shortname(N_("Chromecast"))
     set_description(N_("Chromecast stream output"))
-    set_capability("sout stream", 0)
+    set_capability(VLC_CAP_SOUT_STREAM, 0)
     add_shortcut("chromecast")
     set_callbacks(Open, Close)
 
     add_submodule()
         /* sout proxy that start the cc input when all streams are loaded */
         add_shortcut("chromecast-proxy")
-        set_capability("sout stream", 0)
+        set_capability(VLC_CAP_SOUT_STREAM, 0)
         set_callbacks(ProxyOpen, NULL)
     add_submodule()
         add_shortcut("chromecast-http")
-        set_capability("sout access", 0)
+        set_capability(VLC_CAP_SOUT_ACCESS, 0)
         set_callbacks(AccessOpen, AccessClose)
 
     set_category(CAT_SOUT)

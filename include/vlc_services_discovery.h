@@ -222,7 +222,7 @@ VLC_API int vlc_sd_probe_Add(vlc_probe_t *, const char *, const char *, int cate
 
 #define VLC_SD_PROBE_SUBMODULE \
     add_submodule() \
-        set_capability( "services probe", 100 ) \
+        set_capability( VLC_CAP_SERVICES_PROBE, 100 ) \
         set_callbacks( vlc_sd_probe_Open, NULL )
 
 #define VLC_SD_PROBE_HELPER(name, longname, cat) \

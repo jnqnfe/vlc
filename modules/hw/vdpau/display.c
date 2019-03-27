@@ -44,7 +44,7 @@ static void Close(vout_display_t *vd);
 vlc_module_begin()
     set_shortname(N_("VDPAU"))
     set_description(N_("VDPAU output"))
-    set_capability("vout display", 0)
+    set_capability(VLC_CAP_VOUT_DISPLAY, 0)
     set_callbacks(Open, Close)
     add_shortcut("vdpau")
     //set_category(CAT_VIDEO)

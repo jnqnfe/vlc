@@ -24,6 +24,8 @@
 #ifndef LIBVLC_MODULES_MACROS_H
 # define LIBVLC_MODULES_MACROS_H 1
 
+#include <vlc_module_caps.h>
+
 /**
  * \file
  * This file implements plugin (module) macros used to define a vlc module.
@@ -40,6 +42,7 @@ enum vlc_module_properties
 
     VLC_MODULE_SHORTCUT=0x100,
     VLC_MODULE_CAPABILITY,
+    VLC_MODULE_CUSTOM_CAPABILITY,
     VLC_MODULE_SCORE,
     VLC_MODULE_CB_OPEN,
     VLC_MODULE_CB_CLOSE,
@@ -202,8 +205,8 @@ enum vlc_module_properties
 /**
  * Current plugin ABI version
  */
-# define MODULE_SYMBOL 4_0_7
-# define MODULE_SUFFIX "__4_0_7"
+# define MODULE_SYMBOL 4_0_8
+# define MODULE_SUFFIX "__4_0_8"
 
 /*****************************************************************************
  * Add a few defines. You do not want to read this section. Really.
@@ -322,9 +325,18 @@ VLC_METADATA_EXPORTS
 
 #define set_capability( cap, score ) \
 { \
-    const char * _cap = (cap); \
+    enum vlc_module_cap _cap = (cap); \
     int _score = (score); \
     if (vlc_module_set (VLC_MODULE_CAPABILITY, _cap) \
+     || vlc_module_set (VLC_MODULE_SCORE, _score)) \
+        goto error; \
+}
+
+#define set_custom_capability( cap, score ) \
+{ \
+    const char * _cap = (cap); \
+    int _score = (score); \
+    if (vlc_module_set (VLC_MODULE_CUSTOM_CAPABILITY, _cap) \
      || vlc_module_set (VLC_MODULE_SCORE, _score)) \
         goto error; \
 }

@@ -388,7 +388,7 @@ static int Control(vout_display_t *vd, int query, va_list ap)
 
 vlc_module_begin () set_shortname ("Vulkan")
     set_description (N_("Vulkan video output"))
-    set_capability ("vout display", 0)
+    set_capability (VLC_CAP_VOUT_DISPLAY, 0)
     set_callbacks (Open, Close)
     add_shortcut ("vulkan", "vk")
 

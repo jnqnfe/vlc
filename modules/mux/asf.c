@@ -71,7 +71,7 @@ static void Close  ( vlc_object_t * );
 vlc_module_begin ()
     set_description( N_("ASF muxer") )
     set_shortname( "ASF" )
-    set_capability( "sout mux", 5 )
+    set_capability( VLC_CAP_SOUT_MUX, 5 )
     add_shortcut( "asf", "asfh" )
     set_callbacks( Open, Close )
 

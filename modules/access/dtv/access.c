@@ -242,7 +242,7 @@ static void Close (vlc_object_t *);
 vlc_module_begin ()
     set_shortname (N_("DTV"))
     set_description (N_("Digital Television and Radio"))
-    set_capability ("access", 0)
+    set_capability (VLC_CAP_ACCESS, 0)
     set_callbacks (Open, Close)
     add_shortcut ("dtv", "tv", "dvb", /* "radio", "dab",*/
                   "cable", "dvb-c", "cqam", "isdb-c",

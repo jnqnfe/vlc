@@ -60,7 +60,7 @@ static block_t *EncodeFrame  ( encoder_t *, block_t * );
 
 vlc_module_begin();
     set_description( N_("MP3 fixed point audio encoder") );
-    set_capability( "encoder", 50 );
+    set_capability( VLC_CAP_ENCODER, 50 );
     set_callbacks( OpenEncoder, CloseEncoder );
     //set_category( CAT_INPUT );
     //set_subcategory( SUBCAT_INPUT_ACODEC );

@@ -203,12 +203,12 @@ DecoderContextOpen(vlc_decoder_device *device, vout_window_t *window)
 
 vlc_module_begin ()
     set_description("VDPAU OpenGL surface converter")
-    set_capability("glconv", 2)
+    set_capability(VLC_CAP_GLCONV, 2)
     set_callbacks(Open, Close)
     add_shortcut("vdpau")
 
     add_submodule()
-        set_capability("decoder device", 3)
+        set_capability(VLC_CAP_HW_DECODER_DEVICE, 3)
         set_callbacks(DecoderContextOpen, DecoderContextClose)
 
     //set_category(CAT_VIDEO)

@@ -57,7 +57,7 @@ static void Close        ( vlc_object_t * );
 vlc_module_begin ()
     set_shortname( N_("vsxu"))
     set_description( N_("vsxu") )
-    set_capability( "visualization", 0 )
+    set_capability( VLC_CAP_VISUALIZATION, 0 )
     add_shortcut( "vsxu" )
     set_callbacks( Open, Close )
 

@@ -490,7 +490,7 @@ static void Close (vlc_object_t *obj)
 vlc_module_begin()
     set_shortname(N_("WASAPI"))
     set_description(N_("Windows Audio Session API input"))
-    set_capability("access", 0)
+    set_capability(VLC_CAP_ACCESS, 0)
     add_shortcut("wasapi")
     set_callbacks(Open, Close)
 
