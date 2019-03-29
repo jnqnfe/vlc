@@ -396,7 +396,7 @@ static int Retrieve( addons_finder_t *p_finder, addon_entry_t *p_entry )
         FREENULL( p_finder->p_sys->psz_tempfile );
     }
 
-    p_finder->p_sys->psz_tempfile = tempnam( NULL, "vlp" );
+    p_finder->p_sys->psz_tempfile = strdup( DIR_SEP"tmp"DIR_SEP PACKAGE_NAME"-vlp.XXXXXX" );
     if ( !p_finder->p_sys->psz_tempfile )
     {
         msg_Err( p_finder, "Can't create temp storage file" );
@@ -404,8 +404,8 @@ static int Retrieve( addons_finder_t *p_finder, addon_entry_t *p_entry )
         return VLC_EGENERIC;
     }
 
-    int fd = vlc_open( p_finder->p_sys->psz_tempfile,
-                       O_WRONLY | O_CREAT | O_EXCL, 0600 );
+    int fd = vlc_mkstemp( p_finder->p_sys->psz_tempfile );
+
     if( fd == -1 )
     {
         msg_Err( p_finder, "Failed to open addon temp storage file" );
