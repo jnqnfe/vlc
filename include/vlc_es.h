@@ -178,14 +178,18 @@ static const uint16_t vlc_chan_maps[] =
  */
 typedef enum video_orientation_t
 {
-    ORIENT_TOP_LEFT = 0, /**< Normal */
-    ORIENT_TOP_RIGHT,    /**< Flipped horizontally */
-    ORIENT_BOTTOM_LEFT,  /**< Flipped vertically */
-    ORIENT_BOTTOM_RIGHT, /**< Rotated 180 degrees */
-    ORIENT_LEFT_TOP,     /**< Transposed */
-    ORIENT_LEFT_BOTTOM,  /**< Rotated 90 degrees anti-clockwise */
-    ORIENT_RIGHT_TOP,    /**< Rotated 90 degrees clockwise */
-    ORIENT_RIGHT_BOTTOM, /**< Anti-transposed */
+    /* Warning: the specific value used for each is important to ensure that
+     * bit-manipulation based transformation shortcuts work correctly,
+     * SO DO NOT CHANGE THEM!
+     */
+    ORIENT_TOP_LEFT     = 0, /**< Normal */
+    ORIENT_TOP_RIGHT    = 1, /**< Flipped horizontally */
+    ORIENT_BOTTOM_LEFT  = 2, /**< Flipped vertically */
+    ORIENT_BOTTOM_RIGHT = 3, /**< Rotated 180 degrees */
+    ORIENT_LEFT_TOP     = 4, /**< Transposed */
+    ORIENT_LEFT_BOTTOM  = 5, /**< Rotated 90 degrees anti-clockwise */
+    ORIENT_RIGHT_TOP    = 6, /**< Rotated 90 degrees clockwise */
+    ORIENT_RIGHT_BOTTOM = 7, /**< Anti-transposed */
 
     /* common aliases */
     ORIENT_NORMAL      = ORIENT_TOP_LEFT,

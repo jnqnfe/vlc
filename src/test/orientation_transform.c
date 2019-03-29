@@ -423,6 +423,20 @@ int main( void )
     assert(TRANSFORM_TRANSPOSE      == TRANSFORM_R90_HFLIP);
     assert(TRANSFORM_ANTI_TRANSPOSE == TRANSFORM_R270_HFLIP);
 
+    /* Check orientation values.
+     * Orientations variants must have these specific values assigned to them
+     * in order for bit-based logic to work. If the values get changed, this
+     * will cause tests to fail, so let's just simply check directly now.
+     */
+    assert(ORIENT_NORMAL          == 0);
+    assert(ORIENT_HFLIPPED        == 1);
+    assert(ORIENT_VFLIPPED        == 2);
+    assert(ORIENT_ROTATED_180     == 3);
+    assert(ORIENT_TRANSPOSED      == 4);
+    assert(ORIENT_ROTATED_270     == 5);
+    assert(ORIENT_ROTATED_90      == 6);
+    assert(ORIENT_ANTI_TRANSPOSED == 7);
+
     printf("\n=========================================\n");
     printf("VIDEO ORIENTATION TRANSFORM TEST RESULTS\n");
     printf("\n");
