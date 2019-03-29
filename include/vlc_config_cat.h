@@ -199,7 +199,6 @@ struct config_category_t
     const char *psz_help;
 };
 
-/* This function is deprecated and is kept only for compatibility */
 static const struct config_category_t categories_array[] =
 {
     { CAT_INTERFACE,               N_("Interface"),           INTF_HELP          },
