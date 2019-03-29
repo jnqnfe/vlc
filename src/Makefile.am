@@ -555,6 +555,7 @@ check_PROGRAMS = \
 	test_jaro_winkler \
 	test_list \
 	test_md5 \
+	test_orientation_transform \
 	test_picture_pool \
 	test_sort \
 	test_timer \
@@ -584,6 +585,7 @@ test_jaro_winkler_SOURCES = config/jaro_winkler.c
 test_jaro_winkler_CFLAGS = -DJW_TEST
 test_list_SOURCES = test/list.c
 test_md5_SOURCES = test/md5.c
+test_orientation_transform_SOURCES = test/orientation_transform.c
 test_picture_pool_SOURCES = test/picture_pool.c
 test_sort_SOURCES = test/sort.c
 test_timer_SOURCES = test/timer.c
