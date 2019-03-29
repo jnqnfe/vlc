@@ -452,9 +452,19 @@ static void OutputStart( sout_stream_t *p_stream )
             char *psz_file;
             int i_es;
 
-            psz_file = tempnam( NULL, "vlc" );
+            psz_file = strdup( DIR_SEP"tmp"DIR_SEP"vlc-recording.XXXXXX" );
             if( !psz_file )
                 continue;
+
+            int fd = vlc_mkstemp( psz_file );
+
+            if( fd == -1 )
+                continue;
+
+            /* FIXME: unlink after creation, we only want to create it here,
+               not hold it open since sout takes a path to open not an FD of
+               an already open file */
+            vlc_unlink( psz_file );
 
             msg_Dbg( p_stream, "probing muxer %s", ppsz_muxers[i][0] );
             i_es = OutputNew( p_stream, ppsz_muxers[i][0], psz_file, NULL );
