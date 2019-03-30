@@ -263,7 +263,10 @@ static void Close( demux_t *p_demux )
 {
     demux_sys_t *p_sys = p_demux->p_sys;
 
-    write( p_sys->evfd, &(uint64_t){ 1 }, sizeof (uint64_t));
+    if (write( p_sys->evfd, &(uint64_t){ 1 }, sizeof (uint64_t)))
+    { /* do nothing, don't worry if failed, just use a conditional to fix the
+          unused return value compiler warning */
+    }
     pthread_join( p_sys->thread, NULL );
     vlc_close( p_sys->evfd );
     free( p_sys );
