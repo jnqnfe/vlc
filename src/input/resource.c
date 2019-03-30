@@ -373,7 +373,7 @@ vout_thread_t *input_resource_GetVout(input_resource_t *p_resource,
                                       enum vlc_vout_order *order)
 {
     vout_configuration_t cfg_buf;
-    vout_thread_t *vout;
+    vout_thread_t *vout = NULL;
 
     assert(cfg != NULL);
     assert(cfg->fmt != NULL);
