@@ -860,7 +860,8 @@ static void *Run( void *data )
         if (fds[0].revents & POLLIN)
         {
             char buf;
-            (void)read( fds[0].fd, &buf, 1 );
+            if (read( fds[0].fd, &buf, 1 ))
+            { /* do nothing, just hide compiler warning */ }
         }
 
         /* We need to lock the mutex while building lists of events,
