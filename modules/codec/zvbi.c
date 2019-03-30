@@ -660,6 +660,7 @@ static int OpaquePage( picture_t *p_src, const vbi_page *p_page,
             case VBI_SEMI_TRANSPARENT:
                 if( b_opaque )
                     break;
+                /* fall through */
             /* Full text transparency. only foreground color is show */
             case VBI_TRANSPARENT_FULL:
                 if( (*p_pixel) == (0xff000000 | p_page->color_map[background] ) )
