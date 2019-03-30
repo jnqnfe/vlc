@@ -1543,7 +1543,8 @@ static int Seek( demux_t *p_demux, vlc_tick_t i_date, double f_ratio, bool b_acc
 failandresetpos:
         /* Go back to position before index failure */
         if ( vlc_stream_Tell( p_demux->s ) - i_pos_backup )
-            vlc_stream_Seek( p_demux->s, i_pos_backup );
+            if (vlc_stream_Seek( p_demux->s, i_pos_backup ))
+            { /* do nothing, just hide warning of unused result */ }
 
         return VLC_EGENERIC;
     }
@@ -2573,7 +2574,8 @@ static void AVI_IndexCreate( demux_t *p_demux )
     i_movi_end = __MIN( (uint32_t)(p_movi->i_chunk_pos + p_movi->i_chunk_size),
                         stream_Size( p_demux->s ) );
 
-    vlc_stream_Seek( p_demux->s, p_movi->i_chunk_pos + 12 );
+    if (vlc_stream_Seek( p_demux->s, p_movi->i_chunk_pos + 12 ))
+    { /* do nothing, just hide warning of unused result */ }
     msg_Warn( p_demux, "creating index from LIST-movi, will take time !" );
 
 
