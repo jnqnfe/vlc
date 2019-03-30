@@ -248,7 +248,8 @@ int main (int argc, char *argv[])
         fputs("Cannot determine unprivileged user for VLC!\n", stderr);
         exit (1);
     }
-    setuid (uid);
+    if (!setuid (uid))
+        exit (1);
 
     if (!setuid (0)) /* sanity check: we cannot get root back */
         exit (1);
