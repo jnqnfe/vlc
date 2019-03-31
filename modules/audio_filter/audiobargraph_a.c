@@ -35,15 +35,11 @@
 
 #include <math.h>
 
-#define BARGRAPH_TEXT N_("Defines if BarGraph information should be sent")
-#define BARGRAPH_LONGTEXT N_("Defines if BarGraph information should be sent. "\
-                "1 if the information should be sent, 0 otherwise (default 1)." )
+#define BARGRAPH_TEXT N_("Send BarGraph information")
 #define BARGRAPH_REPETITION_TEXT N_("Sends the barGraph information every n audio packets")
 #define BARGRAPH_REPETITION_LONGTEXT N_("Defines how often the barGraph information should be sent. "\
                 "Sends the barGraph information every n audio packets (default 4)." )
-#define SILENCE_TEXT N_("Defines if silence alarm information should be sent")
-#define SILENCE_LONGTEXT N_("Defines if silence alarm information should be sent. "\
-                "1 if the information should be sent, 0 otherwise (default 1)." )
+#define SILENCE_TEXT N_("Send silence alarm information")
 #define TIME_WINDOW_TEXT N_("Time window to use (in ms)")
 #define TIME_WINDOW_LONGTEXT N_("Time Window during when the audio level is measured in milliseconds for silence detection. "\
                 "If the audio level is under the threshold during this time, "\
@@ -71,9 +67,10 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_AUDIO_FILTER, 0, Open, Close )
 
     set_subcategory( SUBCAT_AUDIO_AFILTER )
-    add_integer( CFG_PREFIX "bargraph", 1, BARGRAPH_TEXT, BARGRAPH_LONGTEXT, false ) // FIXME: this is a bool
+
+    add_bool( CFG_PREFIX "bargraph", true, BARGRAPH_TEXT, NULL, false )
     add_integer( CFG_PREFIX "bargraph_repetition", 4, BARGRAPH_REPETITION_TEXT, BARGRAPH_REPETITION_LONGTEXT, false )
-    add_integer( CFG_PREFIX "silence", 1, SILENCE_TEXT, SILENCE_LONGTEXT, false ) // FIXME: this is a bool
+    add_bool( CFG_PREFIX "silence", true, SILENCE_TEXT, NULL, false )
     add_integer( CFG_PREFIX "time_window", 5000, TIME_WINDOW_TEXT, TIME_WINDOW_LONGTEXT, false )
     add_float( CFG_PREFIX "alarm_threshold", 0.02, ALARM_THRESHOLD_TEXT, ALARM_THRESHOLD_LONGTEXT, false )
     add_integer( CFG_PREFIX "repetition_time", 2000, REPETITION_TIME_TEXT, REPETITION_TIME_LONGTEXT, false )
@@ -115,9 +112,9 @@ static int Open( filter_t *p_filter )
     };
     config_ChainParse(p_filter, CFG_PREFIX, options, p_filter->p_cfg);
 
-    p_sys->bargraph = !!var_CreateGetInteger(p_filter, CFG_PREFIX "bargraph");
+    p_sys->bargraph = var_CreateGetBool(p_filter, CFG_PREFIX "bargraph");
     p_sys->bargraph_repetition = var_CreateGetInteger(p_filter, CFG_PREFIX "bargraph_repetition");
-    p_sys->silence = !!var_CreateGetInteger(p_filter, CFG_PREFIX "silence");
+    p_sys->silence = var_CreateGetBool(p_filter, CFG_PREFIX "silence");
     p_sys->time_window = VLC_TICK_FROM_MS( var_CreateGetInteger(p_filter, CFG_PREFIX "time_window") );
     p_sys->alarm_threshold = var_CreateGetFloat(p_filter, CFG_PREFIX "alarm_threshold");
     p_sys->repetition_time = VLC_TICK_FROM_MS( var_CreateGetInteger(p_filter, CFG_PREFIX "repetition_time") );
