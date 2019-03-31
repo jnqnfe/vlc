@@ -621,6 +621,7 @@ vlc_plugin_begin ()
 
     add_integer( SOUT_CFG_PREFIX "subme", 7, SUBME_TEXT,
                  SUBME_LONGTEXT, true )
+        change_integer_range( 1, 9 )
 
     add_bool( SOUT_CFG_PREFIX "mixed-refs", true, MIXED_REFS_TEXT,
               MIXED_REFS_LONGTEXT, true )
