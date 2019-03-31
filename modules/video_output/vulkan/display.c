@@ -22,6 +22,7 @@
 
 #include <stdlib.h>
 #include <assert.h>
+#include <limits.h>
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
@@ -415,8 +416,8 @@ vlc_plugin_begin ()
 
     set_section("Debanding", NULL)
     add_bool("debanding", false, DEBAND_TEXT, DEBAND_LONGTEXT, false)
-    add_integer("iterations", pl_deband_default_params.iterations,
-            DEBAND_ITER_TEXT, DEBAND_ITER_LONGTEXT, false)
+    add_integer_with_range("iterations", pl_deband_default_params.iterations,
+            0, INT_MAX, DEBAND_ITER_TEXT, DEBAND_ITER_LONGTEXT, false)
     add_float("threshold", pl_deband_default_params.threshold,
             DEBAND_THRESH_TEXT, DEBAND_THRESH_LONGTEXT, false)
     add_float("radius", pl_deband_default_params.radius,
