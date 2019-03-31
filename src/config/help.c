@@ -460,7 +460,7 @@ static void print_item(const module_t *m, const module_config_t *item,
                 free(pi_values);
                 free(ppsz_texts);
             }
-            else if (item->min.i != INT64_MIN || item->max.i != INT64_MAX )
+            else if (item->max.i != INT64_MAX || (item->min.i != INT64_MIN && item->min.i != 0) )
             {
                 if (asprintf(&typebuf, "%s [%"PRId64" .. %"PRId64"]",
                              type, item->min.i, item->max.i) >= 0)
@@ -472,7 +472,7 @@ static void print_item(const module_t *m, const module_config_t *item,
         }
         case CONFIG_ITEM_FLOAT:
             type = _("float");
-            if (item->min.f != -FLT_MAX || item->max.f != FLT_MAX)
+            if (item->max.f != FLT_MAX || (item->min.f != -FLT_MAX && item->min.f != 0.0) )
             {
                 if (asprintf(&typebuf, "%s [%f .. %f]", type,
                              item->min.f, item->max.f) >= 0)
