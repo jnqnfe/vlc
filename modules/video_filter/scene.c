@@ -102,9 +102,9 @@ vlc_plugin_begin ()
     /* General options */
     add_string(  CFG_PREFIX "format", "png",
                  FORMAT_TEXT, FORMAT_LONGTEXT, false )
-    add_integer( CFG_PREFIX "width", -1,
+    add_integer_with_range( CFG_PREFIX "width", -1, -1, INT_MAX,
                  WIDTH_TEXT, WIDTH_LONGTEXT, true )
-    add_integer( CFG_PREFIX "height", -1,
+    add_integer_with_range( CFG_PREFIX "height", -1, -1, INT_MAX,
                  HEIGHT_TEXT, HEIGHT_LONGTEXT, true )
     add_string(  CFG_PREFIX "prefix", "scene",
                  PREFIX_TEXT, PREFIX_LONGTEXT, false )
