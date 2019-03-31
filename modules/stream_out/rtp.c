@@ -116,10 +116,10 @@
     "This allows you to specify the base port for the RTP streaming." )
 #define PORT_AUDIO_TEXT N_("Audio port")
 #define PORT_AUDIO_LONGTEXT N_( \
-    "This allows you to specify the default audio port for the RTP streaming." )
+    "This allows you to specify the default audio port for the RTP streaming. (0 to disable)." )
 #define PORT_VIDEO_TEXT N_("Video port")
 #define PORT_VIDEO_LONGTEXT N_( \
-    "This allows you to specify the default video port for the RTP streaming." )
+    "This allows you to specify the default video port for the RTP streaming. (0 to disable)." )
 
 #define TTL_TEXT N_("Hop limit (TTL)")
 #define TTL_LONGTEXT N_( \
@@ -221,10 +221,10 @@ vlc_plugin_begin ()
         change_string_list( ppsz_protos, ppsz_protocols )
     add_integer_with_range( SOUT_CFG_PREFIX "port", 5004, 1, 65535, PORT_TEXT,
                  PORT_LONGTEXT, true )
-    add_integer( SOUT_CFG_PREFIX "port-audio", 0, PORT_AUDIO_TEXT,
-                 PORT_AUDIO_LONGTEXT, true )
-    add_integer( SOUT_CFG_PREFIX "port-video", 0, PORT_VIDEO_TEXT,
-                 PORT_VIDEO_LONGTEXT, true )
+    add_integer_with_range( SOUT_CFG_PREFIX "port-audio", 0, 0, 65535,
+                            PORT_AUDIO_TEXT, PORT_AUDIO_LONGTEXT, true )
+    add_integer_with_range( SOUT_CFG_PREFIX "port-video", 0, 0, 65535,
+                            PORT_VIDEO_TEXT, PORT_VIDEO_LONGTEXT, true )
 
     add_integer( SOUT_CFG_PREFIX "ttl", -1, TTL_TEXT,
                  TTL_LONGTEXT, true )
