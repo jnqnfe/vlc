@@ -36,6 +36,7 @@
 #endif
 
 #include <math.h>
+#include <float.h>
 
 #include <vlc_common.h>
 #include <vlc_plugin.h>
@@ -70,8 +71,7 @@ typedef struct
 #define LEVEL_TEXT N_("Maximal volume level" )
 #define LEVEL_LONGTEXT N_("If the average power over the last N buffers " \
                "is higher than this value, the volume will be normalized. " \
-               "This value is a positive floating point number. A value " \
-               "between 0.5 and 10 seems sensible." )
+               "A value between 0.5 and 10 seems sensible." )
 
 vlc_plugin_begin ()
     set_description( N_("Volume normalizer") )
@@ -82,7 +82,7 @@ vlc_plugin_begin ()
     set_subcategory( SUBCAT_AUDIO_AFILTER )
     add_integer( "norm-buff-size", 20  ,BUFF_TEXT, BUFF_LONGTEXT,
                  true )
-    add_float( "norm-max-level", 2.0, LEVEL_TEXT,
+    add_float_with_range( "norm-max-level", 2.0, 0.01, FLT_MAX, LEVEL_TEXT,
                LEVEL_LONGTEXT, true )
 vlc_plugin_end ()
 
@@ -103,8 +103,6 @@ static int Open( filter_t *p_filter )
                                         "norm-buff-size" );
     p_sys->f_max = var_CreateGetFloat( vlc_object_parent(p_filter),
                                        "norm-max-level" );
-
-    if( p_sys->f_max <= 0 ) p_sys->f_max = 0.01;
 
     /* We need to store (nb_buffers+1)*nb_channels floats */
     p_sys->p_last = calloc( i_channels * (p_sys->i_nb + 2), sizeof(float) );
