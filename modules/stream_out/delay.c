@@ -41,7 +41,7 @@
 
 #define DELAY_TEXT N_("Delay of the ES (ms)")
 #define DELAY_LONGTEXT N_( \
-    "Specify a delay (in ms) for this elementary stream. " \
+    "Specify a delay (in milliseconds) for this elementary stream. " \
     "Positive means delay and negative means advance." )
 
 static int  Open    ( sout_stream_t * );

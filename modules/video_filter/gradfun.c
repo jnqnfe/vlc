@@ -46,8 +46,7 @@ static void Close(filter_t *);
 
 #define RADIUS_MIN (4)
 #define RADIUS_MAX (32)
-#define RADIUS_TEXT N_("Radius")
-#define RADIUS_LONGTEXT N_("Radius in pixels")
+#define RADIUS_TEXT N_("Radius (pixels)")
 
 #define STRENGTH_MIN (0.51f)
 #define STRENGTH_MAX (255)
@@ -63,7 +62,7 @@ vlc_plugin_begin()
 
     set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_integer_with_range(CFG_PREFIX "radius", 16, RADIUS_MIN, RADIUS_MAX,
-                           RADIUS_TEXT, RADIUS_LONGTEXT, false)
+                           RADIUS_TEXT, NULL, false)
     add_float_with_range(CFG_PREFIX "strength", 1.2, STRENGTH_MIN, STRENGTH_MAX,
                          STRENGTH_TEXT, STRENGTH_LONGTEXT, false)
 vlc_plugin_end()

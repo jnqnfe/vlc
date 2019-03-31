@@ -61,7 +61,7 @@
 #define RTP_MAX_SRC_LONGTEXT N_( \
     "How many distinct active RTP sources are allowed at a time." )
 
-#define RTP_TIMEOUT_TEXT N_("RTP source timeout (sec)")
+#define RTP_TIMEOUT_TEXT N_("RTP source timeout (secs)")
 #define RTP_TIMEOUT_LONGTEXT N_( \
     "How long to wait for any packet before a source is expired.")
 

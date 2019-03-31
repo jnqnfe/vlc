@@ -149,7 +149,7 @@ vlc_plugin_begin ()
     add_integer( ENC_CFG_PREFIX "vt", 0, ENC_VT_TEXT,
                  ENC_VT_LONGTEXT, true )
     add_bool( ENC_CFG_PREFIX "pre-me", false, ENC_PRE_ME_TEXT,
-              ENC_PRE_ME_LONGTEXT, true )
+              NULL, true )
     add_integer( ENC_CFG_PREFIX "rc-buffer-size", 0,
                  ENC_RC_BUF_TEXT, ENC_RC_BUF_LONGTEXT, true )
     add_float( ENC_CFG_PREFIX "rc-buffer-aggressivity", 1.0,

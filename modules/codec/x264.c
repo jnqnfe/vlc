@@ -206,16 +206,14 @@ static void x264_log( void *, int i_level, const char *psz, va_list );
 #define QPSTEP_TEXT N_("Max QP step")
 #define QPSTEP_LONGTEXT N_( "Max QP step between frames.")
 
-#define RATETOL_TEXT N_("Average bitrate tolerance")
-#define RATETOL_LONGTEXT N_( "Allowed variance in average " \
-    "bitrate (in kbits/s).")
+#define RATETOL_TEXT N_("Average bitrate tolerance (kbits/s)")
+#define RATETOL_LONGTEXT N_( "Allowed variance in average bitrate.")
 
-#define VBV_MAXRATE_TEXT N_("Max local bitrate")
-#define VBV_MAXRATE_LONGTEXT N_( "Sets a maximum local bitrate (in kbits/s).")
+#define VBV_MAXRATE_TEXT N_("Max local bitrate (kbits/s)")
 
-#define VBV_BUFSIZE_TEXT N_("VBV buffer")
+#define VBV_BUFSIZE_TEXT N_("VBV buffer (kbits)")
 #define VBV_BUFSIZE_LONGTEXT N_( "Averaging period for the maximum " \
-    "local bitrate (in kbits).")
+    "local bitrate.")
 
 #define VBV_INIT_TEXT N_("Initial VBV buffer occupancy")
 #define VBV_INIT_LONGTEXT N_( "Sets the initial buffer occupancy as a " \
@@ -552,8 +550,7 @@ vlc_plugin_begin ()
                RATETOL_LONGTEXT, true )
         change_float_range( 0, 100 )
 
-    add_integer( SOUT_CFG_PREFIX "vbv-maxrate", 0, VBV_MAXRATE_TEXT,
-                 VBV_MAXRATE_LONGTEXT, true )
+    add_integer( SOUT_CFG_PREFIX "vbv-maxrate", 0, VBV_MAXRATE_TEXT, NULL, true )
 
     add_integer( SOUT_CFG_PREFIX "vbv-bufsize", 0, VBV_BUFSIZE_TEXT,
                  VBV_BUFSIZE_LONGTEXT, true )

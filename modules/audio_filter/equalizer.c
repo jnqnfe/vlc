@@ -72,7 +72,7 @@ static void Close( filter_t * );
 #define TWOPASS_LONGTEXT N_( "Filter the audio twice. This provides a more "  \
          "intense effect.")
 
-#define PREAMP_TEXT N_("Global gain" )
+#define PREAMP_TEXT N_("Global gain (dB)" )
 #define PREAMP_LONGTEXT N_("Set the global gain in dB (-20 ... 20)." )
 
 vlc_plugin_begin ()

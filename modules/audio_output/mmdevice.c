@@ -1455,7 +1455,7 @@ static const char *const ppsz_mmdevice_passthrough_texts[] = {
 #define DEVICE_TEXT N_("Output device")
 #define DEVICE_LONGTEXT N_("Select your audio output device")
 
-#define VOLUME_TEXT N_("Audio volume")
+#define VOLUME_TEXT N_("Audio volume (dB)")
 #define VOLUME_LONGTEXT N_("Audio volume in hundredths of decibels (dB).")
 
 vlc_plugin_begin()

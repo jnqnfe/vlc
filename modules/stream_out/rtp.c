@@ -134,8 +134,7 @@
 
 #define CACHING_TEXT N_("Caching value (ms)")
 #define CACHING_LONGTEXT N_( \
-    "Default caching value for outbound RTP streams. This " \
-    "value should be set in milliseconds." )
+    "Default caching value (in milliseconds) for outbound RTP streams." )
 
 #define PROTO_TEXT N_("Transport protocol")
 #define PROTO_LONGTEXT N_( \
@@ -164,7 +163,7 @@ static const char *const ppsz_protocols[] = {
 #define RFC3016_LONGTEXT N_( \
     "This allows you to stream MPEG4 LATM audio streams (see RFC3016)." )
 
-#define RTSP_TIMEOUT_TEXT N_( "RTSP session timeout (s)" )
+#define RTSP_TIMEOUT_TEXT N_( "RTSP session timeout (secs)" )
 #define RTSP_TIMEOUT_LONGTEXT N_( "RTSP sessions will be closed after " \
     "not receiving any RTSP request for this long. Setting it to a " \
     "negative value or zero disables timeouts. The default is 60 (one " \

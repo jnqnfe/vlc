@@ -52,8 +52,8 @@ static picture_t *Filter( filter_t *, picture_t * );
 #define LOOPS_TEXT N_("Number of times to blend")
 #define ALPHA_TEXT N_("Alpha to blend with")
 #define BASE_IMAGE_TEXT N_("Image to be blended onto")
-#define BASE_CHROMA_TEXT N_("Chroma for the base image")
-#define BLEND_CHROMA_TEXT N_("Chroma for the blend image")
+#define BASE_CHROMA_TEXT N_("Chroma for the base image (fourcc)")
+#define BLEND_CHROMA_TEXT N_("Chroma for the blend image (fourcc)")
 
 #define BLEND_IMAGE_TEXT N_("Image which will be blended")
 #define BLEND_IMAGE_LONGTEXT N_("The image blended onto the base image")

@@ -88,10 +88,10 @@ typedef struct
         "Transparency of the mosaic foreground pictures. " \
         "0 means transparent, 255 opaque (default)." )
 
-#define HEIGHT_TEXT N_("Height")
-#define HEIGHT_LONGTEXT N_( "Total height of the mosaic, in pixels." )
-#define WIDTH_TEXT N_("Width")
-#define WIDTH_LONGTEXT N_( "Total width of the mosaic, in pixels." )
+#define HEIGHT_TEXT N_("Height (pixels)")
+#define HEIGHT_LONGTEXT N_( "Total height of the mosaic." )
+#define WIDTH_TEXT N_("Width (pixels)")
+#define WIDTH_LONGTEXT N_( "Total width of the mosaic." )
 
 #define XOFFSET_TEXT N_("Top left corner X coordinate")
 #define XOFFSET_LONGTEXT N_( \
@@ -100,10 +100,10 @@ typedef struct
 #define YOFFSET_LONGTEXT N_( \
         "Y Coordinate of the top-left corner of the mosaic.")
 
-#define BORDERW_TEXT N_("Border width")
+#define BORDERW_TEXT N_("Border width (pixels)")
 #define BORDERW_LONGTEXT N_( \
         "Width in pixels of the border between miniatures." )
-#define BORDERH_TEXT N_("Border height")
+#define BORDERH_TEXT N_("Border height (pixels)")
 #define BORDERH_LONGTEXT N_( \
         "Height in pixels of the border between miniatures." )
 
@@ -150,7 +150,7 @@ typedef struct
         "(only used if positioning method is set to \"offsets\"). You " \
         "must give a comma-separated list of coordinates (eg: 10,10,150,10)." )
 
-#define DELAY_TEXT N_("Delay")
+#define DELAY_TEXT N_("Delay (ms)")
 #define DELAY_LONGTEXT N_( \
         "Pictures coming from the mosaic elements will be delayed " \
         "according to this value (in milliseconds). For high " \

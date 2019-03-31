@@ -54,9 +54,9 @@ typedef struct
             "suppressing mono (signal common to both channels) "\
             "and by delaying the signal of left into right and vice versa, "\
             "thereby widening the stereo effect.")
-#define DELAY_TEXT N_("Delay time")
-#define DELAY_LONGTEXT N_("Time in ms of the delay of left signal into right "\
-            "and vice versa.")
+#define DELAY_TEXT N_("Delay time (ms)")
+#define DELAY_LONGTEXT N_("Time in milliseconds of the delay of left signal " \
+            "into right and vice versa.")
 #define FEEDBACK_TEXT N_("Feedback gain")
 #define FEEDBACK_LONGTEXT N_("Amount of gain in delayed left signal into "\
             "right and vice versa. Gives a delay effect of left signal in "\

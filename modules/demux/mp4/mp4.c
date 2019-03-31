@@ -52,7 +52,7 @@ static void Close( demux_t * );
 #define MP4_M4A_TEXT     N_("M4A audio only")
 #define MP4_M4A_LONGTEXT N_("Ignore non audio tracks from iTunes audio files")
 
-#define HEIF_DURATION_TEXT N_("Duration in seconds")
+#define HEIF_DURATION_TEXT N_("Duration (seconds)")
 #define HEIF_DURATION_LONGTEXT N_( \
     "Duration in seconds before simulating an end of file. " \
     "A negative value means an unlimited play time.")

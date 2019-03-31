@@ -49,7 +49,7 @@
     "Relative to source delay - multiply subtitle delay. " \
     "Relative to source content - determine subtitle delay from its content (text)." )
 
-#define FACTOR_TEXT N_( "Calculation factor" )
+#define FACTOR_TEXT N_( "Calculation factor (secs)" )
 #define FACTOR_LONGTEXT N_( "Calculation factor. " \
     "In Absolute delay mode the factor represents seconds.")
 
@@ -60,17 +60,17 @@
 #define MIN_ALPHA_LONGTEXT N_( \
     "Alpha value of the earliest subtitle, where 0 is fully transparent and 255 is fully opaque." )
 
-#define MIN_STOPS_INTERVAL_TEXT N_( "Interval between two disappearances" )
+#define MIN_STOPS_INTERVAL_TEXT N_( "Interval between two disappearances (ms)" )
 #define MIN_STOPS_INTERVAL_LONGTEXT N_( \
     "Minimum time (in milliseconds) that subtitle should stay after its predecessor has disappeared " \
     "(subtitle delay will be extended to meet this requirement)." )
 
-#define MIN_STOP_START_INTERVAL_TEXT N_( "Interval between disappearance and appearance" )
+#define MIN_STOP_START_INTERVAL_TEXT N_( "Interval between disappearance and appearance (ms)" )
 #define MIN_STOP_START_INTERVAL_LONGTEXT N_( \
     "Minimum time (in milliseconds) between subtitle disappearance and newer subtitle appearance " \
     "(earlier subtitle delay will be extended to fill the gap)." )
 
-#define MIN_START_STOP_INTERVAL_TEXT N_( "Interval between appearance and disappearance" )
+#define MIN_START_STOP_INTERVAL_TEXT N_( "Interval between appearance and disappearance (ms)" )
 #define MIN_START_STOP_INTERVAL_LONGTEXT N_( \
     "Minimum time (in milliseconds) that subtitle should stay after newer subtitle has appeared " \
     "(earlier subtitle delay will be shortened to avoid the overlap)." )

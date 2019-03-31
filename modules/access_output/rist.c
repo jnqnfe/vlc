@@ -834,7 +834,7 @@ failed:
     "Having this cache will guarantee that the packets going out are " \
     "delivered at a spacing determined by the chain timestamps thus ensuring " \
     "a near jitter free output. Be aware that this setting will also add to " \
-    "the overall latency of the stream." )
+    "the overall latency of the stream. (In milliseconds)." )
 
 #define BUFFER_TEXT N_("RIST retry-buffer queue size (ms)")
 #define BUFFER_LONGTEXT N_( \

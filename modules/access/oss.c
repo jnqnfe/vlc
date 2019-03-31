@@ -63,7 +63,7 @@ static void DemuxClose( demux_t * );
 #define STEREO_TEXT N_( "Stereo" )
 #define STEREO_LONGTEXT N_( \
     "Capture the audio stream in stereo." )
-#define SAMPLERATE_TEXT N_( "Samplerate" )
+#define SAMPLERATE_TEXT N_( "Samplerate (Hz)" )
 #define SAMPLERATE_LONGTEXT N_( \
     "Samplerate of the captured audio stream, in Hz (eg: 11025, 22050, 44100, 48000)" )
 

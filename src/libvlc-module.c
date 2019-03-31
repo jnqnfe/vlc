@@ -139,9 +139,9 @@ static const char *ppsz_roles_text[] = {
     "The volume can be recorded and automatically restored next time " \
     "VLC is used." )
 
-#define DESYNC_TEXT N_("Audio desynchronization compensation")
+#define DESYNC_TEXT N_("Audio desynchronization compensation (ms)")
 #define DESYNC_LONGTEXT N_( \
-    "This delays the audio output. The delay must be given in milliseconds. " \
+    "This delays the audio output for the given delay (in milliseconds). " \
     "This can be handy if you notice a lag between the video and the audio.")
 
 #define AUDIO_RESAMPLER_TEXT N_("Audio resampler")
@@ -190,7 +190,7 @@ static const char *const ppsz_stereo_mode_texts[] = { N_("Unset"),
 #define AUDIO_REPLAY_GAIN_MODE_TEXT N_( \
     "Replay gain mode" )
 #define AUDIO_REPLAY_GAIN_PREAMP_TEXT N_( \
-    "Replay preamp" )
+    "Replay preamp (dB)" )
 #define AUDIO_REPLAY_GAIN_PREAMP_LONGTEXT N_( \
     "This allows you to change the default target level (89 dB) " \
     "for stream with replay gain information" )
@@ -299,16 +299,16 @@ static const char *const ppsz_align_descriptions[] =
 #define VIDEO_TITLE_SHOW_LONGTEXT N_( \
     "Display the title of the video on top of the movie.")
 
-#define VIDEO_TITLE_TIMEOUT_TEXT N_("Show video title for x milliseconds")
+#define VIDEO_TITLE_TIMEOUT_TEXT N_("Show video title for the given time (ms)")
 #define VIDEO_TITLE_TIMEOUT_LONGTEXT N_( \
-    "Show the video title for n milliseconds, default is 5000 ms (5 sec.)")
+    "Show the video title for n milliseconds, default is 5000 (5 sec.)")
 
 #define VIDEO_TITLE_POSITION_TEXT N_("Position of video title")
 #define VIDEO_TITLE_POSITION_LONGTEXT N_( \
     "Place on video where to display the title (default bottom center).")
 
 #define MOUSE_HIDE_TIMEOUT_TEXT N_("Hide cursor and fullscreen " \
-                                   "controller after x milliseconds")
+                                   "controller after given time (ms)")
 
 #define DEINTERLACE_TEXT N_("Deinterlace")
 static const int pi_deinterlace[] = {
@@ -487,7 +487,7 @@ static const char *const screensaver_texts[] = {
     "real-time sources. Use this if you experience jerky playback of " \
     "network streams.")
 
-#define CLOCK_JITTER_TEXT N_("Clock jitter")
+#define CLOCK_JITTER_TEXT N_("Clock jitter (ms)")
 #define CLOCK_JITTER_LONGTEXT N_( \
     "This defines the maximum input delay jitter that the synchronization " \
     "algorithms should try to compensate (in milliseconds)." )
@@ -618,15 +618,15 @@ static const char *const ppsz_prefres[] = {
 #define INPUT_REPEAT_LONGTEXT N_( \
     "Number of time the same input will be repeated")
 
-#define START_TIME_TEXT N_("Start time")
+#define START_TIME_TEXT N_("Start time (secs)")
 #define START_TIME_LONGTEXT N_( \
     "The stream will start at this position (in seconds)." )
 
-#define STOP_TIME_TEXT N_("Stop time")
+#define STOP_TIME_TEXT N_("Stop time (secs)")
 #define STOP_TIME_LONGTEXT N_( \
     "The stream will stop at this position (in seconds)." )
 
-#define RUN_TIME_TEXT N_("Run time")
+#define RUN_TIME_TEXT N_("Run time (secs)")
 #define RUN_TIME_LONGTEXT N_( \
     "The stream will run this duration (in seconds)." )
 
@@ -787,7 +787,7 @@ static const char *const ppsz_prefres[] = {
 # endif
 #endif
 
-#define TIMEOUT_TEXT N_("TCP connection timeout")
+#define TIMEOUT_TEXT N_("TCP connection timeout (ms)")
 #define TIMEOUT_LONGTEXT N_( \
     "Default TCP connection timeout (in milliseconds)." )
 
@@ -1081,7 +1081,7 @@ static const char *const ppsz_prefres[] = {
     "Automatically preparse items added to the playlist " \
     "(to retrieve some metadata)." )
 
-#define PREPARSE_TIMEOUT_TEXT N_( "Preparsing timeout" )
+#define PREPARSE_TIMEOUT_TEXT N_( "Preparsing timeout (ms)" )
 #define PREPARSE_TIMEOUT_LONGTEXT N_( \
     "Maximum time allowed to preparse an item, in milliseconds" )
 

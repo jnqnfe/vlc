@@ -43,7 +43,7 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-#define INDEXINTVL_TEXT N_("Index interval")
+#define INDEXINTVL_TEXT N_("Index interval (ms)")
 #define INDEXINTVL_LONGTEXT N_("Minimal index interval, in milliseconds. " \
     "Set to 0 to disable index creation.")
 #define INDEXRATIO_TEXT N_("Index size ratio")

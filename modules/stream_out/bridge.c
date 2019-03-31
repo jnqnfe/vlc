@@ -47,7 +47,7 @@
     "Name of the destination bridge-in. If you do not need more " \
     "than one bridge-in at a time, you can discard this option." )
 
-#define DELAY_TEXT N_("Delay")
+#define DELAY_TEXT N_("Delay (ms)")
 #define DELAY_LONGTEXT N_("Pictures coming from the picture video outputs " \
         "will be delayed according to this value (in milliseconds, should be "\
         ">= 100 ms). For high values, you will need to raise caching values." )
@@ -68,9 +68,9 @@
     "be used to configure a place holder stream when the real source " \
     "breaks. Source and placeholder streams should have the same format." )
 
-#define PLACEHOLDER_DELAY_TEXT N_( "Placeholder delay" )
+#define PLACEHOLDER_DELAY_TEXT N_( "Placeholder delay (ms)" )
 #define PLACEHOLDER_DELAY_LONGTEXT N_( \
-    "Delay (in ms) before the placeholder kicks in." )
+    "Delay (in milliseconds) before the placeholder kicks in." )
 
 #define PLACEHOLDER_IFRAME_TEXT N_( "Wait for I frame before toggling placeholder" )
 #define PLACEHOLDER_IFRAME_LONGTEXT N_( \

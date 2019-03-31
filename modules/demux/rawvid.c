@@ -43,11 +43,11 @@ static void Close( demux_t * );
 #define FPS_LONGTEXT N_("This is the desired frame rate when " \
     "playing raw video streams. In the form 30000/1001 or 29.97")
 
-#define WIDTH_TEXT N_("Width")
+#define WIDTH_TEXT N_("Width (pixels)")
 #define WIDTH_LONGTEXT N_("This specifies the width in pixels of the raw " \
     "video stream.")
 
-#define HEIGHT_TEXT N_("Height")
+#define HEIGHT_TEXT N_("Height (pixels)")
 #define HEIGHT_LONGTEXT N_("This specifies the height in pixels of the raw " \
     "video stream.")
 

@@ -61,7 +61,7 @@ static void Close(intf_thread_t *);
   "the network master clock to use for clock synchronization.")
 
 #define NETSYNC_TIMEOUT_TEXT N_("UDP timeout (in ms)")
-#define NETSYNC_TIMEOUT_LONGTEXT N_("Length of time (in ms) " \
+#define NETSYNC_TIMEOUT_LONGTEXT N_("Length of time (in milliseconds) " \
   "until aborting data reception.")
 
 vlc_plugin_begin()

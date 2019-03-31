@@ -80,12 +80,12 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_AUDIO_FILTER, 0, Open, Close )
 
     set_subcategory( SUBCAT_AUDIO_AFILTER )
-    add_float( "delay-time", 20, N_("Delay time"),
+    add_float( "delay-time", 20, N_("Delay time (ms)"),
         N_("Time in milliseconds of the average delay. Note average"), true )
-    add_float( "sweep-depth", 6, N_("Sweep Depth"),
+    add_float( "sweep-depth", 6, N_("Sweep Depth (ms)"),
         N_("Time in milliseconds of the maximum sweep depth. Thus, the sweep "
             "range will be delay-time +/- sweep-depth."), true )
-    add_float( "sweep-rate", 6, N_("Sweep Rate"),
+    add_float( "sweep-rate", 6, N_("Sweep Rate (ms)"),
         N_("Rate of change of sweep depth in milliseconds shift per second "
            "of play"), true )
     add_float_with_range( "feedback-gain", 0.5, -0.9, 0.9,

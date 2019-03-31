@@ -53,10 +53,10 @@
 #define DEVICE_LONGTEXT \
     "Framebuffer device to use for rendering (usually /dev/dri/card0)."
 
-#define VLC_CHROMA_TEXT "Image format used by VLC"
+#define VLC_CHROMA_TEXT "Image format used by VLC (fourcc)"
 #define VLC_CHROMA_LONGTEXT "Chroma fourcc request to VLC for output format"
 
-#define DRM_CHROMA_TEXT "Image format used by DRM"
+#define DRM_CHROMA_TEXT "Image format used by DRM (fourcc)"
 #define DRM_CHROMA_LONGTEXT "Chroma fourcc override for DRM framebuffer format selection"
 
 /*

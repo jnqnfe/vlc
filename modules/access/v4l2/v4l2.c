@@ -50,7 +50,7 @@
 #define STANDARD_TEXT N_( "Standard" )
 #define STANDARD_LONGTEXT N_( \
     "Video standard (Default, SECAM, PAL, or NTSC)." )
-#define CHROMA_TEXT N_("Video input chroma format")
+#define CHROMA_TEXT N_("Video input chroma format (fourcc)")
 #define CHROMA_LONGTEXT N_( \
     "Force the Video4Linux2 video device to use a specific chroma format " \
     "(eg. I420 or I422 for raw images, MJPG for M-JPEG compressed input). " \
@@ -62,8 +62,8 @@
 #define AUDIO_INPUT_TEXT N_( "Audio input" )
 #define AUDIO_INPUT_LONGTEXT N_( \
     "Audio input of the card to use (see debug)." )
-#define WIDTH_TEXT N_( "Width" )
-#define HEIGHT_TEXT N_( "Height" )
+#define WIDTH_TEXT N_( "Width (pixels)" )
+#define HEIGHT_TEXT N_( "Height (pixels)" )
 #define SIZE_LONGTEXT N_( \
     "The specified pixel resolution is forced " \
     "(if both width and height are strictly positive)." )
@@ -72,7 +72,7 @@
 
 #define RADIO_DEVICE_TEXT N_( "Radio device" )
 #define RADIO_DEVICE_LONGTEXT N_("Radio tuner device node." )
-#define FREQUENCY_TEXT N_("Frequency")
+#define FREQUENCY_TEXT N_("Frequency (Hz or KHz)")
 #define FREQUENCY_LONGTEXT N_( \
     "Tuner frequency in Hz or kHz (see debug output)." )
 #define TUNER_AUDIO_MODE_TEXT N_("Audio mode")

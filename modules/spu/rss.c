@@ -125,12 +125,12 @@ typedef struct
 
 #define MSG_TEXT N_("Feed URLs")
 #define MSG_LONGTEXT N_("RSS/Atom feed '|' (pipe) separated URLs.")
-#define SPEED_TEXT N_("Speed of feeds")
+#define SPEED_TEXT N_("Speed of feeds (µs)")
 #define SPEED_LONGTEXT N_("Speed of the RSS/Atom feeds in microseconds (bigger is slower).")
 #define LENGTH_TEXT N_("Max length")
 #define LENGTH_LONGTEXT N_("Maximum number of characters displayed on the " \
                 "screen." )
-#define TTL_TEXT N_("Refresh time")
+#define TTL_TEXT N_("Refresh time (secs)")
 #define TTL_LONGTEXT N_("Number of seconds between each forced refresh " \
         "of the feeds. 0 means that the feeds are never updated." )
 #define IMAGE_TEXT N_("Feed images")

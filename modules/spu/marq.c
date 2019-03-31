@@ -96,11 +96,11 @@ typedef struct
 #define POSX_LONGTEXT N_("X offset, from the left screen edge." )
 #define POSY_TEXT N_("Y offset")
 #define POSY_LONGTEXT N_("Y offset, down from the top." )
-#define TIMEOUT_TEXT N_("Timeout")
+#define TIMEOUT_TEXT N_("Timeout (ms)")
 #define TIMEOUT_LONGTEXT N_("Number of milliseconds the marquee must remain " \
                             "displayed. Default value is " \
                             "0 (remains forever).")
-#define REFRESH_TEXT N_("Refresh period in ms")
+#define REFRESH_TEXT N_("Refresh period (ms)")
 #define REFRESH_LONGTEXT N_("Number of milliseconds between string updates. " \
                             "This is mainly useful when using meta data " \
                             "or time format string sequences.")

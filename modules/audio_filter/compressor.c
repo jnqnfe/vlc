@@ -154,23 +154,23 @@ static int MakeupGainCallback   ( vlc_object_t *, char const *, vlc_value_t,
 #define RMS_PEAK_TEXT N_( "RMS/peak" )
 #define RMS_PEAK_LONGTEXT N_( "Set the RMS/peak." )
 
-#define ATTACK_TEXT N_( "Attack time" )
+#define ATTACK_TEXT N_( "Attack time (ms)" )
 #define ATTACK_LONGTEXT N_( "Set the attack time in milliseconds." )
 
-#define RELEASE_TEXT N_( "Release time" )
+#define RELEASE_TEXT N_( "Release time (ms)" )
 #define RELEASE_LONGTEXT N_( "Set the release time in milliseconds." )
 
-#define THRESHOLD_TEXT N_( "Threshold level" )
-#define THRESHOLD_LONGTEXT N_( "Set the threshold level in dB." )
+#define THRESHOLD_TEXT N_( "Threshold level (dB)" )
+#define THRESHOLD_LONGTEXT N_( "Set the threshold level in decibels." )
 
 #define RATIO_TEXT N_( "Ratio" )
 #define RATIO_LONGTEXT N_( "Set the ratio (n:1)." )
 
-#define KNEE_TEXT N_( "Knee radius" )
-#define KNEE_LONGTEXT N_( "Set the knee radius in dB." )
+#define KNEE_TEXT N_( "Knee radius (dB)" )
+#define KNEE_LONGTEXT N_( "Set the knee radius in decibels." )
 
-#define MAKEUP_GAIN_TEXT N_( "Makeup gain" )
-#define MAKEUP_GAIN_LONGTEXT N_( "Set the makeup gain in dB (0 ... 24)." )
+#define MAKEUP_GAIN_TEXT N_( "Makeup gain (dB)" )
+#define MAKEUP_GAIN_LONGTEXT N_( "Set the makeup gain in decibels (0 ... 24)." )
 
 vlc_plugin_begin()
     set_shortname( N_("Compressor") )

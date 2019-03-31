@@ -55,7 +55,7 @@ static void Close ( demux_t * );
 #define REVERB_LONGTEXT N_("Enable reverberation" )
 #define REVERB_LEVEL_LONGTEXT N_( "Reverberation level (from 0 " \
                 "to 100, default value is 0)." )
-#define REVERB_DELAY_LONGTEXT N_("Reverberation delay, in ms." \
+#define REVERB_DELAY_LONGTEXT N_("Reverberation delay, in milliseconds." \
                 " Usual values are from 40 to 200ms." )
 #define MEGABASS_LONGTEXT N_( "Enable megabass mode" )
 #define MEGABASS_LEVEL_LONGTEXT N_("Megabass mode level (from 0 to 100, " \
@@ -65,7 +65,7 @@ static void Close ( demux_t * );
                 "effect applies. Valid values are from 10 to 100 Hz." )
 #define SURROUND_LEVEL_LONGTEXT N_( "Surround effect level (from 0 to 100, " \
                 "default value is 0)." )
-#define SURROUND_DELAY_LONGTEXT N_("Surround delay, in ms. Usual values are " \
+#define SURROUND_DELAY_LONGTEXT N_("Surround delay, in milliseconds. Usual values are " \
                 "from 5 to 40 ms." )
 
 vlc_plugin_begin ()
@@ -84,14 +84,14 @@ vlc_plugin_begin ()
     add_integer_with_range( "mod-reverb-level", 0, 0, 100,
              N_("Reverberation level"), REVERB_LEVEL_LONGTEXT, true )
     add_integer_with_range( "mod-reverb-delay", 40, 0, 1000,
-             N_("Reverberation delay"), REVERB_DELAY_LONGTEXT, true )
+             N_("Reverberation delay (ms)"), REVERB_DELAY_LONGTEXT, true )
 
     add_bool( "mod-megabass", false, N_("Mega bass"),
                     MEGABASS_LONGTEXT, false )
     add_integer_with_range( "mod-megabass-level", 0, 0, 100,
               N_("Mega bass level"), MEGABASS_LEVEL_LONGTEXT, true )
     add_integer_with_range( "mod-megabass-range", 10, 10, 100,
-              N_("Mega bass cutoff"), MEGABASS_RANGE_LONGTEXT, true )
+              N_("Mega bass cutoff (Hz)"), MEGABASS_RANGE_LONGTEXT, true )
 
     add_bool( "mod-surround", false, N_("Surround"), N_("Surround"),
                false )

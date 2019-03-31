@@ -49,13 +49,13 @@
       "Current effects include: dummy, scope, spectrum, "\
       "spectrometer and vuMeter." )
 
-#define WIDTH_TEXT N_( "Video width" )
+#define WIDTH_TEXT N_( "Video width (pixels)" )
 #define WIDTH_LONGTEXT N_( \
-      "The width of the effects video window, in pixels." )
+      "The width of the effects video window." )
 
-#define HEIGHT_TEXT N_( "Video height" )
+#define HEIGHT_TEXT N_( "Video height (pixels)" )
 #define HEIGHT_LONGTEXT N_( \
-      "The height of the effects video window, in pixels." )
+      "The height of the effects video window." )
 
 #define FFT_WINDOW_TEXT N_( "FFT window" )
 #define FFT_WINDOW_LONGTEXT N_( \

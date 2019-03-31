@@ -95,7 +95,7 @@ static void Close ( demux_t * );
   "16 char string (8 hexadecimal bytes).")
 
 
-#define CPKT_TEXT N_("Packet size in bytes to decrypt")
+#define CPKT_TEXT N_("Packet size to decrypt (bytes)")
 #define CPKT_LONGTEXT N_("Specify the size of the TS packet to decrypt. " \
     "The decryption routines subtract the TS-header from the value before " \
     "decrypting." )

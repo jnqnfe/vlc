@@ -136,7 +136,7 @@ static const char *const ts_standards_list_text[] =
 
 #define SHAPING_TEXT N_("Shaping delay (ms)")
 #define SHAPING_LONGTEXT N_("Cut the " \
-  "stream in slices of the given duration, and ensure a constant bitrate " \
+  "stream in slices of the given duration (milliseconds), and ensure a constant bitrate " \
   "between the two boundaries. This avoids having huge bitrate peaks, " \
   "especially for reference frames." )
 
@@ -176,7 +176,7 @@ static const char *const ts_standards_list_text[] =
 #define CU_LONGTEXT N_("CSA encryption key used. It can be the odd/first/1 " \
   "(default) or the even/second/2 one.")
 
-#define CPKT_TEXT N_("Packet size in bytes to encrypt")
+#define CPKT_TEXT N_("Packet size to encrypt (bytes)")
 #define CPKT_LONGTEXT N_("Size of the TS packet to encrypt. " \
     "The encryption routines subtract the TS-header from the value before " \
     "encrypting." )

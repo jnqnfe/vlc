@@ -61,9 +61,9 @@ static void Close  ( sout_mux_t * );
 #define COMMENT_LONGTEXT N_("Comment to put in ASF comments." )
 #define RATING_TEXT N_("Rating")
 #define RATING_LONGTEXT N_("\"Rating\" to put in ASF comments." )
-#define PACKETSIZE_TEXT N_("Packet Size")
-#define PACKETSIZE_LONGTEXT N_("ASF packet size -- default is 4096 bytes")
-#define BITRATE_TEXT N_("Bitrate override")
+#define PACKETSIZE_TEXT N_("Packet Size (bytes)")
+#define PACKETSIZE_LONGTEXT N_("ASF packet size; default is 4096 bytes")
+#define BITRATE_TEXT N_("Bitrate override (bytes)")
 #define BITRATE_LONGTEXT N_("Do not try to guess ASF bitrate. Setting this, allows you to control how Windows Media Player will cache streamed content. Set to audio+video bitrate in bytes")
 
 

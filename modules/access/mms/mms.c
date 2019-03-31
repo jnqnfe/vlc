@@ -55,7 +55,7 @@ static void Close( demux_t * );
     "Select the stream with the maximum bitrate under that limit."  )
 
 #define TIMEOUT_TEXT N_("TCP/UDP timeout (ms)")
-#define TIMEOUT_LONGTEXT N_("Amount of time (in ms) to wait before aborting network reception of data. Note that there will be 10 retries before completely giving up.")
+#define TIMEOUT_LONGTEXT N_("Amount of time (in milliseconds) to wait before aborting network reception of data. Note that there will be 10 retries before completely giving up.")
 
 vlc_plugin_begin ()
     set_shortname( "MMS" )

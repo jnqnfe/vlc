@@ -52,7 +52,7 @@ static void Close   ( intf_thread_t * );
 #define APPLICATION_NAME "VLC media player"
 
 #define TIMEOUT_TEXT N_("Timeout (ms)")
-#define TIMEOUT_LONGTEXT N_("How long the notification will be displayed.")
+#define TIMEOUT_LONGTEXT N_("How long the notification will be displayed (in milliseconds).")
 
 vlc_plugin_begin ()
     set_shortname( N_( "Notify" ) )

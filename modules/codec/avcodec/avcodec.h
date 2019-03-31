@@ -139,12 +139,9 @@ int ffmpeg_OpenCodec( decoder_t *p_dec, AVCodecContext *, const AVCodec * );
   "motion estimation algorithms. This requires more CPU." )
 
 #define ENC_PRE_ME_TEXT N_( "Pre-motion estimation" )
-#define ENC_PRE_ME_LONGTEXT N_( "Enable the pre-motion " \
-  "estimation algorithm.")
 
-#define ENC_RC_BUF_TEXT N_( "Rate control buffer size" )
-#define ENC_RC_BUF_LONGTEXT N_( "Rate control " \
-  "buffer size (in kbytes). A bigger buffer will allow for better rate " \
+#define ENC_RC_BUF_TEXT N_( "Rate control buffer size (KiB)" )
+#define ENC_RC_BUF_LONGTEXT N_( "A bigger buffer will allow for better rate " \
   "control, but will cause a delay in the stream." )
 
 #define ENC_RC_BUF_AGGR_TEXT N_( "Rate control buffer aggressiveness" )

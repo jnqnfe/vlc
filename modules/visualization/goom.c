@@ -43,12 +43,12 @@
 static int  Open         ( filter_t * );
 static void Close        ( filter_t * );
 
-#define WIDTH_TEXT N_("Goom display width")
-#define HEIGHT_TEXT N_("Goom display height")
+#define WIDTH_TEXT N_("Display width (pixels)")
+#define HEIGHT_TEXT N_("Display height (pixels)")
 #define RES_LONGTEXT N_("This allows you to set the resolution of the " \
   "Goom display (bigger resolution will be prettier but more CPU intensive).")
 
-#define SPEED_TEXT N_("Goom animation speed")
+#define SPEED_TEXT N_("Animation speed")
 #define SPEED_LONGTEXT N_("This allows you to set the animation speed " \
   "(between 1 and 10, defaults to 6).")
 

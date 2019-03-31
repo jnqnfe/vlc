@@ -71,7 +71,7 @@ static void Close( stream_t * );
 
 #define HELP_TEXT N_("Support for VDR recordings (http://www.tvdr.de/).")
 
-#define CHAPTER_OFFSET_TEXT N_("Chapter offset in ms")
+#define CHAPTER_OFFSET_TEXT N_("Chapter offset (ms)")
 #define CHAPTER_OFFSET_LONGTEXT N_( \
     "Move all chapters. This value should be set in milliseconds." )
 

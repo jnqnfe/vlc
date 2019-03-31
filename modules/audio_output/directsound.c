@@ -63,7 +63,7 @@ static const char *const speaker_list[] = { "Windows default", "Mono", "Stereo",
 #define SPEAKER_LONGTEXT N_("Select speaker configuration you want to use. " \
     "This option doesn't upmix! So NO e.g. Stereo -> 5.1 conversion." )
 
-#define VOLUME_TEXT N_("Audio volume")
+#define VOLUME_TEXT N_("Audio volume (dB)")
 #define VOLUME_LONGTEXT N_("Audio volume in hundredths of decibels (dB).")
 
 vlc_plugin_begin ()

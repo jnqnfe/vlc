@@ -173,10 +173,10 @@ static block_t *Encode   ( encoder_t *, block_t * );
 #define ENC_QUALITY_LONGTEXT N_( \
   "Enforce a quality between 1 (low) and 10 (high), instead " \
   "of specifying a particular bitrate. This will produce a VBR stream." )
-#define ENC_MAXBR_TEXT N_("Maximum encoding bitrate")
+#define ENC_MAXBR_TEXT N_("Maximum encoding bitrate (kbps)")
 #define ENC_MAXBR_LONGTEXT N_( \
   "Maximum bitrate in kbps. This is useful for streaming applications." )
-#define ENC_MINBR_TEXT N_("Minimum encoding bitrate")
+#define ENC_MINBR_TEXT N_("Minimum encoding bitrate (kbps)")
 #define ENC_MINBR_LONGTEXT N_( \
   "Minimum bitrate in kbps. This is useful for encoding for a fixed-size channel." )
 #define ENC_CBR_TEXT N_("CBR encoding")

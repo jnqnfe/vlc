@@ -106,12 +106,8 @@ static int yCallback( vlc_object_t *, char const *,
 #define ID_LONGTEXT N_( \
     "Specify an identifier string for this subpicture" )
 
-#define WIDTH_TEXT N_("Video width")
-#define WIDTH_LONGTEXT N_( \
-    "Output video width." )
-#define HEIGHT_TEXT N_("Video height")
-#define HEIGHT_LONGTEXT N_( \
-    "Output video height." )
+#define WIDTH_TEXT N_("Video width (pixels)")
+#define HEIGHT_TEXT N_("Video height (pixels)")
 #define RATIO_TEXT N_("Sample aspect ratio")
 #define RATIO_LONGTEXT N_( \
     "Sample aspect ratio of the destination (1:1, 3:4, 2:3)." )
@@ -120,7 +116,7 @@ static int yCallback( vlc_object_t *, char const *,
 #define VFILTER_LONGTEXT N_( \
     "Video filters will be applied to the video stream." )
 
-#define CHROMA_TEXT N_("Image chroma")
+#define CHROMA_TEXT N_("Image chroma (fourcc)")
 #define CHROMA_LONGTEXT N_( \
     "Force the use of a specific chroma. Use YUVA if you're planning " \
     "to use the Alphamask or Bluescreen video filter." )
@@ -150,9 +146,9 @@ vlc_plugin_begin ()
     add_string( CFG_PREFIX "id", "Id", ID_TEXT, ID_LONGTEXT,
                 false )
     add_integer( CFG_PREFIX "width", 0, WIDTH_TEXT,
-                 WIDTH_LONGTEXT, true )
+                 NULL, true )
     add_integer( CFG_PREFIX "height", 0, HEIGHT_TEXT,
-                 HEIGHT_LONGTEXT, true )
+                 NULL, true )
     add_string( CFG_PREFIX "sar", "1:1", RATIO_TEXT,
                 RATIO_LONGTEXT, false )
     add_string( CFG_PREFIX "chroma", NULL, CHROMA_TEXT, CHROMA_LONGTEXT,

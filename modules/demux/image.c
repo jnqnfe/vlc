@@ -54,12 +54,12 @@ static void Close(demux_t *);
 #define DECODE_LONGTEXT N_( \
     "Decode at the demuxer stage")
 
-#define CHROMA_TEXT N_("Forced chroma")
+#define CHROMA_TEXT N_("Forced chroma (fourcc)")
 #define CHROMA_LONGTEXT N_( \
     "If non empty and image-decode is true, the image will be " \
     "converted to the specified chroma.")
 
-#define DURATION_TEXT N_("Duration in seconds")
+#define DURATION_TEXT N_("Duration (secs)")
 #define DURATION_LONGTEXT N_( \
     "Duration in seconds before simulating an end of file. " \
     "A negative value means an unlimited play time.")

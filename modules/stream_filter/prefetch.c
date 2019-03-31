@@ -543,11 +543,11 @@ vlc_plugin_begin()
     set_capability(VLC_CAP_STREAM_FILTER, 0, Open, Close)
 
     set_subcategory(SUBCAT_INPUT_STREAM_FILTER)
-    add_integer("prefetch-buffer-size", 1 << 14, N_("Buffer size"),
-                N_("Prefetch buffer size (KiB)"), false)
+    add_integer("prefetch-buffer-size", 1 << 14, N_("Buffer size (KiB)"),
+                NULL, false)
         change_integer_range(4, 1 << 20)
     add_obsolete_integer("prefetch-read-size") /* since 4.0.0 */
-    add_integer("prefetch-seek-threshold", 1 << 14, N_("Seek threshold"),
-                N_("Prefetch forward seek threshold (bytes)"), true)
+    add_integer("prefetch-seek-threshold", 1 << 14, N_("Forward seek threshold (bytes)"),
+                NULL, true)
         change_integer_range(0, UINT64_C(1) << 60)
 vlc_plugin_end()

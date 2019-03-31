@@ -44,16 +44,16 @@
 #define SILENCE_TEXT N_("Defines if silence alarm information should be sent")
 #define SILENCE_LONGTEXT N_("Defines if silence alarm information should be sent. "\
                 "1 if the information should be sent, 0 otherwise (default 1)." )
-#define TIME_WINDOW_TEXT N_("Time window to use in ms")
-#define TIME_WINDOW_LONGTEXT N_("Time Window during when the audio level is measured in ms for silence detection. "\
+#define TIME_WINDOW_TEXT N_("Time window to use (in ms)")
+#define TIME_WINDOW_LONGTEXT N_("Time Window during when the audio level is measured in milliseconds for silence detection. "\
                 "If the audio level is under the threshold during this time, "\
                 "an alarm is sent (default 5000)." )
 #define ALARM_THRESHOLD_TEXT N_("Minimum Audio level to raise the alarm")
 #define ALARM_THRESHOLD_LONGTEXT N_("Threshold to be attained to raise an alarm. "\
                 "If the audio level is under the threshold during this time, "\
                 "an alarm is sent (default 0.1)." )
-#define REPETITION_TIME_TEXT N_("Time between two alarm messages in ms" )
-#define REPETITION_TIME_LONGTEXT N_("Time between two alarm messages in ms. "\
+#define REPETITION_TIME_TEXT N_("Time between two alarm messages (in ms)" )
+#define REPETITION_TIME_LONGTEXT N_("Time between two alarm messages in milliseconds. "\
                 "This value is used to avoid alarm saturation (default 2000)." )
 
 #define CFG_PREFIX "audiobargraph_a-"

@@ -52,11 +52,11 @@
 static int Open(filter_t *);
 static void Close(filter_t *);
 
-#define WIDTH_TEXT N_("Video width")
-#define WIDTH_LONGTEXT N_("The width of the visualization window, in pixels.")
+#define WIDTH_TEXT N_("Video width (pixels)")
+#define WIDTH_LONGTEXT N_("The width of the visualization window.")
 
-#define HEIGHT_TEXT N_("Video height")
-#define HEIGHT_LONGTEXT N_("The height of the visualization window, in pixels.")
+#define HEIGHT_TEXT N_("Video height (pixels)")
+#define HEIGHT_LONGTEXT N_("The height of the visualization window.")
 
 vlc_plugin_begin()
     set_shortname(N_("glSpectrum"))

@@ -55,7 +55,7 @@ static block_t *Convert( filter_t *, block_t * );
      "long periods of time.\nIt works with any source format from mono " \
      "to 7.1.")
 
-#define HEADPHONE_DIM_TEXT N_("Characteristic dimension")
+#define HEADPHONE_DIM_TEXT N_("Characteristic dimension (meters)")
 #define HEADPHONE_DIM_LONGTEXT N_( \
      "Distance between front left speaker and listener in meters.")
 

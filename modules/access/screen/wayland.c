@@ -453,19 +453,19 @@ static void Close(demux_t *demux)
 #define FPS_LONGTEXT N_( \
     "How many times the screen content should be refreshed per second.")
 
-#define LEFT_TEXT N_("Region left column")
+#define LEFT_TEXT N_("Region left column (pixels)")
 #define LEFT_LONGTEXT N_( \
     "Abscissa of the capture region in pixels.")
 
-#define TOP_TEXT N_("Region top row")
+#define TOP_TEXT N_("Region top row (pixels)")
 #define TOP_LONGTEXT N_( \
     "Ordinate of the capture region in pixels.")
 
-#define WIDTH_TEXT N_("Capture region width")
+#define WIDTH_TEXT N_("Capture region width (pixels)")
 #define WIDTH_LONGTEXT N_( \
     "Pixel width of the capture region, or 0 for full width")
 
-#define HEIGHT_TEXT N_("Capture region height")
+#define HEIGHT_TEXT N_("Capture region height (pixels)")
 #define HEIGHT_LONGTEXT N_( \
     "Pixel height of the capture region, or 0 for full height")
 

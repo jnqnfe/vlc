@@ -32,7 +32,7 @@
 #include <vlc_plugin.h>
 #include <vlc_vout_display.h>
 
-#define CHROMA_TEXT N_("Dummy image chroma format")
+#define CHROMA_TEXT N_("Dummy image chroma format (fourcc)")
 #define CHROMA_LONGTEXT N_( \
     "Force the dummy video output to create images using a specific chroma " \
     "format instead of trying to improve performances by using the most " \

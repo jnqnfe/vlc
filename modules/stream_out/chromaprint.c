@@ -53,8 +53,8 @@ static int   Send( sout_stream_t *, void *, block_t * );
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-#define DURATION_TEXT N_("Duration of the fingerprinting" )
-#define DURATION_LONGTEXT N_("Default: 90sec")
+#define DURATION_TEXT N_("Duration of the fingerprinting (secs)" )
+#define DURATION_LONGTEXT N_("Default: 90 (seconds)")
 
 vlc_plugin_begin ()
     set_description( N_("Chromaprint stream output") )

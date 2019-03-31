@@ -45,7 +45,7 @@ static void Close( demux_t * );
 #define CHANNELS_TEXT N_("Audio channels")
 #define CHANNELS_LONGTEXT N_("Audio channels in input stream. Numeric value >0. Default is 2.")
 
-#define FOURCC_TEXT N_("FOURCC code of raw input format")
+#define FOURCC_TEXT N_("Raw input format (fourcc)")
 #define FOURCC_LONGTEXT N_( \
     "FOURCC code of the raw input format. This is a four character string." )
 
