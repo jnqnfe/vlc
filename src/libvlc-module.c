@@ -2015,10 +2015,10 @@ vlc_plugin_begin ()
     add_integer( "preparse-timeout", 5000, PREPARSE_TIMEOUT_TEXT,
                  PREPARSE_TIMEOUT_LONGTEXT, false )
 
-    add_integer( "preparse-threads", 1, PREPARSE_THREADS_TEXT,
+    add_integer_with_range( "preparse-threads", 1, 0, INT_MAX, PREPARSE_THREADS_TEXT,
                  PREPARSE_THREADS_LONGTEXT, false )
 
-    add_integer( "fetch-art-threads", 1, FETCH_ART_THREADS_TEXT,
+    add_integer_with_range( "fetch-art-threads", 1, 0, INT_MAX, FETCH_ART_THREADS_TEXT,
                  FETCH_ART_THREADS_LONGTEXT, false )
 
     add_bool( "metadata-network-access", false, METADATA_NETWORK_TEXT, NULL, false )
