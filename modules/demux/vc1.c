@@ -28,6 +28,8 @@
 # include "config.h"
 #endif
 
+#include <float.h>
+
 #include <vlc_common.h>
 #include <vlc_plugin.h>
 #include <vlc_demux.h>
@@ -49,7 +51,7 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_DEMUX, 0, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_DEMUX )
-    add_float( "vc1-fps", 25.0, FPS_TEXT, FPS_LONGTEXT, true )
+    add_float_with_range( "vc1-fps", 25.0, 0.0, FLT_MAX, FPS_TEXT, FPS_LONGTEXT, true )
 vlc_plugin_end ()
 
 /*****************************************************************************
@@ -103,8 +105,6 @@ static int Open( demux_t *p_demux )
     p_sys->p_es        = NULL;
     p_sys->i_dts       = 0;
     p_sys->f_fps = var_CreateGetFloat( p_demux, "vc1-fps" );
-    if( p_sys->f_fps < 0.001f )
-        p_sys->f_fps = 0.0f;
 
     /* Load the packetizer */
     es_format_Init( &fmt, VIDEO_ES, VLC_CODEC_VC1 );
