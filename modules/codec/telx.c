@@ -29,6 +29,7 @@
 #endif
 #include <assert.h>
 #include <stdint.h>
+#include <limits.h>
 
 #include <vlc_common.h>
 #include <vlc_plugin.h>
@@ -72,7 +73,7 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_SPU_DECODER, 50, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_SCODEC )
-    add_integer( "telx-override-page", -1,
+    add_integer_with_range( "telx-override-page", -1, -1, INT_MAX,
                  OVERRIDE_PAGE_TEXT, OVERRIDE_PAGE_LONGTEXT, true )
     add_bool( "telx-ignore-subtitle-flag", false,
               IGNORE_SUB_FLAG_TEXT, IGNORE_SUB_FLAG_LONGTEXT, true )
