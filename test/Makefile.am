@@ -36,7 +36,8 @@ check_PROGRAMS = \
 	test_modules_packetizer_helpers \
 	test_modules_packetizer_hxxx \
 	test_modules_keystore \
-	test_modules_demux_dashuri
+	test_modules_demux_dashuri \
+	test_modules_unique_opts
 if ENABLE_SOUT
 check_PROGRAMS += test_modules_tls
 endif
@@ -142,6 +143,8 @@ test_modules_keystore_SOURCES = modules/keystore/test.c
 test_modules_keystore_LDADD = $(LIBVLCCORE) $(LIBVLC)
 test_modules_tls_SOURCES = modules/misc/tls.c
 test_modules_tls_LDADD = $(LIBVLCCORE) $(LIBVLC)
+test_modules_unique_opts_SOURCES = modules/unique_opts.c
+test_modules_unique_opts_LDADD = $(LIBVLCCORE) $(LIBVLC)
 test_modules_demux_dashuri_SOURCES = modules/demux/dashuri.cpp
 
 checkall:
