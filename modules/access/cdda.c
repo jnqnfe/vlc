@@ -40,6 +40,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <limits.h>
 
 #include <vlc_common.h>
 #include <vlc_demux.h>
@@ -990,6 +991,16 @@ static void Close(stream_t *stream)
 
 #define HELP_TEXT N_("Usage hint: [cdda:][device][@[track]]")
 
+#define TRACK_TEXT N_("Track number")
+
+#define FIRST_SECTOR_TEXT N_("First sector")
+#define FIRST_SECTOR_LONGTEXT N_( \
+    "First sector, -1 to ignore and obtain from input item.")
+
+#define LAST_SECTOR_TEXT N_("Last sector")
+#define LAST_SECTOR_LONGTEXT N_( \
+    "Last sector, -1 to ignore and obtain from input item.")
+
 vlc_plugin_begin ()
     set_help (HELP_TEXT)
 
@@ -1002,11 +1013,13 @@ vlc_plugin_begin ()
 
     add_loadfile("cd-audio", CD_DEVICE, CDAUDIO_DEV_TEXT, CDAUDIO_DEV_LONGTEXT)
 
-    add_integer( "cdda-track", 0 , NULL, NULL, true )
+    add_integer_with_range( "cdda-track", 0, 0, INT_MAX, TRACK_TEXT, NULL, true )
         change_volatile ()
-    add_integer( "cdda-first-sector", -1, NULL, NULL, true )
+    add_integer_with_range( "cdda-first-sector", -1, -1, INT_MAX,
+            FIRST_SECTOR_TEXT, FIRST_SECTOR_LONGTEXT, true )
         change_volatile ()
-    add_integer( "cdda-last-sector", -1, NULL, NULL, true )
+    add_integer_with_range( "cdda-last-sector", -1, -1, INT_MAX,
+            LAST_SECTOR_TEXT, LAST_SECTOR_LONGTEXT, true )
         change_volatile ()
 
     add_string( "musicbrainz-server", MUSICBRAINZ_DEFAULT_SERVER,
