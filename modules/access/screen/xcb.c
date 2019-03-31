@@ -26,6 +26,7 @@
 #include <stdarg.h>
 #include <assert.h>
 #include <errno.h>
+#include <float.h>
 #include <xcb/xcb.h>
 #include <xcb/composite.h>
 #ifdef HAVE_SYS_SHM_H
@@ -73,7 +74,7 @@ vlc_plugin_begin ()
     set_capability (VLC_CAP_ACCESS, 0, Open, Close)
 
     set_subcategory (SUBCAT_INPUT_ACCESS)
-    add_float ("screen-fps", 2.0, FPS_TEXT, FPS_LONGTEXT, true)
+    add_float_with_range ("screen-fps", 2.0, 0.0, FLT_MAX, FPS_TEXT, FPS_LONGTEXT, true)
     add_integer ("screen-left", 0, LEFT_TEXT, LEFT_LONGTEXT, true)
         change_integer_range (-32768, 32767)
         change_safe ()
