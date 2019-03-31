@@ -1548,15 +1548,15 @@ vlc_plugin_begin ()
               SNAP_PREVIEW_LONGTEXT, false )
     add_bool( "snapshot-sequential", false, SNAP_SEQUENTIAL_TEXT,
               SNAP_SEQUENTIAL_LONGTEXT, false )
-    add_integer( "snapshot-width", -1, SNAP_WIDTH_TEXT,
+    add_integer_with_range( "snapshot-width", -1, -1, INT_MAX, SNAP_WIDTH_TEXT,
                  SNAP_WIDTH_LONGTEXT, true )
-    add_integer( "snapshot-height", -1, SNAP_HEIGHT_TEXT,
+    add_integer_with_range( "snapshot-height", -1, -1, INT_MAX, SNAP_HEIGHT_TEXT,
                  SNAP_HEIGHT_LONGTEXT, true )
 
     set_section( N_("Window properties" ), NULL )
-    add_integer( "width", -1, WIDTH_TEXT, WIDTH_LONGTEXT, true )
+    add_integer_with_range( "width", -1, -1, INT_MAX, WIDTH_TEXT, WIDTH_LONGTEXT, true )
         change_safe ()
-    add_integer( "height", -1, HEIGHT_TEXT, HEIGHT_LONGTEXT, true )
+    add_integer_with_range( "height", -1, -1, INT_MAX, HEIGHT_TEXT, HEIGHT_LONGTEXT, true )
         change_safe ()
 #if defined(__APPLE__) || defined(_WIN32)
     add_integer( "video-x", 0, VIDEOX_TEXT, VIDEOX_LONGTEXT, true )
