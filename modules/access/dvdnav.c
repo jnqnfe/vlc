@@ -41,6 +41,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <unistd.h>     /* close() */
+#include <limits.h>
 
 #include <vlc_common.h>
 #include <vlc_plugin.h>
@@ -94,7 +95,7 @@ vlc_plugin_begin ()
 
     set_subcategory( SUBCAT_INPUT_ACCESS )
 
-    add_integer( "dvdnav-angle", 1, ANGLE_TEXT, ANGLE_LONGTEXT, false )
+    add_integer_with_range( "dvdnav-angle", 1, 1, INT_MAX, ANGLE_TEXT, ANGLE_LONGTEXT, false )
     add_bool( "dvdnav-menu", true, MENU_TEXT, MENU_LONGTEXT, false )
 
     //set_subcategory( SUBCAT_INPUT_DEMUX )
@@ -305,7 +306,6 @@ static int CommonOpen( demux_t *p_demux,
     }
 
     i_angle = var_CreateGetInteger( p_demux, "dvdnav-angle" );
-    if( i_angle <= 0 ) i_angle = 1;
 
     p_sys->still.b_enabled = false;
     vlc_mutex_init( &p_sys->still.lock );
