@@ -59,7 +59,7 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_VIDEO_SPLITTER, 0, Open, Close )
 
     set_subcategory( SUBCAT_VIDEO_SPLITTER )
-    add_integer( CFG_PREFIX "count", 2, COUNT_TEXT, COUNT_LONGTEXT, false )
+    add_integer_with_range( CFG_PREFIX "count", 2, 1, INT_MAX, COUNT_TEXT, COUNT_LONGTEXT, false )
     add_module_list(CFG_PREFIX "vout-list", VLC_CAP_STR_VOUT_DISPLAY, NULL,
                     VOUTLIST_TEXT, VOUTLIST_LONGTEXT)
 vlc_plugin_end ()
@@ -124,8 +124,6 @@ static int Open( video_splitter_t *p_splitter )
         /* No list was specified. We will use the default vout, and get
          * the number of clones from clone-count */
         p_splitter->i_output = var_CreateGetInteger( p_splitter, CFG_PREFIX "count" );
-        if( p_splitter->i_output <= 0 )
-            p_splitter->i_output = 1;
 
         p_splitter->p_output = calloc( p_splitter->i_output,
                                        sizeof(*p_splitter->p_output) );
