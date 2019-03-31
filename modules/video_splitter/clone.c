@@ -59,7 +59,7 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_VIDEO_SPLITTER, 0, Open, Close )
 
     set_subcategory( SUBCAT_VIDEO_SPLITTER )
-    add_integer_with_range( CFG_PREFIX "count", 2, 1, INT_MAX, COUNT_TEXT, COUNT_LONGTEXT, false )
+    add_integer_with_range( CFG_PREFIX "count", 2, 1, 100, COUNT_TEXT, COUNT_LONGTEXT, false )
     add_module_list(CFG_PREFIX "vout-list", VLC_CAP_STR_VOUT_DISPLAY, NULL,
                     VOUTLIST_TEXT, VOUTLIST_LONGTEXT)
 vlc_plugin_end ()
