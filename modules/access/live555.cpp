@@ -779,7 +779,7 @@ static int SessionsSetup( demux_t *p_demux )
             continue;
         }
 
-        if( p_sys->rtsp && i_client_port != -1 )
+        if( p_sys->rtsp && i_client_port > 0 )
         {
             sub->setClientPortNum( i_client_port );
             i_client_port += 2;
