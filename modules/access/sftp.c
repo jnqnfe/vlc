@@ -65,7 +65,7 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_ACCESS, 0, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_ACCESS )
-    add_integer( "sftp-port", 22, PORT_TEXT, PORT_LONGTEXT, true )
+    add_integer_with_range( "sftp-port", 22, 1, 65535, PORT_TEXT, PORT_LONGTEXT, true )
     add_string( "sftp-user", NULL, USER_TEXT, USER_LONGTEXT, false )
     add_password("sftp-pwd", NULL, PASS_TEXT, PASS_LONGTEXT)
 vlc_plugin_end ()
