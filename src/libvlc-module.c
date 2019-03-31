@@ -1744,7 +1744,7 @@ vlc_plugin_begin ()
 
     set_section( N_( "Network settings" ), NULL )
 
-    add_integer( "mtu", MTU_DEFAULT, MTU_TEXT, MTU_LONGTEXT, true )
+    add_integer_with_range( "mtu", MTU_DEFAULT, 0, INT_MAX, MTU_TEXT, MTU_LONGTEXT, true )
     add_integer( "ipv4-timeout", 5 * 1000, TIMEOUT_TEXT,
                  TIMEOUT_LONGTEXT, true )
         change_integer_range( 0, INT_MAX )
