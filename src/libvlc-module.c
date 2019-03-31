@@ -1686,13 +1686,13 @@ vlc_plugin_begin ()
                  INPUT_MENUTRACK_LANG_TEXT, INPUT_MENUTRACK_LANG_LONGTEXT,
                   false )
         change_safe ()
-    add_integer( "video-track-id", -1, INPUT_VIDEOTRACK_ID_TEXT,
+    add_integer_with_range( "video-track-id", -1, -1, INT_MAX, INPUT_VIDEOTRACK_ID_TEXT,
                  INPUT_VIDEOTRACK_ID_LONGTEXT, true )
         change_safe ()
-    add_integer( "audio-track-id", -1, INPUT_AUDIOTRACK_ID_TEXT,
+    add_integer_with_range( "audio-track-id", -1, -1, INT_MAX, INPUT_AUDIOTRACK_ID_TEXT,
                  INPUT_AUDIOTRACK_ID_LONGTEXT, true )
         change_safe ()
-    add_integer( "sub-track-id", -1,
+    add_integer_with_range( "sub-track-id", -1, -1, INT_MAX,
                  INPUT_SUBTRACK_ID_TEXT, INPUT_SUBTRACK_ID_LONGTEXT, true )
         change_safe ()
     add_integer( "captions", 608,
