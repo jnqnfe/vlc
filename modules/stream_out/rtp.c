@@ -219,7 +219,7 @@ vlc_plugin_begin ()
     add_string( SOUT_CFG_PREFIX "proto", "udp", PROTO_TEXT,
                 PROTO_LONGTEXT, false )
         change_string_list( ppsz_protos, ppsz_protocols )
-    add_integer( SOUT_CFG_PREFIX "port", 5004, PORT_TEXT,
+    add_integer_with_range( SOUT_CFG_PREFIX "port", 5004, 1, 65535, PORT_TEXT,
                  PORT_LONGTEXT, true )
     add_integer( SOUT_CFG_PREFIX "port-audio", 0, PORT_AUDIO_TEXT,
                  PORT_AUDIO_LONGTEXT, true )
