@@ -73,7 +73,7 @@ static void Close  ( intf_thread_t * );
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-#define THRESHOLD_TEXT N_( "Motion threshold (10-100)" )
+#define THRESHOLD_TEXT N_( "Motion threshold" )
 #define THRESHOLD_LONGTEXT N_( \
     "Amount of movement required for a mouse gesture to be recorded." )
 
@@ -93,7 +93,7 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_INTERFACE, 0, Open, Close )
 
     set_subcategory( SUBCAT_INTERFACE_CONTROL )
-    add_integer( "gestures-threshold", 30,
+    add_integer_with_range( "gestures-threshold", 30, 10, 100,
                  THRESHOLD_TEXT, THRESHOLD_LONGTEXT, true )
     add_string( "gestures-button", BUTTON_DEFAULT,
                 BUTTON_TEXT, BUTTON_LONGTEXT, false )
