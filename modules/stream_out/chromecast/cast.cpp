@@ -227,11 +227,11 @@ vlc_plugin_begin ()
     set_subcategory(SUBCAT_SOUT_STREAM)
     add_string(SOUT_CFG_PREFIX "ip", NULL, NULL, NULL, false)
         change_private()
-    add_integer(SOUT_CFG_PREFIX "port", CHROMECAST_CONTROL_PORT, NULL, NULL, false)
+    add_integer_with_range(SOUT_CFG_PREFIX "port", CHROMECAST_CONTROL_PORT, 1, 65535, NULL, NULL, false)
         change_private()
     add_bool(SOUT_CFG_PREFIX "video", true, NULL, NULL, false)
         change_private()
-    add_integer(SOUT_CFG_PREFIX "http-port", HTTP_PORT, HTTP_PORT_TEXT, HTTP_PORT_LONGTEXT, false)
+    add_integer_with_range(SOUT_CFG_PREFIX "http-port", HTTP_PORT, 1, 65535, HTTP_PORT_TEXT, HTTP_PORT_LONGTEXT, false)
     add_obsolete_string(SOUT_CFG_PREFIX "mux") /* since 4.0.0 */
     add_obsolete_string(SOUT_CFG_PREFIX "mime") /* since 4.0.0 */
     add_renderer_opts(SOUT_CFG_PREFIX)
