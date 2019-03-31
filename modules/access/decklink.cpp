@@ -73,8 +73,11 @@ static void Close(demux_t *);
 
 #define CHANNELS_TEXT N_("Number of audio channels")
 #define CHANNELS_LONGTEXT N_( \
-    "Number of input audio channels for DeckLink captures. " \
-    "Must be 2, 8 or 16. 0 disables audio input.")
+    "Number of input audio channels for DeckLink captures.")
+static const int pi_audio_channels_values[] = { 0, 2, 8, 16 };
+static const char *const ppsz_audio_channels_descriptions[] =
+{ N_("Disable"), N_("2"), N_("8"), N_("16") };
+
 
 #define VIDEO_CONNECTION_TEXT N_("Video connection")
 #define VIDEO_CONNECTION_LONGTEXT N_( \
@@ -119,6 +122,7 @@ vlc_plugin_begin ()
                  RATE_TEXT, RATE_LONGTEXT, true)
     add_integer("decklink-audio-channels", 2,
                  CHANNELS_TEXT, CHANNELS_LONGTEXT, true)
+        change_integer_list( pi_audio_channels_values, ppsz_audio_channels_descriptions )
     add_string("decklink-video-connection", 0,
                  VIDEO_CONNECTION_TEXT, VIDEO_CONNECTION_LONGTEXT, true)
         change_string_list(ppsz_videoconns, ppsz_videoconns_text)
