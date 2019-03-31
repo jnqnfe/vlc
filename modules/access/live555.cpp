@@ -110,7 +110,7 @@ vlc_plugin_begin ()
                   N_("Use RTP over RTSP (TCP)"),
                   NULL, true )
             change_safe()
-        add_integer( "rtp-client-port", -1,
+        add_integer_with_range( "rtp-client-port", -1, -1, 65535,
                   N_("Client port"),
                   N_("Port to use for the RTP source of the session"), true )
         add_bool( "rtsp-mcast", false,
@@ -121,7 +121,7 @@ vlc_plugin_begin ()
                   N_("Tunnel RTSP and RTP over HTTP"),
                   NULL, true )
             change_safe()
-        add_integer( "rtsp-http-port", 80,
+        add_integer_with_range( "rtsp-http-port", 80, 1, 65535,
                   N_("HTTP tunnel port"),
                   N_("Port to use for tunneling the RTSP/RTP over HTTP."),
                   true )
