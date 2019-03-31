@@ -30,6 +30,7 @@
 #endif
 
 #include <assert.h>
+#include <limits.h>
 
 #include <vlc_common.h>
 #include <vlc_plugin.h>
@@ -44,7 +45,7 @@
 #define T_HEIGHT N_("Height")
 #define LT_HEIGHT N_("Video memory buffer height.")
 
-#define T_PITCH N_("Pitch")
+#define T_PITCH N_("Pitch (bytes)")
 #define LT_PITCH N_("Video memory buffer pitch in bytes.")
 
 #define T_CHROMA N_("Chroma")
@@ -61,11 +62,11 @@ vlc_plugin_begin()
     set_capability(VLC_CAP_VOUT_DISPLAY, 0, Open, Close)
 
     set_subcategory(SUBCAT_VIDEO_VOUT)
-    add_integer("vmem-width", 320, T_WIDTH, LT_WIDTH, false)
+    add_integer_with_range("vmem-width", 320, 0, INT_MAX, T_WIDTH, LT_WIDTH, false)
         change_private()
-    add_integer("vmem-height", 200, T_HEIGHT, LT_HEIGHT, false)
+    add_integer_with_range("vmem-height", 200, 0, INT_MAX, T_HEIGHT, LT_HEIGHT, false)
         change_private()
-    add_integer("vmem-pitch", 640, T_PITCH, LT_PITCH, false)
+    add_integer_with_range("vmem-pitch", 640, 0, INT_MAX, T_PITCH, LT_PITCH, false)
         change_private()
     add_string("vmem-chroma", "RV16", T_CHROMA, LT_CHROMA, true)
         change_private()
