@@ -676,7 +676,8 @@ static const char *const ppsz_prefres[] = {
 #define INPUT_TIMESHIFT_GRANULARITY_TEXT N_("Timeshift granularity")
 #define INPUT_TIMESHIFT_GRANULARITY_LONGTEXT N_( \
     "This is the maximum size in bytes of the temporary files " \
-    "that will be used to store the timeshifted streams." )
+    "that will be used to store the timeshifted streams. " \
+    "(-1 for auto)." )
 
 #define INPUT_TITLE_FORMAT_TEXT N_( "Change title according to current media" )
 #define INPUT_TITLE_FORMAT_LONGTEXT N_( "This option allows you to set the title according to what's being played<br>"  \
@@ -1848,8 +1849,8 @@ vlc_plugin_begin ()
 
     add_directory("input-timeshift-path", NULL,
                   INPUT_TIMESHIFT_PATH_TEXT, INPUT_TIMESHIFT_PATH_LONGTEXT)
-    add_integer( "input-timeshift-granularity", -1, INPUT_TIMESHIFT_GRANULARITY_TEXT,
-                 INPUT_TIMESHIFT_GRANULARITY_LONGTEXT, true )
+    add_integer_with_range( "input-timeshift-granularity", -1, -1, INT_MAX,
+                 INPUT_TIMESHIFT_GRANULARITY_TEXT, INPUT_TIMESHIFT_GRANULARITY_LONGTEXT, true )
 
     add_string( "input-title-format", "$Z", INPUT_TITLE_FORMAT_TEXT,
                 INPUT_TITLE_FORMAT_LONGTEXT, false );
