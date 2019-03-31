@@ -52,9 +52,8 @@ static block_t *Encode   ( encoder_t *, block_t * );
 
 #define ENC_QUALITY_TEXT N_("Encoding quality")
 #define ENC_QUALITY_LONGTEXT N_( \
-  "Force a specific encoding quality between 0.0 (high) and 50.0 (low), " \
-  "instead of specifying a particular bitrate. " \
-  "This will produce a VBR stream." )
+  "Force a specific encoding quality, instead of specifying a particular " \
+  "bitrate. This will produce a VBR stream. (0.0 is high, 50.0 is low)." )
 #define ENC_MODE_TEXT N_("Stereo mode")
 #define ENC_MODE_LONGTEXT N_( "Handling mode for stereo streams" )
 #define ENC_VBR_TEXT N_("VBR mode")
@@ -76,8 +75,8 @@ vlc_plugin_begin ()
 
     set_subcategory( SUBCAT_INPUT_ACODEC )
 
-    add_float( ENC_CFG_PREFIX "quality", 0.0, ENC_QUALITY_TEXT,
-               ENC_QUALITY_LONGTEXT, false )
+    add_float_with_range( ENC_CFG_PREFIX "quality", 0.0, 0.0, 50.0,
+                          ENC_QUALITY_TEXT, ENC_QUALITY_LONGTEXT, false )
     add_integer( ENC_CFG_PREFIX "mode", 0, ENC_MODE_TEXT,
                  ENC_MODE_LONGTEXT, false )
         change_integer_list( pi_stereo_values, ppsz_stereo_descriptions );
