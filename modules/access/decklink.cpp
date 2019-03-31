@@ -45,14 +45,14 @@
 #include "sdi.h"
 
 #include <atomic>
+#include <limits.h>
 
 static int  Open (demux_t *);
 static void Close(demux_t *);
 
 #define CARD_INDEX_TEXT N_("Input card to use")
 #define CARD_INDEX_LONGTEXT N_( \
-    "DeckLink capture card to use, if multiple exist. " \
-    "The cards are numbered from 0.")
+    "DeckLink capture card to use, if multiple exist. " )
 
 #define MODE_TEXT N_("Desired input video mode. Leave empty for autodetection.")
 #define MODE_LONGTEXT N_( \
@@ -108,14 +108,14 @@ vlc_plugin_begin ()
     set_capability(VLC_CAP_ACCESS, 0, Open, Close)
 
     set_subcategory(SUBCAT_INPUT_ACCESS)
-    add_integer("decklink-card-index", 0,
+    add_integer_with_range("decklink-card-index", 0, 0, INT_MAX,
                  CARD_INDEX_TEXT, CARD_INDEX_LONGTEXT, true)
     add_string("decklink-mode", NULL,
                  MODE_TEXT, MODE_LONGTEXT, true)
     add_string("decklink-audio-connection", 0,
                  AUDIO_CONNECTION_TEXT, AUDIO_CONNECTION_LONGTEXT, true)
         change_string_list(ppsz_audioconns, ppsz_audioconns_text)
-    add_integer("decklink-audio-rate", 48000,
+    add_integer_with_range("decklink-audio-rate", 48000, 0, INT_MAX,
                  RATE_TEXT, RATE_LONGTEXT, true)
     add_integer("decklink-audio-channels", 2,
                  CHANNELS_TEXT, CHANNELS_LONGTEXT, true)
@@ -547,10 +547,6 @@ static int Open(demux_t *demux)
     }
 
     card_index = var_InheritInteger(demux, "decklink-card-index");
-    if (card_index < 0) {
-        msg_Err(demux, "Invalid card index %d", card_index);
-        goto finish;
-    }
 
     for (int i = 0; i <= card_index; i++) {
         if (sys->card)
