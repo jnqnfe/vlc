@@ -2012,7 +2012,7 @@ vlc_plugin_begin ()
     add_bool( "auto-preparse", true, PREPARSE_TEXT,
               PREPARSE_LONGTEXT, false )
 
-    add_integer( "preparse-timeout", 5000, PREPARSE_TIMEOUT_TEXT,
+    add_integer_with_range( "preparse-timeout", 5000, 0, INT_MAX, PREPARSE_TIMEOUT_TEXT,
                  PREPARSE_TIMEOUT_LONGTEXT, false )
 
     add_integer_with_range( "preparse-threads", 1, 0, INT_MAX, PREPARSE_THREADS_TEXT,
