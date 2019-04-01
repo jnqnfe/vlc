@@ -35,6 +35,7 @@
 #include <vlc_timestamp_helper.h>
 
 #include <errno.h>
+#include <limits.h>
 #include <dav1d/dav1d.h>
 
 #include "../packetizer/iso_color_tables.h"
@@ -61,9 +62,9 @@ vlc_plugin_begin ()
     set_capability(VLC_CAP_VIDEO_DECODER, 10000, OpenDecoder, CloseDecoder)
 
     set_subcategory(SUBCAT_INPUT_VCODEC)
-    add_integer("dav1d-thread-frames", 0,
+    add_integer_with_range("dav1d-thread-frames", 0, 0, INT_MAX,
                 THREAD_FRAMES_TEXT, THREAD_FRAMES_LONGTEXT, false)
-    add_integer("dav1d-thread-tiles", 0,
+    add_integer_with_range("dav1d-thread-tiles", 0, 0, 4,
                 THREAD_TILES_TEXT, THREAD_TILES_LONGTEXT, false)
 vlc_plugin_end ()
 
