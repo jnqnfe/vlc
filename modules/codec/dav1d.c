@@ -50,10 +50,10 @@ static void CloseDecoder(decoder_t *);
  * Module descriptor
  *****************************************************************************/
 
-#define THREAD_FRAMES_TEXT N_("Frames Threads")
-#define THREAD_FRAMES_LONGTEXT N_( "Max number of threads used for frame decoding, default 0=auto" )
-#define THREAD_TILES_TEXT N_("Tiles Threads")
-#define THREAD_TILES_LONGTEXT N_( "Max number of threads used for tile decoding, default 0=auto" )
+#define FRAME_DEC_THREADS_TEXT N_("Frame decoding threads")
+#define FRAME_DEC_THREADS_LONGTEXT N_( "Max number of threads used for frame decoding. (0 = auto)." )
+#define TILE_DEC_THREADS_TEXT N_("Tile decoding threads")
+#define TILE_DEC_THREADS_LONGTEXT N_( "Max number of threads used for tile decoding. (0 = auto)." )
 
 
 vlc_plugin_begin ()
@@ -63,9 +63,9 @@ vlc_plugin_begin ()
 
     set_subcategory(SUBCAT_INPUT_VCODEC)
     add_integer_with_range("dav1d-thread-frames", 0, 0, INT_MAX,
-                THREAD_FRAMES_TEXT, THREAD_FRAMES_LONGTEXT, false)
+                FRAME_DEC_THREADS_TEXT, FRAME_DEC_THREADS_LONGTEXT, false)
     add_integer_with_range("dav1d-thread-tiles", 0, 0, 4,
-                THREAD_TILES_TEXT, THREAD_TILES_LONGTEXT, false)
+                TILE_DEC_THREADS_TEXT, TILE_DEC_THREADS_LONGTEXT, false)
 vlc_plugin_end ()
 
 /*****************************************************************************
