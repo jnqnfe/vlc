@@ -40,6 +40,7 @@
 #include <speex/speex_callbacks.h>
 
 #include <assert.h>
+#include <limits.h>
 
 /*****************************************************************************
  * Module descriptor
@@ -122,6 +123,7 @@ vlc_plugin_begin ()
 
     add_integer( ENC_CFG_PREFIX "max-bitrate", 0, ENC_MAXBITRATE_TEXT,
                  ENC_MAXBITRATE_LONGTEXT, false )
+        change_integer_range( 0, INT_MAX )
 
     add_bool( ENC_CFG_PREFIX "vad", true, ENC_VAD_TEXT,
                  ENC_VAD_LONGTEXT, false )
