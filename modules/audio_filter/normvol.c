@@ -37,6 +37,7 @@
 
 #include <math.h>
 #include <float.h>
+#include <limits.h>
 
 #include <vlc_common.h>
 #include <vlc_plugin.h>
@@ -80,7 +81,7 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_AUDIO_FILTER, 0, Open, Close )
 
     set_subcategory( SUBCAT_AUDIO_AFILTER )
-    add_integer( "norm-buff-size", 20  ,BUFF_TEXT, BUFF_LONGTEXT,
+    add_integer_with_range( "norm-buff-size", 20, 0, INT_MAX, BUFF_TEXT, BUFF_LONGTEXT,
                  true )
     add_float_with_range( "norm-max-level", 2.0, 0.01, FLT_MAX, LEVEL_TEXT,
                LEVEL_LONGTEXT, true )
