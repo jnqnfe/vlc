@@ -62,10 +62,12 @@ vlc_plugin_begin ()
     set_capability(VLC_CAP_VIDEO_DECODER, 10000, OpenDecoder, CloseDecoder)
 
     set_subcategory(SUBCAT_INPUT_VCODEC)
-    add_integer_with_range("dav1d-thread-frames", 0, 0, INT_MAX,
+    add_integer_with_range("dav1d-frame-threads", 0, 0, INT_MAX,
                 FRAME_DEC_THREADS_TEXT, FRAME_DEC_THREADS_LONGTEXT, false)
-    add_integer_with_range("dav1d-thread-tiles", 0, 0, 4,
+    add_integer_with_range("dav1d-tile-threads", 0, 0, 4,
                 TILE_DEC_THREADS_TEXT, TILE_DEC_THREADS_LONGTEXT, false)
+    add_obsolete_integer( "dav1d-thread-frames" ) /* since 4.0.0 */
+    add_obsolete_integer( "dav1d-thread-tiles" ) /* since 4.0.0 */
 vlc_plugin_end ()
 
 /*****************************************************************************
