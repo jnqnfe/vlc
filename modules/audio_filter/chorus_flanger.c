@@ -26,6 +26,7 @@
 #endif
 
 #include <math.h>
+#include <float.h>
 
 #include <vlc_common.h>
 #include <vlc_plugin.h>
@@ -80,12 +81,12 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_AUDIO_FILTER, 0, Open, Close )
 
     set_subcategory( SUBCAT_AUDIO_AFILTER )
-    add_float( "delay-time", 20, N_("Delay time (ms)"),
+    add_float_with_range( "delay-time", 20., 0., FLT_MAX, N_("Delay time (ms)"),
         N_("Time in milliseconds of the average delay. Note average"), true )
-    add_float( "sweep-depth", 6, N_("Sweep Depth (ms)"),
+    add_float_with_range( "sweep-depth", 6., 0., FLT_MAX, N_("Sweep Depth (ms)"),
         N_("Time in milliseconds of the maximum sweep depth. Thus, the sweep "
             "range will be delay-time +/- sweep-depth."), true )
-    add_float( "sweep-rate", 6, N_("Sweep Rate (ms)"),
+    add_float_with_range( "sweep-rate", 6., 0., FLT_MAX, N_("Sweep Rate (ms)"),
         N_("Rate of change of sweep depth in milliseconds shift per second "
            "of play"), true )
     add_float_with_range( "feedback-gain", 0.5, -0.9, 0.9,
@@ -130,23 +131,9 @@ static int Open( filter_t *p_filter )
     var_AddCallback( p_filter, "dry-mix", paramCallback, p_sys );
     var_AddCallback( p_filter, "wet-mix", paramCallback, p_sys );
 
-    if( p_sys->f_delayTime < 0.f )
-    {
-        msg_Err( p_filter, "Delay Time is invalid" );
-        free(p_sys);
-        return VLC_EGENERIC;
-    }
-
-    if( p_sys->f_sweepDepth > p_sys->f_delayTime || p_sys->f_sweepDepth < 0.f )
+    if( p_sys->f_sweepDepth > p_sys->f_delayTime )
     {
         msg_Err( p_filter, "Sweep Depth is invalid" );
-        free( p_sys );
-        return VLC_EGENERIC;
-    }
-
-    if( p_sys->f_sweepRate < 0.f )
-    {
-        msg_Err( p_filter, "Sweep Rate is invalid" );
         free( p_sys );
         return VLC_EGENERIC;
     }
