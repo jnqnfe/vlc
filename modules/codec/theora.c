@@ -128,10 +128,11 @@ vlc_plugin_begin ()
 
 #   define DEC_CFG_PREFIX "theora-"
     set_subcategory( SUBCAT_INPUT_VCODEC )
-    add_integer( DEC_CFG_PREFIX "postproc", -1, ENC_POSTPROCESS_TEXT, NULL, true )
+    add_integer_with_range( DEC_CFG_PREFIX "postproc", -1, -1, INT_MAX,
+            ENC_POSTPROCESS_TEXT, NULL, true )
 #ifdef ENABLE_SOUT
 #   define ENC_CFG_PREFIX "sout-theora-"
-    add_integer( ENC_CFG_PREFIX "quality", 2, ENC_QUALITY_TEXT,
+    add_integer_with_range( ENC_CFG_PREFIX "quality", 2, 0, 10, ENC_QUALITY_TEXT,
                  ENC_QUALITY_LONGTEXT, false )
 #endif
 
@@ -693,8 +694,6 @@ static int OpenEncoder( encoder_t *p_enc )
     config_ChainParse( p_enc, ENC_CFG_PREFIX, ppsz_enc_options, p_enc->p_cfg );
 
     i_quality = var_GetInteger( p_enc, ENC_CFG_PREFIX "quality" );
-    if( i_quality > 10 ) i_quality = 10;
-    if( i_quality < 0 ) i_quality = 0;
 
     th_info_init( &p_sys->ti );
 
