@@ -252,7 +252,11 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
             unsigned i_shortcuts = va_arg (ap, unsigned);
             unsigned index = module->i_shortcuts;
             /* The cache loader accept only a small number of shortcuts */
-            assert(i_shortcuts + index <= MODULE_SHORTCUT_MAX);
+            if (unlikely(i_shortcuts + index > MODULE_SHORTCUT_MAX))
+            {
+                ret = -1;
+                break;
+            }
 
             const char *const *tab = va_arg (ap, const char *const *);
             const char **pp = realloc (module->pp_shortcuts,
@@ -272,7 +276,8 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
 
         case VLC_MODULE_CAPABILITY:
             module->capability = va_arg (ap, enum vlc_module_cap);
-            assert(vlc_module_int_is_valid_cap((int)module->capability));
+            if (unlikely(!vlc_module_int_is_valid_cap((int)module->capability)))
+                ret = -1;
             break;
 
         case VLC_MODULE_CUSTOM_CAPABILITY:
@@ -304,7 +309,11 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
         {
             const char *value = va_arg (ap, const char *);
 
-            assert (module->i_shortcuts == 0);
+            if (unlikely(module->i_shortcuts != 0))
+            {
+                ret = -1;
+                break;
+            }
             module->pp_shortcuts = malloc( sizeof( *module->pp_shortcuts ) );
             module->pp_shortcuts[0] = value;
             module->i_shortcuts = 1;
@@ -335,8 +344,10 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
         {
             const char *name = va_arg (ap, const char *);
 
-            assert (name != NULL);
-            item->psz_name = name;
+            if (unlikely(name == NULL))
+                ret = -1;
+            else
+                item->psz_name = name;
             break;
         }
 
@@ -401,8 +412,10 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
         {
             /* note, char is expanded to int when passed variadically */
             char c = (char)va_arg (ap, int);
-            assert(c != '\0' && c != '?' && c != ':');
-            item->i_short = c;
+            if (unlikely(c == '\0' || c == '?' || c == ':'))
+                ret = -1;
+            else
+                item->i_short = c;
             break;
         }
         case VLC_CONFIG_SAFE:
@@ -418,9 +431,12 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
         {
             size_t len = va_arg (ap, size_t);
 
-            assert (item->list_count == 0); /* cannot replace choices */
-            assert (item->list.psz_cb == NULL);
-            if (len == 0)
+            if (unlikely(item->list_count != 0 || item->list.psz_cb != NULL))
+            {
+                ret = -1;
+                break;
+            }
+            if (unlikely(len == 0))
                 break; /* nothing to do */
             /* Copy values */
             if (IsConfigIntegerType (item->i_type))
@@ -460,8 +476,7 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
             else
             if (IsConfigStringType (item->i_type))
                item->list.psz_cb = cb;
-            else
-                break;
+
             break;
         }
 
