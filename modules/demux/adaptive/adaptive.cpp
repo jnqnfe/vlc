@@ -121,7 +121,7 @@ vlc_plugin_begin ()
                      ADAPT_WIDTH_TEXT,  NULL,  false )
         add_integer_with_range( "adaptive-maxheight", 0, 0, INT_MAX,
                      ADAPT_HEIGHT_TEXT, NULL, false )
-        add_integer( "adaptive-bw",     250, ADAPT_BW_TEXT,     ADAPT_BW_LONGTEXT,     false )
+        add_integer_with_range( "adaptive-bw", 250, 0, INT_MAX, ADAPT_BW_TEXT, ADAPT_BW_LONGTEXT, false )
         add_bool   ( "adaptive-use-access", false, ADAPT_ACCESS_TEXT, ADAPT_ACCESS_LONGTEXT, true )
 vlc_plugin_end ()
 
