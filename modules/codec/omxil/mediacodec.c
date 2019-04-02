@@ -136,10 +136,10 @@ typedef struct
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  OpenDecoderJni(vlc_object_t *);
-static int  OpenDecoderNdk(vlc_object_t *);
+static int  OpenDecoderJni(decoder_t *);
+static int  OpenDecoderNdk(decoder_t *);
 static void CleanDecoder(decoder_t *);
-static void CloseDecoder(vlc_object_t *);
+static void CloseDecoder(decoder_t *);
 
 static int Video_OnNewBlock(decoder_t *, block_t **);
 static int VideoHXXX_OnNewBlock(decoder_t *, block_t **);
@@ -540,10 +540,8 @@ static void StopMediaCodec(decoder_t *p_dec)
 /*****************************************************************************
  * OpenDecoder: Create the decoder instance
  *****************************************************************************/
-static int OpenDecoder(vlc_object_t *p_this, pf_MediaCodecApi_init pf_init)
+static int OpenDecoder(decoder_t *p_dec, pf_MediaCodecApi_init pf_init)
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
-
     if (!var_InheritBool(p_dec, "mediacodec"))
         return VLC_EGENERIC;
 
@@ -635,7 +633,7 @@ static int OpenDecoder(vlc_object_t *p_this, pf_MediaCodecApi_init pf_init)
     if ((p_sys = calloc(1, sizeof(*p_sys))) == NULL)
         return VLC_ENOMEM;
 
-    p_sys->api.p_obj = p_this;
+    p_sys->api.p_obj = p_dec;
     p_sys->api.i_codec = p_dec->fmt_in.i_codec;
     p_sys->api.i_cat = p_dec->fmt_in.i_cat;
     p_sys->api.psz_mime = mime;
@@ -803,14 +801,14 @@ bailout:
     return VLC_EGENERIC;
 }
 
-static int OpenDecoderNdk(vlc_object_t *p_this)
+static int OpenDecoderNdk(decoder_t *p_dec)
 {
-    return OpenDecoder(p_this, MediaCodecNdk_Init);
+    return OpenDecoder(p_dec, MediaCodecNdk_Init);
 }
 
-static int OpenDecoderJni(vlc_object_t *p_this)
+static int OpenDecoderJni(decoder_t *p_dec)
 {
-    return OpenDecoder(p_this, MediaCodecJni_Init);
+    return OpenDecoder(p_dec, MediaCodecJni_Init);
 }
 
 static void AbortDecoderLocked(decoder_t *p_dec)
@@ -852,9 +850,8 @@ static void CleanDecoder(decoder_t *p_dec)
 /*****************************************************************************
  * CloseDecoder: Close the decoder instance
  *****************************************************************************/
-static void CloseDecoder(vlc_object_t *p_this)
+static void CloseDecoder(decoder_t *p_dec)
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     vlc_mutex_lock(&p_sys->lock);

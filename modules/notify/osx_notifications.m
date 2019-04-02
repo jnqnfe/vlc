@@ -92,9 +92,9 @@ static void on_current_media_changed(vlc_player_t *player,
 /*
  * Open: Initialization of the module
  */
-static int Open(vlc_object_t *p_this)
+static int Open(intf_thread_t *p_intf)
 {
-    intf_thread_t *p_intf = (intf_thread_t *)p_this;
+    playlist_t *p_playlist = pl_Get(p_intf);
     intf_sys_t *p_sys = p_intf->p_sys = calloc(1, sizeof(intf_sys_t));
 
     if (!p_sys)
@@ -118,9 +118,9 @@ static int Open(vlc_object_t *p_this)
 /*
  * Close: Destruction of the module
  */
-static void Close(vlc_object_t *p_this)
+static void Close(intf_thread_t *p_intf)
 {
-    intf_thread_t *p_intf = (intf_thread_t *)p_this;
+    playlist_t *p_playlist = pl_Get(p_intf);
     intf_sys_t *p_sys = p_intf->p_sys;
 
     @autoreleasepool {

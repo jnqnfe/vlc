@@ -352,9 +352,8 @@ static void Manage(vout_display_t *vd)
 /**
  * This function initializes libcaca vout method.
  */
-static int Open(vlc_object_t *object)
+static int Open(vout_display_t *vd)
 {
-    vout_display_t *vd = (vout_display_t *)object;
     const vout_display_cfg_t *cfg = vd->cfg;
     video_format_t *fmtp = &vd->fmt;
     vout_display_sys_t *sys;
@@ -363,7 +362,7 @@ static int Open(vlc_object_t *object)
         return VLC_EGENERIC;
 #if !defined(__APPLE__) && !defined(_WIN32)
 # ifndef X_DISPLAY_MISSING
-    if (!vlc_xlib_init(object))
+    if (!vlc_xlib_init(VLC_OBJECT(vd)))
         return VLC_EGENERIC;
 # endif
 #endif
@@ -503,9 +502,8 @@ error:
 /**
  * Close a libcaca video output
  */
-static void Close(vlc_object_t *object)
+static void Close(vout_display_t *vd)
 {
-    vout_display_t *vd = (vout_display_t *)object;
     vout_display_sys_t *sys = vd->sys;
 
     if (sys->fifo != NULL) {

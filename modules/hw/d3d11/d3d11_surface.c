@@ -630,10 +630,8 @@ VIDEO_FILTER_WRAPPER (D3D11_YUY2)
 VIDEO_FILTER_WRAPPER (D3D11_RGBA)
 VIDEO_FILTER_WRAPPER (NV12_D3D11)
 
-int D3D11OpenConverter( vlc_object_t *obj )
+int D3D11OpenConverter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)obj;
-
     if ( p_filter->fmt_in.video.i_chroma != VLC_CODEC_D3D11_OPAQUE &&
          p_filter->fmt_in.video.i_chroma != VLC_CODEC_D3D11_OPAQUE_10B &&
          p_filter->fmt_in.video.i_chroma != VLC_CODEC_D3D11_OPAQUE_RGBA &&
@@ -683,7 +681,7 @@ int D3D11OpenConverter( vlc_object_t *obj )
         return VLC_EGENERIC;
     }
 
-    filter_sys_t *p_sys = vlc_obj_calloc(obj, 1, sizeof(filter_sys_t));
+    filter_sys_t *p_sys = vlc_obj_calloc(VLC_OBJECT(p_filter), 1, sizeof(filter_sys_t));
     if (!p_sys)
         return VLC_ENOMEM;
 
@@ -702,9 +700,8 @@ int D3D11OpenConverter( vlc_object_t *obj )
     return VLC_SUCCESS;
 }
 
-int D3D11OpenCPUConverter( vlc_object_t *obj )
+int D3D11OpenCPUConverter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)obj;
     int err = VLC_EGENERIC;
     ID3D11Texture2D *texture = NULL;
     filter_t *p_cpu_filter = NULL;
@@ -795,7 +792,7 @@ int D3D11OpenCPUConverter( vlc_object_t *obj )
             goto done;
     }
 
-    p_sys = vlc_obj_calloc(obj, 1, sizeof(filter_sys_t));
+    p_sys = vlc_obj_calloc(VLC_OBJECT(p_filter), 1, sizeof(filter_sys_t));
     if (!p_sys) {
          err = VLC_ENOMEM;
          goto done;
@@ -829,9 +826,8 @@ done:
     return err;
 }
 
-void D3D11CloseConverter( vlc_object_t *obj )
+void D3D11CloseConverter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)obj;
     filter_sys_t *p_sys = p_filter->p_sys;
 #if CAN_PROCESSOR
     if (p_sys->procOutTexture)
@@ -846,9 +842,8 @@ void D3D11CloseConverter( vlc_object_t *obj )
     D3D11_Destroy(&p_sys->hd3d);
 }
 
-void D3D11CloseCPUConverter( vlc_object_t *obj )
+void D3D11CloseCPUConverter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)obj;
     filter_sys_t *p_sys = p_filter->p_sys;
     DeleteFilter(p_sys->filter);
     picture_Release(p_sys->staging_pic);

@@ -1673,10 +1673,9 @@ static void *Run( void *data )
 /*****************************************************************************
  * Activate: initialize and create stuff
  *****************************************************************************/
-static int Activate( vlc_object_t *p_this )
+static int Activate( intf_thread_t *p_intf )
 {
     /* FIXME: This function is full of memory leaks and bugs in error paths. */
-    intf_thread_t *p_intf = (intf_thread_t*)p_this;
     char *psz_host, *psz_unix_path = NULL;
     int  *pi_socket = NULL;
 
@@ -1774,7 +1773,7 @@ static int Activate( vlc_object_t *p_this )
 
         msg_Dbg( p_intf, "base: %s, port: %d", url.psz_host, url.i_port );
 
-        pi_socket = net_ListenTCP(p_this, url.psz_host, url.i_port);
+        pi_socket = net_ListenTCP(VLC_OBJECT(p_intf), url.psz_host, url.i_port);
         if( pi_socket == NULL )
         {
             msg_Warn( p_intf, "can't listen to %s port %i",
@@ -1869,9 +1868,8 @@ error:
 /*****************************************************************************
  * Deactivate: uninitialize and cleanup
  *****************************************************************************/
-static void Deactivate( vlc_object_t *p_this )
+static void Deactivate( intf_thread_t *p_intf )
 {
-    intf_thread_t *p_intf = (intf_thread_t*)p_this;
     intf_sys_t *p_sys = p_intf->p_sys;
 
     vlc_player_t *player = vlc_playlist_GetPlayer(p_sys->playlist);

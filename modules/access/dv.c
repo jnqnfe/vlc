@@ -47,8 +47,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( stream_t * );
+static void Close( stream_t * );
 static block_t *Block( stream_t *, bool * );
 static int Control( stream_t *, int, va_list );
 
@@ -113,9 +113,8 @@ typedef struct
 /*****************************************************************************
  * Open: open the file
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( stream_t *p_access )
 {
-    stream_t     *p_access = (stream_t*)p_this;
     access_sys_t *p_sys;
 
     struct raw1394_portinfo port_inf[ 16 ];
@@ -125,7 +124,7 @@ static int Open( vlc_object_t *p_this )
     /* Set up p_access */
     ACCESS_SET_CALLBACKS( NULL, Block, Control, NULL );
 
-    p_access->p_sys = p_sys = vlc_obj_malloc( p_this, sizeof( *p_sys ) );
+    p_access->p_sys = p_sys = vlc_obj_malloc( VLC_OBJECT(p_access), sizeof( *p_sys ) );
     if( !p_sys )
         return VLC_EGENERIC;
 
@@ -145,7 +144,7 @@ static int Open( vlc_object_t *p_this )
     if( p_sys->i_node < 0 )
     {
         msg_Err( p_access, "failed to open a Firewire (IEEE1394) connection" );
-        Close( p_this );
+        Close( p_access );
         return VLC_EGENERIC;
     }
 
@@ -153,7 +152,7 @@ static int Open( vlc_object_t *p_this )
     if( !p_sys->p_avc1394 )
     {
         msg_Err( p_access, "no Digital Video Control device found" );
-        Close( p_this );
+        Close( p_access );
         return VLC_EGENERIC;
     }
 
@@ -161,7 +160,7 @@ static int Open( vlc_object_t *p_this )
     if( !p_sys->p_raw1394 )
     {
         msg_Err( p_access, "no Digital Video device found" );
-        Close( p_this );
+        Close( p_access );
         return VLC_EGENERIC;
     }
 
@@ -169,14 +168,14 @@ static int Open( vlc_object_t *p_this )
     if( p_sys->i_cards < 0 )
     {
         msg_Err( p_access, "failed to get port info" );
-        Close( p_this );
+        Close( p_access );
         return VLC_EGENERIC;
     }
 
     if( raw1394_set_port( p_sys->p_raw1394, p_sys->i_port ) < 0 )
     {
         msg_Err( p_access, "failed to set port info" );
-        Close( p_this );
+        Close( p_access );
         return VLC_EGENERIC;
     }
 
@@ -185,7 +184,7 @@ static int Open( vlc_object_t *p_this )
                 p_sys->i_channel, RAW1394_DMA_PACKET_PER_BUFFER, -1 ) < 0 )
     {
         msg_Err( p_access, "failed to init isochronous recv" );
-        Close( p_this );
+        Close( p_access );
         return VLC_EGENERIC;
     }
 
@@ -200,7 +199,7 @@ static int Open( vlc_object_t *p_this )
     if( !p_sys->p_ev )
     {
         msg_Err( p_access, "failed to create event thread struct" );
-        Close( p_this );
+        Close( p_access );
         return VLC_ENOMEM;
     }
 
@@ -212,7 +211,7 @@ static int Open( vlc_object_t *p_this )
                p_sys->p_ev, VLC_THREAD_PRIORITY_OUTPUT ) )
     {
         msg_Err( p_access, "failed to clone event thread" );
-        Close( p_this );
+        Close( p_access );
         return VLC_EGENERIC;
     }
 
@@ -222,9 +221,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: free unused data structures
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( stream_t *p_access )
 {
-    stream_t     *p_access = (stream_t*)p_this;
     access_sys_t *p_sys = p_access->p_sys;
 
     if( p_sys->p_ev )

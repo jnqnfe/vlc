@@ -57,10 +57,8 @@ static vlc_mutex_t lock = VLC_STATIC_MUTEX;
 /*****************************************************************************
  * Module initialization
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( xml_t *p_xml )
 {
-    xml_t *p_xml = (xml_t *)p_this;
-
     if( !xmlHasFeature( XML_WITH_THREAD ) )
         return VLC_EGENERIC;
 
@@ -77,14 +75,14 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Module deinitialization
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( xml_t *p_xml )
 {
 #ifdef LIBXML_GETS_A_CLUE_ABOUT_REENTRANCY_AND_MEMORY_LEAKS
     vlc_mutex_lock( &lock );
     xmlCleanupParser();
     vlc_mutex_unlock( &lock );
 #endif
-    VLC_UNUSED(p_this);
+    VLC_UNUSED(p_xml);
     return;
 }
 
@@ -208,12 +206,11 @@ static int ReaderIsEmptyElement( xml_reader_t *p_reader )
     return xmlTextReaderIsEmptyElement( p_sys->xml );
 }
 
-static int ReaderOpen( vlc_object_t *p_this )
+static int ReaderOpen( xml_reader_t *p_reader )
 {
     if( !xmlHasFeature( XML_WITH_THREAD ) )
         return VLC_EGENERIC;
 
-    xml_reader_t *p_reader = (xml_reader_t *)p_this;
     xml_reader_sys_t *p_sys = malloc( sizeof( *p_sys ) );
     xmlTextReaderPtr p_libxml_reader;
 
@@ -247,9 +244,8 @@ static int ReaderOpen( vlc_object_t *p_this )
     return VLC_SUCCESS;
 }
 
-static void ReaderClose( vlc_object_t *p_this )
+static void ReaderClose( xml_reader_t *p_reader )
 {
-    xml_reader_t *p_reader = (xml_reader_t *)p_this;
     xml_reader_sys_t *p_sys = p_reader->p_sys;
 
     xmlFreeTextReader( p_sys->xml );

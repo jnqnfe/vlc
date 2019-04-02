@@ -40,8 +40,8 @@
 /*****************************************************************************
  * Local protypes
  *****************************************************************************/
-static int  Open         (vlc_object_t *);
-static void Close        (vlc_object_t *);
+static int  Open         (filter_t *);
+static void Close        (filter_t *);
 static picture_t *Filter (filter_t *, picture_t *);
 static int DenoiseCallback( vlc_object_t *p_this, char const *psz_var,
                             vlc_value_t oldval, vlc_value_t newval,
@@ -96,9 +96,8 @@ typedef struct
 /*****************************************************************************
  * Open
  *****************************************************************************/
-static int Open(vlc_object_t *this)
+static int Open(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)this;
     filter_sys_t *sys;
     struct vf_priv_s *cfg;
     const video_format_t *fmt_in  = &filter->fmt_in.video;
@@ -164,9 +163,8 @@ static int Open(vlc_object_t *this)
 /*****************************************************************************
  * Close
  *****************************************************************************/
-static void Close(vlc_object_t *this)
+static void Close(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)this;
     filter_sys_t *sys = filter->p_sys;
     struct vf_priv_s *cfg = &sys->cfg;
 

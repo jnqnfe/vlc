@@ -47,10 +47,8 @@ static const char *StreamLocation( const stream_t *s )
 /*****************************************************************************
  * Import_BDMV: main import function
  *****************************************************************************/
-int Import_BDMV( vlc_object_t *p_this )
+int Import_BDMV( stream_t* p_stream )
 {
-    stream_t *p_stream = (stream_t *)p_this;
-
     CHECK_FILE(p_stream);
 
     if( !stream_HasExtension( p_stream, ".BDMV" ) )

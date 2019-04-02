@@ -64,7 +64,7 @@ typedef struct
     vlc_thread_t thread;
 } demux_sys_t;
 
-static bool DisplayError(vlc_object_t *obj, struct wl_display *display)
+static bool DisplayError(demux_t *demux, struct wl_display *display)
 {
     int val = wl_display_get_error(display);
     if (val == 0)
@@ -76,15 +76,14 @@ static bool DisplayError(vlc_object_t *obj, struct wl_display *display)
         uint32_t id;
 
         val = wl_display_get_protocol_error(display, &iface, &id);
-        msg_Err(obj, "display protocol error %d on %s object %"PRIu32,
+        msg_Err(demux, "display protocol error %d on %s object %"PRIu32,
                 val, iface->name, id);
     }
     else
-        msg_Err(obj, "display fatal error: %s", vlc_strerror_c(val));
+        msg_Err(demux, "display fatal error: %s", vlc_strerror_c(val));
 
     return true;
 }
-#define DisplayError(o,d) DisplayError(VLC_OBJECT(o), (d))
 
 static void output_geometry_cb(void *data, struct wl_output *output, int32_t x,
                                int32_t y, int32_t width, int32_t height,
@@ -355,9 +354,8 @@ static const struct wl_registry_listener registry_cbs =
     registry_global_remove_cb,
 };
 
-static int Open(vlc_object_t *obj)
+static int Open(demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     if (demux->out == NULL)
         return VLC_EGENERIC;
 
@@ -437,9 +435,8 @@ error:
     return VLC_EGENERIC;
 }
 
-static void Close(vlc_object_t *obj)
+static void Close(demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     demux_sys_t *sys = demux->p_sys;
 
     vlc_cancel(sys->thread);

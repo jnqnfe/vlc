@@ -42,8 +42,8 @@
 #define HURRYUP_LONGTEXT N_( "The demuxer will advance timestamps if the " \
                 "input can't keep up with the rate." )
 
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( demux_t * );
+static void Close( demux_t * );
 
 vlc_plugin_begin ()
     set_shortname( "DV" )
@@ -119,9 +119,8 @@ static int Control( demux_t *, int i_query, va_list args );
 /*****************************************************************************
  * Open: initializes raw DV demux structures
  *****************************************************************************/
-static int Open( vlc_object_t * p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
 
     const uint8_t *p_peek, *p_peek_backup;
@@ -234,10 +233,9 @@ static int Open( vlc_object_t * p_this )
 /*****************************************************************************
  * Close: frees unused data
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
-    demux_sys_t *p_sys  = p_demux->p_sys;
+    demux_sys_t *p_sys = p_demux->p_sys;
 
     var_Destroy( p_demux, "rawdv-hurry-up");
     free( p_sys );

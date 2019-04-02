@@ -68,8 +68,8 @@
 #define ANGLE_LONGTEXT N_( \
     "Default DVD angle." )
 
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( demux_t * );
+static void Close( demux_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("DVD without menus") )
@@ -155,9 +155,8 @@ static void DvdReadFindCell ( demux_t * );
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t      *p_demux = (demux_t*)p_this;
     demux_sys_t  *p_sys;
     char         *psz_file;
     ifo_handle_t *p_vmg_file;
@@ -166,7 +165,7 @@ static int Open( vlc_object_t *p_this )
         return VLC_EGENERIC;
 
     if( !p_demux->psz_filepath || !*p_demux->psz_filepath )
-        psz_file = var_InheritString( p_this, "dvd" );
+        psz_file = var_InheritString( p_demux, "dvd" );
     else
         psz_file = strdup( p_demux->psz_filepath );
 
@@ -241,7 +240,7 @@ static int Open( vlc_object_t *p_this )
     {
         msg_Err( p_demux, "DvdReadSetArea(0,0,%i) failed (can't decrypt DVD?)",
                  p_sys->i_angle );
-        Close( p_this );
+        Close( p_demux );
         return VLC_EGENERIC;
     }
 
@@ -251,9 +250,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
 
     for( int i = 0; i < PS_TK_COUNT; i++ )

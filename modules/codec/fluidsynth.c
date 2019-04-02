@@ -62,8 +62,8 @@
 
 #define SAMPLE_RATE_TEXT N_("Sample rate")
 
-static int  Open  (vlc_object_t *);
-static void Close (vlc_object_t *);
+static int  Open  (decoder_t *);
+static void Close (decoder_t *);
 
 vlc_plugin_begin ()
     set_description (N_("FluidSynth MIDI synthesizer"))
@@ -97,10 +97,8 @@ typedef struct
 static int  DecodeBlock (decoder_t *p_dec, block_t *p_block);
 static void Flush (decoder_t *);
 
-static int Open (vlc_object_t *p_this)
+static int Open (decoder_t *p_dec)
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
-
     if (p_dec->fmt_in.i_codec != VLC_CODEC_MIDI)
         return VLC_EGENERIC;
 
@@ -112,13 +110,13 @@ static int Open (vlc_object_t *p_this)
     p_sys->synth = new_fluid_synth (p_sys->settings);
     p_sys->soundfont = -1;
 
-    char *font_path = var_InheritString (p_this, "soundfont");
+    char *font_path = var_InheritString (p_dec, "soundfont");
     if (font_path != NULL)
     {
-        msg_Dbg (p_this, "loading sound fonts file %s", font_path);
+        msg_Dbg (p_dec, "loading sound fonts file %s", font_path);
         p_sys->soundfont = fluid_synth_sfload (p_sys->synth, font_path, 1);
         if (p_sys->soundfont == -1)
-            msg_Err (p_this, "cannot load sound fonts file %s", font_path);
+            msg_Err (p_dec, "cannot load sound fonts file %s", font_path);
         free (font_path);
     }
 #if defined( _POSIX_VERSION ) && !defined(__ANDROID__)
@@ -131,11 +129,11 @@ static int Open (vlc_object_t *p_this)
         {
             const char *path = gl.gl_pathv[i];
 
-            msg_Dbg (p_this, "loading sound fonts file %s", path);
+            msg_Dbg (p_dec, "loading sound fonts file %s", path);
             p_sys->soundfont = fluid_synth_sfload (p_sys->synth, path, 1);
             if (p_sys->soundfont != -1)
                 break; /* it worked! */
-            msg_Err (p_this, "cannot load sound fonts file %s", path);
+            msg_Err (p_dec, "cannot load sound fonts file %s", path);
         }
         globfree (&gl);
     }
@@ -143,8 +141,8 @@ static int Open (vlc_object_t *p_this)
 
     if (p_sys->soundfont == -1)
     {
-        msg_Err (p_this, "sound font file required for synthesis");
-        vlc_dialog_display_error (p_this, _("MIDI synthesis not set up"),
+        msg_Err (p_dec, "sound font file required for synthesis");
+        vlc_dialog_display_error (p_dec, _("MIDI synthesis not set up"),
             _("A sound font file (.SF2) is required for MIDI synthesis.\n"
               "Please install a sound font and configure it "
               "from the VLC preferences "
@@ -156,16 +154,16 @@ static int Open (vlc_object_t *p_this)
     }
 
     fluid_synth_set_chorus_on (p_sys->synth,
-                               var_InheritBool (p_this, "synth-chorus"));
+                               var_InheritBool (p_dec, "synth-chorus"));
     fluid_synth_set_gain (p_sys->synth,
-                          var_InheritFloat (p_this, "synth-gain"));
+                          var_InheritFloat (p_dec, "synth-gain"));
     fluid_synth_set_polyphony (p_sys->synth,
-                               var_InheritInteger (p_this, "synth-polyphony"));
+                               var_InheritInteger (p_dec, "synth-polyphony"));
     fluid_synth_set_reverb_on (p_sys->synth,
-                               var_InheritBool (p_this, "synth-reverb"));
+                               var_InheritBool (p_dec, "synth-reverb"));
 
     p_dec->fmt_out.audio.i_rate =
-        var_InheritInteger (p_this, "synth-sample-rate");;
+        var_InheritInteger (p_dec, "synth-sample-rate");;
     fluid_synth_set_sample_rate (p_sys->synth, p_dec->fmt_out.audio.i_rate);
     p_dec->fmt_out.audio.i_channels = 2;
     p_dec->fmt_out.audio.i_physical_channels = AOUT_CHAN_LEFT | AOUT_CHAN_RIGHT;
@@ -180,9 +178,9 @@ static int Open (vlc_object_t *p_this)
 }
 
 
-static void Close (vlc_object_t *p_this)
+static void Close (decoder_t *p_dec)
 {
-    decoder_sys_t *p_sys = ((decoder_t *)p_this)->p_sys;
+    decoder_sys_t *p_sys = p_dec->p_sys;
 
     fluid_synth_sfunload (p_sys->synth, p_sys->soundfont, 1);
     delete_fluid_synth (p_sys->synth);

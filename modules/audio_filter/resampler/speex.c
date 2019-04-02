@@ -34,9 +34,9 @@
 #define QUALITY_TEXT N_("Resampling quality")
 #define QUALITY_LONGTEXT N_( "Resampling quality, from worst to best" )
 
-static int Open (vlc_object_t *);
-static int OpenResampler (vlc_object_t *);
-static void Close (vlc_object_t *);
+static int Open (filter_t *);
+static int OpenResampler (filter_t *);
+static void Close (filter_t *);
 
 vlc_plugin_begin ()
     set_shortname (N_("Speex resampler"))
@@ -55,10 +55,8 @@ vlc_plugin_end ()
 
 static block_t *Resample (filter_t *, block_t *);
 
-static int OpenResampler (vlc_object_t *obj)
+static int OpenResampler (filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
-
     /* Cannot convert format */
     if (filter->fmt_in.audio.i_format != filter->fmt_out.audio.i_format
     /* Cannot remix */
@@ -75,7 +73,7 @@ static int OpenResampler (vlc_object_t *obj)
 
     SpeexResamplerState *st;
 
-    unsigned q = var_InheritInteger (obj, "speex-resampler-quality");
+    unsigned q = var_InheritInteger (filter, "speex-resampler-quality");
     if (unlikely(q > 10))
         q = 3;
 
@@ -85,7 +83,7 @@ static int OpenResampler (vlc_object_t *obj)
                               filter->fmt_out.audio.i_rate, q, &err);
     if (unlikely(st == NULL))
     {
-        msg_Err (obj, "cannot initialize resampler: %s",
+        msg_Err (filter, "cannot initialize resampler: %s",
                  speex_resampler_strerror (err));
         return VLC_ENOMEM;
     }
@@ -95,19 +93,16 @@ static int OpenResampler (vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static int Open (vlc_object_t *obj)
+static int Open (filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
-
     /* Will change rate */
     if (filter->fmt_in.audio.i_rate == filter->fmt_out.audio.i_rate)
         return VLC_EGENERIC;
-    return OpenResampler (obj);
+    return OpenResampler (filter);
 }
 
-static void Close (vlc_object_t *obj)
+static void Close (filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
     SpeexResamplerState *st = (SpeexResamplerState *)filter->p_sys;
 
     speex_resampler_destroy (st);

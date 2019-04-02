@@ -133,9 +133,8 @@ static int Control(stream_t *stream, int query, va_list args)
     return VLC_SUCCESS;
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(stream_t *stream)
 {
-    stream_t *stream = (stream_t *)obj;
     const uint8_t *peek;
     int bits;
 
@@ -176,9 +175,8 @@ static int Open(vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void Close (vlc_object_t *obj)
+static void Close (stream_t *stream)
 {
-    stream_t *stream = (stream_t *)obj;
     stream_sys_t *sys = stream->p_sys;
 
     inflateEnd(&sys->zstream);

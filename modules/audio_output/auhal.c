@@ -43,8 +43,8 @@
 #define VOLUME_TEXT N_("Audio volume")
 #define DEVICE_TEXT N_("Last audio device")
 
-static int      Open                    (vlc_object_t *);
-static void     Close                   (vlc_object_t *);
+static int  Open  (audio_output_t *);
+static void Close (audio_output_t *);
 
 vlc_plugin_begin ()
     set_shortname("auhal")
@@ -1624,9 +1624,8 @@ Start(audio_output_t *p_aout, audio_sample_format_t *restrict fmt)
     return VLC_EGENERIC;
 }
 
-static void Close(vlc_object_t *obj)
+static void Close(audio_output_t *p_aout)
 {
-    audio_output_t *p_aout = (audio_output_t *)obj;
     aout_sys_t *p_sys = p_aout->sys;
 
     /* remove audio devices callback */
@@ -1682,9 +1681,8 @@ static void Close(vlc_object_t *obj)
     free(p_sys);
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(audio_output_t *p_aout)
 {
-    audio_output_t *p_aout = (audio_output_t *)obj;
     aout_sys_t *p_sys = calloc(1, sizeof (*p_sys));
     if (unlikely(p_sys == NULL))
         return VLC_ENOMEM;

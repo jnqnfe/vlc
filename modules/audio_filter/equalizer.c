@@ -51,8 +51,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( filter_t * );
+static void Close( filter_t * );
 
 #define PRESET_TEXT N_( "Equalizer preset" )
 #define PRESET_LONGTEXT N_("Preset to use for the equalizer." )
@@ -138,15 +138,11 @@ static int BandsCallback  ( vlc_object_t *, char const *, vlc_value_t,
 static int TwoPassCallback( vlc_object_t *, char const *, vlc_value_t,
                             vlc_value_t, void * );
 
-
-
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( filter_t *p_filter )
 {
-    filter_t     *p_filter = (filter_t *)p_this;
-
     /* Allocate structure */
     filter_sys_t *p_sys = p_filter->p_sys = malloc( sizeof( *p_sys ) );
     if( !p_sys )
@@ -171,9 +167,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: close the plugin
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( filter_t *p_filter )
 {
-    filter_t     *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     EqzClean( p_filter );

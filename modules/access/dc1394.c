@@ -44,8 +44,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( demux_t * );
+static void Close( demux_t * );
 
 vlc_plugin_begin()
     set_shortname( N_("DC1394") )
@@ -158,9 +158,8 @@ end:
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t      *p_demux = (demux_t*)p_this;
     demux_sys_t  *p_sys;
     es_format_t   fmt;
     dc1394error_t res;
@@ -172,7 +171,7 @@ static int Open( vlc_object_t *p_this )
     p_demux->pf_demux = Demux;
     p_demux->pf_control = Control;
 
-    p_demux->p_sys = p_sys = vlc_obj_calloc( p_this, 1, sizeof( demux_sys_t ) );
+    p_demux->p_sys = p_sys = vlc_obj_calloc( VLC_OBJECT(p_demux), 1, sizeof( demux_sys_t ) );
     if( !p_sys )
         return VLC_ENOMEM;
 
@@ -225,7 +224,7 @@ static int Open( vlc_object_t *p_this )
         if( dc1394_reset_bus( p_sys->camera ) != DC1394_SUCCESS )
         {
             msg_Err( p_demux, "Unable to reset IEEE 1394 bus");
-            Close( p_this );
+            Close( p_demux );
             return VLC_EGENERIC;
         }
         else msg_Dbg( p_demux, "Successfully reset IEEE 1394 bus");
@@ -234,7 +233,7 @@ static int Open( vlc_object_t *p_this )
     if( dc1394_camera_reset( p_sys->camera ) != DC1394_SUCCESS )
     {
         msg_Err( p_demux, "Unable to reset camera");
-        Close( p_this );
+        Close( p_demux );
         return VLC_EGENERIC;
     }
 
@@ -242,7 +241,7 @@ static int Open( vlc_object_t *p_this )
                   stderr ) != DC1394_SUCCESS )
     {
         msg_Err( p_demux, "Unable to print camera info");
-        Close( p_this );
+        Close( p_demux );
         return VLC_EGENERIC;
     }
 
@@ -250,7 +249,7 @@ static int Open( vlc_object_t *p_this )
                 &p_sys->features ) != DC1394_SUCCESS )
     {
         msg_Err( p_demux, "Unable to get feature set");
-        Close( p_this );
+        Close( p_demux );
         return VLC_EGENERIC;
     }
     // TODO: only print features if verbosity increased
@@ -263,7 +262,7 @@ static int Open( vlc_object_t *p_this )
                         p_sys->video_device ) != DC1394_SUCCESS )
         {
             msg_Err( p_demux, "Unable to set video device");
-            Close( p_this );
+            Close( p_demux );
             return VLC_EGENERIC;
         }
     }
@@ -296,7 +295,7 @@ static int Open( vlc_object_t *p_this )
                     p_sys->frame_rate ) != DC1394_SUCCESS )
     {
         msg_Err( p_demux, "Unable to set framerate");
-        Close( p_this );
+        Close( p_demux );
         return VLC_EGENERIC;
     }
 
@@ -304,7 +303,7 @@ static int Open( vlc_object_t *p_this )
                    p_sys->video_mode ) != DC1394_SUCCESS )
     {
         msg_Err( p_demux, "Unable to set video mode");
-        Close( p_this );
+        Close( p_demux );
         return VLC_EGENERIC;
     }
 
@@ -312,7 +311,7 @@ static int Open( vlc_object_t *p_this )
                     DC1394_ISO_SPEED_400 ) != DC1394_SUCCESS )
     {
         msg_Err( p_demux, "Unable to set iso speed");
-        Close( p_this );
+        Close( p_demux );
         return VLC_EGENERIC;
     }
 
@@ -331,7 +330,7 @@ static int Open( vlc_object_t *p_this )
         {
             msg_Err( p_demux ,"Unable to setup capture" );
         }
-        Close( p_this );
+        Close( p_demux );
         return VLC_EGENERIC;
     }
 
@@ -354,7 +353,7 @@ static int Open( vlc_object_t *p_this )
     {
         msg_Err( p_demux, "Unable to start camera iso transmission" );
         dc1394_capture_stop( p_sys->camera );
-        Close( p_this );
+        Close( p_demux );
         return VLC_EGENERIC;
     }
     msg_Dbg( p_demux, "Set iso transmission" );
@@ -365,9 +364,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
 
     /* Stop data transmission */

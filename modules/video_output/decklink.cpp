@@ -226,10 +226,10 @@ struct decklink_sys_t
  * Local prototypes.
  *****************************************************************************/
 
-static int  OpenVideo           (vlc_object_t *);
-static void CloseVideo          (vlc_object_t *);
-static int  OpenAudio           (vlc_object_t *);
-static void CloseAudio          (vlc_object_t *);
+static int  OpenVideo           (vout_display_t *);
+static void CloseVideo          (vout_display_t *);
+static int  OpenAudio           (audio_output_t *);
+static void CloseAudio          (audio_output_t *);
 
 /*****************************************************************************
  * Module descriptor
@@ -763,10 +763,9 @@ static int ControlVideo(vout_display_t *vd, int query, va_list args)
     return VLC_EGENERIC;
 }
 
-static int OpenVideo(vlc_object_t *p_this)
+static int OpenVideo(vout_display_t *vd)
 {
-    vout_display_t *vd = (vout_display_t *)p_this;
-    decklink_sys_t *sys = HoldDLSys(p_this, VIDEO_ES);
+    decklink_sys_t *sys = HoldDLSys(VLC_OBJECT(vd), VIDEO_ES);
     if(!sys)
         return VLC_ENOMEM;
 
@@ -779,24 +778,24 @@ static int OpenVideo(vlc_object_t *p_this)
 
     if( b_init )
     {
-        sys->video.tenbits = var_InheritBool(p_this, VIDEO_CFG_PREFIX "tenbits");
-        sys->video.nosignal_delay = var_InheritInteger(p_this, VIDEO_CFG_PREFIX "nosignal-delay");
-        sys->video.afd = var_InheritInteger(p_this, VIDEO_CFG_PREFIX "afd");
-        sys->video.ar = var_InheritInteger(p_this, VIDEO_CFG_PREFIX "ar");
+        sys->video.tenbits = var_InheritBool(vd, VIDEO_CFG_PREFIX "tenbits");
+        sys->video.nosignal_delay = var_InheritInteger(vd, VIDEO_CFG_PREFIX "nosignal-delay");
+        sys->video.afd = var_InheritInteger(vd, VIDEO_CFG_PREFIX "afd");
+        sys->video.ar = var_InheritInteger(vd, VIDEO_CFG_PREFIX "ar");
         sys->video.pic_nosignal = NULL;
 
         if (OpenDecklink(vd, sys) != VLC_SUCCESS)
         {
-            CloseVideo(p_this);
+            CloseVideo(vd);
             return VLC_EGENERIC;
         }
 
-        char *pic_file = var_InheritString(p_this, VIDEO_CFG_PREFIX "nosignal-image");
+        char *pic_file = var_InheritString(vd, VIDEO_CFG_PREFIX "nosignal-image");
         if (pic_file)
         {
-            sys->video.pic_nosignal = sdi::Generator::Picture(p_this, pic_file, &vd->fmt);
+            sys->video.pic_nosignal = sdi::Generator::Picture(VLC_OBJECT(vd), pic_file, &vd->fmt);
             if (!sys->video.pic_nosignal)
-                msg_Err(p_this, "Could not create no signal picture");
+                msg_Err(vd, "Could not create no signal picture");
             free(pic_file);
         }
     }
@@ -812,9 +811,9 @@ static int OpenVideo(vlc_object_t *p_this)
     return VLC_SUCCESS;
 }
 
-static void CloseVideo(vlc_object_t *p_this)
+static void CloseVideo(vout_display_t *vd)
 {
-    ReleaseDLSys(p_this, VIDEO_ES);
+    ReleaseDLSys(VLC_OBJECT(vd), VIDEO_ES);
 }
 
 /*****************************************************************************
@@ -899,10 +898,9 @@ static void PlayAudio(audio_output_t *aout, block_t *audio, vlc_tick_t systempts
     block_Release(audio);
 }
 
-static int OpenAudio(vlc_object_t *p_this)
+static int OpenAudio(audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)p_this;
-    decklink_sys_t *sys = HoldDLSys(p_this, AUDIO_ES);
+    decklink_sys_t *sys = HoldDLSys(VLC_OBJECT(aout), AUDIO_ES);
     if(!sys)
         return VLC_ENOMEM;
 
@@ -928,10 +926,10 @@ static int OpenAudio(vlc_object_t *p_this)
     return VLC_SUCCESS;
 }
 
-static void CloseAudio(vlc_object_t *p_this)
+static void CloseAudio(audio_output_t *aout)
 {
-    decklink_sys_t *sys = (decklink_sys_t *) ((audio_output_t *)p_this)->sys;
+    decklink_sys_t *sys = (decklink_sys_t *) aout->sys;
     vlc_mutex_lock(&sys->lock);
     vlc_mutex_unlock(&sys->lock);
-    ReleaseDLSys(p_this, AUDIO_ES);
+    ReleaseDLSys(VLC_OBJECT(aout), AUDIO_ES);
 }

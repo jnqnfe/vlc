@@ -35,7 +35,7 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
+static int  Open ( demux_t * );
 
 vlc_plugin_begin ()
     set_description( N_("CDG demuxer") )
@@ -65,10 +65,8 @@ typedef struct
 /*****************************************************************************
  * Open: check file and initializes structures
  *****************************************************************************/
-static int Open( vlc_object_t * p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
-
     /* Identify cdg file by extension, as there is no simple way to
      * detect it */
     if( !demux_IsPathExtension( p_demux, ".cdg" ) && !demux_IsForced( p_demux, "cdg" ) )
@@ -82,7 +80,7 @@ static int Open( vlc_object_t * p_this )
 //        return VLC_EGENERIC;
 //    }
 
-    demux_sys_t *p_sys = vlc_obj_malloc( p_this, sizeof (*p_sys) );
+    demux_sys_t *p_sys = vlc_obj_malloc( VLC_OBJECT(p_demux), sizeof (*p_sys) );
     if( unlikely(p_sys == NULL) )
         return VLC_ENOMEM;
 

@@ -31,10 +31,8 @@
 
 static block_t *Encode ( encoder_t *, subpicture_t * );
 
-int webvtt_OpenEncoder( vlc_object_t *p_this )
+int webvtt_OpenEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
-
     if( p_enc->fmt_out.i_codec != VLC_CODEC_WEBVTT )
         return VLC_EGENERIC;
 
@@ -43,12 +41,6 @@ int webvtt_OpenEncoder( vlc_object_t *p_this )
     p_enc->pf_encode_sub = Encode;
     p_enc->fmt_out.i_cat = SPU_ES;
     return VLC_SUCCESS;
-}
-
-
-void webvtt_CloseEncoder( vlc_object_t *p_this )
-{
-    (void)p_this;
 }
 
 static void WriteText( const char *psz, bo_t *box, char *c_last )

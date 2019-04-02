@@ -1227,9 +1227,8 @@ ActionCallback(vlc_object_t *obj, char const *var,
  ****************************/
 
 static int
-Open(vlc_object_t *this)
+Open(intf_thread_t *intf)
 {
-    intf_thread_t *intf = (intf_thread_t *)this;
     intf_sys_t *sys = malloc(sizeof(intf_sys_t));
     if (!sys)
         return VLC_ENOMEM;
@@ -1256,9 +1255,8 @@ Open(vlc_object_t *this)
 }
 
 static void
-Close(vlc_object_t *this)
+Close(intf_thread_t *intf)
 {
-    intf_thread_t *intf = (intf_thread_t *)this;
     intf_sys_t *sys = intf->p_sys;
     vlc_player_t *player = vlc_playlist_GetPlayer(sys->playlist);
     vlc_player_Lock(player);

@@ -20,16 +20,16 @@
 #ifndef WEBVTT_H
 #define WEBVTT_H
 
-int  webvtt_OpenDecoder   ( vlc_object_t * );
-void webvtt_CloseDecoder  ( vlc_object_t * );
+int  webvtt_OpenDecoder   ( decoder_t * );
+void webvtt_CloseDecoder  ( decoder_t * );
 
-int  webvtt_OpenDemux     ( vlc_object_t * );
-int  webvtt_OpenDemuxStream (vlc_object_t *);
-void webvtt_CloseDemux    ( vlc_object_t * );
+int  webvtt_OpenDemux     ( demux_t * );
+int  webvtt_OpenDemuxStream ( demux_t * );
+void webvtt_CloseDemux    ( demux_t * );
 
 #ifdef ENABLE_SOUT
-int  webvtt_OpenEncoder   ( vlc_object_t * );
-void webvtt_CloseEncoder  ( vlc_object_t * );
+int  webvtt_OpenEncoder   ( encoder_t * );
+void webvtt_CloseEncoder  ( encoder_t * );
 #endif
 
 typedef struct webvtt_text_parser_t webvtt_text_parser_t;

@@ -136,21 +136,21 @@ struct vlc_tls_operations
  * on client side, essentially the set of trusted root Certificate Authorities
  * with which to validate certificate chains presented by servers.
  */
-typedef struct vlc_tls_client
+struct vlc_tls_client_t
 {
     struct vlc_object_t obj;
     const struct vlc_tls_client_operations *ops;
     void *sys;
-} vlc_tls_client_t;
+};
 
 struct vlc_tls_client_operations
 {
-    vlc_tls_t *(*open)(struct vlc_tls_client *, vlc_tls_t *sock,
+    vlc_tls_t *(*open)(vlc_tls_client_t *, vlc_tls_t *sock,
                        const char *host, const char *const *alpn);
     int  (*handshake)(vlc_tls_t *session,
                       const char *hostname, const char *service,
                       char ** /*restrict*/ alp);
-    void (*destroy)(struct vlc_tls_client *);
+    void (*destroy)(vlc_tls_client_t *);
 };
 
 /**
@@ -214,20 +214,20 @@ VLC_API vlc_tls_t *vlc_tls_ClientSessionCreate(vlc_tls_client_t *creds,
  * trust and cryptographic parameters,
  * public certificates and private keys.
  */
-typedef struct vlc_tls_server
+struct vlc_tls_server_t
 {
     struct vlc_object_t obj;
     const struct vlc_tls_server_operations *ops;
     void *sys;
 
-} vlc_tls_server_t;
+};
 
 struct vlc_tls_server_operations
 {
-    vlc_tls_t *(*open)(struct vlc_tls_server *, vlc_tls_t *sock,
+    vlc_tls_t *(*open)(vlc_tls_server_t *, vlc_tls_t *sock,
                        const char *const *alpn);
     int  (*handshake)(vlc_tls_t *session, char ** /*restrict*/ alp);
-    void (*destroy)(struct vlc_tls_server *);
+    void (*destroy)(vlc_tls_server_t *);
 };
 
 /**

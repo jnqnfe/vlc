@@ -43,8 +43,8 @@ extern "C" {
  * Module descriptor
  *****************************************************************************/
 namespace mkv {
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( demux_t * );
+static void Close( demux_t * );
 } // namespace
 
 using namespace mkv;
@@ -92,9 +92,8 @@ static int  Seek   ( demux_t *, vlc_tick_t i_mk_date, double f_percent, virtual_
 /*****************************************************************************
  * Open: initializes matroska demux structures
  *****************************************************************************/
-static int Open( vlc_object_t * p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t            *p_demux = (demux_t*)p_this;
     demux_sys_t        *p_sys;
     matroska_stream_c  *p_stream;
     matroska_segment_c *p_segment;
@@ -264,9 +263,8 @@ error:
 /*****************************************************************************
  * Close: frees unused data
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t     *p_demux = reinterpret_cast<demux_t*>( p_this );
     demux_sys_t *p_sys = (demux_sys_t *)p_demux->p_sys;
     virtual_segment_c *p_vsegment = p_sys->p_current_vsegment;
     if( p_vsegment )

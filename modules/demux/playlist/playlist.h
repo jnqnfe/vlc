@@ -24,42 +24,42 @@
 
 char *ProcessMRL( const char *, const char * );
 
-int Import_M3U ( vlc_object_t * );
+int Import_M3U ( stream_t * );
 
-int Import_RAM ( vlc_object_t * );
+int Import_RAM ( stream_t * );
 
-int Import_PLS ( vlc_object_t * );
+int Import_PLS ( stream_t * );
 
-int Import_B4S ( vlc_object_t * );
+int Import_B4S ( stream_t * );
 
-int Import_DVB ( vlc_object_t * );
+int Import_DVB ( stream_t * );
 
-int Import_podcast ( vlc_object_t * );
+int Import_podcast ( stream_t * );
 
-int Import_xspf ( vlc_object_t * );
-void Close_xspf ( vlc_object_t * );
+int Import_xspf ( stream_t * );
+void Close_xspf ( stream_t * );
 
-int Import_Shoutcast ( vlc_object_t * );
+int Import_Shoutcast ( stream_t * );
 
-int Import_ASX ( vlc_object_t * );
+int Import_ASX ( stream_t * );
 
-int Import_SGIMB ( vlc_object_t * );
-void Close_SGIMB ( vlc_object_t * );
+int Import_SGIMB ( stream_t * );
+void Close_SGIMB ( stream_t * );
 
-int Import_QTL ( vlc_object_t * );
+int Import_QTL ( stream_t * );
 
-int Import_IFO ( vlc_object_t * );
-void Close_IFO ( vlc_object_t * );
+int Import_IFO ( stream_t * );
+void Close_IFO ( stream_t * );
 
-int Import_BDMV ( vlc_object_t * );
-void Close_BDMV ( vlc_object_t * );
+int Import_BDMV ( stream_t * );
+void Close_BDMV ( stream_t * );
 
-int Import_iTML ( vlc_object_t * );
+int Import_iTML ( stream_t * );
 
-int Import_WMS(vlc_object_t *);
+int Import_WMS( stream_t * );
 
-int Import_WPL ( vlc_object_t * );
-void Close_WPL ( vlc_object_t * );
+int Import_WPL ( stream_t * );
+void Close_WPL ( stream_t * );
 
 #define GetCurrentItem(obj) ((obj)->p_input_item)
 #define GetSource(obj) ((obj)->s)

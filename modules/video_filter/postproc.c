@@ -55,8 +55,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int OpenPostproc( vlc_object_t * );
-static void ClosePostproc( vlc_object_t * );
+static int OpenPostproc( filter_t * );
+static void ClosePostproc( filter_t * );
 
 static picture_t *PostprocPict( filter_t *, picture_t * );
 
@@ -115,9 +115,8 @@ typedef struct
 /*****************************************************************************
  * OpenPostproc: probe and open the postproc
  *****************************************************************************/
-static int OpenPostproc( vlc_object_t *p_this )
+static int OpenPostproc( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys;
     vlc_value_t val, val_orig;
     const char *desc;
@@ -256,9 +255,8 @@ static int OpenPostproc( vlc_object_t *p_this )
 /*****************************************************************************
  * ClosePostproc
  *****************************************************************************/
-static void ClosePostproc( vlc_object_t *p_this )
+static void ClosePostproc( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     /* delete the callback before destroying the mutex */

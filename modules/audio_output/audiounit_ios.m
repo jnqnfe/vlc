@@ -586,9 +586,8 @@ static int DeviceSelect(audio_output_t *p_aout, const char *psz_id)
 }
 
 static void
-Close(vlc_object_t *obj)
+Close(audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
     aout_sys_t *sys = aout->sys;
 
     [sys->aoutWrapper release];
@@ -598,9 +597,8 @@ Close(vlc_object_t *obj)
 }
 
 static int
-Open(vlc_object_t *obj)
+Open(audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
     aout_sys_t *sys = calloc(1, sizeof (*sys));
 
     if (unlikely(sys == NULL))

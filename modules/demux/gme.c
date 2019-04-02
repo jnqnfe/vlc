@@ -35,8 +35,8 @@
 
 #include <gme/gme.h>
 
-static int  Open (vlc_object_t *);
-static void Close (vlc_object_t *);
+static int  Open (demux_t *);
+static void Close (demux_t *);
 
 vlc_plugin_begin ()
     set_shortname ("GME")
@@ -66,9 +66,8 @@ static int Control (demux_t *, int, va_list);
 static gme_err_t ReaderStream (void *, void *, int);
 static gme_err_t ReaderBlock (void *, void *, int);
 
-static int Open (vlc_object_t *obj)
+static int Open (demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     uint64_t size;
 
     if (vlc_stream_GetSize(demux->s, &size))
@@ -84,7 +83,7 @@ static int Open (vlc_object_t *obj)
     const char *type = gme_identify_header (peek);
     if (!*type)
         return VLC_EGENERIC;
-    msg_Dbg (obj, "detected file type %s", type);
+    msg_Dbg (demux, "detected file type %s", type);
 
     block_t *data = NULL;
     if (size <= 0)
@@ -146,7 +145,7 @@ static int Open (vlc_object_t *obj)
          gme_info_t *infos;
          if (gme_track_info (sys->emu, &infos, i))
              continue;
-         msg_Dbg (obj, "track %u: %s %d ms", i, infos->song, infos->length);
+         msg_Dbg (demux, "track %u: %s %d ms", i, infos->song, infos->length);
          if (infos->length != -1)
              title->i_length = VLC_TICK_FROM_MS(infos->length);
          if (infos->song[0])
@@ -163,9 +162,8 @@ static int Open (vlc_object_t *obj)
 }
 
 
-static void Close (vlc_object_t *obj)
+static void Close (demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     demux_sys_t *sys = demux->p_sys;
 
     for (unsigned i = 0, n = sys->titlec; i < n; i++)

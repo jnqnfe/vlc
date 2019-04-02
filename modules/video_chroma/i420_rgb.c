@@ -64,8 +64,8 @@ static picture_t *I420_A8B8G8R8_Filter( filter_t *, picture_t * );
 /*****************************************************************************
  * Module descriptor.
  *****************************************************************************/
-static int  Activate   ( vlc_object_t * );
-static void Deactivate ( vlc_object_t * );
+static int  Activate   ( filter_t * );
+static void Deactivate ( filter_t * );
 
 vlc_plugin_begin ()
 #if defined (AVX2)
@@ -91,9 +91,8 @@ vlc_plugin_end ()
  *****************************************************************************
  * This function allocates and initializes a chroma function
  *****************************************************************************/
-static int Activate( vlc_object_t *p_this )
+static int Activate( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
 #ifdef PLAIN
     size_t i_tables_size;
 #endif
@@ -126,7 +125,7 @@ static int Activate( vlc_object_t *p_this )
                        && p_filter->fmt_out.video.i_bmask == 0x001f ) )
                     {
                         /* R5G5B6 pixel format */
-                        msg_Dbg(p_this, "RGB pixel format is R5G5B5");
+                        msg_Dbg(p_filter, "RGB pixel format is R5G5B5");
                         p_filter->pf_video_filter = I420_R5G5B5_Filter;
                     }
                     else if( ( p_filter->fmt_out.video.i_rmask == 0xf800
@@ -134,7 +133,7 @@ static int Activate( vlc_object_t *p_this )
                             && p_filter->fmt_out.video.i_bmask == 0x001f ) )
                     {
                         /* R5G6B5 pixel format */
-                        msg_Dbg(p_this, "RGB pixel format is R5G6B5");
+                        msg_Dbg(p_filter, "RGB pixel format is R5G6B5");
                         p_filter->pf_video_filter = I420_R5G6B5_Filter;
                     }
                     else
@@ -147,7 +146,7 @@ static int Activate( vlc_object_t *p_this )
                      && p_filter->fmt_out.video.i_bmask == 0x000000ff )
                     {
                         /* A8R8G8B8 pixel format */
-                        msg_Dbg(p_this, "RGB pixel format is A8R8G8B8");
+                        msg_Dbg(p_filter, "RGB pixel format is A8R8G8B8");
                         p_filter->pf_video_filter = I420_A8R8G8B8_Filter;
                     }
                     else if( p_filter->fmt_out.video.i_rmask == 0xff000000
@@ -155,7 +154,7 @@ static int Activate( vlc_object_t *p_this )
                           && p_filter->fmt_out.video.i_bmask == 0x0000ff00 )
                     {
                         /* R8G8B8A8 pixel format */
-                        msg_Dbg(p_this, "RGB pixel format is R8G8B8A8");
+                        msg_Dbg(p_filter, "RGB pixel format is R8G8B8A8");
                         p_filter->pf_video_filter = I420_R8G8B8A8_Filter;
                     }
                     else if( p_filter->fmt_out.video.i_rmask == 0x0000ff00
@@ -163,7 +162,7 @@ static int Activate( vlc_object_t *p_this )
                           && p_filter->fmt_out.video.i_bmask == 0xff000000 )
                     {
                         /* B8G8R8A8 pixel format */
-                        msg_Dbg(p_this, "RGB pixel format is B8G8R8A8");
+                        msg_Dbg(p_filter, "RGB pixel format is B8G8R8A8");
                         p_filter->pf_video_filter = I420_B8G8R8A8_Filter;
                     }
                     else if( p_filter->fmt_out.video.i_rmask == 0x000000ff
@@ -171,7 +170,7 @@ static int Activate( vlc_object_t *p_this )
                           && p_filter->fmt_out.video.i_bmask == 0x00ff0000 )
                     {
                         /* A8B8G8R8 pixel format */
-                        msg_Dbg(p_this, "RGB pixel format is A8B8G8R8");
+                        msg_Dbg(p_filter, "RGB pixel format is A8B8G8R8");
                         p_filter->pf_video_filter = I420_A8B8G8R8_Filter;
                     }
                     else
@@ -276,9 +275,8 @@ static int Activate( vlc_object_t *p_this )
  *****************************************************************************
  * This function frees the previously allocated chroma function
  *****************************************************************************/
-static void Deactivate( vlc_object_t *p_this )
+static void Deactivate( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
 #ifdef PLAIN

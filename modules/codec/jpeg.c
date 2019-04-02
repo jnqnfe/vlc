@@ -74,8 +74,8 @@ typedef struct
     struct jpeg_decompress_struct p_jpeg;
 } decoder_sys_t;
 
-static int  OpenDecoder(vlc_object_t *);
-static void CloseDecoder(vlc_object_t *);
+static int  OpenDecoder(decoder_t *);
+static void CloseDecoder(decoder_t *);
 
 static int DecodeBlock(decoder_t *, block_t *);
 
@@ -97,8 +97,8 @@ static const char * const ppsz_enc_options[] = {
     NULL
 };
 
-static int  OpenEncoder(vlc_object_t *);
-static void CloseEncoder(vlc_object_t *);
+static int  OpenEncoder(encoder_t *);
+static void CloseEncoder(encoder_t *);
 
 static block_t *EncodeBlock(encoder_t *, picture_t *);
 
@@ -149,10 +149,8 @@ static void user_error_message(j_common_ptr p_jpeg)
 /*
  * Probe the decoder and return score
  */
-static int OpenDecoder(vlc_object_t *p_this)
+static int OpenDecoder(decoder_t *p_dec)
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
-
     if (p_dec->fmt_in.i_codec != VLC_CODEC_JPEG)
     {
         return VLC_EGENERIC;
@@ -167,7 +165,7 @@ static int OpenDecoder(vlc_object_t *p_this)
 
     p_dec->p_sys = p_sys;
 
-    p_sys->p_obj = p_this;
+    p_sys->p_obj = VLC_OBJECT(p_dec);
 
     p_sys->p_jpeg.err = jpeg_std_error(&p_sys->err);
     p_sys->err.error_exit = user_error_exit;
@@ -592,9 +590,8 @@ error:
 /*
  * jpeg decoder destruction
  */
-static void CloseDecoder(vlc_object_t *p_this)
+static void CloseDecoder(decoder_t *p_dec)
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     free(p_sys);
@@ -603,10 +600,8 @@ static void CloseDecoder(vlc_object_t *p_this)
 /*
  * Probe the encoder and return score
  */
-static int OpenEncoder(vlc_object_t *p_this)
+static int OpenEncoder(encoder_t *p_enc)
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
-
     config_ChainParse(p_enc, ENC_CFG_PREFIX, ppsz_enc_options, p_enc->p_cfg);
 
     if (p_enc->fmt_out.i_codec != VLC_CODEC_JPEG)
@@ -623,7 +618,7 @@ static int OpenEncoder(vlc_object_t *p_this)
 
     p_enc->p_sys = p_sys;
 
-    p_sys->p_obj = p_this;
+    p_sys->p_obj = VLC_OBJECT(p_enc);
 
     p_sys->p_jpeg.err = jpeg_std_error(&p_sys->err);
     p_sys->err.error_exit = user_error_exit;
@@ -744,9 +739,8 @@ error:
 /*
  * jpeg encoder destruction
  */
-static void CloseEncoder(vlc_object_t *p_this)
+static void CloseEncoder(encoder_t *p_enc)
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys = p_enc->p_sys;
 
     free(p_sys);

@@ -36,7 +36,7 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
+static int  Open ( demux_t * );
 
 vlc_plugin_begin ()
     set_description( N_("XA demuxer") )
@@ -84,9 +84,8 @@ static_assert(offsetof(xa_header_t, wBitsPerSample) == 22, "Bad padding");
 /*****************************************************************************
  * Open: check file and initializes structures
  *****************************************************************************/
-static int Open( vlc_object_t * p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     const uint8_t *peek;
 
     /* XA file heuristic */
@@ -98,7 +97,7 @@ static int Open( vlc_object_t * p_this )
     if( GetWLE( peek + 8 ) != 1 ) /* format tag */
         return VLC_EGENERIC;
 
-    demux_sys_t *p_sys = vlc_obj_malloc( p_this, sizeof (*p_sys) );
+    demux_sys_t *p_sys = vlc_obj_malloc( VLC_OBJECT(p_demux), sizeof (*p_sys) );
     if( unlikely( p_sys == NULL ) )
         return VLC_ENOMEM;
 

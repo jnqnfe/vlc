@@ -43,9 +43,9 @@
 /*****************************************************************************
  * Module descriptor.
  *****************************************************************************/
-static int  DecoderOpen   ( vlc_object_t * );
-static int  PacketizerOpen( vlc_object_t * );
-static void DecoderClose  ( vlc_object_t * );
+static int  DecoderOpen   ( decoder_t * );
+static int  PacketizerOpen( decoder_t * );
+static void DecoderClose  ( decoder_t * );
 
 vlc_plugin_begin ()
     set_description( N_("CVD subtitle decoder") )
@@ -101,9 +101,8 @@ typedef struct
   uint8_t p_palette_highlight[4][4];
 } decoder_sys_t;
 
-static int OpenCommon( vlc_object_t *p_this, bool b_packetizer )
+static int OpenCommon( decoder_t *p_dec, bool b_packetizer )
 {
-    decoder_t     *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     if( p_dec->fmt_in.i_codec != VLC_CODEC_CVD )
@@ -134,25 +133,24 @@ static int OpenCommon( vlc_object_t *p_this, bool b_packetizer )
 /*****************************************************************************
  * DecoderOpen: open/initialize the cvdsub decoder.
  *****************************************************************************/
-static int DecoderOpen( vlc_object_t *p_this )
+static int DecoderOpen( decoder_t *p_dec )
 {
-    return OpenCommon( p_this, false );
+    return OpenCommon( p_dec, false );
 }
 
 /*****************************************************************************
  * PacketizerOpen: open/initialize the cvdsub packetizer.
  *****************************************************************************/
-static int PacketizerOpen( vlc_object_t *p_this )
+static int PacketizerOpen( decoder_t *p_dec )
 {
-    return OpenCommon( p_this, true );
+    return OpenCommon( p_dec, true );
 }
 
 /*****************************************************************************
  * DecoderClose: closes the cvdsub decoder/packetizer.
  *****************************************************************************/
-void DecoderClose( vlc_object_t *p_this )
+void DecoderClose( decoder_t *p_dec )
 {
-    decoder_t     *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     if( p_sys->p_spu ) block_ChainRelease( p_sys->p_spu );

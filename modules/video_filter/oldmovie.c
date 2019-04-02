@@ -172,8 +172,8 @@ static int  oldmovie_sliding_offset_apply( filter_t *p_filter, picture_t *p_pic_
  * Module descriptor
  *****************************************************************************/
 
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( filter_t * );
+static void Close( filter_t * );
 
 vlc_plugin_begin()
     set_description( N_("Old movie effect video filter") )
@@ -185,8 +185,7 @@ vlc_plugin_end()
 /**
  * Open the filter
  */
-static int Open( vlc_object_t *p_this ) {
-    filter_t *p_filter = (filter_t *)p_this;
+static int Open( filter_t *p_filter ) {
     filter_sys_t *p_sys;
 
     /* Assert video in match with video out */
@@ -222,8 +221,7 @@ static int Open( vlc_object_t *p_this ) {
 /**
  * Close the filter
  */
-static void Close( vlc_object_t *p_this ) {
-    filter_t *p_filter  = (filter_t *)p_this;
+static void Close( filter_t *p_filter ) {
     filter_sys_t *p_sys = p_filter->p_sys;
 
     /* Free allocated memory */

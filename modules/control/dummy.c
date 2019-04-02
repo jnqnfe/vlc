@@ -33,7 +33,7 @@
 #include <vlc_plugin.h>
 #include <vlc_interface.h>
 
-static int Open( vlc_object_t * );
+static int Open( intf_thread_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("Dummy") )
@@ -49,11 +49,8 @@ vlc_plugin_end ()
 /*****************************************************************************
  * Open: initialize dummy interface
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( intf_thread_t *p_intf )
 {
-    intf_thread_t *p_intf = (intf_thread_t*) p_this;
-
     msg_Info( p_intf, "using the dummy interface module..." );
-
     return VLC_SUCCESS;
 }

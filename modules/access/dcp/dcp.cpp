@@ -69,8 +69,8 @@ using namespace ASDCP;
                                      with Errata as of 30 August 2012" */
 
 /* Forward declarations */
-static int Open( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int Open( demux_t * );
+static void Close( demux_t * );
 
 /* Module descriptor */
 vlc_plugin_begin()
@@ -302,9 +302,8 @@ void CloseDcpAndMxf( demux_t *p_demux );
 /*****************************************************************************
  * Open: module init function
  *****************************************************************************/
-static int Open( vlc_object_t *obj )
+static int Open( demux_t *p_demux )
 {
-    demux_t *p_demux = ( demux_t* ) obj;
     demux_sys_t *p_sys;
     es_format_t video_format, audio_format;
     int retval;
@@ -593,13 +592,10 @@ error:
 /*****************************************************************************
  * Close: module destroy function
  *****************************************************************************/
-static inline void Close( vlc_object_t *obj )
+static inline void Close( demux_t *p_demux )
 {
-    demux_t *p_demux = ( demux_t* ) obj;
     CloseDcpAndMxf( p_demux );
 }
-
-
 
 /*****************************************************************************
  * Demux: DCP Demuxing function

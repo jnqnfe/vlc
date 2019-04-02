@@ -64,10 +64,8 @@ static struct
     { ADDON_SKIN2,               ADDONS_DIR DIR_SEP "skins2" },
 };
 
-static int   OpenStorage ( vlc_object_t * );
-static void  CloseStorage ( vlc_object_t * );
-static int   OpenLister ( vlc_object_t * );
-static void  CloseLister ( vlc_object_t * );
+static int   OpenStorage ( addons_storage_t * );
+static int   OpenLister ( addons_finder_t * );
 
 static int   LoadCatalog ( addons_finder_t * );
 static bool  FileBelongsToManagedAddon( addons_finder_t *p_finder,
@@ -81,12 +79,12 @@ vlc_plugin_begin ()
     set_shortname(N_("addons local storage"))
     add_shortcut("addons.store.install")
     set_description(N_("Addons local storage installer"))
-    set_capability(VLC_CAP_ADDONS_STORAGE, 10, OpenStorage, CloseStorage)
+    set_capability(VLC_CAP_ADDONS_STORAGE, 10, OpenStorage, NULL)
 
 add_submodule ()
     add_shortcut("addons.store.list")
     set_description( N_("Addons local storage lister") )
-    set_capability( VLC_CAP_ADDONS_FINDER, 0, OpenLister, CloseLister )
+    set_capability( VLC_CAP_ADDONS_FINDER, 0, OpenLister, NULL )
 
     //set_subcategory(SUBCAT_ADVANCED_MISC)
 vlc_plugin_end ()
@@ -342,7 +340,7 @@ static int List( addons_finder_t *p_finder )
     return VLC_SUCCESS;
 }
 
-static int recursive_mkdir( vlc_object_t *p_this, const char *psz_dirname )
+static int recursive_mkdir( addons_storage_t *p_storage, const char *psz_dirname )
 {/* stolen from config_CreateDir() */
     if( !psz_dirname || !*psz_dirname ) return -1;
 
@@ -364,7 +362,7 @@ static int recursive_mkdir( vlc_object_t *p_this, const char *psz_dirname )
             if( psz_end && psz_end != psz_parent )
             {
                 *psz_end = '\0';
-                if( recursive_mkdir( p_this, psz_parent ) == 0 )
+                if( recursive_mkdir( p_storage, psz_parent ) == 0 )
                 {
                     if( !vlc_mkdir( psz_dirname, 0700 ) )
                         return 0;
@@ -373,11 +371,11 @@ static int recursive_mkdir( vlc_object_t *p_this, const char *psz_dirname )
         }
     }
 
-    msg_Warn( p_this, "could not create %s: %m", psz_dirname );
+    msg_Warn( p_storage, "could not create %s: %m", psz_dirname );
     return -1;
 }
 
-static int InstallFile( addons_storage_t *p_this, const char *psz_downloadlink,
+static int InstallFile( addons_storage_t *p_storage, const char *psz_downloadlink,
                         const char *psz_dest )
 {
     stream_t *p_stream;
@@ -385,10 +383,10 @@ static int InstallFile( addons_storage_t *p_this, const char *psz_downloadlink,
     char buffer[1<<10];
     int i_read = 0;
 
-    p_stream = vlc_stream_NewMRL( p_this, psz_downloadlink );
+    p_stream = vlc_stream_NewMRL( p_storage, psz_downloadlink );
     if( !p_stream )
     {
-        msg_Err( p_this, "Failed to access Addon download url %s", psz_downloadlink );
+        msg_Err( p_storage, "Failed to access Addon download url %s", psz_downloadlink );
         return VLC_EGENERIC;
     }
 
@@ -403,14 +401,14 @@ static int InstallFile( addons_storage_t *p_this, const char *psz_downloadlink,
     {
         *++psz_buf = '\0';
         /* ensure directory exists */
-        if( !EMPTY_STR( psz_path ) ) recursive_mkdir( VLC_OBJECT(p_this), psz_path );
+        if( !EMPTY_STR( psz_path ) ) recursive_mkdir( p_storage, psz_path );
     }
     free( psz_path );
 
     p_destfile = vlc_fopen( psz_dest, "w" );
     if( !p_destfile )
     {
-        msg_Err( p_this, "Failed to open Addon storage file %s", psz_dest );
+        msg_Err( p_storage, "Failed to open Addon storage file %s", psz_dest );
         vlc_stream_Delete( p_stream );
         return VLC_EGENERIC;
     }
@@ -419,7 +417,7 @@ static int InstallFile( addons_storage_t *p_this, const char *psz_downloadlink,
     {
         if ( fwrite( &buffer, i_read, 1, p_destfile ) < 1 )
         {
-            msg_Err( p_this, "Failed to write to Addon file" );
+            msg_Err( p_storage, "Failed to write to Addon file" );
             break;
         }
     }
@@ -431,7 +429,7 @@ static int InstallFile( addons_storage_t *p_this, const char *psz_downloadlink,
     return i_read >= 0 ? VLC_SUCCESS : VLC_EGENERIC;
 }
 
-static int InstallAllFiles( addons_storage_t *p_this, const addon_entry_t *p_entry )
+static int InstallAllFiles( addons_storage_t *p_storage, const addon_entry_t *p_entry )
 {
     const addon_file_t *p_file;
     char *psz_dest;
@@ -470,7 +468,7 @@ static int InstallAllFiles( addons_storage_t *p_this, const addon_entry_t *p_ent
                 free( psz_translated_filename );
                 free( psz_dir );
 
-                if ( InstallFile( p_this, p_file->psz_download_uri, psz_dest ) != VLC_SUCCESS )
+                if ( InstallFile( p_storage, p_file->psz_download_uri, psz_dest ) != VLC_SUCCESS )
                 {
                     free( psz_dest );
                     return VLC_EGENERIC;
@@ -493,14 +491,13 @@ static int InstallAllFiles( addons_storage_t *p_this, const addon_entry_t *p_ent
 
 static int Install( addons_storage_t *p_storage, addon_entry_t *p_entry )
 {
-    vlc_object_t *p_this = VLC_OBJECT( p_storage );
     int i_ret = VLC_EGENERIC;
 
     if ( ! p_entry->psz_source_module )
         return i_ret;
 
     /* Query origin module for download path */
-    addons_finder_t *p_finder = vlc_object_create( p_this, sizeof( addons_finder_t ) );
+    addons_finder_t *p_finder = vlc_object_create( VLC_OBJECT( p_storage ), sizeof( addons_finder_t ) );
     if( !p_finder )
         return VLC_ENOMEM;
 
@@ -569,7 +566,7 @@ static int WriteCatalog( addons_storage_t *p_storage,
     {
         *++psz_buf = '\0';
         /* ensure directory exists */
-        if( !EMPTY_STR( psz_path ) ) recursive_mkdir( VLC_OBJECT(p_storage), psz_path );
+        if( !EMPTY_STR( psz_path ) ) recursive_mkdir( p_storage, psz_path );
     }
     free( psz_path );
 
@@ -922,10 +919,8 @@ static int Remove( addons_storage_t *p_storage, addon_entry_t *p_entry )
     return VLC_SUCCESS;
 }
 
-static int OpenStorage(vlc_object_t *p_this)
+static int OpenStorage(addons_storage_t *p_storage)
 {
-    addons_storage_t *p_storage = (addons_storage_t*) p_this;
-
     p_storage->pf_install = Install;
     p_storage->pf_remove = Remove;
     p_storage->pf_catalog = WriteCatalog;
@@ -933,21 +928,10 @@ static int OpenStorage(vlc_object_t *p_this)
     return VLC_SUCCESS;
 }
 
-static void CloseStorage(vlc_object_t *p_this)
+static int OpenLister(addons_finder_t *p_finder)
 {
-    VLC_UNUSED( p_this );
-}
-
-static int OpenLister(vlc_object_t *p_this)
-{
-    addons_finder_t *p_finder = (addons_finder_t*) p_this;
     p_finder->pf_find = List;
     p_finder->pf_retrieve = NULL;
 
     return VLC_SUCCESS;
-}
-
-static void CloseLister(vlc_object_t *p_this)
-{
-    VLC_UNUSED( p_this );
 }

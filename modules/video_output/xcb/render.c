@@ -551,9 +551,7 @@ FindVisual(const xcb_setup_t *setup, const xcb_screen_t *scr,
 static int Open(vout_display_t *vd, const vout_display_cfg_t *cfg,
                 video_format_t *fmtp, vlc_video_context *ctx)
 {
-    vlc_object_t *obj = VLC_OBJECT(vd);
-
-    vout_display_sys_t *sys = vlc_obj_malloc(obj, sizeof (*sys));
+    vout_display_sys_t *sys = vlc_obj_malloc(VLC_OBJECT(vd), sizeof (*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
 
@@ -621,12 +619,12 @@ static int Open(vout_display_t *vd, const vout_display_cfg_t *cfg,
     if (unlikely(sys->format.argb == 0 || sys->format.alpha == 0))
         goto error; /* Buggy server */
 
-    msg_Dbg(obj, "using RENDER picture format %u", sys->format.argb);
-    msg_Dbg(obj, "using X11 visual 0x%"PRIx32, visual);
+    msg_Dbg(vd, "using RENDER picture format %u", sys->format.argb);
+    msg_Dbg(vd, "using X11 visual 0x%"PRIx32, visual);
 
-    char *filter = var_InheritString(obj, "x11-render-filter");
+    char *filter = var_InheritString(vd, "x11-render-filter");
     if (filter != NULL) {
-        msg_Dbg(obj, "using filter \"%s\"", filter);
+        msg_Dbg(vd, "using filter \"%s\"", filter);
         sys->filter = ToCharset("ISO 8859-1", filter, &(size_t){ 0 });
         free(filter);
     } else
@@ -646,7 +644,7 @@ static int Open(vout_display_t *vd, const vout_display_cfg_t *cfg,
     sys->picture.dest = xcb_generate_id(conn);
     sys->gc = xcb_generate_id(conn);
 
-    if (XCB_shm_Check(obj, conn))
+    if (XCB_shm_Check(VLC_OBJECT(vd), conn))
         sys->segment = xcb_generate_id(conn);
     else
         sys->segment = 0;

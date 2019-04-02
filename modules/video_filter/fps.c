@@ -33,9 +33,9 @@
 #include <vlc_filter.h>
 #include <vlc_picture.h>
 
-static int Open( vlc_object_t *p_this);
-static void Close( vlc_object_t *p_this);
-static picture_t *Filter( filter_t *p_filter, picture_t *p_picture);
+static int Open( filter_t * );
+static void Close( filter_t * );
+static picture_t *Filter( filter_t *p_filter, picture_t *p_picture );
 
 #define CFG_PREFIX "fps-"
 
@@ -131,9 +131,8 @@ static picture_t *Filter( filter_t *p_filter, picture_t *p_picture)
     return last_pic;
 }
 
-static int Open( vlc_object_t *p_this)
+static int Open( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
     filter_sys_t *p_sys;
 
     p_sys = p_filter->p_sys = malloc( sizeof( *p_sys ) );
@@ -174,9 +173,8 @@ static int Open( vlc_object_t *p_this)
     return VLC_SUCCESS;
 }
 
-static void Close( vlc_object_t *p_this )
+static void Close( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
     if( p_sys->p_previous_pic )
         picture_Release( p_sys->p_previous_pic );

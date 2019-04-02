@@ -37,12 +37,12 @@
 #include "../codec/vt_utils.h"
 #include "../video_chroma/copy.h"
 
-static int Open(vlc_object_t *);
-static void Close(vlc_object_t *);
+static int Open(filter_t *);
+static void Close(filter_t *);
 
 #if !TARGET_OS_IPHONE
-static int Open_CVPX_to_CVPX(vlc_object_t *);
-static void Close_CVPX_to_CVPX(vlc_object_t *);
+static int Open_CVPX_to_CVPX(filter_t *);
+static void Close_CVPX_to_CVPX(filter_t *);
 #endif
 
 typedef struct
@@ -223,9 +223,8 @@ static picture_t *SW_TO_CVPX_Filter(filter_t *p_filter, picture_t *src)
     return dst;
 }
 
-static void Close(vlc_object_t *obj)
+static void Close(filter_t *p_filter)
 {
-    filter_t *p_filter = (filter_t *)obj;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     if (p_sys->pool != NULL)
@@ -235,10 +234,8 @@ static void Close(vlc_object_t *obj)
     free(p_sys);
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(filter_t *p_filter)
 {
-    filter_t *p_filter = (filter_t *)obj;
-
     if (p_filter->fmt_in.video.i_height != p_filter->fmt_out.video.i_height
         || p_filter->fmt_in.video.i_width != p_filter->fmt_out.video.i_width)
         return VLC_EGENERIC;
@@ -318,7 +315,7 @@ static int Open(vlc_object_t *obj)
     if (b_need_pool
      && (p_sys->pool = cvpxpool_create(&p_filter->fmt_out.video, 3)) == NULL)
     {
-        Close(obj);
+        Close(p_filter);
         return VLC_EGENERIC;
     }
 
@@ -378,10 +375,8 @@ static vlc_fourcc_t const supported_chromas[] = { VLC_CODEC_CVPX_BGRA,
                                                   VLC_CODEC_CVPX_UYVY };
 
 static int
-Open_CVPX_to_CVPX(vlc_object_t *obj)
+Open_CVPX_to_CVPX(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
-
     unsigned int i;
 #define CHECK_CHROMA(fourcc) \
     i = 0; \
@@ -419,9 +414,8 @@ Open_CVPX_to_CVPX(vlc_object_t *obj)
 }
 
 static void
-Close_CVPX_to_CVPX(vlc_object_t *obj)
+Close_CVPX_to_CVPX(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
     filter_sys_t *p_sys = filter->p_sys;
 
     VTPixelTransferSessionInvalidate(p_sys->vttransfer);

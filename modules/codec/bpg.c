@@ -34,8 +34,8 @@ typedef struct
     struct BPGDecoderContext *p_bpg;
 } decoder_sys_t;
 
-static int  OpenDecoder(vlc_object_t *);
-static void CloseDecoder(vlc_object_t *);
+static int  OpenDecoder(decoder_t *);
+static void CloseDecoder(decoder_t *);
 
 static int DecodeBlock(decoder_t *, block_t *);
 
@@ -51,10 +51,8 @@ vlc_plugin_begin()
 vlc_plugin_end()
 
 
-static int OpenDecoder(vlc_object_t *p_this)
+static int OpenDecoder(decoder_t *p_dec)
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
-
     if( p_dec->fmt_in.i_codec != VLC_CODEC_BPG )
     {
         return VLC_EGENERIC;
@@ -157,9 +155,8 @@ error:
     return VLCDEC_SUCCESS;
 }
 
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     if( p_sys->p_bpg )

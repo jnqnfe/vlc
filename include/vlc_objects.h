@@ -107,6 +107,8 @@ vlc_object_cast(xml_t)
 vlc_object_cast(services_discovery_t)
 vlc_object_cast(vlc_renderer_discovery_t)
 vlc_object_cast(vlc_medialibrary_module_t)
+vlc_object_cast(meta_export_t)
+vlc_object_cast(vlc_playlist_export)
 
 /* The root object */
 struct libvlc_int_t

@@ -111,9 +111,8 @@ static void  CommandPush( vod_t *, rtsp_cmd_type_t, vod_media_t *,
 /*****************************************************************************
  * Open: Starts the RTSP server module
  *****************************************************************************/
-int OpenVoD( vlc_object_t *p_this )
+int OpenVoD( vod_t *p_vod )
 {
-    vod_t *p_vod = (vod_t *)p_this;
     vod_sys_t *p_sys = NULL;
     char *psz_url;
 
@@ -175,9 +174,8 @@ error:
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-void CloseVoD( vlc_object_t * p_this )
+void CloseVoD( vod_t *p_vod )
 {
-    vod_t *p_vod = (vod_t *)p_this;
     vod_sys_t *p_sys = p_vod->p_sys;
 
     /* Stop command thread */

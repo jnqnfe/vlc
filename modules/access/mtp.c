@@ -49,8 +49,8 @@
  * Module descriptor
  *****************************************************************************/
 
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( stream_t * );
+static void Close( stream_t * );
 
 vlc_plugin_begin()
     set_description( N_("MTP input") )
@@ -71,9 +71,8 @@ static int  Control( stream_t *, int, va_list );
 /*****************************************************************************
  * Open: open the file
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( stream_t *p_access )
 {
-    stream_t     *p_access = ( stream_t* )p_this;
     uint32_t i_bus;
     uint8_t i_dev;
     uint16_t i_product_id;
@@ -81,7 +80,7 @@ static int Open( vlc_object_t *p_this )
     LIBMTP_raw_device_t *p_rawdevices;
     int i_numrawdevices;
 
-    int *fdp = vlc_obj_malloc( p_this, sizeof (*fdp) );
+    int *fdp = vlc_obj_malloc( VLC_OBJECT(p_access), sizeof (*fdp) );
     if( unlikely(fdp == NULL) )
         return VLC_ENOMEM;
 
@@ -140,11 +139,9 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: close the target
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( stream_t *p_access )
 {
-    stream_t *p_access = ( stream_t* )p_this;
     int *fdp = p_access->p_sys;
-
     vlc_close ( *fdp );
 }
 

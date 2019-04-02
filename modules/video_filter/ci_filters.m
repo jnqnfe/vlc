@@ -285,12 +285,12 @@ filter_ConvertParam(float f_vlc_val,
 }
 
 static int
-ParamsCallback(vlc_object_t *obj,
+ParamsCallback(filter_t *filter,
                char const *psz_var,
                vlc_value_t oldval, vlc_value_t newval,
                void *p_data)
 {
-    VLC_UNUSED(obj); VLC_UNUSED(oldval);
+    VLC_UNUSED(filter); VLC_UNUSED(oldval);
     struct filter_chain *filter = p_data;
     struct filter_param_desc const *filter_param_descs =
         filter_desc_table[filter->filter].param_descs;
@@ -584,10 +584,8 @@ CVPX_to_CVPX_converter_Create(filter_t *filter, bool to_rgba)
 }
 
 static int
-Open(vlc_object_t *obj, char const *psz_filter)
+Open(filter_t *filter, char const *psz_filter)
 {
-    filter_t *filter = (filter_t *)obj;
-
     switch (filter->fmt_in.video.i_chroma)
     {
         case VLC_CODEC_CVPX_NV12:
@@ -687,51 +685,50 @@ error:
 }
 
 static int
-OpenAdjust(vlc_object_t *obj)
+OpenAdjust(filter_t *filter)
 {
-    return Open(obj, "adjust");
+    return Open(filter, "adjust");
 }
 
 static int
-OpenInvert(vlc_object_t *obj)
+OpenInvert(filter_t *filter)
 {
-    return Open(obj, "invert");
+    return Open(filter, "invert");
 }
 
 static int
-OpenPosterize(vlc_object_t *obj)
+OpenPosterize(filter_t *filter)
 {
-    return Open(obj, "posterize");
+    return Open(filter, "posterize");
 }
 
 static int
-OpenSepia(vlc_object_t *obj)
+OpenSepia(filter_t *filter)
 {
-    return Open(obj, "sepia");
+    return Open(filter, "sepia");
 }
 
 static int
-OpenSharpen(vlc_object_t *obj)
+OpenSharpen(filter_t *filter)
 {
-    return Open(obj, "sharpen");
+    return Open(filter, "sharpen");
 }
 
 static int
-OpenPsychedelic(vlc_object_t *obj)
+OpenPsychedelic(filter_t *filter)
 {
-    return Open(obj, "psychedelic");
+    return Open(filter, "psychedelic");
 }
 
 static int
-OpenCustom(vlc_object_t *obj)
+OpenCustom(filter_t *filter)
 {
-    return Open(obj, "custom");
+    return Open(filter, "custom");
 }
 
 static void
-Close(vlc_object_t *obj)
+Close(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
     filter_sys_t *p_sys = filter->p_sys;
     struct ci_filters_ctx *ctx = p_sys->ctx;
     enum filter_type filter_types[NUM_MAX_EQUIVALENT_VLC_FILTERS];

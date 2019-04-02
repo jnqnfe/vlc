@@ -316,9 +316,8 @@ static int AdjustCallback( vlc_object_t *p_this, char const *psz_var,
     return VLC_SUCCESS;
 }
 
-static int D3D11OpenAdjust(vlc_object_t *obj)
+static int D3D11OpenAdjust(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
     HRESULT hr;
 
     if (!is_d3d11_opaque(filter->fmt_in.video.i_chroma))
@@ -517,9 +516,8 @@ error:
     return VLC_EGENERIC;
 }
 
-static void D3D11CloseAdjust(vlc_object_t *obj)
+static void D3D11CloseAdjust(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
     filter_sys_t *sys = filter->p_sys;
 
     var_DelCallback( filter, "contrast",   AdjustCallback, sys );

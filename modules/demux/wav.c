@@ -44,8 +44,8 @@ static_assert( INPUT_CHAN_MAX >= WAV_CHAN_MAX, "channel count mismatch" );
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( demux_t * );
+static void Close( demux_t * );
 
 vlc_plugin_begin ()
     set_description( N_("WAV demuxer") )
@@ -88,9 +88,8 @@ static int FrameInfo_MSGSM    ( unsigned int *, int *, const es_format_t * );
 /*****************************************************************************
  * Open: check file and initializes structures
  *****************************************************************************/
-static int Open( vlc_object_t * p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
 
     const uint8_t *p_peek;
@@ -494,10 +493,9 @@ static int Demux( demux_t *p_demux )
 /*****************************************************************************
  * Close: frees unused data
  *****************************************************************************/
-static void Close ( vlc_object_t * p_this )
+static void Close ( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
-    demux_sys_t *p_sys   = p_demux->p_sys;
+    demux_sys_t *p_sys = p_demux->p_sys;
 
     es_format_Clean( &p_sys->fmt );
     free( p_sys );

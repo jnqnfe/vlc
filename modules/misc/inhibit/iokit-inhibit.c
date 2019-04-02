@@ -107,13 +107,11 @@ static void UpdateInhibit(vlc_inhibit_t *ih, unsigned mask)
     }
 }
 
-static int OpenInhibit(vlc_object_t *obj)
+static int OpenInhibit(vlc_inhibit_t *ih)
 {
-    vlc_inhibit_t *ih = (vlc_inhibit_t *)obj;
-
     // Intialize module private storage
     vlc_inhibit_sys_t *sys = ih->p_sys =
-            vlc_obj_malloc(obj, sizeof(vlc_inhibit_sys_t));
+            vlc_obj_malloc(VLC_OBJECT(ih), sizeof(vlc_inhibit_sys_t));
     if (unlikely(ih->p_sys == NULL))
         return VLC_ENOMEM;
 
@@ -124,9 +122,8 @@ static int OpenInhibit(vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void CloseInhibit(vlc_object_t *obj)
+static void CloseInhibit(vlc_inhibit_t *ih)
 {
-    vlc_inhibit_t *ih = (vlc_inhibit_t*)obj;
     vlc_inhibit_sys_t* sys = ih->p_sys;
 
     // Release remaining IOPMAssertion for inhibition, if any

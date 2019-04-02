@@ -39,8 +39,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Create    ( vlc_object_t * );
-static void Destroy   ( vlc_object_t * );
+static int  Create    ( filter_t * );
+static void Destroy   ( filter_t * );
 
 #define SIGMA_MIN (0.01)
 #define SIGMA_MAX (4096.0)
@@ -122,10 +122,8 @@ static void gaussianblur_InitDistribution( filter_sys_t *p_sys )
     p_sys->pt_distribution = pt_distribution;
 }
 
-static int Create( vlc_object_t *p_this )
+static int Create( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
-
     if(   p_filter->fmt_in.video.i_chroma != VLC_CODEC_I420
        && p_filter->fmt_in.video.i_chroma != VLC_CODEC_J420
        && p_filter->fmt_in.video.i_chroma != VLC_CODEC_YV12
@@ -173,9 +171,8 @@ static int Create( vlc_object_t *p_this )
     return VLC_SUCCESS;
 }
 
-static void Destroy( vlc_object_t *p_this )
+static void Destroy( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     free( p_sys->pt_distribution );

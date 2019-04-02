@@ -34,8 +34,8 @@
 #include <aribb25/b_cas_card.h>
 #include <aribb25/b_cas_card_error_code.h>
 
-static int  Open(vlc_object_t *);
-static void Close(vlc_object_t *);
+static int  Open(stream_t *);
+static void Close(stream_t *);
 
 vlc_plugin_begin ()
     add_shortcut("aribcam")
@@ -245,10 +245,8 @@ static int Control( stream_t *p_stream, int i_query, va_list args )
     return vlc_stream_vaControl( p_stream->s, i_query, args );
 }
 
-static int Open( vlc_object_t *p_object )
+static int Open( stream_t *p_stream )
 {
-    stream_t *p_stream = (stream_t *) p_object;
-
     int64_t i_stream_size = stream_Size( p_stream->s );
     if ( i_stream_size > 0 && i_stream_size < ARIB_STD_B25_TS_PROBING_MIN_DATA )
         return VLC_EGENERIC;
@@ -330,9 +328,8 @@ error:
     return VLC_EGENERIC;
 }
 
-static void Close ( vlc_object_t *p_object )
+static void Close ( stream_t *p_stream )
 {
-    stream_t *p_stream = (stream_t *)p_object;
     stream_sys_t *p_sys = p_stream->p_sys;
 
     if ( p_sys->p_bcas )

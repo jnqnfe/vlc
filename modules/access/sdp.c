@@ -29,7 +29,7 @@
 #include <vlc_plugin.h>
 #include <vlc_access.h>
 
-static int Open (vlc_object_t *);
+static int Open (stream_t *);
 
 vlc_plugin_begin ()
     set_shortname (N_("SDP"))
@@ -43,10 +43,8 @@ static ssize_t Read (stream_t *, void *, size_t);
 static int Seek (stream_t *, uint64_t);
 static int Control (stream_t *, int, va_list);
 
-static int Open (vlc_object_t *obj)
+static int Open (stream_t *access)
 {
-    stream_t *access = (stream_t *)obj;
-
     access->pf_read = Read;
     access->pf_block = NULL;
     access->pf_seek = Seek;

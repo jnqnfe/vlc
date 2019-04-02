@@ -39,8 +39,8 @@
 
 typedef struct filter_sys_t filter_sys_t;
 
-static int  Open     ( vlc_object_t * );
-static void Close    ( vlc_object_t * );
+static int  Open     ( filter_t * );
+static void Close    ( filter_t * );
 static block_t *DoWork( filter_t *, block_t * );
 static int paramCallback( vlc_object_t *, char const *, vlc_value_t ,
                           vlc_value_t , void * );
@@ -110,26 +110,25 @@ static inline float small_value(void)
  * Open: initialize and create stuff
  * @param p_this
  */
-static int Open( vlc_object_t *p_this )
+static int Open( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
     filter_sys_t *p_sys = p_filter->p_sys = malloc( sizeof( *p_sys ) );
     if( !p_sys )
         return VLC_ENOMEM;
 
     p_sys->i_channels       = aout_FormatNbChannels( &p_filter->fmt_in.audio );
-    p_sys->f_delayTime      = var_CreateGetFloat( p_this, "delay-time" );
-    p_sys->f_sweepDepth     = var_CreateGetFloat( p_this, "sweep-depth" );
-    p_sys->f_sweepRate      = var_CreateGetFloat( p_this, "sweep-rate" );
-    p_sys->f_feedbackGain   = var_CreateGetFloat( p_this, "feedback-gain" );
-    p_sys->f_dryLevel       = var_CreateGetFloat( p_this, "dry-mix" );
-    p_sys->f_wetLevel       = var_CreateGetFloat( p_this, "wet-mix" );
-    var_AddCallback( p_this, "delay-time", paramCallback, p_sys );
-    var_AddCallback( p_this, "sweep-depth", paramCallback, p_sys );
-    var_AddCallback( p_this, "sweep-rate", paramCallback, p_sys );
-    var_AddCallback( p_this, "feedback-gain", paramCallback, p_sys );
-    var_AddCallback( p_this, "dry-mix", paramCallback, p_sys );
-    var_AddCallback( p_this, "wet-mix", paramCallback, p_sys );
+    p_sys->f_delayTime      = var_CreateGetFloat( p_filter, "delay-time" );
+    p_sys->f_sweepDepth     = var_CreateGetFloat( p_filter, "sweep-depth" );
+    p_sys->f_sweepRate      = var_CreateGetFloat( p_filter, "sweep-rate" );
+    p_sys->f_feedbackGain   = var_CreateGetFloat( p_filter, "feedback-gain" );
+    p_sys->f_dryLevel       = var_CreateGetFloat( p_filter, "dry-mix" );
+    p_sys->f_wetLevel       = var_CreateGetFloat( p_filter, "wet-mix" );
+    var_AddCallback( p_filter, "delay-time", paramCallback, p_sys );
+    var_AddCallback( p_filter, "sweep-depth", paramCallback, p_sys );
+    var_AddCallback( p_filter, "sweep-rate", paramCallback, p_sys );
+    var_AddCallback( p_filter, "feedback-gain", paramCallback, p_sys );
+    var_AddCallback( p_filter, "dry-mix", paramCallback, p_sys );
+    var_AddCallback( p_filter, "wet-mix", paramCallback, p_sys );
 
     if( p_sys->f_delayTime < 0.f )
     {
@@ -303,23 +302,22 @@ static block_t *DoWork( filter_t *p_filter, block_t *p_in_buf )
  * Close: Destructor
  * @param p_this pointer to this filter object
  */
-static void Close( vlc_object_t *p_this )
+static void Close( filter_t *p_filter )
 {
-    filter_t *p_filter = ( filter_t* )p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
-    var_DelCallback( p_this, "delay-time", paramCallback, p_sys );
-    var_DelCallback( p_this, "sweep-depth", paramCallback, p_sys );
-    var_DelCallback( p_this, "sweep-rate", paramCallback, p_sys );
-    var_DelCallback( p_this, "feedback-gain", paramCallback, p_sys );
-    var_DelCallback( p_this, "wet-mix", paramCallback, p_sys );
-    var_DelCallback( p_this, "dry-mix", paramCallback, p_sys );
-    var_Destroy( p_this, "delay-time" );
-    var_Destroy( p_this, "sweep-depth" );
-    var_Destroy( p_this, "sweep-rate" );
-    var_Destroy( p_this, "feedback-gain" );
-    var_Destroy( p_this, "wet-mix" );
-    var_Destroy( p_this, "dry-mix" );
+    var_DelCallback( p_filter, "delay-time", paramCallback, p_sys );
+    var_DelCallback( p_filter, "sweep-depth", paramCallback, p_sys );
+    var_DelCallback( p_filter, "sweep-rate", paramCallback, p_sys );
+    var_DelCallback( p_filter, "feedback-gain", paramCallback, p_sys );
+    var_DelCallback( p_filter, "wet-mix", paramCallback, p_sys );
+    var_DelCallback( p_filter, "dry-mix", paramCallback, p_sys );
+    var_Destroy( p_filter, "delay-time" );
+    var_Destroy( p_filter, "sweep-depth" );
+    var_Destroy( p_filter, "sweep-rate" );
+    var_Destroy( p_filter, "feedback-gain" );
+    var_Destroy( p_filter, "wet-mix" );
+    var_Destroy( p_filter, "dry-mix" );
 
     free( p_sys->p_delayLineStart );
     free( p_sys );

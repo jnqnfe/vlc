@@ -43,8 +43,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open    ( vlc_object_t * );
-static void Close  ( vlc_object_t * );
+static int Open ( demux_t * );
+static void Close ( demux_t * );
 
 vlc_plugin_begin ()
     set_description( N_( "CAF demuxer" ))
@@ -779,11 +779,10 @@ static int ReadPaktChunk( demux_t *p_demux )
 /*****************************************************************************
  * Open
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( demux_t *p_demux )
 {
     int i_error = VLC_SUCCESS;
 
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
 
     const uint8_t *p_peek;
@@ -1062,9 +1061,8 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
 /*****************************************************************************
  * Close
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
 
     es_format_Clean( &p_sys->fmt );

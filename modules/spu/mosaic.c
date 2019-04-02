@@ -44,8 +44,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  CreateFilter    ( vlc_object_t * );
-static void DestroyFilter   ( vlc_object_t * );
+static int  CreateFilter    ( filter_t * );
+static void DestroyFilter   ( filter_t * );
 static subpicture_t *Filter ( filter_t *, vlc_tick_t );
 
 static int MosaicCallback   ( vlc_object_t *, char const *, vlc_value_t,
@@ -272,9 +272,8 @@ static void mosaic_ParseSetOffsets( vlc_object_t *p_this,
 /*****************************************************************************
  * CreateFiler: allocate mosaic video filter
  *****************************************************************************/
-static int CreateFilter( vlc_object_t *p_this )
+static int CreateFilter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys;
     char *psz_order, *_psz_order;
     char *psz_offsets;
@@ -373,9 +372,8 @@ static int CreateFilter( vlc_object_t *p_this )
 /*****************************************************************************
  * DestroyFilter: destroy mosaic video filter
  *****************************************************************************/
-static void DestroyFilter( vlc_object_t *p_this )
+static void DestroyFilter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
 #define DEL_CB( name ) \

@@ -76,11 +76,9 @@ error:
     return VLCDEC_SUCCESS;
 }
 
-static int OpenDecoder ( vlc_object_t *p_this )
+static int OpenDecoder ( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
-
-    msg_Dbg( p_this, "opening stats decoder" );
+    msg_Dbg( p_dec, "opening stats decoder" );
 
     /* Set callbacks */
     p_dec->pf_decode = DecodeBlock;
@@ -119,11 +117,9 @@ static block_t *EncodeAudio( encoder_t *p_enc, block_t *p_abuff )
     return NULL;
 }
 
-static int OpenEncoder ( vlc_object_t *p_this )
+static int OpenEncoder ( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
-
-    msg_Dbg( p_this, "opening stats encoder" );
+    msg_Dbg( p_enc, "opening stats encoder" );
 
     p_enc->pf_encode_video = EncodeVideo;
     p_enc->pf_encode_audio = EncodeAudio;
@@ -168,9 +164,8 @@ static int DemuxControl( demux_t *p_demux, int i_query, va_list args )
                                    i_query, args );
 }
 
-static int OpenDemux ( vlc_object_t *p_this )
+static int OpenDemux ( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
 
     p_demux->p_sys = NULL;
@@ -200,10 +195,8 @@ static int OpenDemux ( vlc_object_t *p_this )
     return VLC_SUCCESS;
 }
 
-static void CloseDemux ( vlc_object_t *p_this )
+static void CloseDemux ( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t*)p_this;
-
     msg_Dbg( p_demux, "Closing Stat demux" );
 
     free( p_demux->p_sys );

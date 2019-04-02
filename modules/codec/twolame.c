@@ -41,8 +41,8 @@
 /****************************************************************************
  * Local prototypes
  ****************************************************************************/
-static int OpenEncoder   ( vlc_object_t * );
-static void CloseEncoder ( vlc_object_t * );
+static int OpenEncoder   ( encoder_t * );
+static void CloseEncoder ( encoder_t * );
 static block_t *Encode   ( encoder_t *, block_t * );
 
 /*****************************************************************************
@@ -122,9 +122,8 @@ static const uint16_t mpa_bitrate_tab[2][15] =
 static const uint16_t mpa_freq_tab[6] =
 { 44100, 48000, 32000, 22050, 24000, 16000 };
 
-static int OpenEncoder( vlc_object_t *p_this )
+static int OpenEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys;
     int i_frequency;
 
@@ -349,9 +348,8 @@ static block_t *Encode( encoder_t *p_enc, block_t *p_aout_buf )
 /*****************************************************************************
  * CloseEncoder: twolame encoder destruction
  *****************************************************************************/
-static void CloseEncoder( vlc_object_t *p_this )
+static void CloseEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys = p_enc->p_sys;
 
     twolame_close( &p_sys->p_twolame );

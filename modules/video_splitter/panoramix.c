@@ -71,8 +71,8 @@
 #define PANORAMIX_HELP N_("Split the video in multiple windows to " \
     "display on a wall of screens")
 
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( video_splitter_t * );
+static void Close( video_splitter_t * );
 
 vlc_plugin_begin()
     set_help(PANORAMIX_HELP)
@@ -331,9 +331,9 @@ static const panoramix_chroma_t p_chroma_array[] = {
 
 #ifndef _WIN32
 /* Get the number of outputs */
-static unsigned CountMonitors( vlc_object_t *obj )
+static unsigned CountMonitors( video_splitter_t *p_splitter )
 {
-    char *psz_display = var_InheritString( obj, "x11-display" );
+    char *psz_display = var_InheritString( p_splitter, "x11-display" );
     int snum;
     xcb_connection_t *conn = xcb_connect( psz_display, &snum );
     free( psz_display );
@@ -362,7 +362,7 @@ static unsigned CountMonitors( vlc_object_t *obj )
             xcb_randr_query_version( conn, 1, 2 ), NULL );
     if( v == NULL )
         goto error;
-    msg_Dbg( obj, "using X RandR extension v%"PRIu32".%"PRIu32,
+    msg_Dbg( p_splitter, "using X RandR extension v%"PRIu32".%"PRIu32,
              v->major_version, v->minor_version );
     free( v );
 
@@ -387,7 +387,7 @@ static unsigned CountMonitors( vlc_object_t *obj )
         free( output );
     }
     free( r );
-    msg_Dbg( obj, "X randr has %u outputs", n );
+    msg_Dbg( p_splitter, "X randr has %u outputs", n );
 
 error:
     xcb_disconnect( conn );
@@ -400,9 +400,8 @@ error:
  *****************************************************************************
  * This function allocates and initializes a Wall vout method.
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( video_splitter_t *p_splitter )
 {
-    video_splitter_t *p_splitter = (video_splitter_t*)p_this;
     video_splitter_sys_t *p_sys;
 
     const panoramix_chroma_t *p_chroma;
@@ -453,7 +452,7 @@ static int Open( vlc_object_t *p_this )
             }
         }
 #else
-        const unsigned i_monitors = CountMonitors( p_this );
+        const unsigned i_monitors = CountMonitors( p_splitter );
         if( i_monitors > 1 ) /* Find closest to square */
             for( unsigned w = 1; (i_monitors / w) >= w ; w++ )
             {
@@ -686,9 +685,8 @@ static int Open( vlc_object_t *p_this )
 /**
  * Terminate a splitter module
  */
-static void Close( vlc_object_t *p_this )
+static void Close( video_splitter_t *p_splitter )
 {
-    video_splitter_t *p_splitter = (video_splitter_t*)p_this;
     video_splitter_sys_t *p_sys = p_splitter->p_sys;
 
     free( p_splitter->p_output );

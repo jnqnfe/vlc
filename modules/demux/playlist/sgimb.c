@@ -133,9 +133,8 @@ static int ReadDir( stream_t *, input_item_node_t * );
 /*****************************************************************************
  * Activate: initializes m3u demux structures
  *****************************************************************************/
-int Import_SGIMB( vlc_object_t * p_this )
+int Import_SGIMB( stream_t* p_demux )
 {
-    stream_t *p_demux = (stream_t *)p_this;
     const uint8_t *p_peek;
     int i_size;
 
@@ -185,9 +184,8 @@ int Import_SGIMB( vlc_object_t * p_this )
 /*****************************************************************************
  * Deactivate: frees unused data
  *****************************************************************************/
-void Close_SGIMB( vlc_object_t *p_this )
+void Close_SGIMB( stream_t* p_demux )
 {
-    stream_t *p_demux = (stream_t*)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
     free( p_sys->psz_uri );
     free( p_sys->psz_server );

@@ -41,8 +41,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int      OpenDecoder( vlc_object_t * );
-static void     CloseDecoder( vlc_object_t * );
+static int      OpenDecoder( decoder_t * );
+static void     CloseDecoder( decoder_t * );
 
 static unsigned int mpg123_refcount = 0;
 static vlc_mutex_t mpg123_mutex = VLC_STATIC_MUTEX;
@@ -375,9 +375,8 @@ static void ExitMPG123( void )
 /*****************************************************************************
  * OpenDecoder :
  *****************************************************************************/
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys;
 
     if( p_dec->fmt_in.i_codec != VLC_CODEC_MPGA &&
@@ -405,7 +404,7 @@ static int OpenDecoder( vlc_object_t *p_this )
     p_dec->pf_decode = DecodeBlock;
     p_dec->pf_flush  = Flush;
 
-    msg_Dbg( p_this, "%4.4s->%4.4s, bits per sample: %i",
+    msg_Dbg( p_dec, "%4.4s->%4.4s, bits per sample: %i",
              (char *)&p_dec->fmt_in.i_codec,
              (char *)&p_dec->fmt_out.i_codec,
              aout_BitsPerSample( p_dec->fmt_out.i_codec ) );
@@ -420,9 +419,8 @@ error:
 /*****************************************************************************
  * CloseDecoder : deallocate data structures
  *****************************************************************************/
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     mpg123_close( p_sys->p_handle );

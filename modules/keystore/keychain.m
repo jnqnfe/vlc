@@ -43,7 +43,7 @@
 // Marker to recognize changed format in vlc 4: secret does not have \0 cut off anymore.
 int kVlc4Creator = 'vlc4';
 
-static int Open(vlc_object_t *);
+static int Open(vlc_keystore *);
 
 static const int sync_list[] =
 { 0, 1, 2 };
@@ -417,10 +417,8 @@ static unsigned int Remove(vlc_keystore *p_keystore,
     return (unsigned int)count;
 }
 
-static int Open(vlc_object_t *p_this)
+static int Open(vlc_keystore *p_keystore)
 {
-    vlc_keystore *p_keystore = (vlc_keystore *)p_this;
-
     p_keystore->p_sys = NULL;
     p_keystore->pf_store = Store;
     p_keystore->pf_find = Find;

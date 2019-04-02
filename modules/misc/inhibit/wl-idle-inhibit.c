@@ -85,15 +85,14 @@ static const struct wl_registry_listener registry_cbs =
     registry_global_remove_cb,
 };
 
-static int Open(vlc_object_t *obj)
+static int Open(vlc_inhibit_t *ih)
 {
-    vlc_inhibit_t *ih = (vlc_inhibit_t *)obj;
     vout_window_t *wnd = vlc_inhibit_GetWindow(ih);
 
     if (wnd->type != VOUT_WINDOW_TYPE_WAYLAND)
         return VLC_EGENERIC;
 
-    vlc_inhibit_sys_t *sys = vlc_obj_malloc(obj, sizeof (*sys));
+    vlc_inhibit_sys_t *sys = vlc_obj_malloc(VLC_OBJECT(ih), sizeof (*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
 
@@ -128,9 +127,8 @@ error:
     return VLC_EGENERIC;
 }
 
-static void Close(vlc_object_t *obj)
+static void Close(vlc_inhibit_t *ih)
 {
-    vlc_inhibit_t *ih = (vlc_inhibit_t *)obj;
     vlc_inhibit_sys_t *sys = ih->p_sys;
     vout_window_t *wnd = vlc_inhibit_GetWindow(ih);
 

@@ -29,7 +29,7 @@
 #include <vlc_aout.h>
 #include <vlc_cpu.h>
 
-static int Open( vlc_object_t * p_this );
+static int Open( audio_output_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("Dummy") )
@@ -92,10 +92,8 @@ static void Stop(audio_output_t *aout)
     (void) aout;
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
-
     aout->start = Start;
     aout->time_get = aout_TimeGetDefault;
     aout->play = Play;

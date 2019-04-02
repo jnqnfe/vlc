@@ -41,8 +41,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open    ( vlc_object_t * );
-static void Close  ( vlc_object_t * );
+static int  Open    ( demux_t * );
+static void Close  ( demux_t * );
 
 vlc_plugin_begin ()
     set_description( N_("NullSoft demuxer" ) )
@@ -84,9 +84,8 @@ static int ReadNSVs( demux_t *p_demux );
 /*****************************************************************************
  * Open
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
 
     const uint8_t *p_peek;
@@ -131,14 +130,11 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
-
     free( p_sys );
 }
-
 
 /*****************************************************************************
  * Demux:

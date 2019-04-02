@@ -114,8 +114,8 @@ typedef union
 
 } ls_pcast32;
 
-static int      Open            ( vlc_object_t * );
-static void     Close           ( vlc_object_t * );
+static int      Open            ( filter_t * );
+static void     Close           ( filter_t * );
 static block_t *DoWork          ( filter_t *, block_t * );
 
 static void     DbInit          ( filter_sys_t * );
@@ -199,9 +199,8 @@ vlc_plugin_end ()
  * Open: initialize interface
  *****************************************************************************/
 
-static int Open( vlc_object_t *p_this )
+static int Open( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
     vlc_object_t *p_aout = vlc_object_parent(p_filter);
     float f_sample_rate = p_filter->fmt_in.audio.i_rate;
     float f_num;
@@ -265,9 +264,8 @@ static int Open( vlc_object_t *p_this )
  * Close: destroy interface
  *****************************************************************************/
 
-static void Close( vlc_object_t *p_this )
+static void Close( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
     vlc_object_t *p_aout = vlc_object_parent(p_filter);
     filter_sys_t *p_sys = p_filter->p_sys;
 

@@ -56,8 +56,8 @@
  * Module descriptior
  *****************************************************************************/
 
-static int  DemuxOpen ( vlc_object_t * );
-static void DemuxClose( vlc_object_t * );
+static int  DemuxOpen ( demux_t * );
+static void DemuxClose( demux_t * );
 
 
 #define STEREO_TEXT N_( "Stereo" )
@@ -143,9 +143,8 @@ static int FindMainDevice( demux_t *p_demux )
  * url: <oss device>::::
  *
  *****************************************************************************/
-static int DemuxOpen( vlc_object_t *p_this )
+static int DemuxOpen( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
 
     if (p_demux->out == NULL)
@@ -155,7 +154,7 @@ static int DemuxOpen( vlc_object_t *p_this )
     p_demux->pf_control = DemuxControl;
     p_demux->pf_demux = Demux;
 
-    p_demux->p_sys = p_sys = vlc_obj_calloc( p_this, 1, sizeof( demux_sys_t ) );
+    p_demux->p_sys = p_sys = vlc_obj_calloc( p_demux, 1, sizeof( demux_sys_t ) );
     if( p_sys == NULL ) return VLC_ENOMEM;
 
     p_sys->i_sample_rate = var_InheritInteger( p_demux, CFG_PREFIX "samplerate" );
@@ -172,7 +171,7 @@ static int DemuxOpen( vlc_object_t *p_this )
 
     if( FindMainDevice( p_demux ) != VLC_SUCCESS )
     {
-        DemuxClose( p_this );
+        DemuxClose( p_demux );
         return VLC_EGENERIC;
     }
 
@@ -182,10 +181,9 @@ static int DemuxOpen( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: close device, free resources
  *****************************************************************************/
-static void DemuxClose( vlc_object_t *p_this )
+static void DemuxClose( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t *)p_this;
-    demux_sys_t *p_sys   = p_demux->p_sys;
+    demux_sys_t *p_sys = p_demux->p_sys;
 
     if( p_sys->i_fd >= 0 )
         vlc_close( p_sys->i_fd );

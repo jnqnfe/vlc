@@ -200,9 +200,8 @@ static block_t *vlc_av_frame_Wrap(AVFrame *frame)
  * This function is called when the thread ends after a successful
  * initialization.
  *****************************************************************************/
-void EndAudioDec( vlc_object_t *obj )
+void EndAudioDec( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)obj;
     decoder_sys_t *sys = p_dec->p_sys;
     AVCodecContext *ctx = sys->p_context;
 
@@ -215,9 +214,8 @@ void EndAudioDec( vlc_object_t *obj )
  *****************************************************************************
  * The avcodec codec will be opened, some memory allocated.
  *****************************************************************************/
-int InitAudioDec( vlc_object_t *obj )
+int InitAudioDec( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)obj;
     const AVCodec *codec;
     AVCodecContext *avctx = ffmpeg_AllocContext( p_dec, &codec );
     if( avctx == NULL )

@@ -359,9 +359,8 @@ picture_t *AllocPicture( filter_t *p_filter )
     return pic;
 }
 
-int D3D9OpenDeinterlace(vlc_object_t *obj)
+int D3D9OpenDeinterlace(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
     filter_sys_t *sys;
     HINSTANCE hdecoder_dll = NULL;
     HRESULT hr;
@@ -567,9 +566,8 @@ error:
     return VLC_EGENERIC;
 }
 
-void D3D9CloseDeinterlace(vlc_object_t *obj)
+void D3D9CloseDeinterlace(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
     filter_sys_t *sys = filter->p_sys;
 
     IDirect3DSurface9_Release( sys->hw_surface );

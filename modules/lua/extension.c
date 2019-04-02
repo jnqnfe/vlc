@@ -92,14 +92,12 @@ static void inputItemMetaChanged( const vlc_event_t *p_event,
 /**
  * Module entry-point
  **/
-int Open_Extension( vlc_object_t *p_this )
+int Open_Extension( extensions_manager_t *p_mgr )
 {
-    if( lua_Disabled( p_this ) )
+    if( lua_Disabled( p_mgr ) )
         return VLC_EGENERIC;
 
-    msg_Dbg( p_this, "Opening Lua Extension module" );
-
-    extensions_manager_t *p_mgr = ( extensions_manager_t* ) p_this;
+    msg_Dbg( p_mgr, "Opening Lua Extension module" );
 
     p_mgr->pf_control = Control;
 
@@ -114,8 +112,8 @@ int Open_Extension( vlc_object_t *p_this )
     }
 
     // Create the dialog-event variable
-    var_Create( p_this, "dialog-event", VLC_VAR_ADDRESS );
-    var_AddCallback( p_this, "dialog-event",
+    var_Create( p_mgr, "dialog-event", VLC_VAR_ADDRESS );
+    var_AddCallback( p_mgr, "dialog-event",
                      vlclua_extension_dialog_callback, NULL );
 
     return VLC_SUCCESS;
@@ -124,11 +122,9 @@ int Open_Extension( vlc_object_t *p_this )
 /**
  * Module unload function
  **/
-void Close_Extension( vlc_object_t *p_this )
+void Close_Extension( extensions_manager_t *p_mgr )
 {
-    extensions_manager_t *p_mgr = ( extensions_manager_t* ) p_this;
-
-    var_DelCallback( p_this, "dialog-event",
+    var_DelCallback( p_mgr, "dialog-event",
                      vlclua_extension_dialog_callback, NULL );
     var_Destroy( p_mgr, "dialog-event" );
 

@@ -50,9 +50,9 @@ static const char *const conv_type_texts[] = {
     N_("Sinc function (fast)"), N_("Zero Order Hold (fastest)"), N_("Linear (fastest)"),
 };
 
-static int Open (vlc_object_t *);
-static int OpenResampler (vlc_object_t *);
-static void Close (vlc_object_t *);
+static int Open (filter_t *);
+static int OpenResampler (filter_t *);
+static void Close (filter_t *);
 
 vlc_plugin_begin ()
     set_shortname (N_("SRC resampler"))
@@ -70,20 +70,16 @@ vlc_plugin_end ()
 
 static block_t *Resample (filter_t *, block_t *);
 
-static int Open (vlc_object_t *obj)
+static int Open (filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
-
     /* Will change rate */
     if (filter->fmt_in.audio.i_rate == filter->fmt_out.audio.i_rate)
         return VLC_EGENERIC;
-    return OpenResampler (obj);
+    return OpenResampler (filter);
 }
 
-static int OpenResampler (vlc_object_t *obj)
+static int OpenResampler (filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
-
     /* Only float->float */
     if (filter->fmt_in.audio.i_format != VLC_CODEC_FL32
      || filter->fmt_out.audio.i_format != VLC_CODEC_FL32
@@ -91,13 +87,13 @@ static int OpenResampler (vlc_object_t *obj)
      || filter->fmt_in.audio.i_channels != filter->fmt_out.audio.i_channels )
         return VLC_EGENERIC;
 
-    int type = var_InheritInteger (obj, "src-converter-type");
+    int type = var_InheritInteger (filter, "src-converter-type");
     int err;
 
     SRC_STATE *s = src_new (type, filter->fmt_in.audio.i_channels, &err);
     if (s == NULL)
     {
-        msg_Err (obj, "cannot initialize resampler: %s", src_strerror (err));
+        msg_Err (filter, "cannot initialize resampler: %s", src_strerror (err));
         return VLC_EGENERIC;
     }
 
@@ -106,9 +102,8 @@ static int OpenResampler (vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void Close (vlc_object_t *obj)
+static void Close (filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
     SRC_STATE *s = (SRC_STATE *)filter->p_sys;
 
     src_delete (s);

@@ -230,11 +230,10 @@ static const char *const ppsz_sout_options[] = {
 /*****************************************************************************
  * Open: open the file
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_access_out_t *p_access )
 {
-    sout_access_out_t   *p_access = (sout_access_out_t*)p_this;
     int fd;
-    int *fdp = vlc_obj_malloc(p_this, sizeof (*fdp));
+    int *fdp = vlc_obj_malloc(VLC_OBJECT(p_access), sizeof (*fdp));
 
     if (unlikely(fdp == NULL))
         return VLC_ENOMEM;
@@ -364,9 +363,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: close the target
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( sout_access_out_t *p_access )
 {
-    sout_access_out_t *p_access = (sout_access_out_t*)p_this;
     int *fdp = p_access->p_sys, fd = *fdp;
 
     vlc_close(fd);

@@ -135,15 +135,14 @@ static ssize_t Read(stream_t *access, void *buf, size_t len)
 /*****************************************************************************
  * Open: open the socket
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( stream_t *p_access )
 {
-    stream_t     *p_access = (stream_t*)p_this;
     access_sys_t *sys;
 
     if( p_access->b_preparsing )
         return VLC_EGENERIC;
 
-    sys = vlc_obj_malloc( p_this, sizeof( *sys ) );
+    sys = vlc_obj_malloc( VLC_OBJECT(p_access), sizeof( *sys ) );
     if( unlikely( sys == NULL ) )
         return VLC_ENOMEM;
 
@@ -223,9 +222,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: free unused data structures
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( stream_t *p_access )
 {
-    stream_t     *p_access = (stream_t*)p_this;
     access_sys_t *sys = p_access->p_sys;
 
     net_Close( sys->fd );

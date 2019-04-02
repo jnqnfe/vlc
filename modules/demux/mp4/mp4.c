@@ -44,8 +44,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( demux_t * );
+static void Close( demux_t * );
 
 #define CFG_PREFIX "mp4-"
 
@@ -712,16 +712,15 @@ static void MP4_Block_Send( demux_t *p_demux, mp4_track_t *p_track, block_t *p_b
         es_out_Send( p_demux->out, p_track->p_es, p_block );
 }
 
-int  OpenHEIF ( vlc_object_t * );
-void CloseHEIF( vlc_object_t * );
+int  OpenHEIF ( demux_t * );
+void CloseHEIF( demux_t * );
 
 /*****************************************************************************
  * Open: check file and initializes MP4 structures
  *****************************************************************************/
-static int Open( vlc_object_t * p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t  *p_demux = (demux_t *)p_this;
-    demux_sys_t     *p_sys;
+    demux_sys_t *p_sys;
 
     const uint8_t   *p_peek;
 
@@ -964,7 +963,7 @@ static int Open( vlc_object_t * p_this )
         p_sys->i_timescale = BOXDATA(p_mvhd)->i_timescale;
         if( p_sys->i_timescale == 0 )
         {
-            msg_Err( p_this, "bad timescale" );
+            msg_Err( p_demux, "bad timescale" );
             goto error;
         }
     }
@@ -1144,7 +1143,7 @@ error:
             msg_Warn( p_demux, "Can't reset stream position from probing" );
     }
 
-    Close( p_this );
+    Close( p_demux );
 
     return VLC_EGENERIC;
 }
@@ -2255,9 +2254,8 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
 /*****************************************************************************
  * Close: frees unused data
  *****************************************************************************/
-static void Close ( vlc_object_t * p_this )
+static void Close ( demux_t * p_demux )
 {
-    demux_t *  p_demux = (demux_t *)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
     unsigned int i_track;
 

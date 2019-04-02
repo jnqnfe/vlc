@@ -62,8 +62,8 @@ using namespace smooth::playlist;
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open    (vlc_object_t *);
-static void Close   (vlc_object_t *);
+static int  Open    (demux_t *);
+static void Close   (demux_t *);
 
 #define ADAPT_WIDTH_TEXT N_("Maximum device width")
 #define ADAPT_HEIGHT_TEXT N_("Maximum device height")
@@ -137,10 +137,8 @@ static PlaylistManager * HandleHLS(demux_t *,
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open(vlc_object_t *p_obj)
+static int Open(demux_t *p_demux)
 {
-    demux_t *p_demux = (demux_t*) p_obj;
-
     if(!p_demux->s->psz_url || p_demux->s->b_preparsing)
         return VLC_EGENERIC;
 
@@ -155,7 +153,7 @@ static int Open(vlc_object_t *p_obj)
 
     PlaylistManager *p_manager = NULL;
 
-    char *psz_logic = var_InheritString(p_obj, "adaptive-logic");
+    char *psz_logic = var_InheritString(p_demux, "adaptive-logic");
     AbstractAdaptationLogic::LogicType logic = AbstractAdaptationLogic::Default;
     if( psz_logic )
     {
@@ -236,7 +234,7 @@ static int Open(vlc_object_t *p_obj)
     p_demux->pf_demux      = p_manager->demux_callback;
     p_demux->pf_control    = p_manager->control_callback;
 
-    msg_Dbg(p_obj,"opening playlist file (%s)", p_demux->psz_location);
+    msg_Dbg(p_demux, "opening playlist file (%s)", p_demux->psz_location);
 
     return VLC_SUCCESS;
 }
@@ -244,9 +242,8 @@ static int Open(vlc_object_t *p_obj)
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close(vlc_object_t *p_obj)
+static void Close(demux_t *p_demux)
 {
-    demux_t         *p_demux       = (demux_t*) p_obj;
     PlaylistManager *p_manager  = reinterpret_cast<PlaylistManager *>(p_demux->p_sys);
 
     p_manager->stop();

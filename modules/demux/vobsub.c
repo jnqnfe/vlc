@@ -43,8 +43,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t *p_this );
-static void Close( vlc_object_t *p_this );
+static int  Open ( demux_t * );
+static void Close( demux_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Vobsub subtitles parser") )
@@ -112,9 +112,8 @@ static int DemuxVobSub( demux_t *, block_t *);
 /*****************************************************************************
  * Module initializer
  *****************************************************************************/
-static int Open ( vlc_object_t *p_this )
+static int Open ( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
     char *psz_vobname, *s;
     int i_len;
@@ -212,9 +211,8 @@ error:
 /*****************************************************************************
  * Close: Close subtitle demux
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
 
     if( p_sys->p_vobsub_stream )

@@ -41,8 +41,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open (vlc_object_t *);
-static void Close(vlc_object_t *);
+static int  Open (filter_t *);
+static void Close(filter_t *);
 
 #define CFG_PREFIX "transform-"
 
@@ -300,9 +300,8 @@ static int Mouse(filter_t *filter, vlc_mouse_t *mouse,
     return VLC_SUCCESS;
 }
 
-static int Open(vlc_object_t *object)
+static int Open(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)object;
     const video_format_t *src = &filter->fmt_in.video;
     video_format_t       *dst = &filter->fmt_out.video;
 
@@ -439,10 +438,8 @@ error:
     return VLC_EGENERIC;
 }
 
-static void Close(vlc_object_t *object)
+static void Close(filter_t *filter)
 {
-    filter_t     *filter = (filter_t *)object;
-    filter_sys_t *sys    = filter->p_sys;
-
+    filter_sys_t *sys = filter->p_sys;
     free(sys);
 }

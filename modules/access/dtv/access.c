@@ -236,8 +236,8 @@ static const char *const satno_user[] = { N_("Unspecified"),
 #define MINOR_CHANNEL_TEXT N_("ATSC minor channel")
 #define PHYSICAL_CHANNEL_TEXT N_("Physical channel")
 
-static int  Open (vlc_object_t *);
-static void Close (vlc_object_t *);
+static int  Open (stream_t *);
+static void Close (stream_t *);
 
 vlc_plugin_begin ()
     set_shortname (N_("DTV"))
@@ -436,16 +436,15 @@ static uint64_t var_InheritFrequency (vlc_object_t *);
 
 tuner_setup_t dtv_get_delivery_tuner_setup( dtv_delivery_t d );
 
-static int Open (vlc_object_t *obj)
+static int Open (stream_t *access)
 {
-    stream_t *access = (stream_t *)obj;
     access_sys_t *sys = malloc (sizeof (*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
 
-    var_LocationParse (obj, access->psz_location, "dvb-");
+    var_LocationParse (access, access->psz_location, "dvb-");
 
-    dvb_device_t *dev = dvb_open (obj);
+    dvb_device_t *dev = dvb_open (VLC_OBJECT(access));
     if (dev == NULL)
     {
         free (sys);
@@ -457,17 +456,17 @@ static int Open (vlc_object_t *obj)
     sys->pf_setup = NULL;
     access->p_sys = sys;
 
-    uint64_t freq = var_InheritFrequency (obj);
+    uint64_t freq = var_InheritFrequency (VLC_OBJECT(access));
     if (freq != 0)
     {
         dtv_delivery_t d = GuessSystem (access->psz_name, dev);
         if(d != DTV_DELIVERY_NONE)
             sys->pf_setup = dtv_get_delivery_tuner_setup(d);
 
-        if (sys->pf_setup == NULL || Tune (obj, dev, sys->pf_setup, freq))
+        if (sys->pf_setup == NULL || Tune (VLC_OBJECT(access), dev, sys->pf_setup, freq))
         {
-            msg_Err (obj, "tuning to %"PRIu64" Hz failed", freq);
-            vlc_dialog_display_error (obj, N_("Digital broadcasting"),
+            msg_Err (access, "tuning to %"PRIu64" Hz failed", freq);
+            vlc_dialog_display_error (access, N_("Digital broadcasting"),
                 N_("The selected digital tuner does not support "
                    "the specified parameters.\n"
                    "Please check the preferences."));
@@ -481,14 +480,13 @@ static int Open (vlc_object_t *obj)
     return VLC_SUCCESS;
 
 error:
-    Close (obj);
+    Close (access);
     access->p_sys = NULL;
     return VLC_EGENERIC;
 }
 
-static void Close (vlc_object_t *obj)
+static void Close (stream_t *access)
 {
-    stream_t *access = (stream_t *)obj;
     access_sys_t *sys = access->p_sys;
 
     dvb_close (sys->dev);

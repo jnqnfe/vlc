@@ -40,8 +40,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int Create( vlc_object_t * );
-static void Destroy( vlc_object_t * );
+static int Create( filter_t * );
+static void Destroy( filter_t * );
 
 static picture_t *Filter( filter_t *, picture_t * );
 
@@ -105,7 +105,7 @@ typedef struct
     vlc_fourcc_t i_blend_chroma;
 } filter_sys_t;
 
-static int blendbench_LoadImage( vlc_object_t *p_this, picture_t **pp_pic,
+static int blendbench_LoadImage( filter_t *p_filter, picture_t **pp_pic,
                                  vlc_fourcc_t i_chroma, char *psz_file, const char *psz_name )
 {
     image_handler_t *p_image;
@@ -113,18 +113,18 @@ static int blendbench_LoadImage( vlc_object_t *p_this, picture_t **pp_pic,
 
     video_format_Init( &fmt_out, i_chroma );
 
-    p_image = image_HandlerCreate( p_this );
+    p_image = image_HandlerCreate( VLC_OBJECT(p_filter) );
     *pp_pic = image_ReadUrl( p_image, psz_file, &fmt_out );
     video_format_Clean( &fmt_out );
     image_HandlerDelete( p_image );
 
     if( *pp_pic == NULL )
     {
-        msg_Err( p_this, "Unable to load %s image", psz_name );
+        msg_Err( p_filter, "Unable to load %s image", psz_name );
         return VLC_EGENERIC;
     }
 
-    msg_Dbg( p_this, "%s image has dim %d x %d (Y plane)", psz_name,
+    msg_Dbg( p_filter, "%s image has dim %d x %d (Y plane)", psz_name,
              (*pp_pic)->p[Y_PLANE].i_visible_pitch,
              (*pp_pic)->p[Y_PLANE].i_visible_lines );
 
@@ -134,9 +134,8 @@ static int blendbench_LoadImage( vlc_object_t *p_this, picture_t **pp_pic,
 /*****************************************************************************
  * Create: allocates video thread output method
  *****************************************************************************/
-static int Create( vlc_object_t *p_this )
+static int Create( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys;
     char *psz_temp, *psz_cmd;
     int i_ret;
@@ -165,7 +164,7 @@ static int Create( vlc_object_t *p_this )
     p_sys->i_base_chroma = !psz_temp || strlen( psz_temp ) != 4 ? 0 :
         VLC_FOURCC( psz_temp[0], psz_temp[1], psz_temp[2], psz_temp[3] );
     psz_cmd = var_CreateGetStringCommand( p_filter, CFG_PREFIX "base-image" );
-    i_ret = blendbench_LoadImage( p_this, &p_sys->p_base_image,
+    i_ret = blendbench_LoadImage( p_filter, &p_sys->p_base_image,
                                   p_sys->i_base_chroma, psz_cmd, "Base" );
     free( psz_temp );
     free( psz_cmd );
@@ -180,7 +179,7 @@ static int Create( vlc_object_t *p_this )
     p_sys->i_blend_chroma = !psz_temp || strlen( psz_temp ) != 4
         ? 0 : VLC_FOURCC( psz_temp[0], psz_temp[1], psz_temp[2], psz_temp[3] );
     psz_cmd = var_CreateGetStringCommand( p_filter, CFG_PREFIX "blend-image" );
-    i_ret = blendbench_LoadImage( p_this, &p_sys->p_blend_image, p_sys->i_blend_chroma,
+    i_ret = blendbench_LoadImage( p_filter, &p_sys->p_blend_image, p_sys->i_blend_chroma,
                                   psz_cmd, "Blend" );
 
     free( psz_temp );
@@ -200,9 +199,8 @@ static int Create( vlc_object_t *p_this )
 /*****************************************************************************
  * Destroy: destroy video thread output method
  *****************************************************************************/
-static void Destroy( vlc_object_t *p_this )
+static void Destroy( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     picture_Release( p_sys->p_base_image );

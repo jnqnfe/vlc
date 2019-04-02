@@ -36,8 +36,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( demux_t * );
+static void Close( demux_t * );
 
 #define FPS_TEXT N_("Frames per Second")
 #define FPS_LONGTEXT N_("Desired frame rate for the VC-1 stream.")
@@ -72,9 +72,8 @@ static int Control( demux_t *, int, va_list );
 /*****************************************************************************
  * Open: initializes demux structures
  *****************************************************************************/
-static int Open( vlc_object_t * p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
     const uint8_t *p_peek;
     es_format_t fmt;
@@ -121,9 +120,8 @@ static int Open( vlc_object_t * p_this )
 /*****************************************************************************
  * Close: frees unused data
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
 
     demux_PacketizerDestroy( p_sys->p_packetizer );

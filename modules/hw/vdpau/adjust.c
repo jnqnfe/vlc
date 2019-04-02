@@ -125,10 +125,8 @@ static const char *const options[] = {
     "brightness", "contrast", "saturation", "hue", NULL
 };
 
-static int Open(vlc_object_t *obj)
+static int Open(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
-
     if (filter->fmt_in.video.i_chroma != VLC_CODEC_VDPAU_VIDEO_420
      && filter->fmt_in.video.i_chroma != VLC_CODEC_VDPAU_VIDEO_422
      && filter->fmt_in.video.i_chroma != VLC_CODEC_VDPAU_VIDEO_444)
@@ -169,9 +167,8 @@ static int Open(vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *obj)
+static void Close(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
     filter_sys_t *sys = filter->p_sys;
 
     var_DelCallback(filter, "hue", HueCallback, &sys->hue);

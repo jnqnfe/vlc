@@ -36,8 +36,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open   ( vlc_object_t * );
-static void Close  ( vlc_object_t * );
+static int  Open   ( sout_mux_t * );
+static void Close  ( sout_mux_t * );
 
 #define SOUT_CFG_PREFIX "sout-mpjpeg-"
 
@@ -64,10 +64,8 @@ static int Mux      ( sout_mux_t * );
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_mux_t *p_mux )
 {
-    sout_mux_t *p_mux = (sout_mux_t*)p_this;
-
     msg_Dbg( p_mux, "Multipart jpeg muxer opened" );
 
     p_mux->pf_control   = Control;
@@ -83,11 +81,11 @@ static int Open( vlc_object_t *p_this )
  * Close:
  *****************************************************************************/
 
-static void Close( vlc_object_t * p_this )
+static void Close( sout_mux_t *p_mux )
 {
     /* TODO: send the ending boundary ("\r\n--"BOUNDARY"--\r\n"),
      * but is the access_output still useable?? */
-    msg_Dbg( p_this, "Multipart jpeg muxer closed" );
+    msg_Dbg( p_mux, "Multipart jpeg muxer closed" );
 }
 
 static int Control( sout_mux_t *p_mux, int i_query, va_list args )

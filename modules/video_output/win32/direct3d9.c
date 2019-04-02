@@ -72,8 +72,8 @@ static int  Open(vout_display_t *, const vout_display_cfg_t *,
                  video_format_t *, vlc_video_context *);
 static void Close(vout_display_t *);
 
-static int  GLConvOpen(vlc_object_t *);
-static void GLConvClose(vlc_object_t *);
+static int  GLConvOpen(opengl_tex_converter_t *);
+static void GLConvClose(opengl_tex_converter_t *);
 
 #define DESKTOP_LONGTEXT N_(\
     "The desktop mode allows you to display the video on the desktop.")
@@ -1885,9 +1885,8 @@ GLConvAllocateTextures(const opengl_tex_converter_t *tc, GLuint *textures,
 }
 
 static void
-GLConvClose(vlc_object_t *obj)
+GLConvClose(opengl_tex_converter_t *tc)
 {
-    opengl_tex_converter_t *tc = (void *)obj;
     struct glpriv *priv = tc->priv;
 
     if (priv->gl_handle_d3d)
@@ -1910,10 +1909,8 @@ GLConvClose(vlc_object_t *obj)
 }
 
 static int
-GLConvOpen(vlc_object_t *obj)
+GLConvOpen(opengl_tex_converter_t *tc)
 {
-    opengl_tex_converter_t *tc = (void *) obj;
-
     if (tc->fmt.i_chroma != VLC_CODEC_D3D9_OPAQUE
      && tc->fmt.i_chroma != VLC_CODEC_D3D9_OPAQUE_10B)
         return VLC_EGENERIC;
@@ -1930,7 +1927,7 @@ GLConvOpen(vlc_object_t *obj)
 #define LOAD_EXT(name, type) do { \
     vt.name = (type) vlc_gl_GetProcAddress(tc->gl, "wgl" #name); \
     if (!vt.name) { \
-        msg_Warn(obj, "'wgl " #name "' could not be loaded"); \
+        msg_Warn(tc, "'wgl " #name "' could not be loaded"); \
         return VLC_EGENERIC; \
     } \
 } while(0)
@@ -1949,16 +1946,16 @@ GLConvOpen(vlc_object_t *obj)
     tc->priv = priv;
     priv->vt = vt;
 
-    if (D3D9_Create(obj, &priv->hd3d) != VLC_SUCCESS)
+    if (D3D9_Create(VLC_OBJECT(tc), &priv->hd3d) != VLC_SUCCESS)
         goto error;
 
     if (!priv->hd3d.use_ex)
     {
-        msg_Warn(obj, "DX/GL interrop only working on d3d9x");
+        msg_Warn(tc, "DX/GL interrop only working on d3d9x");
         goto error;
     }
 
-    if (FAILED(D3D9_CreateDevice(obj, &priv->hd3d, tc->gl->surface->handle.hwnd,
+    if (FAILED(D3D9_CreateDevice(VLC_OBJECT(tc), &priv->hd3d, tc->gl->surface->handle.hwnd,
                                  &priv->d3d_dev)))
         goto error;
 
@@ -1972,7 +1969,7 @@ GLConvOpen(vlc_object_t *obj)
                                                &priv->dx_render, &shared_handle);
     if (FAILED(hr))
     {
-        msg_Warn(obj, "IDirect3DDevice9_CreateOffscreenPlainSurface failed");
+        msg_Warn(tc, "IDirect3DDevice9_CreateOffscreenPlainSurface failed");
         goto error;
     }
 
@@ -1982,7 +1979,7 @@ GLConvOpen(vlc_object_t *obj)
     priv->gl_handle_d3d = priv->vt.DXOpenDeviceNV(priv->d3d_dev.dev);
     if (!priv->gl_handle_d3d)
     {
-        msg_Warn(obj, "DXOpenDeviceNV failed: %lu", GetLastError());
+        msg_Warn(tc, "DXOpenDeviceNV failed: %lu", GetLastError());
         goto error;
     }
 
@@ -1998,7 +1995,7 @@ GLConvOpen(vlc_object_t *obj)
     return VLC_SUCCESS;
 
 error:
-    GLConvClose(obj);
+    GLConvClose(tc);
     return VLC_EGENERIC;
 }
 #endif

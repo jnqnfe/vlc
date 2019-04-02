@@ -27,8 +27,8 @@
 #include <vlc_aout.h>
 #include <assert.h>
 
-static int Open (vlc_object_t *);
-static void Close (vlc_object_t *);
+static int Open (audio_output_t *);
+static void Close (audio_output_t *);
 
 vlc_plugin_begin ()
     set_shortname (N_("Audio memory"))
@@ -272,34 +272,33 @@ static int Start (audio_output_t *aout, audio_sample_format_t *fmt)
     return VLC_SUCCESS;
 }
 
-static int Open (vlc_object_t *obj)
+static int Open (audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
     aout_sys_t *sys = malloc (sizeof (*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
 
-    void *opaque = var_InheritAddress (obj, "amem-data");
-    sys->setup = var_InheritAddress (obj, "amem-setup");
+    void *opaque = var_InheritAddress (aout, "amem-data");
+    sys->setup = var_InheritAddress (aout, "amem-setup");
     if (sys->setup != NULL)
     {
-        sys->cleanup = var_InheritAddress (obj, "amem-cleanup");
+        sys->cleanup = var_InheritAddress (aout, "amem-cleanup");
         sys->setup_opaque = opaque;
     }
     else
     {
         sys->cleanup = NULL;
         sys->opaque = opaque;
-        sys->rate = var_InheritInteger (obj, "amem-rate");
-        sys->channels = var_InheritInteger (obj, "amem-channels");
+        sys->rate = var_InheritInteger (aout, "amem-rate");
+        sys->channels = var_InheritInteger (aout, "amem-channels");
     }
 
-    sys->play = var_InheritAddress (obj, "amem-play");
-    sys->pause = var_InheritAddress (obj, "amem-pause");
-    sys->resume = var_InheritAddress (obj, "amem-resume");
-    sys->flush = var_InheritAddress (obj, "amem-flush");
-    sys->drain = var_InheritAddress (obj, "amem-drain");
-    sys->set_volume = var_InheritAddress (obj, "amem-set-volume");
+    sys->play = var_InheritAddress (aout, "amem-play");
+    sys->pause = var_InheritAddress (aout, "amem-pause");
+    sys->resume = var_InheritAddress (aout, "amem-resume");
+    sys->flush = var_InheritAddress (aout, "amem-flush");
+    sys->drain = var_InheritAddress (aout, "amem-drain");
+    sys->set_volume = var_InheritAddress (aout, "amem-set-volume");
     sys->volume = 1.;
     sys->mute = false;
     sys->ready = false;
@@ -332,9 +331,8 @@ static int Open (vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void Close (vlc_object_t *obj)
+static void Close (audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
     aout_sys_t *sys = aout->sys;
 
     vlc_mutex_destroy(&sys->lock);

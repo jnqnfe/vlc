@@ -39,8 +39,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Activate( vlc_object_t * );
-static void Close   ( vlc_object_t * );
+static int  Activate( intf_thread_t * );
+static void Close   ( intf_thread_t * );
 
 #define INSTALL_TEXT N_( "Install Windows Service" )
 #define INSTALL_LONGTEXT N_( \
@@ -104,9 +104,8 @@ static intf_thread_t *p_global_intf;
 /*****************************************************************************
  * Activate: initialize and create stuff
  *****************************************************************************/
-static int Activate( vlc_object_t *p_this )
+static int Activate( intf_thread_t *p_intf )
 {
-    intf_thread_t *p_intf = (intf_thread_t*)p_this;
     intf_sys_t *p_sys = malloc( sizeof( *p_sys ) );
     if( unlikely(p_sys == NULL) )
         return VLC_ENOMEM;
@@ -122,9 +121,8 @@ static int Activate( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: destroy interface
  *****************************************************************************/
-void Close( vlc_object_t *p_this )
+void Close( intf_thread_t *p_intf )
 {
-    intf_thread_t *p_intf = (intf_thread_t*)p_this;
     intf_sys_t *p_sys = p_intf->p_sys;
 
     vlc_join( p_sys->thread, NULL );

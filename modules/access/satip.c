@@ -54,8 +54,8 @@
 #define KEEPALIVE_INTERVAL 60
 #define KEEPALIVE_MARGIN 5
 
-static int satip_open(vlc_object_t *);
-static void satip_close(vlc_object_t *);
+static int satip_open(stream_t *);
+static void satip_close(stream_t *);
 
 #define BUFFER_TEXT N_("Receive buffer")
 #define BUFFER_LONGTEXT N_("UDP receive buffer size (bytes)")
@@ -206,7 +206,7 @@ static int parse_transport(stream_t *access, char *request_line) {
  *
  * interrupted: Informs the caller whether an interrupt occured or not
  */
-static char *net_readln_timeout(vlc_object_t *obj, int fd, int timeout, bool *interrupted)
+static char *net_readln_timeout(stream_t *access, int fd, int timeout, bool *interrupted)
 {
     char *buf = NULL;
     size_t size = 0, len = 0;
@@ -272,7 +272,7 @@ static char *net_readln_timeout(vlc_object_t *obj, int fd, int timeout, bool *in
         buf[len] = '\0';
     return buf;
 error:
-    msg_Err(obj, "read error: %s", vlc_strerror_c(errno));
+    msg_Err(access, "read error: %s", vlc_strerror_c(errno));
     free(buf);
     return NULL;
 }
@@ -289,7 +289,7 @@ static enum rtsp_result rtsp_handle(stream_t *access, bool *interrupted) {
 
     /* Parse header */
     while (!have_header) {
-        in = net_readln_timeout((vlc_object_t*)access, sys->tcp_sock, 5000,
+        in = net_readln_timeout(access, sys->tcp_sock, 5000,
                 interrupted);
         if (in == NULL)
             break;
@@ -633,15 +633,14 @@ static int satip_bind_ports(stream_t *access)
     return 0;
 }
 
-static int satip_open(vlc_object_t *obj)
+static int satip_open(stream_t *access)
 {
-    stream_t *access = (stream_t *)obj;
     access_sys_t *sys;
     vlc_url_t url;
 
     bool multicast = var_InheritBool(access, "satip-multicast");
 
-    access->p_sys = sys = vlc_obj_calloc(obj, 1, sizeof(*sys));
+    access->p_sys = sys = vlc_obj_calloc(VLC_OBJECT(access), 1, sizeof(*sys));
     if (sys == NULL)
         return VLC_ENOMEM;
 
@@ -825,9 +824,8 @@ error:
     return VLC_EGENERIC;
 }
 
-static void satip_close(vlc_object_t *obj)
+static void satip_close(stream_t *access)
 {
-    stream_t *access = (stream_t *)obj;
     access_sys_t *sys = access->p_sys;
 
     vlc_cancel(sys->thread);

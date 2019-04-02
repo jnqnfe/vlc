@@ -184,9 +184,9 @@ typedef struct
  * Filter functions
  *****************************************************************************/
 
-static int SubsdelayCreate( vlc_object_t * );
+static int SubsdelayCreate( filter_t * );
 
-static void SubsdelayDestroy( vlc_object_t * );
+static void SubsdelayDestroy( filter_t * );
 
 static subpicture_t * SubsdelayFilter( filter_t *p_filter, subpicture_t* p_subpic );
 
@@ -295,9 +295,8 @@ static const char * const ppsz_filter_options[] = { "mode", "factor", "overlap",
 /*****************************************************************************
  * SubsdelayCreate: Create subsdelay filter
  *****************************************************************************/
-static int SubsdelayCreate( vlc_object_t *p_this )
+static int SubsdelayCreate( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *) p_this;
     filter_sys_t *p_sys;
 
     /* allocate structure */
@@ -347,9 +346,8 @@ static int SubsdelayCreate( vlc_object_t *p_this )
 /*****************************************************************************
  * SubsdelayDestroy: Destroy subsdelay filter
  *****************************************************************************/
-static void SubsdelayDestroy( vlc_object_t *p_this )
+static void SubsdelayDestroy( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *) p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     SubsdelayHeapDestroy( &p_sys->heap );

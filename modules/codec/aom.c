@@ -46,11 +46,11 @@
 /****************************************************************************
  * Local prototypes
  ****************************************************************************/
-static int OpenDecoder(vlc_object_t *);
-static void CloseDecoder(vlc_object_t *);
+static int OpenDecoder(decoder_t *);
+static void CloseDecoder(decoder_t *);
 #ifdef ENABLE_SOUT
-static int OpenEncoder(vlc_object_t *);
-static void CloseEncoder(vlc_object_t *);
+static int OpenEncoder(encoder_t *);
+static void CloseEncoder(encoder_t *);
 static block_t *Encode(encoder_t *p_enc, picture_t *p_pict);
 
 static const int pi_enc_bitdepth_values_list[] =
@@ -317,9 +317,8 @@ static int Decode(decoder_t *dec, block_t *block)
 /*****************************************************************************
  * OpenDecoder: probe the decoder
  *****************************************************************************/
-static int OpenDecoder(vlc_object_t *p_this)
+static int OpenDecoder(decoder_t *dec)
 {
-    decoder_t *dec = (decoder_t *)p_this;
     const aom_codec_iface_t *iface;
     int av_version;
 
@@ -341,11 +340,11 @@ static int OpenDecoder(vlc_object_t *p_this)
         .allow_lowbitdepth = 1
     };
 
-    msg_Dbg(p_this, "AV%d: using libaom version %s (build options %s)",
+    msg_Dbg(dec, "AV%d: using libaom version %s (build options %s)",
         av_version, aom_codec_version_str(), aom_codec_build_config());
 
     if (aom_codec_dec_init(&sys->ctx, iface, &deccfg, 0) != AOM_CODEC_OK) {
-        AOM_ERR(p_this, &sys->ctx, "Failed to initialize decoder");
+        AOM_ERR(dec, &sys->ctx, "Failed to initialize decoder");
         free(sys);
         return VLC_EGENERIC;;
     }
@@ -369,24 +368,23 @@ static int OpenDecoder(vlc_object_t *p_this)
     return VLC_SUCCESS;
 }
 
-static void destroy_context(vlc_object_t *p_this, aom_codec_ctx_t *context)
+static void destroy_context(decoder_t *dec, aom_codec_ctx_t *context)
 {
     if (aom_codec_destroy(context))
-        AOM_ERR(p_this, context, "Failed to destroy codec context");
+        AOM_ERR(dec, context, "Failed to destroy codec context");
 }
 
 /*****************************************************************************
  * CloseDecoder: decoder destruction
  *****************************************************************************/
-static void CloseDecoder(vlc_object_t *p_this)
+static void CloseDecoder(decoder_t *dec)
 {
-    decoder_t *dec = (decoder_t *)p_this;
     decoder_sys_t *sys = dec->p_sys;
 
     /* Flush decoder */
     FlushDecoder(dec);
 
-    destroy_context(p_this, &sys->ctx);
+    destroy_context(dec, &sys->ctx);
 
     free(sys);
 }
@@ -404,9 +402,8 @@ typedef struct
 /*****************************************************************************
  * OpenEncoder: probe the encoder
  *****************************************************************************/
-static int OpenEncoder(vlc_object_t *p_this)
+static int OpenEncoder(encoder_t *p_enc)
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys;
 
     if (p_enc->fmt_out.i_codec != VLC_CODEC_AV1)
@@ -475,13 +472,13 @@ static int OpenEncoder(vlc_object_t *p_this)
             return VLC_EGENERIC;
     }
 
-    msg_Dbg(p_this, "AV1: using libaom version %s (build options %s)",
+    msg_Dbg(p_enc, "AV1: using libaom version %s (build options %s)",
         aom_codec_version_str(), aom_codec_build_config());
 
     struct aom_codec_ctx *ctx = &p_sys->ctx;
     if (aom_codec_enc_init(ctx, iface, &enccfg, enc_flags) != AOM_CODEC_OK)
     {
-        AOM_ERR(p_this, ctx, "Failed to initialize encoder");
+        AOM_ERR(p_enc, ctx, "Failed to initialize encoder");
         free(p_sys);
         return VLC_EGENERIC;
     }
@@ -489,8 +486,8 @@ static int OpenEncoder(vlc_object_t *p_this)
     if (i_tile_rows >= 0 &&
         aom_codec_control(ctx, AV1E_SET_TILE_ROWS, i_tile_rows))
     {
-        AOM_ERR(p_this, ctx, "Failed to set tile rows");
-        destroy_context(p_this, ctx);
+        AOM_ERR(p_enc, ctx, "Failed to set tile rows");
+        destroy_context((decoder_t *)p_enc, ctx);
         free(p_sys);
         return VLC_EGENERIC;
     }
@@ -498,8 +495,8 @@ static int OpenEncoder(vlc_object_t *p_this)
     if (i_tile_columns >= 0 &&
         aom_codec_control(ctx, AV1E_SET_TILE_COLUMNS, i_tile_columns))
     {
-        AOM_ERR(p_this, ctx, "Failed to set tile columns");
-        destroy_context(p_this, ctx);
+        AOM_ERR(p_enc, ctx, "Failed to set tile columns");
+        destroy_context((decoder_t *)p_enc, ctx);
         free(p_sys);
         return VLC_EGENERIC;
     }
@@ -508,8 +505,8 @@ static int OpenEncoder(vlc_object_t *p_this)
     if (b_row_mt &&
         aom_codec_control(ctx, AV1E_SET_ROW_MT, b_row_mt))
     {
-        AOM_ERR(p_this, ctx, "Failed to set row-multithreading");
-        destroy_context(p_this, ctx);
+        AOM_ERR(p_enc, ctx, "Failed to set row-multithreading");
+        destroy_context((decoder_t *)p_enc, ctx);
         free(p_sys);
         return VLC_EGENERIC;
     }
@@ -586,11 +583,10 @@ static block_t *Encode(encoder_t *p_enc, picture_t *p_pict)
 /*****************************************************************************
  * CloseEncoder: encoder destruction
  *****************************************************************************/
-static void CloseEncoder(vlc_object_t *p_this)
+static void CloseEncoder(encoder_t *p_enc)
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys = p_enc->p_sys;
-    destroy_context(p_this, &p_sys->ctx);
+    destroy_context((decoder_t *)p_enc, &p_sys->ctx);
     free(p_sys);
 }
 

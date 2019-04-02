@@ -52,9 +52,9 @@ typedef struct
 /****************************************************************************
  * Local prototypes
  ****************************************************************************/
-static int  OpenDecoder   ( vlc_object_t * );
-static int  OpenPacketizer( vlc_object_t * );
-static void CloseCommon   ( vlc_object_t * );
+static int  OpenDecoder   ( decoder_t * );
+static int  OpenPacketizer( decoder_t * );
+static void CloseCommon   ( decoder_t * );
 
 /*****************************************************************************
  * Module descriptor
@@ -261,10 +261,8 @@ static int DecodeFrame( decoder_t *p_dec, block_t *p_block )
     return VLCDEC_SUCCESS;
 }
 
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
-
     int ret = OpenCommon( p_dec );
     if( ret == VLC_SUCCESS )
     {
@@ -299,10 +297,8 @@ static block_t *SendFrame( decoder_t *p_dec, block_t **pp_block )
     return p_block;
 }
 
-static int OpenPacketizer( vlc_object_t *p_this )
+static int OpenPacketizer( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
-
     int ret = OpenCommon( p_dec );
     if( ret == VLC_SUCCESS )
     {
@@ -315,8 +311,7 @@ static int OpenPacketizer( vlc_object_t *p_this )
 /**
  * Common deinitialization
  */
-static void CloseCommon( vlc_object_t *p_this )
+static void CloseCommon( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     free( p_dec->p_sys );
 }

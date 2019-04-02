@@ -37,9 +37,6 @@
 #include "config/configuration.h"
 #include "libvlc.h"
 
-typedef int (*vlc_activate_cb)(vlc_object_t*);
-typedef void (*vlc_deactivate_cb)(vlc_object_t*);
-
 module_t *vlc_module_create(vlc_plugin_t *plugin)
 {
     module_t *module = malloc (sizeof (*module));

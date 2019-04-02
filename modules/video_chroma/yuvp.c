@@ -40,12 +40,11 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( filter_t * );
 
 vlc_plugin_begin ()
     set_description( N_("YUVP converter") )
-    set_capability( VLC_CAP_VIDEO_CONVERTER, 10, Open, Close )
+    set_capability( VLC_CAP_VIDEO_CONVERTER, 10, Open, NULL )
 vlc_plugin_end ()
 
 /****************************************************************************
@@ -58,10 +57,8 @@ static void Yuv2Rgb( uint8_t *r, uint8_t *g, uint8_t *b, int y1, int u1, int v1 
 /*****************************************************************************
  * Open: probe the filter and return score
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
-
     /* It only supports YUVP to YUVA/RGBA without scaling
      * (if scaling is required another filter can do it) */
     if( p_filter->fmt_in.video.i_chroma != VLC_CODEC_YUVP ||
@@ -82,14 +79,6 @@ static int Open( vlc_object_t *p_this )
              (const char*)&p_filter->fmt_out.video.i_chroma );
 
     return VLC_SUCCESS;
-}
-
-/*****************************************************************************
- * Close: clean up the filter
- *****************************************************************************/
-static void Close( vlc_object_t *p_this )
-{
-    VLC_UNUSED(p_this );
 }
 
 /****************************************************************************

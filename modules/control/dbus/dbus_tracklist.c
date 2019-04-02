@@ -38,6 +38,7 @@
 
 DBUS_METHOD( AddTrack )
 {
+    vlc_object_t *obj = (vlc_object_t*)p_this;
     REPLY_INIT;
 
     DBusError error;
@@ -60,8 +61,7 @@ DBUS_METHOD( AddTrack )
 
     if( dbus_error_is_set( &error ) )
     {
-        msg_Err( (vlc_object_t*) p_this, "D-Bus message reading : %s",
-                error.message );
+        msg_Err( obj, "D-Bus message reading : %s", error.message );
 
         dbus_error_free( &error );
         return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
@@ -75,7 +75,7 @@ DBUS_METHOD( AddTrack )
         ;
     else
     {
-        msg_Warn( (vlc_object_t *) p_this,
+        msg_Warn( obj,
                 "AfterTrack: Invalid track ID \"%s\", appending instead",
                 psz_aftertrack );
         b_append = true;
@@ -102,6 +102,7 @@ DBUS_METHOD( AddTrack )
 
 DBUS_METHOD( GetTracksMetadata )
 {
+    vlc_object_t *obj = (vlc_object_t*)p_this;
     REPLY_INIT;
     OUT_ARGUMENTS;
 
@@ -115,7 +116,7 @@ DBUS_METHOD( GetTracksMetadata )
 
     if( DBUS_TYPE_ARRAY != dbus_message_iter_get_arg_type( &in_args ) )
     {
-        msg_Err( (vlc_object_t*) p_this, "Invalid arguments" );
+        msg_Err( obj, "Invalid arguments" );
         return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
     }
 
@@ -141,8 +142,7 @@ DBUS_METHOD( GetTracksMetadata )
         if (!id_valid)
         {
 invalid_track_id:
-            msg_Err( (vlc_object_t*) p_this, "Invalid track id: %s",
-                                             psz_track_id );
+            msg_Err( obj, "Invalid track id: %s", psz_track_id );
             continue;
         }
 
@@ -155,6 +155,7 @@ invalid_track_id:
 
 DBUS_METHOD( GoTo )
 {
+    vlc_object_t *obj = (vlc_object_t*)p_this;
     REPLY_INIT;
 
     size_t i_track_id;
@@ -169,8 +170,7 @@ DBUS_METHOD( GoTo )
 
     if( dbus_error_is_set( &error ) )
     {
-        msg_Err( (vlc_object_t*) p_this, "D-Bus message reading : %s",
-                error.message );
+        msg_Err( obj, "D-Bus message reading : %s", error.message );
         dbus_error_free( &error );
         return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
     }
@@ -190,12 +190,13 @@ DBUS_METHOD( GoTo )
     REPLY_SEND;
 
 invalid_track_id:
-    msg_Err( (vlc_object_t*) p_this, "Invalid track id %s", psz_track_id );
+    msg_Err( obj, "Invalid track id %s", psz_track_id );
     return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
 }
 
 DBUS_METHOD( RemoveTrack )
 {
+    vlc_object_t *obj = (vlc_object_t*)p_this;
     REPLY_INIT;
 
     DBusError error;
@@ -210,8 +211,7 @@ DBUS_METHOD( RemoveTrack )
 
     if( dbus_error_is_set( &error ) )
     {
-        msg_Err( (vlc_object_t*) p_this, "D-Bus message reading : %s",
-                error.message );
+        msg_Err( obj, "D-Bus message reading : %s", error.message );
         dbus_error_free( &error );
         return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
     }
@@ -231,7 +231,7 @@ DBUS_METHOD( RemoveTrack )
     REPLY_SEND;
 
 invalid_track_id:
-    msg_Err( (vlc_object_t*) p_this, "Invalid track id: %s", psz_id );
+    msg_Err( obj, "Invalid track id: %s", psz_id );
     return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
 }
 
@@ -302,6 +302,7 @@ MarshalCanEditTracks( intf_thread_t *p_intf, DBusMessageIter *container )
 
 DBUS_METHOD( GetProperty )
 {
+    vlc_object_t *obj = (vlc_object_t*)p_this;
     DBusError error;
 
     char *psz_interface_name = NULL;
@@ -315,14 +316,12 @@ DBUS_METHOD( GetProperty )
 
     if( dbus_error_is_set( &error ) )
     {
-        msg_Err( (vlc_object_t*) p_this, "D-Bus message reading : %s",
-                                         error.message );
+        msg_Err( obj, "D-Bus message reading : %s", error.message );
         dbus_error_free( &error );
         return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
     }
 
-    msg_Dbg( (vlc_object_t*) p_this, "Getting property %s",
-                                     psz_property_name );
+    msg_Dbg( obj, "Getting property %s", psz_property_name );
 
     if( strcmp( psz_interface_name, DBUS_MPRIS_TRACKLIST_INTERFACE ) ) {
         return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
@@ -354,6 +353,7 @@ DBUS_METHOD( GetProperty )
 
 DBUS_METHOD( GetAllProperties )
 {
+    vlc_object_t *obj = (vlc_object_t*)p_this;
     REPLY_INIT;
     OUT_ARGUMENTS;
 
@@ -369,8 +369,7 @@ DBUS_METHOD( GetAllProperties )
 
     if( dbus_error_is_set( &error ) )
     {
-        msg_Err( (vlc_object_t*) p_this, "D-Bus message reading : %s",
-                                         error.message );
+        msg_Err( obj, "D-Bus message reading : %s", error.message );
         dbus_error_free( &error );
         return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
     }

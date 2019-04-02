@@ -1039,9 +1039,8 @@ static void Clean( stream_t *p_access )
     vlc_mutex_destroy( &p_sys->lock );
 }
 
-static void Close(vlc_object_t *p_this)
+static void Close(stream_t *p_access)
 {
-    stream_t     *p_access = (stream_t*)p_this;
     stream_sys_t *p_sys = p_access->p_sys;
 
     vlc_cancel(p_sys->thread);
@@ -1050,13 +1049,12 @@ static void Close(vlc_object_t *p_this)
     Clean( p_access );
 }
 
-static int Open(vlc_object_t *p_this)
+static int Open(stream_t *p_access)
 {
-    stream_t     *p_access = (stream_t*)p_this;
     stream_sys_t *p_sys = NULL;
     vlc_url_t     parsed_url = { 0 };
 
-    p_sys = vlc_obj_calloc( p_this, 1, sizeof( *p_sys ) );
+    p_sys = vlc_obj_calloc( p_access, 1, sizeof( *p_sys ) );
     if( unlikely( p_sys == NULL ) )
         return VLC_ENOMEM;
 

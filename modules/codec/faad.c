@@ -46,8 +46,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open( decoder_t * );
+static void Close( decoder_t * );
 
 vlc_plugin_begin ()
     set_description( N_("AAC audio decoder (using libfaad2)") )
@@ -101,9 +101,8 @@ static const uint32_t pi_tovlcmapping[FAAD_CHANNEL_ID_COUNT] =
 /*****************************************************************************
  * OpenDecoder: probe the decoder and return score
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
     NeAACDecConfiguration *cfg;
 
@@ -600,9 +599,8 @@ static int DecodeBlock( decoder_t *p_dec, block_t *p_block )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     NeAACDecClose( p_sys->hfaad );

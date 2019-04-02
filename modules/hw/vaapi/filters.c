@@ -629,16 +629,15 @@ OpenAdjust_InitFilterParams(filter_t * filter, void * p_data,
 }
 
 static int
-OpenAdjust(vlc_object_t * obj)
+OpenAdjust(filter_t *const filter)
 {
     VAProcPipelineCaps          pipeline_caps;
-    filter_t *const             filter = (filter_t *)obj;
     struct adjust_data *const   p_data = calloc(1, sizeof(*p_data));
     if (!p_data)
         return VLC_ENOMEM;
 
     for (unsigned int i = 0; i < NUM_ADJUST_MODES; ++i)
-        var_Create(obj, adjust_params_names[i],
+        var_Create(filter, adjust_params_names[i],
                    VLC_VAR_FLOAT | VLC_VAR_DOINHERIT | VLC_VAR_ISCOMMAND);
 
     if (Open(filter, VAProcFilterColorBalance, &pipeline_caps, p_data,
@@ -646,7 +645,7 @@ OpenAdjust(vlc_object_t * obj)
         goto error;
 
     for (unsigned int i = 0; i < NUM_ADJUST_MODES; ++i)
-        var_AddCallback(obj, adjust_params_names[i], FilterCallback, p_data);
+        var_AddCallback(filter, adjust_params_names[i], FilterCallback, p_data);
 
     filter->pf_video_filter = Adjust;
 
@@ -654,22 +653,21 @@ OpenAdjust(vlc_object_t * obj)
 
 error:
     for (unsigned int i = 0; i < NUM_ADJUST_MODES; ++i)
-        var_Destroy(obj, adjust_params_names[i]);
+        var_Destroy(filter, adjust_params_names[i]);
     free(p_data);
     return VLC_EGENERIC;
 }
 
 static void
-CloseAdjust(vlc_object_t * obj)
+CloseAdjust(filter_t *const filter)
 {
-    filter_t *const     filter = (filter_t *)obj;
     filter_sys_t *const filter_sys = filter->p_sys;
 
     for (unsigned int i = 0; i < NUM_ADJUST_MODES; ++i)
     {
-        var_DelCallback(obj, adjust_params_names[i],
+        var_DelCallback(filter, adjust_params_names[i],
                         FilterCallback, filter_sys->p_data);
-        var_Destroy(obj, adjust_params_names[i]);
+        var_Destroy(filter, adjust_params_names[i]);
     }
     free(filter_sys->p_data);
     Close(filter, filter_sys);
@@ -746,11 +744,10 @@ OpenBasicFilter_InitFilterParams(filter_t * filter, void * p_data,
 }
 
 static int
-OpenBasicFilter(vlc_object_t * obj, VAProcFilterType filter_type,
+OpenBasicFilter(filter_t *const filter, VAProcFilterType filter_type,
                 const char *psz_sigma_name, struct range const *p_vlc_range)
 {
     VAProcPipelineCaps                  pipeline_caps;
-    filter_t *const                     filter = (filter_t *)obj;
     assert(filter->psz_name);
     struct basic_filter_data *const     p_data = calloc(1, sizeof(*p_data));
     if (!p_data)
@@ -760,48 +757,47 @@ OpenBasicFilter(vlc_object_t * obj, VAProcFilterType filter_type,
     p_data->sigma.psz_name = psz_sigma_name;
     p_data->sigma.p_vlc_range = p_vlc_range;
 
-    var_Create(obj, p_data->sigma.psz_name,
+    var_Create(filter, p_data->sigma.psz_name,
                VLC_VAR_FLOAT | VLC_VAR_DOINHERIT | VLC_VAR_ISCOMMAND);
 
     if (Open(filter, p_data->filter_type, &pipeline_caps, p_data,
              OpenBasicFilter_InitFilterParams, NULL))
         goto error;
 
-    var_AddCallback(obj, p_data->sigma.psz_name, FilterCallback, p_data);
+    var_AddCallback(filter, p_data->sigma.psz_name, FilterCallback, p_data);
 
     filter->pf_video_filter = BasicFilter;
 
     return VLC_SUCCESS;
 
 error:
-    var_Destroy(obj, p_data->sigma.psz_name);
+    var_Destroy(filter, p_data->sigma.psz_name);
     free(p_data);
     return VLC_EGENERIC;
 }
 
 static int
-OpenDenoiseFilter(vlc_object_t * obj)
+OpenDenoiseFilter(filter_t *const filter)
 {
-    return OpenBasicFilter(obj, VAProcFilterNoiseReduction, "denoise-sigma",
+    return OpenBasicFilter(filter, VAProcFilterNoiseReduction, "denoise-sigma",
                            &vlc_denoise_sigma_range);
 }
 
 static int
-OpenSharpenFilter(vlc_object_t * obj)
+OpenSharpenFilter(filter_t *const filter)
 {
-    return OpenBasicFilter(obj, VAProcFilterSharpening, "sharpen-sigma",
+    return OpenBasicFilter(filter, VAProcFilterSharpening, "sharpen-sigma",
                            &vlc_sharpen_sigma_range);
 }
 
 static void
-CloseBasicFilter(vlc_object_t * obj)
+CloseBasicFilter(filter_t *const filter)
 {
-    filter_t *const                     filter = (filter_t *)obj;
     filter_sys_t *const                 filter_sys = filter->p_sys;
     struct basic_filter_data *const     p_data = filter_sys->p_data;
 
-    var_DelCallback(obj, p_data->sigma.psz_name, FilterCallback, p_data);
-    var_Destroy(obj, p_data->sigma.psz_name);
+    var_DelCallback(filter, p_data->sigma.psz_name, FilterCallback, p_data);
+    var_Destroy(filter, p_data->sigma.psz_name);
     free(p_data);
     Close(filter, filter_sys);
 }
@@ -1127,10 +1123,9 @@ OpenDeinterlace_InitHistory(void * p_data, VAProcPipelineCaps const * pipeline_c
 }
 
 static int
-OpenDeinterlace(vlc_object_t * obj)
+OpenDeinterlace(filter_t *const filter)
 {
     VAProcPipelineCaps          pipeline_caps;
-    filter_t *const             filter = (filter_t *)obj;
     struct deint_data *const    p_data = calloc(1, sizeof(*p_data));
     if (!p_data)
         return VLC_ENOMEM;
@@ -1163,9 +1158,8 @@ error:
 }
 
 static void
-CloseDeinterlace(vlc_object_t * obj)
+CloseDeinterlace(filter_t *const filter)
 {
-    filter_t *const             filter = (filter_t *)obj;
     filter_sys_t *const         filter_sys = filter->p_sys;
     struct deint_data *const    p_data = filter_sys->p_data;
 

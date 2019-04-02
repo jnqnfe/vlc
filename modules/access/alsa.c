@@ -38,8 +38,8 @@
 #define STEREO_TEXT N_("Stereo")
 #define RATE_TEXT N_("Sample rate")
 
-static int Open (vlc_object_t *);
-static void Close (vlc_object_t *);
+static int Open (demux_t *);
+static void Close (demux_t *);
 
 static const int rate_values[] = { 192000, 176400,
     96000, 88200, 48000, 44100,
@@ -68,7 +68,7 @@ vlc_plugin_end ()
 
 /** Helper for ALSA -> VLC debugging output */
 /** XXX: duplicated from ALSA output */
-static void Dump (vlc_object_t *obj, const char *msg,
+static void Dump (demux_t *demux, const char *msg,
                   int (*cb)(void *, snd_output_t *), void *p)
 {
     snd_output_t *output;
@@ -80,44 +80,42 @@ static void Dump (vlc_object_t *obj, const char *msg,
     int val = cb (p, output);
     if (val)
     {
-        msg_Warn (obj, "cannot get info: %s", snd_strerror (val));
+        msg_Warn (demux, "cannot get info: %s", snd_strerror (val));
         return;
     }
 
     size_t len = snd_output_buffer_string (output, &str);
     if (len > 0 && str[len - 1])
         len--; /* strip trailing newline */
-    msg_Dbg (obj, "%s%.*s", msg, (int)len, str);
+    msg_Dbg (demux, "%s%.*s", msg, (int)len, str);
     snd_output_close (output);
 }
 #define Dump(o, m, cb, p) \
-        Dump(VLC_OBJECT(o), m, (int (*)(void *, snd_output_t *))(cb), p)
+        Dump(o, m, (int (*)(void *, snd_output_t *))(cb), p)
 
-static void DumpDevice (vlc_object_t *obj, snd_pcm_t *pcm)
+static void DumpDevice (demux_t *demux, snd_pcm_t *pcm)
 {
     snd_pcm_info_t *info;
 
-    Dump (obj, " ", snd_pcm_dump, pcm);
+    Dump (demux, " ", snd_pcm_dump, pcm);
     snd_pcm_info_alloca (&info);
     if (snd_pcm_info (pcm, info) == 0)
     {
-        msg_Dbg (obj, " device name   : %s", snd_pcm_info_get_name (info));
-        msg_Dbg (obj, " device ID     : %s", snd_pcm_info_get_id (info));
-        msg_Dbg (obj, " subdevice name: %s",
+        msg_Dbg (demux, " device name   : %s", snd_pcm_info_get_name (info));
+        msg_Dbg (demux, " device ID     : %s", snd_pcm_info_get_id (info));
+        msg_Dbg (demux, " subdevice name: %s",
                 snd_pcm_info_get_subdevice_name (info));
     }
 }
 
-static void DumpDeviceStatus (vlc_object_t *obj, snd_pcm_t *pcm)
+static void DumpDeviceStatus (demux_t *demux, snd_pcm_t *pcm)
 {
     snd_pcm_status_t *status;
 
     snd_pcm_status_alloca (&status);
     snd_pcm_status (pcm, status);
-    Dump (obj, "current status:\n", snd_pcm_status_dump, status);
+    Dump (demux, "current status:\n", snd_pcm_status_dump, status);
 }
-#define DumpDeviceStatus(o, p) DumpDeviceStatus(VLC_OBJECT(o), p)
-
 
 typedef struct
 {
@@ -335,14 +333,12 @@ static uint16_t channel_maps[] = {
     /* TODO: support 7-8 channels - need channels reodering */
 };
 
-static int Open (vlc_object_t *obj)
+static int Open (demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
-
     if (demux->out == NULL)
         return VLC_EGENERIC;
 
-    demux_sys_t *sys = vlc_obj_malloc(obj, sizeof (*sys));
+    demux_sys_t *sys = vlc_obj_malloc(VLC_OBJECT(demux), sizeof (*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
 
@@ -365,7 +361,7 @@ static int Open (vlc_object_t *obj)
     }
     sys->pcm = pcm;
     msg_Dbg (demux, "using ALSA device: %s", device);
-    DumpDevice (VLC_OBJECT(demux), pcm);
+    DumpDevice (demux, pcm);
 
     /* Negotiate capture parameters */
     snd_pcm_hw_params_t *hw;
@@ -511,9 +507,8 @@ error:
     return VLC_EGENERIC;
 }
 
-static void Close (vlc_object_t *obj)
+static void Close (demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     demux_sys_t *sys = demux->p_sys;
 
     vlc_cancel (sys->thread);

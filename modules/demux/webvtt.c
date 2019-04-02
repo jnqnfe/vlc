@@ -628,10 +628,9 @@ static int ProbeWEBVTT( demux_t *p_demux )
 /*****************************************************************************
  * Module initializers
  *****************************************************************************/
-int webvtt_OpenDemux ( vlc_object_t *p_this )
+int webvtt_OpenDemux ( demux_t *p_demux )
 {
-    demux_t        *p_demux = (demux_t*)p_this;
-    demux_sys_t    *p_sys;
+    demux_sys_t *p_sys;
 
     int i_ret = ProbeWEBVTT( p_demux );
     if( i_ret != VLC_SUCCESS )
@@ -646,7 +645,7 @@ int webvtt_OpenDemux ( vlc_object_t *p_this )
 
     if( ReadWEBVTT( p_demux ) != VLC_SUCCESS )
     {
-        webvtt_CloseDemux( p_this );
+        webvtt_CloseDemux( p_demux );
         return VLC_EGENERIC;
     }
 
@@ -659,16 +658,15 @@ int webvtt_OpenDemux ( vlc_object_t *p_this )
     es_format_Clean( &fmt );
     if( p_sys->es == NULL )
     {
-        webvtt_CloseDemux( p_this );
+        webvtt_CloseDemux( p_demux );
         return VLC_EGENERIC;
     }
 
     return VLC_SUCCESS;
 }
 
-int webvtt_OpenDemuxStream ( vlc_object_t *p_this )
+int webvtt_OpenDemuxStream ( demux_t *p_demux )
 {
-    demux_t        *p_demux = (demux_t*)p_this;
     demux_sys_t    *p_sys;
 
     int i_ret = ProbeWEBVTT( p_demux );
@@ -688,7 +686,7 @@ int webvtt_OpenDemuxStream ( vlc_object_t *p_this )
                                           NULL );
     if( !p_sys->p_streamparser )
     {
-        webvtt_CloseDemux( p_this );
+        webvtt_CloseDemux( p_demux );
         return VLC_EGENERIC;
     }
 
@@ -698,7 +696,7 @@ int webvtt_OpenDemuxStream ( vlc_object_t *p_this )
     es_format_Clean( &fmt );
     if( p_sys->es == NULL )
     {
-        webvtt_CloseDemux( p_this );
+        webvtt_CloseDemux( p_demux );
         return VLC_EGENERIC;
     }
 
@@ -708,9 +706,8 @@ int webvtt_OpenDemuxStream ( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: Close subtitle demux
  *****************************************************************************/
-void webvtt_CloseDemux( vlc_object_t *p_this )
+void webvtt_CloseDemux( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
 
     for( size_t i=0; i< p_sys->cues.i_count; i++ )

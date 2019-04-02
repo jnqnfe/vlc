@@ -1188,7 +1188,7 @@ int DMXUnsetFilter( vlc_object_t *p_access, int i_fd )
 /*****************************************************************************
  * DVROpen :
  *****************************************************************************/
-int DVROpen( vlc_object_t *p_access, dvb_sys_t *p_sys )
+int DVROpen( stream_t *p_access, dvb_sys_t *p_sys )
 {
     unsigned int i_adapter, i_device;
     char dvr[128];
@@ -1223,7 +1223,7 @@ int DVROpen( vlc_object_t *p_access, dvb_sys_t *p_sys )
 /*****************************************************************************
  * DVRClose :
  *****************************************************************************/
-void DVRClose( vlc_object_t *p_access, dvb_sys_t *p_sys )
+void DVRClose( stream_t *p_access, dvb_sys_t *p_sys )
 {
     VLC_UNUSED(p_access);
     vlc_close( p_sys->i_handle );

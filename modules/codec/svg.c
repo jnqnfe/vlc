@@ -42,8 +42,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  OpenDecoder   ( vlc_object_t * );
-static void CloseDecoder  ( vlc_object_t * );
+static int  OpenDecoder   ( decoder_t * );
+static void CloseDecoder  ( decoder_t * );
 
 static int DecodeBlock  ( decoder_t *, block_t * );
 
@@ -84,10 +84,8 @@ typedef struct
 /*****************************************************************************
  * OpenDecoder: probe the decoder and return score
  *****************************************************************************/
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
-
     if( p_dec->fmt_in.i_codec != VLC_CODEC_SVG )
         return VLC_EGENERIC;
 
@@ -96,9 +94,9 @@ static int OpenDecoder( vlc_object_t *p_this )
         return VLC_ENOMEM;
     p_dec->p_sys = p_sys;
 
-    p_sys->i_width = var_InheritInteger( p_this, "svg-width" );
-    p_sys->i_height = var_InheritInteger( p_this, "svg-height" );
-    p_sys->f_scale = var_InheritFloat( p_this, "svg-scale" );
+    p_sys->i_width = var_InheritInteger( p_dec, "svg-width" );
+    p_sys->i_height = var_InheritInteger( p_dec, "svg-height" );
+    p_sys->f_scale = var_InheritFloat( p_dec, "svg-scale" );
 
     /* Initialize library */
 #if (GLIB_MAJOR_VERSION < 2 || GLIB_MINOR_VERSION < 36)
@@ -261,9 +259,9 @@ done:
 /*****************************************************************************
  * CloseDecoder: png decoder destruction
  *****************************************************************************/
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t *p_dec )
 {
-    VLC_UNUSED( p_this );
+    VLC_UNUSED( p_dec );
 #if (GLIB_MAJOR_VERSION < 2 || GLIB_MINOR_VERSION < 36)
     rsvg_term();
 #endif

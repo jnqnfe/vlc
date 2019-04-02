@@ -35,10 +35,10 @@
 #include "instance.h"
 #include "platform.h"
 
-static int Open (vlc_object_t *obj)
-{
-    vlc_vk_t *vk = (vlc_vk_t *) obj;
+#define VK_CFG_PREFIX "vk-" /* note, shared with display */
 
+static int Open(vlc_vk_t *vk)
+{
     if (vlc_vk_InitPlatform(vk) != VLC_SUCCESS)
         goto error;
 
@@ -103,10 +103,8 @@ error:
     return VLC_EGENERIC;
 }
 
-static void Close (vlc_object_t *obj)
+static void Close(vlc_vk_t *vk)
 {
-    vlc_vk_t *vk = (vlc_vk_t *) obj;
-
     pl_swapchain_destroy(&vk->swapchain);
     vkDestroySurfaceKHR(vk->instance->instance, vk->surface, NULL);
     pl_vulkan_destroy(&vk->vulkan);

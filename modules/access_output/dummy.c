@@ -36,7 +36,7 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
+static int  Open ( sout_access_out_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Dummy stream output") )
@@ -55,12 +55,9 @@ static ssize_t Write( sout_access_out_t *, block_t * );
 /*****************************************************************************
  * Open: open the file
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_access_out_t *p_access )
 {
-    sout_access_out_t   *p_access = (sout_access_out_t*)p_this;
-
     p_access->pf_write = Write;
-
     return VLC_SUCCESS;
 }
 

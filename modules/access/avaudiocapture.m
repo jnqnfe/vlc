@@ -173,10 +173,8 @@ static int Control(demux_t *p_demux, int i_query, va_list args)
 /*****************************************************************************
 * Open:
 *****************************************************************************/
-static int Open(vlc_object_t *p_this)
+static int Open(demux_t *p_demux)
 {
-    demux_t *p_demux = (demux_t*)p_this;
-
     if (p_demux->out == NULL)
         return VLC_EGENERIC;
 
@@ -310,9 +308,8 @@ static int Open(vlc_object_t *p_this)
 /*****************************************************************************
 * Close:
 *****************************************************************************/
-static void Close(vlc_object_t *p_this)
+static void Close(demux_t *p_demux)
 {
-    demux_t             *p_demux = (demux_t*)p_this;
     demux_sys_t         *p_sys = p_demux->p_sys;
 
     @autoreleasepool {

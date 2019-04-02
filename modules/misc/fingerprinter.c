@@ -60,8 +60,8 @@ struct fingerprinter_sys_t
     } processing;
 };
 
-static int  Open            (vlc_object_t *);
-static void Close           (vlc_object_t *);
+static int  Open            (fingerprinter_thread_t *);
+static void Close           (fingerprinter_thread_t *);
 static void CleanSys        (fingerprinter_sys_t *);
 static void *Run(void *);
 
@@ -210,9 +210,8 @@ static void DoFingerprint( fingerprinter_thread_t *p_fingerprinter,
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open(vlc_object_t *p_this)
+static int Open(fingerprinter_thread_t *p_fingerprinter)
 {
-    fingerprinter_thread_t *p_fingerprinter = (fingerprinter_thread_t*) p_this;
     fingerprinter_sys_t *p_sys = calloc(1, sizeof(fingerprinter_sys_t));
 
     if ( !p_sys )
@@ -279,9 +278,8 @@ error:
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close(vlc_object_t *p_this)
+static void Close(fingerprinter_thread_t *p_fingerprinter)
 {
-    fingerprinter_thread_t   *p_fingerprinter = (fingerprinter_thread_t*) p_this;
     fingerprinter_sys_t *p_sys = p_fingerprinter->p_sys;
 
     vlc_cancel( p_sys->thread );

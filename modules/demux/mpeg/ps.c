@@ -53,9 +53,9 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  OpenForce( vlc_object_t * );
-static int  Open   ( vlc_object_t * );
-static void Close  ( vlc_object_t * );
+static int  OpenForce( demux_t * );
+static int  Open   ( demux_t * );
+static void Close  ( demux_t * );
 
 vlc_plugin_begin ()
     set_description( N_("MPEG-PS demuxer") )
@@ -121,9 +121,8 @@ static block_t *ps_pkt_read   ( stream_t * );
 /*****************************************************************************
  * Open
  *****************************************************************************/
-static int OpenCommon( vlc_object_t *p_this, bool b_force )
+static int OpenCommon( demux_t *p_demux, bool b_force )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
 
     const uint8_t *p_peek;
@@ -237,22 +236,21 @@ static int OpenCommon( vlc_object_t *p_this, bool b_force )
     return VLC_SUCCESS;
 }
 
-static int OpenForce( vlc_object_t *p_this )
+static int OpenForce( demux_t *p_demux )
 {
-    return OpenCommon( p_this, true );
+    return OpenCommon( p_demux, true );
 }
 
-static int Open( vlc_object_t *p_this )
+static int Open( demux_t *p_demux )
 {
-    return OpenCommon( p_this, p_this->force );
+    return OpenCommon( p_demux, VLC_OBJECT(p_demux)->force );
 }
 
 /*****************************************************************************
  * Close
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
     int i;
 

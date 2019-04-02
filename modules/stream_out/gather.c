@@ -36,8 +36,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int      Open    ( vlc_object_t * );
-static void     Close   ( vlc_object_t * );
+static int      Open    ( sout_stream_t * );
+static void     Close   ( sout_stream_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Gathering stream output") )
@@ -70,9 +70,8 @@ typedef struct
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_stream_t *p_stream )
 {
-    sout_stream_t     *p_stream = (sout_stream_t*)p_this;
     sout_stream_sys_t *p_sys;
 
     p_stream->p_sys = p_sys = malloc( sizeof( sout_stream_sys_t ) );
@@ -96,9 +95,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( sout_stream_t *p_stream )
 {
-    sout_stream_t     *p_stream = (sout_stream_t*)p_this;
     sout_stream_sys_t *p_sys = p_stream->p_sys;
     int i;
 

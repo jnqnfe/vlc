@@ -200,7 +200,7 @@ static const struct vout_window_callbacks vlc_vidsplit_window_cbs = {
     .keyboard_event = vlc_vidsplit_window_KeyboardEvent,
 };
 
-static vout_window_t *video_splitter_CreateWindow(vlc_object_t *obj,
+static vout_window_t *video_splitter_CreateWindow(vout_display_t *vd,
     const vout_display_cfg_t *restrict vdcfg,
     const video_format_t *restrict source, void *sys)
 {
@@ -215,7 +215,7 @@ static vout_window_t *video_splitter_CreateWindow(vlc_object_t *obj,
     vout_display_GetDefaultDisplaySize(&cfg.width, &cfg.height, source,
                                        vdcfg);
 
-    vout_window_t *window = vout_window_New(obj, NULL, &owner);
+    vout_window_t *window = vout_window_New(VLC_OBJECT(vd), NULL, &owner);
     if (window != NULL) {
         if (vout_window_Enable(window, &cfg)) {
             vout_window_Delete(window);
@@ -225,7 +225,7 @@ static vout_window_t *video_splitter_CreateWindow(vlc_object_t *obj,
     return window;
 }
 
-static vout_display_t *vlc_vidsplit_CreateDisplay(vlc_object_t *obj,
+static vout_display_t *vlc_vidsplit_CreateDisplay(vout_display_t *vd,
     const video_format_t *restrict source,
     const vout_display_cfg_t *restrict cfg,
     const char *name)
@@ -233,23 +233,21 @@ static vout_display_t *vlc_vidsplit_CreateDisplay(vlc_object_t *obj,
     vout_display_owner_t owner = {
         .event = vlc_vidsplit_display_Event,
     };
-    return vout_display_New(obj, source, cfg, name, &owner);
+    return vout_display_New(VLC_OBJECT(vd), source, cfg, name, &owner);
 }
 
 static int vlc_vidsplit_Open(vout_display_t *vd,
                              const vout_display_cfg_t *cfg,
                              video_format_t *fmtp, vlc_video_context *ctx)
 {
-    vlc_object_t *obj = VLC_OBJECT(vd);
-
     if (vout_display_cfg_IsWindowed(cfg))
         return VLC_EGENERIC;
 
-    char *name = var_InheritString(obj, "video-splitter");
+    char *name = var_InheritString(vd, "video-splitter");
     if (name == NULL)
         return VLC_EGENERIC;
 
-    vout_display_sys_t *sys = vlc_object_create(obj, sizeof (*sys));
+    vout_display_sys_t *sys = vlc_obj_malloc(VLC_OBJECT(vd), sizeof (*sys));
     if (unlikely(sys == NULL)) {
         free(name);
         return VLC_ENOMEM;
@@ -270,9 +268,9 @@ static int vlc_vidsplit_Open(vout_display_t *vd,
         return VLC_EGENERIC;
     }
 
-    sys->pictures = vlc_obj_malloc(obj, splitter->i_output
+    sys->pictures = vlc_obj_malloc(VLC_OBJECT(vd), splitter->i_output
                                         * sizeof (*sys->pictures));
-    sys->parts = vlc_obj_malloc(obj,
+    sys->parts = vlc_obj_malloc(VLC_OBJECT(vd),
                                 splitter->i_output * sizeof (*sys->parts));
     if (unlikely(sys->pictures == NULL || sys->parts == NULL)) {
         splitter->i_output = 0;
@@ -297,7 +295,7 @@ static int vlc_vidsplit_Open(vout_display_t *vd,
         part->width = 1;
         part->height = 1;
 
-        part->window = video_splitter_CreateWindow(obj, &vdcfg, &output->fmt,
+        part->window = video_splitter_CreateWindow(vd, &vdcfg, &output->fmt,
                                                    part);
         if (part->window == NULL) {
             splitter->i_output = i;
@@ -306,8 +304,7 @@ static int vlc_vidsplit_Open(vout_display_t *vd,
         }
 
         vdcfg.window = part->window;
-        display = vlc_vidsplit_CreateDisplay(obj, &output->fmt, &vdcfg,
-                                             modname);
+        display = vlc_vidsplit_CreateDisplay(vd, &output->fmt, &vdcfg, modname);
         if (display == NULL) {
             vout_window_Disable(part->window);
             vout_window_Delete(part->window);

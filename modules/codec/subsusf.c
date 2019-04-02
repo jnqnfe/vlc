@@ -37,8 +37,8 @@
 /*****************************************************************************
  * Module descriptor.
  *****************************************************************************/
-static int  OpenDecoder   ( vlc_object_t * );
-static void CloseDecoder  ( vlc_object_t * );
+static int  OpenDecoder   ( decoder_t * );
+static void CloseDecoder  ( decoder_t * );
 
 #define FORMAT_TEXT N_("Formatted Subtitles")
 #define FORMAT_LONGTEXT N_("Some subtitle formats allow for text formatting. " \
@@ -112,9 +112,8 @@ static subpicture_region_t *LoadEmbeddedImage( decoder_t *p_dec, const char *psz
  * Tries to launch a decoder and return score so that the interface is able
  * to chose.
  *****************************************************************************/
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    decoder_t     *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     if( p_dec->fmt_in.i_codec != VLC_CODEC_USF )
@@ -169,9 +168,8 @@ static int DecodeBlock( decoder_t *p_dec, block_t *p_block )
 /*****************************************************************************
  * CloseDecoder: clean up the decoder
  *****************************************************************************/
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     if( p_sys->pp_ssa_styles )

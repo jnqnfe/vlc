@@ -73,8 +73,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Create ( vlc_object_t * );
-static void Destroy( vlc_object_t * );
+static int  Create ( filter_t * );
+static void Destroy( filter_t * );
 
 #define FONT_TEXT N_("Font")
 #define MONOSPACE_FONT_TEXT N_("Monospace Font")
@@ -1410,10 +1410,9 @@ static void FreeFace( void *p_face, void *p_obj )
  *****************************************************************************
  * This function allocates and initializes a Clone vout method.
  *****************************************************************************/
-static int Create( vlc_object_t *p_this )
+static int Create( filter_t *p_filter )
 {
-    filter_t      *p_filter         = ( filter_t * ) p_this;
-    filter_sys_t  *p_sys            = NULL;
+    filter_sys_t *p_sys = NULL;
 
     /* Allocate structure */
     p_filter->p_sys = p_sys = calloc( 1, sizeof( *p_sys ) );
@@ -1530,7 +1529,7 @@ static int Create( vlc_object_t *p_this )
     return VLC_SUCCESS;
 
 error:
-    Destroy( VLC_OBJECT(p_filter) );
+    Destroy( p_filter );
     return VLC_EGENERIC;
 }
 
@@ -1539,9 +1538,8 @@ error:
  *****************************************************************************
  * Clean up all data and library connections
  *****************************************************************************/
-static void Destroy( vlc_object_t *p_this )
+static void Destroy( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
 #if 0

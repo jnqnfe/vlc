@@ -53,8 +53,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( demux_t * );
+static void Close( demux_t * );
 
 vlc_plugin_begin ()
     set_shortname ( "OGG" )
@@ -203,11 +203,10 @@ static void fill_channels_info(audio_format_t *audio)
 /*****************************************************************************
  * Open: initializes ogg demux structures
  *****************************************************************************/
-static int Open( vlc_object_t * p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t *)p_this;
-    demux_sys_t    *p_sys;
-    const uint8_t  *p_peek;
+    demux_sys_t *p_sys;
+    const uint8_t *p_peek;
 
     /* Check if we are dealing with an ogg stream */
     if( vlc_stream_Peek( p_demux->s, &p_peek, 4 ) < 4 ) return VLC_EGENERIC;
@@ -258,10 +257,9 @@ static int Open( vlc_object_t * p_this )
 /*****************************************************************************
  * Close: frees unused data
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t *)p_this;
-    demux_sys_t *p_sys = p_demux->p_sys  ;
+    demux_sys_t *p_sys = p_demux->p_sys;
 
     /* Cleanup the bitstream parser */
     ogg_sync_clear( &p_sys->oy );

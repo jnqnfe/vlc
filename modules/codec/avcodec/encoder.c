@@ -288,9 +288,8 @@ static void add_av_option_float( encoder_t *p_enc, AVDictionary** pp_dict, const
         msg_Warn( p_enc, "Failed to set encoder option %s", psz_name );
 }
 
-int InitVideoEnc( vlc_object_t *p_this )
+int InitVideoEnc( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys;
     AVCodecContext *p_context;
     AVCodec *p_codec = NULL;
@@ -299,10 +298,10 @@ int InitVideoEnc( vlc_object_t *p_this )
     float f_val;
     char *psz_val;
 
-    msg_Dbg( p_this, "using %s %s", AVPROVIDER(LIBAVCODEC), LIBAVCODEC_IDENT );
+    msg_Dbg( p_enc, "using %s %s", AVPROVIDER(LIBAVCODEC), LIBAVCODEC_IDENT );
 
     /* Initialization must be done before avcodec_find_encoder() */
-    vlc_init_avcodec(p_this);
+    vlc_init_avcodec(VLC_OBJECT(p_enc));
 
     config_ChainParse( p_enc, ENC_CFG_PREFIX, ppsz_enc_options, p_enc->p_cfg );
 
@@ -336,19 +335,19 @@ int InitVideoEnc( vlc_object_t *p_this )
             return VLC_EGENERIC;
     }
 
-    char *psz_encoder = var_GetString( p_this, ENC_CFG_PREFIX "codec" );
+    char *psz_encoder = var_GetString( p_enc, ENC_CFG_PREFIX "codec" );
     if( psz_encoder && *psz_encoder )
     {
         p_codec = avcodec_find_encoder_by_name( psz_encoder );
         if( !p_codec )
         {
-            msg_Err( p_this, "Encoder `%s' not found", psz_encoder );
+            msg_Err( p_enc, "Encoder `%s' not found", psz_encoder );
             free( psz_encoder );
             return VLC_EGENERIC;
         }
         else if( p_codec->id != i_codec_id )
         {
-            msg_Err( p_this, "Encoder `%s' can't handle %4.4s",
+            msg_Err( p_enc, "Encoder `%s' can't handle %4.4s",
                     psz_encoder, (char*)&p_enc->fmt_out.i_codec );
             free( psz_encoder );
             return VLC_EGENERIC;
@@ -404,7 +403,7 @@ int InitVideoEnc( vlc_object_t *p_this )
     p_sys->p_context->codec_id = p_sys->p_codec->id;
     p_context->thread_type = 0;
     p_context->debug = var_InheritInteger( p_enc, "avcodec-debug" );
-    p_context->opaque = (void *)p_this;
+    p_context->opaque = (void *)p_enc;
 
     p_sys->i_key_int = var_GetInteger( p_enc, ENC_CFG_PREFIX "keyint" );
     p_sys->i_b_frames = var_GetInteger( p_enc, ENC_CFG_PREFIX "bframes" );
@@ -1456,9 +1455,8 @@ static block_t *EncodeAudio( encoder_t *p_enc, block_t *p_aout_buf )
 /*****************************************************************************
  * EndVideoEnc: libavcodec encoder destruction
  *****************************************************************************/
-void EndVideoEnc( vlc_object_t *p_this )
+void EndVideoEnc( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys = p_enc->p_sys;
 
     av_frame_free( &p_sys->frame );

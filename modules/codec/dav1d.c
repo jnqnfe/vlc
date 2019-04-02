@@ -42,8 +42,8 @@
 /****************************************************************************
  * Local prototypes
  ****************************************************************************/
-static int OpenDecoder(vlc_object_t *);
-static void CloseDecoder(vlc_object_t *);
+static int OpenDecoder(decoder_t *);
+static void CloseDecoder(decoder_t *);
 
 /*****************************************************************************
  * Module descriptor
@@ -270,22 +270,20 @@ static int Decode(decoder_t *dec, block_t *block)
 /*****************************************************************************
  * OpenDecoder: probe the decoder
  *****************************************************************************/
-static int OpenDecoder(vlc_object_t *p_this)
+static int OpenDecoder(decoder_t *dec)
 {
-    decoder_t *dec = (decoder_t *)p_this;
-
     if (dec->fmt_in.i_codec != VLC_CODEC_AV1)
         return VLC_EGENERIC;
 
-    decoder_sys_t *p_sys = vlc_obj_malloc(p_this, sizeof(*p_sys));
+    decoder_sys_t *p_sys = vlc_obj_malloc(VLC_OBJECT(dec), sizeof(*p_sys));
     if (!p_sys)
         return VLC_ENOMEM;
 
     dav1d_default_settings(&p_sys->s);
-    p_sys->s.n_tile_threads = var_InheritInteger(p_this, "dav1d-thread-tiles");
+    p_sys->s.n_tile_threads = var_InheritInteger(dec, "dav1d-thread-tiles");
     if (p_sys->s.n_tile_threads == 0)
         p_sys->s.n_tile_threads = VLC_CLIP(vlc_GetCPUCount(), 1, 4);
-    p_sys->s.n_frame_threads = var_InheritInteger(p_this, "dav1d-thread-frames");
+    p_sys->s.n_frame_threads = var_InheritInteger(dec, "dav1d-thread-frames");
     if (p_sys->s.n_frame_threads == 0)
         p_sys->s.n_frame_threads = __MAX(1, vlc_GetCPUCount());
     p_sys->s.allocator.cookie = dec;
@@ -294,11 +292,11 @@ static int OpenDecoder(vlc_object_t *p_this)
 
     if (dav1d_open(&p_sys->c, &p_sys->s) < 0)
     {
-        msg_Err(p_this, "Could not open the Dav1d decoder");
+        msg_Err(dec, "Could not open the Dav1d decoder");
         return VLC_EGENERIC;
     }
 
-    msg_Dbg(p_this, "Using dav1d version %s with %d/%d frame/tile threads",
+    msg_Dbg(dec, "Using dav1d version %s with %d/%d frame/tile threads",
             dav1d_version(), p_sys->s.n_frame_threads, p_sys->s.n_tile_threads);
 
     dec->pf_decode = Decode;
@@ -325,9 +323,8 @@ static int OpenDecoder(vlc_object_t *p_this)
 /*****************************************************************************
  * CloseDecoder: decoder destruction
  *****************************************************************************/
-static void CloseDecoder(vlc_object_t *p_this)
+static void CloseDecoder(decoder_t *dec)
 {
-    decoder_t *dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = dec->p_sys;
 
     /* Flush decoder */

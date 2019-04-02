@@ -42,13 +42,13 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  OpenDecoder   ( vlc_object_t * );
-static int  OpenPacketizer( vlc_object_t * );
-static void CloseCommon   ( vlc_object_t * );
+static int  OpenDecoder   ( decoder_t * );
+static int  OpenPacketizer( decoder_t * );
+static void CloseCommon   ( decoder_t * );
 
 #ifdef ENABLE_SOUT
-static int  OpenEncoder   ( vlc_object_t * );
-static void CloseEncoder  ( vlc_object_t * );
+static int  OpenEncoder   ( encoder_t * );
+static void CloseEncoder  ( encoder_t * );
 static block_t *EncodeFrames( encoder_t *, block_t * );
 #endif
 
@@ -299,13 +299,13 @@ static int OpenCommon( decoder_t *p_dec, bool b_packetizer )
 
     return VLC_SUCCESS;
 }
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    return OpenCommon( (decoder_t*) p_this, false );
+    return OpenCommon( p_dec, false );
 }
-static int OpenPacketizer( vlc_object_t *p_this )
+static int OpenPacketizer( decoder_t *p_dec )
 {
-    return OpenCommon( (decoder_t*) p_this, true );
+    return OpenCommon( p_dec, true );
 }
 
 /*****************************************************************************
@@ -509,9 +509,8 @@ static int DecodeFrame( decoder_t *p_dec, block_t *p_block )
 /*****************************************************************************
  * CloseCommon : lpcm decoder destruction
  *****************************************************************************/
-static void CloseCommon( vlc_object_t *p_this )
+static void CloseCommon( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     free( p_dec->p_sys );
 }
 
@@ -519,9 +518,8 @@ static void CloseCommon( vlc_object_t *p_this )
 /*****************************************************************************
  * OpenEncoder: lpcm encoder construction
  *****************************************************************************/
-static int OpenEncoder( vlc_object_t *p_this )
+static int OpenEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys;
 
     /* We only support DVD LPCM yet. */
@@ -577,9 +575,8 @@ static int OpenEncoder( vlc_object_t *p_this )
 /*****************************************************************************
  * CloseEncoder: lpcm encoder destruction
  *****************************************************************************/
-static void CloseEncoder ( vlc_object_t *p_this )
+static void CloseEncoder ( encoder_t *p_enc )
 {
-    encoder_t     *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys = p_enc->p_sys;
 
     free( p_sys->p_buffer );

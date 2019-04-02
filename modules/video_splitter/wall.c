@@ -54,8 +54,8 @@
 
 #define CFG_PREFIX "wall-"
 
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( video_splitter_t * );
+static void Close( video_splitter_t * );
 
 vlc_plugin_begin()
     set_description( N_("Wall video filter") )
@@ -105,9 +105,8 @@ static int Mouse( video_splitter_t *, int, vout_window_mouse_event_t * );
 /**
  * This function allocates and initializes a Wall splitter module.
  */
-static int Open( vlc_object_t *p_this )
+static int Open( video_splitter_t *p_splitter )
 {
-    video_splitter_t *p_splitter = (video_splitter_t*)p_this;
     video_splitter_sys_t *p_sys;
 
     const vlc_chroma_description_t *p_chroma =
@@ -236,9 +235,8 @@ static int Open( vlc_object_t *p_this )
 /**
  * Terminate a splitter module.
  */
-static void Close( vlc_object_t *p_this )
+static void Close( video_splitter_t *p_splitter )
 {
-    video_splitter_t *p_splitter = (video_splitter_t*)p_this;
     video_splitter_sys_t *p_sys = p_splitter->p_sys;
 
     free( p_splitter->p_output );

@@ -174,8 +174,8 @@ static const char *const ppsz_justification_text[] = {
 #define AUTODETECT_UTF8_LONGTEXT N_("This enables automatic detection of " \
             "UTF-8 encoding within subtitle files.")
 
-static int  OpenDecoder   ( vlc_object_t * );
-static void CloseDecoder  ( vlc_object_t * );
+static int  OpenDecoder   ( decoder_t * );
+static void CloseDecoder  ( decoder_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("Subtitles"))
@@ -218,9 +218,8 @@ static text_segment_t *ParseSubtitles(int *pi_align, const char * );
  * Tries to launch a decoder and return score so that the interface is able
  * to chose.
  *****************************************************************************/
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    decoder_t     *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     switch( p_dec->fmt_in.i_codec )
@@ -342,9 +341,8 @@ static int DecodeBlock( decoder_t *p_dec, block_t *p_block )
 /*****************************************************************************
  * CloseDecoder: clean up the decoder
  *****************************************************************************/
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     if( p_sys->iconv_handle != (vlc_iconv_t)-1 )

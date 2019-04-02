@@ -59,8 +59,8 @@ typedef struct
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open( vlc_object_t *p_this );
-static void Close( vlc_object_t *p_this );
+static int  Open( stream_t * );
+static void Close( stream_t * );
 
 #define PROBE_TEXT N_("Probe DVB card for capabilities")
 #define PROBE_LONGTEXT N_("Some DVB cards do not like to be probed for their capabilities, you can disable this feature if you experience some trouble.")
@@ -117,9 +117,8 @@ static int ScanReadCallback( scan_t *, void *,  unsigned, size_t, uint8_t *, siz
 /*****************************************************************************
  * Open: open the frontend device
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( stream_t *p_access )
 {
-    stream_t     *p_access = (stream_t*)p_this;
     access_sys_t *p_sys;
 
     if( p_access->b_preparsing )
@@ -152,16 +151,16 @@ static int Open( vlc_object_t *p_this )
     }
 
     /* Getting frontend info */
-    if( FrontendOpen( p_this, &p_sys->dvb, p_access->psz_name ) )
+    if( FrontendOpen( VLC_OBJECT(p_access), &p_sys->dvb, p_access->psz_name ) )
     {
         free( p_sys );
         return VLC_EGENERIC;
     }
 
     /* Opening DVR device */
-    if( DVROpen( p_this, &p_sys->dvb ) < 0 )
+    if( DVROpen( p_access, &p_sys->dvb ) < 0 )
     {
-        FrontendClose( p_this, &p_sys->dvb );
+        FrontendClose( VLC_OBJECT(p_access), &p_sys->dvb );
         free( p_sys );
         return VLC_EGENERIC;
     }
@@ -173,7 +172,7 @@ static int Open( vlc_object_t *p_this )
 
     parameter.b_use_nit = var_InheritBool( p_access, "dvb-scan-nit" );
 
-    if( FrontendFillScanParameter( p_this, &p_sys->dvb, &parameter ) ||
+    if( FrontendFillScanParameter( VLC_OBJECT(p_access), &p_sys->dvb, &parameter ) ||
             (p_scan = scan_New( VLC_OBJECT(p_access), &parameter,
                                 ScanFrontendTuningHandler,
                                 ScanStatsCallback,
@@ -182,7 +181,7 @@ static int Open( vlc_object_t *p_this )
                                 p_access )) == NULL )
     {
         scan_parameter_Clean( &parameter );
-        Close( VLC_OBJECT(p_access) );
+        Close( p_access );
         return VLC_EGENERIC;
     }
 
@@ -199,15 +198,14 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close : Close the device
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( stream_t *p_access )
 {
-    stream_t     *p_access = (stream_t*)p_this;
     access_sys_t *p_sys = p_access->p_sys;
 
     FilterUnset( p_access, MAX_DEMUX );
 
-    DVRClose( p_this, &p_sys->dvb );
-    FrontendClose( p_this, &p_sys->dvb );
+    DVRClose( p_access, &p_sys->dvb );
+    FrontendClose( VLC_OBJECT(p_access), &p_sys->dvb );
     scan_Destroy( p_sys->scan );
 
     free( p_sys );

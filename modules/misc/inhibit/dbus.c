@@ -168,11 +168,10 @@ static void Inhibit(vlc_inhibit_t *ih, unsigned flags)
     dbus_message_unref(msg);
 }
 
-static void Close(vlc_object_t *obj);
+static void Close(vlc_inhibit_t *ih);
 
-static int Open (vlc_object_t *obj)
+static int Open (vlc_inhibit_t *ih)
 {
-    vlc_inhibit_t *ih = (vlc_inhibit_t *)obj;
     vlc_inhibit_sys_t *sys = malloc (sizeof (*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
@@ -206,13 +205,12 @@ static int Open (vlc_object_t *obj)
         msg_Dbg(ih, "cannot find service %s", dbus_service[i]);
     }
 
-    Close(obj);
+    Close(ih);
     return VLC_EGENERIC;
 }
 
-static void Close (vlc_object_t *obj)
+static void Close (vlc_inhibit_t *ih)
 {
-    vlc_inhibit_t *ih = (vlc_inhibit_t *)obj;
     vlc_inhibit_sys_t *sys = ih->p_sys;
 
     if (sys->pending != NULL)

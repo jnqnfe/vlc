@@ -58,8 +58,8 @@
 //---------------------------------------------------------------------------
 // Local prototypes
 //---------------------------------------------------------------------------
-static int  Open  ( vlc_object_t * );
-static void Close ( vlc_object_t * );
+static int  Open  ( intf_thread_t * );
+static void Close ( intf_thread_t * );
 static void *Run  ( void * );
 
 static struct
@@ -71,10 +71,8 @@ static struct
 //---------------------------------------------------------------------------
 // Open: initialize interface
 //---------------------------------------------------------------------------
-static int Open( vlc_object_t *p_this )
+static int Open( intf_thread_t *p_intf )
 {
-    intf_thread_t *p_intf = (intf_thread_t *)p_this;
-
     // Allocate instance and initialize some members
     p_intf->p_sys = (intf_sys_t *) calloc( 1, sizeof( intf_sys_t ) );
     if( p_intf->p_sys == NULL )
@@ -140,10 +138,8 @@ static int Open( vlc_object_t *p_this )
 //---------------------------------------------------------------------------
 // Close: destroy interface
 //---------------------------------------------------------------------------
-static void Close( vlc_object_t *p_this )
+static void Close( intf_thread_t *p_intf )
 {
-    intf_thread_t *p_intf = (intf_thread_t *)p_this;
-
     msg_Dbg( p_intf, "closing skins2 module" );
 
     /* Terminate input to ensure that our window provider is released. */
@@ -469,7 +465,6 @@ static int WindowOpen( vout_window_t *pWnd )
 static void WindowClose( vout_window_t *pWnd )
 {
     vout_window_skins_t* sys = (vout_window_skins_t *)pWnd->sys;
-
     delete sys;
 }
 

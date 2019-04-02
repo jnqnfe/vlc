@@ -62,8 +62,8 @@ typedef struct
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  OpenDecoder   ( vlc_object_t * );
-static void CloseDecoder  ( vlc_object_t * );
+static int  OpenDecoder   ( decoder_t * );
+static void CloseDecoder  ( decoder_t * );
 
 static int DecodeBlock  ( decoder_t *, block_t * );
 
@@ -76,8 +76,8 @@ typedef struct
     int i_blocksize;
 } encoder_sys_t;
 
-static int  OpenEncoder(vlc_object_t *);
-static void CloseEncoder(vlc_object_t *);
+static int  OpenEncoder(encoder_t *);
+static void CloseEncoder(encoder_t *);
 
 static block_t *EncodeBlock(encoder_t *, picture_t *);
 
@@ -102,10 +102,8 @@ vlc_plugin_end ()
 /*****************************************************************************
  * OpenDecoder: probe the decoder and return score
  *****************************************************************************/
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
-
     if( p_dec->fmt_in.i_codec != VLC_CODEC_PNG &&
         p_dec->fmt_in.i_codec != VLC_FOURCC('M','P','N','G') )
     {
@@ -118,7 +116,7 @@ static int OpenDecoder( vlc_object_t *p_this )
         return VLC_ENOMEM;
     p_dec->p_sys = p_sys;
 
-    p_sys->p_obj = p_this;
+    p_sys->p_obj = VLC_OBJECT(p_dec);
 
     /* Set output properties */
     p_dec->fmt_out.i_codec = VLC_CODEC_RGBA;
@@ -322,18 +320,15 @@ static int DecodeBlock( decoder_t *p_dec, block_t *p_block )
 /*****************************************************************************
  * CloseDecoder: png decoder destruction
  *****************************************************************************/
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     free( p_sys );
 }
 
-static int OpenEncoder(vlc_object_t *p_this)
+static int OpenEncoder(encoder_t *p_enc)
 {
-    encoder_t *p_enc = (encoder_t *) p_this;
-
     if( p_enc->fmt_out.i_codec != VLC_CODEC_PNG )
         return VLC_EGENERIC;
 
@@ -343,7 +338,7 @@ static int OpenEncoder(vlc_object_t *p_this)
         return VLC_ENOMEM;
     p_enc->p_sys = p_sys;
 
-    p_sys->p_obj = p_this;
+    p_sys->p_obj = VLC_OBJECT(p_enc);
 
     p_sys->i_blocksize = 3 * p_enc->fmt_in.video.i_visible_width *
         p_enc->fmt_in.video.i_visible_height;
@@ -447,9 +442,8 @@ static block_t *EncodeBlock(encoder_t *p_enc, picture_t *p_pic)
 /*****************************************************************************
  * CloseEncoder: png encoder destruction
  *****************************************************************************/
-static void CloseEncoder( vlc_object_t *p_this )
+static void CloseEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys = p_enc->p_sys;
 
     free( p_sys );

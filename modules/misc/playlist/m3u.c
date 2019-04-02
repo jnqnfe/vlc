@@ -40,13 +40,13 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-int Export_M3U ( vlc_object_t * );
-int Export_M3U8( vlc_object_t * );
+int Export_M3U ( vlc_playlist_export * );
+int Export_M3U8( vlc_playlist_export * );
 
 /*****************************************************************************
  * Export_M3U: main export function
  *****************************************************************************/
-static void DoExport( struct vlc_playlist_export *p_export,
+static void DoExport( vlc_playlist_export *p_export,
                       int (*pf_fprintf) (FILE *, const char *, ...) )
 {
     size_t prefix_len = -1;
@@ -118,20 +118,16 @@ static void DoExport( struct vlc_playlist_export *p_export,
     }
 }
 
-int Export_M3U( vlc_object_t *p_this )
+int Export_M3U( vlc_playlist_export *p_export )
 {
-    struct vlc_playlist_export *p_export = (struct vlc_playlist_export *) p_this;
-
     msg_Dbg( p_export, "saving using M3U format");
 
     DoExport(p_export, utf8_fprintf);
     return VLC_SUCCESS;
 }
 
-int Export_M3U8( vlc_object_t *p_this )
+int Export_M3U8( vlc_playlist_export *p_export )
 {
-    struct vlc_playlist_export *p_export = (struct vlc_playlist_export *) p_this;
-
     msg_Dbg( p_export, "saving using M3U8 format");
 
     DoExport(p_export, fprintf);

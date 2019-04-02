@@ -55,8 +55,8 @@
 /*****************************************************************************
  * Modules descriptor
  *****************************************************************************/
-static int      Open(vlc_object_t *);
-static void     Close(vlc_object_t *);
+static int      Open(encoder_t *);
+static void     Close(encoder_t *);
 
 #define SW_IMPL_TEXT N_("Enable software mode")
 #define SW_IMPL_LONGTEXT N_("Allow the use of the Intel Media SDK software " \
@@ -369,9 +369,8 @@ static uint64_t qsv_params_get_value(const char *const *text,
     return list[result];
 }
 
-static int Open(vlc_object_t *this)
+static int Open(encoder_t *enc)
 {
-    encoder_t *enc = (encoder_t *)this;
     encoder_sys_t *sys = NULL;
 
     mfxStatus sts = MFX_ERR_NONE;
@@ -629,18 +628,17 @@ static int Open(vlc_object_t *this)
     return VLC_SUCCESS;
 
  error:
-    Close(this);
+    Close(enc);
     enc->p_sys = NULL;
     return VLC_EGENERIC;
  nomem:
-    Close(this);
+    Close(enc);
     enc->p_sys = NULL;
     return VLC_ENOMEM;
 }
 
-static void Close(vlc_object_t *this)
+static void Close(encoder_t *enc)
 {
-    encoder_t *enc = (encoder_t *)this;
     encoder_sys_t *sys = enc->p_sys;
 
     MFXVideoENCODE_Close(sys->session);

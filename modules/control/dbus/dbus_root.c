@@ -258,6 +258,7 @@ DBUS_METHOD( Raise )
 
 DBUS_METHOD( GetProperty )
 {
+    vlc_object_t *obj = (vlc_object_t*)p_this;
     DBusError error;
 
     char *psz_interface_name = NULL;
@@ -271,14 +272,12 @@ DBUS_METHOD( GetProperty )
 
     if( dbus_error_is_set( &error ) )
     {
-        msg_Err( (vlc_object_t*) p_this, "D-Bus message reading : %s",
-                                         error.message );
+        msg_Err( obj, "D-Bus message reading : %s", error.message );
         dbus_error_free( &error );
         return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
     }
 
-    msg_Dbg( (vlc_object_t*) p_this, "Getting property %s",
-                                     psz_property_name );
+    msg_Dbg( obj, "Getting property %s", psz_property_name );
 
     if( strcmp( psz_interface_name, DBUS_MPRIS_ROOT_INTERFACE ) ) {
         return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
@@ -305,6 +304,7 @@ DBUS_METHOD( GetProperty )
 
 DBUS_METHOD( SetProperty )
 {
+    vlc_object_t *obj = (vlc_object_t*)p_this;
     DBusError error;
 
     char *psz_interface_name = NULL;
@@ -318,8 +318,7 @@ DBUS_METHOD( SetProperty )
 
     if( dbus_error_is_set( &error ) )
     {
-        msg_Err( (vlc_object_t*) p_this, "D-Bus message reading : %s",
-                                        error.message );
+        msg_Err( obj, "D-Bus message reading : %s", error.message );
         dbus_error_free( &error );
         return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
     }
@@ -343,6 +342,7 @@ DBUS_METHOD( SetProperty )
 
 DBUS_METHOD( GetAllProperties )
 {
+    vlc_object_t *obj = (vlc_object_t*)p_this;
     REPLY_INIT;
     OUT_ARGUMENTS;
 
@@ -358,8 +358,7 @@ DBUS_METHOD( GetAllProperties )
 
     if( dbus_error_is_set( &error ) )
     {
-        msg_Err( (vlc_object_t*) p_this, "D-Bus message reading : %s",
-                                         error.message );
+        msg_Err( obj, "D-Bus message reading : %s", error.message );
         dbus_error_free( &error );
         return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
     }

@@ -42,11 +42,11 @@
 #include "file_crypt.h"
 #include "list_util.h"
 
-static int Open(vlc_object_t *);
-static void Close(vlc_object_t *);
+static int Open(vlc_keystore *);
+static void Close(vlc_keystore *);
 #ifdef CRYPTFILE
-static int OpenCrypt(vlc_object_t *);
-static void CloseCrypt(vlc_object_t *);
+static int OpenCrypt(vlc_keystore *);
+static void CloseCrypt(vlc_keystore *);
 #endif
 
 vlc_plugin_begin()
@@ -479,9 +479,8 @@ end:
 }
 
 static void
-Close(vlc_object_t *p_this)
+Close(vlc_keystore *p_keystore)
 {
-    vlc_keystore *p_keystore = (vlc_keystore *)p_this;
     vlc_keystore_sys *p_sys = p_keystore->p_sys;
 
     free(p_sys->psz_file);
@@ -489,15 +488,13 @@ Close(vlc_object_t *p_this)
 }
 
 static int
-Open(vlc_object_t *p_this)
+Open(vlc_keystore *p_keystore)
 {
-    vlc_keystore *p_keystore = (vlc_keystore *)p_this;
-
     vlc_keystore_sys *p_sys = calloc(1, sizeof(vlc_keystore_sys));
     if (!p_sys)
         return VLC_EGENERIC;
 
-    char *psz_file = var_InheritString(p_this, "keystore-file");
+    char *psz_file = var_InheritString(p_keystore, "keystore-file");
     if (!psz_file)
     {
         free(p_sys);
@@ -536,31 +533,29 @@ Open(vlc_object_t *p_this)
 
 #ifdef CRYPTFILE
 static void
-CloseCrypt(vlc_object_t *p_this)
+CloseCrypt(vlc_keystore *p_keystore)
 {
-    vlc_keystore *p_keystore = (vlc_keystore *)p_this;
     struct crypt *p_crypt = &p_keystore->p_sys->crypt;
 
     if (p_crypt->pf_clean != NULL)
         p_crypt->pf_clean(p_keystore, p_crypt->p_ctx);
 
-    Close(p_this);
+    Close(p_keystore);
 }
 
 static int
-OpenCrypt(vlc_object_t *p_this)
+OpenCrypt(vlc_keystore *p_keystore)
 {
-    int i_ret = Open(p_this);
+    int i_ret = Open(p_keystore);
 
     if (i_ret != VLC_SUCCESS)
         return i_ret;
 
-    vlc_keystore *p_keystore = (vlc_keystore *)p_this;
     vlc_keystore_sys *p_sys = p_keystore->p_sys;
 
     if (CryptInit(p_keystore, &p_sys->crypt) != VLC_SUCCESS)
     {
-        Close(p_this);
+        Close(p_keystore);
         return VLC_EGENERIC;
     }
     assert(p_sys->crypt.pf_encrypt != NULL && p_sys->crypt.pf_decrypt != NULL);

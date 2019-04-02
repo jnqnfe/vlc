@@ -30,20 +30,20 @@ vlc_fourcc_t GetVlcFourcc( unsigned i_ffmpeg_codec );
 vlc_fourcc_t GetVlcAudioFormat( int i_sample_fmt );
 
 /* Video encoder module */
-int  InitVideoEnc ( vlc_object_t * );
-void EndVideoEnc( vlc_object_t * );
+int  InitVideoEnc ( encoder_t * );
+void EndVideoEnc( encoder_t * );
 
 /* Video Decoder */
-int InitVideoDec( vlc_object_t * );
-void EndVideoDec( vlc_object_t * );
+int InitVideoDec( decoder_t * );
+void EndVideoDec( decoder_t * );
 
 /* Audio Decoder */
-int InitAudioDec( vlc_object_t * );
-void EndAudioDec( vlc_object_t * );
+int InitAudioDec( decoder_t * );
+void EndAudioDec( decoder_t * );
 
 /* Subtitle Decoder */
-int InitSubtitleDec( vlc_object_t * );
-void EndSubtitleDec( vlc_object_t * );
+int InitSubtitleDec( decoder_t * );
+void EndSubtitleDec( decoder_t * );
 
 /* Initialize decoder */
 AVCodecContext *ffmpeg_AllocContext( decoder_t *, const AVCodec ** );

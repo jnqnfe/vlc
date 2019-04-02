@@ -62,8 +62,8 @@
 /*****************************************************************************
  * Local prototypes.
  *****************************************************************************/
-static int  Open           (vlc_object_t *);
-static void Close          (vlc_object_t *);
+static int  Open           (intf_thread_t *);
+static void Close          (intf_thread_t *);
 
 /*****************************************************************************
  * Module descriptor
@@ -1662,10 +1662,9 @@ static void *Run(void *data)
 /*****************************************************************************
  * Open: initialize and create window
  *****************************************************************************/
-static int Open(vlc_object_t *p_this)
+static int Open(intf_thread_t *intf)
 {
-    intf_thread_t  *intf = (intf_thread_t *)p_this;
-    intf_sys_t     *sys  = intf->p_sys = calloc(1, sizeof(intf_sys_t));
+    intf_sys_t *sys = intf->p_sys = calloc(1, sizeof(intf_sys_t));
 
     if (!sys)
         return VLC_ENOMEM;
@@ -1732,9 +1731,8 @@ static int Open(vlc_object_t *p_this)
 /*****************************************************************************
  * Close: destroy interface window
  *****************************************************************************/
-static void Close(vlc_object_t *p_this)
+static void Close(intf_thread_t *intf)
 {
-    intf_thread_t *intf = (intf_thread_t *)p_this;
     intf_sys_t *sys = intf->p_sys;
 
     vlc_cancel(sys->thread);
@@ -1759,7 +1757,7 @@ static void Close(vlc_object_t *p_this)
 
     endwin();   /* Close the ncurses interface */
 
-    vlc_LogSet(vlc_object_instance(p_this), NULL, NULL);
+    vlc_LogSet(vlc_object_instance(intf), NULL, NULL);
     vlc_mutex_destroy(&sys->msg_lock);
     for(unsigned i = 0; i < sizeof sys->msgs / sizeof *sys->msgs; i++) {
         if (sys->msgs[i].item)

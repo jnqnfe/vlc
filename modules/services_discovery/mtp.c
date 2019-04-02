@@ -34,8 +34,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int Open( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int Open( services_discovery_t * );
+static void Close( services_discovery_t * );
 
 VLC_SD_PROBE_HELPER("mtp", N_("MTP devices"), SD_CAT_DEVICES)
 
@@ -81,9 +81,8 @@ typedef struct
 /*****************************************************************************
  * Open: initialize and create stuff
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( services_discovery_t *p_sd )
 {
-    services_discovery_t *p_sd = ( services_discovery_t * )p_this;
     services_discovery_sys_t *p_sys;
 
     if( !( p_sys = malloc( sizeof( services_discovery_sys_t ) ) ) )
@@ -107,9 +106,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: cleanup
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( services_discovery_t *p_sd )
 {
-    services_discovery_t *p_sd = ( services_discovery_t * )p_this;
     services_discovery_sys_t *p_sys = p_sd->p_sys;
 
     free( p_sys->psz_name );

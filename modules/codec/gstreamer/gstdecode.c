@@ -67,8 +67,8 @@ typedef struct
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  OpenDecoder( vlc_object_t* );
-static void CloseDecoder( vlc_object_t* );
+static int  OpenDecoder( decoder_t* );
+static void CloseDecoder( decoder_t* );
 static int  DecodeBlock( decoder_t*, block_t* );
 static void Flush( decoder_t * );
 
@@ -443,9 +443,8 @@ static GstStructure* vlc_to_gst_fmt( const es_format_t *p_fmt )
 /*****************************************************************************
  * OpenDecoder: probe the decoder and return score
  *****************************************************************************/
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = ( decoder_t* )p_this;
     decoder_sys_t *p_sys;
     GstStateChangeReturn i_ret;
     gboolean b_ret;
@@ -629,7 +628,7 @@ fail:
         gst_caps_unref( caps.p_srccaps );
     if( p_list )
         gst_plugin_feature_list_free( p_list );
-    CloseDecoder( ( vlc_object_t* )p_dec );
+    CloseDecoder( VLC_OBJECT(p_dec) );
     return i_rval;
 }
 
@@ -817,9 +816,8 @@ done:
 }
 
 /* Close the decoder instance */
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = ( decoder_t* )p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
     gboolean b_running = p_sys->b_running;
 

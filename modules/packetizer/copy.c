@@ -38,8 +38,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( decoder_t * );
+static void Close( decoder_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Copy packetizer") )
@@ -68,9 +68,8 @@ static void ParseWMV3( decoder_t *, block_t * );
  * Tries to launch a decoder and return score so that the interface is able
  * to choose.
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( decoder_t *p_dec )
 {
-    decoder_t     *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     if( p_dec->fmt_in.i_cat != AUDIO_ES &&
@@ -126,9 +125,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( decoder_t *p_dec )
 {
-    decoder_t     *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     if( p_sys->p_block )

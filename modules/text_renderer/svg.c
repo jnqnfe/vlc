@@ -47,8 +47,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  Create    ( vlc_object_t * );
-static void Destroy   ( vlc_object_t * );
+static int  Create    ( filter_t * );
+static void Destroy   ( filter_t * );
 static int  RenderText( filter_t *p_filter, subpicture_region_t *p_region_out,
                         subpicture_region_t *p_region_in,
                         const vlc_fourcc_t * );
@@ -174,10 +174,8 @@ static char *svg_GetDocument( filter_t *p_filter, int i_width, int i_height, con
  * This function allocates and initializes a  vout method.
  *****************************************************************************/
 
-static int Create( vlc_object_t *p_this )
+static int Create( filter_t *p_filter )
 {
-    filter_t *p_filter = ( filter_t * )p_this;
-
     filter_sys_t *p_sys = calloc( 1, sizeof(*p_sys) );
     if( !p_sys )
         return VLC_ENOMEM;
@@ -198,9 +196,8 @@ static int Create( vlc_object_t *p_this )
  *****************************************************************************
  * Clean up all data and library connections
  *****************************************************************************/
-static void Destroy( vlc_object_t *p_this )
+static void Destroy( filter_t *p_filter )
 {
-    filter_t *p_filter = ( filter_t * )p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 #if (GLIB_MAJOR_VERSION < 2 || GLIB_MINOR_VERSION < 36)
     rsvg_term();

@@ -47,8 +47,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open  ( vlc_object_t * );
-static void Close ( vlc_object_t * );
+static int  Open  ( demux_t * );
+static void Close ( demux_t * );
 
 vlc_plugin_begin ()
     set_description( N_("MusePack demuxer") )
@@ -86,9 +86,8 @@ static mpc_bool_t  ReaderCanSeek( void *p_private );
 /*****************************************************************************
  * Open: initializes ES structures
  *****************************************************************************/
-static int Open( vlc_object_t * p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
     es_format_t fmt;
     const uint8_t *p_peek;
@@ -200,11 +199,9 @@ error:
 /*****************************************************************************
  * Close: frees unused data
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t        *p_demux = (demux_t*)p_this;
-    demux_sys_t    *p_sys = p_demux->p_sys;
-
+    demux_sys_t *p_sys = p_demux->p_sys;
     free( p_sys );
 }
 

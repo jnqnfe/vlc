@@ -537,9 +537,8 @@ static int Control (demux_t *demux, int i_query, va_list args)
 /**
  * Probes file format and starts demuxing.
  */
-static int Open (vlc_object_t *obj)
+static int Open (demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     stream_t *stream = demux->s;
     const uint8_t *peek;
     bool multitrack;
@@ -720,11 +719,9 @@ error:
 /**
  * Releases allocate resources.
  */
-static void Close (vlc_object_t * p_this)
+static void Close (demux_t *p_demux)
 {
-    demux_t *p_demux = (demux_t *)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
-
     free (p_sys);
 }
 

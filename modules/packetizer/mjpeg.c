@@ -160,9 +160,8 @@ static int PacketizeValidate( void *p_private, block_t *p_au )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( decoder_t *p_dec )
 {
-    decoder_t     *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     packetizer_Clean( &p_sys->packetizer );
@@ -173,9 +172,8 @@ static void Close( vlc_object_t *p_this )
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     if( p_dec->fmt_in.i_codec != VLC_CODEC_MJPG )

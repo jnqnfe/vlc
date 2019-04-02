@@ -138,8 +138,8 @@ static bool b_extensions_registered = false;
 static vlc_mutex_t taglib_lock = VLC_STATIC_MUTEX;
 
 // Local functions
-static int ReadMeta    ( vlc_object_t * );
-static int WriteMeta   ( vlc_object_t * );
+static int ReadMeta    ( demux_meta_t* p_demux_meta );
+static int WriteMeta   ( meta_export_t *p_export );
 
 vlc_plugin_begin ()
     set_capability( VLC_CAP_META_READER, 1000, ReadMeta, NULL )
@@ -810,10 +810,9 @@ static void ReadMetaFromMP4( MP4::Tag* tag, demux_meta_t *p_demux_meta, vlc_meta
  * @param p_this: the demux object
  * @return VLC_SUCCESS if the operation success
  */
-static int ReadMeta( vlc_object_t* p_this)
+static int ReadMeta( demux_meta_t* p_demux_meta )
 {
     vlc_mutex_locker locker (&taglib_lock);
-    demux_meta_t*   p_demux_meta = (demux_meta_t *)p_this;
     vlc_meta_t*     p_meta;
     FileRef f;
 
@@ -824,7 +823,7 @@ static int ReadMeta( vlc_object_t* p_this)
         return VLC_ENOMEM;
 
 #if VLC_WINSTORE_APP
-    stream_t *p_stream = vlc_access_NewMRL( p_this, psz_uri );
+    stream_t *p_stream = vlc_access_NewMRL( p_demux_meta, psz_uri );
     free( psz_uri );
     if( p_stream == NULL )
         return VLC_EGENERIC;
@@ -1163,16 +1162,15 @@ static void WriteMetaToXiph( Ogg::XiphComment* tag, input_item_t* p_item )
  * @return VLC_SUCCESS if the operation success
  */
 
-static int WriteMeta( vlc_object_t *p_this )
+static int WriteMeta( meta_export_t *p_export )
 {
     vlc_mutex_locker locker (&taglib_lock);
-    meta_export_t *p_export = (meta_export_t *)p_this;
     input_item_t *p_item = p_export->p_item;
     FileRef f;
 
     if( !p_item )
     {
-        msg_Err( p_this, "Can't save meta data of an empty input" );
+        msg_Err( p_export, "Can't save meta data of an empty input" );
         return VLC_EGENERIC;
     }
 
@@ -1188,12 +1186,12 @@ static int WriteMeta( vlc_object_t *p_this )
 
     if( f.isNull() || !f.tag() || f.file()->readOnly() )
     {
-        msg_Err( p_this, "File %s can't be opened for tag writing",
+        msg_Err( p_export, "File %s can't be opened for tag writing",
                  p_export->psz_file );
         return VLC_EGENERIC;
     }
 
-    msg_Dbg( p_this, "Writing metadata for %s", p_export->psz_file );
+    msg_Dbg( p_export, "Writing metadata for %s", p_export->psz_file );
 
     Tag *p_tag = f.tag();
 

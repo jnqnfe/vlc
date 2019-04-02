@@ -50,8 +50,8 @@
 #define AUTO_GUID_LONGTEXT N_("If uid/gid are not specified in " \
     "the url, VLC will automatically set a uid/gid.")
 
-static int Open(vlc_object_t *);
-static void Close(vlc_object_t *);
+static int Open(stream_t *);
+static void Close(stream_t *);
 
 vlc_plugin_begin()
     set_shortname(N_("NFS"))
@@ -619,16 +619,15 @@ NfsInit(stream_t *p_access, const char *psz_url_decoded)
 }
 
 static int
-Open(vlc_object_t *p_obj)
+Open(stream_t *p_access)
 {
-    stream_t *p_access = (stream_t *)p_obj;
-    access_sys_t *p_sys = vlc_obj_calloc(p_obj, 1, sizeof (*p_sys));
+    access_sys_t *p_sys = vlc_obj_calloc(VLC_OBJECT(p_access), 1, sizeof (*p_sys));
 
     if (unlikely(p_sys == NULL))
         return VLC_ENOMEM;
     p_access->p_sys = p_sys;
 
-    p_sys->b_auto_guid = var_InheritBool(p_obj, "nfs-auto-guid");
+    p_sys->b_auto_guid = var_InheritBool(p_access, "nfs-auto-guid");
 
     /* nfs_* functions need a decoded url */
     p_sys->psz_url_decoded = vlc_uri_decode_duplicate(p_access->psz_url);
@@ -738,14 +737,13 @@ Open(vlc_object_t *p_obj)
     return VLC_SUCCESS;
 
 error:
-    Close(p_obj);
+    Close(p_access);
     return VLC_EGENERIC;
 }
 
 static void
-Close(vlc_object_t *p_obj)
+Close(stream_t *p_access)
 {
-    stream_t *p_access = (stream_t *)p_obj;
     access_sys_t *p_sys = p_access->p_sys;
 
     if (p_sys->p_nfsfh != NULL)

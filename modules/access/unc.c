@@ -256,9 +256,8 @@ static int Control( stream_t *p_access, int i_query, va_list args )
     return VLC_SUCCESS;
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(stream_t *access)
 {
-    stream_t *access = (stream_t *)obj;
     vlc_url_t url;
     vlc_credential credential;
     char *psz_decoded_path = NULL, *psz_uri = NULL, *psz_var_domain = NULL;
@@ -329,7 +328,7 @@ static int Open(vlc_object_t *obj)
     free(psz_decoded_path);
 
     /* Init access */
-    access_sys_t *sys = vlc_obj_calloc(obj, 1, sizeof (*sys));
+    access_sys_t *sys = vlc_obj_calloc(access, 1, sizeof (*sys));
     if (unlikely(sys == NULL))
     {
         free(psz_uri);
@@ -361,9 +360,8 @@ static int Open(vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *obj)
+static void Close(stream_t *access)
 {
-    stream_t *access = (stream_t *)obj;
     access_sys_t *sys = access->p_sys;
 
     vlc_UrlClean(&sys->url);

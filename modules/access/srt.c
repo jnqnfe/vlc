@@ -342,13 +342,12 @@ out:
     return pkt;
 }
 
-static int Open(vlc_object_t *p_this)
+static int Open(stream_t *p_stream)
 {
-    stream_t     *p_stream = (stream_t*)p_this;
     stream_sys_t *p_sys = NULL;
     vlc_url_t     parsed_url = { 0 };
 
-    p_sys = vlc_obj_calloc( p_this, 1, sizeof( *p_sys ) );
+    p_sys = vlc_obj_calloc( p_stream, 1, sizeof( *p_sys ) );
     if( unlikely( p_sys == NULL ) )
         return VLC_ENOMEM;
 
@@ -365,7 +364,7 @@ static int Open(vlc_object_t *p_this)
         goto failed;
     }
 
-    p_sys->psz_host = vlc_obj_strdup( p_this, parsed_url.psz_host );
+    p_sys->psz_host = vlc_obj_strdup( p_stream, parsed_url.psz_host );
     p_sys->i_port = parsed_url.i_port;
 
     vlc_UrlClean( &parsed_url );
@@ -398,9 +397,8 @@ failed:
     return VLC_EGENERIC;
 }
 
-static void Close(vlc_object_t *p_this)
+static void Close(stream_t *p_stream)
 {
-    stream_t     *p_stream = (stream_t*)p_this;
     stream_sys_t *p_sys = p_stream->p_sys;
 
     vlc_mutex_destroy( &p_sys->lock );

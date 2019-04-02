@@ -378,9 +378,8 @@ static int Control(demux_t *demux, int query, va_list ap)
     return VLC_SUCCESS;
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     HRESULT hr;
 
     if (demux->out == NULL)
@@ -389,13 +388,13 @@ static int Open(vlc_object_t *obj)
     if (demux->psz_location != NULL && *demux->psz_location != '\0')
         return VLC_EGENERIC; /* TODO non-default device */
 
-    demux_sys_t *sys = vlc_obj_malloc(obj, sizeof (*sys));
+    demux_sys_t *sys = vlc_obj_malloc(VLC_OBJECT(demux), sizeof (*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
 
     sys->client = NULL;
     sys->es = NULL;
-    sys->caching = VLC_TICK_FROM_MS( var_InheritInteger(obj, "live-caching") );
+    sys->caching = VLC_TICK_FROM_MS( var_InheritInteger(demux, "live-caching") );
     sys->start_time = vlc_tick_now();
     for (unsigned i = 0; i < 2; i++)
         sys->events[i] = NULL;
@@ -464,9 +463,8 @@ error:
     return VLC_ENOMEM;
 }
 
-static void Close (vlc_object_t *obj)
+static void Close (demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     demux_sys_t *sys = demux->p_sys;
     HRESULT hr;
 

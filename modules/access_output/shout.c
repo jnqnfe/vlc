@@ -55,8 +55,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( sout_access_out_t * );
+static void Close( sout_access_out_t * );
 
 #define SOUT_CFG_PREFIX "sout-shout-"
 
@@ -158,9 +158,8 @@ typedef struct
 /*****************************************************************************
  * Open: open the shout connection
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_access_out_t *p_access )
 {
-    sout_access_out_t *p_access = (sout_access_out_t*)p_this;
     sout_access_out_sys_t *p_sys;
     shout_t *p_shout;
     long i_ret;
@@ -396,9 +395,8 @@ error:
 /*****************************************************************************
  * Close: close the target
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( sout_access_out_t *p_access )
 {
-    sout_access_out_t *p_access = (sout_access_out_t*)p_this;
     sout_access_out_sys_t *p_sys = p_access->p_sys;
 
     if( p_sys->p_shout )

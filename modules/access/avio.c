@@ -78,12 +78,9 @@ typedef struct
 
 /* */
 
-/* */
-
-int OpenAvio(vlc_object_t *object)
+int OpenAvio(stream_t *access)
 {
-    stream_t *access = (stream_t*)object;
-    access_sys_t *sys = vlc_obj_malloc(object, sizeof(*sys));
+    access_sys_t *sys = vlc_obj_malloc(VLC_OBJECT(access), sizeof(*sys));
     if (!sys)
         return VLC_ENOMEM;
     sys->context = NULL;
@@ -103,7 +100,7 @@ int OpenAvio(vlc_object_t *object)
         return VLC_ENOMEM;
 
     /* */
-    vlc_init_avformat(object);
+    vlc_init_avformat(VLC_OBJECT(access));
 
     int ret;
     AVIOInterruptCB cb = {
@@ -153,19 +150,17 @@ static const char *const ppsz_sout_options[] = {
     NULL,
 };
 
-int OutOpenAvio(vlc_object_t *object)
+int OutOpenAvio(sout_access_out_t *access)
 {
-    sout_access_out_t *access = (sout_access_out_t*)object;
-
     config_ChainParse( access, "sout-avio-", ppsz_sout_options, access->p_cfg );
 
-    sout_access_out_sys_t *sys = vlc_obj_malloc(object, sizeof(*sys));
+    sout_access_out_sys_t *sys = vlc_obj_malloc(VLC_OBJECT(access), sizeof(*sys));
     if (!sys)
         return VLC_ENOMEM;
     sys->context = NULL;
 
     /* */
-    vlc_init_avformat(object);
+    vlc_init_avformat(VLC_OBJECT(access));
 
     if (!access->psz_path)
         return VLC_EGENERIC;
@@ -197,19 +192,15 @@ int OutOpenAvio(vlc_object_t *object)
     return VLC_SUCCESS;
 }
 
-void CloseAvio(vlc_object_t *object)
+void CloseAvio(stream_t *access)
 {
-    stream_t *access = (stream_t*)object;
     access_sys_t *sys = access->p_sys;
-
     avio_close(sys->context);
 }
 
-void OutCloseAvio(vlc_object_t *object)
+void OutCloseAvio(sout_access_out_t *access)
 {
-    sout_access_out_t *access = (sout_access_out_t*)object;
     sout_access_out_sys_t *sys = access->p_sys;
-
     avio_close(sys->context);
 }
 

@@ -39,8 +39,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( stream_t * );
+static void Close( stream_t * );
 
 vlc_plugin_begin()
     set_description( N_("Internal stream record") )
@@ -72,9 +72,8 @@ static void Write  ( stream_t *, const uint8_t *p_buffer, size_t i_buffer );
 /****************************************************************************
  * Open
  ****************************************************************************/
-static int Open ( vlc_object_t *p_this )
+static int Open ( stream_t *s )
 {
-    stream_t *s = (stream_t*)p_this;
     stream_sys_t *p_sys;
 
     if( s->s->pf_readdir != NULL )
@@ -98,9 +97,8 @@ static int Open ( vlc_object_t *p_this )
 /****************************************************************************
  * Close
  ****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( stream_t *s )
 {
-    stream_t *s = (stream_t*)p_this;
     stream_sys_t *p_sys = s->p_sys;
 
     if( p_sys->f )

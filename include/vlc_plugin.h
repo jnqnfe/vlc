@@ -142,6 +142,9 @@ typedef struct vlc_plugin_t vlc_plugin_t;
 
 EXTERN_SYMBOL typedef int (*vlc_descriptor_cb) (vlc_plugin_t *, enum vlc_plugin_desc_actions, void *, ...);
 
+typedef int (*vlc_activate_cb)(vlc_object_t*);
+typedef void (*vlc_deactivate_cb)(vlc_object_t*);
+
 #define vlc_plugin_set_va(action, ...) desc_cb (context, action,   NULL, __VA_ARGS__)
 #define vlc_module_set_va(action, ...) desc_cb (context, action, module, __VA_ARGS__)
 #define vlc_module_set(action)         desc_cb (context, action, module)
@@ -202,8 +205,8 @@ VLC_METADATA_EXPORTS
 }
 
 #define set_callbacks_inner( a_name, d_name, a_cb, d_cb ) \
-    if (vlc_module_set_va(VLC_MODULE_CB_OPEN, a_name, a_cb) \
-     || vlc_module_set_va(VLC_MODULE_CB_CLOSE, d_name, d_cb)) \
+    if (vlc_module_set_va(VLC_MODULE_CB_OPEN, (a_name), (vlc_activate_cb)(a_cb)) \
+     || vlc_module_set_va(VLC_MODULE_CB_CLOSE, (d_name), (vlc_deactivate_cb)(d_cb))) \
         goto error;
 
 /* Plugin authors, use this stuff! */

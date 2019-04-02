@@ -41,10 +41,8 @@ static int ReadDir(stream_t *, input_item_node_t *);
 static input_item_t *ParseLine(char *line);
 
 /** Detect dvb-utils zap channels.conf format */
-int Import_DVB(vlc_object_t *p_this)
+int Import_DVB(stream_t* demux)
 {
-    stream_t *demux = (stream_t *)p_this;
-
     CHECK_FILE(demux);
     if (!stream_HasExtension(demux, ".conf" ) && !demux->obj.force )
         return VLC_EGENERIC;

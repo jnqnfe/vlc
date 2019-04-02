@@ -69,7 +69,7 @@
 #define TELNETPWD_LONGTEXT N_( "A single password restricts access " \
     "to this interface." )
 
-static int vlc_sd_probe_Open( vlc_object_t * );
+static int vlc_sd_probe_Open( vlc_probe_t * );
 
 vlc_plugin_begin ()
         set_shortname( N_("Lua") )
@@ -501,9 +501,9 @@ out:
     return item;
 }
 
-static int vlc_sd_probe_Open( vlc_object_t *obj )
+static int vlc_sd_probe_Open( vlc_probe_t *probe )
 {
-    if( lua_Disabled( obj ) )
+    if( lua_Disabled( VLC_OBJECT(probe) ) )
         return VLC_EGENERIC;
 
     vlc_dictionary_t name_d;
@@ -541,7 +541,7 @@ static int vlc_sd_probe_Open( vlc_object_t *obj )
     {
         for( char **name = names; *name; ++name )
         {
-            r = vlclua_probe_sd( obj, *name );
+            r = vlclua_probe_sd( probe, *name );
             if( r != VLC_PROBE_CONTINUE )
                 break;
         }

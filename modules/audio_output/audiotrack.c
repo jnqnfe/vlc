@@ -40,8 +40,8 @@
 
 #define AUDIOTIMESTAMP_INTERVAL_US VLC_TICK_FROM_MS(500) // 500ms
 
-static int  Open( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open( audio_output_t * );
+static void Close( audio_output_t * );
 static void Stop( audio_output_t * );
 static int Start( audio_output_t *, audio_sample_format_t * );
 static void *AudioTrack_Thread( void * );
@@ -2206,9 +2206,8 @@ static int DeviceSelect(audio_output_t *p_aout, const char *p_id)
 }
 
 static int
-Open( vlc_object_t *obj )
+Open( audio_output_t *p_aout )
 {
-    audio_output_t *p_aout = (audio_output_t *) obj;
     aout_sys_t *p_sys;
     JNIEnv *env = GET_ENV();
 
@@ -2246,9 +2245,8 @@ Open( vlc_object_t *obj )
 }
 
 static void
-Close( vlc_object_t *obj )
+Close( audio_output_t *p_aout )
 {
-    audio_output_t *p_aout = (audio_output_t *) obj;
     aout_sys_t *p_sys = p_aout->sys;
 
     vlc_mutex_destroy(&p_sys->lock);

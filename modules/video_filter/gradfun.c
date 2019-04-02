@@ -39,8 +39,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open (vlc_object_t *);
-static void Close(vlc_object_t *);
+static int  Open (filter_t *);
+static void Close(filter_t *);
 
 #define CFG_PREFIX "gradfun-"
 
@@ -104,9 +104,8 @@ typedef struct
     struct vf_priv_s cfg;
 } filter_sys_t;
 
-static int Open(vlc_object_t *object)
+static int Open(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)object;
     const vlc_fourcc_t fourcc = filter->fmt_in.video.i_chroma;
 
     const vlc_chroma_description_t *chroma = vlc_fourcc_GetChromaDescription(fourcc);
@@ -150,9 +149,8 @@ static int Open(vlc_object_t *object)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *object)
+static void Close(filter_t *filter)
 {
-    filter_t     *filter = (filter_t *)object;
     filter_sys_t *sys = filter->p_sys;
 
     var_DelCallback(filter, CFG_PREFIX "radius",   Callback, NULL);

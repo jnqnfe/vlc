@@ -45,9 +45,9 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  OpenAudio( vlc_object_t * );
-static int  OpenVideo( vlc_object_t * );
-static void Close    ( vlc_object_t * );
+static int  OpenAudio( demux_t * );
+static int  OpenVideo( demux_t * );
+static void Close    ( demux_t * );
 
 #define FPS_TEXT N_("Frames per Second")
 #define FPS_LONGTEXT N_("This is the frame rate used as a fallback when " \
@@ -288,9 +288,8 @@ static int OpenCommon( demux_t *p_demux,
 
     return VLC_SUCCESS;
 }
-static int OpenAudio( vlc_object_t *p_this )
+static int OpenAudio( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t*)p_this;
     for( int i = 0; p_codecs[i].i_codec != 0; i++ )
     {
         uint64_t i_offset;
@@ -299,10 +298,8 @@ static int OpenAudio( vlc_object_t *p_this )
     }
     return VLC_EGENERIC;
 }
-static int OpenVideo( vlc_object_t *p_this )
+static int OpenVideo( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t*)p_this;
-
     /* Only m4v is supported for the moment */
     bool b_m4v_ext    = demux_IsPathExtension( p_demux, ".m4v" );
     bool b_re4_ext    = !b_m4v_ext && demux_IsPathExtension( p_demux, ".re4" );
@@ -406,9 +403,8 @@ static int Demux( demux_t *p_demux )
 /*****************************************************************************
  * Close: frees unused data
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
 
     if( p_sys->p_packetized_data )

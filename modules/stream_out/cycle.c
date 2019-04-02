@@ -232,9 +232,8 @@ static vlc_tick_t ParseTime(const char *str)
     return -1;
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(sout_stream_t *stream)
 {
-    sout_stream_t *stream = (sout_stream_t *)obj;
     sout_stream_sys_t *sys = malloc(sizeof (*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
@@ -304,9 +303,8 @@ static int Open(vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *obj)
+static void Close(sout_stream_t *stream)
 {
-    sout_stream_t *stream = (sout_stream_t *)obj;
     sout_stream_sys_t *sys = stream->p_sys;
 
     assert(sys->first == NULL && sys->last == NULL);

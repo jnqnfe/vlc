@@ -41,8 +41,8 @@
 #include <errno.h>
 #include <assert.h>
 
-static int Open( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int Open( vlc_keystore * );
+static void Close( vlc_keystore * );
 
 vlc_plugin_begin()
     set_shortname( N_("KWallet keystore") )
@@ -1288,10 +1288,8 @@ Remove( vlc_keystore* p_keystore, const char* const ppsz_values[KEY_MAX] )
 }
 
 static void
-Close( vlc_object_t* p_this )
+Close( vlc_keystore *p_keystore )
 {
-    vlc_keystore *p_keystore = ( vlc_keystore* )p_this;
-
     dbus_connection_close( p_keystore->p_sys->connection );
     dbus_connection_unref( p_keystore->p_sys->connection );
     free( p_keystore->p_sys->psz_app_id );
@@ -1300,9 +1298,8 @@ Close( vlc_object_t* p_this )
 }
 
 static int
-Open( vlc_object_t* p_this )
+Open( vlc_keystore *p_keystore )
 {
-    vlc_keystore *p_keystore = ( vlc_keystore* )p_this;
     int i_ret;
 
     p_keystore->p_sys = calloc( 1, sizeof( vlc_keystore_sys ) );

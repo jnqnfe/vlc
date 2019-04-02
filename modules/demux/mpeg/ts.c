@@ -64,8 +64,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open  ( vlc_object_t * );
-static void Close ( vlc_object_t * );
+static int  Open  ( demux_t * );
+static void Close ( demux_t * );
 
 /* TODO
  * - Rename "extra pmt" to "user pmt"
@@ -352,9 +352,8 @@ static int DetectPVRHeadersAndHeaderSize( demux_t *p_demux, unsigned *pi_header_
 /*****************************************************************************
  * Open
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
 
     int          i_packet_size;
@@ -450,17 +449,17 @@ static int Open( vlc_object_t *p_this )
         p_sys->csa = csa_New();
 
         psz_csa2 = var_CreateGetStringCommand( p_demux, "ts-csa2-ck" );
-        i_res = csa_SetCW( (vlc_object_t*)p_demux, p_sys->csa, psz_string, true );
+        i_res = csa_SetCW( VLC_OBJECT(p_demux), p_sys->csa, psz_string, true );
         if( i_res == VLC_SUCCESS && psz_csa2 && *psz_csa2 )
         {
-            if( csa_SetCW( (vlc_object_t*)p_demux, p_sys->csa, psz_csa2, false ) != VLC_SUCCESS )
+            if( csa_SetCW( VLC_OBJECT(p_demux), p_sys->csa, psz_csa2, false ) != VLC_SUCCESS )
             {
-                csa_SetCW( (vlc_object_t*)p_demux, p_sys->csa, psz_string, false );
+                csa_SetCW( VLC_OBJECT(p_demux), p_sys->csa, psz_string, false );
             }
         }
         else if ( i_res == VLC_SUCCESS )
         {
-            csa_SetCW( (vlc_object_t*)p_demux, p_sys->csa, psz_string, false );
+            csa_SetCW( VLC_OBJECT(p_demux), p_sys->csa, psz_string, false );
         }
         else
         {
@@ -547,9 +546,8 @@ static void FreeDictAttachment( void *p_value, void *p_obj )
     vlc_input_attachment_Delete( (input_attachment_t *) p_value );
 }
 
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
 
     PIDRelease( p_demux, GetPID(p_sys, 0) );

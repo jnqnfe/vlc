@@ -33,8 +33,8 @@
 
 #include "list_util.h"
 
-static int Open(vlc_object_t *);
-static void Close(vlc_object_t *);
+static int Open(vlc_keystore *);
+static void Close(vlc_keystore *);
 
 vlc_plugin_begin()
     set_shortname(N_("Memory keystore"))
@@ -139,9 +139,8 @@ Remove(vlc_keystore *p_keystore, const char *const ppsz_values[KEY_MAX])
 }
 
 static void
-Close(vlc_object_t *p_this)
+Close(vlc_keystore *p_keystore)
 {
-    vlc_keystore *p_keystore = (vlc_keystore *)p_this;
     vlc_keystore_sys *p_sys = p_keystore->p_sys;
 
     ks_list_free(&p_sys->list);
@@ -150,9 +149,8 @@ Close(vlc_object_t *p_this)
 }
 
 static int
-Open(vlc_object_t *p_this)
+Open(vlc_keystore *p_keystore)
 {
-    vlc_keystore *p_keystore = (vlc_keystore *)p_this;
     p_keystore->p_sys = calloc(1, sizeof(vlc_keystore_sys));
     if (!p_keystore->p_sys)
         return VLC_EGENERIC;

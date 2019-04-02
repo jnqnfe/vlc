@@ -32,8 +32,8 @@
 #include <libsecret/secret.h>
 #include <gio/gdbusnamewatching.h>
 
-static int Open(vlc_object_t *);
-static void Close(vlc_object_t *);
+static int Open(vlc_keystore *);
+static void Close(vlc_keystore *);
 
 vlc_plugin_begin()
     set_shortname(N_("libsecret keystore"))
@@ -289,9 +289,9 @@ dbus_vanished_cb(GDBusConnection *connection, const gchar *name,
 }
 
 static int
-Open(vlc_object_t *p_this)
+Open(vlc_keystore *p_keystore)
 {
-    if (!p_this->force)
+    if (!(VLC_OBJECT(p_keystore))->force)
     {
         /* First, check if secrets service is running using g_bus_watch_name().
          * Indeed, secret_service_get_sync will spawn a service if it's not
@@ -324,8 +324,6 @@ Open(vlc_object_t *p_this)
     if (!p_ss)
         return VLC_EGENERIC;
 
-    vlc_keystore *p_keystore = (vlc_keystore *)p_this;
-
     p_keystore->p_sys = (vlc_keystore_sys *) p_ss;
     p_keystore->pf_store = Store;
     p_keystore->pf_find = Find;
@@ -335,9 +333,8 @@ Open(vlc_object_t *p_this)
 }
 
 static void
-Close(vlc_object_t *p_this)
+Close(vlc_keystore *p_keystore)
 {
-    vlc_keystore *p_keystore = (vlc_keystore *)p_this;
     SecretService *p_ss = (SecretService *) p_keystore->p_sys;
     g_object_unref(p_ss);
     secret_service_disconnect();

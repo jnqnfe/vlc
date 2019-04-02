@@ -392,9 +392,8 @@ static int Demux( demux_t* p_demux )
     return VLC_DEMUXER_SUCCESS;
 }
 
-int tt_OpenDemux( vlc_object_t* p_this )
+int tt_OpenDemux( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
 
     const uint8_t *p_peek;

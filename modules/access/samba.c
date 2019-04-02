@@ -235,9 +235,8 @@ static void smb_auth(const char *srv, const char *shr, char *wg, int wglen,
     //wglen = unlen = pwlen = 0;
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(stream_t *access)
 {
-    stream_t *access = (stream_t *)obj;
     vlc_url_t url;
     vlc_credential credential;
     char *psz_decoded_path = NULL, *uri, *psz_var_domain = NULL;
@@ -312,7 +311,7 @@ static int Open(vlc_object_t *obj)
     free(psz_decoded_path);
 
     /* Init access */
-    access_sys_t *sys = vlc_obj_calloc(obj, 1, sizeof (*sys));
+    access_sys_t *sys = vlc_obj_calloc(VLC_OBJECT(access), 1, sizeof (*sys));
     if (unlikely(sys == NULL))
     {
         free(uri);
@@ -343,7 +342,7 @@ static int Open(vlc_object_t *obj)
 
     if (fd < 0)
     {
-        msg_Err(obj, "cannot open %s: %s",
+        msg_Err(access, "cannot open %s: %s",
                 access->psz_location, vlc_strerror_c(errno));
         return VLC_EGENERIC;
     }
@@ -354,9 +353,8 @@ static int Open(vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *obj)
+static void Close(stream_t *access)
 {
-    stream_t *access = (stream_t *)obj;
     access_sys_t *sys = access->p_sys;
 
     vlc_UrlClean(&sys->url);

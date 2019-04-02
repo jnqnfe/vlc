@@ -59,9 +59,9 @@ static const soxr_datatype_t soxr_resampler_quality_list[] =
 };
 #define MAX_SOXR_QUALITY 4
 
-static int OpenConverter( vlc_object_t * );
-static int OpenResampler( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int OpenConverter( filter_t * );
+static int OpenResampler( filter_t * );
+static void Close( filter_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("SoX Resampler") )
@@ -115,10 +115,8 @@ SoXR_GetFormat( vlc_fourcc_t i_format, soxr_datatype_t *p_type )
 }
 
 static int
-Open( vlc_object_t *p_obj, bool b_change_ratio )
+Open( filter_t *p_filter, bool b_change_ratio )
 {
-    filter_t *p_filter = (filter_t *)p_obj;
-
     /* Cannot remix */
     if( p_filter->fmt_in.audio.i_channels != p_filter->fmt_out.audio.i_channels )
         return VLC_EGENERIC;
@@ -134,7 +132,7 @@ Open( vlc_object_t *p_obj, bool b_change_ratio )
         return VLC_ENOMEM;
 
     /* Setup SoXR */
-    int64_t i_vlc_q = var_InheritInteger( p_obj, "soxr-resampler-quality" );
+    int64_t i_vlc_q = var_InheritInteger( p_filter, "soxr-resampler-quality" );
     if( i_vlc_q < 0 )
         i_vlc_q = 0;
     else if( i_vlc_q > MAX_SOXR_QUALITY )
@@ -194,32 +192,27 @@ Open( vlc_object_t *p_obj, bool b_change_ratio )
 }
 
 static int
-OpenResampler( vlc_object_t *p_obj )
+OpenResampler( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_obj;
-
     /* A resampler doesn't convert the format */
     if( p_filter->fmt_in.audio.i_format != p_filter->fmt_out.audio.i_format )
         return VLC_EGENERIC;
-    return Open( p_obj, true );
+    return Open( p_filter, true );
 }
 
 static int
-OpenConverter( vlc_object_t *p_obj )
+OpenConverter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_obj;
-
     /* Don't use SoXR to convert format. Prefer to use converter/format.c that
      * has better performances */
     if( p_filter->fmt_in.audio.i_rate == p_filter->fmt_out.audio.i_rate )
         return VLC_EGENERIC;
-    return Open( p_obj, false );
+    return Open( p_filter, false );
 }
 
 static void
-Close( vlc_object_t *p_obj )
+Close( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_obj;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     soxr_delete( p_sys->soxr );

@@ -37,8 +37,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open  ( vlc_object_t * );
-static void Close ( vlc_object_t * );
+static int  Open  ( demux_t * );
+static void Close ( demux_t * );
 
 vlc_plugin_begin ()
     set_shortname( "TTA" )
@@ -76,9 +76,8 @@ typedef struct
 /*****************************************************************************
  * Open: initializes ES structures
  *****************************************************************************/
-static int Open( vlc_object_t * p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
     es_format_t fmt;
     const uint8_t *p_peek;
@@ -171,17 +170,16 @@ static int Open( vlc_object_t * p_this )
     return VLC_SUCCESS;
 error:
     es_format_Clean( &fmt );
-    Close( p_this );
+    Close( p_demux );
     return VLC_EGENERIC;
 }
 
 /*****************************************************************************
  * Close: frees unused data
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t        *p_demux = (demux_t*)p_this;
-    demux_sys_t    *p_sys = p_demux->p_sys;
+    demux_sys_t *p_sys = p_demux->p_sys;
 
     free( p_sys->pi_seektable );
     free( p_sys );

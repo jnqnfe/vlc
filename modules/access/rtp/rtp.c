@@ -85,8 +85,8 @@
 static const char *const dynamic_pt_list[] = { "theora" };
 static const char *const dynamic_pt_list_text[] = { "Theora Encoded Video" };
 
-static int  Open (vlc_object_t *);
-static void Close (vlc_object_t *);
+static int  Open (demux_t *);
+static void Close (demux_t *);
 
 /*
  * Module descriptor
@@ -155,9 +155,8 @@ static int extract_port (char **phost);
 /**
  * Probes and initializes.
  */
-static int Open (vlc_object_t *obj)
+static int Open (demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     int tp; /* transport protocol */
 
     if (demux->out == NULL)
@@ -203,7 +202,7 @@ static int Open (vlc_object_t *obj)
     if (dport == 0)
         dport = 5004; /* avt-profile-1 port */
 
-    int rtcp_dport = var_CreateGetInteger (obj, "rtcp-port");
+    int rtcp_dport = var_CreateGetInteger (demux, "rtcp-port");
 
     /* Try to connect */
     int fd = -1, rtcp_fd = -1;
@@ -212,11 +211,11 @@ static int Open (vlc_object_t *obj)
     {
         case IPPROTO_UDP:
         case IPPROTO_UDPLITE:
-            fd = net_OpenDgram (obj, dhost, dport, shost, sport, tp);
+            fd = net_OpenDgram (demux, dhost, dport, shost, sport, tp);
             if (fd == -1)
                 break;
             if (rtcp_dport > 0) /* XXX: source port is unknown */
-                rtcp_fd = net_OpenDgram (obj, dhost, rtcp_dport, shost, 0, tp);
+                rtcp_fd = net_OpenDgram (demux, dhost, rtcp_dport, shost, 0, tp);
             break;
 
          case IPPROTO_DCCP:
@@ -226,16 +225,16 @@ static int Open (vlc_object_t *obj)
 # endif
 #endif
 #ifdef SOCK_DCCP
-            var_Create (obj, "dccp-service", VLC_VAR_STRING);
-            var_SetString (obj, "dccp-service", "RTPV"); /* FIXME: RTPA? */
-            fd = net_Connect (obj, dhost, dport, SOCK_DCCP, tp);
+            var_Create (demux, "dccp-service", VLC_VAR_STRING);
+            var_SetString (demux, "dccp-service", "RTPV"); /* FIXME: RTPA? */
+            fd = net_Connect (demux, dhost, dport, SOCK_DCCP, tp);
 #else
-            msg_Err (obj, "DCCP support not included");
+            msg_Err (demux, "DCCP support not included");
 #endif
             break;
 
         case IPPROTO_TCP:
-            fd = net_Connect (obj, dhost, dport, SOCK_STREAM, tp);
+            fd = net_Connect (demux, dhost, dport, SOCK_STREAM, tp);
             break;
     }
 
@@ -260,10 +259,10 @@ static int Open (vlc_object_t *obj)
 #endif
     p_sys->fd           = fd;
     p_sys->rtcp_fd      = rtcp_fd;
-    p_sys->max_src      = var_CreateGetInteger (obj, "rtp-max-src");
-    p_sys->timeout      = vlc_tick_from_sec( var_CreateGetInteger (obj, "rtp-timeout") );
-    p_sys->max_dropout  = var_CreateGetInteger (obj, "rtp-max-dropout");
-    p_sys->max_misorder = var_CreateGetInteger (obj, "rtp-max-misorder");
+    p_sys->max_src      = var_CreateGetInteger (demux, "rtp-max-src");
+    p_sys->timeout      = vlc_tick_from_sec( var_CreateGetInteger (demux, "rtp-timeout") );
+    p_sys->max_dropout  = var_CreateGetInteger (demux, "rtp-max-dropout");
+    p_sys->max_misorder = var_CreateGetInteger (demux, "rtp-max-misorder");
     p_sys->thread_ready = false;
     p_sys->autodetect   = true;
 
@@ -294,7 +293,7 @@ static int Open (vlc_object_t *obj)
         free (key);
         if (val)
         {
-            msg_Err (obj, "bad SRTP key/salt combination (%s)",
+            msg_Err (demux, "bad SRTP key/salt combination (%s)",
                      vlc_strerror_c(val));
             goto error;
         }
@@ -309,7 +308,7 @@ static int Open (vlc_object_t *obj)
     return VLC_SUCCESS;
 
 error:
-    Close (obj);
+    Close (demux);
     return VLC_EGENERIC;
 }
 
@@ -317,9 +316,8 @@ error:
 /**
  * Releases resources
  */
-static void Close (vlc_object_t *obj)
+static void Close (demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     demux_sys_t *p_sys = demux->p_sys;
 
     if (p_sys->thread_ready)

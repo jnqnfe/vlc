@@ -30,7 +30,7 @@
 #include <vlc_aout.h>
 #include <vlc_aout_volume.h>
 
-static int Probe(vlc_object_t *);
+static int Probe(audio_volume_t *);
 
 vlc_plugin_begin()
     set_description(N_("ARM NEON audio volume"))
@@ -40,10 +40,8 @@ vlc_plugin_end()
 
 static void AmplifyFloat(audio_volume_t *, block_t *, float);
 
-static int Probe(vlc_object_t *obj)
+static int Probe(audio_volume_t *volume)
 {
-    audio_volume_t *volume = (audio_volume_t *)obj;
-
     if (!vlc_CPU_ARM_NEON())
         return VLC_EGENERIC;
     if (volume->format == VLC_CODEC_FL32)

@@ -55,8 +55,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( stream_t * );
+static void Close( stream_t * );
 
 #define RECONNECT_TEXT N_("Auto re-connect")
 #define RECONNECT_LONGTEXT N_( \
@@ -133,15 +133,14 @@ static int AuthCheckReply( stream_t *p_access, const char *psz_header,
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( stream_t *p_access )
 {
-    stream_t *p_access = (stream_t*)p_this;
     const char *psz_url = p_access->psz_url;
     char *psz;
     int ret = VLC_EGENERIC;
     vlc_credential credential;
 
-    access_sys_t *p_sys = vlc_obj_malloc( p_this, sizeof(*p_sys) );
+    access_sys_t *p_sys = vlc_obj_malloc( VLC_OBJECT(p_access), sizeof(*p_sys) );
     if( unlikely(p_sys == NULL) )
         return VLC_ENOMEM;
 
@@ -363,9 +362,8 @@ error:
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( stream_t *p_access )
 {
-    stream_t     *p_access = (stream_t*)p_this;
     access_sys_t *p_sys = p_access->p_sys;
 
     vlc_UrlClean( &p_sys->url );

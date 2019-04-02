@@ -67,8 +67,8 @@ struct intf_sys_t
 #define NONE 0
 #define GESTURE( a, b, c, d ) (a | ( b << 4 ) | ( c << 8 ) | ( d << 12 ))
 
-static int  Open   ( vlc_object_t * );
-static void Close  ( vlc_object_t * );
+static int  Open   ( intf_thread_t * );
+static void Close  ( intf_thread_t * );
 
 /*****************************************************************************
  * Module descriptor
@@ -114,10 +114,8 @@ static int ButtonEvent( vlc_object_t *, char const *,
 /*****************************************************************************
  * OpenIntf: initialize interface
  *****************************************************************************/
-static int Open ( vlc_object_t *p_this )
+static int Open ( intf_thread_t *p_intf )
 {
-    intf_thread_t *p_intf = (intf_thread_t *)p_this;
-
     /* Allocate instance and initialize some members */
     intf_sys_t *p_sys = p_intf->p_sys = malloc( sizeof( intf_sys_t ) );
     if( unlikely(p_sys == NULL) )
@@ -175,9 +173,8 @@ static inline unsigned gesture( unsigned i_pattern, unsigned i_num )
 /*****************************************************************************
  * CloseIntf: destroy dummy interface
  *****************************************************************************/
-static void Close ( vlc_object_t *p_this )
+static void Close ( intf_thread_t *p_intf )
 {
-    intf_thread_t *p_intf = (intf_thread_t *)p_this;
     intf_sys_t *p_sys = p_intf->p_sys;
 
     vlc_player_t *player = vlc_playlist_GetPlayer(p_sys->playlist);

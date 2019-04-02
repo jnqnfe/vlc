@@ -33,7 +33,7 @@
 
 
 // Export the playlist in HTML
-int Export_HTML( vlc_object_t *p_this );
+int Export_HTML( vlc_playlist_export *p_export );
 
 
 /**
@@ -41,7 +41,7 @@ int Export_HTML( vlc_object_t *p_this );
  * @param p_export: the export structure
  * @param p_root: the current node
  */
-static void DoExport( struct vlc_playlist_export *p_export )
+static void DoExport( vlc_playlist_export *p_export )
 {
     /* Go through the playlist and add items */
     size_t count = vlc_playlist_view_Count(p_export->playlist_view);
@@ -85,13 +85,11 @@ static void DoExport( struct vlc_playlist_export *p_export )
 
 /**
  * Export the playlist as an HTML page
- * @param p_this: the playlist
+ * @param p_export: the playlist
  * @return VLC_SUCCESS if everything goes fine
  */
-int Export_HTML( vlc_object_t *p_this )
+int Export_HTML( struct vlc_playlist_export *p_export )
 {
-    struct vlc_playlist_export *p_export = (struct vlc_playlist_export *) p_this;
-
     msg_Dbg( p_export, "saving using HTML format" );
 
     /* Write header */

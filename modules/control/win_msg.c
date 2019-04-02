@@ -166,9 +166,8 @@ static void *HelperThread(void *data)
     return NULL;
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(intf_thread_t *intf)
 {
-    intf_thread_t *intf = (intf_thread_t *)obj;
     intf_sys_t *sys = malloc(sizeof (*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
@@ -192,9 +191,8 @@ static int Open(vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *obj)
+static void Close(intf_thread_t *intf)
 {
-    intf_thread_t *intf = (intf_thread_t *)obj;
     intf_sys_t *sys = intf->p_sys;
 
     SendMessage(sys->window, WM_QUIT, 0, 0);

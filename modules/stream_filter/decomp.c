@@ -49,10 +49,10 @@
 
 #include <signal.h>
 
-static int  OpenGzip (vlc_object_t *);
-static int  OpenBzip2 (vlc_object_t *);
-static int  OpenXZ (vlc_object_t *);
-static void Close (vlc_object_t *);
+static int  OpenGzip (stream_t *);
+static int  OpenBzip2 (stream_t *);
+static int  OpenXZ (stream_t *);
+static void Close (stream_t *);
 
 vlc_plugin_begin ()
     set_description (N_("LZMA decompression"))
@@ -342,9 +342,8 @@ static int Open (stream_t *stream, const char *path)
 /**
  * Releases allocate resources.
  */
-static void Close (vlc_object_t *obj)
+static void Close (stream_t *stream)
 {
-    stream_t *stream = (stream_t *)obj;
     stream_sys_t *p_sys = stream->p_sys;
     int status;
 
@@ -355,9 +354,9 @@ static void Close (vlc_object_t *obj)
         /* Killed before EOF? */
         vlc_close (p_sys->write_fd);
 
-    msg_Dbg (obj, "waiting for PID %u", (unsigned)p_sys->pid);
+    msg_Dbg (stream, "waiting for PID %u", (unsigned)p_sys->pid);
     while (waitpid (p_sys->pid, &status, 0) == -1);
-    msg_Dbg (obj, "exit status %d", status);
+    msg_Dbg (stream, "exit status %d", status);
 
     vlc_mutex_destroy (&p_sys->lock);
     vlc_cond_destroy (&p_sys->wait);
@@ -368,9 +367,8 @@ static void Close (vlc_object_t *obj)
 /**
  * Detects gzip file format
  */
-static int OpenGzip (vlc_object_t *obj)
+static int OpenGzip (stream_t *stream)
 {
-    stream_t      *stream = (stream_t *)obj;
     const uint8_t *peek;
 
     if (vlc_stream_Peek (stream->s, &peek, 3) < 3)
@@ -379,7 +377,7 @@ static int OpenGzip (vlc_object_t *obj)
     if (memcmp (peek, "\x1f\x8b\x08", 3))
         return VLC_EGENERIC;
 
-    msg_Dbg (obj, "detected gzip compressed stream");
+    msg_Dbg (stream, "detected gzip compressed stream");
     return Open (stream, "zcat");
 }
 
@@ -387,9 +385,8 @@ static int OpenGzip (vlc_object_t *obj)
 /**
  * Detects bzip2 file format
  */
-static int OpenBzip2 (vlc_object_t *obj)
+static int OpenBzip2 (stream_t *stream)
 {
-    stream_t      *stream = (stream_t *)obj;
     const uint8_t *peek;
 
     /* (Try to) parse the bzip2 header */
@@ -400,16 +397,15 @@ static int OpenBzip2 (vlc_object_t *obj)
      || memcmp (peek + 4, "\x31\x41\x59\x26\x53\x59", 6))
         return VLC_EGENERIC;
 
-    msg_Dbg (obj, "detected bzip2 compressed stream");
+    msg_Dbg (stream, "detected bzip2 compressed stream");
     return Open (stream, "bzcat");
 }
 
 /**
  * Detects xz file format
  */
-static int OpenXZ (vlc_object_t *obj)
+static int OpenXZ (stream_t *stream)
 {
-    stream_t      *stream = (stream_t *)obj;
     const uint8_t *peek;
 
     /* (Try to) parse the xz stream header */
@@ -419,6 +415,6 @@ static int OpenXZ (vlc_object_t *obj)
     if (memcmp (peek, "\xfd\x37\x7a\x58\x5a", 6))
         return VLC_EGENERIC;
 
-    msg_Dbg (obj, "detected xz compressed stream");
+    msg_Dbg (stream, "detected xz compressed stream");
     return Open (stream, "xzcat");
 }

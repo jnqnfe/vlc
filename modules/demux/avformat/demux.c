@@ -167,10 +167,9 @@ static void get_rotation(es_format_t *fmt, AVStream *s)
     }
 }
 
-static int avformat_ProbeDemux( vlc_object_t *p_this,
+static int avformat_ProbeDemux( demux_t *p_demux,
                                 AVInputFormat **pp_fmt, const char *psz_url )
 {
-    demux_t       *p_demux = (demux_t*)p_this;
     AVProbeData   pd = { 0 };
     const uint8_t *peek;
 
@@ -194,10 +193,10 @@ static int avformat_ProbeDemux( vlc_object_t *p_this,
 
     pd.filename = psz_url;
 
-    vlc_init_avformat(p_this);
+    vlc_init_avformat(VLC_OBJECT(p_demux));
 
     /* Guess format */
-    char *psz_format = var_InheritString( p_this, "avformat-format" );
+    char *psz_format = var_InheritString( p_demux, "avformat-format" );
     if( psz_format )
     {
         if( (*pp_fmt = av_find_input_format(psz_format)) )
@@ -262,9 +261,8 @@ static int avformat_ProbeDemux( vlc_object_t *p_this,
     return VLC_SUCCESS;
 }
 
-int avformat_OpenDemux( vlc_object_t *p_this )
+int avformat_OpenDemux( demux_t *p_demux )
 {
-    demux_t       *p_demux = (demux_t*)p_this;
     demux_sys_t   *p_sys;
     AVInputFormat *fmt = NULL;
     vlc_tick_t    i_start_time = VLC_TICK_INVALID;
@@ -277,7 +275,7 @@ int avformat_OpenDemux( vlc_object_t *p_this )
     else
         psz_url = p_demux->psz_url;
 
-    if( avformat_ProbeDemux( p_this, &fmt, psz_url ) != VLC_SUCCESS )
+    if( avformat_ProbeDemux( p_demux, &fmt, psz_url ) != VLC_SUCCESS )
         return VLC_EGENERIC;
 
     vlc_stream_Control( p_demux->s, STREAM_CAN_SEEK, &b_can_seek );
@@ -302,7 +300,7 @@ int avformat_OpenDemux( vlc_object_t *p_this )
     unsigned char * p_io_buffer = av_malloc( AVFORMAT_IOBUFFER_SIZE );
     if( !p_io_buffer )
     {
-        avformat_CloseDemux( p_this );
+        avformat_CloseDemux( p_demux );
         return VLC_ENOMEM;
     }
 
@@ -310,7 +308,7 @@ int avformat_OpenDemux( vlc_object_t *p_this )
     if( !p_sys->ic )
     {
         av_free( p_io_buffer );
-        avformat_CloseDemux( p_this );
+        avformat_CloseDemux( p_demux );
         return VLC_ENOMEM;
     }
 
@@ -319,7 +317,7 @@ int avformat_OpenDemux( vlc_object_t *p_this )
     if( !pb )
     {
         av_free( p_io_buffer );
-        avformat_CloseDemux( p_this );
+        avformat_CloseDemux( p_demux );
         return VLC_ENOMEM;
     }
 
@@ -333,7 +331,7 @@ int avformat_OpenDemux( vlc_object_t *p_this )
         av_free( pb->buffer );
         av_free( pb );
         p_sys->ic = NULL;
-        avformat_CloseDemux( p_this );
+        avformat_CloseDemux( p_demux );
         return VLC_EGENERIC;
     }
 
@@ -367,13 +365,13 @@ int avformat_OpenDemux( vlc_object_t *p_this )
     if( !nb_streams )
     {
         msg_Err( p_demux, "No streams found");
-        avformat_CloseDemux( p_this );
+        avformat_CloseDemux( p_demux );
         return VLC_EGENERIC;
     }
     p_sys->tracks = calloc( nb_streams, sizeof(*p_sys->tracks) );
     if( !p_sys->tracks )
     {
-        avformat_CloseDemux( p_this );
+        avformat_CloseDemux( p_demux );
         return VLC_ENOMEM;
     }
     p_sys->i_tracks = nb_streams;
@@ -732,9 +730,8 @@ int avformat_OpenDemux( vlc_object_t *p_this )
 /*****************************************************************************
  * Close
  *****************************************************************************/
-void avformat_CloseDemux( vlc_object_t *p_this )
+void avformat_CloseDemux( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
 
     free( p_sys->tracks );

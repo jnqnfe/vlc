@@ -31,7 +31,7 @@
 #define IOCTL_CDROMDISK2        0x82
 #define CDROMDISK2_DRIVELETTERS 0x60
 
-static int Open (vlc_object_t *);
+static int Open (services_discovery_t *);
 
 VLC_SD_PROBE_HELPER("disc", N_("Discs"), SD_CAT_DEVICES)
 
@@ -53,10 +53,8 @@ vlc_plugin_end ()
 /**
  * Probes and initializes.
  */
-static int Open (vlc_object_t *obj)
+static int Open (services_discovery_t *sd)
 {
-    services_discovery_t *sd = (services_discovery_t *)obj;
-
     HFILE hcd2;
     ULONG ulAction;
     ULONG ulParamLen;

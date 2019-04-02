@@ -114,7 +114,7 @@ static picture_t *Deinterlace( filter_t *p_filter, picture_t *p_pic );
  * @see IsChromaSupported()
  * @see SetFilterMethod()
  */
-static int Open( vlc_object_t *p_this );
+static int Open( filter_t * );
 
 /**
  * Resets the filter state, including resetting all algorithm-specific state
@@ -159,9 +159,9 @@ static int Mouse( filter_t *p_filter,
 
 /**
  * Stops and uninitializes the filter, and deallocates memory.
- * @param p_this The filter instance as vlc_object_t.
+ * @param filter_t The filter instance as filter_t.
  */
-static void Close( vlc_object_t *p_this );
+static void Close( filter_t * );
 
 /*****************************************************************************
  * Extra documentation
@@ -484,9 +484,8 @@ int Mouse( filter_t *p_filter,
  * Open
  *****************************************************************************/
 
-int Open( vlc_object_t *p_this )
+int Open( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
     filter_sys_t *p_sys;
 
     const vlc_fourcc_t fourcc = p_filter->fmt_in.video.i_chroma;
@@ -622,7 +621,7 @@ notsupp:
         ( fmt.i_chroma != p_filter->fmt_in.video.i_chroma ||
           fmt.i_height != p_filter->fmt_in.video.i_height ) )
     {
-        Close( VLC_OBJECT(p_filter) );
+        Close( p_filter );
         return VLC_EGENERIC;
     }
     p_filter->fmt_out.video = fmt;
@@ -640,10 +639,8 @@ notsupp:
  * Close: clean up the filter
  *****************************************************************************/
 
-void Close( vlc_object_t *p_this )
+void Close( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
-
     Flush( p_filter );
     free( p_filter->p_sys );
 }

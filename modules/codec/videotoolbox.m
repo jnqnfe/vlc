@@ -69,8 +69,8 @@ const CFStringRef kVTVideoDecoderSpecification_RequireHardwareAcceleratedVideoDe
 
 #pragma mark - module descriptor
 
-static int OpenDecoder(vlc_object_t *);
-static void CloseDecoder(vlc_object_t *);
+static int OpenDecoder(decoder_t *);
+static void CloseDecoder(decoder_t *);
 
 #define VT_ENABLE_TEXT N_("Enable hardware acceleration")
 #define VT_REQUIRE_HW_DEC N_("Use Hardware decoders only")
@@ -1316,10 +1316,8 @@ static void StopVideoToolbox(decoder_t *p_dec)
 #pragma mark - module open and close
 
 
-static int OpenDecoder(vlc_object_t *p_this)
+static int OpenDecoder(decoder_t *p_dec)
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
-
     if (!var_InheritBool(p_dec, "videotoolbox"))
         return VLC_EGENERIC;
 
@@ -1431,12 +1429,12 @@ static int OpenDecoder(vlc_object_t *p_this)
 
     if (p_sys->pf_codec_init && !p_sys->pf_codec_init(p_dec))
     {
-        CloseDecoder(p_this);
+        CloseDecoder(p_dec);
         return VLC_EGENERIC;
     }
     if (p_sys->pf_codec_supported && !p_sys->pf_codec_supported(p_dec))
     {
-        CloseDecoder(p_this);
+        CloseDecoder(p_dec);
         return VLC_EGENERIC;
     }
 
@@ -1445,7 +1443,7 @@ static int OpenDecoder(vlc_object_t *p_this)
         msg_Info(p_dec, "Using Video Toolbox to decode '%4.4s'",
                         (char *)&p_dec->fmt_in.i_codec);
     else
-        CloseDecoder(p_this);
+        CloseDecoder(p_dec);
     return i_ret;
 }
 
@@ -1456,9 +1454,8 @@ static void pic_holder_clean(struct pic_holder *pic_holder)
     free(pic_holder);
 }
 
-static void CloseDecoder(vlc_object_t *p_this)
+static void CloseDecoder(decoder_t *p_dec)
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     StopVideoToolbox(p_dec);

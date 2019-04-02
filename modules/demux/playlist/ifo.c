@@ -48,10 +48,8 @@ static const char *StreamLocation( const stream_t *s )
 /*****************************************************************************
  * Import_IFO: main import function
  *****************************************************************************/
-int Import_IFO( vlc_object_t *p_this )
+int Import_IFO( stream_t* p_stream )
 {
-    stream_t *p_stream = (stream_t *)p_this;
-
     CHECK_FILE(p_stream);
 
     if( !stream_HasExtension( p_stream, ".IFO" ) )

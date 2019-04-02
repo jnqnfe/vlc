@@ -52,8 +52,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open  ( vlc_object_t * );
-static void Close ( vlc_object_t * );
+static int  Open  ( demux_t * );
+static void Close ( demux_t * );
 
 vlc_plugin_begin ()
     set_description( N_("ASF/WMV demuxer") )
@@ -144,9 +144,8 @@ static void     FlushQueues( demux_t *p_demux );
 /*****************************************************************************
  * Open: check file and initializes ASF structures
  *****************************************************************************/
-static int Open( vlc_object_t * p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t *)p_this;
     demux_sys_t *p_sys;
     vlc_guid_t      guid;
     const uint8_t     *p_peek;
@@ -275,12 +274,9 @@ static int Demux( demux_t *p_demux )
 /*****************************************************************************
  * Close: frees unused data
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t *)p_this;
-
     DemuxEnd( p_demux );
-
     free( p_demux->p_sys );
 }
 

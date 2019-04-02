@@ -38,8 +38,8 @@
 /*****************************************************************************
  * Exported prototypes
  *****************************************************************************/
-static int      Open    ( vlc_object_t * );
-static void     Close   ( vlc_object_t * );
+static int      Open    ( sout_stream_t * );
+static void     Close   ( sout_stream_t * );
 
 static void *Add( sout_stream_t *, const es_format_t * );
 static void  Del( sout_stream_t *, void * );
@@ -63,9 +63,8 @@ typedef struct
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_stream_t *p_stream )
 {
-    sout_stream_t *p_stream = (sout_stream_t*)p_this;
     sout_stream_sys_t *p_sys = malloc(sizeof(sout_stream_sys_t));
     if( unlikely(p_sys == NULL) )
         return VLC_ENOMEM;
@@ -91,12 +90,11 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( sout_stream_t *p_stream )
 {
-    sout_stream_t *p_stream = (sout_stream_t *)p_this;
     sout_stream_sys_t *p_sys = p_stream->p_sys;
 
-    msg_Dbg( p_this, "Closing" );
+    msg_Dbg( p_stream, "Closing" );
 
     free( p_sys );
 }

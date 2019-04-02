@@ -53,8 +53,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( sout_access_out_t * );
+static void Close( sout_access_out_t * );
 
 #define SOUT_CFG_PREFIX "sout-udp-"
 
@@ -122,10 +122,9 @@ typedef struct
 /*****************************************************************************
  * Open: open the file
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_access_out_t *p_access )
 {
-    sout_access_out_t       *p_access = (sout_access_out_t*)p_this;
-    sout_access_out_sys_t   *p_sys;
+    sout_access_out_sys_t *p_sys;
 
     char                *psz_dst_addr = NULL;
     int                 i_dst_port;
@@ -167,7 +166,7 @@ static int Open( vlc_object_t *p_this )
         i_dst_port = atoi (psz_parser);
     }
 
-    i_handle = net_ConnectDgram( p_this, psz_dst_addr, i_dst_port, -1,
+    i_handle = net_ConnectDgram( VLC_OBJECT(p_access), psz_dst_addr, i_dst_port, -1,
                                  IPPROTO_UDP );
     free (psz_dst_addr);
 
@@ -201,7 +200,7 @@ static int Open( vlc_object_t *p_this )
     p_sys->i_caching = VLC_TICK_FROM_MS(
                      var_GetInteger( p_access, SOUT_CFG_PREFIX "caching") );
     p_sys->i_handle = i_handle;
-    p_sys->i_mtu = var_CreateGetInteger( p_this, "mtu" );
+    p_sys->i_mtu = var_CreateGetInteger( p_access, "mtu" );
     p_sys->b_mtu_warning = false;
     p_sys->p_fifo = block_FifoNew();
     p_sys->p_buffer = NULL;
@@ -225,9 +224,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: close the target
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( sout_access_out_t *p_access )
 {
-    sout_access_out_t     *p_access = (sout_access_out_t*)p_this;
     sout_access_out_sys_t *p_sys = p_access->p_sys;
 
     vlc_cancel( p_sys->thread );

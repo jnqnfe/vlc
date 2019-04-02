@@ -39,9 +39,9 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  OpenH264 ( vlc_object_t * );
-static int  OpenHEVC ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  OpenH264 ( demux_t * );
+static int  OpenHEVC ( demux_t * );
+static void Close( demux_t * );
 
 #define FPS_TEXT N_("Frames per Second")
 #define FPS_LONGTEXT N_("Desired frame rate for the stream.")
@@ -369,32 +369,31 @@ static int GenericOpen( demux_t *p_demux, const char *psz_module,
 /*****************************************************************************
  * Open: initializes demux structures
  *****************************************************************************/
-static int OpenH264( vlc_object_t * p_this )
+static int OpenH264( demux_t * p_demux )
 {
     h264_probe_ctx_t ctx = { 0, 0 };
     const char *rgi_psz_ext[] = { ".h264", ".264", ".bin", ".bit", ".raw", NULL };
     const char *rgi_psz_mime[] = { "video/H264", "video/h264", "video/avc", NULL };
 
-    return GenericOpen( (demux_t*)p_this, "h264", VLC_CODEC_H264, ProbeH264,
+    return GenericOpen( p_demux, "h264", VLC_CODEC_H264, ProbeH264,
                         &ctx, rgi_psz_ext, rgi_psz_mime );
 }
 
-static int OpenHEVC( vlc_object_t * p_this )
+static int OpenHEVC( demux_t * p_demux )
 {
     hevc_probe_ctx_t ctx = { 0, 0, 0 };
     const char *rgi_psz_ext[] = { ".h265", ".265", ".hevc", ".bin", ".bit", ".raw", NULL };
     const char *rgi_psz_mime[] = { "video/h265", "video/hevc", "video/HEVC", NULL };
 
-    return GenericOpen( (demux_t*)p_this, "hevc", VLC_CODEC_HEVC, ProbeHEVC,
+    return GenericOpen( p_demux, "hevc", VLC_CODEC_HEVC, ProbeHEVC,
                         &ctx, rgi_psz_ext, rgi_psz_mime );
 }
 
 /*****************************************************************************
  * Close: frees unused data
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
 
     demux_PacketizerDestroy( p_sys->p_packetizer );

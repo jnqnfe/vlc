@@ -710,7 +710,7 @@ static picture_t *YCbCrRender(filter_t *filter, picture_t *src)
     return (src != NULL) ? Render(filter, src, true) : NULL;
 }
 
-static int OutputCheckFormat(vlc_object_t *obj, vdp_t *vdp, VdpDevice dev,
+static int OutputCheckFormat(filter_t *filter, vdp_t *vdp, VdpDevice dev,
                              const video_format_t *fmt,
                              VdpRGBAFormat *restrict rgb_fmt)
 {
@@ -728,7 +728,7 @@ static int OutputCheckFormat(vlc_object_t *obj, vdp_t *vdp, VdpDevice dev,
                                                      rgb_fmts[i], &ok, &w, &h);
         if (err != VDP_STATUS_OK)
         {
-            msg_Err(obj, "%s capabilities query failure: %s", "output surface",
+            msg_Err(filter, "%s capabilities query failure: %s", "output surface",
                     vdp_get_error_string(vdp, err));
             continue;
         }
@@ -737,38 +737,36 @@ static int OutputCheckFormat(vlc_object_t *obj, vdp_t *vdp, VdpDevice dev,
             continue;
 
         *rgb_fmt = rgb_fmts[i];
-        msg_Dbg(obj, "using RGBA format %u", *rgb_fmt);
+        msg_Dbg(filter, "using RGBA format %u", *rgb_fmt);
         return 0;
     }
 
-    msg_Err(obj, "no supported output surface format");
+    msg_Err(filter, "no supported output surface format");
     return VLC_EGENERIC;
 }
 
-static picture_pool_t *OutputPoolAlloc(vlc_object_t *obj, vdp_t *vdp,
+static picture_pool_t *OutputPoolAlloc(filter_t *filter, vdp_t *vdp,
     VdpDevice dev, const video_format_t *restrict fmt)
 {
     /* Check output surface format */
     VdpRGBAFormat rgb_fmt;
 
-    if (OutputCheckFormat(obj, vdp, dev, fmt, &rgb_fmt))
+    if (OutputCheckFormat(filter, vdp, dev, fmt, &rgb_fmt))
         return NULL;
 
     /* Allocate the pool */
     return vlc_vdp_output_pool_create(vdp, rgb_fmt, fmt, 3);
 }
 
-static int OutputOpen(vlc_object_t *obj)
+static int OutputOpen(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
-
     if (filter->fmt_out.video.i_chroma != VLC_CODEC_VDPAU_OUTPUT)
         return VLC_EGENERIC;
 
     assert(filter->fmt_out.video.orientation == ORIENT_TOP_LEFT
         || filter->fmt_in.video.orientation == filter->fmt_out.video.orientation);
 
-    vlc_vdp_mixer_t *sys = vlc_obj_malloc(obj, sizeof (*sys));
+    vlc_vdp_mixer_t *sys = vlc_obj_malloc(VLC_OBJECT(filter), sizeof (*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
 
@@ -806,7 +804,7 @@ static int OutputOpen(vlc_object_t *obj)
         return VLC_EGENERIC;
 
     /* Allocate the output surface picture pool */
-    sys->pool = OutputPoolAlloc(obj, sys->vdp, sys->device,
+    sys->pool = OutputPoolAlloc(filter, sys->vdp, sys->device,
                                 &filter->fmt_out.video);
     if (sys->pool == NULL)
     {
@@ -836,9 +834,8 @@ static int OutputOpen(vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void OutputClose(vlc_object_t *obj)
+static void OutputClose(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
     vlc_vdp_mixer_t *sys = filter->p_sys;
 
     Flush(filter);
@@ -885,9 +882,8 @@ static bool ChromaMatches(VdpChromaType vdp_type, vlc_fourcc_t vlc_chroma)
     }
 }
 
-static int YCbCrOpen(vlc_object_t *obj)
+static int YCbCrOpen(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
     VdpChromaType type;
     VdpYCbCrFormat format;
 
@@ -905,7 +901,7 @@ static int YCbCrOpen(vlc_object_t *obj)
           != filter->fmt_in.video.i_sar_den * filter->fmt_out.video.i_sar_num))
         return VLC_EGENERIC;
 
-    vlc_vdp_yuv_getter_t *sys = vlc_obj_malloc(obj, sizeof (*sys));
+    vlc_vdp_yuv_getter_t *sys = vlc_obj_malloc(VLC_OBJECT(filter), sizeof (*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
     sys->format = format;

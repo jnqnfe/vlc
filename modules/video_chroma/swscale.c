@@ -51,8 +51,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  OpenScaler( vlc_object_t * );
-static void CloseScaler( vlc_object_t * );
+static int  OpenScaler( filter_t * );
+static void CloseScaler( filter_t * );
 
 #define SCALEMODE_TEXT N_("Scaling mode")
 
@@ -140,9 +140,8 @@ static int GetSwsCpuMask(void);
 /*****************************************************************************
  * OpenScaler: probe the filter and return score
  *****************************************************************************/
-static int OpenScaler( vlc_object_t *p_this )
+static int OpenScaler( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
     filter_sys_t *p_sys;
 
     int i_sws_mode;
@@ -207,9 +206,8 @@ static int OpenScaler( vlc_object_t *p_this )
 /*****************************************************************************
  * CloseFilter: clean up the filter
  *****************************************************************************/
-static void CloseScaler( vlc_object_t *p_this )
+static void CloseScaler( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     Clean( p_filter );
@@ -710,12 +708,12 @@ static picture_t *Filter( filter_t *p_filter, picture_t *p_pic )
 
 #else /* LIBSWSCALE_VERSION_INT >= ((0<<16)+(5<<8)+0) */
 
-int OpenScaler( vlc_object_t *p_this )
+int OpenScaler( filter_t *p_filter )
 {
     return VLC_EGENERIC;
 }
 
-void CloseScaler( vlc_object_t *p_this )
+void CloseScaler( filter_t *p_filter )
 {
 }
 

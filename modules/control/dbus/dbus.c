@@ -97,8 +97,8 @@ enum
     PIPE_IN  = 1
 };
 
-static int  Open    ( vlc_object_t * );
-static void Close   ( vlc_object_t * );
+static int  Open    ( intf_thread_t * );
+static void Close   ( intf_thread_t * );
 static void *Run    ( void * );
 
 static int TrackChange( intf_thread_t * );
@@ -170,10 +170,9 @@ vlc_plugin_end ()
  * Open: initialize interface
  *****************************************************************************/
 
-static int Open( vlc_object_t *p_this )
+static int Open( intf_thread_t *p_intf )
 {
-    intf_thread_t   *p_intf = (intf_thread_t*)p_this;
-    vlc_object_t *vlc = VLC_OBJECT(vlc_object_instance(p_this));
+    vlc_object_t *vlc = VLC_OBJECT(vlc_object_instance(VLC_OBJECT(p_intf)));
     vlc_playlist_t *playlist = NULL;
 
     /* initialisation of the connection */
@@ -204,7 +203,7 @@ static int Open( vlc_object_t *p_this )
     p_conn = dbus_bus_get_private( DBUS_BUS_SESSION, &error );
     if( !p_conn )
     {
-        msg_Err( p_this, "Failed to connect to the D-Bus session daemon: %s",
+        msg_Err( p_intf, "Failed to connect to the D-Bus session daemon: %s",
                 error.message );
         dbus_error_free( &error );
         goto dbus_connection_failure;
@@ -214,7 +213,7 @@ static int Open( vlc_object_t *p_this )
 
     /* Register the entry point object path */
     dbus_connection_register_object_path( p_conn, DBUS_MPRIS_OBJECT_PATH,
-            &dbus_mpris_vtable, p_this );
+            &dbus_mpris_vtable, VLC_OBJECT(p_intf) );
 
     /* Try to register org.mpris.MediaPlayer2.vlc */
     const unsigned bus_flags = DBUS_NAME_FLAG_DO_NOT_QUEUE;
@@ -358,9 +357,8 @@ dbus_connection_failure:
  * Close: destroy interface
  *****************************************************************************/
 
-static void Close   ( vlc_object_t *p_this )
+static void Close ( intf_thread_t *p_intf )
 {
-    intf_thread_t   *p_intf     = (intf_thread_t*) p_this;
     intf_sys_t      *p_sys      = p_intf->p_sys;
     vlc_playlist_t  *playlist = p_sys->playlist;
 
@@ -778,6 +776,7 @@ static void DispatchDBusMessages( intf_thread_t *p_intf )
 static DBusHandlerResult
 MPRISEntryPoint ( DBusConnection *p_conn, DBusMessage *p_from, void *p_this )
 {
+    vlc_object_t *obj = (vlc_object_t*)p_this;
     const char *psz_target_interface;
     const char *psz_interface = dbus_message_get_interface( p_from );
     const char *psz_method    = dbus_message_get_member( p_from );
@@ -796,9 +795,8 @@ MPRISEntryPoint ( DBusConnection *p_conn, DBusMessage *p_from, void *p_this )
 
         if( dbus_error_is_set( &error ) )
         {
-            msg_Err( (vlc_object_t*) p_this, "D-Bus error on %s.%s: %s",
-                                             psz_interface, psz_method,
-                                             error.message );
+            msg_Err( obj, "D-Bus error on %s.%s: %s",
+                     psz_interface, psz_method, error.message );
             dbus_error_free( &error );
             return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
         }

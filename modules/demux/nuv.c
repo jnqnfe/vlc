@@ -42,8 +42,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open  ( vlc_object_t * );
-static void Close ( vlc_object_t * );
+static int  Open  ( demux_t * );
+static void Close ( demux_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Nuv demuxer") )
@@ -201,9 +201,8 @@ static int ControlSetPosition(demux_t *demux, uint64_t offset, bool guess);
 /*****************************************************************************
  * Open: initializes ES structures
  *****************************************************************************/
-static int Open( vlc_object_t * p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
     const uint8_t *p_peek;
     frame_header_t fh;
@@ -335,7 +334,7 @@ static int Open( vlc_object_t * p_this )
 
 error:
     msg_Warn( p_demux, "cannot load Nuv file" );
-    Close( p_this );
+    Close( p_demux );
     p_demux->p_sys = NULL;
     return VLC_EGENERIC;
 }
@@ -343,9 +342,8 @@ error:
 /*****************************************************************************
  * Close: frees unused data
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t        *p_demux = (demux_t*)p_this;
     demux_sys_t    *p_sys = p_demux->p_sys;
 
     free( p_sys->p_extra_f );

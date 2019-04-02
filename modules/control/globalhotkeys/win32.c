@@ -35,8 +35,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int Open( vlc_object_t *p_this );
-static void Close( vlc_object_t *p_this );
+static int Open( intf_thread_t * );
+static void Close( intf_thread_t * );
 static void *Thread( void *p_data );
 LRESULT CALLBACK WMHOTKEYPROC( HWND, UINT, WPARAM, LPARAM );
 
@@ -62,9 +62,8 @@ struct intf_sys_t
 /*****************************************************************************
  * Open: initialize interface
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( intf_thread_t *p_intf )
 {
-    intf_thread_t *p_intf = (intf_thread_t *)p_this;
     intf_sys_t *p_sys = malloc( sizeof (intf_sys_t) );
 
     if( p_sys == NULL )
@@ -107,9 +106,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: destroy interface
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( intf_thread_t *p_intf )
 {
-    intf_thread_t *p_intf = (intf_thread_t *)p_this;
     intf_sys_t *p_sys = p_intf->p_sys;
 
     /* stop hotkey window */

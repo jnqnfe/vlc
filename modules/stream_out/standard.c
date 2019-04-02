@@ -76,8 +76,8 @@
 #define SAP_TEXT N_("SAP announcing")
 #define SAP_LONGTEXT N_("Announce this session with SAP.")
 
-static int      Open    ( vlc_object_t * );
-static void     Close   ( vlc_object_t * );
+static int      Open    ( sout_stream_t * );
+static void     Close   ( sout_stream_t * );
 
 #define SOUT_CFG_PREFIX "sout-standard-"
 
@@ -323,9 +323,8 @@ static void checkAccessMux( sout_stream_t *p_stream, char *psz_access,
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_stream_t *p_stream )
 {
-    sout_stream_t       *p_stream = (sout_stream_t*)p_this;
     sout_stream_sys_t   *p_sys;
     char *psz_mux, *psz_access, *psz_url;
     sout_access_out_t   *p_access;
@@ -413,7 +412,7 @@ static int Open( vlc_object_t *p_this )
 
     ret = VLC_SUCCESS;
 
-    msg_Dbg( p_this, "using `%s/%s://%s'", psz_access, psz_mux, psz_url );
+    msg_Dbg( p_stream, "using `%s/%s://%s'", psz_access, psz_mux, psz_url );
 
 end:
     if( ret != VLC_SUCCESS )
@@ -428,9 +427,8 @@ end:
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( sout_stream_t *p_stream )
 {
-    sout_stream_t     *p_stream = (sout_stream_t*)p_this;
     sout_stream_sys_t *p_sys    = p_stream->p_sys;
     sout_access_out_t *p_access = p_sys->p_mux->p_access;
 

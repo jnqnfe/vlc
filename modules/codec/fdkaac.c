@@ -59,8 +59,8 @@
 #include <vlc_plugin.h>
 #include <vlc_codec.h>
 
-static int OpenEncoder(vlc_object_t *);
-static void CloseEncoder(vlc_object_t *);
+static int OpenEncoder(encoder_t *);
+static void CloseEncoder(encoder_t *);
 
 #define ENC_CFG_PREFIX "sout-fdkaac-"
 
@@ -167,10 +167,8 @@ static const char *fdkaac_error(AACENC_ERROR erraac)
 /*****************************************************************************
  * OpenDecoder: open the encoder.
  *****************************************************************************/
-static int OpenEncoder(vlc_object_t *p_this)
+static int OpenEncoder(encoder_t *p_enc)
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
-
     config_ChainParse(p_enc, ENC_CFG_PREFIX, ppsz_enc_options, p_enc->p_cfg);
 
     int i_aot;
@@ -318,7 +316,7 @@ static int OpenEncoder(vlc_object_t *p_this)
     return VLC_SUCCESS;
 
 error:
-    CloseEncoder(p_this);
+    CloseEncoder(p_enc);
     return VLC_EGENERIC;
 }
 
@@ -465,9 +463,8 @@ static block_t *EncodeAudio(encoder_t *p_enc, block_t *p_aout_buf)
 /*****************************************************************************
  * CloseDecoder: decoder destruction
  *****************************************************************************/
-static void CloseEncoder(vlc_object_t *p_this)
+static void CloseEncoder(encoder_t *p_enc)
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys = p_enc->p_sys;
 
     aacEncClose(&p_sys->handle);

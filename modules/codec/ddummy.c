@@ -37,9 +37,9 @@
     "Save the raw codec data if you have selected/forced the dummy " \
     "decoder in the main options." )
 
-static int OpenDecoder( vlc_object_t * );
-static int OpenDecoderDump( vlc_object_t * );
-static void CloseDecoder( vlc_object_t * );
+static int OpenDecoder( decoder_t * );
+static int OpenDecoderDump( decoder_t * );
+static void CloseDecoder( decoder_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("Dummy") )
@@ -81,9 +81,8 @@ static int DecodeBlock( decoder_t *p_dec, block_t *p_block );
 /*****************************************************************************
  * OpenDecoder: Open the decoder
  *****************************************************************************/
-static int OpenDecoderCommon( vlc_object_t *p_this, bool b_force_dump )
+static int OpenDecoderCommon( decoder_t *p_dec, bool b_force_dump )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     char psz_file[10 + 3 * sizeof (p_dec)];
 
     snprintf( psz_file, sizeof( psz_file), "stream.%p", (void *)p_dec );
@@ -112,14 +111,14 @@ static int OpenDecoderCommon( vlc_object_t *p_this, bool b_force_dump )
     return VLC_SUCCESS;
 }
 
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    return OpenDecoderCommon( p_this, false );
+    return OpenDecoderCommon( p_dec, false );
 }
 
-static int  OpenDecoderDump( vlc_object_t *p_this )
+static int  OpenDecoderDump( decoder_t *p_dec )
 {
-    return OpenDecoderCommon( p_this, true );
+    return OpenDecoderCommon( p_dec, true );
 }
 
 /****************************************************************************
@@ -148,9 +147,8 @@ static int DecodeBlock( decoder_t *p_dec, block_t *p_block )
 /*****************************************************************************
  * CloseDecoder: decoder destruction
  *****************************************************************************/
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     FILE *stream = (void *)p_dec->p_sys;
 
     if( stream != NULL )

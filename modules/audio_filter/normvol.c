@@ -47,8 +47,8 @@
  * Local prototypes
  *****************************************************************************/
 
-static int  Open     ( vlc_object_t * );
-static void Close    ( vlc_object_t * );
+static int  Open     ( filter_t * );
+static void Close    ( filter_t * );
 static block_t *DoWork( filter_t *, block_t * );
 
 typedef struct
@@ -89,9 +89,8 @@ vlc_plugin_end ()
 /*****************************************************************************
  * Open: initialize and create stuff
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
     unsigned i_channels;
     filter_sys_t *p_sys;
 
@@ -221,9 +220,8 @@ out:
 /**********************************************************************
  * Close
  **********************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     free( p_sys->p_last );

@@ -70,9 +70,8 @@ static void *ReadThread (void *);
 static int DemuxControl( demux_t *, int, va_list );
 static int InitVideo (demux_t *, int fd, uint32_t caps);
 
-int DemuxOpen( vlc_object_t *obj )
+int DemuxOpen( demux_t *demux )
 {
-    demux_t *demux = (demux_t *)obj;
     if (demux->out == NULL)
         return VLC_EGENERIC;
 
@@ -84,14 +83,14 @@ int DemuxOpen( vlc_object_t *obj )
     sys->vbi = NULL;
 #endif
 
-    ParseMRL( obj, demux->psz_location );
+    ParseMRL( VLC_OBJECT(demux), demux->psz_location );
 
-    char *path = var_InheritString (obj, CFG_PREFIX"dev");
+    char *path = var_InheritString (demux, CFG_PREFIX"dev");
     if (unlikely(path == NULL))
         goto error; /* probably OOM */
 
     uint32_t caps;
-    int fd = OpenDevice (obj, path, &caps);
+    int fd = OpenDevice (VLC_OBJECT(demux), path, &caps);
     free (path);
     if (fd == -1)
         goto error;
@@ -103,7 +102,7 @@ int DemuxOpen( vlc_object_t *obj )
         goto error;
     }
 
-    sys->controls = ControlsInit(vlc_object_parent(obj), fd);
+    sys->controls = ControlsInit(vlc_object_parent(VLC_OBJECT(demux)), fd);
     sys->start = vlc_tick_now ();
     demux->pf_demux = NULL;
     demux->pf_control = DemuxControl;
@@ -614,16 +613,15 @@ static int InitVideo (demux_t *demux, int fd, uint32_t caps)
     return 0;
 }
 
-void DemuxClose( vlc_object_t *obj )
+void DemuxClose( demux_t *demux )
 {
-    demux_t *demux = (demux_t *)obj;
     demux_sys_t *sys = demux->p_sys;
 
     vlc_cancel (sys->thread);
     vlc_join (sys->thread, NULL);
     if (sys->bufv != NULL)
         StopMmap (sys->fd, sys->bufv, sys->bufc);
-    ControlsDeinit(vlc_object_parent(obj), sys->controls);
+    ControlsDeinit(vlc_object_parent(VLC_OBJECT(demux)), sys->controls);
     v4l2_close (sys->fd);
 
 #ifdef ZVBI_COMPILED
@@ -635,13 +633,13 @@ void DemuxClose( vlc_object_t *obj )
 }
 
 /** Allocates and queue a user buffer using mmap(). */
-static block_t *UserPtrQueue (vlc_object_t *obj, int fd, size_t length)
+static block_t *UserPtrQueue (demux_t *demux, int fd, size_t length)
 {
     void *ptr = mmap (NULL, length, PROT_READ | PROT_WRITE,
                       MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
     if (ptr == MAP_FAILED)
     {
-        msg_Err (obj, "cannot allocate %zu-bytes buffer: %s", length,
+        msg_Err (demux, "cannot allocate %zu-bytes buffer: %s", length,
                  vlc_strerror_c(errno));
         return NULL;
     }
@@ -664,7 +662,7 @@ static block_t *UserPtrQueue (vlc_object_t *obj, int fd, size_t length)
 
     if (v4l2_ioctl (fd, VIDIOC_QBUF, &buf) < 0)
     {
-        msg_Err (obj, "cannot queue buffer: %s", vlc_strerror_c(errno));
+        msg_Err (demux, "cannot queue buffer: %s", vlc_strerror_c(errno));
         block_Release (block);
         return NULL;
     }
@@ -689,7 +687,7 @@ static void *UserPtrThread (void *data)
             .type = V4L2_BUF_TYPE_VIDEO_CAPTURE,
             .memory = V4L2_MEMORY_USERPTR,
         };
-        block_t *block = UserPtrQueue (VLC_OBJECT(demux), fd, sys->blocksize);
+        block_t *block = UserPtrQueue (demux, fd, sys->blocksize);
         if (block == NULL)
             break;
 

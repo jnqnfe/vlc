@@ -39,8 +39,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-int  avparser_OpenPacketizer ( vlc_object_t * );
-void avparser_ClosePacketizer( vlc_object_t * );
+int  avparser_OpenPacketizer ( decoder_t * );
+void avparser_ClosePacketizer( decoder_t * );
 
 #define AVPARSER_MODULE \
     set_description( N_("avparser packetizer") ) \

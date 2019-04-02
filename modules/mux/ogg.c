@@ -50,8 +50,8 @@
 #define INDEXRATIO_LONGTEXT N_(\
     "Set index size ratio. Alters default (60min content) or estimated size." )
 
-static int  Open   ( vlc_object_t * );
-static void Close  ( vlc_object_t * );
+static int  Open   ( sout_mux_t * );
+static void Close  ( sout_mux_t * );
 
 #define SOUT_CFG_PREFIX "sout-ogg-"
 
@@ -228,10 +228,9 @@ static bool AllocateIndex( sout_mux_t *p_mux, sout_input_t *p_input );
 /*****************************************************************************
  * Open: Open muxer
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_mux_t *p_mux )
 {
-    sout_mux_t      *p_mux = (sout_mux_t*)p_this;
-    sout_mux_sys_t  *p_sys;
+    sout_mux_sys_t *p_sys;
 
     msg_Info( p_mux, "Open" );
 
@@ -247,9 +246,9 @@ static int Open( vlc_object_t *p_this )
     p_sys->skeleton.b_create = false;
     p_sys->skeleton.b_head_done = false;
     p_sys->skeleton.i_index_intvl =
-            VLC_TICK_FROM_MS(var_InheritInteger( p_this, SOUT_CFG_PREFIX "indexintvl" ));
+            VLC_TICK_FROM_MS(var_InheritInteger( p_mux, SOUT_CFG_PREFIX "indexintvl" ));
     p_sys->skeleton.i_index_ratio =
-            var_InheritFloat( p_this, SOUT_CFG_PREFIX "indexratio" );
+            var_InheritFloat( p_mux, SOUT_CFG_PREFIX "indexratio" );
     p_sys->i_data_start = 0;
     p_sys->i_segment_start = 0;
     p_mux->p_sys        = p_sys;
@@ -271,9 +270,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: Finalize ogg bitstream and close muxer
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( sout_mux_t *p_mux )
 {
-    sout_mux_t     *p_mux = (sout_mux_t*)p_this;
     sout_mux_sys_t *p_sys = p_mux->p_sys;
 
     msg_Info( p_mux, "Close" );

@@ -35,8 +35,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-static int Create (vlc_object_t *);
-static void Destroy(vlc_object_t *);
+static int Create(filter_t *);
+static void Destroy(filter_t *);
 static int RenderText(filter_t *,
                       subpicture_region_t *,
                       subpicture_region_t *,
@@ -55,9 +55,8 @@ typedef struct filter_sys_t
     NSString *lastString;
 } filter_sys_t;
 
-static int  Create (vlc_object_t *p_this)
+static int Create (filter_t *p_filter)
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys;
 
     p_filter->p_sys = p_sys = malloc(sizeof(filter_sys_t));
@@ -72,9 +71,8 @@ static int  Create (vlc_object_t *p_this)
     return VLC_SUCCESS;
 }
 
-static void Destroy(vlc_object_t *p_this)
+static void Destroy(filter_t *p_filter)
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     [p_sys->speechSynthesizer stopSpeaking];

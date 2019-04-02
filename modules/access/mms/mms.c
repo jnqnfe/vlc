@@ -42,8 +42,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( demux_t * );
+static void Close( demux_t * );
 
 #define ALL_TEXT N_("Force selection of all streams")
 #define ALL_LONGTEXT N_( \
@@ -81,10 +81,8 @@ typedef struct
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( stream_t *p_access )
 {
-    stream_t *p_access = (stream_t*)p_this;
-
     /* use specified method */
     if( !strncmp( p_access->psz_name, "mmsu", 4 ) )
         return  MMSTUOpen ( p_access );
@@ -103,9 +101,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: free unused data structures
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( stream_t *p_access )
 {
-    stream_t     *p_access = (stream_t*)p_this;
     access_sys_t *p_sys = p_access->p_sys;
 
     if( ( p_sys->i_proto == MMS_PROTO_TCP ) ||

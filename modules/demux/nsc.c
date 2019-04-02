@@ -39,12 +39,11 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  DemuxOpen  ( vlc_object_t * );
-static void DemuxClose ( vlc_object_t * );
+static int  DemuxOpen  ( demux_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Windows Media NSC metademux") )
-    set_capability( VLC_CAP_DEMUX, 3, DemuxOpen, DemuxClose )
+    set_capability( VLC_CAP_DEMUX, 3, DemuxOpen, NULL )
     //set_subcategory( SUBCAT_INPUT_DEMUX )
 vlc_plugin_end ()
 
@@ -137,7 +136,7 @@ static int load_byte( unsigned char encoding_type,
     return 0;
 }
 
-static char *nscdec( vlc_object_t *p_demux, char* p_encoded )
+static char *nscdec( demux_t *p_demux, char* p_encoded )
 {
     unsigned int i;
     unsigned char tmp;
@@ -227,9 +226,8 @@ static char *nscdec( vlc_object_t *p_demux, char* p_encoded )
     return buf8;
 }
 
-static int DemuxOpen( vlc_object_t * p_this )
+static int DemuxOpen( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t *)p_this;
     const uint8_t *p_peek;
     int i_size;
 
@@ -254,16 +252,6 @@ static int DemuxOpen( vlc_object_t * p_this )
         }
     }
     return VLC_EGENERIC;
-}
-
-
-/*****************************************************************************
- * Deactivate: frees unused data
- *****************************************************************************/
-static void DemuxClose( vlc_object_t *p_this )
-{
-    VLC_UNUSED( p_this );
-    return;
 }
 
 static int ParseLine ( demux_t *p_demux, char *psz_line )
@@ -300,7 +288,7 @@ static int ParseLine ( demux_t *p_demux, char *psz_line )
     {
         /* This should be NSC encoded strings in the values */
         char *psz_out;
-        psz_out = nscdec( (vlc_object_t *)p_demux, psz_value );
+        psz_out = nscdec( p_demux, psz_value );
         if( psz_out )
         {
             msg_Dbg( p_demux, "%s = %s", psz_bol, psz_out );

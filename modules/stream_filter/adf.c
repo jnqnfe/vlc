@@ -32,7 +32,7 @@
 #include <vlc_plugin.h>
 #include <vlc_stream.h>
 
-static int Open( vlc_object_t * );
+static int Open( stream_t * );
 
 vlc_plugin_begin()
     set_shortname( "adf" )
@@ -63,10 +63,8 @@ static int Seek( stream_t *s, uint64_t offset )
     return vlc_stream_Seek( s->s, offset );
 }
 
-static int Open( vlc_object_t *p_object )
+static int Open( stream_t *p_stream )
 {
-    stream_t *p_stream = (stream_t *)p_object;
-
     /* Require .adf extension unless forced. */
     if( !p_stream->obj.force )
     {

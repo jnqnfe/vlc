@@ -108,17 +108,15 @@ tc_vdpau_gl_update(opengl_tex_converter_t const *tc, GLuint textures[],
 }
 
 static void
-Close(vlc_object_t *obj)
+Close(opengl_tex_converter_t *tc)
 {
-    opengl_tex_converter_t *tc = (void *)obj;
     _glVDPAUFiniNV(); assert(tc->vt->GetError() == GL_NO_ERROR);
     vdp_release_x11(tc->dec_device->opaque);
 }
 
 static int
-Open(vlc_object_t *obj)
+Open(opengl_tex_converter_t *tc)
 {
-    opengl_tex_converter_t *tc = (void *) obj;
     if (tc->dec_device == NULL
      || tc->dec_device->type != VLC_DECODER_DEVICE_VDPAU
      || (tc->fmt.i_chroma != VLC_CODEC_VDPAU_VIDEO_420
@@ -168,7 +166,7 @@ Open(vlc_object_t *obj)
                                               COLOR_SPACE_UNDEF);
     if (!tc->fshader)
     {
-        Close(obj);
+        Close(tc);
         return VLC_EGENERIC;
     }
 

@@ -44,8 +44,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int Create( vlc_object_t * );
-static void Destroy( vlc_object_t * );
+static int Create( filter_t * );
+static void Destroy( filter_t * );
 static subpicture_t *Filter( filter_t *, vlc_tick_t );
 
 static int AdjustCallback( vlc_object_t *p_this, char const *psz_var,
@@ -83,9 +83,8 @@ static const char *const ppsz_filter_options[] = {
  *****************************************************************************
  * This function allocates and initializes a adjust vout method.
  *****************************************************************************/
-static int Create( vlc_object_t *p_this )
+static int Create( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys;
 
     /* Allocate structure */
@@ -129,9 +128,8 @@ static int Create( vlc_object_t *p_this )
  *****************************************************************************
  * Terminate an output method created by adjustCreateOutputMethod
  *****************************************************************************/
-static void Destroy( vlc_object_t *p_this )
+static void Destroy( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     BufferDestroy( &p_sys->input );

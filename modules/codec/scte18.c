@@ -34,8 +34,8 @@
 /*****************************************************************************
  * Module descriptor.
  *****************************************************************************/
-static int  Open (vlc_object_t *);
-static void Close(vlc_object_t *);
+static int  Open (decoder_t *);
+static void Close(decoder_t *);
 
 vlc_plugin_begin ()
     set_description(N_("SCTE-18 decoder"))
@@ -216,10 +216,8 @@ exit:
     return VLCDEC_SUCCESS;
 }
 
-static int Open( vlc_object_t *object )
+static int Open( decoder_t *dec )
 {
-    decoder_t *dec = (decoder_t *)object;
-
     if ( dec->fmt_in.i_codec != VLC_CODEC_SCTE_18 )
         return VLC_EGENERIC;
 
@@ -241,9 +239,8 @@ static int Open( vlc_object_t *object )
     return VLC_SUCCESS;
 }
 
-static void Close( vlc_object_t *p_object )
+static void Close( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_object;
     decoder_sys_t *p_sys = (decoder_sys_t *) p_dec->p_sys;
     atsc_a65_handle_Release( p_sys->p_handle );
     free( p_sys );

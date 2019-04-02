@@ -37,9 +37,9 @@
 /*****************************************************************************
  * Module descriptor.
  *****************************************************************************/
-static int  DecoderOpen   ( vlc_object_t * );
-static int  PacketizerOpen( vlc_object_t * );
-static void Close         ( vlc_object_t * );
+static int  DecoderOpen   ( decoder_t * );
+static int  PacketizerOpen( decoder_t * );
+static void Close         ( decoder_t * );
 
 #define DVDSUBTRANS_DISABLE_TEXT N_("Disable DVD subtitle transparency")
 #define DVDSUBTRANS_DISABLE_LONGTEXT N_("Removes all transparency effects " \
@@ -66,9 +66,8 @@ static block_t *      Reassemble( decoder_t *, block_t * );
 static int            Decode    ( decoder_t *, block_t * );
 static block_t *      Packetize ( decoder_t *, block_t ** );
 
-static int OpenCommon( vlc_object_t *p_this, bool b_packetizer )
+static int OpenCommon( decoder_t *p_dec, bool b_packetizer )
 {
-    decoder_t     *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     if( p_dec->fmt_in.i_codec != VLC_CODEC_SPU )
@@ -99,22 +98,21 @@ static int OpenCommon( vlc_object_t *p_this, bool b_packetizer )
     return VLC_SUCCESS;
 }
 
-static int DecoderOpen( vlc_object_t *p_this )
+static int DecoderOpen( decoder_t *p_dec )
 {
-    return OpenCommon( p_this, false );
+    return OpenCommon( p_dec, false );
 }
 
-static int PacketizerOpen( vlc_object_t *p_this )
+static int PacketizerOpen( decoder_t *p_dec )
 {
-    return OpenCommon( p_this, true );
+    return OpenCommon( p_dec, true );
 }
 
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( decoder_t *p_dec )
 {
-    decoder_t     *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     if( p_sys->p_block )

@@ -30,7 +30,7 @@
 #include <vlc_stream.h>
 #include <assert.h>
 
-static int  Open(vlc_object_t *);
+static int Open(stream_t *);
 
 vlc_plugin_begin ()
     set_shortname("accesstweaks")
@@ -102,10 +102,9 @@ static int Seek( stream_t *s, uint64_t offset )
     return vlc_stream_Seek( s->s, offset );
 }
 
-static int Open( vlc_object_t *p_object )
+static int Open( stream_t *p_stream )
 {
-    stream_t *p_stream = (stream_t *) p_object;
-    stream_sys_t *p_sys = vlc_obj_malloc(p_object, sizeof (*p_sys));
+    stream_sys_t *p_sys = vlc_obj_malloc(VLC_OBJECT(p_stream), sizeof (*p_sys));
     if (unlikely(p_sys == NULL))
         return VLC_ENOMEM;
 

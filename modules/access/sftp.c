@@ -46,8 +46,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t* );
-static void Close( vlc_object_t* );
+static int  Open ( stream_t* );
+static void Close( stream_t* );
 
 #define PORT_TEXT N_("SFTP port")
 #define PORT_LONGTEXT N_("SFTP port number to use on the server")
@@ -223,12 +223,11 @@ error:
 
 /**
  * Connect to the sftp server and ask for a file
- * @param p_this: the vlc_object
+ * @param p_access: the vlc_object
  * @return VLC_SUCCESS if everything was fine
  */
-static int Open( vlc_object_t* p_this )
+static int Open( stream_t* p_access )
 {
-    stream_t*   p_access = (stream_t*)p_this;
     access_sys_t* p_sys;
     vlc_credential credential;
     char* psz_path = NULL;
@@ -243,7 +242,7 @@ static int Open( vlc_object_t* p_this )
     if( !p_access->psz_location )
         return VLC_EGENERIC;
 
-    p_sys = p_access->p_sys = vlc_obj_calloc( p_this, 1, sizeof( access_sys_t ) );
+    p_sys = p_access->p_sys = vlc_obj_calloc( VLC_OBJECT(p_access), 1, sizeof( access_sys_t ) );
     if( !p_sys ) return VLC_ENOMEM;
 
     p_sys->i_socket = -1;
@@ -515,16 +514,15 @@ error:
     vlc_credential_clean( &credential );
     vlc_UrlClean( &url );
     if( i_result != VLC_SUCCESS ) {
-        Close( p_this );
+        Close( p_access );
     }
     return i_result;
 }
 
 
 /* Close: quit the module */
-static void Close( vlc_object_t* p_this )
+static void Close( stream_t* p_access )
 {
-    stream_t*   p_access = (stream_t*)p_this;
     access_sys_t* p_sys = p_access->p_sys;
 
     if( p_sys->file )

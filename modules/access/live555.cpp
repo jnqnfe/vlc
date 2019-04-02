@@ -69,8 +69,8 @@ extern "C" {
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( demux_t * );
+static void Close( demux_t * );
 
 #define KASENNA_TEXT N_( "Kasenna RTSP dialect")
 #define KASENNA_LONGTEXT N_( "Kasenna servers use an old and nonstandard " \
@@ -297,9 +297,8 @@ static char *passwordLessURL( vlc_url_t *url );
 /*****************************************************************************
  * DemuxOpen:
  *****************************************************************************/
-static int  Open ( vlc_object_t *p_this )
+static int  Open ( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys = NULL;
 
     int i_return;
@@ -464,16 +463,15 @@ static int  Open ( vlc_object_t *p_this )
     return VLC_SUCCESS;
 
 error:
-    Close( p_this );
+    Close( p_demux );
     return i_error;
 }
 
 /*****************************************************************************
  * DemuxClose:
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys = (demux_sys_t *)p_demux->p_sys;
 
     vlc_timer_destroy(p_sys->timer);

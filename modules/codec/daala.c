@@ -75,9 +75,9 @@ typedef struct
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  OpenDecoder   ( vlc_object_t * );
-static int  OpenPacketizer( vlc_object_t * );
-static void CloseDecoder  ( vlc_object_t * );
+static int  OpenDecoder   ( decoder_t * );
+static int  OpenPacketizer( decoder_t * );
+static void CloseDecoder  ( decoder_t * );
 
 static int DecodeVideo( decoder_t *p_dec, block_t *p_block );
 static block_t *Packetize ( decoder_t *, block_t ** );
@@ -90,8 +90,8 @@ static void ParseDaalaComments( decoder_t * );
 static void daala_CopyPicture( picture_t *, daala_image * );
 
 #ifdef ENABLE_SOUT
-static int  OpenEncoder( vlc_object_t *p_this );
-static void CloseEncoder( vlc_object_t *p_this );
+static int  OpenEncoder( encoder_t * );
+static void CloseEncoder( encoder_t * );
 static block_t *Encode( encoder_t *p_enc, picture_t *p_pict );
 
 static const char *const enc_chromafmt_list[] = {
@@ -153,9 +153,8 @@ static const char *const ppsz_enc_options[] = {
 };
 #endif
 
-static int OpenCommon( vlc_object_t *p_this, bool b_packetizer )
+static int OpenCommon( decoder_t *p_dec, bool b_packetizer )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     if( p_dec->fmt_in.i_codec != VLC_CODEC_DAALA )
@@ -196,14 +195,14 @@ static int OpenCommon( vlc_object_t *p_this, bool b_packetizer )
 /*****************************************************************************
  * OpenDecoder: probe the decoder and return score
  *****************************************************************************/
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    return OpenCommon( p_this, false );
+    return OpenCommon( p_dec, false );
 }
 
-static int OpenPacketizer( vlc_object_t *p_this )
+static int OpenPacketizer( decoder_t *p_dec )
 {
-    return OpenCommon( p_this, true );
+    return OpenCommon( p_dec, true );
 }
 
 /****************************************************************************
@@ -540,9 +539,8 @@ static void ParseDaalaComments( decoder_t *p_dec )
 /*****************************************************************************
  * CloseDecoder: daala decoder destruction
  *****************************************************************************/
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     daala_info_clear(&p_sys->di);
@@ -584,9 +582,8 @@ typedef struct
     daala_enc_ctx   *dcx;                   /* daala context */
 } encoder_sys_t;
 
-static int OpenEncoder( vlc_object_t *p_this )
+static int OpenEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys;
     daala_packet header;
     int status;
@@ -700,7 +697,7 @@ static int OpenEncoder( vlc_object_t *p_this )
     {
         if ( status < 0 )
         {
-            CloseEncoder( p_this );
+            CloseEncoder( p_enc );
             return VLC_EGENERIC;
         }
         if( xiph_AppendHeaders( &p_enc->fmt_out.i_extra,
@@ -772,9 +769,8 @@ static block_t *Encode( encoder_t *p_enc, picture_t *p_pict )
     return p_block;
 }
 
-static void CloseEncoder( vlc_object_t *p_this )
+static void CloseEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys = p_enc->p_sys;
 
     daala_info_clear(&p_sys->di);

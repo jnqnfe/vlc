@@ -45,8 +45,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( decoder_t * );
+static void Close( decoder_t * );
 
 vlc_plugin_begin ()
     set_description( N_("MPEG4 video packetizer") )
@@ -126,9 +126,8 @@ static const uint8_t p_mp4v_startcode[3] = { 0x00, 0x00, 0x01 };
 /*****************************************************************************
  * Open: probe the packetizer and return score
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( decoder_t *p_dec )
 {
-    decoder_t     *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     if( p_dec->fmt_in.i_codec != VLC_CODEC_MP4V )
@@ -171,9 +170,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: clean up the packetizer
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     packetizer_Clean( &p_sys->packetizer );

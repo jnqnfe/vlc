@@ -43,8 +43,8 @@
  *****************************************************************************/
 typedef struct filter_sys_t filter_sys_t;
 
-static int  Create       ( vlc_object_t * );
-static void Destroy      ( vlc_object_t * );
+static int  Create       ( filter_t * );
+static void Destroy      ( filter_t * );
 static picture_t *Filter ( filter_t *, picture_t * );
 static void RenderBlur   ( filter_sys_t *, picture_t *, picture_t * );
 static int MotionBlurCallback( vlc_object_t *, char const *,
@@ -86,10 +86,8 @@ struct filter_sys_t
 /*****************************************************************************
  * Create
  *****************************************************************************/
-static int Create( vlc_object_t *p_this )
+static int Create( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
-
     const vlc_chroma_description_t *p_chroma =
         vlc_fourcc_GetChromaDescription( p_filter->fmt_in.video.i_chroma );
     if( p_chroma == NULL || p_chroma->plane_count == 0 )
@@ -126,9 +124,8 @@ static int Create( vlc_object_t *p_this )
 /*****************************************************************************
  * Destroy
  *****************************************************************************/
-static void Destroy( vlc_object_t *p_this )
+static void Destroy( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     var_DelCallback( p_filter, FILTER_PREFIX "factor",

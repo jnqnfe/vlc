@@ -72,8 +72,8 @@ enum { RED, GREEN, BLUE, WHITE };
 
 typedef struct filter_sys_t filter_sys_t;
 
-static int  Create    ( vlc_object_t * );
-static void Destroy   ( vlc_object_t * );
+static int  Create    ( filter_t * );
+static void Destroy   ( filter_t * );
 
 static picture_t *Filter( filter_t *, picture_t * );
 
@@ -92,7 +92,7 @@ static void FilterBall( filter_t *, picture_t *, picture_t * );
 static int ballCallback( vlc_object_t *, char const *,
                          vlc_value_t, vlc_value_t,
                          void * );
-static int getBallColor( vlc_object_t *p_this, char const *psz_newval );
+static int getBallColor( filter_t *p_filter, char const *psz_newval );
 
 
 /*****************************************************************************
@@ -219,9 +219,8 @@ struct filter_sys_t
 *****************************************************************************
 * This function allocates and initializes a Distort vout method.
 *****************************************************************************/
-static int Create( vlc_object_t *p_this )
+static int Create( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     char *psz_method;
 
     /* Allocate structure */
@@ -273,7 +272,7 @@ static int Create( vlc_object_t *p_this )
         p_sys->ballColor = RED;
     }
     else
-        p_sys->ballColor = getBallColor( p_this, psz_method );
+        p_sys->ballColor = getBallColor( p_filter, psz_method );
 
     free( psz_method );
 
@@ -316,9 +315,8 @@ static int Create( vlc_object_t *p_this )
 *****************************************************************************
 * Terminate an output method created by DistortCreateOutputMethod
  *****************************************************************************/
-static void Destroy( vlc_object_t *p_this )
+static void Destroy( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     var_DelCallback( p_filter, FILTER_PREFIX "color",
@@ -819,7 +817,7 @@ static int ballCallback( vlc_object_t *p_this, char const *psz_var,
     vlc_mutex_lock( &p_sys->lock );
     if( !strcmp( psz_var, FILTER_PREFIX "color" ) )
     {
-        p_sys->ballColor = getBallColor( p_this, newval.psz_string );
+        p_sys->ballColor = getBallColor( (filter_t *)p_this, newval.psz_string );
     }
     else if( !strcmp( psz_var, FILTER_PREFIX "size" ) )
     {
@@ -848,7 +846,7 @@ static int ballCallback( vlc_object_t *p_this, char const *psz_var,
  *****************************************************************************
  * Get and assign the ball color value
  *****************************************************************************/
-static int getBallColor( vlc_object_t *p_this, char const *psz_newval )
+static int getBallColor( filter_t *p_filter, char const *psz_newval )
 {
     int ret;
     if( !strcmp( psz_newval, "red" ) )
@@ -861,7 +859,7 @@ static int getBallColor( vlc_object_t *p_this, char const *psz_newval )
         ret = WHITE;
     else
     {
-        msg_Err( p_this, "no valid ball color provided (%s)", psz_newval );
+        msg_Err( p_filter, "no valid ball color provided (%s)", psz_newval );
         ret = RED;
     }
     return ret;

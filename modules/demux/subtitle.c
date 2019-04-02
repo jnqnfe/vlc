@@ -43,8 +43,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t *p_this );
-static void Close( vlc_object_t *p_this );
+static int  Open ( demux_t * );
+static void Close( demux_t * );
 
 #define SUB_TYPE_LONGTEXT \
     N_("Force the subtiles format. Selecting \"auto\" means autodetection and should always work.")
@@ -175,31 +175,31 @@ typedef struct
     block_t * (*pf_convert)( const subtitle_t * );
 } demux_sys_t;
 
-static int  ParseMicroDvd   ( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
-static int  ParseSubRip     ( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
-static int  ParseSubViewer  ( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
-static int  ParseSSA        ( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
-static int  ParseVplayer    ( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
-static int  ParseSami       ( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
-static int  ParseDVDSubtitle( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
-static int  ParseMPL2       ( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
-static int  ParseAQT        ( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
-static int  ParsePJS        ( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
-static int  ParseMPSub      ( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
-static int  ParseJSS        ( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
-static int  ParsePSB        ( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
-static int  ParseRealText   ( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
-static int  ParseDKS        ( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
-static int  ParseSubViewer1 ( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
-static int  ParseCommonSBV  ( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
-static int  ParseSCC        ( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
+static int  ParseMicroDvd   ( demux_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
+static int  ParseSubRip     ( demux_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
+static int  ParseSubViewer  ( demux_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
+static int  ParseSSA        ( demux_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
+static int  ParseVplayer    ( demux_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
+static int  ParseSami       ( demux_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
+static int  ParseDVDSubtitle( demux_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
+static int  ParseMPL2       ( demux_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
+static int  ParseAQT        ( demux_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
+static int  ParsePJS        ( demux_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
+static int  ParseMPSub      ( demux_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
+static int  ParseJSS        ( demux_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
+static int  ParsePSB        ( demux_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
+static int  ParseRealText   ( demux_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
+static int  ParseDKS        ( demux_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
+static int  ParseSubViewer1 ( demux_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
+static int  ParseCommonSBV  ( demux_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
+static int  ParseSCC        ( demux_t *, subs_properties_t *, text_t *, subtitle_t *, size_t );
 
 static const struct
 {
     const char *psz_type_name;
     int  i_type;
     const char *psz_name;
-    int  (*pf_read)( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t*, size_t );
+    int  (*pf_read)( demux_t *, subs_properties_t *, text_t *, subtitle_t*, size_t );
 } sub_read_subtitle_function [] =
 {
     { "microdvd",   SUB_TYPE_MICRODVD,    "MicroDVD",    ParseMicroDvd },
@@ -283,14 +283,13 @@ static block_t *ToEIA608Block( const subtitle_t *p_subtitle )
 /*****************************************************************************
  * Module initializer
  *****************************************************************************/
-static int Open ( vlc_object_t *p_this )
+static int Open ( demux_t *p_demux )
 {
-    demux_t        *p_demux = (demux_t*)p_this;
     demux_sys_t    *p_sys;
     es_format_t    fmt;
     float          f_fps;
     char           *psz_type;
-    int  (*pf_read)( vlc_object_t *, subs_properties_t *, text_t *, subtitle_t*, size_t );
+    int  (*pf_read)( demux_t *, subs_properties_t *, text_t *, subtitle_t*, size_t );
 
     if( !p_demux->obj.force )
     {
@@ -627,7 +626,7 @@ static int Open ( vlc_object_t *p_this )
     if( e_bom == UTF8BOM && /* skip BOM */
         vlc_stream_Read( p_demux->s, NULL, 3 ) != 3 )
     {
-        Close( p_this );
+        Close( p_demux );
         return VLC_EGENERIC;
     }
 
@@ -645,13 +644,13 @@ static int Open ( vlc_object_t *p_this )
             if( p_realloc == NULL )
             {
                 TextUnload( &txtlines );
-                Close( p_this );
+                Close( p_demux );
                 return VLC_ENOMEM;
             }
             p_sys->subtitles.p_array = p_realloc;
         }
 
-        if( pf_read( VLC_OBJECT(p_demux), &p_sys->props, &txtlines,
+        if( pf_read( p_demux, &p_sys->props, &txtlines,
                      &p_sys->subtitles.p_array[p_sys->subtitles.i_count],
                      p_sys->subtitles.i_count ) )
             break;
@@ -709,7 +708,7 @@ static int Open ( vlc_object_t *p_this )
     es_format_Clean( &fmt );
     if( p_sys->es == NULL )
     {
-        Close( p_this );
+        Close( p_demux );
         return VLC_EGENERIC;
     }
 
@@ -719,9 +718,8 @@ static int Open ( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: Close subtitle demux
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
 
     for( size_t i = 0; i < p_sys->subtitles.i_count; i++ )
@@ -974,7 +972,7 @@ static void TextPreviousLine( text_t *txt )
  *      {n1}{n2}Line1|Line2|Line3....
  *  where n1 and n2 are the video frame number (n2 can be empty)
  */
-static int ParseMicroDvd( vlc_object_t *p_obj, subs_properties_t *p_props,
+static int ParseMicroDvd( demux_t *p_demux, subs_properties_t *p_props,
                           text_t *txt, subtitle_t *p_subtitle,
                           size_t i_idx )
 {
@@ -1005,7 +1003,7 @@ static int ParseMicroDvd( vlc_object_t *p_obj, subs_properties_t *p_props,
             /* We found a possible setting of the framerate "{1}{1}23.976" */
             /* Check if it's usable, and if the sub-original-fps is not set */
             float f_fps = us_strtof( psz_text, NULL );
-            if( f_fps > 0.f && var_GetFloat( p_obj, "sub-original-fps" ) <= 0.f )
+            if( f_fps > 0.f && var_GetFloat( p_demux, "sub-original-fps" ) <= 0.f )
                 p_props->i_microsecperframe = llroundf((float)CLOCK_FREQ / f_fps);
         }
         free( psz_text );
@@ -1041,12 +1039,12 @@ static int ParseMicroDvd( vlc_object_t *p_obj, subs_properties_t *p_props,
  *      [empty line]
  *  We ignore line number for SubRip
  */
-static int ParseSubRipSubViewer( vlc_object_t *p_obj, subs_properties_t *p_props,
+static int ParseSubRipSubViewer( demux_t *p_demux, subs_properties_t *p_props,
                                  text_t *txt, subtitle_t *p_subtitle,
                                  int (* pf_parse_timing)(subtitle_t *, const char *),
                                  bool b_replace_br )
 {
-    VLC_UNUSED(p_obj);
+    VLC_UNUSED(p_demux);
     VLC_UNUSED(p_props);
     char    *psz_text;
 
@@ -1154,12 +1152,12 @@ static int subtitle_ParseSubRipTiming( subtitle_t *p_subtitle,
 }
 /* ParseSubRip
  */
-static int  ParseSubRip( vlc_object_t *p_obj, subs_properties_t *p_props,
+static int  ParseSubRip( demux_t *p_demux, subs_properties_t *p_props,
                          text_t *txt, subtitle_t *p_subtitle,
                          size_t i_idx )
 {
     VLC_UNUSED( i_idx );
-    return ParseSubRipSubViewer( p_obj, p_props, txt, p_subtitle,
+    return ParseSubRipSubViewer( p_demux, p_props, txt, p_subtitle,
                                  &subtitle_ParseSubRipTiming,
                                  false );
 }
@@ -1187,24 +1185,24 @@ static int subtitle_ParseSubViewerTiming( subtitle_t *p_subtitle,
 
 /* ParseSubViewer
  */
-static int  ParseSubViewer( vlc_object_t *p_obj, subs_properties_t *p_props,
+static int  ParseSubViewer( demux_t *p_demux, subs_properties_t *p_props,
                             text_t *txt, subtitle_t *p_subtitle,
                             size_t i_idx )
 {
     VLC_UNUSED( i_idx );
 
-    return ParseSubRipSubViewer( p_obj, p_props, txt, p_subtitle,
+    return ParseSubRipSubViewer( p_demux, p_props, txt, p_subtitle,
                                  &subtitle_ParseSubViewerTiming,
                                  true );
 }
 
 /* ParseSSA
  */
-static int  ParseSSA( vlc_object_t *p_obj, subs_properties_t *p_props,
+static int  ParseSSA( demux_t *p_demux, subs_properties_t *p_props,
                       text_t *txt, subtitle_t *p_subtitle,
                       size_t i_idx )
 {
-    VLC_UNUSED(p_obj);
+    VLC_UNUSED(p_demux);
     size_t header_len = 0;
 
     for( ;; )
@@ -1292,11 +1290,11 @@ static int  ParseSSA( vlc_object_t *p_obj, subs_properties_t *p_props,
  *  or
  *      h:m:s Line1|Line2|Line3....
  */
-static int ParseVplayer( vlc_object_t *p_obj, subs_properties_t *p_props,
+static int ParseVplayer( demux_t *p_demux, subs_properties_t *p_props,
                          text_t *txt, subtitle_t *p_subtitle,
                          size_t i_idx )
 {
-    VLC_UNUSED(p_obj);
+    VLC_UNUSED(p_demux);
     VLC_UNUSED(p_props);
     VLC_UNUSED( i_idx );
     char *psz_text;
@@ -1355,10 +1353,10 @@ static const char *ParseSamiSearch( text_t *txt,
             return &s[strlen( psz_str )];
     }
 }
-static int ParseSami( vlc_object_t *p_obj, subs_properties_t *p_props,
+static int ParseSami( demux_t *p_demux, subs_properties_t *p_props,
                       text_t *txt, subtitle_t *p_subtitle, size_t i_idx )
 {
-    VLC_UNUSED(p_obj);
+    VLC_UNUSED(p_demux);
     VLC_UNUSED(p_props);
     VLC_UNUSED( i_idx );
     const char *s;
@@ -1457,10 +1455,10 @@ static int ParseSami( vlc_object_t *p_obj, subs_properties_t *p_props,
  *      LANG support would be cool
  *      CODEPAGE is probably mandatory FIXME
  */
-static int ParseDVDSubtitle(vlc_object_t *p_obj, subs_properties_t *p_props,
+static int ParseDVDSubtitle(demux_t *p_demux, subs_properties_t *p_props,
                             text_t *txt, subtitle_t *p_subtitle, size_t i_idx )
 {
-    VLC_UNUSED(p_obj);
+    VLC_UNUSED(p_demux);
     VLC_UNUSED(p_props);
     VLC_UNUSED( i_idx );
     char *psz_text;
@@ -1521,10 +1519,10 @@ static int ParseDVDSubtitle(vlc_object_t *p_obj, subs_properties_t *p_props,
  *     [n1][n2]Line1|Line2|Line3...
  *  where n1 and n2 are the video frame number (n2 can be empty)
  */
-static int ParseMPL2(vlc_object_t *p_obj, subs_properties_t *p_props,
+static int ParseMPL2(demux_t *p_demux, subs_properties_t *p_props,
                      text_t *txt, subtitle_t *p_subtitle, size_t i_idx )
 {
-    VLC_UNUSED(p_obj);
+    VLC_UNUSED(p_demux);
     VLC_UNUSED(p_props);
     VLC_UNUSED( i_idx );
     char *psz_text;
@@ -1571,9 +1569,9 @@ static int ParseMPL2(vlc_object_t *p_obj, subs_properties_t *p_props,
     return VLC_SUCCESS;
 }
 
-static int ParseAQT(vlc_object_t *p_obj, subs_properties_t *p_props, text_t *txt, subtitle_t *p_subtitle, size_t i_idx )
+static int ParseAQT(demux_t *p_demux, subs_properties_t *p_props, text_t *txt, subtitle_t *p_subtitle, size_t i_idx )
 {
-    VLC_UNUSED(p_obj);
+    VLC_UNUSED(p_demux);
     VLC_UNUSED(p_props);
     VLC_UNUSED( i_idx );
 
@@ -1628,10 +1626,9 @@ static int ParseAQT(vlc_object_t *p_obj, subs_properties_t *p_props, text_t *txt
     return VLC_SUCCESS;
 }
 
-static int ParsePJS(vlc_object_t *p_obj, subs_properties_t *p_props,
+static int ParsePJS(demux_t *p_demux, subs_properties_t *p_props,
                     text_t *txt, subtitle_t *p_subtitle, size_t i_idx )
 {
-    VLC_UNUSED(p_obj);
     VLC_UNUSED(p_props);
     VLC_UNUSED( i_idx );
 
@@ -1672,11 +1669,11 @@ static int ParsePJS(vlc_object_t *p_obj, subs_properties_t *p_props,
     }
 
     p_subtitle->psz_text = psz_text;
-    msg_Dbg( p_obj, "%s", psz_text );
+    msg_Dbg( p_demux, "%s", psz_text );
     return VLC_SUCCESS;
 }
 
-static int ParseMPSub( vlc_object_t *p_obj, subs_properties_t *p_props,
+static int ParseMPSub( demux_t *p_demux, subs_properties_t *p_props,
                        text_t *txt, subtitle_t *p_subtitle, size_t i_idx )
 {
     VLC_UNUSED( i_idx );
@@ -1722,8 +1719,8 @@ static int ParseMPSub( vlc_object_t *p_obj, subs_properties_t *p_props,
             {
                 float f_fps = us_strtof( psz_temp, NULL );
 
-                if( f_fps > 0.f && var_GetFloat( p_obj, "sub-original-fps" ) <= 0.f )
-                    var_SetFloat( p_obj, "sub-original-fps", f_fps );
+                if( f_fps > 0.f && var_GetFloat( p_demux, "sub-original-fps" ) <= 0.f )
+                    var_SetFloat( p_demux, "sub-original-fps", f_fps );
 
                 p_props->mpsub.i_factor = 1;
                 free( psz_temp );
@@ -1773,7 +1770,7 @@ static int ParseMPSub( vlc_object_t *p_obj, subs_properties_t *p_props,
     return VLC_SUCCESS;
 }
 
-static int ParseJSS( vlc_object_t *p_obj, subs_properties_t *p_props,
+static int ParseJSS( demux_t *p_demux, subs_properties_t *p_props,
                      text_t *txt, subtitle_t *p_subtitle, size_t i_idx )
 {
     VLC_UNUSED( i_idx );
@@ -2013,15 +2010,15 @@ static int ParseJSS( vlc_object_t *p_obj, subs_properties_t *p_props,
     }
 
     p_subtitle->psz_text = psz_orig2;
-    msg_Dbg( p_obj, "%s", p_subtitle->psz_text );
+    msg_Dbg( p_demux, "%s", p_subtitle->psz_text );
     free( psz_orig );
     return VLC_SUCCESS;
 }
 
-static int ParsePSB( vlc_object_t *p_obj, subs_properties_t *p_props,
+static int ParsePSB( demux_t *p_demux, subs_properties_t *p_props,
                      text_t *txt, subtitle_t *p_subtitle, size_t i_idx )
 {
-    VLC_UNUSED(p_obj);
+    VLC_UNUSED(p_demux);
     VLC_UNUSED(p_props);
     VLC_UNUSED( i_idx );
 
@@ -2076,10 +2073,10 @@ static int64_t ParseRealTime( char *psz, int *h, int *m, int *s, int *f )
     else return VLC_EGENERIC;
 }
 
-static int ParseRealText( vlc_object_t *p_obj, subs_properties_t *p_props,
+static int ParseRealText( demux_t *p_demux, subs_properties_t *p_props,
                           text_t *txt, subtitle_t *p_subtitle, size_t i_idx )
 {
-    VLC_UNUSED(p_obj);
+    VLC_UNUSED(p_demux);
     VLC_UNUSED(p_props);
     VLC_UNUSED( i_idx );
     char *psz_text = NULL;
@@ -2166,10 +2163,10 @@ static int ParseRealText( vlc_object_t *p_obj, subs_properties_t *p_props,
     return VLC_SUCCESS;
 }
 
-static int ParseDKS( vlc_object_t *p_obj, subs_properties_t *p_props,
+static int ParseDKS( demux_t *p_demux, subs_properties_t *p_props,
                      text_t *txt, subtitle_t *p_subtitle, size_t i_idx )
 {
-    VLC_UNUSED(p_obj);
+    VLC_UNUSED(p_demux);
     VLC_UNUSED(p_props);
     VLC_UNUSED( i_idx );
 
@@ -2221,10 +2218,10 @@ static int ParseDKS( vlc_object_t *p_obj, subs_properties_t *p_props,
     return VLC_SUCCESS;
 }
 
-static int ParseSubViewer1( vlc_object_t *p_obj, subs_properties_t *p_props,
+static int ParseSubViewer1( demux_t *p_demux, subs_properties_t *p_props,
                             text_t *txt, subtitle_t *p_subtitle, size_t i_idx )
 {
-    VLC_UNUSED(p_obj);
+    VLC_UNUSED(p_demux);
     VLC_UNUSED(p_props);
     VLC_UNUSED( i_idx );
     char *psz_text;
@@ -2271,10 +2268,10 @@ static int ParseSubViewer1( vlc_object_t *p_obj, subs_properties_t *p_props,
     return VLC_SUCCESS;
 }
 
-static int ParseCommonSBV( vlc_object_t *p_obj, subs_properties_t *p_props,
+static int ParseCommonSBV( demux_t *p_demux, subs_properties_t *p_props,
                            text_t *txt, subtitle_t *p_subtitle, size_t i_idx )
 {
-    VLC_UNUSED(p_obj);
+    VLC_UNUSED(p_demux);
     VLC_UNUSED( i_idx );
     VLC_UNUSED( p_props );
     char        *psz_text;
@@ -2330,10 +2327,10 @@ static int ParseCommonSBV( vlc_object_t *p_obj, subs_properties_t *p_props,
     }
 }
 
-static int ParseSCC( vlc_object_t *p_obj, subs_properties_t *p_props,
+static int ParseSCC( demux_t *p_demux, subs_properties_t *p_props,
                      text_t *txt, subtitle_t *p_subtitle, size_t i_idx )
 {
-    VLC_UNUSED(p_obj);
+    VLC_UNUSED(p_demux);
     VLC_UNUSED( i_idx );
     VLC_UNUSED( p_props );
 
@@ -2353,7 +2350,7 @@ static int ParseSCC( vlc_object_t *p_obj, subs_properties_t *p_props,
         { 6000, { 60, 1 },       false },
     };
     const struct rates *p_rate = &framerates[3];
-    float f_fps = var_GetFloat( p_obj, "sub-original-fps" );
+    float f_fps = var_GetFloat( p_demux, "sub-original-fps" );
     if( f_fps > 1.0 )
     {
         for( size_t i=0; i<ARRAY_SIZE(framerates); i++ )

@@ -38,8 +38,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open (vlc_object_t *);
-static void Close(vlc_object_t *);
+static int  Open (decoder_t *);
+static void Close(decoder_t *);
 
 vlc_plugin_begin()
     set_description(N_("EBU STL subtitles decoder"))
@@ -465,10 +465,8 @@ static int ParseGSI(decoder_t *dec, decoder_sys_t *p_sys)
     return VLC_SUCCESS;
 }
 
-static int Open(vlc_object_t *object)
+static int Open(decoder_t *dec)
 {
-    decoder_t *dec = (decoder_t*)object;
-
     if (dec->fmt_in.i_codec != VLC_CODEC_EBU_STL)
         return VLC_EGENERIC;
 
@@ -489,9 +487,8 @@ static int Open(vlc_object_t *object)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *object)
+static void Close(decoder_t *dec)
 {
-    decoder_t *dec = (decoder_t*)object;
     decoder_sys_t *p_sys = dec->p_sys;
 
     ResetGroups(p_sys);

@@ -42,7 +42,7 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open(vlc_object_t *);
+static int  Open(filter_t *);
 
 vlc_plugin_begin()
     set_description(N_("Audio filter for PCM format conversion"))
@@ -57,10 +57,8 @@ vlc_plugin_end()
 typedef block_t *(*cvt_t)(filter_t *, block_t *);
 static cvt_t FindConversion(vlc_fourcc_t src, vlc_fourcc_t dst);
 
-static int Open(vlc_object_t *object)
+static int Open(filter_t *filter)
 {
-    filter_t     *filter = (filter_t *)object;
-
     const es_format_t *src = &filter->fmt_in;
     es_format_t       *dst = &filter->fmt_out;
 

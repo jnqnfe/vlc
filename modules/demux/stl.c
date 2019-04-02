@@ -35,8 +35,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open (vlc_object_t *);
-static void Close(vlc_object_t *);
+static int  Open (demux_t *);
+static void Close(demux_t *);
 
 vlc_plugin_begin()
     set_description(N_("EBU STL subtitles parser"))
@@ -227,10 +227,8 @@ static int Demux(demux_t *demux)
     return sys->current < sys->count ? VLC_DEMUXER_SUCCESS : VLC_DEMUXER_EOF;
 }
 
-static int Open(vlc_object_t *object)
+static int Open(demux_t *demux)
 {
-    demux_t *demux = (demux_t*)object;
-
     const uint8_t *peek;
     if (vlc_stream_Peek(demux->s, &peek, 11) != 11)
         return VLC_EGENERIC;
@@ -303,7 +301,7 @@ static int Open(vlc_object_t *object)
     if (sys->count == 0 ||
         vlc_stream_Seek(demux->s, 1024 + 128LL * sys->index[0].blocknumber) != VLC_SUCCESS)
     {
-        Close(object);
+        Close(demux);
         return VLC_EGENERIC;
     }
 
@@ -319,7 +317,7 @@ static int Open(vlc_object_t *object)
 
     if(sys->es == NULL)
     {
-        Close(object);
+        Close(demux);
         return VLC_EGENERIC;
     }
 
@@ -329,9 +327,8 @@ static int Open(vlc_object_t *object)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *object)
+static void Close(demux_t *demux)
 {
-    demux_t *demux = (demux_t*)object;
     demux_sys_t *sys = demux->p_sys;
 
     free(sys->index);

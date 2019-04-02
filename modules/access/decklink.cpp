@@ -46,8 +46,8 @@
 
 #include <atomic>
 
-static int  Open (vlc_object_t *);
-static void Close(vlc_object_t *);
+static int  Open (demux_t *);
+static void Close(demux_t *);
 
 #define CARD_INDEX_TEXT N_("Input card to use")
 #define CARD_INDEX_LONGTEXT N_( \
@@ -517,9 +517,8 @@ static int GetVideoConn(demux_t *demux)
     return VLC_SUCCESS;
 }
 
-static int Open(vlc_object_t *p_this)
+static int Open(demux_t *demux)
 {
-    demux_t     *demux = (demux_t*)p_this;
     demux_sys_t *sys;
     int         ret = VLC_EGENERIC;
     int         card_index;
@@ -539,7 +538,7 @@ static int Open(vlc_object_t *p_this)
 
     vlc_mutex_init(&sys->pts_lock);
 
-    sys->tenbits = var_InheritBool(p_this, "decklink-tenbits");
+    sys->tenbits = var_InheritBool(demux, "decklink-tenbits");
 
     IDeckLinkIterator *decklink_iterator = CreateDeckLinkIteratorInstance();
     if (!decklink_iterator) {
@@ -752,14 +751,13 @@ finish:
         decklink_iterator->Release();
 
     if (ret != VLC_SUCCESS)
-        Close(p_this);
+        Close(demux);
 
     return ret;
 }
 
-static void Close(vlc_object_t *p_this)
+static void Close(demux_t *demux)
 {
-    demux_t     *demux = (demux_t *)p_this;
     demux_sys_t *sys = (demux_sys_t *)demux->p_sys;
 
     if (sys->attributes)

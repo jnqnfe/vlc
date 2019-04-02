@@ -72,7 +72,7 @@ static const int pi_channels_maps[CHANNELS_MAX+1] =
 /*****************************************************************************
  * Local prototypes.
  *****************************************************************************/
-static int     Open        ( vlc_object_t * );
+static int     Open        ( audio_output_t * );
 static void    Play        ( audio_output_t *, block_t *, vlc_tick_t );
 static void    Pause       ( audio_output_t *, bool, vlc_tick_t );
 static void    Flush       ( audio_output_t * );
@@ -343,10 +343,8 @@ static void Flush( audio_output_t *aout )
         msg_Err( aout, "flush error: %s", vlc_strerror_c(errno) );
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
-
     aout->start = Start;
     aout->stop = Stop;
     aout->volume_set = NULL;

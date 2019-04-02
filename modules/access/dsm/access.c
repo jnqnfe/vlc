@@ -53,12 +53,11 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-int bdsm_SdOpen( vlc_object_t * );
-void bdsm_SdClose( vlc_object_t * );
-int bdsm_sd_probe_Open( vlc_object_t * );
+int bdsm_SdOpen( services_discovery_t * );
+void bdsm_SdClose( services_discovery_t * );
 
-static int Open( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int Open( stream_t * );
+static void Close( stream_t * );
 
 VLC_SD_PROBE_HELPER( "dsm", N_("Windows networks"), SD_CAT_LAN )
 
@@ -119,9 +118,8 @@ typedef struct
 /*****************************************************************************
  * Open: Initialize module's data structures and libdsm
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( stream_t *p_access )
 {
-    stream_t     *p_access = (stream_t*)p_this;
     access_sys_t *p_sys;
     smb_stat st;
 
@@ -187,16 +185,15 @@ static int Open( vlc_object_t *p_this )
     return VLC_SUCCESS;
 
     error:
-        Close( p_this );
+        Close( p_access );
         return VLC_EGENERIC;
 }
 
 /*****************************************************************************
  * Close: free unused data structures
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( stream_t *p_access )
 {
-    stream_t     *p_access = (stream_t*)p_this;
     access_sys_t *p_sys = p_access->p_sys;
 
     if( p_sys->p_ns )

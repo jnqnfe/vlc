@@ -183,12 +183,11 @@ static char *StripPasswords( const char *psz_config )
 
 static const luaL_Reg p_reg[] = { { NULL, NULL } };
 
-static int Start_LuaIntf( vlc_object_t *p_this, const char *name )
+static int Start_LuaIntf( intf_thread_t *p_intf, const char *name )
 {
-    if( lua_Disabled( p_this ) )
+    if( lua_Disabled( VLC_OBJECT(p_intf) ) )
         return VLC_EGENERIC;
 
-    intf_thread_t *p_intf = (intf_thread_t*)p_this;
     struct vlc_logger *logger = p_intf->obj.logger;
     lua_State *L;
     char *namebuf = NULL;
@@ -197,7 +196,7 @@ static int Start_LuaIntf( vlc_object_t *p_this, const char *name )
 
     if( name == NULL )
     {
-        namebuf = var_InheritString( p_this, "lua-intf" );
+        namebuf = var_InheritString( p_intf, "lua-intf" );
         if( unlikely(namebuf == NULL) )
             return VLC_EGENERIC;
         name = namebuf;
@@ -383,9 +382,8 @@ error:
     return VLC_EGENERIC;
 }
 
-void Close_LuaIntf( vlc_object_t *p_this )
+void Close_LuaIntf( intf_thread_t *p_intf )
 {
-    intf_thread_t *p_intf = (intf_thread_t*)p_this;
     intf_sys_t *p_sys = p_intf->p_sys;
 
     vlclua_fd_interrupt( &p_sys->dtable );
@@ -413,30 +411,30 @@ static void *Run( void *data )
     return NULL;
 }
 
-int Open_LuaIntf( vlc_object_t *p_this )
+int Open_LuaIntf( intf_thread_t *p_intf )
 {
-    return Start_LuaIntf( p_this, NULL );
+    return Start_LuaIntf( p_intf, NULL );
 }
 
-int Open_LuaHTTP( vlc_object_t *p_this )
+int Open_LuaHTTP( intf_thread_t *p_intf )
 {
-    return Start_LuaIntf( p_this, "http" );
+    return Start_LuaIntf( p_intf, "http" );
 }
 
-int Open_LuaCLI( vlc_object_t *p_this )
+int Open_LuaCLI( intf_thread_t *p_intf )
 {
-    return Start_LuaIntf( p_this, "cli" );
+    return Start_LuaIntf( p_intf, "cli" );
 }
 
-int Open_LuaTelnet( vlc_object_t *p_this )
+int Open_LuaTelnet( intf_thread_t *p_intf )
 {
-    char *pw = var_CreateGetNonEmptyString( p_this, "telnet-password" );
+    char *pw = var_CreateGetNonEmptyString( p_intf, "telnet-password" );
     if( pw == NULL )
     {
-        msg_Err( p_this, "password not configured" );
-        msg_Info( p_this, "Please specify the password in the preferences." );
+        msg_Err( p_intf, "password not configured" );
+        msg_Info( p_intf, "Please specify the password in the preferences." );
         return VLC_EGENERIC;
     }
     free( pw );
-    return Start_LuaIntf( p_this, "telnet" );
+    return Start_LuaIntf( p_intf, "telnet" );
 }

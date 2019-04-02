@@ -31,8 +31,8 @@
 #include <vlc_plugin.h>
 #include <vlc_codec.h>
 
-static int OpenEncoder( vlc_object_t * );
-static void CloseEncoder( vlc_object_t * );
+static int OpenEncoder( encoder_t * );
+static void CloseEncoder( encoder_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("Dummy") )
@@ -51,10 +51,8 @@ static block_t *EncodeAudio( encoder_t *p_enc, block_t *p_buf );
 /*****************************************************************************
  * OpenDecoder: open the dummy encoder.
  *****************************************************************************/
-static int OpenEncoder( vlc_object_t *p_this )
+static int OpenEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
-
     p_enc->pf_encode_video = EncodeVideo;
     p_enc->pf_encode_audio = EncodeAudio;
 
@@ -82,7 +80,7 @@ static block_t *EncodeAudio( encoder_t *p_enc, block_t *p_buf )
 /*****************************************************************************
  * CloseDecoder: decoder destruction
  *****************************************************************************/
-static void CloseEncoder( vlc_object_t *p_this )
+static void CloseEncoder( encoder_t *p_enc )
 {
-    VLC_UNUSED(p_this);
+    VLC_UNUSED(p_enc);
 }

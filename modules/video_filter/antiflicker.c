@@ -45,8 +45,8 @@ static int AntiFlickerCallback( vlc_object_t *p_this, char const *psz_var,
                            vlc_value_t oldval, vlc_value_t newval,
                            void *p_data );
 
-static int  Create    ( vlc_object_t * );
-static void Destroy   ( vlc_object_t * );
+static int  Create    ( filter_t * );
+static void Destroy   ( filter_t * );
 
 #define WINDOW_TEXT N_("Window size")
 #define WINDOW_LONGTEXT N_("Number of frames (0 to 100)")
@@ -96,10 +96,8 @@ typedef struct
  *****************************************************************************
  * This function allocates and initializes a Distort vout method.
  *****************************************************************************/
-static int Create( vlc_object_t *p_this )
+static int Create( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
-
     switch( p_filter->fmt_in.video.i_chroma )
     {
         CASE_PLANAR_YUV
@@ -153,9 +151,8 @@ static int Create( vlc_object_t *p_this )
  *****************************************************************************
  * Terminate an output method created by DistortCreateOutputMethod
  *****************************************************************************/
-static void Destroy( vlc_object_t *p_this )
+static void Destroy( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     var_DelCallback(p_filter,FILTER_PREFIX "window-size",

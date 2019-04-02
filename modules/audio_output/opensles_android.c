@@ -123,8 +123,8 @@ typedef struct
 /*****************************************************************************
  * Local prototypes.
  *****************************************************************************/
-static int  Open  (vlc_object_t *);
-static void Close (vlc_object_t *);
+static int  Open  (audio_output_t *);
+static void Close (audio_output_t *);
 
 /*****************************************************************************
  * Module descriptor
@@ -510,9 +510,8 @@ static void Stop(audio_output_t *aout)
 /*****************************************************************************
  *
  *****************************************************************************/
-static void Close(vlc_object_t *obj)
+static void Close(audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
     aout_sys_t *sys = aout->sys;
 
     Destroy(sys->outputMixObject);
@@ -522,9 +521,8 @@ static void Close(vlc_object_t *obj)
     free(sys);
 }
 
-static int Open (vlc_object_t *obj)
+static int Open (audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
     aout_sys_t *sys;
     SLresult result;
 

@@ -65,34 +65,33 @@ static int RadioControl (demux_t *demux, int query, va_list args)
     return VLC_SUCCESS;
 }
 
-int RadioOpen (vlc_object_t *obj)
+int RadioOpen (demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     if (demux->out == NULL)
         return VLC_EGENERIC;
 
     /* Parse MRL */
     size_t pathlen = strcspn (demux->psz_location, ":;");
     char *path = (pathlen != 0) ? strndup (demux->psz_location, pathlen)
-                              : var_InheritString (obj, CFG_PREFIX"radio-dev");
+                              : var_InheritString (demux, CFG_PREFIX"radio-dev");
     if (unlikely(path == NULL))
         return VLC_ENOMEM;
     if (demux->psz_location[pathlen] != '\0')
-        var_LocationParse (obj, demux->psz_location + pathlen + 1, CFG_PREFIX);
+        var_LocationParse (VLC_OBJECT(demux), demux->psz_location + pathlen + 1, CFG_PREFIX);
 
     /* Open device */
     uint32_t caps;
-    int fd = OpenDevice (obj, path, &caps);
+    int fd = OpenDevice (VLC_OBJECT(demux), path, &caps);
     free (path);
     if (fd == -1)
         return VLC_EGENERIC;
     if (!(caps & V4L2_CAP_TUNER))
     {
-        msg_Err (obj, "not a radio tuner device");
+        msg_Err (demux, "not a radio tuner device");
         goto error;
     }
 
-    if (SetupTuner (obj, fd, 0))
+    if (SetupTuner (VLC_OBJECT(demux), fd, 0))
         goto error;
 
     demux_sys_t *sys = malloc (sizeof (*sys));
@@ -100,7 +99,7 @@ int RadioOpen (vlc_object_t *obj)
         goto error;
 
     sys->fd = fd;
-    sys->controls = ControlsInit(vlc_object_parent(obj), fd);
+    sys->controls = ControlsInit(vlc_object_parent(VLC_OBJECT(demux)), fd);
     sys->start = vlc_tick_now ();
 
     demux->p_sys = sys;
@@ -113,12 +112,11 @@ error:
     return VLC_EGENERIC;
 }
 
-void RadioClose (vlc_object_t *obj)
+void RadioClose (demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     demux_sys_t *sys = demux->p_sys;
 
-    ControlsDeinit(vlc_object_parent(obj), sys->controls);
+    ControlsDeinit(vlc_object_parent(VLC_OBJECT(demux)), sys->controls);
     v4l2_close (sys->fd);
     free (sys);
 }

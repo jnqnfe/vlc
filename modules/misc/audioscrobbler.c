@@ -104,8 +104,8 @@ struct intf_sys_t
                                                  * metadata already         */
 };
 
-static int  Open            (vlc_object_t *);
-static void Close           (vlc_object_t *);
+static int  Open            (intf_thread_t *);
+static void Close           (intf_thread_t *);
 static void *Run            (void *);
 
 /*****************************************************************************
@@ -365,11 +365,10 @@ static void playlist_on_current_index_changed(vlc_playlist_t *playlist,
 /*****************************************************************************
  * Open: initialize and create stuff
  *****************************************************************************/
-static int Open(vlc_object_t *p_this)
+static int Open(intf_thread_t *p_intf)
 {
-    intf_thread_t   *p_intf     = (intf_thread_t*) p_this;
-    intf_sys_t      *p_sys      = calloc(1, sizeof(intf_sys_t));
-    int             retval      = VLC_EGENERIC;
+    intf_sys_t *p_sys = calloc(1, sizeof(intf_sys_t));
+    int retval = VLC_EGENERIC;
 
     if (!p_sys)
         return VLC_ENOMEM;
@@ -435,9 +434,8 @@ ret:
 /*****************************************************************************
  * Close: destroy interface stuff
  *****************************************************************************/
-static void Close(vlc_object_t *p_this)
+static void Close(intf_thread_t *p_intf)
 {
-    intf_thread_t *p_intf = (intf_thread_t*) p_this;
     intf_sys_t *p_sys = p_intf->p_sys;
     vlc_playlist_t *playlist = p_sys->playlist;
 

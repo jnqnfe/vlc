@@ -36,8 +36,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( demux_t * );
+static void Close( demux_t * );
 
 #define FPS_TEXT N_("Frames per Second")
 #define FPS_LONGTEXT N_("This is the desired frame rate when " \
@@ -121,9 +121,8 @@ static const struct preset_t p_presets[] =
 /*****************************************************************************
  * Open: initializes raw DV demux structures
  *****************************************************************************/
-static int Open( vlc_object_t * p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
     int i_width=-1, i_height=-1;
     unsigned u_fps_num, u_fps_den;
@@ -374,10 +373,9 @@ error:
 /*****************************************************************************
  * Close: frees unused data
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
-    demux_sys_t *p_sys  = p_demux->p_sys;
+    demux_sys_t *p_sys = p_demux->p_sys;
     free( p_sys );
 }
 

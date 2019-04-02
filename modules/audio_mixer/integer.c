@@ -30,7 +30,7 @@
 #include <vlc_aout.h>
 #include <vlc_aout_volume.h>
 
-static int Activate (vlc_object_t *);
+static int Activate (audio_volume_t *);
 
 vlc_plugin_begin ()
     set_description (N_("Integer audio volume"))
@@ -101,10 +101,8 @@ static void FilterU8 (audio_volume_t *vol, block_t *block, float volume)
     (void) vol;
 }
 
-static int Activate (vlc_object_t *obj)
+static int Activate (audio_volume_t *vol)
 {
-    audio_volume_t *vol = (audio_volume_t *)obj;
-
     switch (vol->format)
     {
         case VLC_CODEC_S32N:

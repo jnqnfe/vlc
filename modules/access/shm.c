@@ -64,8 +64,8 @@
 #define FILE_LONGTEXT N_( \
     "Path of the memory mapped file of the frame buffer")
 
-static int  Open (vlc_object_t *);
-static void Close (vlc_object_t *);
+static int  Open (demux_t *);
+static void Close (demux_t *);
 
 static const int depths[] = {
     0, 8, 15, 16, 24, 32,
@@ -135,13 +135,12 @@ struct demux_sys_t
     void (*detach) (demux_sys_t *);
 };
 
-static int Open (vlc_object_t *obj)
+static int Open (demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     if (demux->out == NULL)
         return VLC_EGENERIC;
 
-    demux_sys_t *sys = vlc_obj_malloc(obj, sizeof (*sys));
+    demux_sys_t *sys = vlc_obj_malloc(VLC_OBJECT(demux), sizeof (*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
 
@@ -220,7 +219,7 @@ static int Open (vlc_object_t *obj)
     }
 
     /* Initializes format */
-    float rate = var_InheritFloat (obj, "shm-fps");
+    float rate = var_InheritFloat (demux, "shm-fps");
     if (rate <= 0.f)
         goto error;
 
@@ -259,9 +258,8 @@ error:
 /**
  * Releases resources
  */
-static void Close (vlc_object_t *obj)
+static void Close (demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     demux_sys_t *sys = demux->p_sys;
 
     vlc_timer_destroy (sys->timer);

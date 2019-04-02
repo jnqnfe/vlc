@@ -459,14 +459,13 @@ static int Control( demux_t *p_demux_filter, int i_query, va_list args)
     return p_sys->Control( p_demux_filter, i_query, args );
 }
 
-int Open(vlc_object_t *p_this)
+int Open(demux_t *p_demux)
 {
-    demux_t *p_demux = reinterpret_cast<demux_t*>(p_this);
     chromecast_common *p_renderer = static_cast<chromecast_common *>(
                 var_InheritAddress( p_demux, CC_SHARED_VAR_NAME ) );
     if ( p_renderer == NULL )
     {
-        msg_Warn( p_this, "using Chromecast demuxer with no sout" );
+        msg_Warn( p_demux, "using Chromecast demuxer with no sout" );
         return VLC_ENOOBJ;
     }
 
@@ -481,11 +480,9 @@ int Open(vlc_object_t *p_this)
     return VLC_SUCCESS;
 }
 
-void Close(vlc_object_t *p_this)
+void Close(demux_t *p_demux)
 {
-    demux_t *p_demux = reinterpret_cast<demux_t*>(p_this);
     demux_cc *p_sys = reinterpret_cast<demux_cc*>(p_demux->p_sys);
-
     delete p_sys;
 }
 

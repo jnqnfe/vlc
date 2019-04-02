@@ -62,10 +62,8 @@ static int Control(demux_t *demux, int query, va_list args)
     return VLC_SUCCESS;
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
-
     demux->pf_demux = Demux;
     demux->pf_control = Control;
     return VLC_SUCCESS;

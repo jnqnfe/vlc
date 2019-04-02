@@ -35,7 +35,7 @@
 /****************************************************************************
  * Local prototypes
  ****************************************************************************/
-static int  OpenFilter ( vlc_object_t * );
+static int  OpenFilter ( filter_t * );
 static void RV24_RV32( filter_t *, picture_t *, picture_t * );
 static picture_t *RV24_RV32_Filter( filter_t *, picture_t * );
 
@@ -50,10 +50,8 @@ vlc_plugin_end ()
 /*****************************************************************************
  * OpenFilter: probe the filter and return score
  *****************************************************************************/
-static int OpenFilter( vlc_object_t *p_this )
+static int OpenFilter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
-
     /* XXX Only support RV24 -> RV32 conversion */
     if( p_filter->fmt_in.video.i_chroma != VLC_CODEC_RGB24 ||
         (p_filter->fmt_out.video.i_chroma != VLC_CODEC_RGB32 &&

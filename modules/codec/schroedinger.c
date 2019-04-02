@@ -44,10 +44,10 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int        OpenDecoder  ( vlc_object_t * );
-static void       CloseDecoder ( vlc_object_t * );
-static int        OpenEncoder  ( vlc_object_t * );
-static void       CloseEncoder ( vlc_object_t * );
+static int        OpenDecoder  ( decoder_t * );
+static void       CloseDecoder ( decoder_t * );
+static int        OpenEncoder  ( encoder_t * );
+static void       CloseEncoder ( encoder_t * );
 
 #define ENC_CFG_PREFIX "sout-schro-"
 
@@ -549,9 +549,8 @@ typedef struct
 /*****************************************************************************
  * OpenDecoder: probe the decoder and return score
  *****************************************************************************/
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
     SchroDecoder *p_schro;
 
@@ -731,9 +730,8 @@ static void SchroBufferFree( SchroBuffer *buf, void *priv )
 /*****************************************************************************
  * CloseDecoder: decoder destruction
  *****************************************************************************/
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     schro_decoder_free( p_sys->p_schro );
@@ -1065,9 +1063,8 @@ static bool SetEncChromaFormat( encoder_t *p_enc, uint32_t i_codec )
 /*****************************************************************************
  * OpenEncoder: probe the encoder and return score
  *****************************************************************************/
-static int OpenEncoder( vlc_object_t *p_this )
+static int OpenEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys;
     int i_tmp;
     float f_tmp;
@@ -1097,7 +1094,7 @@ static int OpenEncoder( vlc_object_t *p_this )
 
     if( ( p_sys->p_dts_fifo = timestamp_FifoNew(32) ) == NULL )
     {
-        CloseEncoder( p_this );
+        CloseEncoder( p_enc );
         return VLC_ENOMEM;
     }
 
@@ -1301,7 +1298,7 @@ static int OpenEncoder( vlc_object_t *p_this )
 
     return VLC_SUCCESS;
 error:
-    CloseEncoder( p_this );
+    CloseEncoder( p_enc );
     return VLC_EGENERIC;
 }
 
@@ -1582,9 +1579,8 @@ static block_t *Encode( encoder_t *p_enc, picture_t *p_pic )
 /*****************************************************************************
  * CloseEncoder: Schro encoder destruction
  *****************************************************************************/
-static void CloseEncoder( vlc_object_t *p_this )
+static void CloseEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys = p_enc->p_sys;
 
     /* Free the encoder resources */

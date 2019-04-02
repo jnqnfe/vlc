@@ -303,9 +303,8 @@ picture_t *AllocPicture( filter_t *p_filter )
     return pic;
 }
 
-int D3D11OpenDeinterlace(vlc_object_t *obj)
+int D3D11OpenDeinterlace(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
     HRESULT hr;
 
     if (!is_d3d11_opaque(filter->fmt_in.video.i_chroma))
@@ -483,9 +482,8 @@ error:
     return VLC_EGENERIC;
 }
 
-void D3D11CloseDeinterlace(vlc_object_t *obj)
+void D3D11CloseDeinterlace(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
     filter_sys_t *sys = filter->p_sys;
 
     if (likely(sys->processorOutput))

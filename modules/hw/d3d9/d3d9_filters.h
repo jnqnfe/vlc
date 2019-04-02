@@ -27,12 +27,12 @@
 
 #include "../../video_chroma/d3d9_fmt.h"
 
-int  D3D9OpenDeinterlace(vlc_object_t *);
-void D3D9CloseDeinterlace(vlc_object_t *);
-int  D3D9OpenConverter(vlc_object_t *);
-void D3D9CloseConverter(vlc_object_t *);
-int  D3D9OpenCPUConverter(vlc_object_t *);
-void D3D9CloseCPUConverter(vlc_object_t *);
+int  D3D9OpenDeinterlace(filter_t *);
+void D3D9CloseDeinterlace(filter_t *);
+int  D3D9OpenConverter(filter_t *);
+void D3D9CloseConverter(filter_t *);
+int  D3D9OpenCPUConverter(filter_t *);
+void D3D9CloseCPUConverter(filter_t *);
 
 void D3D9_FilterHoldInstance(filter_t *, d3d9_device_t *, D3DSURFACE_DESC *);
 void D3D9_FilterReleaseInstance(d3d9_device_t *);

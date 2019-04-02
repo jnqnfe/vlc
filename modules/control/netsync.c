@@ -48,8 +48,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open (vlc_object_t *);
-static void Close(vlc_object_t *);
+static int  Open (intf_thread_t *);
+static void Close(intf_thread_t *);
 
 #define NETSYNC_TEXT N_("Network master clock")
 #define NETSYNC_LONGTEXT N_("When set, " \
@@ -98,10 +98,9 @@ static int PlaylistEvent(vlc_object_t *, char const *cmd,
 /*****************************************************************************
  * Activate: initialize and create stuff
  *****************************************************************************/
-static int Open(vlc_object_t *object)
+static int Open(intf_thread_t *intf)
 {
-    intf_thread_t *intf = (intf_thread_t*)object;
-    intf_sys_t    *sys;
+    intf_sys_t *sys;
     int fd;
 
     if (!var_InheritBool(intf, "netsync-master")) {
@@ -142,9 +141,8 @@ static int Open(vlc_object_t *object)
 /*****************************************************************************
  * Close: destroy interface
  *****************************************************************************/
-void Close(vlc_object_t *object)
+void Close(intf_thread_t *intf)
 {
-    intf_thread_t *intf = (intf_thread_t*)object;
     intf_sys_t *sys = intf->p_sys;
 
     var_DelCallback(sys->playlist, "input-current", PlaylistEvent, intf);

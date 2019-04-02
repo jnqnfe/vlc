@@ -74,9 +74,8 @@ static bool IsHLS(const unsigned char *buf, size_t length)
 /*****************************************************************************
  * Import_M3U: main import function
  *****************************************************************************/
-int Import_M3U( vlc_object_t *p_this )
+int Import_M3U( stream_t* p_stream )
 {
-    stream_t *p_stream = (stream_t *)p_this;
     const uint8_t *p_peek;
     ssize_t i_peek;
     int offset = 0;

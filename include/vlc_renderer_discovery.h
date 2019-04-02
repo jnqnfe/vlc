@@ -204,9 +204,9 @@ vlc_rd_probe_add(vlc_probe_t *p_probe, const char *psz_name,
                  const char *psz_longname);
 
 #define VLC_RD_PROBE_HELPER(name, longname) \
-static int vlc_rd_probe_open(vlc_object_t *obj) \
+static inline int vlc_rd_probe_open(vlc_probe_t *probe) \
 { \
-    return vlc_rd_probe_add((struct vlc_probe_t *)obj, name, longname); \
+    return vlc_rd_probe_add(probe, name, longname); \
 }
 
 #define VLC_RD_PROBE_SUBMODULE \

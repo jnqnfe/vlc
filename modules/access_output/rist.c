@@ -720,9 +720,8 @@ static void Clean( sout_access_out_t *p_access )
         block_Release(p_sys->p_pktbuffer);
 }
 
-static void Close( vlc_object_t * p_this )
+static void Close( sout_access_out_t *p_access )
 {
-    sout_access_out_t     *p_access = (sout_access_out_t*)p_this;
     sout_access_out_sys_t *p_sys = p_access->p_sys;
 
     vlc_cancel(p_sys->ristthread);
@@ -734,10 +733,9 @@ static void Close( vlc_object_t * p_this )
     Clean( p_access );
 }
 
-static int Open( vlc_object_t *p_this )
+static int Open( sout_access_out_t *p_access )
 {
-    sout_access_out_t       *p_access = (sout_access_out_t*)p_this;
-    sout_access_out_sys_t   *p_sys = NULL;
+    sout_access_out_sys_t *p_sys = NULL;
 
     if (var_Create ( p_access, "dst-port", VLC_VAR_INTEGER )
      || var_Create ( p_access, "src-port", VLC_VAR_INTEGER )
@@ -750,7 +748,7 @@ static int Open( vlc_object_t *p_this )
 
     config_ChainParse( p_access, SOUT_CFG_PREFIX, ppsz_sout_options, p_access->p_cfg );
 
-    p_sys = vlc_obj_calloc( p_this, 1, sizeof( *p_sys ) );
+    p_sys = vlc_obj_calloc( p_access, 1, sizeof( *p_sys ) );
     if( unlikely( p_sys == NULL ) )
         return VLC_ENOMEM;
 

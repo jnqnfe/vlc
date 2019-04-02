@@ -104,14 +104,14 @@ static const char *const ppsz_pos_descriptions[] =
 /*****************************************************************************
  * Module descriptor.
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( decoder_t * );
+static void Close( decoder_t * );
 static int Decode( decoder_t *, block_t * );
 static void Flush( decoder_t * );
 
 #ifdef ENABLE_SOUT
-static int OpenEncoder  ( vlc_object_t * );
-static void CloseEncoder( vlc_object_t * );
+static int OpenEncoder  ( encoder_t * );
+static void CloseEncoder( encoder_t * );
 static block_t *Encode  ( encoder_t *, subpicture_t * );
 #endif
 
@@ -320,9 +320,8 @@ static subpicture_t *render( decoder_t * );
  * Tries to launch a decoder and return score so that the interface is able
  * to chose.
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( decoder_t *p_dec )
 {
-    decoder_t     *p_dec = (decoder_t *) p_this;
     decoder_sys_t *p_sys;
     int i_posx, i_posy;
 
@@ -348,10 +347,10 @@ static int Open( vlc_object_t *p_this )
     /* configure for SD res in case DDS is not present */
     default_dds_init( p_dec );
 
-    p_sys->i_spu_position = var_CreateGetInteger( p_this,
+    p_sys->i_spu_position = var_CreateGetInteger( p_dec,
                                     DVBSUB_CFG_PREFIX "position" );
-    i_posx = var_CreateGetInteger( p_this, DVBSUB_CFG_PREFIX "x" );
-    i_posy = var_CreateGetInteger( p_this, DVBSUB_CFG_PREFIX "y" );
+    i_posx = var_CreateGetInteger( p_dec, DVBSUB_CFG_PREFIX "x" );
+    i_posy = var_CreateGetInteger( p_dec, DVBSUB_CFG_PREFIX "y" );
 
     /* Check if subpicture position was overridden */
     p_sys->b_absolute = true;
@@ -374,14 +373,13 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( decoder_t *p_dec )
 {
-    decoder_t     *p_dec = (decoder_t*) p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
-    var_Destroy( p_this, DVBSUB_CFG_PREFIX "x" );
-    var_Destroy( p_this, DVBSUB_CFG_PREFIX "y" );
-    var_Destroy( p_this, DVBSUB_CFG_PREFIX "position" );
+    var_Destroy( p_dec, DVBSUB_CFG_PREFIX "x" );
+    var_Destroy( p_dec, DVBSUB_CFG_PREFIX "y" );
+    var_Destroy( p_dec, DVBSUB_CFG_PREFIX "position" );
 
     free_all( p_dec );
     free( p_sys );
@@ -1691,9 +1689,8 @@ static void encode_object( encoder_t *, bs_t *, subpicture_t * );
 /*****************************************************************************
  * OpenEncoder: probe the encoder and return score
  *****************************************************************************/
-static int OpenEncoder( vlc_object_t *p_this )
+static int OpenEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys;
 
     if( ( p_enc->fmt_out.i_codec != VLC_CODEC_DVBS ) &&
@@ -1719,8 +1716,8 @@ static int OpenEncoder( vlc_object_t *p_this )
     p_sys->i_regions = 0;
     p_sys->p_regions = 0;
 
-    p_sys->i_offset_x = var_CreateGetInteger( p_this, ENC_CFG_PREFIX "x" );
-    p_sys->i_offset_y = var_CreateGetInteger( p_this, ENC_CFG_PREFIX "y" );
+    p_sys->i_offset_x = var_CreateGetInteger( p_enc, ENC_CFG_PREFIX "x" );
+    p_sys->i_offset_y = var_CreateGetInteger( p_enc, ENC_CFG_PREFIX "y" );
 
     return VLC_SUCCESS;
 }
@@ -2041,14 +2038,13 @@ static block_t *Encode( encoder_t *p_enc, subpicture_t *p_subpic )
 /*****************************************************************************
  * CloseEncoder: encoder destruction
  *****************************************************************************/
-static void CloseEncoder( vlc_object_t *p_this )
+static void CloseEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys = p_enc->p_sys;
 
-    var_Destroy( p_this , ENC_CFG_PREFIX "x" );
-    var_Destroy( p_this , ENC_CFG_PREFIX "y" );
-    var_Destroy( p_this , ENC_CFG_PREFIX "timeout" );
+    var_Destroy( p_enc , ENC_CFG_PREFIX "x" );
+    var_Destroy( p_enc , ENC_CFG_PREFIX "y" );
+    var_Destroy( p_enc , ENC_CFG_PREFIX "timeout" );
 
     if( p_sys->i_regions ) free( p_sys->p_regions );
     free( p_sys );

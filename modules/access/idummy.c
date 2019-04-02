@@ -34,7 +34,7 @@
 #include <vlc_demux.h>
 #include <vlc_charset.h>
 
-static int OpenDemux( vlc_object_t * );
+static int OpenDemux( demux_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("Dummy") )
@@ -135,9 +135,8 @@ static int ControlPause( demux_t *demux, int query, va_list args )
 /*****************************************************************************
  * OpenDemux: initialize the target, ie. parse the command
  *****************************************************************************/
-static int OpenDemux( vlc_object_t *p_this )
+static int OpenDemux( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t*)p_this;
     const char *psz_name = p_demux->psz_location;
 
     p_demux->p_sys = NULL;
@@ -181,7 +180,7 @@ nop:
         if( length == 0 )
             goto nop; /* avoid division by zero */
 
-        demux_sys_t *p_sys = vlc_obj_malloc( p_this, sizeof( *p_sys ) );
+        demux_sys_t *p_sys = vlc_obj_malloc( VLC_OBJECT(p_demux), sizeof( *p_sys ) );
         if( p_sys == NULL )
             return VLC_ENOMEM;
 

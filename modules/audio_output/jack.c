@@ -67,8 +67,8 @@ typedef struct
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  Open         ( vlc_object_t * );
-static void Close        ( vlc_object_t * );
+static int  Open         ( audio_output_t * );
+static void Close        ( audio_output_t * );
 static void Play         ( audio_output_t * p_aout, block_t *, vlc_tick_t );
 static void Pause        ( audio_output_t *aout, bool paused, vlc_tick_t date );
 static void Flush        ( audio_output_t *p_aout );
@@ -448,9 +448,8 @@ static void Stop( audio_output_t *p_aout )
     jack_ringbuffer_free( p_sys->p_jack_ringbuffer );
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
     aout_sys_t *sys = calloc(1, sizeof (*sys));
 
     if( unlikely( sys == NULL ) )
@@ -462,10 +461,8 @@ static int Open(vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *obj)
+static void Close(audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
     aout_sys_t *sys = aout->sys;
-
     free(sys);
 }

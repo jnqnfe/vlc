@@ -60,10 +60,11 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  OpenDecoder( vlc_object_t * );
-static int  OpenEncoder( vlc_object_t * );
-static int  OpenGeneric( vlc_object_t *, bool b_encode );
-static void CloseGeneric( vlc_object_t * );
+static int  OpenDecoder( decoder_t * );
+static int  OpenEncoder( encoder_t * );
+static void CloseEncoder( encoder_t * );
+static int  OpenGeneric( decoder_t *, bool b_encode );
+static void CloseGeneric( decoder_t * );
 
 static int DecodeVideo( decoder_t *, block_t * );
 static int DecodeAudio ( decoder_t *, block_t * );
@@ -96,7 +97,7 @@ vlc_plugin_begin ()
 
     add_submodule ()
     set_description( N_("Video encoder (using OpenMAX IL)") )
-    set_capability( VLC_CAP_ENCODER, 0, OpenEncoder, CloseGeneric )
+    set_capability( VLC_CAP_ENCODER, 0, OpenEncoder, CloseEncoder )
 
     //set_subcategory( SUBCAT_INPUT_VCODEC )
     //set_section( N_("Decoding") , NULL )
@@ -875,15 +876,14 @@ static OMX_ERRORTYPE InitialiseComponent(decoder_t *p_dec,
 /*****************************************************************************
  * OpenDecoder: Create the decoder instance
  *****************************************************************************/
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     int status;
 
     if( 0 || !GetOmxRole(p_dec->fmt_in.i_codec, p_dec->fmt_in.i_cat, false) )
         return VLC_EGENERIC;
 
-    status = OpenGeneric( p_this, false );
+    status = OpenGeneric( p_dec, false );
     if(status != VLC_SUCCESS) return status;
 
     switch( p_dec->fmt_in.i_cat )
@@ -900,15 +900,14 @@ static int OpenDecoder( vlc_object_t *p_this )
 /*****************************************************************************
  * OpenEncoder: Create the encoder instance
  *****************************************************************************/
-static int OpenEncoder( vlc_object_t *p_this )
+static int OpenEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t*)p_this;
     int status;
 
     if( !GetOmxRole(p_enc->fmt_out.i_codec, p_enc->fmt_in.i_cat, true) )
         return VLC_EGENERIC;
 
-    status = OpenGeneric( p_this, true );
+    status = OpenGeneric( (decoder_t*)p_enc, true );
     if(status != VLC_SUCCESS) return status;
 
     p_enc->pf_encode_video = EncodeVideo;
@@ -919,15 +918,14 @@ static int OpenEncoder( vlc_object_t *p_this )
 /*****************************************************************************
  * OpenGeneric: Create the generic decoder/encoder instance
  *****************************************************************************/
-static int OpenGeneric( vlc_object_t *p_this, bool b_encode )
+static int OpenGeneric( decoder_t *p_dec, bool b_encode )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
     OMX_ERRORTYPE omx_error;
     OMX_BUFFERHEADERTYPE *p_header;
     unsigned int i;
 
-    if (InitOmxCore(p_this) != VLC_SUCCESS) {
+    if (InitOmxCore(VLC_OBJECT(p_dec)) != VLC_SUCCESS) {
         return VLC_EGENERIC;
     }
 
@@ -970,15 +968,15 @@ static int OpenGeneric( vlc_object_t *p_this, bool b_encode )
 
     /* Enumerate components and build a list of the one we want to try */
     p_sys->components =
-        CreateComponentsList(p_this,
+        CreateComponentsList(VLC_OBJECT(p_dec),
              GetOmxRole(p_sys->b_enc ? p_dec->fmt_out.i_codec :
                         p_dec->fmt_in.i_codec, p_dec->fmt_in.i_cat,
                         p_sys->b_enc), p_sys->ppsz_components);
     if( !p_sys->components )
     {
-        msg_Warn( p_this, "couldn't find an omx component for codec %4.4s",
+        msg_Warn( p_dec, "couldn't find an omx component for codec %4.4s",
                   (char *)&p_dec->fmt_in.i_codec );
-        CloseGeneric(p_this);
+        CloseGeneric(p_dec);
         return VLC_EGENERIC;
     }
 
@@ -1112,7 +1110,7 @@ static int OpenGeneric( vlc_object_t *p_this, bool b_encode )
     return VLC_SUCCESS;
 
  error:
-    CloseGeneric(p_this);
+    CloseGeneric(p_dec);
     return VLC_EGENERIC;
 }
 
@@ -1688,9 +1686,8 @@ error:
 /*****************************************************************************
  * CloseGeneric: omxil decoder destruction
  *****************************************************************************/
-static void CloseGeneric( vlc_object_t *p_this )
+static void CloseGeneric( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     if(p_sys->omx_handle) DeinitialiseComponent(p_dec, p_sys->omx_handle);
@@ -1705,6 +1702,11 @@ static void CloseGeneric( vlc_object_t *p_this )
     free( p_sys );
 }
 
+static void CloseEncoder( encoder_t *p_enc )
+{
+    CloseGeneric((decoder_t *)p_enc);
+}
+
 /*****************************************************************************
  * OmxEventHandler:
  *****************************************************************************/
@@ -1717,7 +1719,7 @@ static OMX_ERRORTYPE OmxEventHandler( OMX_HANDLETYPE omx_handle,
     unsigned int i;
     (void)omx_handle;
 
-    PrintOmxEvent((vlc_object_t *) p_dec, event, data_1, data_2, event_data);
+    PrintOmxEvent(VLC_OBJECT(p_dec), event, data_1, data_2, event_data);
     switch (event)
     {
     case OMX_EventError:

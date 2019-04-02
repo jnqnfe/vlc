@@ -64,9 +64,9 @@ static block_t * PacketizeClosed( decoder_t *, block_t ** );
  *****************************************************************************/
 static void FlushPacketizer( decoder_t *p_dec )
 {
-    avparser_ClosePacketizer( VLC_OBJECT( p_dec ) );
+    avparser_ClosePacketizer( p_dec );
     p_dec->p_sys = NULL;
-    int res = avparser_OpenPacketizer( VLC_OBJECT( p_dec ) );
+    int res = avparser_OpenPacketizer( p_dec );
     if ( res != VLC_SUCCESS )
     {
         msg_Err( p_dec, "failed to flush with error %d", res );
@@ -80,9 +80,8 @@ static void FlushPacketizer( decoder_t *p_dec )
  * Tries to launch a decoder and return score so that the interface is able
  * to choose.
  *****************************************************************************/
-int avparser_OpenPacketizer( vlc_object_t *p_this )
+int avparser_OpenPacketizer( decoder_t *p_dec )
 {
-    decoder_t     *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     /* Restrict to VP9 for now */
@@ -96,7 +95,7 @@ int avparser_OpenPacketizer( vlc_object_t *p_this )
         return VLC_EGENERIC;
 
     /* init avcodec */
-    vlc_init_avcodec(p_this);
+    vlc_init_avcodec(VLC_OBJECT(p_dec));
 
     /* It is less likely to have a parser than a codec, start by that */
     AVCodecParserContext * p_ctx = av_parser_init( i_avcodec_id );
@@ -139,9 +138,8 @@ int avparser_OpenPacketizer( vlc_object_t *p_this )
 /*****************************************************************************
  * avparser_ClosePacketizer:
  *****************************************************************************/
-void avparser_ClosePacketizer( vlc_object_t *p_this )
+void avparser_ClosePacketizer( decoder_t *p_dec )
 {
-    decoder_t     *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
     if (likely( p_sys != NULL ))
     {

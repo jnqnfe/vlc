@@ -39,11 +39,11 @@
 /*****************************************************************************
  * Module descriptior
  *****************************************************************************/
-static int  OpenAccess (vlc_object_t *);
-static void CloseAccess(vlc_object_t *);
+static int  OpenAccess (stream_t *);
+static void CloseAccess(stream_t *);
 
-static int  OpenDemux (vlc_object_t *);
-static void CloseDemux(vlc_object_t *);
+static int  OpenDemux (demux_t *);
+static void CloseDemux(demux_t *);
 
 #define ID_TEXT N_("ID")
 #define ID_LONGTEXT N_(\
@@ -284,15 +284,14 @@ static int OpenCommon(vlc_object_t *object, imem_sys_t **sys_ptr, const char *ps
 /**
  * It opens an imem access.
  */
-static int OpenAccess(vlc_object_t *object)
+static int OpenAccess(stream_t *access)
 {
-    stream_t   *access = (stream_t *)object;
     imem_sys_t *sys;
 
-    if (OpenCommon(object, &sys, access->psz_location))
+    if (OpenCommon(VLC_OBJECT(access), &sys, access->psz_location))
         return VLC_EGENERIC;
 
-    if (var_InheritInteger(object, "imem-cat") != 4) {
+    if (var_InheritInteger(access, "imem-cat") != 4) {
         CloseCommon(sys);
         return VLC_EGENERIC;
     }
@@ -310,10 +309,8 @@ static int OpenAccess(vlc_object_t *object)
 /**
  * It closes an imem access
  */
-static void CloseAccess(vlc_object_t *object)
+static void CloseAccess(stream_t *access)
 {
-    stream_t *access = (stream_t *)object;
-
     CloseCommon((imem_sys_t*)access->p_sys);
 }
 
@@ -406,55 +403,54 @@ static inline int GetCategory(vlc_object_t *object)
 /**
  * It opens an imem access_demux.
  */
-static int OpenDemux(vlc_object_t *object)
+static int OpenDemux(demux_t *demux)
 {
-    demux_t    *demux = (demux_t *)object;
     imem_sys_t *sys;
 
     if (demux->out == NULL)
         return VLC_EGENERIC;
 
-    if (OpenCommon(object, &sys, demux->psz_location))
+    if (OpenCommon(VLC_OBJECT(demux), &sys, demux->psz_location))
         return VLC_EGENERIC;
 
     /* ES format */
     es_format_t fmt;
-    es_format_Init(&fmt, GetCategory(object), 0);
+    es_format_Init(&fmt, GetCategory(VLC_OBJECT(demux)), 0);
 
-    fmt.i_id = var_InheritInteger(object, "imem-id");
-    fmt.i_group = var_InheritInteger(object, "imem-group");
+    fmt.i_id = var_InheritInteger(demux, "imem-id");
+    fmt.i_group = var_InheritInteger(demux, "imem-group");
 
-    char *tmp = var_InheritString(object, "imem-codec");
+    char *tmp = var_InheritString(demux, "imem-codec");
     if (tmp)
         fmt.i_codec = vlc_fourcc_GetCodecFromString(fmt.i_cat, tmp);
     free(tmp);
 
     switch (fmt.i_cat) {
     case AUDIO_ES: {
-        fmt.audio.i_channels = var_InheritInteger(object, "imem-channels");
-        fmt.audio.i_rate = var_InheritInteger(object, "imem-samplerate");
+        fmt.audio.i_channels = var_InheritInteger(demux, "imem-channels");
+        fmt.audio.i_rate = var_InheritInteger(demux, "imem-samplerate");
 
-        msg_Dbg(object, "Audio %4.4s %d channels %d Hz",
+        msg_Dbg(demux, "Audio %4.4s %d channels %d Hz",
                 (const char *)&fmt.i_codec,
                 fmt.audio.i_channels, fmt.audio.i_rate);
         break;
     }
     case VIDEO_ES: {
-        fmt.video.i_width  = var_InheritInteger(object, "imem-width");
-        fmt.video.i_height = var_InheritInteger(object, "imem-height");
+        fmt.video.i_width  = var_InheritInteger(demux, "imem-width");
+        fmt.video.i_height = var_InheritInteger(demux, "imem-height");
         unsigned num, den;
-        if (!var_InheritURational(object, &num, &den, "imem-dar") && num > 0 && den > 0) {
+        if (!var_InheritURational(demux, &num, &den, "imem-dar") && num > 0 && den > 0) {
             if (fmt.video.i_width != 0 && fmt.video.i_height != 0) {
                 fmt.video.i_sar_num = num * fmt.video.i_height;
                 fmt.video.i_sar_den = den * fmt.video.i_width;
             }
         }
-        if (!var_InheritURational(object, &num, &den, "imem-fps") && num > 0 && den > 0) {
+        if (!var_InheritURational(demux, &num, &den, "imem-fps") && num > 0 && den > 0) {
             fmt.video.i_frame_rate      = num;
             fmt.video.i_frame_rate_base = den;
         }
 
-        msg_Dbg(object, "Video %4.4s %dx%d  SAR %d:%d frame rate %u/%u",
+        msg_Dbg(demux, "Video %4.4s %dx%d  SAR %d:%d frame rate %u/%u",
                 (const char *)&fmt.i_codec,
                 fmt.video.i_width, fmt.video.i_height,
                 fmt.video.i_sar_num, fmt.video.i_sar_den,
@@ -463,11 +459,11 @@ static int OpenDemux(vlc_object_t *object)
     }
     case SPU_ES: {
         fmt.subs.spu.i_original_frame_width =
-            var_InheritInteger(object, "imem-width");
+            var_InheritInteger(demux, "imem-width");
         fmt.subs.spu.i_original_frame_height =
-            var_InheritInteger(object, "imem-height");
+            var_InheritInteger(demux, "imem-height");
 
-        msg_Dbg(object, "Subtitle %4.4s",
+        msg_Dbg(demux, "Subtitle %4.4s",
                 (const char *)&fmt.i_codec);
         break;
     }
@@ -477,7 +473,7 @@ static int OpenDemux(vlc_object_t *object)
         return VLC_EGENERIC;
     }
 
-    fmt.psz_language = var_InheritString(object, "imem-language");
+    fmt.psz_language = var_InheritString(demux, "imem-language");
 
     sys->es = es_out_Add(demux->out, &fmt);
     es_format_Clean(&fmt);
@@ -498,10 +494,8 @@ static int OpenDemux(vlc_object_t *object)
 /**
  * It closes an imem access_demux
  */
-static void CloseDemux(vlc_object_t *object)
+static void CloseDemux(demux_t *demux)
 {
-    demux_t *demux = (demux_t *)object;
-
     CloseCommon((imem_sys_t*)demux->p_sys);
 }
 

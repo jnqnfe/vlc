@@ -53,8 +53,8 @@ typedef struct
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  OpenEncoder   ( vlc_object_t * );
-static void CloseEncoder  ( vlc_object_t * );
+static int  OpenEncoder   ( encoder_t * );
+static void CloseEncoder  ( encoder_t * );
 
 static block_t *EncodeFrame  ( encoder_t *, block_t * );
 
@@ -70,9 +70,8 @@ static struct
     vlc_mutex_t lock;
 } entrant = { false, VLC_STATIC_MUTEX, };
 
-static int OpenEncoder( vlc_object_t *p_this )
+static int OpenEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t*)p_this;
     encoder_sys_t *p_sys;
 
     /* shine is an 'MP3' encoder */
@@ -273,9 +272,9 @@ static block_t *EncodeFrame( encoder_t *p_enc, block_t *p_block )
     return p_chain;
 }
 
-static void CloseEncoder( vlc_object_t *p_this )
+static void CloseEncoder( encoder_t *p_enc )
 {
-    encoder_sys_t *p_sys = ((encoder_t*)p_this)->p_sys;
+    encoder_sys_t *p_sys = p_enc->p_sys;
 
     vlc_mutex_lock( &entrant.lock );
     entrant.busy = false;

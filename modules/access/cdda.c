@@ -64,12 +64,12 @@
  #include <errno.h>
 #endif
 
-static vcddev_t *DiscOpen(vlc_object_t *obj, const char *location,
+static vcddev_t *DiscOpen(stream_t *access, const char *location,
                          const char *path, unsigned *restrict trackp)
 {
     char *devpath;
 
-    *trackp = var_InheritInteger(obj, "cdda-track");
+    *trackp = var_InheritInteger(access, "cdda-track");
 
     if (path != NULL)
         devpath = ToLocaleDup(path);
@@ -99,7 +99,7 @@ static vcddev_t *DiscOpen(vlc_object_t *obj, const char *location,
 #endif
     }
     else
-        devpath = var_InheritString(obj, "cd-audio");
+        devpath = var_InheritString(access, "cd-audio");
 
     if (devpath == NULL)
         return NULL;
@@ -111,9 +111,9 @@ static vcddev_t *DiscOpen(vlc_object_t *obj, const char *location,
 #endif
 
     /* Open CDDA */
-    vcddev_t *dev = ioctl_Open(obj, devpath);
+    vcddev_t *dev = ioctl_Open(VLC_OBJECT(access), devpath);
     if (dev == NULL)
-        msg_Warn(obj, "cannot open disc %s", devpath);
+        msg_Warn(access, "cannot open disc %s", devpath);
     free(devpath);
 
     return dev;
@@ -280,26 +280,24 @@ static int TOC_GetAudioRange(vcddev_toc_t *p_toc,
     return (i_last >= i_first) ? i_last - i_first + 1 : 0;
 }
 
-static int DemuxOpen(vlc_object_t *obj, vcddev_t *dev, unsigned track)
+static int DemuxOpen(demux_t *demux, vcddev_t *dev, unsigned track)
 {
-    demux_t *demux = (demux_t *)obj;
-
     if (demux->out == NULL)
         goto error;
 
-    demux_sys_t *sys = vlc_obj_malloc(obj, sizeof (*sys));
+    demux_sys_t *sys = vlc_obj_malloc(VLC_OBJECT(demux), sizeof (*sys));
     if (unlikely(sys == NULL))
         goto error;
 
     demux->p_sys = sys;
     sys->vcddev = dev;
-    sys->start = var_InheritInteger(obj, "cdda-first-sector");
-    sys->length = var_InheritInteger(obj, "cdda-last-sector") - sys->start;
+    sys->start = var_InheritInteger(demux, "cdda-first-sector");
+    sys->length = var_InheritInteger(demux, "cdda-last-sector") - sys->start;
 
     /* Track number in input item */
     if (sys->start == (unsigned)-1 || sys->length == (unsigned)-1)
     {
-        vcddev_toc_t *p_toc = ioctl_GetTOC(obj, dev, true);
+        vcddev_toc_t *p_toc = ioctl_GetTOC(VLC_OBJECT(demux), dev, true);
         if(p_toc == NULL)
             goto error;
 
@@ -308,7 +306,7 @@ static int DemuxOpen(vlc_object_t *obj, vcddev_t *dev, unsigned track)
 
         if (track == 0 || track > (unsigned) i_cdda_tracks)
         {
-            msg_Err(obj, "invalid track number: %u/%i", track, i_cdda_tracks);
+            msg_Err(demux, "invalid track number: %u/%i", track, i_cdda_tracks);
             vcddev_toc_Free(p_toc);
             goto error;
         }
@@ -340,7 +338,7 @@ static int DemuxOpen(vlc_object_t *obj, vcddev_t *dev, unsigned track)
     return VLC_SUCCESS;
 
 error:
-    ioctl_Close(obj, dev);
+    ioctl_Close(VLC_OBJECT(demux), dev);
     return VLC_EGENERIC;
 }
 
@@ -446,17 +444,17 @@ static char * BuildMusicbrainzDiscID( const vcddev_toc_t *p_toc,
 # define BuildMusicbrainzDiscID(a, b, c, d) (NULL)
 #endif
 
-static musicbrainz_recording_t * GetMusicbrainzInfo( vlc_object_t *obj,
+static musicbrainz_recording_t * GetMusicbrainzInfo( stream_t *access,
                                                      const vcddev_toc_t *p_toc,
                                                      int i_total, int i_first, int i_last )
 {
     musicbrainz_recording_t *recording = NULL;
 
-    char *psz_mbserver = var_InheritString( obj, "musicbrainz-server" );
+    char *psz_mbserver = var_InheritString( access, "musicbrainz-server" );
     if( !psz_mbserver || !*psz_mbserver )
         return NULL;
 
-    musicbrainz_config_t cfg = { .obj = obj,
+    musicbrainz_config_t cfg = { .obj = access,
                                  .psz_mb_server = psz_mbserver,
                                  .psz_coverart_server = NULL };
 
@@ -506,15 +504,15 @@ static musicbrainz_recording_t * GetMusicbrainzInfo( vlc_object_t *obj,
 }
 
 #ifdef HAVE_LIBCDDB
-static cddb_disc_t *GetCDDBInfo( vlc_object_t *obj, const vcddev_toc_t *p_toc )
+static cddb_disc_t *GetCDDBInfo( stream_t *access, const vcddev_toc_t *p_toc )
 {
-    msg_Dbg( obj, "retrieving metadata with CDDB" );
+    msg_Dbg( access, "retrieving metadata with CDDB" );
 
     /* */
     cddb_conn_t *p_cddb = cddb_new();
     if( !p_cddb )
     {
-        msg_Warn( obj, "unable to use CDDB" );
+        msg_Warn( access, "unable to use CDDB" );
         return NULL;
     }
 
@@ -522,14 +520,14 @@ static cddb_disc_t *GetCDDBInfo( vlc_object_t *obj, const vcddev_toc_t *p_toc )
 
     cddb_http_enable( p_cddb );
 
-    char *psz_tmp = var_InheritString( obj, "cddb-server" );
+    char *psz_tmp = var_InheritString( access, "cddb-server" );
     if( psz_tmp )
     {
         cddb_set_server_name( p_cddb, psz_tmp );
         free( psz_tmp );
     }
 
-    cddb_set_server_port( p_cddb, var_InheritInteger( obj, "cddb-port" ) );
+    cddb_set_server_port( p_cddb, var_InheritInteger( access, "cddb-port" ) );
 
     cddb_set_email_address( p_cddb, "vlc@videolan.org" );
 
@@ -553,7 +551,7 @@ static cddb_disc_t *GetCDDBInfo( vlc_object_t *obj, const vcddev_toc_t *p_toc )
     cddb_disc_t *p_disc = cddb_disc_new();
     if( !p_disc )
     {
-        msg_Err( obj, "unable to create CDDB disc structure." );
+        msg_Err( access, "unable to create CDDB disc structure." );
         goto error;
     }
 
@@ -568,35 +566,35 @@ static cddb_disc_t *GetCDDBInfo( vlc_object_t *obj, const vcddev_toc_t *p_toc )
                                (int64_t)CDDA_DATA_SIZE;
         i_length += INT64_C(1000000) * i_size / 44100 / 4  ;
 
-        msg_Dbg( obj, "Track %i offset: %i", i, p_toc->p_sectors[i].i_lba + 150 );
+        msg_Dbg( access, "Track %i offset: %i", i, p_toc->p_sectors[i].i_lba + 150 );
     }
 
-    msg_Dbg( obj, "Total length: %i", (int)(i_length/1000000) );
+    msg_Dbg( access, "Total length: %i", (int)(i_length/1000000) );
     cddb_disc_set_length( p_disc, (int)(i_length/1000000) );
 
     if( !cddb_disc_calc_discid( p_disc ) )
     {
-        msg_Err( obj, "CDDB disc ID calculation failed" );
+        msg_Err( access, "CDDB disc ID calculation failed" );
         goto error;
     }
 
     const int i_matches = cddb_query( p_cddb, p_disc );
     if( i_matches < 0 )
     {
-        msg_Warn( obj, "CDDB error: %s", cddb_error_str(errno) );
+        msg_Warn( access, "CDDB error: %s", cddb_error_str(errno) );
         goto error;
     }
     else if( i_matches == 0 )
     {
-        msg_Dbg( obj, "Couldn't find any matches in CDDB." );
+        msg_Dbg( access, "Couldn't find any matches in CDDB." );
         goto error;
     }
     else if( i_matches > 1 )
-        msg_Warn( obj, "found %d matches in CDDB. Using first one.", i_matches );
+        msg_Warn( access, "found %d matches in CDDB. Using first one.", i_matches );
 
     cddb_read( p_cddb, p_disc );
 
-    msg_Dbg( obj, "disc ID: 0x%08x", cddb_disc_get_discid(p_disc) );
+    msg_Dbg( access, "disc ID: 0x%08x", cddb_disc_get_discid(p_disc) );
 
     cddb_destroy( p_cddb);
     return p_disc;
@@ -605,7 +603,7 @@ error:
     if( p_disc )
         cddb_disc_destroy( p_disc );
     cddb_destroy( p_cddb );
-    msg_Dbg( obj, "CDDB failure" );
+    msg_Dbg( access, "CDDB failure" );
     return NULL;
 }
 #endif /* HAVE_LIBCDDB */
@@ -861,36 +859,35 @@ static int AccessControl(stream_t *access, int query, va_list args)
     return access_vaDirectoryControlHelper(access, query, args);
 }
 
-static int AccessOpen(vlc_object_t *obj, vcddev_t *dev)
+static int AccessOpen(stream_t *access, vcddev_t *dev)
 {
-    stream_t *access = (stream_t *)obj;
     /* Only whole discs here */
-    access_sys_t *sys = vlc_obj_malloc(obj, sizeof (*sys));
+    access_sys_t *sys = vlc_obj_malloc(VLC_OBJECT(access), sizeof (*sys));
     if (unlikely(sys == NULL))
     {
-        ioctl_Close(obj, dev);
+        ioctl_Close(VLC_OBJECT(access), dev);
         return VLC_ENOMEM;
     }
 
     sys->vcddev = dev;
-    sys->p_toc = ioctl_GetTOC(obj, dev, true);
+    sys->p_toc = ioctl_GetTOC(VLC_OBJECT(access), dev, true);
     if (sys->p_toc == NULL)
     {
-        msg_Err(obj, "cannot count tracks");
+        msg_Err(access, "cannot count tracks");
         goto error;
     }
 
     sys->i_cdda_tracks = TOC_GetAudioRange(sys->p_toc, &sys->i_cdda_first, &sys->i_cdda_last);
     if (sys->i_cdda_tracks == 0)
     {
-        msg_Err(obj, "no audio tracks found");
+        msg_Err(access, "no audio tracks found");
         vcddev_toc_Free(sys->p_toc);
         goto error;
     }
 
-    if (ioctl_GetCdText(obj, dev, &sys->cdtextv, &sys->cdtextc))
+    if (ioctl_GetCdText(VLC_OBJECT(access), dev, &sys->cdtextv, &sys->cdtextc))
     {
-        msg_Dbg(obj, "CD-TEXT information missing");
+        msg_Dbg(access, "CD-TEXT information missing");
         sys->cdtextv = NULL;
         sys->cdtextc = 0;
     }
@@ -900,16 +897,16 @@ static int AccessOpen(vlc_object_t *obj, vcddev_t *dev)
     sys->cddb = NULL;
 #endif
 
-    if(var_InheritBool(obj, "metadata-network-access"))
+    if(var_InheritBool(access, "metadata-network-access"))
     {
-        sys->mbrecord = GetMusicbrainzInfo(obj, sys->p_toc, sys->i_cdda_tracks,
+        sys->mbrecord = GetMusicbrainzInfo(access, sys->p_toc, sys->i_cdda_tracks,
                                            sys->i_cdda_first, sys->i_cdda_last );
 #ifdef HAVE_LIBCDDB
         if(!sys->mbrecord)
-            sys->cddb = GetCDDBInfo(obj, sys->p_toc);
+            sys->cddb = GetCDDBInfo(access, sys->p_toc);
 #endif
     }
-    else msg_Dbg(obj, "album art policy set to manual: not fetching");
+    else msg_Dbg(access, "album art policy set to manual: not fetching");
 
     access->p_sys = sys;
     access->pf_read = NULL;
@@ -920,7 +917,7 @@ static int AccessOpen(vlc_object_t *obj, vcddev_t *dev)
     return VLC_SUCCESS;
 
 error:
-    ioctl_Close(obj, dev);
+    ioctl_Close(VLC_OBJECT(access), dev);
     return VLC_EGENERIC;
 }
 
@@ -943,25 +940,23 @@ static void AccessClose(access_sys_t *sys)
     vcddev_toc_Free(sys->p_toc);
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(stream_t *stream)
 {
-    stream_t *stream = (stream_t *)obj;
     unsigned track;
 
-    vcddev_t *dev = DiscOpen(obj, stream->psz_location, stream->psz_filepath,
+    vcddev_t *dev = DiscOpen(stream, stream->psz_location, stream->psz_filepath,
                              &track);
     if (dev == NULL)
         return VLC_EGENERIC;
 
     if (track == 0)
-        return AccessOpen(obj, dev);
+        return AccessOpen(stream, dev);
     else
-        return DemuxOpen(obj, dev, track);
+        return DemuxOpen((demux_t*)stream, dev, track);
 }
 
-static void Close(vlc_object_t *obj)
+static void Close(stream_t *stream)
 {
-    stream_t *stream = (stream_t *)obj;
     void *sys = stream->p_sys;
 
     if (stream->pf_readdir != NULL)
@@ -969,7 +964,7 @@ static void Close(vlc_object_t *obj)
 
     static_assert(offsetof(demux_sys_t, vcddev) == 0, "Invalid cast");
     static_assert(offsetof(access_sys_t, vcddev) == 0, "Invalid cast");
-    ioctl_Close(obj, *(vcddev_t **)sys);
+    ioctl_Close(VLC_OBJECT(stream), *(vcddev_t **)sys);
 }
 
 /*****************************************************************************

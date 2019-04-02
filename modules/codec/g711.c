@@ -31,13 +31,13 @@
 #include <vlc_codec.h>
 #include <vlc_aout.h>
 
-static int  DecoderOpen ( vlc_object_t * );
-static void DecoderClose( vlc_object_t * );
+static int DecoderOpen( decoder_t * );
+static void DecoderClose( decoder_t * );
 static int DecodeBlock( decoder_t *, block_t * );
 static void Flush( decoder_t * );
 
 #ifdef ENABLE_SOUT
-static int  EncoderOpen ( vlc_object_t * );
+static int EncoderOpen( encoder_t * );
 static block_t *EncoderEncode( encoder_t *, block_t * );
 #endif
 
@@ -140,9 +140,8 @@ static const int16_t alawtos16[256] =
        944,    912,   1008,    976,    816,    784,    880,    848
 };
 
-static int DecoderOpen( vlc_object_t *p_this )
+static int DecoderOpen( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     const int16_t *table;
 
     switch( p_dec->fmt_in.i_codec )
@@ -281,10 +280,8 @@ static int DecodeBlock( decoder_t *p_dec, block_t *p_block )
     return VLCDEC_SUCCESS;
 }
 
-static void DecoderClose( vlc_object_t *p_this )
+static void DecoderClose( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
-
     free( p_dec->p_sys );
 }
 
@@ -1151,10 +1148,8 @@ static const int8_t ulaw_encode[8193] =
     0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x00
 };
 
-static int EncoderOpen( vlc_object_t *p_this )
+static int EncoderOpen( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
-
     if( p_enc->fmt_out.i_codec != VLC_CODEC_ALAW
      && p_enc->fmt_out.i_codec != VLC_CODEC_MULAW )
         return VLC_EGENERIC;

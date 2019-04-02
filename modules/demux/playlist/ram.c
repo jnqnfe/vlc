@@ -65,12 +65,11 @@ static void ParseClipInfo( const char * psz_clipinfo, char **ppsz_artist, char *
 
 /**
  * Import_RAM: main import function
- * @param p_this: this demux object
+ * @param p_demux: this demux object
  * @return VLC_SUCCESS if everything is okay
  */
-int Import_RAM( vlc_object_t *p_this )
+int Import_RAM( stream_t* p_demux )
 {
-    stream_t *p_demux = (stream_t *)p_this;
     const uint8_t *p_peek;
 
     CHECK_FILE(p_demux);

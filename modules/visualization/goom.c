@@ -40,8 +40,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open         ( vlc_object_t * );
-static void Close        ( vlc_object_t * );
+static int  Open         ( filter_t * );
+static void Close        ( filter_t * );
 
 #define WIDTH_TEXT N_("Goom display width")
 #define HEIGHT_TEXT N_("Goom display height")
@@ -106,10 +106,9 @@ static void *Thread( void * );
 /*****************************************************************************
  * Open: open a scope effect plugin
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( filter_t *p_filter )
 {
-    filter_t       *p_filter = (filter_t *)p_this;
-    goom_thread_t  *p_thread;
+    goom_thread_t *p_thread;
 
     /* Create goom thread */
     p_filter->p_sys = p_thread = calloc( 1, sizeof(*p_thread) );
@@ -337,9 +336,8 @@ static void *Thread( void *p_thread_data )
 /*****************************************************************************
  * Close: close the plugin
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( filter_t *p_filter )
 {
-    filter_t     *p_filter = (filter_t *)p_this;
     goom_thread_t *p_thread = p_filter->p_sys;
 
     /* Stop Goom Thread */

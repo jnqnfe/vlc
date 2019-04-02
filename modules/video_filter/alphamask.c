@@ -48,8 +48,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  Create      ( vlc_object_t * );
-static void Destroy     ( vlc_object_t * );
+static int  Create      ( filter_t * );
+static void Destroy     ( filter_t * );
 
 static picture_t *Filter( filter_t *, picture_t * );
 static void LoadMask( filter_t *, const char * );
@@ -81,9 +81,8 @@ typedef struct
     vlc_mutex_t mask_lock;
 } filter_sys_t;
 
-static int Create( vlc_object_t *p_this )
+static int Create( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys;
     char *psz_string;
 
@@ -126,9 +125,8 @@ static int Create( vlc_object_t *p_this )
     return VLC_SUCCESS;
 }
 
-static void Destroy( vlc_object_t *p_this )
+static void Destroy( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     var_DelCallback( p_filter, CFG_PREFIX "mask", MaskCallback,

@@ -44,13 +44,13 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  OpenDecoder   ( vlc_object_t * );
-static int  OpenPacketizer( vlc_object_t * );
-static void CloseDecoder  ( vlc_object_t * );
+static int  OpenDecoder   ( decoder_t * );
+static int  OpenPacketizer( decoder_t * );
+static void CloseDecoder  ( decoder_t * );
 
 #ifdef ENABLE_SOUT
-static int OpenEncoder   ( vlc_object_t * );
-static void CloseEncoder ( vlc_object_t * );
+static int OpenEncoder   ( encoder_t * );
+static void CloseEncoder ( encoder_t * );
 #endif
 
 #define ENC_CFG_PREFIX "sout-speex-"
@@ -185,9 +185,8 @@ static block_t *SendPacket( decoder_t *, block_t * );
 
 static void ParseSpeexComments( decoder_t *, ogg_packet * );
 
-static int OpenCommon( vlc_object_t *p_this, bool b_packetizer )
+static int OpenCommon( decoder_t *p_dec, bool b_packetizer )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     if( p_dec->fmt_in.i_codec != VLC_CODEC_SPEEX )
@@ -242,14 +241,14 @@ static int OpenCommon( vlc_object_t *p_this, bool b_packetizer )
 /*****************************************************************************
  * OpenDecoder: probe the decoder and return score
  *****************************************************************************/
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    return OpenCommon( p_this, false );
+    return OpenCommon( p_dec, false );
 }
 
-static int OpenPacketizer( vlc_object_t *p_this )
+static int OpenPacketizer( decoder_t *p_dec )
 {
-    return OpenCommon( p_this, true );
+    return OpenCommon( p_dec, true );
 }
 
 static int CreateDefaultHeader( decoder_t *p_dec )
@@ -901,9 +900,8 @@ static void ParseSpeexComments( decoder_t *p_dec, ogg_packet *p_oggpacket )
 /*****************************************************************************
  * CloseDecoder: speex decoder destruction
  *****************************************************************************/
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t *p_dec )
 {
-    decoder_t * p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     if( p_sys->p_state )
@@ -951,9 +949,8 @@ static block_t *Encode   ( encoder_t *, block_t * );
 /*****************************************************************************
  * OpenEncoder: probe the encoder and return score
  *****************************************************************************/
-static int OpenEncoder( vlc_object_t *p_this )
+static int OpenEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys;
     const SpeexMode *p_speex_mode = &speex_nb_mode;
     int i_tmp, i;
@@ -1175,9 +1172,8 @@ static block_t *Encode( encoder_t *p_enc, block_t *p_aout_buf )
 /*****************************************************************************
  * CloseEncoder: encoder destruction
  *****************************************************************************/
-static void CloseEncoder( vlc_object_t *p_this )
+static void CloseEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys = p_enc->p_sys;
 
     speex_encoder_destroy( p_sys->p_state );

@@ -40,8 +40,8 @@
  * Local prototypes
  *****************************************************************************/
 
-static int      Open        ( vlc_object_t * );
-static void     Close       ( vlc_object_t * );
+static int      Open        ( filter_t * );
+static void     Close       ( filter_t * );
 static block_t  *Process    ( filter_t *, block_t * );
 
 typedef struct
@@ -73,10 +73,9 @@ vlc_plugin_end()
  * Open: initialize filter
  *****************************************************************************/
 
-static int Open( vlc_object_t *p_this )
+static int Open( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
-    filter_sys_t *p_sys = vlc_object_create( p_this, sizeof( *p_sys ) );
+    filter_sys_t *p_sys = vlc_object_create( p_filter, sizeof( *p_sys ) );
     if( unlikely( p_sys == NULL ) )
         return VLC_ENOMEM;
 
@@ -117,9 +116,8 @@ static block_t *Process( filter_t *p_filter, block_t *p_block )
  * Close: close filter
  *****************************************************************************/
 
-static void Close( vlc_object_t *p_this )
+static void Close( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     module_unneed( &p_sys->volume, p_sys->module );

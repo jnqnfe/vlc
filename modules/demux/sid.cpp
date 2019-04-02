@@ -45,8 +45,8 @@
 
 #include <new>
 
-static int  Open (vlc_object_t *);
-static void Close (vlc_object_t *);
+static int  Open (demux_t *);
+static void Close (demux_t *);
 
 vlc_plugin_begin ()
     set_shortname ("sid")
@@ -79,9 +79,8 @@ struct demux_sys_t
 static int Demux (demux_t *);
 static int Control (demux_t *, int, va_list);
 
-static int Open (vlc_object_t *obj)
+static int Open (demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     demux_sys_t *sys = NULL;
     es_format_t fmt;
     bool result = false;
@@ -192,9 +191,8 @@ error:
 }
 
 
-static void Close (vlc_object_t *obj)
+static void Close (demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     demux_sys_t *sys = reinterpret_cast<demux_sys_t *>(demux->p_sys);
 
     delete sys->player;

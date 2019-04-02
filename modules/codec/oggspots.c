@@ -62,9 +62,9 @@ typedef struct
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  OpenDecoder   (vlc_object_t*);
-static int  OpenPacketizer(vlc_object_t*);
-static void CloseDecoder  (vlc_object_t*);
+static int  OpenDecoder   (decoder_t *);
+static int  OpenPacketizer(decoder_t *);
+static void CloseDecoder  (decoder_t *);
 
 static int        DecodeVideo  (decoder_t*, block_t*);
 static block_t*   Packetize  (decoder_t*, block_t**);
@@ -92,9 +92,8 @@ vlc_plugin_begin ()
     //set_subcategory(SUBCAT_INPUT_VCODEC)
 vlc_plugin_end ()
 
-static int OpenCommon(vlc_object_t* p_this, bool b_packetizer)
+static int OpenCommon(decoder_t *p_dec, bool b_packetizer)
 {
-    decoder_t* p_dec = (decoder_t*)p_this;
     decoder_sys_t* p_sys;
 
     if (p_dec->fmt_in.i_codec != VLC_CODEC_OGGSPOTS) {
@@ -137,14 +136,14 @@ static int OpenCommon(vlc_object_t* p_this, bool b_packetizer)
 /*****************************************************************************
  * OpenDecoder: probe the decoder and return score
  *****************************************************************************/
-static int OpenDecoder(vlc_object_t* p_this)
+static int OpenDecoder(decoder_t *p_dec)
 {
-    return OpenCommon(p_this, false);
+    return OpenCommon(p_dec, false);
 }
 
-static int OpenPacketizer(vlc_object_t* p_this)
+static int OpenPacketizer(decoder_t *p_dec)
 {
-    return OpenCommon(p_this, true);
+    return OpenCommon(p_dec, true);
 }
 
 /****************************************************************************
@@ -392,9 +391,8 @@ error:
 /*****************************************************************************
  * CloseDecoder: OggSpots decoder destruction
  *****************************************************************************/
-static void CloseDecoder(vlc_object_t* p_this)
+static void CloseDecoder(decoder_t *p_dec)
 {
-    decoder_t* p_dec = (decoder_t*)p_this;
     decoder_sys_t* p_sys = p_dec->p_sys;
 
     image_HandlerDelete(p_sys->p_image);

@@ -40,8 +40,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open (vlc_object_t *);
-static void Close(vlc_object_t *);
+static int  Open (filter_t *);
+static void Close(filter_t *);
 
 #define BANK_SIZE (64)
 
@@ -370,10 +370,8 @@ static int Callback(vlc_object_t *object, char const *cmd,
     return VLC_SUCCESS;
 }
 
-static int Open(vlc_object_t *object)
+static int Open(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)object;
-
     const vlc_chroma_description_t *chroma =
         vlc_fourcc_GetChromaDescription(filter->fmt_in.video.i_chroma);
     if (!chroma || chroma->plane_count < 3 || chroma->pixel_size != 1) {
@@ -414,9 +412,8 @@ static int Open(vlc_object_t *object)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *object)
+static void Close(filter_t *filter)
 {
-    filter_t     *filter = (filter_t *)object;
     filter_sys_t *sys    = filter->p_sys;
 
     var_DelCallback(filter, CFG_PREFIX "variance", Callback, NULL);

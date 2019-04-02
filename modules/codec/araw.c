@@ -38,11 +38,11 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  DecoderOpen ( vlc_object_t * );
-static void DecoderClose( vlc_object_t * );
+static int  DecoderOpen ( decoder_t * );
+static void DecoderClose( decoder_t * );
 
 #ifdef ENABLE_SOUT
-static int  EncoderOpen ( vlc_object_t * );
+static int  EncoderOpen ( encoder_t * );
 #endif
 
 vlc_plugin_begin ()
@@ -96,9 +96,8 @@ static void DAT12Decode( void *, const uint8_t *, unsigned );
 /*****************************************************************************
  * DecoderOpen: probe the decoder and return score
  *****************************************************************************/
-static int DecoderOpen( vlc_object_t *p_this )
+static int DecoderOpen( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     vlc_fourcc_t format = p_dec->fmt_in.i_codec;
 
     switch( p_dec->fmt_in.i_codec )
@@ -630,10 +629,8 @@ static void DAT12Decode( void *outp, const uint8_t *in, unsigned samples )
 /*****************************************************************************
  * DecoderClose: decoder destruction
  *****************************************************************************/
-static void DecoderClose( vlc_object_t *p_this )
+static void DecoderClose( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
-
     free( p_dec->p_sys );
 }
 
@@ -805,9 +802,8 @@ static block_t *Encode( encoder_t *enc, block_t *in )
 /**
  * Probes the PCM audio encoder.
  */
-static int EncoderOpen( vlc_object_t *p_this )
+static int EncoderOpen( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     void (*encode)(void *, const uint8_t *, unsigned) = NULL;
 
     switch( p_enc->fmt_out.i_codec )

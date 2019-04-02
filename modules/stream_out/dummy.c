@@ -36,7 +36,7 @@
 /*****************************************************************************
  * Exported prototypes
  *****************************************************************************/
-static int      Open    ( vlc_object_t * );
+static int      Open    ( sout_stream_t * );
 
 static void *Add( sout_stream_t *, const es_format_t * );
 static void  Del ( sout_stream_t *, void * );
@@ -54,10 +54,8 @@ vlc_plugin_end ()
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_stream_t *p_stream )
 {
-    sout_stream_t *p_stream = (sout_stream_t*)p_this;
-
     p_stream->pf_add    = Add;
     p_stream->pf_del    = Del;
     p_stream->pf_send   = Send;

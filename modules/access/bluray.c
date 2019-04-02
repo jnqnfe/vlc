@@ -238,8 +238,8 @@ static const char *const ppsz_region_code_text[] = {
 #define BD_READ_SIZE    (10 * BD_CLUSTER_SIZE)
 
 /* Callbacks */
-static int  blurayOpen (vlc_object_t *);
-static void blurayClose(vlc_object_t *);
+static int  blurayOpen (demux_t *);
+static void blurayClose(demux_t *);
 
 vlc_plugin_begin ()
     set_shortname(N_("Blu-ray"))
@@ -808,9 +808,8 @@ bailout:
 /*****************************************************************************
  * blurayOpen: module init function
  *****************************************************************************/
-static int blurayOpen(vlc_object_t *object)
+static int blurayOpen(demux_t *p_demux)
 {
-    demux_t *p_demux = (demux_t*)object;
     demux_sys_t *p_sys;
     bool forced;
     uint64_t i_init_pos = 0;
@@ -844,7 +843,7 @@ static int blurayOpen(vlc_object_t *object)
     }
 
     /* */
-    p_demux->p_sys = p_sys = vlc_obj_calloc(object, 1, sizeof(*p_sys));
+    p_demux->p_sys = p_sys = vlc_obj_calloc(VLC_OBJECT(p_demux), 1, sizeof(*p_sys));
     if (unlikely(!p_sys))
         return VLC_ENOMEM;
 
@@ -897,7 +896,7 @@ static int blurayOpen(vlc_object_t *object)
     {
         if (!p_demux->psz_filepath) {
             /* no path provided (bluray://). use default DVD device. */
-            p_sys->psz_bd_path = var_InheritString(object, "dvd");
+            p_sys->psz_bd_path = var_InheritString(p_demux, "dvd");
         } else {
             /* store current bd path */
             p_sys->psz_bd_path = strdup(p_demux->psz_filepath);
@@ -1065,7 +1064,7 @@ static int blurayOpen(vlc_object_t *object)
 error:
     if (error_msg)
         vlc_dialog_display_error(p_demux, _("Blu-ray error"), "%s", error_msg);
-    blurayClose(object);
+    blurayClose(p_demux);
 
     if (p_demux->s != NULL) {
         /* restore stream position */
@@ -1083,9 +1082,8 @@ error:
 /*****************************************************************************
  * blurayClose: module destroy function
  *****************************************************************************/
-static void blurayClose(vlc_object_t *object)
+static void blurayClose(demux_t *p_demux)
 {
-    demux_t *p_demux = (demux_t*)object;
     demux_sys_t *p_sys = p_demux->p_sys;
 
     setTitleInfo(p_sys, NULL);

@@ -51,8 +51,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open    ( vlc_object_t * );
-static void Close   ( vlc_object_t * );
+static int  Open    ( intf_thread_t * );
+static void Close   ( intf_thread_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("Infrared") )
@@ -84,9 +84,8 @@ static void Process( intf_thread_t * );
 /*****************************************************************************
  * Open: initialize interface
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( intf_thread_t *p_intf )
 {
-    intf_thread_t *p_intf = (intf_thread_t *)p_this;
     intf_sys_t *p_sys;
 
     /* Allocate instance and initialize some members */
@@ -132,9 +131,8 @@ error:
 /*****************************************************************************
  * Close: destroy interface
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( intf_thread_t *p_intf )
 {
-    intf_thread_t *p_intf = (intf_thread_t *)p_this;
     intf_sys_t *p_sys = p_intf->p_sys;
 
     vlc_cancel( p_sys->thread );

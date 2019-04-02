@@ -27,7 +27,7 @@
 #include <vlc_filter.h>
 #include <vlc_plugin.h>
 
-static int Open (vlc_object_t *);
+static int Open (filter_t *);
 
 vlc_plugin_begin ()
     set_shortname (N_("Karaoke"))
@@ -38,10 +38,8 @@ vlc_plugin_end ()
 
 static block_t *Process (filter_t *, block_t *);
 
-static int Open (vlc_object_t *obj)
+static int Open (filter_t *filter)
 {
-    filter_t *filter = (filter_t *)obj;
-
     if (filter->fmt_in.audio.i_channels != 2)
     {
         msg_Err (filter, "voice removal requires stereo");

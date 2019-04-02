@@ -52,15 +52,15 @@ typedef long (STDCALL *GETCLASS) ( const GUID*, const GUID*, void** );
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  DecoderOpen  ( vlc_object_t * );
-static void DecoderClose ( vlc_object_t * );
+static int  DecoderOpen  ( decoder_t * );
+static void DecoderClose ( decoder_t * );
 static int DecodeBlock ( decoder_t *, block_t * );
 static void *DecoderThread( void * );
-static int  EncoderOpen  ( vlc_object_t * );
-static void EncoderClose ( vlc_object_t * );
+static int  EncoderOpen  ( encoder_t * );
+static void EncoderClose ( encoder_t * );
 static block_t *EncodeBlock( encoder_t *, void * );
 
-static int  EncOpen  ( vlc_object_t * );
+static int  EncOpen  ( encoder_t * );
 
 static int LoadDMO( vlc_object_t *, HINSTANCE *, IMediaObject **,
                     es_format_t *, bool );
@@ -220,9 +220,8 @@ static void WINAPI DMOFreeMediaType( DMO_MEDIA_TYPE *mt )
 /*****************************************************************************
  * DecoderOpen: open dmo codec
  *****************************************************************************/
-static int DecoderOpen( vlc_object_t *p_this )
+static int DecoderOpen( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     /* We can't open it now, because of ldt_keeper or something
@@ -279,9 +278,8 @@ error:
 /*****************************************************************************
  * DecoderClose: close codec
  *****************************************************************************/
-static void DecoderClose( vlc_object_t *p_this )
+static void DecoderClose( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     vlc_mutex_lock( &p_sys->lock );
@@ -1030,11 +1028,9 @@ typedef struct
 /*****************************************************************************
  * EncoderOpen: open dmo codec
  *****************************************************************************/
-static int EncoderOpen( vlc_object_t *p_this )
+static int EncoderOpen( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t*)p_this;
-
-    int i_ret = EncOpen( p_this );
+    int i_ret = EncOpen( p_enc );
     if( i_ret != VLC_SUCCESS ) return i_ret;
 
     /* Set callbacks */
@@ -1345,9 +1341,8 @@ static int EncoderSetAudioType( encoder_t *p_enc, IMediaObject *p_dmo )
 /*****************************************************************************
  * EncOpen: open dmo codec
  *****************************************************************************/
-static int EncOpen( vlc_object_t *p_this )
+static int EncOpen( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t*)p_this;
     encoder_sys_t *p_sys = NULL;
     IMediaObject *p_dmo = NULL;
     HINSTANCE hmsdmo_dll = NULL;
@@ -1356,7 +1351,7 @@ static int EncOpen( vlc_object_t *p_this )
     if( FAILED(CoInitializeEx( NULL, COINIT_MULTITHREADED )) )
         vlc_assert_unreachable();
 
-    if( LoadDMO( p_this, &hmsdmo_dll, &p_dmo, &p_enc->fmt_out, true )
+    if( LoadDMO( VLC_OBJECT(p_enc), &hmsdmo_dll, &p_dmo, &p_enc->fmt_out, true )
         != VLC_SUCCESS )
     {
         hmsdmo_dll = 0;
@@ -1593,9 +1588,8 @@ static block_t *EncodeBlock( encoder_t *p_enc, void *p_data )
 /*****************************************************************************
  * EncoderClose: close codec
  *****************************************************************************/
-void EncoderClose( vlc_object_t *p_this )
+void EncoderClose( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t*)p_this;
     encoder_sys_t *p_sys = p_enc->p_sys;
 
     if( !p_sys ) return;

@@ -55,10 +55,8 @@ static block_t *ReadBlock (stream_t *, bool *);
 static int AccessControl( stream_t *, int, va_list );
 static int InitVideo(stream_t *, int, uint32_t);
 
-int AccessOpen( vlc_object_t *obj )
+int AccessOpen( stream_t *access )
 {
-    stream_t *access = (stream_t *)obj;
-
     if( access->b_preparsing )
         return VLC_EGENERIC;
 
@@ -67,14 +65,14 @@ int AccessOpen( vlc_object_t *obj )
         return VLC_ENOMEM;
     access->p_sys = sys;
 
-    ParseMRL( obj, access->psz_location );
+    ParseMRL( VLC_OBJECT(access), access->psz_location );
 
-    char *path = var_InheritString (obj, CFG_PREFIX"dev");
+    char *path = var_InheritString (access, CFG_PREFIX"dev");
     if (unlikely(path == NULL))
         goto error; /* probably OOM */
 
     uint32_t caps;
-    int fd = OpenDevice (obj, path, &caps);
+    int fd = OpenDevice (VLC_OBJECT(access), path, &caps);
     free (path);
     if (fd == -1)
         goto error;
@@ -86,7 +84,7 @@ int AccessOpen( vlc_object_t *obj )
         goto error;
     }
 
-    sys->controls = ControlsInit(vlc_object_parent(obj), fd);
+    sys->controls = ControlsInit(vlc_object_parent(VLC_OBJECT(access)), fd);
     access->pf_seek = NULL;
     access->pf_control = AccessControl;
     return VLC_SUCCESS;
@@ -185,14 +183,13 @@ int InitVideo (stream_t *access, int fd, uint32_t caps)
     return 0;
 }
 
-void AccessClose( vlc_object_t *obj )
+void AccessClose( stream_t *access )
 {
-    stream_t *access = (stream_t *)obj;
     access_sys_t *sys = access->p_sys;
 
     if (sys->bufv != NULL)
         StopMmap (sys->fd, sys->bufv, sys->bufc);
-    ControlsDeinit(vlc_object_parent(obj), sys->controls);
+    ControlsDeinit(vlc_object_parent(VLC_OBJECT(access)), sys->controls);
     v4l2_close (sys->fd);
     free( sys );
 }

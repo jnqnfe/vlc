@@ -70,10 +70,8 @@ static int Control(demux_t *demux, int query, va_list args)
     return VLC_EGENERIC;
 }
 
-static int Import_Dir( vlc_object_t *p_this )
+static int Import_Dir( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t *)p_this;
-
     if( p_demux->s->pf_readdir == NULL )
         return VLC_EGENERIC;
     if( p_demux->p_input_item == NULL )

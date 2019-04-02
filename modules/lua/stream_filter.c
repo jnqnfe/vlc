@@ -272,12 +272,11 @@ static int ReadDir(stream_t *s, input_item_node_t *node)
 /*****************************************************************************
  * Import_LuaPlaylist: main import function
  *****************************************************************************/
-int Import_LuaPlaylist(vlc_object_t *obj)
+int Import_LuaPlaylist(stream_t *s)
 {
-    if( lua_Disabled( obj ) )
+    if( lua_Disabled( VLC_OBJECT(s) ) )
         return VLC_EGENERIC;
 
-    stream_t *s = (stream_t *)obj;
     if( s->s->pf_readdir != NULL )
         return VLC_EGENERIC;
 
@@ -314,9 +313,8 @@ int Import_LuaPlaylist(vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-void Close_LuaPlaylist(vlc_object_t *obj)
+void Close_LuaPlaylist(stream_t *s)
 {
-    stream_t *s = (stream_t *)obj;
     struct vlclua_playlist *sys = s->p_sys;
 
     free(sys->filename);

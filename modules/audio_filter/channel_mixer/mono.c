@@ -39,8 +39,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  OpenFilter    ( vlc_object_t * );
-static void CloseFilter   ( vlc_object_t * );
+static int  OpenFilter ( filter_t * );
+static void CloseFilter ( filter_t * );
 
 static block_t *Convert( filter_t *p_filter, block_t *p_block );
 
@@ -187,11 +187,11 @@ static void ComputeChannelOperations( filter_sys_t * p_data,
     }
 }
 
-static int Init( vlc_object_t *p_this, filter_sys_t * p_data,
+static int Init( filter_t *p_filter, filter_sys_t * p_data,
                  unsigned int i_nb_channels, uint32_t i_physical_channels,
                  unsigned int i_rate )
 {
-    double d_x = var_InheritInteger( p_this, "headphone-dim" );
+    double d_x = var_InheritInteger( p_filter, "headphone-dim" );
     double d_z = d_x;
     double d_z_rear = -d_x/3;
     double d_min = 0;
@@ -199,7 +199,7 @@ static int Init( vlc_object_t *p_this, filter_sys_t * p_data,
     int i_source_channel_offset;
     unsigned int i;
 
-    if( var_InheritBool( p_this, "headphone-compensate" ) )
+    if( var_InheritBool( p_filter, "headphone-compensate" ) )
     {
         /* minimal distance to any speaker */
         if( i_physical_channels & AOUT_CHAN_REARCENTER )
@@ -332,9 +332,8 @@ static int Init( vlc_object_t *p_this, filter_sys_t * p_data,
 /*****************************************************************************
  * OpenFilter
  *****************************************************************************/
-static int OpenFilter( vlc_object_t *p_this )
+static int OpenFilter( filter_t *p_filter )
 {
-    filter_t * p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = NULL;
 
     if( aout_FormatNbChannels( &(p_filter->fmt_in.audio) ) == 1 )
@@ -348,8 +347,8 @@ static int OpenFilter( vlc_object_t *p_this )
     if( p_sys == NULL )
         return VLC_EGENERIC;
 
-    p_sys->b_downmix = var_InheritBool( p_this, MONO_CFG "downmix" );
-    p_sys->i_channel_selected = var_InheritInteger( p_this, MONO_CFG "channel" );
+    p_sys->b_downmix = var_InheritBool( p_filter, MONO_CFG "downmix" );
+    p_sys->i_channel_selected = var_InheritInteger( p_filter, MONO_CFG "channel" );
 
     p_sys->i_nb_channels = aout_FormatNbChannels( &(p_filter->fmt_in.audio) );
     p_sys->i_bitspersample = p_filter->fmt_out.audio.i_bitspersample;
@@ -359,7 +358,7 @@ static int OpenFilter( vlc_object_t *p_this )
     p_sys->i_nb_atomic_operations = 0;
     p_sys->p_atomic_operations = NULL;
 
-    if( Init( VLC_OBJECT(p_filter), p_filter->p_sys,
+    if( Init( p_filter, p_filter->p_sys,
               aout_FormatNbChannels( &p_filter->fmt_in.audio ),
               p_filter->fmt_in.audio.i_physical_channels,
               p_filter->fmt_in.audio.i_rate ) < 0 )
@@ -370,20 +369,20 @@ static int OpenFilter( vlc_object_t *p_this )
 
     if( p_sys->b_downmix )
     {
-        msg_Dbg( p_this, "using stereo to mono downmix" );
+        msg_Dbg( p_filter, "using stereo to mono downmix" );
         p_filter->fmt_out.audio.i_physical_channels = AOUT_CHAN_CENTER;
         p_filter->fmt_out.audio.i_channels = 1;
     }
     else
     {
-        msg_Dbg( p_this, "using pseudo mono" );
+        msg_Dbg( p_filter, "using pseudo mono" );
         p_filter->fmt_out.audio.i_physical_channels = AOUT_CHANS_STEREO;
         p_filter->fmt_out.audio.i_channels = 2;
     }
     p_filter->fmt_out.audio.i_rate = p_filter->fmt_in.audio.i_rate;
     p_filter->pf_audio_filter = Convert;
 
-    msg_Dbg( p_this, "%4.4s->%4.4s, channels %d->%d, bits per sample: %i->%i",
+    msg_Dbg( p_filter, "%4.4s->%4.4s, channels %d->%d, bits per sample: %i->%i",
              (char *)&p_filter->fmt_in.i_codec,
              (char *)&p_filter->fmt_out.i_codec,
              p_filter->fmt_in.audio.i_physical_channels,
@@ -402,9 +401,8 @@ static int OpenFilter( vlc_object_t *p_this )
 /*****************************************************************************
  * CloseFilter
  *****************************************************************************/
-static void CloseFilter( vlc_object_t *p_this)
+static void CloseFilter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *) p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     free( p_sys->p_atomic_operations );

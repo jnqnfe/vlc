@@ -110,8 +110,8 @@
 #define VOUT_WIDTH  800
 #define VOUT_HEIGHT 500
 
-static int  Open         ( vlc_object_t * );
-static void Close        ( vlc_object_t * );
+static int  Open         ( filter_t * );
+static void Close        ( filter_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("Visualizer"))
@@ -187,9 +187,8 @@ typedef struct
 /*****************************************************************************
  * Open: open the visualizer
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( filter_t *p_filter )
 {
-    filter_t     *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys;
 
     char *psz_effects, *psz_parser;
@@ -405,9 +404,8 @@ static void Flush( filter_t *p_filter )
 /*****************************************************************************
  * Close: close the plugin
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( filter_t *p_filter )
 {
-    filter_t * p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     vlc_cancel( p_sys->thread );

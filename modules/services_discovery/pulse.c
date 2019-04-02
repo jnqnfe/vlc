@@ -33,8 +33,8 @@
 #include <pulse/pulseaudio.h>
 #include "audio_output/vlcpulse.h"
 
-static int Open (vlc_object_t *);
-static void Close (vlc_object_t *);
+static int Open (services_discovery_t *);
+static void Close (services_discovery_t *);
 
 VLC_SD_PROBE_HELPER("pulse", N_("Audio capture"), SD_CAT_DEVICES);
 
@@ -60,9 +60,8 @@ static void SourceCallback(pa_context *, const pa_source_info *, int, void *);
 static void ContextCallback(pa_context *, pa_subscription_event_type_t,
                             uint32_t, void *);
 
-static int Open (vlc_object_t *obj)
+static int Open (services_discovery_t *sd)
 {
-    services_discovery_t *sd = (services_discovery_t *)obj;
     pa_operation *op;
     pa_context *ctx;
 
@@ -70,7 +69,7 @@ static int Open (vlc_object_t *obj)
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
 
-    ctx = vlc_pa_connect (obj, &sys->mainloop);
+    ctx = vlc_pa_connect (VLC_OBJECT(sd), &sys->mainloop);
     if (ctx == NULL)
     {
         free (sys);
@@ -103,7 +102,7 @@ static int Open (vlc_object_t *obj)
 /*
 error:
     pa_threaded_mainloop_unlock (sys->mainloop);
-    vlc_pa_disconnect (obj, ctx, sys->mainloop);
+    vlc_pa_disconnect (VLC_OBJECT(sd), ctx, sys->mainloop);
     free (sys);
     return VLC_EGENERIC;*/
 }
@@ -236,12 +235,11 @@ static void ContextCallback(pa_context *ctx, pa_subscription_event_type_t type,
     }
 }
 
-static void Close (vlc_object_t *obj)
+static void Close (services_discovery_t *sd)
 {
-    services_discovery_t *sd = (services_discovery_t *)obj;
     services_discovery_sys_t *sys = sd->p_sys;
 
-    vlc_pa_disconnect (obj, sys->context, sys->mainloop);
+    vlc_pa_disconnect (VLC_OBJECT(sd), sys->context, sys->mainloop);
     tdestroy (sys->root, DestroySource);
     free (sys);
 }

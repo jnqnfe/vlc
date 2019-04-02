@@ -900,9 +900,8 @@ static void Del(sout_stream_t *p_stream, void *_id)
     }
 }
 
-int OpenSout( vlc_object_t *p_this )
+int OpenSout( sout_stream_t *p_stream )
 {
-    sout_stream_t *p_stream = reinterpret_cast<sout_stream_t*>(p_this);
     sout_stream_sys_t *p_sys = nullptr;
 
     config_ChainParse(p_stream, SOUT_CFG_PREFIX, ppsz_sout_options, p_stream->p_cfg);
@@ -925,7 +924,7 @@ int OpenSout( vlc_object_t *p_this )
         return VLC_EGENERIC;
     }
 
-    p_sys->p_upnp = UpnpInstanceWrapper::get( p_this );
+    p_sys->p_upnp = UpnpInstanceWrapper::get( VLC_OBJECT(p_stream) );
     if ( !p_sys->p_upnp )
         goto error;
     try {
@@ -959,9 +958,8 @@ error:
     return VLC_EGENERIC;
 }
 
-void CloseSout( vlc_object_t *p_this)
+void CloseSout( sout_stream_t *p_stream )
 {
-    sout_stream_t *p_stream = reinterpret_cast<sout_stream_t*>( p_this );
     sout_stream_sys_t *p_sys = static_cast<sout_stream_sys_t *>( p_stream->p_sys );
 
     p_sys->renderer->ConnectionComplete();

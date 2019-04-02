@@ -82,10 +82,8 @@ error:
 /*****************************************************************************
  * DirOpen: Open the directory access
  *****************************************************************************/
-int DirOpen (vlc_object_t *obj)
+int DirOpen (stream_t *access)
 {
-    stream_t *access = (stream_t *)obj;
-
     if (access->psz_filepath == NULL)
         return VLC_EGENERIC;
 
@@ -99,9 +97,8 @@ int DirOpen (vlc_object_t *obj)
 /*****************************************************************************
  * Close: close the target
  *****************************************************************************/
-void DirClose(vlc_object_t *obj)
+void DirClose(stream_t *access)
 {
-    stream_t *access = (stream_t *)obj;
     access_sys_t *sys = access->p_sys;
 
     free(sys->base_uri);

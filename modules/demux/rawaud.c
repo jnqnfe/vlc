@@ -35,8 +35,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( demux_t * );
+static void Close( demux_t * );
 
 
 #define SAMPLERATE_TEXT N_("Audio samplerate (Hz)")
@@ -99,9 +99,8 @@ static int Control( demux_t *, int i_query, va_list args );
 /*****************************************************************************
  * Open: initializes raw audio demuxer
  *****************************************************************************/
-static int Open( vlc_object_t * p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
 
     p_demux->p_sys      = p_sys = malloc( sizeof( demux_sys_t ) );
@@ -223,9 +222,8 @@ static int Open( vlc_object_t * p_this )
 /*****************************************************************************
  * Close: frees unused data
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys  = p_demux->p_sys;
 
     es_format_Clean( &p_sys->fmt );

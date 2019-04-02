@@ -47,11 +47,11 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  OpenDecoder   ( vlc_object_t * );
-static void CloseDecoder  ( vlc_object_t * );
+static int  OpenDecoder   ( decoder_t * );
+static void CloseDecoder  ( decoder_t * );
 #ifdef ENABLE_SOUT
-static int  OpenEncoder   ( vlc_object_t * );
-static void CloseEncoder  ( vlc_object_t * );
+static int  OpenEncoder   ( encoder_t * );
+static void CloseEncoder  ( encoder_t * );
 #endif
 
 vlc_plugin_begin ()
@@ -160,9 +160,8 @@ static block_t *DecodePacket( decoder_t *, ogg_packet *, int, vlc_tick_t );
 /*****************************************************************************
  * OpenDecoder: probe the decoder and return score
  *****************************************************************************/
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     if( p_dec->fmt_in.i_codec != VLC_CODEC_OPUS )
@@ -521,9 +520,8 @@ static block_t *DecodePacket( decoder_t *p_dec, ogg_packet *p_oggpacket,
 /*****************************************************************************
  * CloseDecoder: Opus decoder destruction
  *****************************************************************************/
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t * p_dec )
 {
-    decoder_t * p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     if( p_sys->p_st ) opus_multistream_decoder_destroy(p_sys->p_st);
@@ -644,10 +642,8 @@ static block_t *Encode(encoder_t *enc, block_t *buf)
     return result;
 }
 
-static int OpenEncoder(vlc_object_t *p_this)
+static int OpenEncoder(encoder_t *enc)
 {
-    encoder_t *enc = (encoder_t *)p_this;
-
     if (enc->fmt_out.i_codec != VLC_CODEC_OPUS)
         return VLC_EGENERIC;
 
@@ -750,9 +746,8 @@ error:
     return status;
 }
 
-static void CloseEncoder(vlc_object_t *p_this)
+static void CloseEncoder(encoder_t *enc)
 {
-    encoder_t *enc = (encoder_t *)p_this;
     encoder_sys_t *sys = enc->p_sys;
 
     opus_multistream_encoder_destroy(sys->enc);

@@ -278,9 +278,8 @@ error:
 }
 
 static void
-Close(vlc_object_t *obj)
+Close(opengl_tex_converter_t *tc)
 {
-    opengl_tex_converter_t *tc = (void *)obj;
     struct priv *priv = tc->priv;
 
     if (priv->last.pic != NULL)
@@ -324,10 +323,8 @@ tc_va_check_interop_blacklist(opengl_tex_converter_t *tc, VADisplay *vadpy)
 }
 
 static int
-Open(vlc_object_t *obj)
+Open(opengl_tex_converter_t *tc)
 {
-    opengl_tex_converter_t *tc = (void *) obj;
-
     if (tc->dec_device == NULL
      || tc->dec_device->type != VLC_DECODER_DEVICE_VAAPI
      || !vlc_vaapi_IsChromaOpaque(tc->fmt.i_chroma)

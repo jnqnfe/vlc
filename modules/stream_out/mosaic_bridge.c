@@ -77,8 +77,8 @@ static inline struct decoder_owner *dec_get_owner( decoder_t *p_dec )
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  Open    ( vlc_object_t * );
-static void Close   ( vlc_object_t * );
+static int  Open    ( sout_stream_t * );
+static void Close   ( sout_stream_t * );
 static void *Add( sout_stream_t *, const es_format_t * );
 static void  Del( sout_stream_t *, void * );
 static int   Send( sout_stream_t *, void *, block_t * );
@@ -174,9 +174,8 @@ static const char *const ppsz_sout_options[] = {
 /*****************************************************************************
  * Open
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_stream_t *p_stream )
 {
-    sout_stream_t        *p_stream = (sout_stream_t *)p_this;
     sout_stream_sys_t    *p_sys;
     vlc_value_t           val;
 
@@ -257,9 +256,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( sout_stream_t *p_stream )
 {
-    sout_stream_t     *p_stream = (sout_stream_t*)p_this;
     sout_stream_sys_t *p_sys = p_stream->p_sys;
 
     /* Delete the callbacks */

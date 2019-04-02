@@ -107,8 +107,8 @@ typedef struct
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  OpenDecoder( vlc_object_t * );
-static void CloseDecoder( vlc_object_t * );
+static int  OpenDecoder( decoder_t * );
+static void CloseDecoder( decoder_t * );
 
 static int DecodeVideo( decoder_t *, block_t *);
 #if MPEG2_RELEASE >= MPEG2_VERSION (0, 5, 0)
@@ -142,9 +142,8 @@ vlc_plugin_end ()
 /*****************************************************************************
  * OpenDecoder: probe the decoder and return score
  *****************************************************************************/
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
     uint32_t i_accel = 0;
 
@@ -615,9 +614,8 @@ static int DecodeVideo( decoder_t *p_dec, block_t *p_block)
 /*****************************************************************************
  * CloseDecoder: libmpeg2 decoder destruction
  *****************************************************************************/
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
 #if MPEG2_RELEASE >= MPEG2_VERSION (0, 5, 0)

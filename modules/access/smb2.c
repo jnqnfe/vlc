@@ -60,8 +60,8 @@
 
 #define CIFS_PORT 445
 
-static int Open(vlc_object_t *);
-static void Close(vlc_object_t *);
+static int Open(stream_t *);
+static void Close(stream_t *);
 
 vlc_plugin_begin()
     set_help(N_("Samba (Windows network shares) input via libsmb2"))
@@ -568,10 +568,9 @@ vlc_smb2_resolve(stream_t *access, const char *host, unsigned port)
 }
 
 static int
-Open(vlc_object_t *p_obj)
+Open(stream_t *access)
 {
-    stream_t *access = (stream_t *)p_obj;
-    struct access_sys *sys = vlc_obj_calloc(p_obj, 1, sizeof (*sys));
+    struct access_sys *sys = vlc_obj_calloc(access, 1, sizeof (*sys));
     struct smb2_url *smb2_url = NULL;
     char *var_domain = NULL;
 
@@ -698,9 +697,8 @@ error:
 }
 
 static void
-Close(vlc_object_t *p_obj)
+Close(stream_t *access)
 {
-    stream_t *access = (stream_t *)p_obj;
     struct access_sys *sys = access->p_sys;
 
     if (sys->smb2fh != NULL)

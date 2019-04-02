@@ -37,8 +37,8 @@
 #define APPEND_LONGTEXT N_( \
     "If the file already exists, it will not be overwritten." )
 
-static int  Open( vlc_object_t * );
-static void Close ( vlc_object_t * );
+static int  Open( demux_t * );
+static void Close ( demux_t * );
 
 vlc_plugin_begin ()
     set_shortname("Dump")
@@ -63,10 +63,8 @@ static int Control( demux_t *, int,va_list );
 /**
  * Initializes the raw dump pseudo-demuxer.
  */
-static int Open( vlc_object_t * p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t*)p_this;
-
     /* Accept only if forced */
     if( !p_demux->obj.force )
         return VLC_EGENERIC;
@@ -108,11 +106,9 @@ static int Open( vlc_object_t * p_this )
 /**
  * Destroys the pseudo-demuxer.
  */
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t*)p_this;
     sout_access_out_t *out = (void *)p_demux->p_sys;
-
     sout_AccessOutDelete( out );
 }
 

@@ -149,10 +149,10 @@ static decoder_t **kate_decoder_list = NULL;
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  OpenDecoder   ( vlc_object_t * );
-static void CloseDecoder  ( vlc_object_t * );
+static int  OpenDecoder   ( decoder_t * );
+static void CloseDecoder  ( decoder_t * );
 #ifdef ENABLE_PACKETIZER
-static int OpenPacketizer( vlc_object_t *p_this );
+static int OpenPacketizer( decoder_t * );
 #endif
 
 static int  DecodeSub( decoder_t *p_dec, block_t *p_block );
@@ -325,9 +325,8 @@ vlc_plugin_begin ()
 #endif
 vlc_plugin_end ()
 
-static int OpenCommon( vlc_object_t *p_this, bool b_packetizer )
+static int OpenCommon( decoder_t *p_dec, bool b_packetizer )
 {
-    decoder_t     *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     if( p_dec->fmt_in.i_codec != VLC_CODEC_KATE )
@@ -427,15 +426,15 @@ static int OpenCommon( vlc_object_t *p_this, bool b_packetizer )
     return VLC_SUCCESS;
 }
 
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    return OpenCommon( p_this, false );
+    return OpenCommon( p_dec, false );
 }
 
 #ifdef ENABLE_PACKETIZER
-static int OpenPacketizer( vlc_object_t *p_this )
+static int OpenPacketizer( decoder_t *p_dec )
 {
-    return OpenCommon( p_this, true );
+    return OpenCommon( p_dec, true );
 }
 #endif
 
@@ -1266,9 +1265,8 @@ static void ParseKateComments( decoder_t *p_dec )
 /*****************************************************************************
  * CloseDecoder: clean up the decoder
  *****************************************************************************/
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     size_t     i_index;
 
     /* remove the decoder from the global list */

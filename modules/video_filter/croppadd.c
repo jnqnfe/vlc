@@ -38,8 +38,8 @@
 /****************************************************************************
  * Local prototypes
  ****************************************************************************/
-static int  OpenFilter ( vlc_object_t * );
-static void CloseFilter( vlc_object_t * );
+static int  OpenFilter ( filter_t * );
+static void CloseFilter( filter_t * );
 
 static picture_t *Filter( filter_t *, picture_t * );
 
@@ -123,9 +123,8 @@ typedef struct
 /*****************************************************************************
  * OpenFilter: probe the filter and return score
  *****************************************************************************/
-static int OpenFilter( vlc_object_t *p_this )
+static int OpenFilter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
     filter_sys_t *p_sys;
 
     if( !p_filter->b_allow_fmt_out_change )
@@ -203,9 +202,8 @@ static int OpenFilter( vlc_object_t *p_this )
 /*****************************************************************************
  * CloseFilter: clean up the filter
  *****************************************************************************/
-static void CloseFilter( vlc_object_t *p_this )
+static void CloseFilter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     free( p_filter->p_sys );
 }
 

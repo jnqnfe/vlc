@@ -40,7 +40,7 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open    ( vlc_object_t * );
+static int Open ( demux_t * );
 
 vlc_plugin_begin ()
     set_description( N_("AIFF demuxer" ) )
@@ -97,10 +97,8 @@ static unsigned int GetF80BE( const uint8_t p[10] )
 /*****************************************************************************
  * Open
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
-
     const uint8_t *p_peek;
 
     if( vlc_stream_Peek( p_demux->s, &p_peek, 12 ) < 12 )
@@ -113,7 +111,7 @@ static int Open( vlc_object_t *p_this )
         return VLC_EGENERIC;
 
     /* Fill p_demux field */
-    demux_sys_t *p_sys = vlc_obj_calloc( p_this, 1, sizeof (*p_sys) );
+    demux_sys_t *p_sys = vlc_obj_calloc( VLC_OBJECT(p_demux), 1, sizeof (*p_sys) );
     es_format_Init( &p_sys->fmt, AUDIO_ES, VLC_FOURCC( 't', 'w', 'o', 's' ) );
     p_sys->i_time = 0;
     p_sys->i_ssnd_pos = -1;

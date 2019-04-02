@@ -346,6 +346,8 @@ typedef struct playlist_item_t playlist_item_t;
 typedef struct services_discovery_t services_discovery_t;
 typedef struct vlc_renderer_discovery_t vlc_renderer_discovery_t;
 typedef struct vlc_renderer_item_t vlc_renderer_item_t;
+typedef struct vlc_probe_t vlc_probe_t;
+typedef struct vlc_playlist_export vlc_playlist_export;
 
 /* Modules */
 typedef struct module_t module_t;
@@ -445,6 +447,8 @@ typedef struct vlm_message_t vlm_message_t;
 typedef struct vlc_meta_t    vlc_meta_t;
 typedef struct input_stats_t input_stats_t;
 typedef struct addon_entry_t addon_entry_t;
+typedef struct vlc_tls_server_t vlc_tls_server_t;
+typedef struct vlc_tls_client_t vlc_tls_client_t;
 
 /* Update */
 typedef struct update_t update_t;

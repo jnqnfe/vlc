@@ -42,8 +42,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( sout_access_out_t * );
+static void Close( sout_access_out_t * );
 
 #define SOUT_CFG_PREFIX "sout-http-"
 
@@ -167,10 +167,9 @@ static uint16_t metacube2_compute_crc(const struct metacube2_block_header *hdr)
 /*****************************************************************************
  * Open: open the file
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_access_out_t *p_access )
 {
-    sout_access_out_t       *p_access = (sout_access_out_t*)p_this;
-    sout_access_out_sys_t   *p_sys;
+    sout_access_out_sys_t *p_sys;
 
     char                *psz_user;
     char                *psz_pwd;
@@ -298,10 +297,9 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: close the target
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( sout_access_out_t *p_access )
 {
-    sout_access_out_t       *p_access = (sout_access_out_t*)p_this;
-    sout_access_out_sys_t   *p_sys = p_access->p_sys;
+    sout_access_out_sys_t *p_sys = p_access->p_sys;
 
     httpd_StreamDelete( p_sys->p_httpd_stream );
     httpd_HostDelete( p_sys->p_httpd_host );

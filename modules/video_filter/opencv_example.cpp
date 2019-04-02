@@ -65,8 +65,8 @@ struct filter_sys_t
 /****************************************************************************
  * Local prototypes
  ****************************************************************************/
-static int  OpenFilter ( vlc_object_t * );
-static void CloseFilter( vlc_object_t * );
+static int  OpenFilter ( filter_t * );
+static void CloseFilter( filter_t * );
 
 static picture_t *Filter( filter_t *, picture_t * );
 
@@ -88,9 +88,8 @@ vlc_plugin_end ()
 /*****************************************************************************
  * OpenFilter: probe the filter and return score
  *****************************************************************************/
-static int OpenFilter( vlc_object_t *p_this )
+static int OpenFilter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
     filter_sys_t *p_sys;
 
     /* Allocate the memory needed to store the decoder's structure */
@@ -128,9 +127,8 @@ static int OpenFilter( vlc_object_t *p_this )
 /*****************************************************************************
  * CloseFilter: clean up the filter
  *****************************************************************************/
-static void CloseFilter( vlc_object_t *p_this )
+static void CloseFilter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
     filter_sys_t *p_sys = static_cast<filter_sys_t *>(p_filter->p_sys);
 
     if( p_sys->p_cascade )

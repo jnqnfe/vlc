@@ -36,8 +36,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int Create (vlc_object_t *);
-static int CreateResampler (vlc_object_t *);
+static int Create (filter_t *);
+static int CreateResampler (filter_t *);
 
 static block_t *DoWork( filter_t *, block_t * );
 
@@ -57,19 +57,15 @@ vlc_plugin_end ()
 /*****************************************************************************
  * Create: allocate ugly resampler
  *****************************************************************************/
-static int Create( vlc_object_t *p_this )
+static int Create( filter_t *p_filter )
 {
-    filter_t * p_filter = (filter_t *)p_this;
-
     if( p_filter->fmt_in.audio.i_rate == p_filter->fmt_out.audio.i_rate )
         return VLC_EGENERIC;
-    return CreateResampler( p_this );
+    return CreateResampler( p_filter );
 }
 
-static int CreateResampler( vlc_object_t *p_this )
+static int CreateResampler( filter_t *p_filter )
 {
-    filter_t * p_filter = (filter_t *)p_this;
-
     if( p_filter->fmt_in.audio.i_format != p_filter->fmt_out.audio.i_format
      || p_filter->fmt_in.audio.i_channels != p_filter->fmt_out.audio.i_channels
      || !AOUT_FMT_LINEAR( &p_filter->fmt_in.audio ) )

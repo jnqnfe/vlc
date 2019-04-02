@@ -24,12 +24,12 @@ void LibavcodecCallback( void *p_opaque, int i_level,
                              const char *psz_format, va_list va );
 
 /* Demux module */
-int  avformat_OpenDemux ( vlc_object_t * );
-void avformat_CloseDemux( vlc_object_t * );
+int  avformat_OpenDemux ( demux_t * );
+void avformat_CloseDemux( demux_t * );
 
 /* Mux module */
-int  avformat_OpenMux ( vlc_object_t * );
-void avformat_CloseMux( vlc_object_t * );
+int  avformat_OpenMux ( sout_mux_t * );
+void avformat_CloseMux( sout_mux_t * );
 
 #define MUX_TEXT N_("Avformat mux")
 #define MUX_LONGTEXT N_("Force use of a specific avformat muxer.")

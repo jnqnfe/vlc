@@ -48,8 +48,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open    ( vlc_object_t * );
-static void Close  ( vlc_object_t * );
+static int Open ( demux_t * );
+static void Close ( demux_t * );
 
 #define NOISE_LONGTEXT N_("Enable noise reduction algorithm.")
 #define REVERB_LONGTEXT N_("Enable reverberation" )
@@ -131,9 +131,8 @@ static int Validate( demux_t *p_demux, const char *psz_ext );
 /*****************************************************************************
  * Open
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
     ModPlug_Settings settings;
 
@@ -156,13 +155,13 @@ static int Open( vlc_object_t *p_this )
     if( i_size <= 0 || i_size >= MOD_MAX_FILE_SIZE )
         return VLC_EGENERIC;
 
-    p_sys = vlc_obj_malloc( p_this, sizeof (*p_sys) );
+    p_sys = vlc_obj_malloc( VLC_OBJECT(p_demux), sizeof (*p_sys) );
     if( !p_sys )
         return VLC_ENOMEM;
 
     msg_Dbg( p_demux, "loading complete file (could be long)" );
     p_sys->i_data = i_size;
-    p_sys->p_data = vlc_obj_malloc( p_this, p_sys->i_data );
+    p_sys->p_data = vlc_obj_malloc( VLC_OBJECT(p_demux), p_sys->i_data );
     if( unlikely(p_sys->p_data == NULL) )
         return VLC_ENOMEM;
 
@@ -243,11 +242,9 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
-
     ModPlug_Unload( p_sys->f );
 }
 

@@ -1635,7 +1635,7 @@ static const struct
 };
 
 
-static void ASF_ObjectDumpDebug( vlc_object_t *p_obj,
+static void ASF_ObjectDumpDebug( stream_t *s,
                                  asf_object_common_t *p_node, unsigned i_level )
 {
     unsigned i;
@@ -1674,12 +1674,12 @@ static void ASF_ObjectDumpDebug( vlc_object_t *p_obj,
              );
 
 
-    msg_Dbg( p_obj, "%s", str );
+    msg_Dbg( s, "%s", str );
 
     for( p_child = p_node->p_first; p_child != NULL;
                                              p_child = p_child->common.p_next )
     {
-        ASF_ObjectDumpDebug( p_obj, &p_child->common, i_level + 1 );
+        ASF_ObjectDumpDebug( s, &p_child->common, i_level + 1 );
     }
 }
 
@@ -1798,8 +1798,7 @@ asf_object_root_t *ASF_ReadObjectRoot( stream_t *s, int b_seekable )
                 }
             }
 
-            ASF_ObjectDumpDebug( VLC_OBJECT(s),
-                                 (asf_object_common_t*)p_root, 0 );
+            ASF_ObjectDumpDebug( s, (asf_object_common_t*)p_root, 0 );
             return p_root;
         }
         msg_Warn( s, "cannot find file properties object" );

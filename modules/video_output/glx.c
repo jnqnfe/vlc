@@ -75,22 +75,22 @@ static void *GetSymbol(vlc_gl_t *gl, const char *procname)
     return glXGetProcAddressARB ((const GLubyte *)procname);
 }
 
-static bool CheckGLX (vlc_object_t *vd, Display *dpy)
+static bool CheckGLX (vlc_gl_t *gl, Display *dpy)
 {
     int major, minor;
     bool ok = false;
 
     if (!glXQueryVersion (dpy, &major, &minor))
-        msg_Dbg (vd, "GLX extension not available");
+        msg_Dbg (gl, "GLX extension not available");
     else
     if (major != 1)
-        msg_Dbg (vd, "GLX extension version %d.%d unknown", major, minor);
+        msg_Dbg (gl, "GLX extension version %d.%d unknown", major, minor);
     else
     if (minor < 3)
-        msg_Dbg (vd, "GLX extension version %d.%d too old", major, minor);
+        msg_Dbg (gl, "GLX extension version %d.%d too old", major, minor);
     else
     {
-        msg_Dbg (vd, "using GLX extension version %d.%d", major, minor);
+        msg_Dbg (gl, "using GLX extension version %d.%d", major, minor);
         ok = true;
     }
     return ok;
@@ -115,9 +115,7 @@ static bool CheckGLXext (Display *dpy, unsigned snum, const char *ext)
 
 static int Open(vlc_gl_t *gl, unsigned width, unsigned height)
 {
-    vlc_object_t *obj = VLC_OBJECT(gl);
-
-    if (gl->surface->type != VOUT_WINDOW_TYPE_XID || !vlc_xlib_init (obj))
+    if (gl->surface->type != VOUT_WINDOW_TYPE_XID || !vlc_xlib_init (VLC_OBJECT(gl)))
         return VLC_EGENERIC;
 
     /* Initialize GLX display */
@@ -134,7 +132,7 @@ static int Open(vlc_gl_t *gl, unsigned width, unsigned height)
     gl->sys = sys;
     sys->display = dpy;
 
-    if (!CheckGLX (obj, dpy))
+    if (!CheckGLX (gl, dpy))
         goto error;
 
     /* Determine our pixel format */
@@ -158,7 +156,7 @@ static int Open(vlc_gl_t *gl, unsigned width, unsigned height)
     GLXFBConfig *confs = glXChooseFBConfig (dpy, snum, attr, &nelem);
     if (confs == NULL)
     {
-        msg_Err (obj, "cannot choose GLX frame buffer configurations");
+        msg_Err (gl, "cannot choose GLX frame buffer configurations");
         goto error;
     }
 
@@ -180,7 +178,7 @@ static int Open(vlc_gl_t *gl, unsigned width, unsigned height)
 
     if (!found)
     {
-        msg_Err (obj, "cannot match GLX frame buffer configuration");
+        msg_Err (gl, "cannot match GLX frame buffer configuration");
         goto error;
     }
 
@@ -188,7 +186,7 @@ static int Open(vlc_gl_t *gl, unsigned width, unsigned height)
     sys->win = glXCreateWindow (dpy, conf, gl->surface->handle.xid, NULL);
     if (sys->win == None)
     {
-        msg_Err (obj, "cannot create GLX window");
+        msg_Err (gl, "cannot create GLX window");
         goto error;
     }
 
@@ -197,7 +195,7 @@ static int Open(vlc_gl_t *gl, unsigned width, unsigned height)
     if (sys->ctx == NULL)
     {
         glXDestroyWindow (dpy, sys->win);
-        msg_Err (obj, "cannot create GLX context");
+        msg_Err (gl, "cannot create GLX context");
         goto error;
     }
 

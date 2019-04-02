@@ -66,8 +66,8 @@ See http://www.vdr-wiki.de/ and http://www.tvdr.de/ for more information.
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( stream_t * );
+static void Close( stream_t * );
 
 #define HELP_TEXT N_("Support for VDR recordings (http://www.tvdr.de/).")
 
@@ -153,10 +153,8 @@ static const char *BaseName( const char *psz_path );
 /*****************************************************************************
  * Open a directory
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( stream_t *p_access )
 {
-    stream_t *p_access = (stream_t*)p_this;
-
     if( !p_access->psz_filepath )
         return VLC_EGENERIC;
 
@@ -185,7 +183,7 @@ static int Open( vlc_object_t *p_this )
         !S_ISDIR( st.st_mode ) )
         return VLC_EGENERIC;
 
-    access_sys_t *p_sys = vlc_obj_calloc( p_this, 1, sizeof( *p_sys ) );
+    access_sys_t *p_sys = vlc_obj_calloc( VLC_OBJECT(p_access), 1, sizeof( *p_sys ) );
 
     if( unlikely(p_sys == NULL) )
         return VLC_ENOMEM;
@@ -200,7 +198,7 @@ static int Open( vlc_object_t *p_this )
     if( !ScanDirectory( p_access ) ||
         !SwitchFile( p_access, 0 ) )
     {
-        Close( p_this );
+        Close( p_access );
         return VLC_EGENERIC;
     }
 
@@ -211,9 +209,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close files and free resources
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( stream_t *p_access )
 {
-    stream_t *p_access = (stream_t*)p_this;
     access_sys_t *p_sys = p_access->p_sys;
 
     if( p_sys->fd != -1 )

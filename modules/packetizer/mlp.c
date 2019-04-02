@@ -40,8 +40,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( decoder_t * );
+static void Close( decoder_t * );
 
 vlc_plugin_begin ()
     set_description( N_("MLP/TrueHD parser") )
@@ -462,9 +462,8 @@ static block_t *Packetize( decoder_t *p_dec, block_t **pp_block )
     return NULL;
 }
 
-static int Open( vlc_object_t *p_this )
+static int Open( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     if( p_dec->fmt_in.i_codec != VLC_CODEC_MLP &&
@@ -495,9 +494,8 @@ static int Open( vlc_object_t *p_this )
     return VLC_SUCCESS;
 }
 
-static void Close( vlc_object_t *p_this )
+static void Close( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     block_BytestreamRelease( &p_sys->bytestream );

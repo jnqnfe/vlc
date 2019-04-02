@@ -151,9 +151,8 @@ static int LiveControl(stream_t *access, int query, va_list args)
     return VLC_SUCCESS;
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(stream_t *access)
 {
-    stream_t *access = (stream_t *)obj;
     access_sys_t *sys = malloc(sizeof (*sys));
     int ret = VLC_ENOMEM;
 
@@ -164,8 +163,8 @@ static int Open(vlc_object_t *obj)
     sys->resource = NULL;
 
     void *jar = NULL;
-    if (var_InheritBool(obj, "http-forward-cookies"))
-        jar = var_InheritAddress(obj, "http-cookies");
+    if (var_InheritBool(access, "http-forward-cookies"))
+        jar = var_InheritAddress(access, "http-cookies");
 
     struct vlc_credential crd;
     struct vlc_url_t crd_url;
@@ -174,13 +173,13 @@ static int Open(vlc_object_t *obj)
     vlc_UrlParse(&crd_url, access->psz_url);
     vlc_credential_init(&crd, &crd_url);
 
-    sys->manager = vlc_http_mgr_create(obj, jar);
+    sys->manager = vlc_http_mgr_create(VLC_OBJECT(access), jar);
     if (sys->manager == NULL)
         goto error;
 
-    char *ua = var_InheritString(obj, "http-user-agent");
-    char *referer = var_InheritString(obj, "http-referrer");
-    bool live = var_InheritBool(obj, "http-continuous");
+    char *ua = var_InheritString(access, "http-user-agent");
+    char *referer = var_InheritString(access, "http-referrer");
+    bool live = var_InheritBool(access, "http-continuous");
 
     sys->resource = (live ? vlc_http_live_create : vlc_http_file_create)(
         sys->manager, access->psz_url, ua, referer);
@@ -190,7 +189,7 @@ static int Open(vlc_object_t *obj)
     if (sys->resource == NULL)
         goto error;
 
-    if (vlc_credential_get(&crd, obj, NULL, NULL, NULL, NULL))
+    if (vlc_credential_get(&crd, VLC_OBJECT(access), NULL, NULL, NULL, NULL))
         vlc_http_res_set_login(sys->resource,
                                crd.psz_username, crd.psz_password);
 
@@ -207,7 +206,7 @@ static int Open(vlc_object_t *obj)
         if (psz_realm == NULL)
             break;
         crd.psz_realm = psz_realm;
-        if (!vlc_credential_get(&crd, obj, NULL, NULL, _("HTTP authentication"),
+        if (!vlc_credential_get(&crd, VLC_OBJECT(access), NULL, NULL, _("HTTP authentication"),
                                 _("Please enter a valid login name and "
                                   "a password for realm %s."), crd.psz_realm))
             break;
@@ -237,7 +236,7 @@ static int Open(vlc_object_t *obj)
         goto error;
     }
 
-    vlc_credential_store(&crd, obj);
+    vlc_credential_store(&crd, VLC_OBJECT(access));
     free(psz_realm);
     vlc_credential_clean(&crd);
     vlc_UrlClean(&crd_url);
@@ -270,9 +269,8 @@ error:
     return ret;
 }
 
-static void Close(vlc_object_t *obj)
+static void Close(stream_t *access)
 {
-    stream_t *access = (stream_t *)obj;
     access_sys_t *sys = access->p_sys;
 
     vlc_http_res_destroy(sys->resource);

@@ -1394,13 +1394,11 @@ static int Control( vlc_medialibrary_module_t* module, int query, va_list args )
     return ml->Control( query, args );
 }
 
-static int Open( vlc_object_t* obj )
+static int Open( vlc_medialibrary_module_t* module )
 {
-    auto* p_ml = reinterpret_cast<vlc_medialibrary_module_t*>( obj );
-
     try
     {
-        p_ml->p_sys = new MediaLibrary( p_ml );
+        module->p_sys = new MediaLibrary( module );
     }
     catch ( const std::exception& ex )
     {

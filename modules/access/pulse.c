@@ -35,8 +35,8 @@
     "Pass pulse:// to open the default PulseAudio source, " \
     "or pulse://SOURCE to open a specific source named SOURCE.")
 
-static int Open(vlc_object_t *);
-static void Close(vlc_object_t *);
+static int Open(demux_t *);
+static void Close(demux_t *);
 
 vlc_plugin_begin ()
     set_help (HELP_TEXT)
@@ -248,25 +248,23 @@ static const vlc_fourcc_t fourccs[] = {
     [PA_SAMPLE_S24_32BE] =  VLC_CODEC_S24B32,
 };
 
-static int Open(vlc_object_t *obj)
+static int Open(demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
-
     if (demux->out == NULL)
         return VLC_EGENERIC;
 
-    demux_sys_t *sys = vlc_obj_malloc(obj, sizeof (*sys));
+    demux_sys_t *sys = vlc_obj_malloc(VLC_OBJECT(demux), sizeof (*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
 
-    sys->context = vlc_pa_connect(obj, &sys->mainloop);
+    sys->context = vlc_pa_connect(VLC_OBJECT(demux), &sys->mainloop);
     if (sys->context == NULL)
         return VLC_EGENERIC;
 
     sys->stream = NULL;
     sys->es = NULL;
     sys->discontinuity = false;
-    sys->caching = VLC_TICK_FROM_MS( var_InheritInteger(obj, "live-caching") );
+    sys->caching = VLC_TICK_FROM_MS( var_InheritInteger(demux, "live-caching") );
     demux->p_sys = sys;
 
     /* Stream parameters */
@@ -321,21 +319,21 @@ static int Open(vlc_object_t *obj)
 
     if (pa_stream_connect_record(s, dev, &attr, flags) < 0
      || stream_wait(s, sys->mainloop)) {
-        vlc_pa_error(obj, "cannot connect record stream", sys->context);
+        vlc_pa_error(demux, "cannot connect record stream", sys->context);
         goto error;
     }
 
     /* The ES should be initialized before stream_read_cb(), but how? */
     const struct pa_sample_spec *pss = pa_stream_get_sample_spec(s);
     if ((unsigned)pss->format >= sizeof (fourccs) / sizeof (fourccs[0])) {
-        msg_Err(obj, "unknown PulseAudio sample format %u",
+        msg_Err(demux, "unknown PulseAudio sample format %u",
                 (unsigned)pss->format);
         goto error;
     }
 
     vlc_fourcc_t format = fourccs[pss->format];
     if (format == 0) { /* FIXME: should renegotiate something else */
-        msg_Err(obj, "unsupported PulseAudio sample format %u",
+        msg_Err(demux, "unsupported PulseAudio sample format %u",
                 (unsigned)pss->format);
         goto error;
     }
@@ -367,13 +365,12 @@ static int Open(vlc_object_t *obj)
 
 error:
     pa_threaded_mainloop_unlock(sys->mainloop);
-    Close(obj);
+    Close(demux);
     return VLC_EGENERIC;
 }
 
-static void Close (vlc_object_t *obj)
+static void Close (demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     demux_sys_t *sys = demux->p_sys;
     pa_stream *s = sys->stream;
 
@@ -392,5 +389,5 @@ static void Close (vlc_object_t *obj)
         pa_threaded_mainloop_unlock(sys->mainloop);
     }
 
-    vlc_pa_disconnect(obj, sys->context, sys->mainloop);
+    vlc_pa_disconnect(VLC_OBJECT(demux), sys->context, sys->mainloop);
 }

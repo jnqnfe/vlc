@@ -101,10 +101,10 @@ extern "C" char **environ;
 /*****************************************************************************
  * Local prototypes.
  *****************************************************************************/
-static int  OpenIntf     ( vlc_object_t * );
-static int  OpenDialogs  ( vlc_object_t * );
-static int  Open         ( vlc_object_t *, bool );
-static void Close        ( vlc_object_t * );
+static int  OpenIntf     ( intf_thread_t * );
+static int  OpenDialogs  ( intf_thread_t * );
+static int  Open         ( intf_thread_t *, bool );
+static void Close        ( intf_thread_t * );
 static int  WindowOpen   ( vout_window_t * );
 static void ShowDialog   ( intf_thread_t *, int, int, intf_dialog_args_t * );
 
@@ -389,12 +389,10 @@ static void Abort( void *obj )
 #endif
 
 /* Open Interface */
-static int Open( vlc_object_t *p_this, bool isDialogProvider )
+static int Open( intf_thread_t *p_intf, bool isDialogProvider )
 {
-    intf_thread_t *p_intf = (intf_thread_t *)p_this;
-
 #ifndef X_DISPLAY_MISSING
-    if (!vlc_xlib_init(p_this))
+    if (!vlc_xlib_init(VLC_OBJECT(p_intf)))
         return VLC_EGENERIC;
 #endif
 
@@ -417,7 +415,7 @@ static int Open( vlc_object_t *p_this, bool isDialogProvider )
 
     if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
     {
-        msg_Dbg(p_this, "Qt check failed (%d). Skipping.", status);
+        msg_Dbg(p_intf, "Qt check failed (%d). Skipping.", status);
         return VLC_EGENERIC;
     }
 #endif
@@ -429,7 +427,7 @@ static int Open( vlc_object_t *p_this, bool isDialogProvider )
     if (busy || open_state == OPEN_STATE_ERROR)
     {
         if (busy)
-            msg_Err (p_this, "cannot start Qt multiple times");
+            msg_Err (p_intf, "cannot start Qt multiple times");
         return VLC_EGENERIC;
     }
 
@@ -475,27 +473,26 @@ static int Open( vlc_object_t *p_this, bool isDialogProvider )
 }
 
 /* Open Qt interface */
-static int OpenIntf( vlc_object_t *p_this )
+static int OpenIntf( intf_thread_t *p_intf )
 {
-    return Open( p_this, false );
+    return Open( p_intf, false );
 }
 
 /* Open Dialog Provider */
-static int OpenDialogs( vlc_object_t *p_this )
+static int OpenDialogs( intf_thread_t *p_intf )
 {
-    return Open( p_this, true );
+    return Open( p_intf, true );
 }
 
-static void Close( vlc_object_t *p_this )
+static void Close( intf_thread_t *p_intf )
 {
-    intf_thread_t *p_intf = (intf_thread_t *)p_this;
     intf_sys_t *p_sys = p_intf->p_sys;
 
     /* And quit */
-    msg_Dbg( p_this, "requesting exit..." );
+    msg_Dbg( p_intf, "requesting exit..." );
     QVLCApp::triggerQuit();
 
-    msg_Dbg( p_this, "waiting for UI thread..." );
+    msg_Dbg( p_intf, "waiting for UI thread..." );
 #ifndef Q_OS_MAC
     vlc_join (p_sys->thread, NULL);
 #endif

@@ -70,8 +70,8 @@ typedef struct
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  Open    ( vlc_object_t * );
-static void Close   ( vlc_object_t * );
+static int  Open    ( audio_output_t * );
+static void Close   ( audio_output_t * );
 static void Play    ( audio_output_t *_p_aout, block_t *block, vlc_tick_t );
 static void Pause   ( audio_output_t *, bool, vlc_tick_t );
 static void Flush   ( audio_output_t * );
@@ -274,9 +274,8 @@ static ULONG APIENTRY KaiCallback( PVOID p_cb_data,
     return i_buf_size;
 }
 
-static int Open (vlc_object_t *obj)
+static int Open (audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
     aout_sys_t *sys = calloc( 1, sizeof( aout_sys_t ) );
 
     if( unlikely( sys == NULL ))
@@ -289,11 +288,9 @@ static int Open (vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void Close( vlc_object_t *obj )
+static void Close( audio_output_t *aout )
 {
-    audio_output_t *aout = (audio_output_t *)obj;
     aout_sys_t *sys = aout->sys;
-
     free(sys);
 }
 

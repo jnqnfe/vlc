@@ -52,8 +52,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( demux_t * );
+static void Close( demux_t * );
 
 #define PACE_TEXT N_( "Pace" )
 #define PACE_LONGTEXT N_( \
@@ -116,9 +116,8 @@ static block_t *GrabJack( demux_t * );
 /*****************************************************************************
  * Open: Connect to the JACK server
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t *p_demux = ( demux_t* )p_this;
     demux_sys_t *p_sys;
     es_format_t fmt;
     int i_out_ports = 0;
@@ -130,7 +129,7 @@ static int Open( vlc_object_t *p_this )
     p_demux->pf_control = Control;
 
     /* Allocate structure */
-    p_demux->p_sys = p_sys = vlc_obj_calloc( p_this, 1, sizeof( demux_sys_t ) );
+    p_demux->p_sys = p_sys = vlc_obj_calloc( VLC_OBJECT(p_demux), 1, sizeof( demux_sys_t ) );
     if( !p_sys )
         return VLC_ENOMEM;
 
@@ -295,10 +294,9 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: Disconnect from jack server and release associated resources
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t    *p_demux = ( demux_t* )p_this;
-    demux_sys_t    *p_sys = p_demux->p_sys;
+    demux_sys_t *p_sys = p_demux->p_sys;
 
     msg_Dbg( p_demux,"Module unloaded" );
     if( p_sys->p_block_audio ) block_Release( p_sys->p_block_audio );

@@ -35,8 +35,8 @@
 #include <pulse/pulseaudio.h>
 #include "audio_output/vlcpulse.h"
 
-static int  Open        ( vlc_object_t * );
-static void Close       ( vlc_object_t * );
+static int Open ( audio_output_t * );
+static void Close ( audio_output_t * );
 
 vlc_plugin_begin ()
     set_shortname( "PulseAudio" )
@@ -987,9 +987,8 @@ static void Stop(audio_output_t *aout)
     pa_threaded_mainloop_unlock(sys->mainloop);
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
     aout_sys_t *sys = malloc(sizeof (*sys));
     pa_operation *op;
 
@@ -997,7 +996,7 @@ static int Open(vlc_object_t *obj)
         return VLC_ENOMEM;
 
     /* Allocate structures */
-    pa_context *ctx = vlc_pa_connect(obj, &sys->mainloop);
+    pa_context *ctx = vlc_pa_connect(VLC_OBJECT(aout), &sys->mainloop);
     if (ctx == NULL)
     {
         free(sys);
@@ -1044,16 +1043,15 @@ static int Open(vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *obj)
+static void Close(audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
     aout_sys_t *sys = aout->sys;
     pa_context *ctx = sys->context;
 
     pa_threaded_mainloop_lock(sys->mainloop);
     pa_context_set_subscribe_callback(sys->context, NULL, NULL);
     pa_threaded_mainloop_unlock(sys->mainloop);
-    vlc_pa_disconnect(obj, ctx, sys->mainloop);
+    vlc_pa_disconnect(VLC_OBJECT(aout), ctx, sys->mainloop);
 
     for (struct sink *sink = sys->sinks, *next; sink != NULL; sink = next)
     {

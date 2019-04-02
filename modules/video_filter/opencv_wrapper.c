@@ -45,8 +45,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  Create    ( vlc_object_t * );
-static void Destroy   ( vlc_object_t * );
+static int  Create    ( filter_t * );
+static void Destroy   ( filter_t * );
 
 static picture_t* Filter( filter_t*, picture_t* );
 
@@ -143,9 +143,8 @@ typedef struct
  *****************************************************************************
  * This function allocates and initializes a opencv_wrapper vout method.
  *****************************************************************************/
-static int Create( vlc_object_t *p_this )
+static int Create( filter_t* p_filter )
 {
-    filter_t* p_filter = (filter_t*)p_this;
     filter_sys_t *p_sys;
     char *psz_chroma, *psz_output;
 
@@ -259,9 +258,8 @@ static int Create( vlc_object_t *p_this )
  *****************************************************************************
  * Terminate an output method created by opencv_wrapperCreateOutputMethod
  *****************************************************************************/
-static void Destroy( vlc_object_t *p_this )
+static void Destroy( filter_t* p_filter )
 {
-    filter_t* p_filter = (filter_t*)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
     ReleaseImages( p_filter );
 

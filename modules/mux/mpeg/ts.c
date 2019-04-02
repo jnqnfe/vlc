@@ -89,8 +89,8 @@ static int ActiveKeyCallback    ( vlc_object_t *, char const *, vlc_value_t, vlc
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int     Open   ( vlc_object_t * );
-static void    Close  ( vlc_object_t * );
+static int     Open   ( sout_mux_t * );
+static void    Close  ( sout_mux_t * );
 
 static const char *const ts_standards_list[] =
     { "dvb", "atsc", };
@@ -535,10 +535,9 @@ static csa_t *csaSetup( vlc_object_t *p_this )
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_mux_t *p_mux )
 {
-    sout_mux_t          *p_mux =(sout_mux_t*)p_this;
-    sout_mux_sys_t      *p_sys = NULL;
+    sout_mux_sys_t *p_sys = NULL;
 
     config_ChainParse( p_mux, SOUT_CFG_PREFIX, ppsz_sout_options, p_mux->p_cfg );
 
@@ -739,7 +738,7 @@ static int Open( vlc_object_t *p_this )
 
     p_mux->p_sys        = p_sys;
 
-    p_sys->csa = csaSetup(p_this);
+    p_sys->csa = csaSetup(VLC_OBJECT(p_mux));
 
     p_mux->pf_control   = Control;
     p_mux->pf_addstream = AddStream;
@@ -752,10 +751,9 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( sout_mux_t *p_mux )
 {
-    sout_mux_t          *p_mux = (sout_mux_t*)p_this;
-    sout_mux_sys_t      *p_sys = p_mux->p_sys;
+    sout_mux_sys_t *p_sys = p_mux->p_sys;
 
     if( p_sys->p_dvbpsi )
         dvbpsi_delete( p_sys->p_dvbpsi );

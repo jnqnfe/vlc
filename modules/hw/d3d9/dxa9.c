@@ -197,19 +197,19 @@ static picture_t *NewBuffer(filter_t *p_filter)
     return p_sys->staging;
 }
 
-static filter_t *CreateFilter( vlc_object_t *p_this, const es_format_t *p_fmt_in,
+static filter_t *CreateFilter( filter_t *p_filter, const es_format_t *p_fmt_in,
                                vlc_fourcc_t dst_chroma )
 {
     filter_t *p_filter;
 
-    p_filter = vlc_object_create( p_this, sizeof(filter_t) );
+    p_filter = vlc_object_create( VLC_OBJECT(p_filter), sizeof(filter_t) );
     if (unlikely(p_filter == NULL))
         return NULL;
 
     static const struct filter_video_callbacks cbs = { NewBuffer };
     p_filter->b_allow_fmt_out_change = false;
     p_filter->owner.video = &cbs;
-    p_filter->owner.sys = p_this;
+    p_filter->owner.sys = VLC_OBJECT(p_filter);
 
     es_format_InitFromVideo( &p_filter->fmt_in,  &p_fmt_in->video );
     es_format_InitFromVideo( &p_filter->fmt_out, &p_fmt_in->video );
@@ -299,10 +299,8 @@ VIDEO_FILTER_WRAPPER (DXA9_YV12)
 VIDEO_FILTER_WRAPPER (DXA9_NV12)
 VIDEO_FILTER_WRAPPER (YV12_D3D9)
 
-int D3D9OpenConverter( vlc_object_t *obj )
+int D3D9OpenConverter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)obj;
-
     if ( p_filter->fmt_in.video.i_chroma != VLC_CODEC_D3D9_OPAQUE &&
          p_filter->fmt_in.video.i_chroma != VLC_CODEC_D3D9_OPAQUE_10B )
         return VLC_EGENERIC;
@@ -361,9 +359,8 @@ int D3D9OpenConverter( vlc_object_t *obj )
     return VLC_SUCCESS;
 }
 
-int D3D9OpenCPUConverter( vlc_object_t *obj )
+int D3D9OpenCPUConverter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)obj;
     int err = VLC_EGENERIC;
     IDirect3DSurface9 *texture = NULL;
     filter_t *p_cpu_filter = NULL;
@@ -447,7 +444,7 @@ int D3D9OpenCPUConverter( vlc_object_t *obj )
         res_sys->surface = texture;
         IDirect3DSurface9_AddRef(texture);
 
-        p_cpu_filter = CreateFilter(VLC_OBJECT(p_filter), &p_filter->fmt_in, p_dst->format.i_chroma);
+        p_cpu_filter = CreateFilter(p_filter, &p_filter->fmt_in, p_dst->format.i_chroma);
         if (!p_cpu_filter)
             goto done;
     }
@@ -470,9 +467,8 @@ done:
     return err;
 }
 
-void D3D9CloseConverter( vlc_object_t *obj )
+void D3D9CloseConverter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)obj;
     filter_sys_t *p_sys = p_filter->p_sys;
     CopyCleanCache( &p_sys->cache );
     D3D9_Destroy( &p_sys->hd3d );
@@ -480,9 +476,8 @@ void D3D9CloseConverter( vlc_object_t *obj )
     p_filter->p_sys = NULL;
 }
 
-void D3D9CloseCPUConverter( vlc_object_t *obj )
+void D3D9CloseCPUConverter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)obj;
     filter_sys_t *p_sys = p_filter->p_sys;
     DeleteFilter(p_sys->filter);
     picture_Release(p_sys->staging);

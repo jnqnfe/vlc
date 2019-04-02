@@ -81,8 +81,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int        OpenDecoder  ( vlc_object_t * );
-static void       CloseDecoder ( vlc_object_t * );
+static int        OpenDecoder  ( decoder_t * );
+static void       CloseDecoder ( decoder_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Crystal HD hardware video decoder") )
@@ -133,9 +133,8 @@ typedef struct
 /*****************************************************************************
 * OpenDecoder: probe the decoder and return score
 *****************************************************************************/
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     /* Codec specifics */
@@ -363,9 +362,8 @@ error:
 /*****************************************************************************
  * CloseDecoder: decoder destruction
  *****************************************************************************/
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     if( BC_FUNC_PSYS(DtsFlushInput)( p_sys->bcm_handle, 2 ) != BC_STS_SUCCESS )

@@ -28,8 +28,8 @@
 #include "vlc_vaapi.h"
 
 /* chroma filters callbacks */
-int  vlc_vaapi_OpenChroma(vlc_object_t *obj);
-void vlc_vaapi_CloseChroma(vlc_object_t *obj);
+int  vlc_vaapi_OpenChroma(filter_t *obj);
+void vlc_vaapi_CloseChroma(filter_t *obj);
 
 /* Get and hold the VADisplay instance from a filter */
 vlc_decoder_device *

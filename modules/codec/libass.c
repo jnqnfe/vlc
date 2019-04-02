@@ -52,8 +52,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Create ( vlc_object_t * );
-static void Destroy( vlc_object_t * );
+static int  Create ( decoder_t * );
+static void Destroy( decoder_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("Subtitles (advanced)"))
@@ -125,9 +125,8 @@ static void RegionDraw( subpicture_region_t *p_region, ASS_Image *p_img );
 /*****************************************************************************
  * Create: Open libass decoder.
  *****************************************************************************/
-static int Create( vlc_object_t *p_this )
+static int Create( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys;
 
     if( p_dec->fmt_in.i_codec != VLC_CODEC_SSA )
@@ -277,10 +276,8 @@ static int Create( vlc_object_t *p_this )
 /*****************************************************************************
  * Destroy: finish
  *****************************************************************************/
-static void Destroy( vlc_object_t *p_this )
+static void Destroy( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
-
     DecSysRelease( p_dec->p_sys );
 }
 

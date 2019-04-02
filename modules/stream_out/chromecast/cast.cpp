@@ -180,11 +180,11 @@ static const char DEFAULT_MUXER_WEBM[] = "avformat{mux=webm,options={live=1},res
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int Open(vlc_object_t *);
-static void Close(vlc_object_t *);
-static int ProxyOpen(vlc_object_t *);
-static int AccessOpen(vlc_object_t *);
-static void AccessClose(vlc_object_t *);
+static int Open(sout_stream_t *);
+static void Close(sout_stream_t *);
+static int ProxyOpen(sout_stream_t *);
+static int AccessOpen(sout_access_out_t *);
+static void AccessClose(sout_access_out_t *);
 
 static const char *const ppsz_sout_options[] = {
     "ip", "port",  "http-port", "video", NULL
@@ -311,10 +311,9 @@ static void ProxyFlush(sout_stream_t *p_stream, void *id)
     sout_StreamFlush(p_stream->p_next, id);
 }
 
-static int ProxyOpen(vlc_object_t *p_this)
+static int ProxyOpen(sout_stream_t *p_stream)
 {
-    sout_stream_t *p_stream = reinterpret_cast<sout_stream_t*>(p_this);
-    sout_stream_sys_t *p_sys = (sout_stream_sys_t *) var_InheritAddress(p_this, SOUT_CFG_PREFIX "sys");
+    sout_stream_sys_t *p_sys = (sout_stream_sys_t *) var_InheritAddress(p_stream, SOUT_CFG_PREFIX "sys");
     if (p_sys == NULL || p_stream->p_next == NULL)
         return VLC_EGENERIC;
 
@@ -628,10 +627,8 @@ static int AccessControl(sout_access_out_t *p_access, int i_query, va_list args)
     return VLC_SUCCESS;
 }
 
-static int AccessOpen(vlc_object_t *p_this)
+static int AccessOpen(sout_access_out_t *p_access)
 {
-    sout_access_out_t *p_access = (sout_access_out_t*)p_this;
-
     sout_access_out_sys_t *p_sys = (sout_access_out_sys_t *)
         var_InheritAddress(p_access, SOUT_CFG_PREFIX "access-out-sys");
     if (p_sys == NULL)
@@ -644,11 +641,9 @@ static int AccessOpen(vlc_object_t *p_this)
     return VLC_SUCCESS;
 }
 
-static void AccessClose(vlc_object_t *p_this)
+static void AccessClose(sout_access_out_t *p_access)
 {
-    sout_access_out_t *p_access = (sout_access_out_t*)p_this;
     sout_access_out_sys_t *p_sys = reinterpret_cast<sout_access_out_sys_t *>( p_access->p_sys );
-
     p_sys->close();
 }
 
@@ -1222,9 +1217,8 @@ static void on_input_event_cb(void *data, enum cc_input_event event, union cc_in
 /*****************************************************************************
  * Open: connect to the Chromecast and initialize the sout
  *****************************************************************************/
-static int Open(vlc_object_t *p_this)
+static int Open(sout_stream_t *p_stream)
 {
-    sout_stream_t *p_stream = reinterpret_cast<sout_stream_t*>(p_this);
     sout_stream_sys_t *p_sys = NULL;
     intf_sys_t *p_intf = NULL;
     char *psz_ip = NULL;
@@ -1239,7 +1233,7 @@ static int Open(vlc_object_t *p_this)
     psz_ip = var_GetNonEmptyString( p_stream, SOUT_CFG_PREFIX "ip");
     if ( psz_ip == NULL )
     {
-        msg_Err( p_this, "missing Chromecast IP address" );
+        msg_Err( p_stream, "missing Chromecast IP address" );
         goto error;
     }
 
@@ -1256,12 +1250,12 @@ static int Open(vlc_object_t *p_this)
 
     try
     {
-        p_intf = new intf_sys_t( p_this, i_local_server_port, psz_ip, i_device_port,
+        p_intf = new intf_sys_t( VLC_OBJECT(p_stream), i_local_server_port, psz_ip, i_device_port,
                                  httpd_host );
     }
     catch (const std::runtime_error& err )
     {
-        msg_Err( p_this, "cannot load the Chromecast controller (%s)", err.what() );
+        msg_Err( p_stream, "cannot load the Chromecast controller (%s)", err.what() );
         goto error;
     }
     catch (const std::bad_alloc& )
@@ -1319,9 +1313,8 @@ error:
 /*****************************************************************************
  * Close: destroy interface
  *****************************************************************************/
-static void Close(vlc_object_t *p_this)
+static void Close(sout_stream_t *p_stream)
 {
-    sout_stream_t *p_stream = reinterpret_cast<sout_stream_t*>(p_this);
     sout_stream_sys_t *p_sys = reinterpret_cast<sout_stream_sys_t *>( p_stream->p_sys );
 
     assert(p_sys->out_streams.empty() && p_sys->streams.empty());

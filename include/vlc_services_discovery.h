@@ -225,10 +225,9 @@ VLC_API int vlc_sd_probe_Add(vlc_probe_t *, const char *, const char *, int cate
         set_capability( VLC_CAP_SERVICES_PROBE, 100, vlc_sd_probe_Open, NULL )
 
 #define VLC_SD_PROBE_HELPER(name, longname, cat) \
-static int vlc_sd_probe_Open (vlc_object_t *obj) \
+static inline int vlc_sd_probe_Open(vlc_probe_t *probe) \
 { \
-    return vlc_sd_probe_Add ((struct vlc_probe_t *)obj, name, \
-                             longname, cat); \
+    return vlc_sd_probe_Add(probe, name, longname, cat); \
 }
 
 /** @} */

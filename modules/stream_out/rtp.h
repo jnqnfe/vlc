@@ -94,8 +94,8 @@ void rtp_get_video_geometry( sout_stream_id_sys_t *id, int *width, int *height )
 uint16_t rtp_get_extended_sequence( sout_stream_id_sys_t *id );
 
 /* VoD */
-int  OpenVoD ( vlc_object_t * );
-void CloseVoD( vlc_object_t * );
+int  OpenVoD ( vod_t * );
+void CloseVoD( vod_t * );
 
 int vod_check_range(vod_media_t *p_media, const char *psz_session,
                     vlc_tick_t start, vlc_tick_t end);

@@ -28,7 +28,7 @@
 #include <vlc_plugin.h>
 #include <vlc_filter.h>
 
-static int OpenRenderer( vlc_object_t * );
+static int OpenRenderer( filter_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("Dummy") )
@@ -46,9 +46,8 @@ static int RenderText( filter_t *p_filter, subpicture_region_t *p_region_out,
     return VLC_EGENERIC;
 }
 
-static int OpenRenderer( vlc_object_t *p_this )
+static int OpenRenderer( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     p_filter->pf_render = RenderText;
     return VLC_SUCCESS;
 }

@@ -35,11 +35,11 @@
 
 #pragma mark Function declarations
 
-static int OpenSD( vlc_object_t * );
-static void CloseSD( vlc_object_t * );
+static int OpenSD( services_discovery_t * );
+static void CloseSD( services_discovery_t * );
 
-static int OpenRD( vlc_object_t * );
-static void CloseRD( vlc_object_t * );
+static int OpenRD( vlc_renderer_discovery_t * );
+static void CloseRD( vlc_renderer_discovery_t * );
 
 VLC_SD_PROBE_HELPER( "Bonjour", N_("Bonjour Network Discovery"), SD_CAT_LAN )
 VLC_RD_PROBE_HELPER( "Bonjour_renderer", "Bonjour Renderer Discovery" )
@@ -385,9 +385,8 @@ NSString *const VLCBonjourRendererDemux         = @"VLCBonjourRendererDemux";
 
 @end
 
-static int OpenSD(vlc_object_t *p_this)
+static int OpenSD(services_discovery_t *p_sd)
 {
-    services_discovery_t *p_sd = (services_discovery_t *)p_this;
     services_discovery_sys_t *p_sys = NULL;
 
     p_sd->p_sys = p_sys = calloc(1, sizeof(services_discovery_sys_t));
@@ -406,9 +405,8 @@ static int OpenSD(vlc_object_t *p_this)
     return VLC_SUCCESS;
 }
 
-static void CloseSD(vlc_object_t *p_this)
+static void CloseSD(services_discovery_t *p_sd)
 {
-    services_discovery_t *p_sd = (services_discovery_t *)p_this;
     services_discovery_sys_t *p_sys = p_sd->p_sys;
 
     VLCNetServiceDiscoveryController *discoveryController = (__bridge VLCNetServiceDiscoveryController *)(p_sys->discoveryController);
@@ -420,9 +418,8 @@ static void CloseSD(vlc_object_t *p_this)
     free(p_sys);
 }
 
-static int OpenRD(vlc_object_t *p_this)
+static int OpenRD(vlc_renderer_discovery_t *p_rd)
 {
-    vlc_renderer_discovery_t *p_rd = (vlc_renderer_discovery_t *)p_this;
     struct vlc_renderer_discovery_sys *p_sys = NULL;
 
     p_rd->p_sys = p_sys = calloc(1, sizeof(struct vlc_renderer_discovery_sys));
@@ -439,9 +436,8 @@ static int OpenRD(vlc_object_t *p_this)
     return VLC_SUCCESS;
 }
 
-static void CloseRD(vlc_object_t *p_this)
+static void CloseRD(vlc_renderer_discovery_t *p_rd)
 {
-    vlc_renderer_discovery_t *p_rd = (vlc_renderer_discovery_t *)p_this;
     struct vlc_renderer_discovery_sys *p_sys = p_rd->p_sys;
 
     VLCNetServiceDiscoveryController *discoveryController = (__bridge VLCNetServiceDiscoveryController *)(p_sys->discoveryController);

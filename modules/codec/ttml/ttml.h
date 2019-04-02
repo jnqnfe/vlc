@@ -18,11 +18,11 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-int tt_OpenDemux( vlc_object_t* p_this );
-void tt_CloseDemux( demux_t* p_demux );
+int tt_OpenDemux( demux_t* );
+void tt_CloseDemux( demux_t* );
 
-int  tt_OpenDecoder   ( vlc_object_t * );
-void tt_CloseDecoder  ( vlc_object_t * );
+int  tt_OpenDecoder   ( decoder_t * );
+void tt_CloseDecoder  ( decoder_t * );
 
 enum
 {

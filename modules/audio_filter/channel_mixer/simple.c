@@ -36,7 +36,7 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  OpenFilter( vlc_object_t * );
+static int  OpenFilter( filter_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Audio filter for simple channel mixing") )
@@ -265,9 +265,8 @@ static void DoWork_6_1_to_5_x( filter_t * p_filter,  block_t * p_in_buf, block_t
 /*****************************************************************************
  * OpenFilter:
  *****************************************************************************/
-static int OpenFilter( vlc_object_t *p_this )
+static int OpenFilter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     void (*do_work)(filter_t *, block_t *, block_t *) = NULL;
 
     if( p_filter->fmt_in.audio.i_format != VLC_CODEC_FL32 ||

@@ -30,8 +30,8 @@
 #include <spawn.h>
 #include <sys/wait.h>
 
-static int Open (vlc_object_t *);
-static void Close (vlc_object_t *);
+static int Open (vlc_inhibit_t *);
+static void Close (vlc_inhibit_t *);
 
 vlc_plugin_begin ()
     set_shortname (N_("XDG-screensaver") )
@@ -79,9 +79,8 @@ static void Inhibit (vlc_inhibit_t *ih, unsigned mask)
     vlc_timer_schedule (sys->timer, false, delay, delay);
 }
 
-static int Open (vlc_object_t *obj)
+static int Open (vlc_inhibit_t *ih)
 {
-    vlc_inhibit_t *ih = (vlc_inhibit_t *)obj;
     vlc_inhibit_sys_t *p_sys = malloc (sizeof (*p_sys));
     if (p_sys == NULL)
         return VLC_ENOMEM;
@@ -111,9 +110,8 @@ static int Open (vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void Close (vlc_object_t *obj)
+static void Close (vlc_inhibit_t *ih)
 {
-    vlc_inhibit_t *ih = (vlc_inhibit_t *)obj;
     vlc_inhibit_sys_t *p_sys = ih->p_sys;
 
     vlc_timer_destroy (p_sys->timer);

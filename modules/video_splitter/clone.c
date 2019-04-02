@@ -47,8 +47,8 @@
         "and/or video output modules")
 #define CFG_PREFIX "clone-"
 
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( video_splitter_t * );
+static void Close( video_splitter_t * );
 
 vlc_plugin_begin ()
     set_help(CLONE_HELP)
@@ -78,10 +78,8 @@ static int Filter( video_splitter_t *, picture_t *pp_dst[], picture_t * );
 /**
  * This function allocates and initializes a Clone splitter module
  */
-static int Open( vlc_object_t *p_this )
+static int Open( video_splitter_t *p_splitter )
 {
-    video_splitter_t *p_splitter = (video_splitter_t*)p_this;
-
     config_ChainParse( p_splitter, CFG_PREFIX, ppsz_filter_options,
                        p_splitter->p_cfg );
 
@@ -158,10 +156,8 @@ static int Open( vlc_object_t *p_this )
 /**
  * This function closes a clone video splitter module
  */
-static void Close( vlc_object_t *p_this )
+static void Close( video_splitter_t *p_splitter )
 {
-    video_splitter_t *p_splitter = (video_splitter_t*)p_this;
-
     for( int i = 0; i < p_splitter->i_output; i++ )
     {
         video_splitter_output_t *p_cfg = &p_splitter->p_output[i];

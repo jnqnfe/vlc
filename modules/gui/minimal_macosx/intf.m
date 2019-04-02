@@ -46,9 +46,8 @@ static void Run (intf_thread_t *p_intf);
 /*****************************************************************************
  * OpenIntf: initialize interface
  *****************************************************************************/
-int OpenIntf (vlc_object_t *p_this)
+int OpenIntf (intf_thread_t *p_intf)
 {
-    intf_thread_t *p_intf = (intf_thread_t*) p_this;
     msg_Dbg(p_intf, "Using minimal macosx interface");
 
     p_intf->p_sys = NULL;
@@ -61,10 +60,8 @@ int OpenIntf (vlc_object_t *p_this)
 /*****************************************************************************
  * CloseIntf: destroy interface
  *****************************************************************************/
-void CloseIntf (vlc_object_t *p_this)
+void CloseIntf (intf_thread_t *p_intf)
 {
-    intf_thread_t *p_intf = (intf_thread_t*) p_this;
-
     free(p_intf->p_sys);
 }
 

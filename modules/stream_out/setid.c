@@ -50,9 +50,9 @@
 #define LANG_LONGTEXT N_( \
     "Specify an ISO-639 code (three characters) for this elementary stream" )
 
-static int  OpenId    ( vlc_object_t * );
-static int  OpenLang  ( vlc_object_t * );
-static void Close     ( vlc_object_t * );
+static int  OpenId    ( sout_stream_t * );
+static int  OpenLang  ( sout_stream_t * );
+static void Close     ( sout_stream_t * );
 
 #define SOUT_CFG_PREFIX_ID   "sout-setid-"
 #define SOUT_CFG_PREFIX_LANG "sout-setlang-"
@@ -109,9 +109,8 @@ typedef struct
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int OpenCommon( vlc_object_t *p_this )
+static int OpenCommon( sout_stream_t *p_stream )
 {
-    sout_stream_t     *p_stream = (sout_stream_t*)p_this;
     sout_stream_sys_t *p_sys;
 
     if( !p_stream->p_next )
@@ -132,13 +131,11 @@ static int OpenCommon( vlc_object_t *p_this )
     return VLC_SUCCESS;
 }
 
-static int OpenId( vlc_object_t *p_this )
+static int OpenId( sout_stream_t *p_stream )
 {
-    int i_ret = OpenCommon( p_this );
+    int i_ret = OpenCommon( p_stream );
     if( i_ret != VLC_SUCCESS )
         return i_ret;
-
-    sout_stream_t *p_stream = (sout_stream_t*)p_this;
 
     config_ChainParse( p_stream, SOUT_CFG_PREFIX_ID, ppsz_sout_options_id,
                        p_stream->p_cfg );
@@ -153,13 +150,11 @@ static int OpenId( vlc_object_t *p_this )
     return VLC_SUCCESS;
 }
 
-static int OpenLang( vlc_object_t *p_this )
+static int OpenLang( sout_stream_t *p_stream )
 {
-    int i_ret = OpenCommon( p_this );
+    int i_ret = OpenCommon( p_stream );
     if( i_ret != VLC_SUCCESS )
         return i_ret;
-
-    sout_stream_t *p_stream = (sout_stream_t*)p_this;
 
     config_ChainParse( p_stream, SOUT_CFG_PREFIX_LANG, ppsz_sout_options_lang,
                        p_stream->p_cfg );
@@ -177,9 +172,8 @@ static int OpenLang( vlc_object_t *p_this )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( sout_stream_t *p_stream )
 {
-    sout_stream_t     *p_stream = (sout_stream_t*)p_this;
     sout_stream_sys_t *p_sys = (sout_stream_sys_t *)p_stream->p_sys;
 
     free( p_sys->psz_language );

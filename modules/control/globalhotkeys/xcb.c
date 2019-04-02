@@ -40,8 +40,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int Open( vlc_object_t *p_this );
-static void Close( vlc_object_t *p_this );
+static int Open( intf_thread_t * );
+static void Close( intf_thread_t * );
 
 /*****************************************************************************
  * Module descriptor
@@ -80,9 +80,8 @@ static void *Thread( void *p_data );
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( intf_thread_t *p_intf )
 {
-    intf_thread_t *p_intf = (intf_thread_t *)p_this;
     intf_sys_t *p_sys;
     int ret = VLC_EGENERIC;
 
@@ -146,9 +145,8 @@ error:
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( intf_thread_t *p_intf )
 {
-    intf_thread_t *p_intf = (intf_thread_t *)p_this;
     intf_sys_t *p_sys = p_intf->p_sys;
 
     if( !p_sys )

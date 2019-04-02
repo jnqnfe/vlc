@@ -51,8 +51,8 @@
  *****************************************************************************/
 
 /* audio filter */
-static int  OpenFilter ( vlc_object_t * );
-static void CloseFilter( vlc_object_t * );
+static int  OpenFilter ( filter_t * );
+static void CloseFilter( filter_t * );
 static block_t *Resample( filter_t *, block_t * );
 
 static void ResampleFloat( filter_t *p_filter,
@@ -280,9 +280,8 @@ static block_t *Resample( filter_t * p_filter, block_t * p_in_buf )
 /*****************************************************************************
  * OpenFilter:
  *****************************************************************************/
-static int OpenFilter( vlc_object_t *p_this )
+static int OpenFilter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys;
     unsigned int i_out_rate  = p_filter->fmt_out.audio.i_rate;
 
@@ -306,7 +305,7 @@ static int OpenFilter( vlc_object_t *p_this )
     p_sys->b_first = true;
     p_filter->pf_audio_filter = Resample;
 
-    msg_Dbg( p_this, "%4.4s/%iKHz/%i->%4.4s/%iKHz/%i",
+    msg_Dbg( p_filter, "%4.4s/%iKHz/%i->%4.4s/%iKHz/%i",
              (char *)&p_filter->fmt_in.i_codec,
              p_filter->fmt_in.audio.i_rate,
              p_filter->fmt_in.audio.i_channels,
@@ -323,9 +322,8 @@ static int OpenFilter( vlc_object_t *p_this )
 /*****************************************************************************
  * CloseFilter : deallocate data structures
  *****************************************************************************/
-static void CloseFilter( vlc_object_t *p_this )
+static void CloseFilter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     free( p_filter->p_sys->p_buf );
     free( p_filter->p_sys );
 }

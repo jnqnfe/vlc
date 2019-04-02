@@ -41,8 +41,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open   ( vlc_object_t * );
-static void Close  ( vlc_object_t * );
+static int  Open   ( sout_mux_t * );
+static void Close  ( sout_mux_t * );
 
 #define SOUT_CFG_PREFIX "sout-avi-"
 
@@ -158,10 +158,9 @@ static void SetFCC( uint8_t *p, char *fcc )
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_mux_t *p_mux )
 {
-    sout_mux_t      *p_mux = (sout_mux_t*)p_this;
-    sout_mux_sys_t  *p_sys;
+    sout_mux_sys_t *p_sys;
 
     msg_Dbg( p_mux, "AVI muxer opened" );
 
@@ -196,10 +195,9 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( sout_mux_t *p_mux )
 {
-    sout_mux_t      *p_mux = (sout_mux_t*)p_this;
-    sout_mux_sys_t  *p_sys = p_mux->p_sys;
+    sout_mux_sys_t *p_sys = p_mux->p_sys;
 
     block_t       *p_hdr, *p_idx1;
     int                 i_stream;

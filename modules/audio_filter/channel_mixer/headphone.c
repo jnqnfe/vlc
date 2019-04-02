@@ -40,8 +40,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  OpenFilter ( vlc_object_t * );
-static void CloseFilter( vlc_object_t * );
+static int  OpenFilter ( filter_t * );
+static void CloseFilter( filter_t * );
 static block_t *Convert( filter_t *, block_t * );
 
 /*****************************************************************************
@@ -182,11 +182,11 @@ static void ComputeChannelOperations( filter_sys_t * p_data
     }
 }
 
-static int Init( vlc_object_t *p_this, filter_sys_t * p_data
+static int Init( filter_t *p_filter, filter_sys_t * p_data
         , unsigned int i_nb_channels, uint32_t i_physical_channels
         , unsigned int i_rate )
 {
-    double d_x = var_InheritInteger( p_this, "headphone-dim" );
+    double d_x = var_InheritInteger( p_filter, "headphone-dim" );
     double d_z = d_x;
     double d_z_rear = -d_x/3;
     double d_min = 0;
@@ -194,7 +194,7 @@ static int Init( vlc_object_t *p_this, filter_sys_t * p_data
     int i_source_channel_offset;
     unsigned int i;
 
-    if( var_InheritBool( p_this, "headphone-compensate" ) )
+    if( var_InheritBool( p_filter, "headphone-compensate" ) )
     {
         /* minimal distance to any speaker */
         if( i_physical_channels & AOUT_CHAN_REARCENTER )
@@ -433,9 +433,8 @@ static void DoWork( filter_t * p_filter,
 /*****************************************************************************
  * OpenFilter:
  *****************************************************************************/
-static int OpenFilter( vlc_object_t *p_this )
+static int OpenFilter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys;
 
     /* Activate this filter only with stereo devices */
@@ -455,7 +454,7 @@ static int OpenFilter( vlc_object_t *p_this )
     p_sys->i_nb_atomic_operations = 0;
     p_sys->p_atomic_operations = NULL;
 
-    if( Init( VLC_OBJECT(p_filter), p_sys
+    if( Init( p_filter, p_sys
                 , aout_FormatNbChannels ( &(p_filter->fmt_in.audio) )
                 , p_filter->fmt_in.audio.i_physical_channels
                 , p_filter->fmt_in.audio.i_rate ) < 0 )
@@ -487,9 +486,8 @@ static int OpenFilter( vlc_object_t *p_this )
 /*****************************************************************************
  * CloseFilter : deallocate data structures
  *****************************************************************************/
-static void CloseFilter( vlc_object_t *p_this )
+static void CloseFilter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     free( p_sys->p_overflow_buffer );

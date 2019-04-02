@@ -41,13 +41,13 @@
 #include <vlc_fs.h>
 #include <vlc_url.h>
 
-static int OpenV4L (vlc_object_t *);
+static int OpenV4L (services_discovery_t *);
 #ifdef HAVE_ALSA
-static int OpenALSA (vlc_object_t *);
+static int OpenALSA (services_discovery_t *);
 #endif
-static int OpenDisc (vlc_object_t *);
-static void Close (vlc_object_t *);
-static int vlc_sd_probe_Open (vlc_object_t *);
+static int OpenDisc (services_discovery_t *);
+static void Close (services_discovery_t *);
+static int vlc_sd_probe_Open (vlc_probe_t *);
 
 /*
  * Module descriptor
@@ -75,10 +75,8 @@ vlc_plugin_begin ()
     //set_subcategory (SUBCAT_PLAYLIST_SD)
 vlc_plugin_end ()
 
-static int vlc_sd_probe_Open (vlc_object_t *obj)
+static int vlc_sd_probe_Open (vlc_probe_t *probe)
 {
-    vlc_probe_t *probe = (vlc_probe_t *)obj;
-
     struct udev *udev = udev_new ();
     if (udev == NULL)
         return VLC_PROBE_CONTINUE;
@@ -218,9 +216,8 @@ static void *Run (void *);
 /**
  * Probes and initializes.
  */
-static int Open (vlc_object_t *obj, const struct subsys *subsys)
+static int Open (services_discovery_t *sd, const struct subsys *subsys)
 {
-    services_discovery_t *sd = (services_discovery_t *)obj;
     services_discovery_sys_t *p_sys = malloc (sizeof (*p_sys));
 
     if (p_sys == NULL)
@@ -289,9 +286,8 @@ error:
 /**
  * Releases resources
  */
-static void Close (vlc_object_t *obj)
+static void Close (services_discovery_t *sd)
 {
-    services_discovery_t *sd = (services_discovery_t *)obj;
     services_discovery_sys_t *p_sys = sd->p_sys;
 
     if (p_sys->monitor != NULL)
@@ -432,14 +428,14 @@ static char *v4l_get_name (struct udev_device *dev)
     return prd ? strdup (prd) : NULL;
 }
 
-int OpenV4L (vlc_object_t *obj)
+int OpenV4L (services_discovery_t *sd)
 {
     static const struct subsys subsys = {
         "video4linux", N_("Video capture"),
         v4l_get_mrl, v4l_get_name, ITEM_TYPE_CARD,
     };
 
-    return Open (obj, &subsys);
+    return Open (sd, &subsys);
 }
 
 
@@ -507,14 +503,14 @@ out:
     return name;
 }
 
-int OpenALSA (vlc_object_t *obj)
+int OpenALSA (services_discovery_t *sd)
 {
     static const struct subsys subsys = {
         "sound", N_("Audio capture"),
         alsa_get_mrl, alsa_get_name, ITEM_TYPE_CARD,
     };
 
-    return Open (obj, &subsys);
+    return Open (sd, &subsys);
 }
 #endif /* HAVE_ALSA */
 
@@ -612,11 +608,11 @@ static char *disc_get_name (struct udev_device *dev)
     return name;
 }
 
-int OpenDisc (vlc_object_t *obj)
+int OpenDisc (services_discovery_t *sd)
 {
     static const struct subsys subsys = {
         "block", N_("Discs"), disc_get_mrl, disc_get_name, ITEM_TYPE_DISC,
     };
 
-    return Open (obj, &subsys);
+    return Open (sd, &subsys);
 }

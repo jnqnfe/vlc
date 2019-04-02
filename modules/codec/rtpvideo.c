@@ -34,7 +34,7 @@
 /****************************************************************************
  * Local prototypes
  ****************************************************************************/
-static int  OpenEncoder( vlc_object_t * );
+static int  OpenEncoder( encoder_t * );
 static block_t *Encode( encoder_t *p_enc, picture_t *p_pict );
 
 /*****************************************************************************
@@ -47,9 +47,8 @@ vlc_plugin_begin ()
     //set_subcategory( SUBCAT_INPUT_VCODEC )
 vlc_plugin_end ()
 
-static int OpenEncoder( vlc_object_t *p_this )
+static int OpenEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     if( p_enc->fmt_out.i_codec != VLC_CODEC_R420 && !p_enc->obj.force )
         return VLC_EGENERIC;
 

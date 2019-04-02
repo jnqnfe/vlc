@@ -53,7 +53,7 @@ vlc_plugin_begin ()
 #ifdef ENABLE_SOUT
     add_submodule()
         set_description( "WEBVTT text encoder" )
-        set_capability( VLC_CAP_ENCODER, 101, webvtt_OpenEncoder, webvtt_CloseEncoder )
+        set_capability( VLC_CAP_ENCODER, 101, webvtt_OpenEncoder, NULL )
 #endif
 
     //set_subcategory( SUBCAT_INPUT_SCODEC )

@@ -47,17 +47,16 @@ DEFINE_PROPERTYKEY(PKEY_Device_FriendlyName, 0xa45c254e, 0xdf1c, 0x4efd,
 DEFINE_GUID (GUID_VLC_AUD_OUT, 0x4533f59d, 0x59ee, 0x00c6,
    0xad, 0xb2, 0xc6, 0x8b, 0x50, 0x1a, 0x66, 0x55);
 
-static int TryEnterMTA(vlc_object_t *obj)
+static int TryEnterMTA(audio_output_t *aout)
 {
     HRESULT hr = CoInitializeEx(NULL, COINIT_MULTITHREADED);
     if (unlikely(FAILED(hr)))
     {
-        msg_Err (obj, "cannot initialize COM (error 0x%lX)", hr);
+        msg_Err (aout, "cannot initialize COM (error 0x%lx)", hr);
         return -1;
     }
     return 0;
 }
-#define TryEnterMTA(o) TryEnterMTA(VLC_OBJECT(o))
 
 static void EnterMTA(void)
 {
@@ -1245,10 +1244,8 @@ static void Stop(audio_output_t *aout)
     sys->stream = NULL;
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
-
     aout_sys_t *sys = malloc(sizeof (*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
@@ -1340,9 +1337,8 @@ error:
     return VLC_EGENERIC;
 }
 
-static void Close(vlc_object_t *obj)
+static void Close(audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
     aout_sys_t *sys = aout->sys;
 
     EnterCriticalSection(&sys->lock);

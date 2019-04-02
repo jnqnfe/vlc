@@ -38,8 +38,8 @@
 /*****************************************************************************
  * Local and extern prototypes.
  *****************************************************************************/
-static int  Activate( vlc_object_t * );
-static void Destroy( vlc_object_t * );
+static int  Activate( filter_t * );
+static void Destroy( filter_t * );
 static picture_t *Filter( filter_t *, picture_t * );
 
 /* This module effectively implements a form of picture-in-picture.
@@ -143,9 +143,8 @@ static const struct filter_video_callbacks canvas_cbs =
 /*****************************************************************************
  *
  *****************************************************************************/
-static int Activate( vlc_object_t *p_this )
+static int Activate( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     unsigned i_canvas_width; /* visible width of output canvas */
     unsigned i_canvas_height; /* visible height of output canvas */
     unsigned i_canvas_aspect; /* canvas PictureAspectRatio */
@@ -377,9 +376,8 @@ static int Activate( vlc_object_t *p_this )
 /*****************************************************************************
  *
  *****************************************************************************/
-static void Destroy( vlc_object_t *p_this )
+static void Destroy( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
     filter_chain_Delete( p_sys->p_chain );
     free( p_sys );

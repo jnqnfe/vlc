@@ -46,8 +46,8 @@
 /*****************************************************************************
  * Module descriptor
  ****************************************************************************/
-static int  Open    ( vlc_object_t * );
-static void Close   ( vlc_object_t * );
+static int  Open    ( intf_thread_t * );
+static void Close   ( intf_thread_t * );
 
 #define APPLICATION_NAME "VLC media player"
 
@@ -85,10 +85,9 @@ struct intf_sys_t
 /*****************************************************************************
  * Open: initialize and create stuff
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( intf_thread_t *p_intf )
 {
-    intf_thread_t   *p_intf = (intf_thread_t *)p_this;
-    intf_sys_t      *p_sys  = malloc( sizeof( *p_sys ) );
+    intf_sys_t *p_sys = malloc( sizeof( *p_sys ) );
 
     if( !p_sys )
         return VLC_ENOMEM;
@@ -144,10 +143,9 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: destroy interface stuff
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( intf_thread_t *p_intf )
 {
-    intf_thread_t   *p_intf = ( intf_thread_t* ) p_this;
-    intf_sys_t      *p_sys  = p_intf->p_sys;
+    intf_sys_t *p_sys  = p_intf->p_sys;
 
     vlc_player_t *player = vlc_playlist_GetPlayer(p_sys->playlist);
     vlc_player_Lock(player);

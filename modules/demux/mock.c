@@ -619,9 +619,8 @@ Demux(demux_t *demux)
 }
 
 static void
-Close(vlc_object_t *obj)
+Close(demux_t *demux)
 {
-    demux_t *demux = (demux_t*)obj;
     struct demux_sys *sys = demux->p_sys;
 
     struct mock_track *track;
@@ -634,23 +633,21 @@ Close(vlc_object_t *obj)
 }
 
 static int
-Open(vlc_object_t *obj)
+Open(demux_t *demux)
 {
-    demux_t *demux = (demux_t*)obj;
-
     if (demux->out == NULL)
         return VLC_EGENERIC;
-    struct demux_sys *sys = vlc_obj_malloc(obj, sizeof(*sys));
+    struct demux_sys *sys = vlc_obj_malloc(VLC_OBJECT(demux), sizeof(*sys));
     if (!sys)
         return VLC_ENOMEM;
 
     demux->p_sys = sys;
 
-    if (var_LocationParse(obj, demux->psz_location, "mock-") != VLC_SUCCESS)
+    if (var_LocationParse(demux, demux->psz_location, "mock-") != VLC_SUCCESS)
         return VLC_ENOMEM;
 
 #define X(var_name, type, module_header_type, getter, default_value) \
-    sys->var_name = getter(obj, "mock-"#var_name);
+    sys->var_name = getter(demux, "mock-"#var_name);
     LIST_OPTIONS
 #undef X
 
@@ -724,7 +721,7 @@ Open(vlc_object_t *obj)
 
     return VLC_SUCCESS;
 error:
-    Close(obj);
+    Close(demux);
     demux->p_sys = NULL;
     return ret;
 }

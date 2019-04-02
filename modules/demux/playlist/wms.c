@@ -68,9 +68,8 @@ skip:
     return VLC_SUCCESS;
 }
 
-int Import_WMS(vlc_object_t *obj)
+int Import_WMS(stream_t* demux)
 {
-    stream_t *demux = (stream_t *)obj;
     const uint8_t *peek;
 
     CHECK_FILE(demux);

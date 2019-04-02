@@ -39,8 +39,8 @@
 /*****************************************************************************
  * Module descriptior
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( stream_t * );
+static void Close( stream_t * );
 
 #define HELP_TEXT N_("Usage hint: [vcd:][device][#[title][,[chapter]]]")
 
@@ -87,9 +87,8 @@ static int      EntryPoints( stream_t * );
 /*****************************************************************************
  * VCDOpen: open vcd
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( stream_t *p_access )
 {
-    stream_t     *p_access = (stream_t *)p_this;
     access_sys_t *p_sys;
     if( p_access->psz_filepath == NULL )
         return VLC_EGENERIC;
@@ -133,7 +132,7 @@ static int Open( vlc_object_t *p_this )
 #endif
 
     /* Open VCD */
-    vcddev = ioctl_Open( p_this, psz_dup );
+    vcddev = ioctl_Open( VLC_OBJECT(p_access), psz_dup );
     free( psz_dup );
     if( !vcddev )
         return VLC_EGENERIC;
@@ -212,9 +211,8 @@ error:
 /*****************************************************************************
  * Close: closes vcd
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( stream_t *p_access )
 {
-    stream_t     *p_access = (stream_t *)p_this;
     access_sys_t *p_sys = p_access->p_sys;
 
     for( size_t i = 0; i < ARRAY_SIZE(p_sys->titles); i++ )
@@ -222,7 +220,7 @@ static void Close( vlc_object_t *p_this )
 
     vcddev_toc_Free( p_sys->p_toc );
 
-    ioctl_Close( p_this, p_sys->vcddev );
+    ioctl_Close( VLC_OBJECT(p_access), p_sys->vcddev );
     free( p_sys );
 }
 

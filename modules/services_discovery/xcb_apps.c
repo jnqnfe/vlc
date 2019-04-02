@@ -37,9 +37,9 @@ typedef xcb_atom_t Atom;
 #endif
 #include <poll.h>
 
-static int  Open (vlc_object_t *);
-static void Close (vlc_object_t *);
-static int vlc_sd_probe_Open (vlc_object_t *);
+static int  Open (services_discovery_t *);
+static void Close (services_discovery_t *);
+static int vlc_sd_probe_Open (vlc_probe_t *);
 
 /*
  * Module descriptor
@@ -71,11 +71,9 @@ static void UpdateApps (services_discovery_t *);
 static void DelApp (void *);
 static void AddDesktop(services_discovery_t *);
 
-static int vlc_sd_probe_Open (vlc_object_t *obj)
+static int vlc_sd_probe_Open (vlc_probe_t *probe)
 {
-    vlc_probe_t *probe = (vlc_probe_t *)obj;
-
-    char *display = var_InheritString (obj, "x11-display");
+    char *display = var_InheritString (probe, "x11-display");
     xcb_connection_t *conn = xcb_connect (display, NULL);
     free (display);
     if (xcb_connection_has_error (conn))
@@ -88,9 +86,8 @@ static int vlc_sd_probe_Open (vlc_object_t *obj)
 /**
  * Probes and initializes.
  */
-static int Open (vlc_object_t *obj)
+static int Open (services_discovery_t *sd)
 {
-    services_discovery_t *sd = (services_discovery_t *)obj;
     services_discovery_sys_t *p_sys = malloc (sizeof (*p_sys));
 
     if (p_sys == NULL)
@@ -99,7 +96,7 @@ static int Open (vlc_object_t *obj)
     sd->description = _("Screen capture");
 
     /* Connect to X server */
-    char *display = var_InheritString (obj, "x11-display");
+    char *display = var_InheritString (sd, "x11-display");
     int snum;
     xcb_connection_t *conn = xcb_connect (display, &snum);
     free (display);
@@ -125,7 +122,7 @@ static int Open (vlc_object_t *obj)
     }
     if (scr == NULL)
     {
-        msg_Err (obj, "bad X11 screen number");
+        msg_Err (sd, "bad X11 screen number");
         goto error;
     }
 
@@ -187,9 +184,8 @@ error:
 /**
  * Releases resources
  */
-static void Close (vlc_object_t *obj)
+static void Close (services_discovery_t *sd)
 {
-    services_discovery_t *sd = (services_discovery_t *)obj;
     services_discovery_sys_t *p_sys = sd->p_sys;
 
     vlc_cancel (p_sys->thread);

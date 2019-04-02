@@ -39,8 +39,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open (vlc_object_t *);
-static void Close(vlc_object_t *);
+static int  Open (demux_t *);
+static void Close(demux_t *);
 
 #define ID_TEXT N_("ES ID")
 #define ID_LONGTEXT N_( \
@@ -684,10 +684,8 @@ static vlc_fourcc_t Detect(stream_t *s)
     return 0;
 }
 
-static int Open(vlc_object_t *object)
+static int Open(demux_t *demux)
 {
-    demux_t *demux = (demux_t*)object;
-
     /* Detect the image type */
     vlc_fourcc_t codec = Detect(demux->s);
     if (codec == 0)
@@ -755,10 +753,9 @@ static int Open(vlc_object_t *object)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *object)
+static void Close(demux_t *demux)
 {
-    demux_t     *demux = (demux_t*)object;
-    demux_sys_t *sys   = demux->p_sys;
+    demux_sys_t *sys = demux->p_sys;
 
     if (sys->data)
         block_Release(sys->data);

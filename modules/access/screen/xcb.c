@@ -60,8 +60,8 @@
 #define FOLLOW_MOUSE_LONGTEXT N_( \
     "Follow the mouse when capturing a subscreen." )
 
-static int  Open (vlc_object_t *);
-static void Close (vlc_object_t *);
+static int  Open (demux_t *);
+static void Close (demux_t *);
 
 /*
  * Module descriptor
@@ -136,9 +136,8 @@ static bool CheckSHM (xcb_connection_t *conn)
 /**
  * Probes and initializes.
  */
-static int Open (vlc_object_t *obj)
+static int Open (demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     if (demux->out == NULL)
         return VLC_EGENERIC;
 
@@ -148,7 +147,7 @@ static int Open (vlc_object_t *obj)
     demux->p_sys = p_sys;
 
     /* Connect to X server */
-    char *display = var_InheritString (obj, "x11-display");
+    char *display = var_InheritString (demux, "x11-display");
     int snum;
     xcb_connection_t *conn = xcb_connect (display, &snum);
     free (display);
@@ -176,7 +175,7 @@ static int Open (vlc_object_t *obj)
         }
         if (scr == NULL)
         {
-            msg_Err (obj, "bad X11 screen number");
+            msg_Err (demux, "bad X11 screen number");
             goto error;
         }
         p_sys->window = scr->root;
@@ -189,7 +188,7 @@ static int Open (vlc_object_t *obj)
         unsigned long ul = strtoul (demux->psz_location, &end, 0);
         if (*end || ul > 0xffffffff)
         {
-            msg_Err (obj, "bad X11 drawable %s", demux->psz_location);
+            msg_Err (demux, "bad X11 drawable %s", demux->psz_location);
             goto error;
         }
         p_sys->window = ul;
@@ -199,11 +198,11 @@ static int Open (vlc_object_t *obj)
                 xcb_composite_query_version (conn, 0, 4), NULL);
         if (r == NULL || r->minor_version < 2)
         {
-            msg_Err (obj, "X Composite extension not available");
+            msg_Err (demux, "X Composite extension not available");
             free (r);
             goto error;
         }
-        msg_Dbg (obj, "using Composite extension v%"PRIu32".%"PRIu32,
+        msg_Dbg (demux, "using Composite extension v%"PRIu32".%"PRIu32,
                  r->major_version, r->minor_version);
         free (r);
 
@@ -217,20 +216,20 @@ static int Open (vlc_object_t *obj)
     p_sys->pixmap = xcb_generate_id (conn);
     p_sys->segment = xcb_generate_id (conn);
     p_sys->shm = CheckSHM (conn);
-    p_sys->w = var_InheritInteger (obj, "screen-width");
-    p_sys->h = var_InheritInteger (obj, "screen-height");
+    p_sys->w = var_InheritInteger (demux, "screen-width");
+    p_sys->h = var_InheritInteger (demux, "screen-height");
     if (p_sys->w != 0 || p_sys->h != 0)
-        p_sys->follow_mouse = var_InheritBool (obj, "screen-follow-mouse");
+        p_sys->follow_mouse = var_InheritBool (demux, "screen-follow-mouse");
     else /* Following mouse is meaningless if width&height are dynamic. */
         p_sys->follow_mouse = false;
     if (!p_sys->follow_mouse) /* X and Y are meaningless if following mouse */
     {
-        p_sys->x = var_InheritInteger (obj, "screen-left");
-        p_sys->y = var_InheritInteger (obj, "screen-top");
+        p_sys->x = var_InheritInteger (demux, "screen-left");
+        p_sys->y = var_InheritInteger (demux, "screen-top");
     }
 
     /* Initializes format */
-    p_sys->rate = var_InheritFloat (obj, "screen-fps");
+    p_sys->rate = var_InheritFloat (demux, "screen-fps");
     if (!p_sys->rate)
         goto error;
 
@@ -261,9 +260,8 @@ error:
 /**
  * Releases resources
  */
-static void Close (vlc_object_t *obj)
+static void Close (demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     demux_sys_t *p_sys = demux->p_sys;
 
     vlc_timer_destroy (p_sys->timer);

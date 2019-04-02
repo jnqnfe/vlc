@@ -55,9 +55,9 @@
 #define HEADPHONES_LONGTEXT N_("If the output is stereo, render ambisonics " \
                                "with the binaural decoder.")
 
-static int OpenBinauralizer(vlc_object_t *p_this);
-static int Open( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int OpenBinauralizer(filter_t *);
+static int Open( filter_t * );
+static void Close( filter_t * );
 static void Flush( filter_t * );
 
 vlc_plugin_begin()
@@ -325,9 +325,8 @@ static int allocateBuffers(filter_spatialaudio *p_sys)
     return VLC_SUCCESS;
 }
 
-static int OpenBinauralizer(vlc_object_t *p_this)
+static int OpenBinauralizer(filter_t *p_filter)
 {
-    filter_t *p_filter = (filter_t *)p_this;
     audio_format_t *infmt = &p_filter->fmt_in.audio;
     audio_format_t *outfmt = &p_filter->fmt_out.audio;
 
@@ -405,9 +404,8 @@ static int OpenBinauralizer(vlc_object_t *p_this)
     return VLC_SUCCESS;
 }
 
-static int Open(vlc_object_t *p_this)
+static int Open(filter_t *p_filter)
 {
-    filter_t *p_filter = (filter_t *)p_this;
     audio_format_t *infmt = &p_filter->fmt_in.audio;
     audio_format_t *outfmt = &p_filter->fmt_out.audio;
 
@@ -555,10 +553,8 @@ static int Open(vlc_object_t *p_this)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *p_this)
+static void Close(filter_t *p_filter)
 {
-    filter_t *p_filter = (filter_t *)p_this;
-
     filter_spatialaudio *p_sys = reinterpret_cast<filter_spatialaudio *>(p_filter->p_sys);
     delete p_sys;
 }

@@ -34,11 +34,11 @@
 /*****************************************************************************
  * Module descriptor.
  *****************************************************************************/
-static int OpenDecoder ( vlc_object_t * );
-static void CloseDecoder ( vlc_object_t * );
+static int OpenDecoder ( decoder_t * );
+static void CloseDecoder ( decoder_t * );
 static int Decode( decoder_t *, block_t * );
 #ifdef ENABLE_SOUT
-static int OpenEncoder ( vlc_object_t * );
+static int OpenEncoder ( encoder_t * );
 static block_t * Encode( encoder_t *, subpicture_t * );
 #endif
 
@@ -529,16 +529,13 @@ static void ParseExtradataTextMedia( decoder_t *p_dec )
 /*****************************************************************************
  * Decoder entry/exit points
  *****************************************************************************/
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t *p_dec )
 {
-    decoder_t     *p_dec = (decoder_t *) p_this;
     text_style_Delete( (text_style_t *) p_dec->p_sys );
 }
 
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    decoder_t     *p_dec = (decoder_t *) p_this;
-
     if( p_dec->fmt_in.i_codec != VLC_CODEC_TX3G &&
         p_dec->fmt_in.i_codec != VLC_CODEC_QTXT )
         return VLC_EGENERIC;
@@ -599,10 +596,8 @@ static void FillExtradataTx3g( void **pp_extra, int *pi_extra )
     }
 }
 
-static int OpenEncoder( vlc_object_t *p_this )
+static int OpenEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
-
     if( p_enc->fmt_out.i_codec != VLC_CODEC_TX3G )
         return VLC_EGENERIC;
 

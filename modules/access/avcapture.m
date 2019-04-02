@@ -54,9 +54,9 @@
 /*****************************************************************************
 * Local prototypes
 *****************************************************************************/
-static int Open(vlc_object_t *p_this);
-static void Close(vlc_object_t *p_this);
-static int Demux(demux_t *p_demux);
+static int Open(demux_t *);
+static void Close(demux_t *);
+static int Demux(demux_t *);
 static int Control(demux_t *, int, va_list);
 
 /*****************************************************************************
@@ -249,9 +249,8 @@ typedef struct demux_sys_t
 /*****************************************************************************
 * Open:
 *****************************************************************************/
-static int Open(vlc_object_t *p_this)
+static int Open(demux_t *p_demux)
 {
-    demux_t                 *p_demux = (demux_t*)p_this;
     demux_sys_t             *p_sys = NULL;
 
     NSString                *avf_currdevice_uid;
@@ -390,9 +389,8 @@ static int Open(vlc_object_t *p_this)
 /*****************************************************************************
 * Close:
 *****************************************************************************/
-static void Close(vlc_object_t *p_this)
+static void Close(demux_t *p_demux)
 {
-    demux_t             *p_demux = (demux_t*)p_this;
     demux_sys_t         *p_sys = p_demux->p_sys;
 
     @autoreleasepool {

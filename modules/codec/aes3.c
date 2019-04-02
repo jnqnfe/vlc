@@ -35,9 +35,9 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  OpenDecoder   ( vlc_object_t * );
-static int  OpenPacketizer( vlc_object_t * );
-static void Close         ( vlc_object_t * );
+static int  OpenDecoder   ( decoder_t * );
+static int  OpenPacketizer( decoder_t * );
+static void Close         ( decoder_t * );
 
 vlc_plugin_begin ()
 
@@ -76,29 +76,24 @@ static block_t *Parse( decoder_t *p_dec, int *pi_frame_length, int *pi_bits,
 /*****************************************************************************
  * OpenDecoder:
  *****************************************************************************/
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
-
     return Open( p_dec, false );
 }
 
 /*****************************************************************************
  * OpenPacketizer:
  *****************************************************************************/
-static int OpenPacketizer( vlc_object_t *p_this )
+static int OpenPacketizer( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
-
     return Open( p_dec, true );
 }
 
 /*****************************************************************************
  * Close : aes3 decoder destruction
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     free( p_dec->p_sys );
 }
 

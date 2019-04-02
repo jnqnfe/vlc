@@ -35,8 +35,8 @@
 #include <vlc_aout.h>
 #include <vlc_filter.h>
 
-static int Create( vlc_object_t * );
-static void Destroy( vlc_object_t * );
+static int Create( filter_t * );
+static void Destroy( filter_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Audio filter for trivial channel mixing") )
@@ -166,9 +166,8 @@ static block_t *Extract( filter_t *p_filter, block_t *p_in_buf )
 /**
  * Probes the trivial channel mixer
  */
-static int Create( vlc_object_t *p_this )
+static int Create( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     const audio_format_t *infmt = &p_filter->fmt_in.audio;
     const audio_format_t *outfmt = &p_filter->fmt_out.audio;
 
@@ -310,8 +309,7 @@ static int Create( vlc_object_t *p_this )
     return VLC_SUCCESS;
 }
 
-static void Destroy( vlc_object_t *p_this )
+static void Destroy( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     free( p_filter->p_sys );
 }

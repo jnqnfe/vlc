@@ -39,8 +39,8 @@
 /*****************************************************************************
  * Module descriptor.
  *****************************************************************************/
-static int  Open( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open( decoder_t * );
+static void Close( decoder_t * );
 static int Decode( decoder_t *, block_t * );
 
 #define IGNORE_RUBY_TEXT N_("Ignore ruby (furigana)")
@@ -90,9 +90,8 @@ static void messages_callback_handler( void *, const char *psz_message );
  * Tries to launch a decoder and return score so that the interface is able
  * to choose.
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( decoder_t *p_dec )
 {
-    decoder_t     *p_dec = (decoder_t *) p_this;
     decoder_sys_t *p_sys;
 
     if( p_dec->fmt_in.i_codec != VLC_CODEC_ARIB_A &&
@@ -107,7 +106,7 @@ static int Open( vlc_object_t *p_this )
         return VLC_ENOMEM;
     }
 
-    p_sys->p_arib_instance = arib_instance_new( (void *) p_this );
+    p_sys->p_arib_instance = arib_instance_new( (void *) p_dec );
     if ( !p_sys->p_arib_instance )
     {
         free( p_sys );
@@ -121,9 +120,9 @@ static int Open( vlc_object_t *p_this )
     p_sys->b_a_profile = ( p_dec->fmt_in.i_codec == VLC_CODEC_ARIB_A );
 
     p_sys->b_ignore_ruby =
-        var_InheritBool( p_this, ARIBSUB_CFG_PREFIX "ignore-ruby" );
+        var_InheritBool( p_dec, ARIBSUB_CFG_PREFIX "ignore-ruby" );
     p_sys->b_use_coretext =
-        var_InheritBool( p_this, ARIBSUB_CFG_PREFIX "use-coretext" );
+        var_InheritBool( p_dec, ARIBSUB_CFG_PREFIX "use-coretext" );
     p_sys->b_ignore_position_adjustment = p_sys->b_use_coretext;
     p_sys->p_arib_instance->b_use_private_conv = p_sys->b_use_coretext;
     p_sys->p_arib_instance->b_replace_ellipsis = p_sys->b_use_coretext;
@@ -141,16 +140,15 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( decoder_t *p_dec )
 {
-    decoder_t     *p_dec = (decoder_t*) p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     arib_instance_destroy( p_sys->p_arib_instance );
     free( p_sys->psz_arib_base_dir );
 
-    var_Destroy( p_this, ARIBSUB_CFG_PREFIX "ignore-ruby" );
-    var_Destroy( p_this, ARIBSUB_CFG_PREFIX "use-coretext" );
+    var_Destroy( p_dec, ARIBSUB_CFG_PREFIX "ignore-ruby" );
+    var_Destroy( p_dec, ARIBSUB_CFG_PREFIX "use-coretext" );
 
     free( p_sys );
 }

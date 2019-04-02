@@ -28,7 +28,7 @@
 #include <vlc_codec.h>
 #include <vlc_modules.h>
 
-static int OpenDecoder(vlc_object_t *);
+static int OpenDecoder(decoder_t *);
 
 vlc_plugin_begin()
     set_description(N_("S/PDIF pass-through decoder"))
@@ -45,10 +45,8 @@ DecodeBlock(decoder_t *p_dec, block_t *p_block)
 }
 
 static int
-OpenDecoder(vlc_object_t *p_this)
+OpenDecoder(decoder_t *p_dec)
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
-
     switch (p_dec->fmt_in.i_codec)
     {
     case VLC_CODEC_MPGA:

@@ -97,10 +97,10 @@
        "announcements." )
 
 /* Callbacks */
-    static int  Open ( vlc_object_t * );
-    static void Close( vlc_object_t * );
-    static int  OpenDemux ( vlc_object_t * );
-    static void CloseDemux ( vlc_object_t * );
+    static int  Open ( services_discovery_t * );
+    static void Close( services_discovery_t * );
+    static int  OpenDemux ( demux_t * );
+    static void CloseDemux ( demux_t * );
 
 VLC_SD_PROBE_HELPER("sap", N_("Network streams (SAP)"), SD_CAT_LAN)
 
@@ -277,9 +277,8 @@ static bool IsWellKnownPayload (int type)
 /*****************************************************************************
  * Open: initialize and create stuff
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( services_discovery_t *p_sd )
 {
-    services_discovery_t *p_sd = ( services_discovery_t* )p_this;
     services_discovery_sys_t *p_sys  = (services_discovery_sys_t *)
                                 malloc( sizeof( services_discovery_sys_t ) );
     if( !p_sys )
@@ -311,9 +310,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * OpenDemux: initialize and create stuff
  *****************************************************************************/
-static int OpenDemux( vlc_object_t *p_this )
+static int OpenDemux( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t *)p_this;
     const uint8_t *p_peek;
     char *psz_sdp = NULL;
     sdp_t *p_sdp = NULL;
@@ -398,9 +396,8 @@ error:
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( services_discovery_t *p_sd )
 {
-    services_discovery_t *p_sd = ( services_discovery_t* )p_this;
     services_discovery_sys_t    *p_sys  = p_sd->p_sys;
     int i;
 
@@ -425,9 +422,8 @@ static void Close( vlc_object_t *p_this )
 /*****************************************************************************
  * CloseDemux: Close the demuxer
  *****************************************************************************/
-static void CloseDemux( vlc_object_t *p_this )
+static void CloseDemux( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t *)p_this;
     demux_sys_t *sys = p_demux->p_sys;
 
     if( sys->p_sdp )
@@ -1473,7 +1469,7 @@ error:
 static int InitSocket( services_discovery_t *p_sd, const char *psz_address,
                        int i_port )
 {
-    int i_fd = net_ListenUDP1 ((vlc_object_t *)p_sd, psz_address, i_port);
+    int i_fd = net_ListenUDP1 (VLC_OBJECT(p_sd), psz_address, i_port);
     if (i_fd == -1)
         return VLC_EGENERIC;
 

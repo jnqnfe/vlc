@@ -42,8 +42,8 @@
 
 #define BROADCAST_TIMEOUT 6 // in seconds
 
-int bdsm_SdOpen( vlc_object_t * );
-void bdsm_SdClose( vlc_object_t * );
+int bdsm_SdOpen( services_discovery_t *p_sd );
+void bdsm_SdClose( services_discovery_t *p_sd );
 
 struct entry_item
 {
@@ -127,9 +127,8 @@ static void netbios_ns_discover_on_entry_removed( void *p_opaque,
     entry_item_remove( p_sd, p_entry );
 }
 
-int bdsm_SdOpen (vlc_object_t *p_this)
+int bdsm_SdOpen (services_discovery_t *p_sd)
 {
-    services_discovery_t *p_sd = (services_discovery_t *)p_this;
     services_discovery_sys_t *p_sys = calloc (1, sizeof (*p_sys));
     netbios_ns_discover_callbacks callbacks;
 
@@ -155,13 +154,12 @@ int bdsm_SdOpen (vlc_object_t *p_this)
     return VLC_SUCCESS;
 
     error:
-        bdsm_SdClose( p_this );
+        bdsm_SdClose( p_sd );
         return VLC_EGENERIC;
 }
 
-void bdsm_SdClose (vlc_object_t *p_this)
+void bdsm_SdClose (services_discovery_t *p_sd)
 {
-    services_discovery_t *sd = (services_discovery_t *)p_this;
     services_discovery_sys_t *p_sys = sd->p_sys;
 
     if( p_sys == NULL )

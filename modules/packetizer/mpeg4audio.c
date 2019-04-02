@@ -212,8 +212,8 @@ static int AOTtoAACProfile(uint8_t i_object_type)
 /****************************************************************************
  * Local prototypes
  ****************************************************************************/
-static int  OpenPacketizer(vlc_object_t *);
-static void ClosePacketizer(vlc_object_t *);
+static int  OpenPacketizer(decoder_t *);
+static void ClosePacketizer(decoder_t *);
 
 static block_t *Packetize    (decoder_t *, block_t **);
 static void     Flush( decoder_t * );
@@ -232,9 +232,8 @@ vlc_plugin_end ()
 /*****************************************************************************
  * OpenPacketizer: probe the packetizer and return score
  *****************************************************************************/
-static int OpenPacketizer(vlc_object_t *p_this)
+static int OpenPacketizer(decoder_t *p_dec)
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     if (p_dec->fmt_in.i_codec != VLC_CODEC_MP4A)
@@ -340,9 +339,8 @@ static int OpenPacketizer(vlc_object_t *p_this)
 /*****************************************************************************
  * ClosePacketizer: clean up the packetizer
  *****************************************************************************/
-static void ClosePacketizer(vlc_object_t *p_this)
+static void ClosePacketizer(decoder_t *p_dec)
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     block_BytestreamRelease(&p_sys->bytestream);

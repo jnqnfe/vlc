@@ -42,8 +42,8 @@
 
 #define DS_BUF_SIZE (6*1024*1024)
 
-static int  Open( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open( audio_output_t * );
+static void Close( audio_output_t * );
 static HRESULT StreamStart( aout_stream_t *, audio_sample_format_t *,
                             const GUID * );
 static HRESULT StreamStop( aout_stream_t * );
@@ -1051,9 +1051,8 @@ static int DeviceSelect (audio_output_t *aout, const char *id)
     return 0;
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
     aout_sys_t *sys = calloc(1, sizeof (*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
@@ -1073,7 +1072,7 @@ static int Open(vlc_object_t *obj)
     /* DirectSound does not support hot-plug events (unless with WASAPI) */
     char **ids, **names;
     int count = ReloadDirectXDevices(NULL, &ids, &names);
-    msg_Dbg(obj, "found %d devices", count);
+    msg_Dbg(aout, "found %d devices", count);
     if (count >= 0)
     {
         for (int i = 0; i < count; i++)
@@ -1093,9 +1092,8 @@ static int Open(vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *obj)
+static void Close(audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
     aout_sys_t *sys = aout->sys;
 
     var_Destroy(aout, "directx-audio-device");

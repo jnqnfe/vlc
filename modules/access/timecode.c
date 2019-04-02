@@ -33,7 +33,7 @@
 
 #define FPS_TEXT N_("Frame rate")
 
-static int  Open (vlc_object_t *);
+static int  Open (demux_t *);
 
 static const char *const fps_values[] = { "24/1", "25/1", "30000/1001", "30/1" };
 static const char *const fps_texts[] = { "24", "25", "29.97", "30" };
@@ -162,13 +162,12 @@ static int Control (demux_t *demux, int query, va_list args)
     return VLC_SUCCESS;
 }
 
-static int Open (vlc_object_t *obj)
+static int Open (demux_t *demux)
 {
-    demux_t *demux = (demux_t *)obj;
     if (demux->out == NULL)
         return VLC_EGENERIC;
 
-    demux_sys_t *sys = vlc_obj_malloc(obj, sizeof (*sys));
+    demux_sys_t *sys = vlc_obj_malloc(VLC_OBJECT(demux), sizeof (*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
 

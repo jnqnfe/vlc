@@ -57,8 +57,8 @@
     "Recreate a index for the AVI file. Use this if your AVI file is damaged "\
     "or incomplete (not seekable)." )
 
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( demux_t * );
+static void Close( demux_t * );
 
 static const int pi_index[] = {0,1,2,3};
 
@@ -243,9 +243,8 @@ static int        AVI_TrackStopFinishedStreams( demux_t *);
 /*****************************************************************************
  * Close: frees unused data
  *****************************************************************************/
-static void Close ( vlc_object_t * p_this )
+static void Close ( demux_t * p_demux )
 {
-    demux_t *    p_demux = (demux_t *)p_this;
     demux_sys_t *p_sys = p_demux->p_sys  ;
 
     for( unsigned int i = 0; i < p_sys->i_track; i++ )
@@ -273,10 +272,9 @@ static void Close ( vlc_object_t * p_this )
 /*****************************************************************************
  * Open: check file and initializes AVI structures
  *****************************************************************************/
-static int Open( vlc_object_t * p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t  *p_demux = (demux_t *)p_this;
-    demux_sys_t     *p_sys;
+    demux_sys_t *p_sys;
 
     bool       b_index = false, b_aborted = false;
     int              i_do_index;
@@ -793,7 +791,7 @@ aviindex:
     return VLC_SUCCESS;
 
 error:
-    Close( p_this );
+    Close( p_demux );
     return b_aborted ? VLC_ETIMEOUT : VLC_EGENERIC;
 }
 

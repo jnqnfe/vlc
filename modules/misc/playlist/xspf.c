@@ -37,7 +37,7 @@
 
 #include <assert.h>
 
-int xspf_export_playlist( vlc_object_t *p_this );
+int xspf_export_playlist( const vlc_playlist_export *p_export );
 
 static char *input_xml( input_item_t *p_item, char *(*func)(input_item_t *) )
 {
@@ -156,13 +156,11 @@ xspfexportitem_end:
 /**
  * \brief Prints the XSPF header to file, writes each item by xspf_export_item()
  * and closes the open xml elements
- * \param p_this the VLC playlist object
+ * \param p_export the VLC playlist object
  * \return VLC_SUCCESS if some memory is available, otherwise VLC_ENOMEM
  */
-int xspf_export_playlist( vlc_object_t *p_this )
+int xspf_export_playlist( const struct vlc_playlist_export *p_export )
 {
-    struct vlc_playlist_export *p_export = (struct vlc_playlist_export *) p_this;
-
     /* write XSPF XML header */
     fprintf( p_export->file, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" );
     fprintf( p_export->file,

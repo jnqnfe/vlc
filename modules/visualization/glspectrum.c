@@ -49,8 +49,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int Open(vlc_object_t *);
-static void Close(vlc_object_t *);
+static int Open(filter_t *);
+static void Close(filter_t *);
 
 #define WIDTH_TEXT N_("Video width")
 #define WIDTH_LONGTEXT N_("The width of the visualization window, in pixels.")
@@ -108,12 +108,11 @@ const GLfloat lightZeroPosition[] = {0.0f, 3.0f, 10.0f, 0.0f};
 
 /**
  * Open the module.
- * @param p_this: the filter object
+ * @param p_filter: the filter object
  * @return VLC_SUCCESS or vlc error codes
  */
-static int Open(vlc_object_t * p_this)
+static int Open(filter_t *p_filter)
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys;
 
     p_sys = p_filter->p_sys = (filter_sys_t*)malloc(sizeof(*p_sys));
@@ -142,7 +141,7 @@ static int Open(vlc_object_t * p_this)
         .height = var_InheritInteger(p_filter, "glspectrum-height"),
     };
 
-    p_sys->gl = vlc_gl_surface_Create(p_this, &cfg, NULL);
+    p_sys->gl = vlc_gl_surface_Create(VLC_OBJECT(p_filter), &cfg, NULL);
     if (p_sys->gl == NULL)
     {
         block_FifoRelease(p_sys->fifo);
@@ -168,11 +167,10 @@ error:
 
 /**
  * Close the module.
- * @param p_this: the filter object
+ * @param p_filter: the filter object
  */
-static void Close(vlc_object_t *p_this)
+static void Close(filter_t *p_filter)
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     /* Terminate the thread. */

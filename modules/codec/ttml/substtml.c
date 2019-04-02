@@ -1366,9 +1366,8 @@ static void Flush( decoder_t *p_dec )
 /*****************************************************************************
  * tt_OpenDecoder: probe the decoder and return score
  *****************************************************************************/
-int tt_OpenDecoder( vlc_object_t *p_this )
+int tt_OpenDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     if( p_dec->fmt_in.i_codec != VLC_CODEC_TTML &&
@@ -1394,9 +1393,8 @@ int tt_OpenDecoder( vlc_object_t *p_this )
 /*****************************************************************************
  * tt_CloseDecoder: clean up the decoder
  *****************************************************************************/
-void tt_CloseDecoder( vlc_object_t *p_this )
+void tt_CloseDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     free( p_sys );

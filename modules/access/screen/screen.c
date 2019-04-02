@@ -84,8 +84,8 @@
     "Index of screen (1, 2, 3, ...). Alternative to Display ID." )
 #endif
 
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( demux_t * );
+static void Close( demux_t * );
 
 #ifdef _WIN32
 #   define SCREEN_FPS 1
@@ -136,9 +136,8 @@ static int Demux  ( demux_t * );
 /*****************************************************************************
  * DemuxOpen:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
 
     if (p_demux->out == NULL)
@@ -250,9 +249,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
 
     screen_CloseCapture( p_demux );

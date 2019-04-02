@@ -36,10 +36,10 @@
 
 #include <microdns/microdns.h>
 
-static int OpenSD( vlc_object_t * );
-static void CloseSD( vlc_object_t * );
-static int OpenRD( vlc_object_t * );
-static void CloseRD( vlc_object_t * );
+static int OpenSD( services_discovery_t * );
+static void CloseSD( services_discovery_t * );
+static int OpenRD( vlc_renderer_discovery_t * );
+static void CloseRD( vlc_renderer_discovery_t * );
 
 VLC_SD_PROBE_HELPER( "microdns", N_("mDNS Network Discovery"), SD_CAT_LAN )
 VLC_RD_PROBE_HELPER( "microdns_renderer", "mDNS renderer Discovery" )
@@ -626,10 +626,8 @@ CleanCommon( struct discovery_sys *p_sys )
 }
 
 static int
-OpenSD( vlc_object_t *p_obj )
+OpenSD( services_discovery_t *p_sd )
 {
-    services_discovery_t *p_sd = (services_discovery_t *)p_obj;
-
     struct discovery_sys *p_sys = calloc( 1, sizeof(struct discovery_sys) );
     if( !p_sys )
         return VLC_ENOMEM;
@@ -638,23 +636,19 @@ OpenSD( vlc_object_t *p_obj )
     p_sd->description = _("mDNS Network Discovery");
     config_ChainParse( p_sd, CFG_PREFIX, ppsz_options, p_sd->p_cfg );
 
-    return OpenCommon( p_obj, p_sys, false );
+    return OpenCommon( VLC_OBJECT(p_sd), p_sys, false );
 }
 
 static void
-CloseSD( vlc_object_t *p_this )
+CloseSD( services_discovery_t *p_sd )
 {
-    services_discovery_t *p_sd = (services_discovery_t *) p_this;
     struct discovery_sys *p_sys = p_sd->p_sys;
-
     CleanCommon( p_sys );
 }
 
 static int
-OpenRD( vlc_object_t *p_obj )
+OpenRD( vlc_renderer_discovery_t *p_rd )
 {
-    vlc_renderer_discovery_t *p_rd = (vlc_renderer_discovery_t *)p_obj;
-
     struct discovery_sys *p_sys = calloc( 1, sizeof(struct discovery_sys) );
     if( !p_sys )
         return VLC_ENOMEM;
@@ -662,13 +656,12 @@ OpenRD( vlc_object_t *p_obj )
 
     config_ChainParse( p_rd, CFG_PREFIX, ppsz_options, p_rd->p_cfg );
 
-    return OpenCommon( p_obj, p_sys, true );
+    return OpenCommon( VLC_OBJECT(p_rd), p_sys, true );
 }
 
 static void
-CloseRD( vlc_object_t *p_this )
+CloseRD( vlc_renderer_discovery_t *p_rd )
 {
-    vlc_renderer_discovery_t *p_rd = (vlc_renderer_discovery_t *) p_this;
     struct discovery_sys *p_sys = p_rd->p_sys;
 
     CleanCommon( p_sys );

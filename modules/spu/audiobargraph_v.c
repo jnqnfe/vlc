@@ -65,9 +65,9 @@ static const char *const ppsz_pos_descriptions[] =
 { N_("Center"), N_("Left"), N_("Right"), N_("Top"), N_("Bottom"),
   N_("Top-Left"), N_("Top-Right"), N_("Bottom-Left"), N_("Bottom-Right") };
 
-static int  OpenSub  (vlc_object_t *);
-static int  OpenVideo(vlc_object_t *);
-static void Close    (vlc_object_t *);
+static int  OpenSub  (filter_t *);
+static int  OpenVideo(filter_t *);
+static void Close    (filter_t *);
 
 vlc_plugin_begin ()
     set_description(N_("Audio Bar Graph Video sub source"))
@@ -483,9 +483,8 @@ out:
 /**
  * Common open function
  */
-static int OpenCommon(vlc_object_t *p_this, bool b_sub)
+static int OpenCommon(filter_t *p_filter, bool b_sub)
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys;
 
     /* */
@@ -561,25 +560,24 @@ static int OpenCommon(vlc_object_t *p_this, bool b_sub)
 /**
  * Open the sub source
  */
-static int OpenSub(vlc_object_t *p_this)
+static int OpenSub(filter_t *p_filter)
 {
-    return OpenCommon(p_this, true);
+    return OpenCommon(p_filter, true);
 }
 
 /**
  * Open the video filter
  */
-static int OpenVideo(vlc_object_t *p_this)
+static int OpenVideo(filter_t *p_filter)
 {
-    return OpenCommon(p_this, false);
+    return OpenCommon(p_filter, false);
 }
 
 /**
  * Common close function
  */
-static void Close(vlc_object_t *p_this)
+static void Close(filter_t *p_filter)
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
     vlc_object_t *vlc = VLC_OBJECT(vlc_object_instance(p_filter));
 

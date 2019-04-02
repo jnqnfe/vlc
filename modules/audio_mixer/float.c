@@ -37,7 +37,7 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int Create( vlc_object_t * );
+static int Create( audio_volume_t * );
 
 /*****************************************************************************
  * Module descriptor
@@ -81,10 +81,8 @@ static void FilterFL64( audio_volume_t *p_volume, block_t *p_buffer,
 /**
  * Initializes the mixer
  */
-static int Create( vlc_object_t *p_this )
+static int Create( audio_volume_t *p_volume )
 {
-    audio_volume_t *p_volume = (audio_volume_t *)p_this;
-
     switch (p_volume->format)
     {
         case VLC_CODEC_FL32:

@@ -85,10 +85,8 @@ static int ReadDir(stream_t *, input_item_node_t *);
 /**
  * \brief XSPF submodule initialization function
  */
-int Import_xspf(vlc_object_t *p_this)
+int Import_xspf(stream_t* p_stream)
 {
-    stream_t *p_stream = (stream_t *)p_this;
-
     CHECK_FILE(p_stream);
 
     if( !stream_HasExtension( p_stream, ".xspf" )
@@ -107,9 +105,8 @@ int Import_xspf(vlc_object_t *p_this)
     return VLC_SUCCESS;
 }
 
-void Close_xspf(vlc_object_t *p_this)
+void Close_xspf(stream_t* p_stream)
 {
-    stream_t *p_stream = (stream_t *)p_this;
     xspf_sys_t *p_sys = p_stream->p_sys;
     for (int i = 0; i < p_sys->i_tracklist_entries; i++)
         if (p_sys->pp_tracklist[i])

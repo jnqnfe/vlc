@@ -60,8 +60,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( sout_access_out_t * );
+static void Close( sout_access_out_t * );
 
 #define SOUT_CFG_PREFIX "sout-livehttp-"
 #define SEGLEN_TEXT N_("Segment length")
@@ -213,9 +213,8 @@ static ssize_t openNextFile( sout_access_out_t *p_access, sout_access_out_sys_t 
 /*****************************************************************************
  * Open: open the file
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_access_out_t *p_access )
 {
-    sout_access_out_t   *p_access = (sout_access_out_t*)p_this;
     sout_access_out_sys_t *p_sys;
     char *psz_idx;
 
@@ -754,9 +753,8 @@ static void closeCurrentSegment( sout_access_out_t *p_access, sout_access_out_sy
 /*****************************************************************************
  * Close: close the target
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( sout_access_out_t *p_access )
 {
-    sout_access_out_t *p_access = (sout_access_out_t*)p_this;
     sout_access_out_sys_t *p_sys = p_access->p_sys;
 
     if( p_sys->ongoing_segment )

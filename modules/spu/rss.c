@@ -49,8 +49,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  CreateFilter ( vlc_object_t * );
-static void DestroyFilter( vlc_object_t * );
+static int  CreateFilter ( filter_t * );
+static void DestroyFilter( filter_t * );
 static subpicture_t *Filter( filter_t *, vlc_tick_t );
 
 static struct rss_feed_t *FetchRSS( filter_t * );
@@ -231,9 +231,8 @@ static const char *const ppsz_filter_options[] = {
 /*****************************************************************************
  * CreateFilter: allocates RSS video filter
  *****************************************************************************/
-static int CreateFilter( vlc_object_t *p_this )
+static int CreateFilter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys;
     char *psz_urls;
     int i_ttl;
@@ -327,9 +326,8 @@ error:
 /*****************************************************************************
  * DestroyFilter: destroy RSS video filter
  *****************************************************************************/
-static void DestroyFilter( vlc_object_t *p_this )
+static void DestroyFilter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     vlc_timer_destroy( p_sys->timer );

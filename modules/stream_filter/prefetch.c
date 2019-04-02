@@ -425,10 +425,8 @@ static int Control(stream_t *stream, int query, va_list args)
     return VLC_SUCCESS;
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(stream_t *stream)
 {
-    stream_t *stream = (stream_t *)obj;
-
     bool fast_seek;
     /* For local files, the operating system is likely to do a better work at
      * caching/prefetching. Also, prefetching with this module could cause
@@ -466,8 +464,8 @@ static int Open(vlc_object_t *obj)
     sys->buffer_offset = 0;
     sys->stream_offset = 0;
     sys->buffer_length = 0;
-    sys->buffer_size = var_InheritInteger(obj, "prefetch-buffer-size") << 10u;
-    sys->seek_threshold = var_InheritInteger(obj, "prefetch-seek-threshold");
+    sys->buffer_size = var_InheritInteger(stream, "prefetch-buffer-size") << 10u;
+    sys->seek_threshold = var_InheritInteger(stream, "prefetch-seek-threshold");
     sys->controls = NULL;
 
     uint64_t size = stream_Size(stream->s);
@@ -517,9 +515,8 @@ error:
 /**
  * Releases allocate resources.
  */
-static void Close (vlc_object_t *obj)
+static void Close (stream_t *stream)
 {
-    stream_t *stream = (stream_t *)obj;
     stream_sys_t *sys = stream->p_sys;
 
     vlc_cancel(sys->thread);

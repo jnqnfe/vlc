@@ -74,10 +74,8 @@ static const char *vlclua_sd_description( vlc_object_t *obj, lua_State *L,
     return lua_tostring( L, -1 );
 }
 
-int vlclua_probe_sd( vlc_object_t *obj, const char *name )
+int vlclua_probe_sd( vlc_probe_t *probe, const char *name )
 {
-    vlc_probe_t *probe = (vlc_probe_t *)obj;
-
     char *filename = vlclua_find_file( "sd", name );
     if( filename == NULL )
     {
@@ -103,7 +101,7 @@ int vlclua_probe_sd( vlc_object_t *obj, const char *name )
         free( filename );
         return VLC_ENOMEM;
     }
-    if( vlclua_dofile( obj, L, filename ) )
+    if( vlclua_dofile( VLC_OBJECT(probe), L, filename ) )
     {
         msg_Err( probe, "Error loading script %s: %s", filename,
                  lua_tostring( L, -1 ) );
@@ -111,7 +109,7 @@ int vlclua_probe_sd( vlc_object_t *obj, const char *name )
         free( filename );
         return VLC_PROBE_CONTINUE;
     }
-    const char *description = vlclua_sd_description( obj, L, filename );
+    const char *description = vlclua_sd_description( VLC_OBJECT(probe), L, filename );
     if( description == NULL )
         description = name;
 
@@ -152,12 +150,11 @@ static const luaL_Reg p_reg[] = { { NULL, NULL } };
 /*****************************************************************************
  * Open: initialize and create stuff
  *****************************************************************************/
-int Open_LuaSD( vlc_object_t *p_this )
+int Open_LuaSD( services_discovery_t *p_sd )
 {
-    if( lua_Disabled( p_this ) )
+    if( lua_Disabled( VLC_OBJECT(p_sd) ) )
         return VLC_EGENERIC;
 
-    services_discovery_t *p_sd = ( services_discovery_t * )p_this;
     services_discovery_sys_t *p_sys;
     lua_State *L = NULL;
     char *psz_name;
@@ -256,9 +253,8 @@ error:
 /*****************************************************************************
  * Close: cleanup
  *****************************************************************************/
-void Close_LuaSD( vlc_object_t *p_this )
+void Close_LuaSD( services_discovery_t *p_sd )
 {
-    services_discovery_t *p_sd = ( services_discovery_t * )p_this;
     services_discovery_sys_t *p_sys = p_sd->p_sys;
 
     vlc_cancel( p_sys->thread );

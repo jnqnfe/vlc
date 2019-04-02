@@ -39,8 +39,8 @@
 #include "../packetizer/a52.h"
 #include "../packetizer/dts_header.h"
 
-static int  Open( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open( filter_t * );
+static void Close( filter_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Audio filter for A/52/DTS->S/PDIF encapsulation") )
@@ -598,9 +598,8 @@ static block_t *DoWork( filter_t *p_filter, block_t *p_in_buf )
     return p_out_buf;
 }
 
-static int Open( vlc_object_t *p_this )
+static int Open( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys;
 
     if( ( p_filter->fmt_in.audio.i_format != VLC_CODEC_DTS &&
@@ -622,10 +621,8 @@ static int Open( vlc_object_t *p_this )
     return VLC_SUCCESS;
 }
 
-static void Close( vlc_object_t *p_this )
+static void Close( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
-
     Flush( p_filter );
     free( p_filter->p_sys );
 }

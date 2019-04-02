@@ -180,15 +180,13 @@ static int Control(stream_t *access, int query, va_list args)
     return VLC_SUCCESS;
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(stream_t *access)
 {
-    stream_t *access = (stream_t *)obj;
-
     char *list = var_CreateGetNonEmptyString(access, "concat-list");
     if (list == NULL)
         return VLC_EGENERIC;
 
-    access_sys_t *sys = vlc_obj_malloc(obj, sizeof (*sys));
+    access_sys_t *sys = vlc_obj_malloc(VLC_OBJECT(access), sizeof (*sys));
     if (unlikely(sys == NULL))
     {
         free(list);
@@ -218,7 +216,7 @@ static int Open(vlc_object_t *obj)
         if (unlikely(e == NULL))
             break;
 
-        stream_t *a = vlc_access_NewMRL(obj, mrl);
+        stream_t *a = vlc_access_NewMRL(VLC_OBJECT(access), mrl);
         if (a == NULL)
         {
             msg_Err(access, "cannot concatenate location %s", mrl);
@@ -283,9 +281,8 @@ static int Open(vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *obj)
+static void Close(stream_t *access)
 {
-    stream_t *access = (stream_t *)obj;
     access_sys_t *sys = access->p_sys;
 
     if (sys->access != NULL)

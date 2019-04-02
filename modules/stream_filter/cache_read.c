@@ -486,10 +486,8 @@ static int AStreamControl(stream_t *s, int i_query, va_list args)
     return VLC_SUCCESS;
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(stream_t *s)
 {
-    stream_t *s = (stream_t *)obj;
-
     if (s->s->pf_read == NULL)
         return VLC_EGENERIC;
 
@@ -553,9 +551,8 @@ static int Open(vlc_object_t *obj)
 /****************************************************************************
  * AStreamDestroy:
  ****************************************************************************/
-static void Close(vlc_object_t *obj)
+static void Close(stream_t *s)
 {
-    stream_t *s = (stream_t *)obj;
     stream_sys_t *sys = s->p_sys;
 
     free(sys->p_buffer);

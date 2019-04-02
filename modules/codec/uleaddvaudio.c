@@ -33,8 +33,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open(vlc_object_t *);
-static void Close(vlc_object_t *);
+static int  Open(decoder_t *);
+static void Close(decoder_t *);
 
 vlc_plugin_begin()
     set_description(N_("Ulead DV audio decoder"))
@@ -130,10 +130,8 @@ static int DecodeAudio(decoder_t *dec, block_t *block)
     return VLCDEC_SUCCESS;
 }
 
-static int Open(vlc_object_t *object)
+static int Open(decoder_t *dec)
 {
-    decoder_t *dec = (decoder_t*)object;
-
     if (dec->fmt_in.i_codec != VLC_CODEC_ULEAD_DV_AUDIO_NTSC &&
         dec->fmt_in.i_codec != VLC_CODEC_ULEAD_DV_AUDIO_PAL)
         return VLC_EGENERIC;
@@ -171,10 +169,8 @@ static int Open(vlc_object_t *object)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *object)
+static void Close(decoder_t *dec)
 {
-    decoder_t *dec = (decoder_t *)object;
-
     free(dec->p_sys);
 }
 

@@ -36,8 +36,8 @@ namespace DLNA
 {
 
 /* module callbacks */
-int OpenSout(vlc_object_t *);
-void CloseSout(vlc_object_t *);
+int OpenSout(sout_stream_t *);
+void CloseSout(sout_stream_t *);
 
 }
 #endif /* DLNA_COMMON_H */

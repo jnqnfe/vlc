@@ -63,8 +63,8 @@ typedef struct
 
 #include "volume.h"
 
-static int Open (vlc_object_t *);
-static void Close (vlc_object_t *);
+static int Open (audio_output_t *);
+static void Close (audio_output_t *);
 
 #define AUDIO_DEV_TEXT N_("Audio output device")
 #define AUDIO_DEV_LONGTEXT N_("OSS device node path.")
@@ -386,9 +386,8 @@ static int DeviceSelect (audio_output_t *aout, const char *id)
     return 0;
 }
 
-static int Open (vlc_object_t *obj)
+static int Open (audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
 
     aout_sys_t *sys = malloc (sizeof (*sys));
     if(unlikely( sys == NULL ))
@@ -408,9 +407,8 @@ static int Open (vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void Close (vlc_object_t *obj)
+static void Close (audio_output_t *aout)
 {
-    audio_output_t *aout = (audio_output_t *)obj;
     aout_sys_t *sys = aout->sys;
 
     free (sys->device);

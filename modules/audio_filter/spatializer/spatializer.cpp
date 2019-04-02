@@ -48,8 +48,8 @@ using std::nothrow;
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( filter_t * );
+static void Close( filter_t * );
 
 #define ROOMSIZE_TEXT N_("Room size")
 #define ROOMSIZE_LONGTEXT N_("Defines the virtual surface of the room" \
@@ -130,9 +130,8 @@ static block_t *DoWork( filter_t *, block_t * );
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( filter_t *p_filter )
 {
-    filter_t     *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys;
     vlc_object_t *p_aout = vlc_object_parent(p_filter);
 
@@ -171,9 +170,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close: close the plugin
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( filter_t *p_filter )
 {
-    filter_t     *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = reinterpret_cast<filter_sys_t *>( p_filter->p_sys );
     vlc_object_t *p_aout = vlc_object_parent(p_filter);
 
@@ -187,7 +185,7 @@ static void Close( vlc_object_t *p_this )
     delete p_sys->p_reverbm;
     vlc_mutex_destroy( &p_sys->lock );
     free( p_sys );
-    msg_Dbg( p_this, "Closing filter spatializer" );
+    msg_Dbg( p_filter, "Closing filter spatializer" );
 }
 
 /*****************************************************************************

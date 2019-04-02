@@ -268,17 +268,13 @@ static int Demux( stream_t* p_demux, input_item_node_t *p_node )
     return VLC_SUCCESS;
 }
 
-void Close_WPL( vlc_object_t* p_this )
+void Close_WPL( stream_t* p_demux )
 {
-    stream_t *p_demux = (stream_t*)p_this;
-
     xml_ReaderDelete( p_demux->p_sys );
 }
 
-int Import_WPL( vlc_object_t* p_this )
+int Import_WPL( stream_t* p_demux )
 {
-    stream_t* p_demux = (stream_t*)p_this;
-
     CHECK_FILE(p_demux);
     if( !stream_HasExtension( p_demux, ".wpl" ) &&
         !stream_HasExtension( p_demux, ".zpl" ) )
@@ -293,7 +289,7 @@ int Import_WPL( vlc_object_t* p_this )
     if( unlikely( !p_probestream ) )
         return VLC_EGENERIC;
 
-    xml_reader_t *p_reader = xml_ReaderCreate( p_this, p_probestream );
+    xml_reader_t *p_reader = xml_ReaderCreate( p_demux, p_probestream );
     if ( p_reader == NULL )
     {
         msg_Err( p_demux, "Failed to create an XML reader" );
@@ -310,7 +306,7 @@ int Import_WPL( vlc_object_t* p_this )
     if ( type != XML_READER_STARTELEM || strcasecmp( psz_name, "smil" ) )
     {
         msg_Err( p_demux, "Invalid WPL playlist. Root element should have been <smil>" );
-        Close_WPL( p_this );
+        Close_WPL( p_demux );
         vlc_stream_Delete( p_probestream );
         return VLC_EGENERIC;
     }

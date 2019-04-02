@@ -41,8 +41,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  Create      ( vlc_object_t * );
-static void Destroy     ( vlc_object_t * );
+static int  Create      ( filter_t * );
+static void Destroy     ( filter_t * );
 
 static void RVSepia( picture_t *, picture_t *, int );
 static void PlanarI420Sepia( picture_t *, picture_t *, int);
@@ -108,9 +108,8 @@ typedef struct
  *****************************************************************************
  * This function allocates and initializes a Sepia vout method.
  *****************************************************************************/
-static int Create( vlc_object_t *p_this )
+static int Create( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys;
 
     /* Allocate structure */
@@ -151,10 +150,8 @@ static int Create( vlc_object_t *p_this )
  *****************************************************************************
  * Terminate an output method
  *****************************************************************************/
-static void Destroy( vlc_object_t *p_this )
+static void Destroy( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
-
     var_DelCallback( p_filter, CFG_PREFIX "intensity", FilterCallback, NULL );
 
     free( p_filter->p_sys );

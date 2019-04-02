@@ -84,10 +84,10 @@
 #define TELX_LANG_LONGTEXT N_( \
     "Allows you to set Teletext language (page=lang/type,...)." )
 
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
-static int  DemuxOpen ( vlc_object_t * );
-static void DemuxClose( vlc_object_t * );
+static int  Open ( demux_t * );
+static void Close( demux_t * );
+static int  DemuxOpen ( demux_t * );
+static void DemuxClose( demux_t * );
 
 vlc_plugin_begin()
     set_description( N_("SDI Input") )
@@ -200,9 +200,8 @@ static int Capture( demux_t *p_demux );
 /*****************************************************************************
  * DemuxOpen:
  *****************************************************************************/
-static int DemuxOpen( vlc_object_t *p_this )
+static int DemuxOpen( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t *)p_this;
     demux_sys_t *p_sys;
     char        *psz_parser;
 
@@ -279,13 +278,12 @@ static int DemuxOpen( vlc_object_t *p_this )
     return VLC_SUCCESS;
 }
 
-static int Open( vlc_object_t *p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t *)p_this;
     demux_sys_t *p_sys;
     int         i_ret;
 
-    if ( (i_ret = DemuxOpen( p_this )) != VLC_SUCCESS )
+    if ( (i_ret = DemuxOpen( p_demux )) != VLC_SUCCESS )
         return i_ret;
 
     /* Fill p_demux field */
@@ -307,9 +305,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * DemuxClose:
  *****************************************************************************/
-static void DemuxClose( vlc_object_t *p_this )
+static void DemuxClose( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t *)p_this;
     demux_sys_t *p_sys   = p_demux->p_sys;
 
     free( p_sys->psz_telx );
@@ -317,12 +314,10 @@ static void DemuxClose( vlc_object_t *p_this )
     free( p_sys );
 }
 
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t *)p_this;
-
     CloseCapture( p_demux );
-    DemuxClose( p_this );
+    DemuxClose( p_demux );
 }
 
 /*****************************************************************************

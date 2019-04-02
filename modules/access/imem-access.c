@@ -108,11 +108,9 @@ static int open_cb_default(void *opaque, void **datap, uint64_t *sizep)
     return 0;
 }
 
-static int Open(vlc_object_t *object)
+static int Open(stream_t *access)
 {
-    stream_t *access = (stream_t *)object;
-
-    access_sys_t *sys = vlc_obj_malloc(object, sizeof (*sys));
+    access_sys_t *sys = vlc_obj_malloc(VLC_OBJECT(access), sizeof (*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
 
@@ -146,9 +144,8 @@ static int Open(vlc_object_t *object)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *object)
+static void Close(stream_t *access)
 {
-    stream_t *access = (stream_t *)object;
     access_sys_t *sys = access->p_sys;
 
     if (sys->close_cb != NULL)

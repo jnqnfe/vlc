@@ -40,11 +40,11 @@ typedef __LA_INT64_T la_int64_t;
 typedef __LA_SSIZE_T la_ssize_t;
 #endif
 
-static  int ExtractorOpen( vlc_object_t* );
-static void ExtractorClose( vlc_object_t* );
+static  int ExtractorOpen( stream_extractor_t * );
+static void ExtractorClose( stream_extractor_t * );
 
-static  int DirectoryOpen( vlc_object_t* );
-static void DirectoryClose( vlc_object_t* );
+static  int DirectoryOpen( stream_directory_t * );
+static void DirectoryClose( stream_directory_t * );
 
 vlc_plugin_begin()
     set_description( N_( "libarchive based stream directory" ) )
@@ -679,15 +679,13 @@ static void CommonClose( private_sys_t* p_sys )
     free( p_sys );
 }
 
-static void DirectoryClose( vlc_object_t* p_obj )
+static void DirectoryClose( stream_directory_t* p_directory )
 {
-    stream_directory_t* p_directory = (void*)p_obj;
     return CommonClose( p_directory->p_sys );
 }
 
-static void ExtractorClose( vlc_object_t* p_obj )
+static void ExtractorClose( stream_extractor_t* p_extractor )
 {
-    stream_extractor_t* p_extractor = (void*)p_obj;
     return CommonClose( p_extractor->p_sys );
 }
 
@@ -710,10 +708,9 @@ static private_sys_t* CommonOpen( vlc_object_t* p_obj, stream_t* source  )
     return p_sys;
 }
 
-static int DirectoryOpen( vlc_object_t* p_obj )
+static int DirectoryOpen( stream_directory_t* p_directory )
 {
-    stream_directory_t* p_directory = (void*)p_obj;
-    private_sys_t* p_sys = CommonOpen( p_obj, p_directory->source );
+    private_sys_t* p_sys = CommonOpen( VLC_OBJECT(p_directory), p_directory->source );
 
     if( p_sys == NULL )
         return VLC_EGENERIC;
@@ -724,10 +721,9 @@ static int DirectoryOpen( vlc_object_t* p_obj )
     return VLC_SUCCESS;
 }
 
-static int ExtractorOpen( vlc_object_t* p_obj )
+static int ExtractorOpen( stream_extractor_t* p_extractor )
 {
-    stream_extractor_t* p_extractor = (void*)p_obj;
-    private_sys_t* p_sys = CommonOpen( p_obj, p_extractor->source );
+    private_sys_t* p_sys = CommonOpen( VLC_OBJECT(p_extractor), p_extractor->source );
 
     if( p_sys == NULL )
         return VLC_EGENERIC;

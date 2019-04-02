@@ -39,7 +39,7 @@
 /*****************************************************************************
  * Local and extern prototypes.
  *****************************************************************************/
-static int  Activate ( vlc_object_t * );
+static int  Activate ( filter_t * );
 
 static void YUY2_I422           ( filter_t *, picture_t *, picture_t * );
 static void YVYU_I422           ( filter_t *, picture_t *, picture_t * );
@@ -61,10 +61,8 @@ vlc_plugin_end ()
  *****************************************************************************
  * This function allocates and initializes a chroma function
  *****************************************************************************/
-static int Activate( vlc_object_t *p_this )
+static int Activate( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
-
     if( p_filter->fmt_in.video.i_width & 1
      || p_filter->fmt_in.video.i_height & 1 )
     {

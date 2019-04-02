@@ -208,7 +208,6 @@ static void Close(vlc_gl_t *gl)
 static int Open(vlc_gl_t *gl, const struct gl_api *api,
                 unsigned width, unsigned height)
 {
-    vlc_object_t *obj = VLC_OBJECT(gl);
     vlc_gl_sys_t *sys = malloc(sizeof (*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
@@ -227,7 +226,7 @@ static int Open(vlc_gl_t *gl, const struct gl_api *api,
 #ifdef USE_PLATFORM_X11
     sys->x11 = NULL;
 
-    if (wnd->type != VOUT_WINDOW_TYPE_XID || !vlc_xlib_init(obj))
+    if (wnd->type != VOUT_WINDOW_TYPE_XID || !vlc_xlib_init(VLC_OBJECT(gl)))
         goto error;
 
     window = &wnd->handle.xid;
@@ -319,18 +318,18 @@ static int Open(vlc_gl_t *gl, const struct gl_api *api,
     EGLint major, minor;
     if (eglInitialize(sys->display, &major, &minor) != EGL_TRUE)
         goto error;
-    msg_Dbg(obj, "EGL version %s by %s",
+    msg_Dbg(gl, "EGL version %s by %s",
             eglQueryString(sys->display, EGL_VERSION),
             eglQueryString(sys->display, EGL_VENDOR));
 
     const char *ext = eglQueryString(sys->display, EGL_EXTENSIONS);
     if (*ext)
-        msg_Dbg(obj, " extensions: %s", ext);
+        msg_Dbg(gl, " extensions: %s", ext);
 
     if (major != 1 || minor < api->min_minor
      || !CheckAPI(sys->display, api->name))
     {
-        msg_Err(obj, "cannot select %s API", api->name);
+        msg_Err(gl, "cannot select %s API", api->name);
         goto error;
     }
 
@@ -347,7 +346,7 @@ static int Open(vlc_gl_t *gl, const struct gl_api *api,
     if (eglChooseConfig(sys->display, conf_attr, cfgv, 1, &cfgc) != EGL_TRUE
      || cfgc == 0)
     {
-        msg_Err (obj, "cannot choose EGL configuration");
+        msg_Err (gl, "cannot choose EGL configuration");
         goto error;
     }
 
@@ -355,13 +354,13 @@ static int Open(vlc_gl_t *gl, const struct gl_api *api,
     sys->surface = createSurface(sys->display, cfgv[0], window, NULL);
     if (sys->surface == EGL_NO_SURFACE)
     {
-        msg_Err (obj, "cannot create EGL window surface");
+        msg_Err (gl, "cannot create EGL window surface");
         goto error;
     }
 
     if (eglBindAPI (api->api) != EGL_TRUE)
     {
-        msg_Err (obj, "cannot bind EGL API");
+        msg_Err (gl, "cannot bind EGL API");
         goto error;
     }
 
@@ -369,7 +368,7 @@ static int Open(vlc_gl_t *gl, const struct gl_api *api,
                                       api->attr);
     if (ctx == EGL_NO_CONTEXT)
     {
-        msg_Err (obj, "cannot create EGL context");
+        msg_Err (gl, "cannot create EGL context");
         goto error;
     }
     sys->context = ctx;

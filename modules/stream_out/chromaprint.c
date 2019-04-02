@@ -43,8 +43,8 @@
 /*****************************************************************************
  * Exported prototypes
  *****************************************************************************/
-static int      Open    ( vlc_object_t * );
-static void     Close   ( vlc_object_t * );
+static int      Open    ( sout_stream_t * );
+static void     Close   ( sout_stream_t * );
 
 static void *Add( sout_stream_t *, const es_format_t * );
 static void  Del( sout_stream_t *, void * );
@@ -90,9 +90,8 @@ struct sout_stream_id_sys_t
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_stream_t *p_stream )
 {
-    sout_stream_t *p_stream = (sout_stream_t*)p_this;
     sout_stream_sys_t *p_sys;
 
     p_stream->p_sys = p_sys = malloc(sizeof(sout_stream_sys_t));
@@ -151,9 +150,8 @@ static void Finish( sout_stream_t *p_stream )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( sout_stream_t *p_stream )
 {
-    sout_stream_t *p_stream = (sout_stream_t *)p_this;
     sout_stream_sys_t *p_sys = p_stream->p_sys;
 
     if ( !p_sys->b_done ) Finish( p_stream );

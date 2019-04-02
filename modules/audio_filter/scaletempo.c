@@ -40,13 +40,13 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open( filter_t * );
+static void Close( filter_t * );
 static block_t *DoWork( filter_t *, block_t * );
 
 #ifdef PITCH_SHIFTER
-static int  OpenPitch( vlc_object_t * );
-static void ClosePitch( vlc_object_t * );
+static int  OpenPitch( filter_t * );
+static void ClosePitch( filter_t * );
 static block_t *DoPitchWork( filter_t *, block_t * );
 # define MODULE_DESC N_("Pitch Shifter")
 # define MODULES_SHORTNAME N_("Audio pitch changer")
@@ -397,10 +397,8 @@ static int reinit_buffers( filter_t *p_filter )
 /*****************************************************************************
  * Open: initialize as "audio filter"
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( filter_t *p_filter )
 {
-    filter_t     *p_filter = (filter_t *)p_this;
-
     /* Allocate structure */
     filter_sys_t *p_sys = p_filter->p_sys = malloc( sizeof(*p_sys) );
     if( ! p_sys )
@@ -412,17 +410,17 @@ static int Open( vlc_object_t *p_this )
     p_sys->bytes_per_sample  = 4;
     p_sys->bytes_per_frame   = p_sys->samples_per_frame * p_sys->bytes_per_sample;
 
-    msg_Dbg( p_this, "format: %5i rate, %i nch, %i bps, %s",
+    msg_Dbg( p_filter, "format: %5i rate, %i nch, %i bps, %s",
              p_sys->sample_rate,
              p_sys->samples_per_frame,
              p_sys->bytes_per_sample,
              "fl32" );
 
-    p_sys->ms_stride       = var_InheritInteger( p_this, "scaletempo-stride" );
-    p_sys->percent_overlap = var_InheritFloat( p_this, "scaletempo-overlap" );
-    p_sys->ms_search       = var_InheritInteger( p_this, "scaletempo-search" );
+    p_sys->ms_stride       = var_InheritInteger( p_filter, "scaletempo-stride" );
+    p_sys->percent_overlap = var_InheritFloat( p_filter, "scaletempo-overlap" );
+    p_sys->ms_search       = var_InheritInteger( p_filter, "scaletempo-search" );
 
-    msg_Dbg( p_this, "params: %i stride, %.3f overlap, %i search",
+    msg_Dbg( p_filter, "params: %i stride, %.3f overlap, %i search",
              p_sys->ms_stride, p_sys->percent_overlap, p_sys->ms_search );
 
     p_sys->buf_queue      = NULL;
@@ -437,7 +435,7 @@ static int Open( vlc_object_t *p_this )
 
     if( reinit_buffers( p_filter ) != VLC_SUCCESS )
     {
-        Close( p_this );
+        Close( p_filter );
         return VLC_EGENERIC;
     }
 
@@ -494,13 +492,12 @@ static filter_t *ResamplerCreate(filter_t *p_filter)
     return p_resampler;
 }
 
-static int OpenPitch( vlc_object_t *p_this )
+static int OpenPitch( filter_t *p_filter )
 {
-    int err = Open( p_this );
+    int err = Open( p_filter );
     if( err )
         return err;
 
-    filter_t     *p_filter = (filter_t *)p_this;
     vlc_object_t *p_aout = vlc_object_parent(p_filter);
     filter_sys_t *p_sys = p_filter->p_sys;
 
@@ -518,9 +515,8 @@ static int OpenPitch( vlc_object_t *p_this )
 }
 #endif
 
-static void Close( vlc_object_t *p_this )
+static void Close( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
     free( p_sys->buf_queue );
     free( p_sys->buf_overlap );
@@ -531,16 +527,15 @@ static void Close( vlc_object_t *p_this )
 }
 
 #ifdef PITCH_SHIFTER
-static void ClosePitch( vlc_object_t *p_this )
+static void ClosePitch( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
     vlc_object_t *p_aout = vlc_object_parent(p_filter);
     var_DelCallback( p_aout, "pitch-shift", PitchCallback, p_sys );
     var_Destroy( p_aout, "pitch-shift" );
     module_unneed( p_sys->resampler, p_sys->resampler->p_module );
     vlc_object_delete(p_sys->resampler);
-    Close( p_this );
+    Close( p_filter );
 }
 #endif
 

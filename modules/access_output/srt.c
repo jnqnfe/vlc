@@ -159,7 +159,7 @@ static bool srt_schedule_reconnect(sout_access_out_t *p_access)
 
     /* set passphrase */
     if (psz_passphrase != NULL && psz_passphrase[0] != '\0') {
-        int i_key_length = var_InheritInteger( access_obj, SRT_PARAM_KEY_LENGTH );
+        int i_key_length = var_InheritInteger( p_access, SRT_PARAM_KEY_LENGTH );
 
         srt_set_socket_option( access_obj, SRT_PARAM_KEY_LENGTH, p_sys->sock,
                 SRTO_PBKEYLEN, &i_key_length, sizeof(i_key_length) );
@@ -356,10 +356,9 @@ static int Control( sout_access_out_t *p_access, int i_query, va_list args )
     return i_ret;
 }
 
-static int Open( vlc_object_t *p_this )
+static int Open( sout_access_out_t *p_access )
 {
-    sout_access_out_t       *p_access = (sout_access_out_t*)p_this;
-    sout_access_out_sys_t   *p_sys = NULL;
+    sout_access_out_sys_t *p_sys = NULL;
 
     if (var_Create ( p_access, "dst-port", VLC_VAR_INTEGER )
      || var_Create ( p_access, "src-port", VLC_VAR_INTEGER )
@@ -370,7 +369,7 @@ static int Open( vlc_object_t *p_this )
         return VLC_ENOMEM;
     }
 
-    p_sys = vlc_obj_calloc( p_this, 1, sizeof( *p_sys ) );
+    p_sys = vlc_obj_calloc( p_access, 1, sizeof( *p_sys ) );
     if( unlikely( p_sys == NULL ) )
         return VLC_ENOMEM;
 
@@ -410,9 +409,8 @@ failed:
     return VLC_EGENERIC;
 }
 
-static void Close( vlc_object_t * p_this )
+static void Close( sout_access_out_t *p_access )
 {
-    sout_access_out_t     *p_access = (sout_access_out_t*)p_this;
     sout_access_out_sys_t *p_sys = p_access->p_sys;
 
     vlc_mutex_destroy( &p_sys->lock );

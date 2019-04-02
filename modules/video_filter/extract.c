@@ -39,8 +39,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  Create      ( vlc_object_t * );
-static void Destroy     ( vlc_object_t * );
+static int  Create      ( filter_t * );
+static void Destroy     ( filter_t * );
 
 static picture_t *Filter( filter_t *, picture_t * );
 static int ExtractCallback( vlc_object_t *, char const *,
@@ -89,10 +89,8 @@ typedef struct
 /*****************************************************************************
  * Create
  *****************************************************************************/
-static int Create( vlc_object_t *p_this )
+static int Create( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
-
     switch( p_filter->fmt_in.video.i_chroma )
     {
         case VLC_CODEC_I420:
@@ -147,9 +145,8 @@ static int Create( vlc_object_t *p_this )
 /*****************************************************************************
  * Destroy
  *****************************************************************************/
-static void Destroy( vlc_object_t *p_this )
+static void Destroy( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     var_DelCallback( p_filter, FILTER_PREFIX "component", ExtractCallback,

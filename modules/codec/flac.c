@@ -140,12 +140,12 @@ static const uint32_t wfx_chans_order[MAPPED_WFX_CHANNELS + 1] =
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  OpenDecoder   ( vlc_object_t * );
-static void CloseDecoder  ( vlc_object_t * );
+static int  OpenDecoder   ( decoder_t * );
+static void CloseDecoder  ( decoder_t * );
 
 #ifdef ENABLE_SOUT
-static int OpenEncoder   ( vlc_object_t * );
-static void CloseEncoder ( vlc_object_t * );
+static int OpenEncoder   ( encoder_t * );
+static void CloseEncoder ( encoder_t * );
 #endif
 
 static int DecodeBlock( decoder_t *, block_t * );
@@ -418,9 +418,8 @@ static void DecoderErrorCallback( const FLAC__StreamDecoder *decoder,
 /*****************************************************************************
  * OpenDecoder: probe the decoder and return score
  *****************************************************************************/
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     if( p_dec->fmt_in.i_codec != VLC_CODEC_FLAC )
@@ -494,9 +493,8 @@ static int OpenDecoder( vlc_object_t *p_this )
 /*****************************************************************************
  * CloseDecoder: flac decoder destruction
  *****************************************************************************/
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     FLAC__stream_decoder_finish( p_sys->p_flac );
@@ -792,9 +790,8 @@ static void EncoderMetadataCallback( const FLAC__StreamEncoder *encoder,
 /*****************************************************************************
  * OpenEncoder: probe the encoder and return score
  *****************************************************************************/
-static int OpenEncoder( vlc_object_t *p_this )
+static int OpenEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys;
 
     if( p_enc->fmt_out.i_codec != VLC_CODEC_FLAC &&
@@ -905,9 +902,8 @@ static block_t *Encode( encoder_t *p_enc, block_t *p_aout_buf )
 /*****************************************************************************
  * CloseEncoder: encoder destruction
  *****************************************************************************/
-static void CloseEncoder( vlc_object_t *p_this )
+static void CloseEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys = p_enc->p_sys;
 
     FLAC__stream_encoder_delete( p_sys->p_flac );

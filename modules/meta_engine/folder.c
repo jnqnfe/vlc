@@ -57,7 +57,7 @@ static const char cover_files[][20] = {
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int FindMeta( vlc_object_t * );
+static int FindMeta( meta_fetcher_t * );
 
 /*****************************************************************************
  * Module descriptor
@@ -98,9 +98,8 @@ static bool ProbeArtFile(input_item_t *item,
     return found;
 }
 
-static int FindMeta( vlc_object_t *p_this )
+static int FindMeta( meta_fetcher_t *p_finder )
 {
-    meta_fetcher_t *p_finder = (meta_fetcher_t *)p_this;
     input_item_t *p_item = p_finder->p_item;
 
     if( !p_item )
@@ -127,7 +126,7 @@ static int FindMeta( vlc_object_t *p_this )
 
     int ret = VLC_EGENERIC;
 
-    char *filename = var_InheritString(p_this, "album-art-filename");
+    char *filename = var_InheritString(p_finder, "album-art-filename");
     if (filename != NULL && ProbeArtFile(p_item, psz_basedir, filename))
         ret = VLC_SUCCESS;
     else

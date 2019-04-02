@@ -199,8 +199,8 @@ static unsigned char amf_object_end[] = { 0x0, 0x0, 0x9 };
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open( stream_t * );
+static void Close( stream_t * );
 
 vlc_plugin_begin()
     set_description( N_("HTTP Dynamic Streaming") )
@@ -265,8 +265,8 @@ static uint64_t get_stream_size( stream_t* s )
         hds_stream->bitrate * BITRATE_AS_BYTES_PER_SECOND;
 }
 
-static uint8_t* parse_asrt( vlc_object_t* p_this,
-                        hds_stream_t* s,
+static uint8_t* parse_asrt( stream_t *s,
+                        hds_stream_t* stream,
                         uint8_t* data,
                         uint8_t* data_end )
 {
@@ -277,7 +277,7 @@ static uint8_t* parse_asrt( vlc_object_t* p_this,
     if( asrt_len > data_end - data ||
         data_end - data <  14 )
     {
-        msg_Err( p_this, "Not enough asrt data (%"PRIu32", %tu)", asrt_len,
+        msg_Err( s, "Not enough asrt data (%"PRIu32", %tu)", asrt_len,
                  data_end - data );
         return NULL;
     }
@@ -286,7 +286,7 @@ static uint8_t* parse_asrt( vlc_object_t* p_this,
 
     if( 0 != memcmp( "asrt", data_p, 4 ) )
     {
-        msg_Err( p_this, "Cant find asrt in bootstrap" );
+        msg_Err( s, "Cant find asrt in bootstrap" );
         return NULL;
     }
     data_p += 4;
@@ -298,7 +298,7 @@ static uint8_t* parse_asrt( vlc_object_t* p_this,
     bool quality_found = false;
     data_p++;
 
-    if( ! s->quality_segment_modifier )
+    if( ! stream->quality_segment_modifier )
     {
         quality_found = true;
     }
@@ -309,15 +309,15 @@ static uint8_t* parse_asrt( vlc_object_t* p_this,
         data_p = memchr( data_p, '\0', data_end - data_p );
         if( ! data_p )
         {
-            msg_Err( p_this, "Couldn't find quality entry string in asrt" );
+            msg_Err( s, "Couldn't find quality entry string in asrt" );
             return NULL;
         }
         data_p++;
 
         if( ! quality_found )
         {
-            if( ! strncmp( str_start, s->quality_segment_modifier,
-                           strlen(s->quality_segment_modifier) ) )
+            if( ! strncmp( str_start, stream->quality_segment_modifier,
+                           strlen(stream->quality_segment_modifier) ) )
             {
                 quality_found = true;
             }
@@ -325,14 +325,14 @@ static uint8_t* parse_asrt( vlc_object_t* p_this,
 
         if( data_p >= data_end )
         {
-            msg_Err( p_this, "Premature end of asrt in quality entries" );
+            msg_Err( s, "Premature end of asrt in quality entries" );
             return NULL;
         }
     }
 
     if( data_end - data_p < 4 )
     {
-        msg_Err( p_this, "Premature end of asrt after quality entries" );
+        msg_Err( s, "Premature end of asrt after quality entries" );
         return NULL;
     }
 
@@ -341,13 +341,13 @@ static uint8_t* parse_asrt( vlc_object_t* p_this,
 
     if( data_end - data_p < 8 * segment_run_entry_count )
     {
-        msg_Err( p_this, "Not enough data in asrt for segment run entries" );
+        msg_Err( s, "Not enough data in asrt for segment run entries" );
         return NULL;
     }
 
     if( segment_run_entry_count >= MAX_HDS_SEGMENT_RUNS )
     {
-        msg_Err( p_this, "Too many segment runs" );
+        msg_Err( s, "Too many segment runs" );
         return NULL;
     }
 
@@ -355,24 +355,24 @@ static uint8_t* parse_asrt( vlc_object_t* p_this,
     {
         if( quality_found )
         {
-            s->segment_runs[s->segment_run_count].first_segment = U32_AT(data_p);
+            stream->segment_runs[stream->segment_run_count].first_segment = U32_AT(data_p);
         }
         data_p+=4;
 
         if( quality_found )
         {
-            s->segment_runs[s->segment_run_count].fragments_per_segment = U32_AT(data_p);
+            stream->segment_runs[stream->segment_run_count].fragments_per_segment = U32_AT(data_p);
         }
         data_p+=4;
 
-        s->segment_run_count++;
+        stream->segment_run_count++;
     }
 
     return data_p;
 }
 
-static uint8_t* parse_afrt( vlc_object_t* p_this,
-                        hds_stream_t* s,
+static uint8_t* parse_afrt( stream_t *s,
+                        hds_stream_t* stream,
                         uint8_t* data,
                         uint8_t* data_end )
 {
@@ -382,7 +382,7 @@ static uint8_t* parse_afrt( vlc_object_t* p_this,
     if( afrt_len > data_end - data ||
         data_end - data <  9 )
     {
-        msg_Err( p_this, "Not enough afrt data %u, %td", afrt_len,
+        msg_Err( s, "Not enough afrt data %u, %td", afrt_len,
                  data_end - data );
         return NULL;
     }
@@ -390,7 +390,7 @@ static uint8_t* parse_afrt( vlc_object_t* p_this,
 
     if( 0 != memcmp( data_p, "afrt", 4 ) )
     {
-        msg_Err( p_this, "Cant find afrt in bootstrap" );
+        msg_Err( s, "Cant find afrt in bootstrap" );
         return NULL;
     }
     data_p += 4;
@@ -400,15 +400,15 @@ static uint8_t* parse_afrt( vlc_object_t* p_this,
 
     if( data_end - data_p < 9 )
     {
-        msg_Err( p_this, "afrt is too short" );
+        msg_Err( s, "afrt is too short" );
         return NULL;
     }
 
-    s->afrt_timescale = U32_AT( data_p );
+    stream->afrt_timescale = U32_AT( data_p );
     data_p += 4;
 
     bool quality_found = false;
-    if( ! s->quality_segment_modifier )
+    if( ! stream->quality_segment_modifier )
     {
         quality_found = true;
     }
@@ -421,15 +421,15 @@ static uint8_t* parse_afrt( vlc_object_t* p_this,
         data_p = memchr( data_p, '\0', data_end - data_p );
         if( ! data_p )
         {
-            msg_Err( p_this, "Couldn't find quality entry string in afrt" );
+            msg_Err( s, "Couldn't find quality entry string in afrt" );
             return NULL;
         }
         data_p++;
 
         if( ! quality_found )
         {
-            if( ! strncmp( str_start, s->quality_segment_modifier,
-                           strlen(s->quality_segment_modifier) ) )
+            if( ! strncmp( str_start, stream->quality_segment_modifier,
+                           strlen(stream->quality_segment_modifier) ) )
             {
                 quality_found = true;
             }
@@ -438,7 +438,7 @@ static uint8_t* parse_afrt( vlc_object_t* p_this,
 
     if( data_end - data_p < 5 )
     {
-        msg_Err( p_this, "No more space in afrt after quality entries" );
+        msg_Err( s, "No more space in afrt after quality entries" );
         return NULL;
     }
 
@@ -449,42 +449,42 @@ static uint8_t* parse_afrt( vlc_object_t* p_this,
     {
         if( data_end - data_p < 16 )
         {
-            msg_Err( p_this, "Not enough data in afrt" );
+            msg_Err( s, "Not enough data in afrt" );
             return NULL;
         }
 
-        if( s->fragment_run_count >= MAX_HDS_FRAGMENT_RUNS )
+        if( stream->fragment_run_count >= MAX_HDS_FRAGMENT_RUNS )
         {
-            msg_Err( p_this, "Too many fragment runs, exiting" );
+            msg_Err( s, "Too many fragment runs, exiting" );
             return NULL;
         }
 
-        s->fragment_runs[s->fragment_run_count].fragment_number_start = U32_AT(data_p);
+        stream->fragment_runs[stream->fragment_run_count].fragment_number_start = U32_AT(data_p);
         data_p += 4;
 
-        s->fragment_runs[s->fragment_run_count].fragment_timestamp = U64_AT( data_p );
+        stream->fragment_runs[stream->fragment_run_count].fragment_timestamp = U64_AT( data_p );
         data_p += 8;
 
-        s->fragment_runs[s->fragment_run_count].fragment_duration = U32_AT( data_p );
+        stream->fragment_runs[stream->fragment_run_count].fragment_duration = U32_AT( data_p );
         data_p += 4;
 
-        s->fragment_runs[s->fragment_run_count].discont = 0;
-        if( s->fragment_runs[s->fragment_run_count].fragment_duration == 0 )
+        stream->fragment_runs[stream->fragment_run_count].discont = 0;
+        if( stream->fragment_runs[stream->fragment_run_count].fragment_duration == 0 )
         {
             /* discontinuity flag */
-            s->fragment_runs[s->fragment_run_count].discont = *(data_p++);
+            stream->fragment_runs[stream->fragment_run_count].discont = *(data_p++);
         }
 
-        s->fragment_run_count++;
+        stream->fragment_run_count++;
     }
 
-    if ( s->fragment_runs[s->fragment_run_count-1].fragment_number_start == 0 &&
-         s->fragment_runs[s->fragment_run_count-1].fragment_timestamp == 0 &&
-         s->fragment_runs[s->fragment_run_count-1].fragment_duration == 0 &&
-         s->fragment_runs[s->fragment_run_count-1].discont == 0 )
+    if ( stream->fragment_runs[stream->fragment_run_count-1].fragment_number_start == 0 &&
+         stream->fragment_runs[stream->fragment_run_count-1].fragment_timestamp == 0 &&
+         stream->fragment_runs[stream->fragment_run_count-1].fragment_duration == 0 &&
+         stream->fragment_runs[stream->fragment_run_count-1].discont == 0 )
     {
         /* ignore sentinel value */
-        s->fragment_run_count--;
+        stream->fragment_run_count--;
     }
 
     return data_p;
@@ -502,8 +502,8 @@ static void chunk_free( chunk_t * chunk )
     free( chunk );
 }
 
-static void parse_BootstrapData( vlc_object_t* p_this,
-                                 hds_stream_t * s,
+static void parse_BootstrapData( stream_t *s,
+                                 hds_stream_t * stream,
                                  uint8_t* data,
                                  uint8_t* data_end )
 {
@@ -513,14 +513,14 @@ static void parse_BootstrapData( vlc_object_t* p_this,
     if( abst_len > data_end - data
         || data_end - data < 29 /* min size of data */ )
     {
-        msg_Warn( p_this, "Not enough bootstrap data" );
+        msg_Warn( s, "Not enough bootstrap data" );
         return;
     }
     data_p += sizeof(abst_len);
 
     if( 0 != memcmp( data_p, "abst", 4 ) )
     {
-        msg_Warn( p_this, "Cant find abst in bootstrap" );
+        msg_Warn( s, "Cant find abst in bootstrap" );
         return;
     }
     data_p += 4;
@@ -537,20 +537,20 @@ static void parse_BootstrapData( vlc_object_t* p_this,
     data_p += 1;
 
     /* timescale */
-    s->timescale = U32_AT( data_p );
-    data_p += sizeof(s->timescale);
+    stream->timescale = U32_AT( data_p );
+    data_p += sizeof(stream->timescale);
 
-    s->live_current_time = U64_AT( data_p );
-    data_p += sizeof(s->live_current_time);
+    stream->live_current_time = U64_AT( data_p );
+    data_p += sizeof(stream->live_current_time);
 
     /* smtpe time code offset */
     data_p += 8;
 
-    s->movie_id = strndup( (char*)data_p, data_end - data_p );
-    data_p += ( strlen( s->movie_id ) + 1 );
+    stream->movie_id = strndup( (char*)data_p, data_end - data_p );
+    data_p += ( strlen( stream->movie_id ) + 1 );
 
     if( data_end - data_p < 4 ) {
-        msg_Warn( p_this, "Not enough bootstrap after Movie Identifier" );
+        msg_Warn( s, "Not enough bootstrap after Movie Identifier" );
         return;
     }
 
@@ -558,22 +558,22 @@ static void parse_BootstrapData( vlc_object_t* p_this,
     server_entry_count = (uint8_t) *data_p;
     data_p++;
 
-    s->server_entry_count = 0;
+    stream->server_entry_count = 0;
     while( server_entry_count-- > 0 )
     {
-        if( s->server_entry_count < MAX_HDS_SERVERS )
+        if( stream->server_entry_count < MAX_HDS_SERVERS )
         {
-            s->server_entries[s->server_entry_count++] = strndup( (char*)data_p,
+            stream->server_entries[stream->server_entry_count++] = strndup( (char*)data_p,
                                                                   data_end - data_p );
-            data_p += strlen( s->server_entries[s->server_entry_count-1] ) + 1;
+            data_p += strlen( stream->server_entries[stream->server_entry_count-1] ) + 1;
         }
         else
         {
-            msg_Warn( p_this, "Too many servers" );
+            msg_Warn( s, "Too many servers" );
             data_p = memchr( data_p, '\0', data_end - data_p );
             if( ! data_p )
             {
-                msg_Err( p_this, "Couldn't find server entry" );
+                msg_Err( s, "Couldn't find server entry" );
                 return;
             }
             data_p++;
@@ -581,39 +581,39 @@ static void parse_BootstrapData( vlc_object_t* p_this,
 
         if( data_p >= data_end )
         {
-            msg_Warn( p_this, "Premature end of bootstrap info while reading servers" );
+            msg_Warn( s, "Premature end of bootstrap info while reading servers" );
             return;
         }
     }
 
     if( data_end - data_p < 3 ) {
-        msg_Warn( p_this, "Not enough bootstrap after Servers" );
+        msg_Warn( s, "Not enough bootstrap after Servers" );
         return;
     }
 
-    s->quality_segment_modifier = NULL;
+    stream->quality_segment_modifier = NULL;
 
     uint8_t quality_entry_count = *data_p;
     data_p++;
 
     if( quality_entry_count > 1 )
     {
-        msg_Err( p_this, "I don't know what to do with multiple quality levels in the bootstrap - shouldn't this be handled at the manifest level?" );
+        msg_Err( s, "I don't know what to do with multiple quality levels in the bootstrap - shouldn't this be handled at the manifest level?" );
         return;
     }
 
-    s->quality_segment_modifier = NULL;
+    stream->quality_segment_modifier = NULL;
     while( quality_entry_count-- > 0 )
     {
-        if( s->quality_segment_modifier )
+        if( stream->quality_segment_modifier )
         {
-            s->quality_segment_modifier = strndup( (char*)data_p, data_end - data_p );
+            stream->quality_segment_modifier = strndup( (char*)data_p, data_end - data_p );
         }
         data_p += strnlen( (char*)data_p, data_end - data_p ) + 1;
     }
 
     if( data_end - data_p < 2 ) {
-        msg_Warn( p_this, "Not enough bootstrap after quality entries" );
+        msg_Warn( s, "Not enough bootstrap after quality entries" );
         return;
     }
 
@@ -621,13 +621,13 @@ static void parse_BootstrapData( vlc_object_t* p_this,
     data_p = memchr( data_p, '\0', data_end - data_p );
     if( ! data_p )
     {
-        msg_Err( p_this, "Couldn't find DRM Data" );
+        msg_Err( s, "Couldn't find DRM Data" );
         return;
     }
     data_p++;
 
     if( data_end - data_p < 2 ) {
-        msg_Warn( p_this, "Not enough bootstrap after drm data" );
+        msg_Warn( s, "Not enough bootstrap after drm data" );
         return;
     }
 
@@ -635,37 +635,37 @@ static void parse_BootstrapData( vlc_object_t* p_this,
     data_p = memchr( data_p, '\0', data_end - data_p );
     if( ! data_p )
     {
-        msg_Err( p_this, "Couldn't find metadata");
+        msg_Err( s, "Couldn't find metadata");
         return;
     }
     data_p++;
 
     if( data_end - data_p < 2 ) {
-        msg_Warn( p_this, "Not enough bootstrap after drm data" );
+        msg_Warn( s, "Not enough bootstrap after drm data" );
         return;
     }
 
     uint8_t asrt_count = *data_p;
     data_p++;
 
-    s->segment_run_count = 0;
+    stream->segment_run_count = 0;
     while( asrt_count-- > 0 &&
            data_end > data_p &&
-           (data_p = parse_asrt( p_this, s, data_p, data_end )) );
+           (data_p = parse_asrt( s, stream, data_p, data_end )) );
 
     if( ! data_p )
     {
-        msg_Warn( p_this, "Couldn't find afrt data" );
+        msg_Warn( s, "Couldn't find afrt data" );
         return;
     }
 
     uint8_t afrt_count = *data_p;
     data_p++;
 
-    s->fragment_run_count = 0;
+    stream->fragment_run_count = 0;
     while( afrt_count-- > 0 &&
            data_end > data_p &&
-           (data_p = parse_afrt( p_this, s, data_p, data_end )) );
+           (data_p = parse_afrt( s, stream, data_p, data_end )) );
 }
 
 /* this only works with ANSI characters - this is ok
@@ -1154,7 +1154,7 @@ static void* live_thread( void* p )
             else
             {
                 vlc_mutex_lock( & hds_stream->abst_lock );
-                parse_BootstrapData( p_this, hds_stream,
+                parse_BootstrapData( s, hds_stream,
                                      data, data + read );
                 vlc_mutex_unlock( & hds_stream->abst_lock );
                 maintain_live_chunks( p_this, hds_stream );
@@ -1345,7 +1345,7 @@ static int parse_Manifest( stream_t *s, manifest_t *m )
         case XML_READER_ENDELEM:
             if( current_element && ! strcmp( current_element, "bootstrapInfo") ) {
                 if( bootstrap_idx + 1 == MAX_BOOTSTRAP_INFO ) {
-                    msg_Warn( (vlc_object_t*) s, "Too many bootstraps, ignoring" );
+                    msg_Warn( s, "Too many bootstraps, ignoring" );
                 } else {
                     bootstrap_idx++;
                 }
@@ -1367,7 +1367,7 @@ static int parse_Manifest( stream_t *s, manifest_t *m )
         {
             if( media_idx == MAX_MEDIA_ELEMENTS )
             {
-                msg_Err( (vlc_object_t*) s, "Too many media elements, quitting" );
+                msg_Err( s, "Too many media elements, quitting" );
                 free(media_id);
                 return VLC_EGENERIC;
             }
@@ -1450,7 +1450,7 @@ static int parse_Manifest( stream_t *s, manifest_t *m )
                     vlc_b64_decode_binary( (uint8_t**)&bootstraps[bootstrap_idx].data, start );
                 if( ! bootstraps[bootstrap_idx].data )
                 {
-                    msg_Err( (vlc_object_t*) s, "Couldn't decode bootstrap info" );
+                    msg_Err( s, "Couldn't decode bootstrap info" );
                 }
             }
             else if( ! strcmp( current_element, "duration" ) )
@@ -1492,7 +1492,7 @@ static int parse_Manifest( stream_t *s, manifest_t *m )
                     if ( ( end_marker < medias[mi].metadata ) ||
                          memcmp(end_marker, amf_object_end, sizeof(amf_object_end)) != 0 )
                     {
-                        msg_Dbg( (vlc_object_t*)s, "Ignoring invalid metadata packet on stream %d", mi );
+                        msg_Dbg( s, "Ignoring invalid metadata packet on stream %d", mi );
                         FREENULL( medias[mi].metadata );
                         medias[mi].metadata_len = 0;
                     }
@@ -1559,7 +1559,7 @@ static int parse_Manifest( stream_t *s, manifest_t *m )
 
                 if( ! sys->live )
                 {
-                    parse_BootstrapData( (vlc_object_t*)s,
+                    parse_BootstrapData( s,
                                          new_stream,
                                          bootstraps[j].data,
                                          bootstraps[j].data + bootstraps[j].data_len );
@@ -1596,7 +1596,7 @@ static int parse_Manifest( stream_t *s, manifest_t *m )
 
                 vlc_array_append_or_abort( &sys->hds_streams, new_stream );
 
-                msg_Info( (vlc_object_t*)s, "New track with quality_segment(%s), bitrate(%u), timescale(%u), movie_id(%s), segment_run_count(%d), fragment_run_count(%u)",
+                msg_Info( s, "New track with quality_segment(%s), bitrate(%u), timescale(%u), movie_id(%s), segment_run_count(%d), fragment_run_count(%u)",
                           new_stream->quality_segment_modifier?new_stream->quality_segment_modifier:"", new_stream->bitrate, new_stream->timescale,
                           new_stream->movie_id, new_stream->segment_run_count, new_stream->fragment_run_count );
 
@@ -1646,15 +1646,14 @@ static void SysCleanup( stream_sys_t *p_sys )
     free( p_sys->base_url );
 }
 
-static int Open( vlc_object_t *p_this )
+static int Open( stream_t *s )
 {
-    stream_t *s = (stream_t*)p_this;
     stream_sys_t *p_sys;
 
     if( !isHDS( s ) || s->psz_url == NULL )
         return VLC_EGENERIC;
 
-    msg_Info( p_this, "HTTP Dynamic Streaming (%s)", s->psz_url );
+    msg_Info( s, "HTTP Dynamic Streaming (%s)", s->psz_url );
 
     s->p_sys = p_sys = calloc( 1, sizeof(*p_sys ) );
     if( unlikely( p_sys == NULL ) )
@@ -1700,7 +1699,7 @@ static int Open( vlc_object_t *p_this )
     }
 
     if( p_sys->live ) {
-        msg_Info( p_this, "Live stream detected" );
+        msg_Info( s, "Live stream detected" );
 
         if( vlc_clone( &p_sys->live_thread, live_thread, s, VLC_THREAD_PRIORITY_INPUT ) )
         {
@@ -1716,9 +1715,8 @@ error:
     return VLC_EGENERIC;
 }
 
-static void Close( vlc_object_t *p_this )
+static void Close( stream_t *s )
 {
-    stream_t *s = (stream_t*)p_this;
     stream_sys_t *p_sys = s->p_sys;
 
     // TODO: Change here for selectable stream
@@ -1875,7 +1873,7 @@ static ssize_t Read( stream_t *s, void *buffer, size_t i_read )
     if ( header_unfinished( p_sys ) )
         return send_flv_header( stream, p_sys, buffer, i_read );
 
-    return read_chunk_data( (vlc_object_t*)s, buffer, i_read, stream );
+    return read_chunk_data( VLC_OBJECT(s), buffer, i_read, stream );
 }
 
 static int Control( stream_t *s, int i_query, va_list args )

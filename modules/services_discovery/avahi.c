@@ -47,10 +47,10 @@
  *****************************************************************************/
 
 /* Callbacks */
-static int  OpenSD ( vlc_object_t * );
-static void CloseSD( vlc_object_t * );
-static int  OpenRD ( vlc_object_t * );
-static void CloseRD( vlc_object_t * );
+static int  OpenSD ( services_discovery_t * );
+static void CloseSD( services_discovery_t * );
+static int  OpenRD ( vlc_renderer_discovery_t * );
+static void CloseRD( vlc_renderer_discovery_t * );
 
 VLC_SD_PROBE_HELPER("avahi", N_("Zeroconf network services"), SD_CAT_LAN)
 VLC_RD_PROBE_HELPER( "avahi_renderer", "Avahi Zeroconf renderer Discovery" )
@@ -477,15 +477,14 @@ error:
     return VLC_EGENERIC;
 }
 
-static int OpenSD( vlc_object_t *p_this )
+static int OpenSD( services_discovery_t *p_sd )
 {
-    services_discovery_t *p_sd = ( services_discovery_t* )p_this;
     p_sd->description = _("Zeroconf network services");
 
     discovery_sys_t *p_sys = p_sd->p_sys = calloc( 1, sizeof( discovery_sys_t ) );
     if( !p_sd->p_sys )
         return VLC_ENOMEM;
-    p_sys->parent = p_this;
+    p_sys->parent = VLC_OBJECT(p_sd);
     p_sys->renderer = false;
 
     int ret = OpenCommon( p_sys );
@@ -498,14 +497,12 @@ static int OpenSD( vlc_object_t *p_this )
     return ret;
 }
 
-static int OpenRD( vlc_object_t *p_this )
+static int OpenRD( vlc_renderer_discovery_t *p_rd )
 {
-    vlc_renderer_discovery_t *p_rd = (vlc_renderer_discovery_t *)p_this;
-
     discovery_sys_t *p_sys = p_rd->p_sys = calloc( 1, sizeof( discovery_sys_t ) );
     if( !p_rd->p_sys )
         return VLC_ENOMEM;
-    p_sys->parent = p_this;
+    p_sys->parent = VLC_OBJECT(p_rd);
     p_sys->renderer = true;
 
     int ret = OpenCommon( p_sys );
@@ -530,9 +527,8 @@ static void CloseCommon( discovery_sys_t *p_sys )
 
 }
 
-static void CloseSD( vlc_object_t *p_this )
+static void CloseSD( services_discovery_t *p_sd )
 {
-    services_discovery_t *p_sd = ( services_discovery_t* )p_this;
     discovery_sys_t *p_sys = p_sd->p_sys;
     CloseCommon( p_sys );
     vlc_dictionary_clear( &p_sys->services_name_to_input_item,
@@ -540,9 +536,8 @@ static void CloseSD( vlc_object_t *p_this )
     free( p_sys );
 }
 
-static void CloseRD( vlc_object_t *p_this )
+static void CloseRD( vlc_renderer_discovery_t *p_rd )
 {
-    vlc_renderer_discovery_t *p_rd = (vlc_renderer_discovery_t *)p_this;
     discovery_sys_t *p_sys = p_rd->p_sys;
     CloseCommon( p_sys );
     vlc_dictionary_clear( &p_sys->services_name_to_input_item,

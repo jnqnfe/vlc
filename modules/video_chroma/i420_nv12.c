@@ -140,11 +140,8 @@ VIDEO_FILTER_WRAPPER( P010_I42010B )
  *****************************************************************************
  * This function allocates and initializes a chroma function
  *****************************************************************************/
-static int Create( vlc_object_t *p_this )
+static int Create( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
-
-
     /* video must be even, because 4:2:0 is subsampled by 2 in both ways */
     if( p_filter->fmt_in.video.i_width  & 1
      || p_filter->fmt_in.video.i_height & 1 )
@@ -223,9 +220,8 @@ static int Create( vlc_object_t *p_this )
     return 0;
 }
 
-static void Delete(vlc_object_t *p_this)
+static void Delete(filter_t *p_filter)
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
     CopyCleanCache( &p_sys->cache );
 }

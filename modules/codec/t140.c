@@ -28,22 +28,17 @@
 #include <vlc_codec.h>
 #include <vlc_sout.h>
 
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( encoder_t * );
 
 vlc_plugin_begin ()
     set_description( N_("T.140 text encoder") )
-    set_capability( VLC_CAP_ENCODER, 100, Open, Close )
+    set_capability( VLC_CAP_ENCODER, 100, Open, NULL )
 vlc_plugin_end ()
-
 
 static block_t *Encode ( encoder_t *, subpicture_t * );
 
-
-static int Open( vlc_object_t *p_this )
+static int Open( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
-
     switch( p_enc->fmt_out.i_codec )
     {
         case VLC_CODEC_SUBT:
@@ -51,7 +46,7 @@ static int Open( vlc_object_t *p_this )
              && strcasecmp( p_enc->fmt_out.subs.psz_encoding, "utf8" )
              && strcasecmp( p_enc->fmt_out.subs.psz_encoding, "UTF-8" ) )
             {
-                msg_Err( p_this, "Only UTF-8 encoding supported" );
+                msg_Err( p_enc, "Only UTF-8 encoding supported" );
                 return VLC_EGENERIC;
             }
         case VLC_CODEC_ITU_T140:
@@ -70,13 +65,6 @@ static int Open( vlc_object_t *p_this )
     p_enc->fmt_out.i_cat = SPU_ES;
     return VLC_SUCCESS;
 }
-
-
-static void Close( vlc_object_t *p_this )
-{
-    (void)p_this;
-}
-
 
 static block_t *Encode( encoder_t *p_enc, subpicture_t *p_spu )
 {

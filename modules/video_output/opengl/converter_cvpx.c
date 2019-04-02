@@ -141,9 +141,8 @@ tc_cvpx_update(const opengl_tex_converter_t *tc, GLuint *textures,
 #endif
 
 static void
-Close(vlc_object_t *obj)
+Close(opengl_tex_converter_t *tc)
 {
-    opengl_tex_converter_t *tc = (void *)obj;
     struct priv *priv = tc->priv;
 
 #if TARGET_OS_IPHONE
@@ -161,9 +160,8 @@ Close(vlc_object_t *obj)
 }
 
 static int
-Open(vlc_object_t *obj)
+Open(opengl_tex_converter_t *tc)
 {
-    opengl_tex_converter_t *tc = (void *) obj;
     if (tc->fmt.i_chroma != VLC_CODEC_CVPX_UYVY
      && tc->fmt.i_chroma != VLC_CODEC_CVPX_NV12
      && tc->fmt.i_chroma != VLC_CODEC_CVPX_I420

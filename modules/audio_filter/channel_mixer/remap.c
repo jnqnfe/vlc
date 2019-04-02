@@ -37,8 +37,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  OpenFilter( vlc_object_t * );
-static void CloseFilter( vlc_object_t * );
+static int  OpenFilter( filter_t * );
+static void CloseFilter( filter_t * );
 
 #define REMAP_CFG "aout-remap-"
 
@@ -261,9 +261,8 @@ static inline remap_fun_t GetRemapFun( audio_format_t *p_format, bool b_add )
 /*****************************************************************************
  * OpenFilter:
  *****************************************************************************/
-static int OpenFilter( vlc_object_t *p_this )
+static int OpenFilter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys;
 
     audio_format_t *audio_in  = &p_filter->fmt_in.audio;
@@ -284,7 +283,7 @@ static int OpenFilter( vlc_object_t *p_this )
     /* get number of and layout of input channels */
     uint32_t i_output_physical = 0;
     int8_t pi_map_ch[ AOUT_CHAN_MAX ] = { 0 }; /* which out channel each in channel is mapped to */
-    p_sys->b_normalize = var_InheritBool( p_this, REMAP_CFG "normalize" );
+    p_sys->b_normalize = var_InheritBool( p_filter, REMAP_CFG "normalize" );
 
     for( uint8_t in_ch = 0, wg4_i = 0; in_ch < audio_in->i_channels; in_ch++, wg4_i++ )
     {
@@ -298,7 +297,7 @@ static int OpenFilter( vlc_object_t *p_this )
         uint8_t *pi_chnidx = memchr( channel_wg4idx, wg4_i, channel_wg4idx_len );
         assert( pi_chnidx != NULL );
         uint8_t chnidx = pi_chnidx - channel_wg4idx;
-        int64_t val = var_InheritInteger( p_this, channel_name[chnidx] );
+        int64_t val = var_InheritInteger( p_filter, channel_name[chnidx] );
         if (val >= AOUT_CHAN_MAX)
         {
             msg_Err( p_filter, "invalid channel index" );
@@ -374,9 +373,8 @@ static int OpenFilter( vlc_object_t *p_this )
 /*****************************************************************************
  * CloseFilter:
  *****************************************************************************/
-static void CloseFilter( vlc_object_t *p_this )
+static void CloseFilter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *) p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
     free( p_sys );
 }

@@ -143,9 +143,9 @@ static const uint32_t pi_3channels_in[] =
 /****************************************************************************
  * Local prototypes
  ****************************************************************************/
-static int  OpenDecoder   ( vlc_object_t * );
-static int  OpenPacketizer( vlc_object_t * );
-static void CloseDecoder  ( vlc_object_t * );
+static int  OpenDecoder   ( decoder_t * );
+static int  OpenPacketizer( decoder_t * );
+static void CloseDecoder  ( decoder_t * );
 static int  DecodeAudio  ( decoder_t *, block_t * );
 static block_t *Packetize  ( decoder_t *, block_t ** );
 static void Flush( decoder_t * );
@@ -161,8 +161,8 @@ static void ParseVorbisComments( decoder_t * );
 static void ConfigureChannelOrder(uint8_t *, int, uint32_t );
 
 #ifdef HAVE_VORBIS_ENCODER
-static int OpenEncoder   ( vlc_object_t * );
-static void CloseEncoder ( vlc_object_t * );
+static int OpenEncoder   ( encoder_t * );
+static void CloseEncoder ( encoder_t * );
 static block_t *Encode   ( encoder_t *, block_t * );
 #endif
 
@@ -224,9 +224,8 @@ static const char *const ppsz_enc_options[] = {
 };
 #endif
 
-static int OpenCommon( vlc_object_t *p_this, bool b_packetizer )
+static int OpenCommon( decoder_t *p_dec, bool b_packetizer )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     if( p_dec->fmt_in.i_codec != VLC_CODEC_VORBIS )
@@ -267,14 +266,14 @@ static int OpenCommon( vlc_object_t *p_this, bool b_packetizer )
     return VLC_SUCCESS;
 }
 
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    return OpenCommon( p_this, false );
+    return OpenCommon( p_dec, false );
 }
 
-static int OpenPacketizer( vlc_object_t *p_this )
+static int OpenPacketizer( decoder_t *p_dec )
 {
-    return OpenCommon( p_this, true );
+    return OpenCommon( p_dec, true );
 }
 
 /****************************************************************************
@@ -703,9 +702,8 @@ static void ConfigureChannelOrder(uint8_t *pi_chan_table, int i_channels,
 /*****************************************************************************
  * CloseDecoder: vorbis decoder destruction
  *****************************************************************************/
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     if( !p_sys->b_packetizer && p_sys->b_has_headers )
@@ -750,9 +748,8 @@ typedef struct
 /*****************************************************************************
  * OpenEncoder: probe the encoder and return score
  *****************************************************************************/
-static int OpenEncoder( vlc_object_t *p_this )
+static int OpenEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys;
     int i_quality, i_min_bitrate, i_max_bitrate;
     ogg_packet header[3];
@@ -957,9 +954,8 @@ static block_t *Encode( encoder_t *p_enc, block_t *p_aout_buf )
 /*****************************************************************************
  * CloseEncoder: vorbis encoder destruction
  *****************************************************************************/
-static void CloseEncoder( vlc_object_t *p_this )
+static void CloseEncoder( encoder_t *p_enc )
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys = p_enc->p_sys;
 
     vorbis_block_clear( &p_sys->vb );

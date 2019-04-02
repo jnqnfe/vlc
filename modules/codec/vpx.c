@@ -43,12 +43,12 @@
 /****************************************************************************
  * Local prototypes
  ****************************************************************************/
-static int OpenDecoder(vlc_object_t *);
-static void CloseDecoder(vlc_object_t *);
+static int OpenDecoder(decoder_t *);
+static void CloseDecoder(decoder_t *);
 #ifdef ENABLE_SOUT
 static const char *const ppsz_sout_options[] = { "quality-mode", NULL };
-static int OpenEncoder(vlc_object_t *);
-static void CloseEncoder(vlc_object_t *);
+static int OpenEncoder(encoder_t *);
+static void CloseEncoder(encoder_t *);
 static block_t *Encode(encoder_t *p_enc, picture_t *p_pict);
 
 #define QUALITY_MODE_TEXT N_("Quality mode")
@@ -292,9 +292,8 @@ static int Decode(decoder_t *dec, block_t *block)
 /*****************************************************************************
  * OpenDecoder: probe the decoder
  *****************************************************************************/
-static int OpenDecoder(vlc_object_t *p_this)
+static int OpenDecoder(decoder_t *dec)
 {
-    decoder_t *dec = (decoder_t *)p_this;
     const struct vpx_codec_iface *iface;
     int vp_version;
 
@@ -326,11 +325,11 @@ static int OpenDecoder(vlc_object_t *p_this)
         .threads = __MIN(vlc_GetCPUCount(), 16)
     };
 
-    msg_Dbg(p_this, "VP%d: using libvpx version %s (build options %s)",
+    msg_Dbg(dec, "VP%d: using libvpx version %s (build options %s)",
         vp_version, vpx_codec_version_str(), vpx_codec_build_config());
 
     if (vpx_codec_dec_init(&sys->ctx, iface, &deccfg, 0) != VPX_CODEC_OK) {
-        VPX_ERR(p_this, &sys->ctx, "Failed to initialize decoder");
+        VPX_ERR(dec, &sys->ctx, "Failed to initialize decoder");
         free(sys);
         return VLC_EGENERIC;;
     }
@@ -351,9 +350,8 @@ static int OpenDecoder(vlc_object_t *p_this)
 /*****************************************************************************
  * CloseDecoder: decoder destruction
  *****************************************************************************/
-static void CloseDecoder(vlc_object_t *p_this)
+static void CloseDecoder(decoder_t *dec)
 {
-    decoder_t *dec = (decoder_t *)p_this;
     decoder_sys_t *sys = dec->p_sys;
 
     /* Free our PTS */
@@ -384,9 +382,8 @@ typedef struct
 /*****************************************************************************
  * OpenEncoder: probe the encoder
  *****************************************************************************/
-static int OpenEncoder(vlc_object_t *p_this)
+static int OpenEncoder(encoder_t *p_enc)
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys;
 
     /* Allocate the memory needed to store the encoder's structure */
@@ -423,12 +420,12 @@ static int OpenEncoder(vlc_object_t *p_this)
     enccfg.g_w = p_enc->fmt_in.video.i_visible_width;
     enccfg.g_h = p_enc->fmt_in.video.i_visible_height;
 
-    msg_Dbg(p_this, "VP%d: using libvpx version %s (build options %s)",
+    msg_Dbg(p_enc, "VP%d: using libvpx version %s (build options %s)",
         vp_version, vpx_codec_version_str(), vpx_codec_build_config());
 
     struct vpx_codec_ctx *ctx = &p_sys->ctx;
     if (vpx_codec_enc_init(ctx, iface, &enccfg, 0) != VPX_CODEC_OK) {
-        VPX_ERR(p_this, ctx, "Failed to initialize encoder");
+        VPX_ERR(p_enc, ctx, "Failed to initialize encoder");
         free(p_sys);
         return VLC_EGENERIC;
     }
@@ -519,12 +516,11 @@ static block_t *Encode(encoder_t *p_enc, picture_t *p_pict)
 /*****************************************************************************
  * CloseEncoder: encoder destruction
  *****************************************************************************/
-static void CloseEncoder(vlc_object_t *p_this)
+static void CloseEncoder(encoder_t *p_enc)
 {
-    encoder_t *p_enc = (encoder_t *)p_this;
     encoder_sys_t *p_sys = p_enc->p_sys;
     if (vpx_codec_destroy(&p_sys->ctx))
-        VPX_ERR(p_this, &p_sys->ctx, "Failed to destroy codec");
+        VPX_ERR(p_enc, &p_sys->ctx, "Failed to destroy codec");
     free(p_sys);
 }
 

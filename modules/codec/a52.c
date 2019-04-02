@@ -51,8 +51,8 @@
 #include <vlc_block.h>
 #include <vlc_codec.h>
 
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( decoder_t * );
+static void Close( decoder_t * );
 
 typedef struct
 {
@@ -269,9 +269,8 @@ static int channels_vlc2a52( const audio_format_t *p_audio, int *p_flags )
     return VLC_SUCCESS;
 }
 
-static int Open( vlc_object_t *p_this )
+static int Open( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys;
 
     if( p_dec->fmt_in.i_codec != VLC_CODEC_A52
@@ -286,14 +285,14 @@ static int Open( vlc_object_t *p_this )
     if( p_sys == NULL )
         return VLC_ENOMEM;
 
-    p_sys->b_dynrng = var_InheritBool( p_this, "a52-dynrng" );
+    p_sys->b_dynrng = var_InheritBool( p_dec, "a52-dynrng" );
     p_sys->b_dontwarn = 0;
 
     p_sys->i_nb_channels = aout_FormatNbChannels( &p_dec->fmt_in.audio );
     if( channels_vlc2a52( &p_dec->fmt_in.audio, &p_sys->i_flags )
         != VLC_SUCCESS )
     {
-        msg_Warn( p_this, "unknown sample format!" );
+        msg_Warn( p_dec, "unknown sample format!" );
         free( p_sys );
         return VLC_EGENERIC;
     }
@@ -303,7 +302,7 @@ static int Open( vlc_object_t *p_this )
     p_sys->p_liba52 = a52_init( 0 );
     if( p_sys->p_liba52 == NULL )
     {
-        msg_Err( p_this, "unable to initialize liba52" );
+        msg_Err( p_dec, "unable to initialize liba52" );
         free( p_sys );
         return VLC_EGENERIC;
     }
@@ -329,7 +328,7 @@ static int Open( vlc_object_t *p_this )
 
     if( decoder_UpdateAudioFormat( p_dec ) )
     {
-        Close( p_this );
+        Close( p_dec );
         return VLC_EGENERIC;
     }
 
@@ -338,9 +337,8 @@ static int Open( vlc_object_t *p_this )
     return VLC_SUCCESS;
 }
 
-static void Close( vlc_object_t *p_this )
+static void Close( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     a52_free( p_sys->p_liba52 );

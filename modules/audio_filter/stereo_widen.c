@@ -32,8 +32,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( filter_t * );
+static void Close( filter_t * );
 
 static block_t *Filter ( filter_t *, block_t * );
 static int paramCallback( vlc_object_t *, char const *, vlc_value_t ,
@@ -113,9 +113,8 @@ static int MakeRingBuffer( float **pp_buffer, size_t *pi_buffer,
     return VLC_SUCCESS;
 }
 
-static int Open( vlc_object_t *obj )
+static int Open( filter_t *p_filter )
 {
-    filter_t *p_filter  = (filter_t *)obj;
     vlc_object_t *p_aout = vlc_object_parent(p_filter);
     filter_sys_t *p_sys;
 
@@ -148,7 +147,7 @@ static int Open( vlc_object_t *obj )
     if( MakeRingBuffer( &p_sys->pf_ringbuf, &p_sys->i_len, &p_sys->pf_write,
                         p_sys->f_delay, p_filter->fmt_in.audio.i_rate ) != VLC_SUCCESS )
     {
-        Close( obj );
+        Close( p_filter );
         return VLC_ENOMEM;
     }
 
@@ -193,9 +192,8 @@ static block_t *Filter( filter_t *p_filter, block_t *p_block )
 /*****************************************************************************
  * Close: close the plugin
  *****************************************************************************/
-static void Close( vlc_object_t *obj )
+static void Close( filter_t *p_filter )
 {
-    filter_t *p_filter  = (filter_t *)obj;
     vlc_object_t *p_aout = vlc_object_parent(p_filter);
     filter_sys_t *p_sys = p_filter->p_sys;
 

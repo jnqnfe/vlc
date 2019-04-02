@@ -177,11 +177,11 @@ static const char *const ppsz_amtuner_mode_text[] = { N_("Default"),
 static int  CommonOpen ( vlc_object_t *, access_sys_t *, bool );
 static void CommonClose( vlc_object_t *, access_sys_t * );
 
-static int  AccessOpen ( vlc_object_t * );
-static void AccessClose( vlc_object_t * );
+static int  AccessOpen ( demux_t * );
+static void AccessClose( demux_t * );
 
-static int  DemuxOpen  ( vlc_object_t * );
-static void DemuxClose ( vlc_object_t * );
+static int  DemuxOpen  ( demux_t * );
+static void DemuxClose ( demux_t * );
 
 } // namespace
 
@@ -655,9 +655,8 @@ static void SetRGBMasks( vlc_fourcc_t i_fourcc, es_format_t *fmt )
 /*****************************************************************************
  * DemuxOpen: open direct show device as an access_demux module
  *****************************************************************************/
-static int DemuxOpen( vlc_object_t *p_this )
+static int DemuxOpen( demux_t *p_demux )
 {
-    demux_t      *p_demux = (demux_t *)p_this;
     access_sys_t *p_sys;
 
     if (p_demux->out == NULL)
@@ -670,24 +669,24 @@ static int DemuxOpen( vlc_object_t *p_this )
 
     ComContext ctx( COINIT_MULTITHREADED );
 
-    if( vlc_mta_acquire( p_this ) == false )
+    if( vlc_mta_acquire( p_demux ) == false )
     {
-        msg_Err( p_this, "Failed to acquire MTA" );
+        msg_Err( p_demux, "Failed to acquire MTA" );
         return VLC_EGENERIC;
     }
 
-    if( CommonOpen( p_this, p_sys, true ) != VLC_SUCCESS )
+    if( CommonOpen( VLC_OBJECT(p_demux), p_sys, true ) != VLC_SUCCESS )
     {
-        CommonClose( p_this, p_sys );
+        CommonClose( VLC_OBJECT(p_demux), p_sys );
         return VLC_EGENERIC;
     }
 
     /* Everything is ready. Let's rock baby */
-    msg_Dbg( p_this, "Playing...");
+    msg_Dbg( p_demux, "Playing...");
     if( FAILED( p_sys->p_control->Run() ) )
     {
-        msg_Err( p_this, "Failed to run graph. Capture device may be in use." );
-        CommonClose( p_this, p_sys );
+        msg_Err( p_demux, "Failed to run graph. Capture device may be in use." );
+        CommonClose( VLC_OBJECT(p_demux), p_sys );
         return VLC_EGENERIC;
     }
 
@@ -703,7 +702,7 @@ static int DemuxOpen( vlc_object_t *p_this )
 
         if( p_stream->mt.majortype == MEDIATYPE_Video )
         {
-            char *psz_aspect = var_CreateGetString( p_this, "dshow-aspect-ratio" );
+            char *psz_aspect = var_CreateGetString( p_demux, "dshow-aspect-ratio" );
             char *psz_delim = !EMPTY_STR( psz_aspect ) ? strchr( psz_aspect, ':' ) : NULL;
 
             es_format_Init( &fmt, VIDEO_ES, p_stream->i_fourcc );
@@ -762,9 +761,8 @@ static int DemuxOpen( vlc_object_t *p_this )
 /*****************************************************************************
  * AccessOpen: open direct show device as an access module
  *****************************************************************************/
-static int AccessOpen( vlc_object_t *p_this )
+static int AccessOpen( stream_t *p_access )
 {
-    stream_t     *p_access = (stream_t*)p_this;
     access_sys_t *p_sys;
 
     p_access->p_sys = p_sys = (access_sys_t*)calloc( 1, sizeof( access_sys_t ) );
@@ -773,15 +771,15 @@ static int AccessOpen( vlc_object_t *p_this )
 
     ComContext ctx( COINIT_MULTITHREADED );
 
-    if( vlc_mta_acquire( p_this ) == false )
+    if( vlc_mta_acquire( p_access ) == false )
     {
-        msg_Err( p_this, "Failed to acquire MTA" );
+        msg_Err( p_access, "Failed to acquire MTA" );
         return VLC_EGENERIC;
     }
 
-    if( CommonOpen( p_this, p_sys, false ) != VLC_SUCCESS )
+    if( CommonOpen( VLC_OBJECT(p_access), p_sys, false ) != VLC_SUCCESS )
     {
-        CommonClose( p_this, p_sys );
+        CommonClose( VLC_OBJECT(p_access), p_sys );
         return VLC_EGENERIC;
     }
 
@@ -793,11 +791,11 @@ static int AccessOpen( vlc_object_t *p_this )
     p_access->p_sys = p_sys;
 
     /* Everything is ready. Let's rock baby */
-    msg_Dbg( p_this, "Playing...");
+    msg_Dbg( p_access, "Playing...");
     if( FAILED( p_sys->p_control->Run() ) )
     {
-        msg_Err( p_this, "Failed to run graph. Capture device may be in use." );
-        CommonClose( p_this, p_sys );
+        msg_Err( p_access, "Failed to run graph. Capture device may be in use." );
+        CommonClose( VLC_OBJECT(p_access), p_sys );
         return VLC_EGENERIC;
     }
 
@@ -826,9 +824,8 @@ static void CommonClose( vlc_object_t *p_this, access_sys_t *p_sys )
 /*****************************************************************************
  * AccessClose: close device
  *****************************************************************************/
-static void AccessClose( vlc_object_t *p_this )
+static void AccessClose( stream_t *p_access )
 {
-    stream_t     *p_access = (stream_t *)p_this;
     access_sys_t *p_sys    = (access_sys_t *)p_access->p_sys;
 
     ComContext ctx( COINIT_MULTITHREADED );
@@ -836,15 +833,14 @@ static void AccessClose( vlc_object_t *p_this )
     /* Stop capturing stuff */
     p_sys->p_control->Stop();
 
-    CommonClose( p_this, p_sys );
+    CommonClose( VLC_OBJECT(p_access), p_sys );
 }
 
 /*****************************************************************************
  * DemuxClose: close device
  *****************************************************************************/
-static void DemuxClose( vlc_object_t *p_this )
+static void DemuxClose( demux_t *p_demux )
 {
-    demux_t      *p_demux = (demux_t *)p_this;
     access_sys_t *p_sys   = (access_sys_t *)p_demux->p_sys;
 
     ComContext ctx( COINIT_MULTITHREADED );
@@ -852,7 +848,7 @@ static void DemuxClose( vlc_object_t *p_this )
     /* Stop capturing stuff */
     p_sys->p_control->Stop();
 
-    CommonClose( p_this, p_sys );
+    CommonClose( VLC_OBJECT(p_demux), p_sys );
 }
 
 /****************************************************************************

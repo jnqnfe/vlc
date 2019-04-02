@@ -132,10 +132,8 @@ static int FileControl (stream_t *, int, va_list);
 /*****************************************************************************
  * FileOpen: open the file
  *****************************************************************************/
-int FileOpen( vlc_object_t *p_this )
+int FileOpen( stream_t *p_access )
 {
-    stream_t *p_access = (stream_t*)p_this;
-
     /* Open file */
     int fd = -1;
 
@@ -202,7 +200,7 @@ int FileOpen( vlc_object_t *p_this )
 #endif
     }
 
-    access_sys_t *p_sys = vlc_obj_malloc(p_this, sizeof (*p_sys));
+    access_sys_t *p_sys = vlc_obj_malloc(VLC_OBJECT(p_access), sizeof (*p_sys));
     if (unlikely(p_sys == NULL))
         goto error;
     p_access->pf_read = Read;
@@ -246,13 +244,11 @@ error:
 /*****************************************************************************
  * FileClose: close the target
  *****************************************************************************/
-void FileClose (vlc_object_t * p_this)
+void FileClose (stream_t *p_access)
 {
-    stream_t     *p_access = (stream_t*)p_this;
-
     if (p_access->pf_read == NULL)
     {
-        DirClose (p_this);
+        DirClose (p_access);
         return;
     }
 

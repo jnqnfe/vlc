@@ -37,7 +37,7 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
+static int  Open ( demux_t * );
 
 vlc_plugin_begin ()
     set_description( N_("VOC demuxer") )
@@ -71,9 +71,8 @@ static const char ct_header[] = "Creative Voice File\x1a";
 /*****************************************************************************
  * Open: check file and initializes structures
  *****************************************************************************/
-static int Open( vlc_object_t * p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     const uint8_t *p_buf;
     uint16_t    i_data_offset, i_version;
 
@@ -105,7 +104,7 @@ static int Open( vlc_object_t * p_this )
     if( vlc_stream_Read( p_demux->s, NULL, i_data_offset ) < i_data_offset )
         return VLC_EGENERIC;
 
-    demux_sys_t *p_sys = vlc_obj_malloc( p_this, sizeof (*p_sys) );
+    demux_sys_t *p_sys = vlc_obj_malloc( VLC_OBJECT(p_demux), sizeof (*p_sys) );
     if( unlikely(p_sys == NULL) )
         return VLC_ENOMEM;
 

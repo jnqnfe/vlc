@@ -79,9 +79,9 @@ static const char *const ppsz_pos_descriptions[] =
 { N_("Center"), N_("Left"), N_("Right"), N_("Top"), N_("Bottom"),
   N_("Top-Left"), N_("Top-Right"), N_("Bottom-Left"), N_("Bottom-Right") };
 
-static int  OpenSub  ( vlc_object_t * );
-static int  OpenVideo( vlc_object_t * );
-static void Close    ( vlc_object_t * );
+static int  OpenSub  ( filter_t * );
+static int  OpenVideo( filter_t * );
+static void Close    ( filter_t * );
 
 vlc_plugin_begin ()
     set_help(LOGO_HELP)
@@ -182,7 +182,7 @@ static const char *const ppsz_filter_callbacks[] = {
     NULL
 };
 
-static int OpenCommon( vlc_object_t *, bool b_sub );
+static int OpenCommon( filter_t *, bool b_sub );
 
 static subpicture_t *FilterSub( filter_t *, vlc_tick_t );
 static picture_t    *FilterVideo( filter_t *, picture_t * );
@@ -192,7 +192,7 @@ static int Mouse( filter_t *, vlc_mouse_t *, const vlc_mouse_t *, const vlc_mous
 static int LogoCallback( vlc_object_t *, char const *,
                          vlc_value_t, vlc_value_t, void * );
 
-static void LogoListLoad( vlc_object_t *, logo_list_t *, const char * );
+static void LogoListLoad( filter_t *, logo_list_t *, const char * );
 static void LogoListUnload( logo_list_t * );
 static logo_t *LogoListNext( logo_list_t *p_list, vlc_tick_t i_date );
 static logo_t *LogoListCurrent( logo_list_t *p_list );
@@ -200,25 +200,24 @@ static logo_t *LogoListCurrent( logo_list_t *p_list );
 /**
  * Open the sub source
  */
-static int OpenSub( vlc_object_t *p_this )
+static int OpenSub( filter_t *p_filter )
 {
-    return OpenCommon( p_this, true );
+    return OpenCommon( p_filter, true );
 }
 
 /**
  * Open the video filter
  */
-static int OpenVideo( vlc_object_t *p_this )
+static int OpenVideo( filter_t *p_filter )
 {
-    return OpenCommon( p_this, false );
+    return OpenCommon( p_filter, false );
 }
 
 /**
  * Common open function
  */
-static int OpenCommon( vlc_object_t *p_this, bool b_sub )
+static int OpenCommon( filter_t *p_filter, bool b_sub )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys;
     char *psz_filename;
 
@@ -264,7 +263,7 @@ static int OpenCommon( vlc_object_t *p_this, bool b_sub )
         return VLC_ENOMEM;
     }
     if( *psz_filename == '\0' )
-        msg_Warn( p_this, "no logo file specified" );
+        msg_Warn( p_filter, "no logo file specified" );
 
     p_list->i_alpha = var_CreateGetIntegerCommand( p_filter, "logo-opacity");
     p_list->i_alpha = VLC_CLIP( p_list->i_alpha, 0, 255 );
@@ -281,7 +280,7 @@ static int OpenCommon( vlc_object_t *p_this, bool b_sub )
         p_sys->i_pos = 0;
 
     vlc_mutex_init( &p_sys->lock );
-    LogoListLoad( p_this, p_list, psz_filename );
+    LogoListLoad( p_filter, p_list, psz_filename );
     p_sys->b_spu_update = true;
     p_sys->b_mouse_grab = false;
 
@@ -307,9 +306,8 @@ static int OpenCommon( vlc_object_t *p_this, bool b_sub )
 /**
  * Common close function
  */
-static void Close( vlc_object_t *p_this )
+static void Close( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
 
     for( int i = 0; ppsz_filter_callbacks[i]; i++ )
@@ -573,7 +571,7 @@ static int LogoCallback( vlc_object_t *p_this, char const *psz_var,
     if( !strcmp( psz_var, "logo-file" ) )
     {
         LogoListUnload( p_list );
-        LogoListLoad( p_this, p_list, newval.psz_string );
+        LogoListLoad( (filter_t *)p_this, p_list, newval.psz_string );
     }
     else if ( !strcmp( psz_var, "logo-x" ) )
     {
@@ -604,12 +602,12 @@ static int LogoCallback( vlc_object_t *p_this, char const *psz_var,
 /**
  * It loads the logo image into memory.
  */
-static picture_t *LoadImage( vlc_object_t *p_this, const char *psz_filename )
+static picture_t *LoadImage( filter_t *p_filter, const char *psz_filename )
 {
     if( !psz_filename )
         return NULL;
 
-    image_handler_t *p_image = image_HandlerCreate( p_this );
+    image_handler_t *p_image = image_HandlerCreate( VLC_OBJECT(p_filter) );
     if( !p_image )
         return NULL;
 
@@ -633,7 +631,7 @@ static picture_t *LoadImage( vlc_object_t *p_this, const char *psz_filename )
  * times. An image without a stated time or opacity will use the
  * logo-delay and logo-opacity values.
  */
-static void LogoListLoad( vlc_object_t *p_this, logo_list_t *p_logo_list,
+static void LogoListLoad( filter_t *p_filter, logo_list_t *p_logo_list,
                           const char *psz_filename )
 {
     char *psz_list; /* the list: <logo>[,[<delay>[,[<alpha>]]]][;...] */
@@ -691,12 +689,12 @@ static void LogoListLoad( vlc_object_t *p_this, logo_list_t *p_logo_list,
                 *p_c = '\0';
         }
 
-        msg_Dbg( p_this, "logo file name %s, delay %d, alpha %d",
+        msg_Dbg( p_filter, "logo file name %s, delay %d, alpha %d",
                  psz_list, p_logo[i].i_delay, p_logo[i].i_alpha );
-        p_logo[i].p_pic = LoadImage( p_this, psz_list );
+        p_logo[i].p_pic = LoadImage( p_filter, psz_list );
         if( !p_logo[i].p_pic )
         {
-            msg_Warn( p_this, "error while loading logo %s, will be skipped",
+            msg_Warn( p_filter, "error while loading logo %s, will be skipped",
                       psz_list );
         }
 

@@ -72,9 +72,8 @@ static int Control( stream_t *p_access, int i_query, va_list args )
     return VLC_SUCCESS;
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(stream_t *access)
 {
-    stream_t *access = (stream_t *)obj;
     vlc_tls_t *sock;
     vlc_url_t url;
 
@@ -86,7 +85,7 @@ static int Open(vlc_object_t *obj)
         return VLC_EGENERIC;
     }
 
-    sock = vlc_tls_SocketOpenTCP(obj, url.psz_host, url.i_port);
+    sock = vlc_tls_SocketOpenTCP(VLC_OBJECT(access), url.psz_host, url.i_port);
     vlc_UrlClean(&url);
     if (sock == NULL)
         return VLC_EGENERIC;
@@ -99,10 +98,8 @@ static int Open(vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void Close( vlc_object_t *p_this )
+static void Close( stream_t *access )
 {
-    stream_t *access = (stream_t *)p_this;
-
     vlc_tls_SessionDelete(access->p_sys);
 }
 

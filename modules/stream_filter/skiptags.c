@@ -189,9 +189,8 @@ static int Control(stream_t *stream, int query, va_list args)
     return vlc_stream_vaControl(stream->s, query, args);
 }
 
-static int Open(vlc_object_t *obj)
+static int Open(stream_t *stream)
 {
-    stream_t *stream = (stream_t *)obj;
     stream_t *s = stream->s;
     struct skiptags_sys_t *sys;
 
@@ -225,9 +224,8 @@ static int Open(vlc_object_t *obj)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *obj)
+static void Close(stream_t *stream)
 {
-    stream_t *stream = (stream_t *)obj;
     struct skiptags_sys_t *sys = (struct skiptags_sys_t *) stream->p_sys;
 
     skiptags_sys_Delete(sys);

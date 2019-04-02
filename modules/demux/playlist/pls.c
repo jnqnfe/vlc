@@ -42,9 +42,8 @@ static int ReadDir( stream_t *, input_item_node_t * );
 /*****************************************************************************
  * Import_PLS: main import function
  *****************************************************************************/
-int Import_PLS( vlc_object_t *p_this )
+int Import_PLS( stream_t* p_demux )
 {
-    stream_t *p_demux = (stream_t *)p_this;
     const uint8_t *p_peek;
 
     CHECK_FILE(p_demux);

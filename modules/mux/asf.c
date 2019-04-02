@@ -47,8 +47,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open   ( vlc_object_t * );
-static void Close  ( vlc_object_t * );
+static int  Open   ( sout_mux_t * );
+static void Close  ( sout_mux_t * );
 
 #define SOUT_CFG_PREFIX "sout-asf-"
 
@@ -181,9 +181,8 @@ static void bo_addle_str16( bo_t *, const char * );
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_mux_t *p_mux )
 {
-    sout_mux_t     *p_mux = (sout_mux_t*)p_this;
     sout_mux_sys_t *p_sys;
 
     msg_Dbg( p_mux, "asf muxer opened" );
@@ -245,9 +244,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( sout_mux_t *p_mux )
 {
-    sout_mux_t     *p_mux = (sout_mux_t*)p_this;
     sout_mux_sys_t *p_sys = p_mux->p_sys;
     block_t  *out;
 

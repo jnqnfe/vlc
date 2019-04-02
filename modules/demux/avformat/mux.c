@@ -84,10 +84,9 @@ static int IOWriteTyped(void *opaque, uint8_t *buf, int buf_size,
 /*****************************************************************************
  * Open
  *****************************************************************************/
-int avformat_OpenMux( vlc_object_t *p_this )
+int avformat_OpenMux( sout_mux_t *p_mux )
 {
     AVOutputFormat *file_oformat;
-    sout_mux_t *p_mux = (sout_mux_t*)p_this;
     bool dummy = !strcmp( p_mux->p_access->psz_access, "dummy");
 
     if( dummy && strlen(p_mux->p_access->psz_path)
@@ -96,7 +95,7 @@ int avformat_OpenMux( vlc_object_t *p_this )
 
     msg_Dbg( p_mux, "using %s %s", AVPROVIDER(LIBAVFORMAT), LIBAVFORMAT_IDENT );
 
-    vlc_init_avformat(p_this);
+    vlc_init_avformat(VLC_OBJECT(p_mux));
 
     config_ChainParse( p_mux, "sout-avformat-", ppsz_mux_options, p_mux->p_cfg );
 
@@ -165,9 +164,8 @@ int avformat_OpenMux( vlc_object_t *p_this )
 /*****************************************************************************
  * Close
  *****************************************************************************/
-void avformat_CloseMux( vlc_object_t *p_this )
+void avformat_CloseMux( sout_mux_t *p_mux )
 {
-    sout_mux_t *p_mux = (sout_mux_t*)p_this;
     sout_mux_sys_t *p_sys = p_mux->p_sys;
 
     if( !p_sys->b_write_header && !p_sys->b_error && av_write_trailer( p_sys->oc ) < 0 )

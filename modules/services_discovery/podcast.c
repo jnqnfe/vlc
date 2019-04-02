@@ -47,8 +47,8 @@
  *****************************************************************************/
 
 /* Callbacks */
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( services_discovery_t * );
+static void Close( services_discovery_t * );
 
 VLC_SD_PROBE_HELPER("podcast", N_("Podcasts"), SD_CAT_INTERNET)
 
@@ -110,12 +110,11 @@ static void SaveUrls( services_discovery_t *p_sd );
 /*****************************************************************************
  * Open: initialize and create stuff
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( services_discovery_t *p_sd )
 {
-    if( strcmp( vlc_object_typename(vlc_object_parent(p_this)), "playlist" ) )
+    if( strcmp( vlc_object_typename(vlc_object_parent(p_sd)), "playlist" ) )
         return VLC_EGENERIC; /* FIXME: support LibVLC SD too! */
 
-    services_discovery_t *p_sd = ( services_discovery_t* )p_this;
     services_discovery_sys_t *p_sys = malloc( sizeof( *p_sys ) );
     if( !p_sys )
         return VLC_ENOMEM;
@@ -157,9 +156,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( services_discovery_t *p_sd )
 {
-    services_discovery_t *p_sd = ( services_discovery_t* )p_this;
     services_discovery_sys_t *p_sys = p_sd->p_sys;
     vlc_object_t *pl = vlc_object_parent(p_sd);
 

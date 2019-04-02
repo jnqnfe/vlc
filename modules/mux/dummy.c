@@ -37,8 +37,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open   ( vlc_object_t * );
-static void Close  ( vlc_object_t * );
+static int  Open   ( sout_mux_t * );
+static void Close  ( sout_mux_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Dummy/Raw muxer") )
@@ -65,10 +65,9 @@ typedef struct
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_mux_t *p_mux )
 {
-    sout_mux_t *p_mux = (sout_mux_t*)p_this;
-    sout_mux_sys_t  *p_sys;
+    sout_mux_sys_t *p_sys;
 
     msg_Dbg( p_mux, "Dummy/Raw muxer opened" );
     msg_Info( p_mux, "Open" );
@@ -90,9 +89,8 @@ static int Open( vlc_object_t *p_this )
  * Close:
  *****************************************************************************/
 
-static void Close( vlc_object_t * p_this )
+static void Close( sout_mux_t *p_mux )
 {
-    sout_mux_t *p_mux = (sout_mux_t*)p_this;
     sout_mux_sys_t *p_sys = p_mux->p_sys;
 
     msg_Dbg( p_mux, "Dummy/Raw muxer closed" );

@@ -44,11 +44,11 @@
  * Local prototypes
  *****************************************************************************/
 
-static int   Open ( vlc_object_t * );
-static void  Close ( vlc_object_t * );
+static int   Open ( addons_finder_t * );
+static void  Close ( addons_finder_t * );
 static int   Retrieve ( addons_finder_t *p_finder, addon_entry_t *p_entry );
-static int   OpenDesignated ( vlc_object_t * );
-static int   FindDesignated ( addons_finder_t *p_finder );
+static int   OpenDesignated ( addons_finder_t * );
+static int   FindDesignated ( addons_finder_t * );
 
 #define ADDONS_MODULE_SHORTCUT "addons.vo"
 #define ADDONS_REPO_SCHEMEHOST "https://api-addons.videolan.org"
@@ -497,10 +497,8 @@ static int FindDesignated( addons_finder_t *p_finder )
     return VLC_SUCCESS;
 }
 
-static int Open(vlc_object_t *p_this)
+static int Open(addons_finder_t *p_finder)
 {
-    addons_finder_t *p_finder = (addons_finder_t*) p_this;
-
     p_finder->p_sys = (addons_finder_sys_t*) malloc(sizeof(addons_finder_sys_t));
     if ( !p_finder->p_sys )
         return VLC_ENOMEM;
@@ -520,9 +518,8 @@ static int Open(vlc_object_t *p_this)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *p_this)
+static void Close(addons_finder_t *p_finder)
 {
-    addons_finder_t *p_finder = (addons_finder_t*) p_this;
     if ( p_finder->p_sys->psz_tempfile )
     {
         vlc_unlink( p_finder->p_sys->psz_tempfile );
@@ -531,9 +528,8 @@ static void Close(vlc_object_t *p_this)
     free( p_finder->p_sys );
 }
 
-static int OpenDesignated(vlc_object_t *p_this)
+static int OpenDesignated(addons_finder_t *p_finder)
 {
-    addons_finder_t *p_finder = (addons_finder_t*) p_this;
     if ( !p_finder->psz_uri
          || strncmp( "file://", p_finder->psz_uri, 7 )
          || strncmp( ".vlp", p_finder->psz_uri + strlen( p_finder->psz_uri ) - 4, 4 )

@@ -54,9 +54,9 @@
     "\"Fast Start\" files are optimized for downloads and allow the user " \
     "to start previewing the file while it is downloading.")
 
-static int  Open   (vlc_object_t *);
-static void Close  (vlc_object_t *);
-static void CloseFrag  (vlc_object_t *);
+static int  Open   (sout_mux_t *);
+static void Close  (sout_mux_t *);
+static void CloseFrag  (sout_mux_t *);
 
 #define SOUT_CFG_PREFIX "sout-mp4-"
 
@@ -253,9 +253,8 @@ static int WriteSlowStartHeader(sout_mux_t *p_mux)
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open(vlc_object_t *p_this)
+static int Open(sout_mux_t *p_mux)
 {
-    sout_mux_t      *p_mux = (sout_mux_t*)p_this;
     sout_mux_sys_t  *p_sys = malloc(sizeof(sout_mux_sys_t));
     if (!p_sys)
         return VLC_ENOMEM;
@@ -309,9 +308,8 @@ static int Open(vlc_object_t *p_this)
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close(vlc_object_t *p_this)
+static void Close(sout_mux_t *p_mux)
 {
-    sout_mux_t      *p_mux = (sout_mux_t*)p_this;
     sout_mux_sys_t  *p_sys = p_mux->p_sys;
 
     msg_Dbg(p_mux, "Close");
@@ -344,7 +342,7 @@ static void Close(vlc_object_t *p_this)
     bo_t *moov = mp4mux_GetMoov(p_sys->muxh, VLC_OBJECT(p_mux), 0);
 
     /* Check we need to create "fast start" files */
-    p_sys->b_fast_start = var_GetBool(p_this, SOUT_CFG_PREFIX "faststart");
+    p_sys->b_fast_start = var_GetBool(p_mux, SOUT_CFG_PREFIX "faststart");
     while (p_sys->b_fast_start && moov && moov->b)
     {
         /* Move data to the end of the file so we can fit the moov header
@@ -368,7 +366,7 @@ static void Close(vlc_object_t *p_this)
 
         /* Fix-up samples to chunks table in MOOV header to they point to next MDAT location */
         mp4mux_ShiftSamples(p_sys->muxh, bo_size(moov));
-        msg_Dbg(p_this,"Moving data by %"PRIu64, (uint64_t)bo_size(moov));
+        msg_Dbg(p_mux,"Moving data by %"PRIu64, (uint64_t)bo_size(moov));
         bo_t *shifted = mp4mux_GetMoov(p_sys->muxh, VLC_OBJECT(p_mux), 0);
         if(!shifted)
         {
@@ -389,7 +387,7 @@ static void Close(vlc_object_t *p_this)
                                 p_sys->i_mdat_pos + i_mdatsize - i_chunk);
             ssize_t i_read = sout_AccessOutRead(p_mux->p_access, p_buf);
             if (i_read < 0 || (size_t) i_read < i_chunk) {
-                msg_Warn(p_this, "read() not supported by access output, "
+                msg_Warn(p_mux, "read() not supported by access output, "
                           "won't create a fast start file");
                 p_sys->b_fast_start = false;
                 block_Release(p_buf);
@@ -1369,9 +1367,8 @@ static void LengthLocalFixup(sout_mux_t *p_mux, const mp4_stream_t *p_stream, bl
     }
 }
 
-static void CloseFrag(vlc_object_t *p_this)
+static void CloseFrag(sout_mux_t *p_mux)
 {
-    sout_mux_t *p_mux = (sout_mux_t *) p_this;
     sout_mux_sys_t *p_sys = (sout_mux_sys_t*) p_mux->p_sys;
 
     /* Flush remaining entries */

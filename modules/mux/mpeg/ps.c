@@ -56,8 +56,8 @@
 #define PES_SIZE_LONGTEXT N_("Set the maximum allowed PES "\
   "size when producing the MPEG PS streams.")
 
-static int     Open   ( vlc_object_t * );
-static void    Close  ( vlc_object_t * );
+static int     Open   ( sout_mux_t * );
+static void    Close  ( sout_mux_t * );
 
 #define SOUT_CFG_PREFIX "sout-ps-"
 
@@ -142,9 +142,8 @@ static const char *const ppsz_sout_options[] = {
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_mux_t *p_mux )
 {
-    sout_mux_t *p_mux = (sout_mux_t*)p_this;
     sout_mux_sys_t *p_sys;
     vlc_value_t val;
 
@@ -205,10 +204,9 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( sout_mux_t *p_mux )
 {
-    sout_mux_t      *p_mux = (sout_mux_t*)p_this;
-    sout_mux_sys_t  *p_sys = p_mux->p_sys;
+    sout_mux_sys_t *p_sys = p_mux->p_sys;
 
     block_t   *p_end;
 

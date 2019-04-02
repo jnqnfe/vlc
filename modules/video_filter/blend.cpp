@@ -36,8 +36,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open (vlc_object_t *);
-static void Close(vlc_object_t *);
+static int  Open (filter_t *);
+static void Close(filter_t *);
 
 vlc_plugin_begin()
     set_description(N_("Video pictures blending"))
@@ -679,9 +679,8 @@ static void Blend(filter_t *filter,
                width, height, alpha);
 }
 
-static int Open(vlc_object_t *object)
+static int Open(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)object;
     const vlc_fourcc_t src = filter->fmt_in.video.i_chroma;
     const vlc_fourcc_t dst = filter->fmt_out.video.i_chroma;
 
@@ -703,9 +702,8 @@ static int Open(vlc_object_t *object)
     return VLC_SUCCESS;
 }
 
-static void Close(vlc_object_t *object)
+static void Close(filter_t *filter)
 {
-    filter_t *filter = (filter_t *)object;
     filter_sys_t *p_sys = reinterpret_cast<filter_sys_t *>( filter->p_sys );
     delete p_sys;
 }

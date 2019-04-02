@@ -37,8 +37,7 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int  Create      ( vlc_object_t * );
-static void Destroy     ( vlc_object_t * );
+static int Create ( filter_t * );
 
 static picture_t *Filter( filter_t *, picture_t * );
 
@@ -49,7 +48,7 @@ vlc_plugin_begin ()
     set_description( N_("Invert video filter") )
     set_shortname( N_("Color inversion" ))
     add_shortcut( "invert" )
-    set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, NULL )
     //set_subcategory( SUBCAT_VIDEO_VFILTER )
 vlc_plugin_end ()
 
@@ -58,9 +57,8 @@ vlc_plugin_end ()
  *****************************************************************************
  * This function allocates and initializes a Invert vout method.
  *****************************************************************************/
-static int Create( vlc_object_t *p_this )
+static int Create( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     vlc_fourcc_t fourcc = p_filter->fmt_in.video.i_chroma;
 
     if( fourcc == VLC_CODEC_YUVP || fourcc == VLC_CODEC_RGBP
@@ -76,16 +74,6 @@ static int Create( vlc_object_t *p_this )
 
     p_filter->pf_video_filter = Filter;
     return VLC_SUCCESS;
-}
-
-/*****************************************************************************
- * Destroy: destroy Invert video thread output method
- *****************************************************************************
- * Terminate an output method created by InvertCreateOutputMethod
- *****************************************************************************/
-static void Destroy( vlc_object_t *p_this )
-{
-    (void)p_this;
 }
 
 /*****************************************************************************

@@ -177,8 +177,8 @@ static const char *const ppsz_protocols[] = {
 #define RTSP_PASS_LONGTEXT N_("Password that will be " \
                               "requested to access the stream." )
 
-static int  Open ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open ( sout_stream_t * );
+static void Close( sout_stream_t * );
 
 #define SOUT_CFG_PREFIX "sout-rtp-"
 #define MAX_EMPTY_BLOCKS 200
@@ -384,9 +384,8 @@ struct sout_stream_id_sys_t
 /*****************************************************************************
  * Open:
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( sout_stream_t *p_stream )
 {
-    sout_stream_t       *p_stream = (sout_stream_t*)p_this;
     sout_stream_sys_t   *p_sys = NULL;
     char                *psz;
     bool          b_rtsp = false;
@@ -466,10 +465,10 @@ static int Open( vlc_object_t *p_this )
     if (!strcasecmp (psz, "udplite") || !strcasecmp (psz, "udp-lite"))
         p_sys->proto = IPPROTO_UDPLITE;
     else
-        msg_Warn (p_this, "unknown or unsupported transport protocol \"%s\"",
+        msg_Warn (p_stream, "unknown or unsupported transport protocol \"%s\"",
                   psz);
     free (psz);
-    var_Create (p_this, "dccp-service", VLC_VAR_STRING);
+    var_Create (p_stream, "dccp-service", VLC_VAR_STRING);
 
     p_sys->p_vod_media = NULL;
     p_sys->psz_vod_session = NULL;
@@ -624,7 +623,7 @@ static int Open( vlc_object_t *p_this )
         sout_stream_id_sys_t *id = Add( p_stream, NULL );
         if( id == NULL )
         {
-            Close( p_this );
+            Close( p_stream );
             return VLC_EGENERIC;
         }
     }
@@ -635,9 +634,8 @@ static int Open( vlc_object_t *p_this )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t * p_this )
+static void Close( sout_stream_t *p_stream )
 {
-    sout_stream_t     *p_stream = (sout_stream_t*)p_this;
     sout_stream_sys_t *p_sys = p_stream->p_sys;
 
     if( p_sys->p_mux )

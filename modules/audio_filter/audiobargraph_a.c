@@ -61,8 +61,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  Open( filter_t * );
+static void Close( filter_t * );
 static block_t *DoWork( filter_t *, block_t * );
 
 vlc_plugin_begin ()
@@ -103,9 +103,8 @@ typedef struct
 /*****************************************************************************
  * Open: open the visualizer
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( filter_t *p_filter )
 {
-    filter_t     *p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys = malloc(sizeof(*p_sys));
     if (!p_sys)
         return VLC_ENOMEM;
@@ -239,9 +238,8 @@ static block_t *DoWork( filter_t *p_filter, block_t *p_in_buf )
 /*****************************************************************************
  * Close: close the plugin
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( filter_t *p_filter )
 {
-    filter_t * p_filter = (filter_t *)p_this;
     filter_sys_t *p_sys = p_filter->p_sys;
     vlc_object_t *vlc = VLC_OBJECT(vlc_object_instance(p_filter));
 

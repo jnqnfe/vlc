@@ -45,8 +45,8 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static int Open( vlc_object_t * );
-static int Close( vlc_object_t * );
+static int Open( filter_t * );
+static void Close( filter_t * );
 static picture_t *new_frame( filter_t * );
 static picture_t *Filter( filter_t *, picture_t * );
 static uint8_t sobel( const uint8_t *, const int, const int, int, int);
@@ -91,10 +91,9 @@ static const struct filter_video_callbacks filter_video_edge_cbs =
  * needed so that the Sobel operator does not give a high response for noise,
  * or small changes in the image.
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( filter_t *p_filter )
 {
     int i_ret;
-    filter_t *p_filter = (filter_t *)p_this;
     filter_owner_t owner = {
         .video = &filter_video_edge_cbs,
         .sys = p_filter,
@@ -136,11 +135,9 @@ static int Open( vlc_object_t *p_this )
 /******************************************************************************
  * Closes the filter and cleans up all dynamically allocated data.
  ******************************************************************************/
-static int Close( vlc_object_t *p_this )
+static void Close( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t *)p_this;
     filter_chain_Delete( (filter_chain_t *)p_filter->p_sys );
-    return VLC_SUCCESS;
 }
 
 /* *****************************************************************************

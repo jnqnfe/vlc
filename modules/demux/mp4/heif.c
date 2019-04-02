@@ -780,9 +780,8 @@ static int DemuxHEIF( demux_t *p_demux )
     return VLC_DEMUXER_SUCCESS;
 }
 
-int OpenHEIF( vlc_object_t * p_this )
+int OpenHEIF( demux_t *p_demux )
 {
-    demux_t  *p_demux = (demux_t *)p_this;
     const uint8_t *p_peek;
 
     if( vlc_stream_Peek( p_demux->s, &p_peek, 12 ) < 12 )
@@ -853,9 +852,8 @@ int OpenHEIF( vlc_object_t * p_this )
     return VLC_SUCCESS;
 }
 
-void CloseHEIF ( vlc_object_t * p_this )
+void CloseHEIF ( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t *)p_this;
     struct heif_private_t *p_sys = (void *) p_demux->p_sys;
     MP4_BoxFree( p_sys->p_root );
     if( p_sys->id )

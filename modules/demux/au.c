@@ -41,7 +41,7 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
+static int  Open ( demux_t * );
 
 vlc_plugin_begin ()
     set_description( N_("AU demuxer") )
@@ -96,10 +96,8 @@ static int Control ( demux_t *, int i_query, va_list args );
 /*****************************************************************************
  * Open: check file and initializes structures
  *****************************************************************************/
-static int Open( vlc_object_t *p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
-
     uint8_t      hdr[20];
     const uint8_t *p_peek;
     int          i_cat;
@@ -127,7 +125,7 @@ static int Open( vlc_object_t *p_this )
         return VLC_EGENERIC;
     }
 
-    demux_sys_t *p_sys = vlc_obj_malloc( p_this, sizeof (*p_sys) );
+    demux_sys_t *p_sys = vlc_obj_malloc( VLC_OBJECT(p_demux), sizeof (*p_sys) );
     if( unlikely(p_sys == NULL) )
         return VLC_ENOMEM;
 

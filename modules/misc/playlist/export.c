@@ -34,10 +34,10 @@
 /***************************************************************************
  * Prototypes
  ***************************************************************************/
-int Export_M3U    ( vlc_object_t *p_intf );
-int Export_M3U8   ( vlc_object_t *p_intf );
-int Export_HTML   ( vlc_object_t *p_intf );
-int xspf_export_playlist( vlc_object_t *p_intf );
+int Export_M3U    ( vlc_playlist_export * );
+int Export_M3U8   ( vlc_playlist_export * );
+int Export_HTML   ( vlc_playlist_export * );
+int xspf_export_playlist( vlc_playlist_export * );
 
 /*****************************************************************************
  * Module descriptor

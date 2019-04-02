@@ -28,7 +28,9 @@
  *****************************************************************************/
 
 #include <vlc_common.h>
+#include <vlc_extensions.h>
 #include <vlc_input.h>
+#include <vlc_interface.h>
 #include <vlc_playlist.h>
 #include <vlc_meta.h>
 #include <vlc_meta_fetcher.h>
@@ -73,25 +75,25 @@ int ReadMeta( demux_meta_t * );
 int FetchMeta( meta_fetcher_t * );
 int FindArt( meta_fetcher_t * );
 
-int Import_LuaPlaylist( vlc_object_t * );
-void Close_LuaPlaylist( vlc_object_t * );
+int Import_LuaPlaylist( stream_t * );
+void Close_LuaPlaylist( stream_t * );
 
 #define TELNETPORT_DEFAULT 4212
-int Open_LuaIntf( vlc_object_t * );
-void Close_LuaIntf( vlc_object_t * );
-int Open_LuaHTTP( vlc_object_t * );
-int Open_LuaCLI( vlc_object_t * );
-int Open_LuaTelnet( vlc_object_t * );
+int Open_LuaIntf( intf_thread_t * );
+void Close_LuaIntf( intf_thread_t * );
+int Open_LuaHTTP( intf_thread_t * );
+int Open_LuaCLI( intf_thread_t * );
+int Open_LuaTelnet( intf_thread_t * );
 
 
-int Open_Extension( vlc_object_t * );
-void Close_Extension( vlc_object_t * );
+int Open_Extension( extensions_manager_t *p_mgr );
+void Close_Extension( extensions_manager_t *p_mgr );
 
-int Open_LuaSD( vlc_object_t * );
-void Close_LuaSD( vlc_object_t * );
+int Open_LuaSD( services_discovery_t *p_sd );
+void Close_LuaSD( services_discovery_t *p_sd );
 
 // Script probe
-int vlclua_probe_sd( vlc_object_t *, const char *name );
+int vlclua_probe_sd( vlc_probe_t *, const char *name );
 
 /*****************************************************************************
  * Lua debug

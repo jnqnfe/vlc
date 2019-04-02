@@ -110,20 +110,20 @@ struct access_sys_t
  */
 namespace SD
 {
-    static int OpenSD( vlc_object_t* );
-    static void CloseSD( vlc_object_t* );
+    static int OpenSD( services_discovery_t * );
+    static void CloseSD( services_discovery_t * );
 }
 
 namespace Access
 {
-    static int OpenAccess( vlc_object_t* );
-    static void CloseAccess( vlc_object_t* );
+    static int OpenAccess( stream_t * );
+    static void CloseAccess( stream_t * );
 }
 
 namespace RD
 {
-    static int OpenRD( vlc_object_t*);
-    static void CloseRD( vlc_object_t* );
+    static int OpenRD( vlc_renderer_discovery_t * );
+    static void CloseRD( vlc_renderer_discovery_t * );
 }
 
 VLC_SD_PROBE_HELPER( "upnp", N_("Universal Plug'n'Play"), SD_CAT_LAN )
@@ -282,9 +282,8 @@ SearchThread( void *p_data )
 /*
  * Initializes UPNP instance.
  */
-static int OpenSD( vlc_object_t *p_this )
+static int OpenSD( services_discovery_t *p_sd )
 {
-    services_discovery_t *p_sd = ( services_discovery_t* )p_this;
     services_discovery_sys_t *p_sys = new (std::nothrow) services_discovery_sys_t();
 
     if( !( p_sd->p_sys = p_sys ) )
@@ -292,7 +291,7 @@ static int OpenSD( vlc_object_t *p_this )
 
     p_sd->description = _("Universal Plug'n'Play");
 
-    p_sys->p_upnp = UpnpInstanceWrapper::get( p_this );
+    p_sys->p_upnp = UpnpInstanceWrapper::get( VLC_OBJECT(p_sd) );
     if ( !p_sys->p_upnp )
     {
         delete p_sys;
@@ -315,7 +314,7 @@ static int OpenSD( vlc_object_t *p_this )
     /* XXX: Contrary to what the libupnp doc states, UpnpSearchAsync is
      * blocking (select() and send() are called). Therefore, Call
      * UpnpSearchAsync from an other thread. */
-    if ( vlc_clone( &p_sys->thread, SearchThread, p_this,
+    if ( vlc_clone( &p_sys->thread, SearchThread, VLC_OBJECT(p_sd),
                     VLC_THREAD_PRIORITY_LOW ) )
     {
         p_sys->p_upnp->removeListener( p_sys->p_server_list );
@@ -330,9 +329,8 @@ static int OpenSD( vlc_object_t *p_this )
 /*
  * Releases resources.
  */
-static void CloseSD( vlc_object_t *p_this )
+static void CloseSD( services_discovery_t *p_sd )
 {
-    services_discovery_t *p_sd = ( services_discovery_t* )p_this;
     services_discovery_sys_t *p_sys = reinterpret_cast<services_discovery_sys_t *>( p_sd->p_sys );
 
     vlc_join( p_sys->thread, NULL );
@@ -1324,15 +1322,14 @@ static int ReadDirectory( stream_t *p_access, input_item_node_t* p_node )
     return VLC_SUCCESS;
 }
 
-static int OpenAccess( vlc_object_t *p_this )
+static int OpenAccess( stream_t* p_access )
 {
-    stream_t* p_access = (stream_t*)p_this;
     access_sys_t* p_sys = new(std::nothrow) access_sys_t;
     if ( unlikely( !p_sys ) )
         return VLC_ENOMEM;
 
     p_access->p_sys = p_sys;
-    p_sys->p_upnp = UpnpInstanceWrapper::get( p_this );
+    p_sys->p_upnp = UpnpInstanceWrapper::get( VLC_OBJECT(p_access) );
     if ( !p_sys->p_upnp )
     {
         delete p_sys;
@@ -1345,9 +1342,8 @@ static int OpenAccess( vlc_object_t *p_this )
     return VLC_SUCCESS;
 }
 
-static void CloseAccess( vlc_object_t* p_this )
+static void CloseAccess( stream_t* p_access )
 {
-    stream_t* p_access = (stream_t*)p_this;
     access_sys_t *sys = (access_sys_t *)p_access->p_sys;
 
     sys->p_upnp->release();
@@ -1589,15 +1585,14 @@ void *SearchThread(void *data)
     return data;
 }
 
-static int OpenRD( vlc_object_t *p_this )
+static int OpenRD( vlc_renderer_discovery_t *p_rd )
 {
-    vlc_renderer_discovery_t *p_rd = ( vlc_renderer_discovery_t* )p_this;
     renderer_discovery_sys_t *p_sys  = new(std::nothrow) renderer_discovery_sys_t;
 
     if ( !p_sys )
         return VLC_ENOMEM;
     p_rd->p_sys = p_sys;
-    p_sys->p_upnp = UpnpInstanceWrapper::get( p_this );
+    p_sys->p_upnp = UpnpInstanceWrapper::get( VLC_OBJECT(p_rd) );
 
     if ( !p_sys->p_upnp )
     {
@@ -1630,9 +1625,8 @@ static int OpenRD( vlc_object_t *p_this )
     return VLC_SUCCESS;
 }
 
-static void CloseRD( vlc_object_t *p_this )
+static void CloseRD( vlc_renderer_discovery_t *p_rd )
 {
-    vlc_renderer_discovery_t *p_rd = ( vlc_renderer_discovery_t* )p_this;
     renderer_discovery_sys_t *p_sys = (renderer_discovery_sys_t*)p_rd->p_sys;
 
     vlc_join(p_sys->thread, NULL);

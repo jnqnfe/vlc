@@ -39,7 +39,7 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  Open ( vlc_object_t * );
+static int  Open ( demux_t * );
 
 #define FPS_TEXT N_("Frames per Second")
 #define FPS_LONGTEXT N_("This is the desired frame rate when " \
@@ -288,9 +288,8 @@ static int SendBlock( demux_t *p_demux, int i )
 /*****************************************************************************
  * Open: check file and initializes structures
  *****************************************************************************/
-static int Open( vlc_object_t * p_this )
+static int Open( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     int         i_size;
     bool        b_matched = false;
 
@@ -298,7 +297,7 @@ static int Open( vlc_object_t * p_this )
         // let avformat handle this case
         return VLC_EGENERIC;
 
-    demux_sys_t *p_sys = vlc_obj_malloc( p_this, sizeof (*p_sys) );
+    demux_sys_t *p_sys = vlc_obj_malloc( VLC_OBJECT(p_demux), sizeof (*p_sys) );
     if( unlikely(p_sys == NULL) )
         return VLC_ENOMEM;
 
@@ -325,7 +324,7 @@ static int Open( vlc_object_t * p_this )
                 boundary[len-1] = '\0';
                 boundary++;
             }
-            p_sys->psz_separator = vlc_obj_strdup( p_this, boundary );
+            p_sys->psz_separator = vlc_obj_strdup( VLC_OBJECT(p_demux), boundary );
             if( !p_sys->psz_separator )
             {
                 free( content_type );

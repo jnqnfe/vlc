@@ -69,19 +69,19 @@ void CloseVBI (vlc_v4l2_vbi_t *);
 #endif
 
 /* demux.c */
-int DemuxOpen(vlc_object_t *);
-void DemuxClose(vlc_object_t *);
+int DemuxOpen(demux_t *);
+void DemuxClose(demux_t *);
 float GetAbsoluteMaxFrameRate(vlc_object_t *, int fd, uint32_t fmt);
 void GetMaxDimensions(vlc_object_t *, int fd, uint32_t fmt, float fps_min,
                       uint32_t *pwidth, uint32_t *pheight);
 
 /* access.c */
-int AccessOpen(vlc_object_t *);
-void AccessClose(vlc_object_t *);
+int AccessOpen(stream_t *);
+void AccessClose(stream_t *);
 
 /* radio.c */
-int RadioOpen(vlc_object_t *);
-void RadioClose(vlc_object_t *);
+int RadioOpen(demux_t *);
+void RadioClose(demux_t *);
 
 /* controls.c */
 vlc_v4l2_ctrl_t *ControlsInit(vlc_object_t *, int fd);

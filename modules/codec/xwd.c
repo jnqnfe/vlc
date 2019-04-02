@@ -32,7 +32,7 @@
 #include <vlc_plugin.h>
 #include <vlc_codec.h>
 
-static int Open(vlc_object_t *);
+static int Open(decoder_t *);
 
 vlc_plugin_begin()
     set_description(N_("XWD image decoder"))
@@ -42,10 +42,8 @@ vlc_plugin_end()
 
 static int Decode(decoder_t *, block_t *);
 
-static int Open(vlc_object_t *obj)
+static int Open(decoder_t *dec)
 {
-    decoder_t *dec = (decoder_t *)obj;
-
     if (dec->fmt_in.i_codec != VLC_CODEC_XWD)
         return VLC_EGENERIC;
 

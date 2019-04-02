@@ -23,10 +23,10 @@
 #include <libavformat/avformat.h>
 #include <libavformat/avio.h>
 
-int  OpenAvio (vlc_object_t *);
-void CloseAvio(vlc_object_t *);
-int  OutOpenAvio (vlc_object_t *);
-void OutCloseAvio(vlc_object_t *);
+int  OpenAvio (stream_t *);
+void CloseAvio(stream_t *);
+int  OutOpenAvio (sout_access_out_t *);
+void OutCloseAvio(sout_access_out_t *);
 
 #define AVIO_MODULE \
     set_shortname(N_("AVIO"))                                                    \

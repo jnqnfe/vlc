@@ -37,8 +37,8 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  OpenDecoder( vlc_object_t * );
-static void CloseDecoder( vlc_object_t * );
+static int  OpenDecoder( decoder_t * );
+static void CloseDecoder( decoder_t * );
 
 static int DecodeAudio( decoder_t *, block_t * );
 static void Flush( decoder_t * );
@@ -119,9 +119,8 @@ static const int i_adaptation_coeff2[7] =
 /*****************************************************************************
  * OpenDecoder: probe the decoder and return score
  *****************************************************************************/
-static int OpenDecoder( vlc_object_t *p_this )
+static int OpenDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t*)p_this;
     decoder_sys_t *p_sys;
 
     switch( p_dec->fmt_in.i_codec )
@@ -383,9 +382,8 @@ static int DecodeAudio( decoder_t *p_dec, block_t *p_block )
 /*****************************************************************************
  * CloseDecoder:
  *****************************************************************************/
-static void CloseDecoder( vlc_object_t *p_this )
+static void CloseDecoder( decoder_t *p_dec )
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
 
     free( p_sys->prev );

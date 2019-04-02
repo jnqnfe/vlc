@@ -85,5 +85,5 @@ int  FrontendFillScanParameter( vlc_object_t *, dvb_sys_t *, struct scan_paramet
 int DMXSetFilter( vlc_object_t *, int i_pid, int * pi_fd, int i_type );
 int DMXUnsetFilter( vlc_object_t *, int i_fd );
 
-int  DVROpen( vlc_object_t *, dvb_sys_t * );
-void DVRClose( vlc_object_t *, dvb_sys_t * );
+int  DVROpen( stream_t *, dvb_sys_t * );
+void DVRClose( stream_t *, dvb_sys_t * );

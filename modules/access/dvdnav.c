@@ -76,10 +76,10 @@
 
 #define LANGUAGE_DEFAULT ("en")
 
-static int  AccessDemuxOpen ( vlc_object_t * );
-static void Close( vlc_object_t * );
+static int  AccessDemuxOpen ( demux_t * );
+static void Close( demux_t * );
 
-static int  DemuxOpen ( vlc_object_t * );
+static int  DemuxOpen ( demux_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("DVD with menus") )
@@ -183,10 +183,9 @@ static void EventMouse( const vlc_mouse_t *mouse, void *p_data );
 /*****************************************************************************
  * CommonOpen:
  *****************************************************************************/
-static int CommonOpen( vlc_object_t *p_this,
+static int CommonOpen( demux_t *p_demux,
                        dvdnav_t *p_dvdnav, bool b_readahead )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys;
     int         i_angle;
     char        *psz_code;
@@ -320,9 +319,8 @@ static int CommonOpen( vlc_object_t *p_this,
 /*****************************************************************************
  * AccessDemuxOpen:
  *****************************************************************************/
-static int AccessDemuxOpen ( vlc_object_t *p_this )
+static int AccessDemuxOpen ( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t*)p_this;
     dvdnav_t *p_dvdnav = NULL;
     char *psz_file = NULL;
     const char *psz_path = NULL;
@@ -341,7 +339,7 @@ static int AccessDemuxOpen ( vlc_object_t *p_this )
         if( !forced )
             return VLC_EGENERIC;
 
-        psz_file = var_InheritString( p_this, "dvd" );
+        psz_file = var_InheritString( p_demux, "dvd" );
     }
     else
         psz_file = strdup( p_demux->psz_filepath );
@@ -373,7 +371,7 @@ static int AccessDemuxOpen ( vlc_object_t *p_this )
         goto bailout;
     }
 
-    i_ret = CommonOpen( p_this, p_dvdnav, !!DVD_READ_CACHE );
+    i_ret = CommonOpen( p_demux, p_dvdnav, !!DVD_READ_CACHE );
     if( i_ret != VLC_SUCCESS )
         dvdnav_close( p_dvdnav );
 
@@ -436,9 +434,8 @@ static int stream_cb_read( void *s, void* buffer, int size )
 /*****************************************************************************
  * DemuxOpen:
  *****************************************************************************/
-static int DemuxOpen ( vlc_object_t *p_this )
+static int DemuxOpen ( demux_t *p_demux )
 {
-    demux_t *p_demux = (demux_t*)p_this;
     dvdnav_t *p_dvdnav = NULL;
     bool forced = false, b_seekable = false;
 
@@ -471,7 +468,7 @@ static int DemuxOpen ( vlc_object_t *p_this )
         return VLC_EGENERIC;
     }
 
-    int i_ret = CommonOpen( p_this, p_dvdnav, false );
+    int i_ret = CommonOpen( p_demux, p_dvdnav, false );
     if( i_ret != VLC_SUCCESS )
         dvdnav_close( p_dvdnav );
     return i_ret;
@@ -480,9 +477,8 @@ static int DemuxOpen ( vlc_object_t *p_this )
 /*****************************************************************************
  * Close:
  *****************************************************************************/
-static void Close( vlc_object_t *p_this )
+static void Close( demux_t *p_demux )
 {
-    demux_t     *p_demux = (demux_t*)p_this;
     demux_sys_t *p_sys = p_demux->p_sys;
 
     /* Stop still image handler */

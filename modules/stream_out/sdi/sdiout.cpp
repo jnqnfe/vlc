@@ -145,18 +145,16 @@ static_assert(ARRAY_SIZE(rgi_ar_values) == ARRAY_SIZE(rgsz_ar_text), "afd arrays
  * Sout callbacks
  *****************************************************************************/
 
-static void CloseSDIOutput(vlc_object_t *p_this)
+static void CloseSDIOutput(sout_stream_t *p_stream)
 {
-    sout_stream_t *p_stream = reinterpret_cast<sout_stream_t*>(p_this);
     sdi_sout::DBMSDIOutput *sdi =
             reinterpret_cast<sdi_sout::DBMSDIOutput *>(p_stream->p_sys);
     sdi->Process(); /* Drain */
     delete sdi;
 }
 
-static int OpenSDIOutput(vlc_object_t *p_this)
+static int OpenSDIOutput(sout_stream_t *p_stream)
 {
-    sout_stream_t *p_stream = reinterpret_cast<sout_stream_t*>(p_this);
     sdi_sout::DBMSDIOutput *output = new sdi_sout::DBMSDIOutput(p_stream);
 
     if(output->Open() != VLC_SUCCESS && !FAKE_DRIVER)

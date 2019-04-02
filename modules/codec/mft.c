@@ -55,8 +55,8 @@
 #include <mferror.h>
 #include <mfobjects.h>
 
-static int  Open(vlc_object_t *);
-static void Close(vlc_object_t *);
+static int  Open(decoder_t *);
+static void Close(decoder_t *);
 
 vlc_plugin_begin()
     set_description(N_("Media Foundation Transform decoder"))
@@ -1165,9 +1165,8 @@ static int LoadMFTLibrary(MFHandle *mf)
     return VLC_SUCCESS;
 }
 
-static int Open(vlc_object_t *p_this)
+static int Open(decoder_t *p_dec)
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys;
 
     p_sys = p_dec->p_sys = calloc(1, sizeof(*p_sys));
@@ -1201,13 +1200,12 @@ static int Open(vlc_object_t *p_this)
     return VLC_SUCCESS;
 
 error:
-    Close(p_this);
+    Close(p_dec);
     return VLC_EGENERIC;
 }
 
-static void Close(vlc_object_t *p_this)
+static void Close(decoder_t *p_dec)
 {
-    decoder_t *p_dec = (decoder_t *)p_this;
     decoder_sys_t *p_sys = p_dec->p_sys;
     MFHandle *mf = &p_sys->mf_handle;
 

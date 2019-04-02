@@ -37,7 +37,7 @@
 /****************************************************************************
  * Local prototypes
  ****************************************************************************/
-static int  OpenFilter ( vlc_object_t * );
+static int OpenFilter ( filter_t * );
 static picture_t *Filter( filter_t *, picture_t * );
 
 /*****************************************************************************
@@ -51,10 +51,8 @@ vlc_plugin_end ()
 /*****************************************************************************
  * OpenFilter: probe the filter and return score
  *****************************************************************************/
-static int OpenFilter( vlc_object_t *p_this )
+static int OpenFilter( filter_t *p_filter )
 {
-    filter_t *p_filter = (filter_t*)p_this;
-
     if( ( p_filter->fmt_in.video.i_chroma != VLC_CODEC_YUVP &&
           p_filter->fmt_in.video.i_chroma != VLC_CODEC_YUVA &&
           p_filter->fmt_in.video.i_chroma != VLC_CODEC_I420 &&

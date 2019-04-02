@@ -152,10 +152,8 @@ static bool PeekASX( stream_t *s )
  * Import_ASX: main import function
  *****************************************************************************/
 
-int Import_ASX( vlc_object_t *p_this )
+int Import_ASX( stream_t* p_demux )
 {
-    stream_t *p_demux = (stream_t *)p_this;
-
     CHECK_FILE(p_demux);
 
     char *type = stream_MimeType( p_demux->s );
