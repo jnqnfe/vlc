@@ -499,9 +499,11 @@ VLC_METADATA_EXPORTS
 
 #define add_float( name, v, text, longtext, advc ) \
 { \
-    double _v = (v); \
+    /* note, module_value_t uses float, but floats are converted to double \
+       when passed variadically */ \
+    float _v = (v); \
     add_typename_inner(CONFIG_ITEM_FLOAT, name, text, longtext) \
-    vlc_config_set (VLC_CONFIG_VALUE, _v); \
+    vlc_config_set (VLC_CONFIG_VALUE, (double)_v); \
 }
 
 #define add_float_with_range( name, value, f_min, f_max, text, longtext, advc ) \
@@ -544,8 +546,11 @@ VLC_METADATA_EXPORTS
 /* Modifier macros for the config options (used for fine tuning) */
 
 #define change_short( ch ) \
+{ \
     /* note, char is expanded to int when passed variadically */ \
-    vlc_config_set (VLC_CONFIG_SHORTCUT, (int)(ch));
+    char _ch = (ch); \
+    vlc_config_set (VLC_CONFIG_SHORTCUT, (int)_ch); \
+}
 
 #define change_string_list( list, list_text ) \
 { \
@@ -585,8 +590,10 @@ VLC_METADATA_EXPORTS
 
 #define change_float_range( minv, maxv ) \
 { \
-    double _minv = (minv), _maxv = (maxv); \
-    vlc_config_set (VLC_CONFIG_RANGE, _minv, _maxv); \
+    /* note, module_value_t uses float, but floats are converted to double \
+       when passed variadically */ \
+    float _minv = (minv), _maxv = (maxv); \
+    vlc_config_set (VLC_CONFIG_RANGE, (double)_minv, (double)_maxv); \
 }
 
 /* For options that are saved but hidden from the preferences panel */

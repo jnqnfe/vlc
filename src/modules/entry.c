@@ -351,6 +351,8 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
         {
             if (IsConfigFloatType (item->i_type))
             {
+                /* note, module_value_t uses float, but floats are converted
+                   to double when passed variadically */
                 item->min.f = va_arg (ap, double);
                 item->max.f = va_arg (ap, double);
             }
@@ -380,7 +382,8 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
 
         case VLC_CONFIG_SHORTCUT:
         {
-            char c = va_arg (ap, int);
+            /* note, char is expanded to int when passed variadically */
+            char c = (char)va_arg (ap, int);
             assert(c != '\0' && c != '?' && c != ':');
             item->i_short = c;
             break;
