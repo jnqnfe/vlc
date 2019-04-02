@@ -29,6 +29,7 @@
 # include "config.h"
 #endif
 
+#include <float.h>
 #include <vlc_common.h>
 #include <vlc_plugin.h>
 #include <vlc_demux.h>
@@ -73,7 +74,7 @@ vlc_plugin_begin ()
     add_shortcut( "mp4v" )
 
     set_subcategory( SUBCAT_INPUT_DEMUX )
-    add_float( "es-fps", 25, FPS_TEXT, FPS_LONGTEXT, false )
+    add_float_with_range( "es-fps", 25., 0., FLT_MAX, FPS_TEXT, FPS_LONGTEXT, false )
 vlc_plugin_end ()
 
 /*****************************************************************************
