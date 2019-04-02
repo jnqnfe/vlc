@@ -34,38 +34,43 @@
 #include <vlc_demux.h>
 #include <vlc_codec.h>
 #include <float.h>
+#ifdef PLUGIN_NAME_IS_hevc
 #include "../packetizer/hevc_nal.h" /* definitions, inline helpers */
+#else
 #include "../packetizer/h264_nal.h" /* definitions, inline helpers */
+#endif
 
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-static int  OpenH264 ( demux_t * );
-static int  OpenHEVC ( demux_t * );
+static int  Open ( demux_t * );
 static void Close( demux_t * );
 
 #define FPS_TEXT N_("Frames per Second")
 #define FPS_LONGTEXT N_("Desired frame rate for the stream. (Use 0.0 to request default).")
 
+#ifdef PLUGIN_NAME_IS_hevc
+# define MOD_NAME "hevc"
+#else
+# define MOD_NAME "h264"
+#endif
+
+#define MOD_CFG_PREFIX MOD_NAME"-"
+
 vlc_plugin_begin ()
+#ifdef PLUGIN_NAME_IS_hevc
+    set_shortname( "HEVC")
+    set_description( N_("HEVC/H.265 video demuxer" ) )
+    add_shortcut( "hevc", "h265" )
+#else
     set_shortname( "H264")
     set_description( N_("H264 video demuxer" ) )
     add_shortcut( "h264" )
-    set_capability( VLC_CAP_DEMUX, 6, OpenH264, Close )
-
-    add_submodule()
-        set_shortname( "HEVC")
-        set_description( N_("HEVC/H.265 video demuxer" ) )
-        add_shortcut( "hevc", "h265" )
-        set_capability( VLC_CAP_DEMUX, 6, OpenHEVC, Close )
+#endif
+    set_capability( VLC_CAP_DEMUX, 6, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_DEMUX )
-
-    set_section( N_("H264 video demuxer" ), NULL )
-    add_float_with_range( "h264-fps", 0.0, 0.0, FLT_MAX, FPS_TEXT, FPS_LONGTEXT, true )
-
-    set_section( N_("HEVC/H.265 video demuxer" ), NULL )
-    add_float_with_range( "hevc-fps", 0.0, 0.0, FLT_MAX, FPS_TEXT, FPS_LONGTEXT, true )
+    add_float_with_range( MOD_CFG_PREFIX "fps", 0.0, 0.0, FLT_MAX, FPS_TEXT, FPS_LONGTEXT, true )
 vlc_plugin_end ()
 
 /*****************************************************************************
@@ -98,18 +103,15 @@ typedef struct
 {
     bool b_sps;
     bool b_pps;
+#ifdef PLUGIN_NAME_IS_hevc
     bool b_vps;
-} hevc_probe_ctx_t;
+#endif
+} probe_ctx_t;
 
-typedef struct
+#ifdef PLUGIN_NAME_IS_hevc
+static int Probe( const uint8_t *p_peek, size_t i_peek, void *p_priv )
 {
-    bool b_sps;
-    bool b_pps;
-} h264_probe_ctx_t;
-
-static int ProbeHEVC( const uint8_t *p_peek, size_t i_peek, void *p_priv )
-{
-    hevc_probe_ctx_t *p_ctx = (hevc_probe_ctx_t *) p_priv;
+    probe_ctx_t *p_ctx = (probe_ctx_t *) p_priv;
 
     if( i_peek < 2 )
         return -1;
@@ -165,10 +167,12 @@ static int ProbeHEVC( const uint8_t *p_peek, size_t i_peek, void *p_priv )
 
     return 0; /* Probe more */
 }
+#endif
 
-static int ProbeH264( const uint8_t *p_peek, size_t i_peek, void *p_priv )
+#ifdef PLUGIN_NAME_IS_h264
+static int Probe( const uint8_t *p_peek, size_t i_peek, void *p_priv )
 {
-    h264_probe_ctx_t *p_ctx = (h264_probe_ctx_t *) p_priv;
+    probe_ctx_t *p_ctx = (probe_ctx_t *) p_priv;
 
     if( i_peek < 1 )
         return -1;
@@ -227,6 +231,7 @@ static int ProbeH264( const uint8_t *p_peek, size_t i_peek, void *p_priv )
 
     return 0;
 }
+#endif
 
 /*****************************************************************************
  * Shared Open code
@@ -243,13 +248,20 @@ static inline bool check_Property( demux_t *p_demux, const char **pp_psz,
     return false;
 }
 
-static int GenericOpen( demux_t *p_demux, const char *psz_module,
-                        vlc_fourcc_t i_codec,
-                        int(*pf_probe)(const uint8_t *, size_t, void *),
-                        void *p_ctx,
-                        const char **pp_psz_exts,
-                        const char **pp_psz_mimes )
+static int Open( demux_t *p_demux )
 {
+#ifdef PLUGIN_NAME_IS_hevc
+    vlc_fourcc_t i_codec = VLC_CODEC_HEVC;
+    probe_ctx_t ctx = { 0, 0, 0 };
+    const char *rgi_psz_ext[] = { ".h265", ".265", ".hevc", ".bin", ".bit", ".raw", NULL };
+    const char *rgi_psz_mime[] = { "video/h265", "video/hevc", "video/HEVC", NULL };
+#else
+    vlc_fourcc_t i_codec = VLC_CODEC_H264;
+    probe_ctx_t ctx = { 0, 0 };
+    const char *rgi_psz_ext[] = { ".h264", ".264", ".bin", ".bit", ".raw", NULL };
+    const char *rgi_psz_mime[] = { "video/H264", "video/h264", "video/avc", NULL };
+#endif
+
     demux_sys_t *p_sys;
     const uint8_t *p_peek;
     es_format_t fmt;
@@ -258,8 +270,8 @@ static int GenericOpen( demux_t *p_demux, const char *psz_module,
 
     /* Restrict by type first */
     if( !p_demux->obj.force &&
-        !check_Property( p_demux, pp_psz_exts, demux_IsPathExtension ) &&
-        !check_Property( p_demux, pp_psz_mimes, demux_IsContentType ) )
+        !check_Property( p_demux, rgi_psz_ext, demux_IsPathExtension ) &&
+        !check_Property( p_demux, rgi_psz_mime, demux_IsContentType ) )
     {
         return VLC_EGENERIC;
     }
@@ -301,7 +313,7 @@ static int GenericOpen( demux_t *p_demux, const char *psz_module,
             if( b_synced )
             {
                 p_probe = &p_peek[i_probe_offset];
-                i_ret = pf_probe( p_probe, i_peek - i_probe_offset, p_ctx );
+                i_ret = Probe( p_probe, i_peek - i_probe_offset, &ctx );
             }
 
             if( i_ret != 0 )
@@ -316,12 +328,12 @@ static int GenericOpen( demux_t *p_demux, const char *psz_module,
     {
         if( !p_demux->obj.force )
         {
-            msg_Warn( p_demux, "%s module discarded (no startcode)", psz_module );
+            msg_Warn( p_demux, MOD_NAME " module discarded (no startcode)" );
             return VLC_EGENERIC;
         }
 
-        msg_Err( p_demux, "this doesn't look like a %s ES stream, "
-                 "continuing anyway", psz_module );
+        msg_Err( p_demux, "this doesn't look like a "MOD_NAME" ES stream, "
+                 "continuing anyway" );
     }
 
     p_demux->pf_demux  = Demux;
@@ -331,14 +343,7 @@ static int GenericOpen( demux_t *p_demux, const char *psz_module,
     p_sys->frame_rate_num = 0;
     p_sys->frame_rate_den = 0;
 
-    float f_fps = 0;
-    char *psz_fpsvar;
-    if( asprintf( &psz_fpsvar, "%s-fps", psz_module ) )
-    {
-        f_fps = var_CreateGetFloat( p_demux, psz_fpsvar );
-        free( psz_fpsvar );
-    }
-
+    float f_fps = var_CreateGetFloat( p_demux, MOD_CFG_PREFIX "fps" );
     if( f_fps )
     {
         if ( f_fps < 0.001f ) f_fps = 0.001f;
@@ -357,7 +362,7 @@ static int GenericOpen( demux_t *p_demux, const char *psz_module,
         fmt.video.i_frame_rate = p_sys->dts.i_divider_num;
         fmt.video.i_frame_rate_base = p_sys->dts.i_divider_den;
     }
-    p_sys->p_packetizer = demux_PacketizerNew( p_demux, &fmt, psz_module );
+    p_sys->p_packetizer = demux_PacketizerNew( p_demux, &fmt, MOD_NAME );
     if( !p_sys->p_packetizer )
     {
         free( p_sys );
@@ -365,29 +370,6 @@ static int GenericOpen( demux_t *p_demux, const char *psz_module,
     }
 
     return VLC_SUCCESS;
-}
-
-/*****************************************************************************
- * Open: initializes demux structures
- *****************************************************************************/
-static int OpenH264( demux_t * p_demux )
-{
-    h264_probe_ctx_t ctx = { 0, 0 };
-    const char *rgi_psz_ext[] = { ".h264", ".264", ".bin", ".bit", ".raw", NULL };
-    const char *rgi_psz_mime[] = { "video/H264", "video/h264", "video/avc", NULL };
-
-    return GenericOpen( p_demux, "h264", VLC_CODEC_H264, ProbeH264,
-                        &ctx, rgi_psz_ext, rgi_psz_mime );
-}
-
-static int OpenHEVC( demux_t * p_demux )
-{
-    hevc_probe_ctx_t ctx = { 0, 0, 0 };
-    const char *rgi_psz_ext[] = { ".h265", ".265", ".hevc", ".bin", ".bit", ".raw", NULL };
-    const char *rgi_psz_mime[] = { "video/h265", "video/hevc", "video/HEVC", NULL };
-
-    return GenericOpen( p_demux, "hevc", VLC_CODEC_HEVC, ProbeHEVC,
-                        &ctx, rgi_psz_ext, rgi_psz_mime );
 }
 
 /*****************************************************************************

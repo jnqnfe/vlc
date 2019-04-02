@@ -176,7 +176,8 @@ libvlc_demux_run_la_LIBADD += \
 	../modules/libcaf_plugin.la \
 	../modules/libes_plugin.la \
 	../modules/libflacsys_plugin.la \
-	../modules/libh26x_plugin.la \
+	../modules/libh264_plugin.la \
+	../modules/libhevc_plugin.la \
 	../modules/libmjpeg_plugin.la \
 	../modules/libmp4_plugin.la \
 	../modules/libnsc_plugin.la \

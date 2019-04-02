@@ -169,10 +169,15 @@ libes_plugin_la_SOURCES  = demux/mpeg/es.c \
                            packetizer/dts_header.c packetizer/dts_header.h
 demux_LTLIBRARIES += libes_plugin.la
 
-libh26x_plugin_la_SOURCES = demux/mpeg/h26x.c \
-                            packetizer/h264_nal.c packetizer/hevc_nal.h
-libh26x_plugin_la_LIBADD = $(LIBM)
-demux_LTLIBRARIES += libh26x_plugin.la
+libh264_plugin_la_SOURCES = demux/mpeg/h26x.c packetizer/h264_nal.c
+libh264_plugin_la_LIBADD = $(LIBM)
+libh264_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) -DPLUGIN_NAME_IS_h264
+demux_LTLIBRARIES += libh264_plugin.la
+
+libhevc_plugin_la_SOURCES = demux/mpeg/h26x.c packetizer/hevc_nal.h
+libhevc_plugin_la_LIBADD = $(LIBM)
+libhevc_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) -DPLUGIN_NAME_IS_hevc
+demux_LTLIBRARIES += libhevc_plugin.la
 
 libmkv_plugin_la_SOURCES = \
 	demux/mkv/util.hpp demux/mkv/util.cpp \
