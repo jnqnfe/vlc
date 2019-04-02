@@ -81,37 +81,37 @@ var_InheritFourcc(vlc_object_t *obj, const char *name)
     return fourcc;
 }
 
-/* X:  var_name, type, module_header_type, getter, default_value */
-/* XR: var_name, type, module_header_type, getter, default_value, min, max */
+/* X:  var_name, default_value,           type, module_header_type, getter */
+/* XR: var_name, default_value, min, max, type, module_header_type, getter */
 #define LIST_OPTIONS \
-    X(length, vlc_tick_t, add_integer, var_InheritInteger, VLC_TICK_FROM_MS(5000)) \
-    X(audio_track_count, ssize_t, add_integer, var_InheritSsize, 0) \
-    X(audio_channels, unsigned, add_integer, var_InheritUnsigned, 2) \
-    X(audio_format, vlc_fourcc_t, add_string, var_InheritFourcc, "u8") \
-    X(audio_rate, unsigned, add_integer, var_InheritUnsigned, 44100) \
-    X(audio_packetized, bool, add_bool, var_InheritBool, true) \
-    X(video_track_count, ssize_t, add_integer, var_InheritSsize, 0) \
-    X(video_chroma, vlc_fourcc_t, add_string, var_InheritFourcc, "I420") \
-    X(video_width, unsigned, add_integer, var_InheritUnsigned, 640) \
-    X(video_height, unsigned, add_integer, var_InheritUnsigned, 480) \
-    X(video_frame_rate, unsigned, add_integer, var_InheritUnsigned, 25) \
-    X(video_frame_rate_base, unsigned, add_integer, var_InheritUnsigned, 1) \
-    X(video_packetized, bool, add_bool, var_InheritBool, true) \
-    X(sub_track_count, ssize_t, add_integer, var_InheritSsize, 0) \
-    X(sub_packetized, bool, add_bool, var_InheritBool, true) \
-    X(title_count, ssize_t, add_integer, var_InheritSsize, 0 ) \
-    X(chapter_count, ssize_t, add_integer, var_InheritSsize, 0) \
-    X(null_names, bool, add_bool, var_InheritBool, false) \
-    X(program_count, ssize_t, add_integer, var_InheritSsize, 0) \
-    X(can_seek, bool, add_bool, var_InheritBool, true) \
-    X(can_pause, bool, add_bool, var_InheritBool, true) \
-    X(can_control_pace, bool, add_bool, var_InheritBool, true) \
-    X(can_control_rate, bool, add_bool, var_InheritBool, true) \
-    X(can_record, bool, add_bool, var_InheritBool, true) \
-    X(error, bool, add_bool, var_InheritBool, false) \
-    X(add_video_track_at, vlc_tick_t, add_integer, var_InheritInteger, VLC_TICK_INVALID ) \
-    X(add_audio_track_at, vlc_tick_t, add_integer, var_InheritInteger, VLC_TICK_INVALID ) \
-    X(add_spu_track_at, vlc_tick_t, add_integer, var_InheritInteger, VLC_TICK_INVALID ) \
+    X(length,                 VLC_TICK_FROM_MS(5000), vlc_tick_t, add_integer, var_InheritInteger) \
+    X(audio_track_count,      0,                ssize_t,      add_integer, var_InheritSsize) \
+    X(audio_channels,         2,                unsigned,     add_integer, var_InheritUnsigned) \
+    X(audio_format,           "u8",             vlc_fourcc_t, add_string,  var_InheritFourcc) \
+    X(audio_rate,             44100,            unsigned,     add_integer, var_InheritUnsigned) \
+    X(audio_packetized,       true,             bool,         add_bool,    var_InheritBool) \
+    X(video_track_count,      0,                ssize_t,      add_integer, var_InheritSsize) \
+    X(video_chroma,           "I420",           vlc_fourcc_t, add_string,  var_InheritFourcc) \
+    X(video_width,            640,              unsigned,     add_integer, var_InheritUnsigned) \
+    X(video_height,           480,              unsigned,     add_integer, var_InheritUnsigned) \
+    X(video_frame_rate,       25,               unsigned,     add_integer, var_InheritUnsigned) \
+    X(video_frame_rate_base,  1,                unsigned,     add_integer, var_InheritUnsigned) \
+    X(video_packetized,       true,             bool,         add_bool,    var_InheritBool) \
+    X(sub_track_count,        0,                ssize_t,      add_integer, var_InheritSsize) \
+    X(sub_packetized,         true,             bool,         add_bool,    var_InheritBool) \
+    X(title_count,            0,                ssize_t,      add_integer, var_InheritSsize) \
+    X(chapter_count,          0,                ssize_t,      add_integer, var_InheritSsize) \
+    X(null_names,             false,            bool,         add_bool,    var_InheritBool) \
+    X(program_count,          0,                ssize_t,      add_integer, var_InheritSsize) \
+    X(can_seek,               true,             bool,         add_bool,    var_InheritBool) \
+    X(can_pause,              true,             bool,         add_bool,    var_InheritBool) \
+    X(can_control_pace,       true,             bool,         add_bool,    var_InheritBool) \
+    X(can_control_rate,       true,             bool,         add_bool,    var_InheritBool) \
+    X(can_record,             true,             bool,         add_bool,    var_InheritBool) \
+    X(error,                  false,            bool,         add_bool,    var_InheritBool) \
+    X(add_video_track_at,     VLC_TICK_INVALID, vlc_tick_t,   add_integer, var_InheritInteger) \
+    X(add_audio_track_at,     VLC_TICK_INVALID, vlc_tick_t,   add_integer, var_InheritInteger) \
+    X(add_spu_track_at,       VLC_TICK_INVALID, vlc_tick_t,   add_integer, var_InheritInteger) \
 
 struct demux_sys
 {
@@ -122,9 +122,9 @@ struct demux_sys
     int current_title;
     size_t chapter_gap;
 
-#define XR(var_name, type, module_header_type, getter, default_value, min, max) \
-    X(var_name, type, module_header_type, getter, default_value)
-#define X(var_name, type, module_header_type, getter, default_value) \
+#define XR(var_name, default_value, min, max, type, module_header_type, getter) \
+    X(var_name, default_value, type, module_header_type, getter)
+#define X(var_name, default_value, type, module_header_type, getter) \
     type var_name;
     LIST_OPTIONS
 #undef XR
@@ -650,9 +650,9 @@ Open(demux_t *demux)
     if (var_LocationParse(demux, demux->psz_location, "mock-") != VLC_SUCCESS)
         return VLC_ENOMEM;
 
-#define XR(var_name, type, module_header_type, getter, default_value, min, max) \
-    X(var_name, type, module_header_type, getter, default_value)
-#define X(var_name, type, module_header_type, getter, default_value) \
+#define XR(var_name, default_value, min, max, type, module_header_type, getter) \
+    X(var_name, default_value, type, module_header_type, getter)
+#define X(var_name, default_value, type, module_header_type, getter) \
     sys->var_name = getter(demux, "mock-"#var_name);
     LIST_OPTIONS
 #undef XR
@@ -733,11 +733,11 @@ error:
     return ret;
 }
 
-#define XR(var_name, type, module_header_type, getter, default_value, min, max) \
+#define XR(var_name, default_value, min, max, type, module_header_type, getter) \
     module_header_type("mock-"#var_name, default_value, min, max, NULL, NULL, true) \
     change_volatile() \
     change_safe()
-#define X(var_name, type, module_header_type, getter, default_value) \
+#define X(var_name, default_value, type, module_header_type, getter) \
     module_header_type("mock-"#var_name, default_value, NULL, NULL, true) \
     change_volatile() \
     change_safe()
