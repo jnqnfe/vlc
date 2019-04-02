@@ -81,7 +81,8 @@ var_InheritFourcc(vlc_object_t *obj, const char *name)
     return fourcc;
 }
 
-/* var_name, type, module_header_type, getter, default_value */
+/* X:  var_name, type, module_header_type, getter, default_value */
+/* XR: var_name, type, module_header_type, getter, default_value, min, max */
 #define LIST_OPTIONS \
     X(length, vlc_tick_t, add_integer, var_InheritInteger, VLC_TICK_FROM_MS(5000)) \
     X(audio_track_count, ssize_t, add_integer, var_InheritSsize, 0) \
@@ -121,9 +122,12 @@ struct demux_sys
     int current_title;
     size_t chapter_gap;
 
+#define XR(var_name, type, module_header_type, getter, default_value, min, max) \
+    X(var_name, type, module_header_type, getter, default_value)
 #define X(var_name, type, module_header_type, getter, default_value) \
     type var_name;
     LIST_OPTIONS
+#undef XR
 #undef X
 };
 
@@ -646,9 +650,12 @@ Open(demux_t *demux)
     if (var_LocationParse(demux, demux->psz_location, "mock-") != VLC_SUCCESS)
         return VLC_ENOMEM;
 
+#define XR(var_name, type, module_header_type, getter, default_value, min, max) \
+    X(var_name, type, module_header_type, getter, default_value)
 #define X(var_name, type, module_header_type, getter, default_value) \
     sys->var_name = getter(demux, "mock-"#var_name);
     LIST_OPTIONS
+#undef XR
 #undef X
 
     if (sys->chapter_count > 0 && sys->title_count == 0)
@@ -726,6 +733,10 @@ error:
     return ret;
 }
 
+#define XR(var_name, type, module_header_type, getter, default_value, min, max) \
+    module_header_type("mock-"#var_name, default_value, min, max, NULL, NULL, true) \
+    change_volatile() \
+    change_safe()
 #define X(var_name, type, module_header_type, getter, default_value) \
     module_header_type("mock-"#var_name, default_value, NULL, NULL, true) \
     change_volatile() \
@@ -740,4 +751,5 @@ vlc_plugin_begin()
     LIST_OPTIONS
 vlc_plugin_end()
 
+#undef XR
 #undef X
