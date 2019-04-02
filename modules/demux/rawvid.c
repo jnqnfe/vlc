@@ -29,6 +29,8 @@
 # include "config.h"
 #endif
 
+#include <limits.h>
+
 #include <vlc_common.h>
 #include <vlc_plugin.h>
 #include <vlc_demux.h>
@@ -45,11 +47,11 @@ static void Close( demux_t * );
 
 #define WIDTH_TEXT N_("Width (pixels)")
 #define WIDTH_LONGTEXT N_("This specifies the width in pixels of the raw " \
-    "video stream.")
+    "video stream. (0 means use preset).")
 
 #define HEIGHT_TEXT N_("Height (pixels)")
 #define HEIGHT_LONGTEXT N_("This specifies the height in pixels of the raw " \
-    "video stream.")
+    "video stream. (0 means use preset).")
 
 #define CHROMA_TEXT N_("Force chroma (Use carefully)")
 #define CHROMA_LONGTEXT N_("Force chroma. This is a four character string.")
@@ -66,8 +68,8 @@ vlc_plugin_begin ()
 
     set_subcategory( SUBCAT_INPUT_DEMUX )
     add_string( "rawvid-fps", NULL, FPS_TEXT, FPS_LONGTEXT, false )
-    add_integer( "rawvid-width", 0, WIDTH_TEXT, WIDTH_LONGTEXT, 0 )
-    add_integer( "rawvid-height", 0, HEIGHT_TEXT, HEIGHT_LONGTEXT, 0 )
+    add_integer_with_range( "rawvid-width", 0, 0, INT_MAX, WIDTH_TEXT, WIDTH_LONGTEXT, 0 )
+    add_integer_with_range( "rawvid-height", 0, 0, INT_MAX, HEIGHT_TEXT, HEIGHT_LONGTEXT, 0 )
     add_string( "rawvid-chroma", NULL, CHROMA_TEXT, CHROMA_LONGTEXT,
                 true )
     add_string( "rawvid-aspect-ratio", NULL,
