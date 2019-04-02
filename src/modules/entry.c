@@ -194,6 +194,31 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
     va_list ap;
     int ret = 0;
 
+#ifdef HAVE_DYNAMIC_PLUGINS
+# define print_err_plugin_path \
+        const char* err_plugin_path = (plugin->path != NULL) ? plugin->path : "NULL"; \
+        fprintf(stderr, "    %s: %s\n", _("plugin path"), err_plugin_path);
+#else
+# define print_err_plugin_path
+#endif
+
+#define print_module_error(msg) \
+    do { \
+        const char* err_mod_name = (module && module->i_shortcuts != 0 \
+            && module->pp_shortcuts[0] != NULL) ? module->pp_shortcuts[0] : "NULL"; \
+        fprintf(stderr, "%s: %s\n", _("LibVLC module error"), msg); \
+        print_err_plugin_path \
+        fprintf(stderr, "    %s: %s\n", _("module name"), err_mod_name); \
+    } while (0)
+
+#define print_config_error(msg) \
+    do { \
+        const char* err_cfg_name = (item && item->psz_name != NULL) ? item->psz_name : "NULL"; \
+        fprintf(stderr, "%s: %s\n", _("LibVLC plugin config error"), msg); \
+        print_err_plugin_path \
+        fprintf(stderr, "    %s: %s\n", _("option name"), err_cfg_name); \
+    } while (0)
+
     va_start (ap, propid);
     switch (propid)
     {
@@ -254,6 +279,7 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
             /* The cache loader accept only a small number of shortcuts */
             if (unlikely(i_shortcuts + index > MODULE_SHORTCUT_MAX))
             {
+                print_module_error(_("too many module shortcuts"));
                 ret = -1;
                 break;
             }
@@ -277,7 +303,14 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
         case VLC_MODULE_CAPABILITY:
             module->capability = va_arg (ap, enum vlc_module_cap);
             if (unlikely(!vlc_module_int_is_valid_cap((int)module->capability)))
+            {
+                if (module->capability == VLC_CAP_CUSTOM)
+                    print_module_error(_("invalid capability, for a custom " \
+                                         "capability use set_custom_capability()"));
+                else
+                    print_module_error(_("invalid capability"));
                 ret = -1;
+            }
             break;
 
         case VLC_MODULE_CUSTOM_CAPABILITY:
@@ -311,6 +344,7 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
 
             if (unlikely(module->i_shortcuts != 0))
             {
+                print_module_error(_("name already set"));
                 ret = -1;
                 break;
             }
@@ -345,7 +379,10 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
             const char *name = va_arg (ap, const char *);
 
             if (unlikely(name == NULL))
+            {
+                print_config_error(_("name cannot be null"));
                 ret = -1;
+            }
             else
                 item->psz_name = name;
             break;
@@ -413,7 +450,10 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
             /* note, char is expanded to int when passed variadically */
             char c = (char)va_arg (ap, int);
             if (unlikely(c == '\0' || c == '?' || c == ':'))
+            {
+                print_config_error(_("invalid short option"));
                 ret = -1;
+            }
             else
                 item->i_short = c;
             break;
@@ -433,6 +473,7 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
 
             if (unlikely(item->list_count != 0 || item->list.psz_cb != NULL))
             {
+                print_config_error(_("list properties already set"));
                 ret = -1;
                 break;
             }
@@ -481,11 +522,14 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
         }
 
         default:
-            fprintf (stderr, "LibVLC: unknown module property %d\n", propid);
-            fprintf (stderr, "LibVLC: too old to use this module?\n");
+            fprintf(stderr, "%s (%d)\n", _("LibVLC plugin error: unknown property"), propid);
             ret = -1;
             break;
     }
+
+#undef print_err_plugin_path
+#undef print_module_error
+#undef print_config_error
 
     va_end (ap);
     return ret;
