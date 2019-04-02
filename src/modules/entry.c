@@ -378,15 +378,35 @@ static int vlc_plugin_desc_cb(vlc_plugin_t *plugin, enum vlc_plugin_desc_actions
             break;
 
         case VLC_MODULE_CB_OPEN:
-            module->activate_name = va_arg(ap, const char *);
-            module->pf_activate = va_arg (ap, vlc_activate_cb);
-            break;
+        {
+            const char * cb_name = va_arg (ap, const char *);
+            vlc_activate_cb cb = va_arg (ap, vlc_activate_cb);
 
+            if (cb != NULL && (cb_name == NULL || strlen(cb_name) == 0))
+            {
+                print_module_error(_("callback name cannot be null or empty"));
+                ret = -1;
+                break;
+            }
+            module->pf_activate = cb;
+            module->activate_name = (cb != NULL) ? cb_name : NULL;
+            break;
+        }
         case VLC_MODULE_CB_CLOSE:
-            module->deactivate_name = va_arg(ap, const char *);
-            module->pf_deactivate = va_arg (ap, vlc_deactivate_cb);
-            break;
+        {
+            const char * cb_name = va_arg (ap, const char *);
+            vlc_deactivate_cb cb = va_arg (ap, vlc_deactivate_cb);
 
+            if (cb != NULL && (cb_name == NULL || strlen(cb_name) == 0))
+            {
+                print_module_error(_("callback name cannot be null or empty"));
+                ret = -1;
+                break;
+            }
+            module->pf_deactivate = cb;
+            module->deactivate_name = (cb != NULL) ? cb_name : NULL;
+            break;
+        }
         case VLC_MODULE_NO_UNLOAD:
 #ifdef HAVE_DYNAMIC_PLUGINS
             plugin->unloadable = false;
@@ -756,7 +776,7 @@ static int vlc_plugin_get_symbol(void *root, const char *name,
                                  void **restrict addrp)
 {
     if (name == NULL)
-    {   /* TODO: use this; do not define "NULL" as a name for NULL? */
+    {
         *addrp = NULL;
         return 0;
     }

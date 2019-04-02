@@ -162,7 +162,7 @@ int CDECL_SYMBOL __VLC_MY_DESCRIPTOR_SYMBOL (vlc_descriptor_cb, vlc_plugin_t *);
 EXTERN_SYMBOL DLL_SYMBOL \
 int CDECL_SYMBOL __VLC_MY_DESCRIPTOR_SYMBOL (vlc_descriptor_cb desc_cb, vlc_plugin_t *context) \
 { \
-    module_t *module; \
+    module_t *module = NULL; \
     module_config_item_t *config = NULL; \
     config_item_params_t cfg_params; \
     if (vlc_plugin_set_va (VLC_MODULE_CREATE, &module)) \
@@ -205,9 +205,123 @@ VLC_METADATA_EXPORTS
 }
 
 #define set_callbacks_inner( a_name, d_name, a_cb, d_cb ) \
-    if (vlc_module_set_va(VLC_MODULE_CB_OPEN, (a_name), (vlc_activate_cb)(a_cb)) \
-     || vlc_module_set_va(VLC_MODULE_CB_CLOSE, (d_name), (vlc_deactivate_cb)(d_cb))) \
+    if (vlc_module_set_va(VLC_MODULE_CB_OPEN, (a_name), (vlc_activate_cb)(void*)(a_cb)) \
+     || vlc_module_set_va(VLC_MODULE_CB_CLOSE, (d_name), (vlc_deactivate_cb)(void*)(d_cb))) \
         goto error;
+
+#define set_callbacks_common_inner( a_name, d_name, a_cb, d_cb, ty ) \
+{ \
+    int (*_activate_cb)(ty *) = (a_cb); \
+    void (*_deactivate_cb)(ty *) = (d_cb); \
+    set_callbacks_inner((a_name), (d_name), _activate_cb, _deactivate_cb) \
+} \
+
+/* module types following the common activate/deactivate signature of:
+   activation: int(*)(<type>*)
+   deactivation: void(*)(<type>*)
+ */
+#define set_callbacks_VLC_CAP_ACCESS(            an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, demux_t )
+#define set_callbacks_VLC_CAP_ADDONS_FINDER(     an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, addons_finder_t )
+#define set_callbacks_VLC_CAP_ADDONS_STORAGE(    an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, addons_storage_t )
+#define set_callbacks_VLC_CAP_ART_FINDER(        an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, meta_fetcher_t )
+#define set_callbacks_VLC_CAP_AUDIO_CONVERTER(   an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, filter_t )
+#define set_callbacks_VLC_CAP_AUDIO_DECODER(     an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, decoder_t )
+#define set_callbacks_VLC_CAP_AUDIO_FILTER(      an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, filter_t )
+#define set_callbacks_VLC_CAP_AUDIO_OUTPUT(      an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, audio_output_t )
+#define set_callbacks_VLC_CAP_AUDIO_RENDERER(    an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, filter_t )
+#define set_callbacks_VLC_CAP_AUDIO_RESAMPLER(   an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, filter_t )
+#define set_callbacks_VLC_CAP_AUDIO_VOLUME(      an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, audio_volume_t )
+#define set_callbacks_VLC_CAP_DEMUX(             an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, demux_t )
+#define set_callbacks_VLC_CAP_DEMUX_FILTER(      an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, demux_t )
+#define set_callbacks_VLC_CAP_DIALOGS_PROVIDER(  an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, intf_thread_t )
+#define set_callbacks_VLC_CAP_ENCODER(           an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, encoder_t )
+#define set_callbacks_VLC_CAP_EXTENSION(         an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, extensions_manager_t )
+#define set_callbacks_VLC_CAP_FINGERPRINTER(     an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, fingerprinter_thread_t )
+#define set_callbacks_VLC_CAP_GLCONV(            an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, opengl_tex_converter_t )
+#define set_callbacks_VLC_CAP_INHIBIT(           an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, vlc_inhibit_t )
+#define set_callbacks_VLC_CAP_INTERFACE(         an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, intf_thread_t )
+#define set_callbacks_VLC_CAP_KEYSTORE(          an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, vlc_keystore )
+#define set_callbacks_VLC_CAP_MEDIALIBRARY(      an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, vlc_medialibrary_module_t )
+#define set_callbacks_VLC_CAP_META_FETCHER(      an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, meta_fetcher_t )
+#define set_callbacks_VLC_CAP_META_READER(       an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, demux_meta_t )
+#define set_callbacks_VLC_CAP_META_WRITER(       an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, meta_export_t )
+#define set_callbacks_VLC_CAP_PACKETIZER(        an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, decoder_t )
+#define set_callbacks_VLC_CAP_PLAYLIST_EXPORT(   an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, vlc_playlist_export )
+#define set_callbacks_VLC_CAP_RENDERER_DISCOVERY(an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, vlc_renderer_discovery_t )
+#define set_callbacks_VLC_CAP_RENDERER_PROBE(    an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, vlc_probe_t )
+#define set_callbacks_VLC_CAP_SERVICES_DISCOVERY(an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, services_discovery_t )
+#define set_callbacks_VLC_CAP_SERVICES_PROBE(    an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, vlc_probe_t )
+#define set_callbacks_VLC_CAP_SOUT_ACCESS(       an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, sout_access_out_t )
+#define set_callbacks_VLC_CAP_SOUT_MUX(          an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, sout_mux_t )
+#define set_callbacks_VLC_CAP_SOUT_STREAM(       an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, sout_stream_t )
+#define set_callbacks_VLC_CAP_SPU_DECODER(       an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, decoder_t )
+#define set_callbacks_VLC_CAP_STREAM_DIRECTORY(  an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, stream_directory_t )
+#define set_callbacks_VLC_CAP_STREAM_EXTRACTOR(  an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, stream_extractor_t )
+#define set_callbacks_VLC_CAP_STREAM_FILTER(     an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, stream_t )
+#define set_callbacks_VLC_CAP_SUB_FILTER(        an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, filter_t )
+#define set_callbacks_VLC_CAP_SUB_SOURCE(        an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, filter_t )
+#define set_callbacks_VLC_CAP_TEXT_RENDERER(     an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, filter_t )
+#define set_callbacks_VLC_CAP_TLS_CLIENT(        an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, vlc_tls_client_t )
+#define set_callbacks_VLC_CAP_VIDEO_BLENDING(    an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, filter_t )
+#define set_callbacks_VLC_CAP_VIDEO_CONVERTER(   an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, filter_t )
+#define set_callbacks_VLC_CAP_VIDEO_DECODER(     an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, decoder_t )
+#define set_callbacks_VLC_CAP_VIDEO_FILTER(      an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, filter_t )
+#define set_callbacks_VLC_CAP_VIDEO_SPLITTER(    an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, video_splitter_t )
+#define set_callbacks_VLC_CAP_VISUALIZATION(     an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, filter_t )
+#define set_callbacks_VLC_CAP_VOD_SERVER(        an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, vod_t )
+#define set_callbacks_VLC_CAP_VOUT_WINDOW(       an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, vout_window_t )
+#define set_callbacks_VLC_CAP_VULKAN(            an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, vlc_vk_t )
+#define set_callbacks_VLC_CAP_XML(               an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, xml_t )
+#define set_callbacks_VLC_CAP_XML_READER(        an, dn, ac, dc) set_callbacks_common_inner( an, dn, ac, dc, xml_reader_t )
+
+
+/* module types with more exotic activate/deactivate signatures */
+#ifndef __PLUGIN__
+#define set_callbacks_VLC_CAP_CORE( an, dn, ac, dc ) \
+    /* do nothing, core does not use a callback */
+#endif
+#define set_callbacks_VLC_CAP_AOUT_STREAM( an, dn, ac, dc ) \
+{ \
+    HRESULT (*_activate_cb)(aout_stream_t *, audio_sample_format_t *, const GUID *) = (ac); \
+    void (*_deactivate_cb)(aout_stream_t *) = (dc); \
+    set_callbacks_inner((an), (dn), _activate_cb, _deactivate_cb) \
+}
+#define set_callbacks_VLC_CAP_HW_DECODER( an, dn, ac, dc ) \
+{ \
+    int (*_activate_cb)(vlc_va_t *, AVCodecContext *, enum PixelFormat, const es_format_t *, void *) = (ac); \
+    void (*_deactivate_cb)(vlc_va_t *, void **) = (dc); \
+    set_callbacks_inner((an), (dn), _activate_cb, _deactivate_cb) \
+}
+#define set_callbacks_VLC_CAP_HW_DECODER_DEVICE( an, dn, ac, dc ) \
+{ \
+    int (*_activate_cb)(vlc_decoder_device *, vout_window_t *) = (ac); \
+    void (*_deactivate_cb)(vlc_decoder_device *) = (dc); \
+    set_callbacks_inner((an), (dn), _activate_cb, _deactivate_cb) \
+}
+#define set_callbacks_VLC_CAP_LOGGER( an, dn, ac, dc ) \
+{ \
+    const struct vlc_logger_operations* (*_activate_cb)(vlc_object_t *, void **) = (ac); \
+    void (*_deactivate_cb)(vlc_object_t *) = (dc); \
+    set_callbacks_inner((an), (dn), _activate_cb, _deactivate_cb) \
+}
+#define set_callbacks_VLC_CAP_OPENGL( an, dn, ac, dc ) \
+{ \
+    int (*_activate_cb)(vlc_gl_t *, unsigned, unsigned) = (ac); \
+    void (*_deactivate_cb)(vlc_gl_t *) = (dc); \
+    set_callbacks_inner((an), (dn), _activate_cb, _deactivate_cb) \
+}
+#define set_callbacks_VLC_CAP_TLS_SERVER( an, dn, ac, dc ) \
+{ \
+    int (*_activate_cb)(vlc_tls_server_t *, const char *, const char *) = (ac); \
+    void (*_deactivate_cb)(vlc_tls_server_t *) = (dc); \
+    set_callbacks_inner((an), (dn), _activate_cb, _deactivate_cb) \
+}
+#define set_callbacks_VLC_CAP_VOUT_DISPLAY( an, dn, ac, dc ) \
+{ \
+    int (*_activate_cb)(vout_display_t *, const vout_display_cfg_t *, video_format_t *, vlc_video_context *) = (ac); \
+    void (*_deactivate_cb)(vout_display_t *) = (dc); \
+    set_callbacks_inner((an), (dn), _activate_cb, _deactivate_cb) \
+}
 
 /* Plugin authors, use this stuff! */
 
@@ -246,7 +360,7 @@ VLC_METADATA_EXPORTS
 
 #define set_capability( cap, score, activate, deactivate ) \
     set_capability_inner( cap, score ) \
-    set_callbacks_inner( #activate, #deactivate, activate, deactivate ) \
+    set_callbacks_##cap( #activate, #deactivate, activate, deactivate ) \
 
 #define set_capability_custom( cap, score, activate, deactivate ) \
     set_custom_capability_inner( cap, score ) \
