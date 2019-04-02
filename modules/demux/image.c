@@ -29,6 +29,8 @@
 #endif
 
 #include <assert.h>
+#include <limits.h>
+#include <float.h>
 
 #include <vlc_common.h>
 #include <vlc_plugin.h>
@@ -79,15 +81,15 @@ vlc_plugin_begin()
     set_capability(VLC_CAP_DEMUX, 10, Open, Close)
 
     set_subcategory(SUBCAT_INPUT_DEMUX)
-    add_integer("image-id", -1, ID_TEXT, ID_LONGTEXT, true)
+    add_integer_with_range("image-id", -1, -1, INT_MAX, ID_TEXT, ID_LONGTEXT, true)
         change_safe()
-    add_integer("image-group", 0, GROUP_TEXT, GROUP_LONGTEXT, true)
+    add_integer_with_range("image-group", 0, 0, INT_MAX, GROUP_TEXT, GROUP_LONGTEXT, true)
         change_safe()
     add_bool("image-decode", true, DECODE_TEXT, DECODE_LONGTEXT, true)
         change_safe()
     add_string("image-chroma", "", CHROMA_TEXT, CHROMA_LONGTEXT, true)
         change_safe()
-    add_float("image-duration", 10, DURATION_TEXT, DURATION_LONGTEXT, false)
+    add_float_with_range("image-duration", 10., 0., FLT_MAX, DURATION_TEXT, DURATION_LONGTEXT, false)
         change_safe()
     add_string("image-fps", "10/1", FPS_TEXT, FPS_LONGTEXT, true)
         change_safe()
