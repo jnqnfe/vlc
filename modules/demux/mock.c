@@ -41,20 +41,6 @@ struct mock_track
 };
 typedef struct VLC_VECTOR(struct mock_track *) mock_track_vector;
 
-static ssize_t
-var_InheritSsize(vlc_object_t *obj, const char *name)
-{
-    int64_t value = var_InheritInteger(obj, name);
-    return value >= 0 ? value : -1;
-}
-
-static unsigned
-var_InheritUnsigned(vlc_object_t *obj, const char *name)
-{
-    int64_t value = var_InheritInteger(obj, name);
-    return value >= 0 && value < UINT_MAX ? value : UINT_MAX;
-}
-
 static vlc_fourcc_t
 var_InheritFourcc(vlc_object_t *obj, const char *name)
 {
@@ -84,34 +70,34 @@ var_InheritFourcc(vlc_object_t *obj, const char *name)
 /* X:  var_name, default_value,           type, module_header_type, getter */
 /* XR: var_name, default_value, min, max, type, module_header_type, getter */
 #define LIST_OPTIONS \
-    X(length,                 VLC_TICK_FROM_MS(5000), vlc_tick_t, add_integer, var_InheritInteger) \
-    X(audio_track_count,      0,                ssize_t,      add_integer, var_InheritSsize) \
-    X(audio_channels,         2,                unsigned,     add_integer, var_InheritUnsigned) \
-    X(audio_format,           "u8",             vlc_fourcc_t, add_string,  var_InheritFourcc) \
-    X(audio_rate,             44100,            unsigned,     add_integer, var_InheritUnsigned) \
-    X(audio_packetized,       true,             bool,         add_bool,    var_InheritBool) \
-    X(video_track_count,      0,                ssize_t,      add_integer, var_InheritSsize) \
-    X(video_chroma,           "I420",           vlc_fourcc_t, add_string,  var_InheritFourcc) \
-    X(video_width,            640,              unsigned,     add_integer, var_InheritUnsigned) \
-    X(video_height,           480,              unsigned,     add_integer, var_InheritUnsigned) \
-    X(video_frame_rate,       25,               unsigned,     add_integer, var_InheritUnsigned) \
-    X(video_frame_rate_base,  1,                unsigned,     add_integer, var_InheritUnsigned) \
-    X(video_packetized,       true,             bool,         add_bool,    var_InheritBool) \
-    X(sub_track_count,        0,                ssize_t,      add_integer, var_InheritSsize) \
-    X(sub_packetized,         true,             bool,         add_bool,    var_InheritBool) \
-    X(title_count,            0,                ssize_t,      add_integer, var_InheritSsize) \
-    X(chapter_count,          0,                ssize_t,      add_integer, var_InheritSsize) \
-    X(null_names,             false,            bool,         add_bool,    var_InheritBool) \
-    X(program_count,          0,                ssize_t,      add_integer, var_InheritSsize) \
-    X(can_seek,               true,             bool,         add_bool,    var_InheritBool) \
-    X(can_pause,              true,             bool,         add_bool,    var_InheritBool) \
-    X(can_control_pace,       true,             bool,         add_bool,    var_InheritBool) \
-    X(can_control_rate,       true,             bool,         add_bool,    var_InheritBool) \
-    X(can_record,             true,             bool,         add_bool,    var_InheritBool) \
-    X(error,                  false,            bool,         add_bool,    var_InheritBool) \
-    X(add_video_track_at,     VLC_TICK_INVALID, vlc_tick_t,   add_integer, var_InheritInteger) \
-    X(add_audio_track_at,     VLC_TICK_INVALID, vlc_tick_t,   add_integer, var_InheritInteger) \
-    X(add_spu_track_at,       VLC_TICK_INVALID, vlc_tick_t,   add_integer, var_InheritInteger) \
+    XR( length,                VLC_TICK_FROM_MS(5000), 0, INT_MAX, vlc_tick_t, add_integer_with_range, var_InheritInteger ) \
+    XR( audio_track_count,     0, 0, INT_MAX,    ssize_t,      add_integer_with_range, var_InheritInteger ) \
+    XR( audio_channels,        2, 1, AOUT_CHAN_MAX, unsigned,  add_integer_with_range, (unsigned)var_InheritInteger ) \
+    X(  audio_format,          "u8",             vlc_fourcc_t, add_string,             var_InheritFourcc ) \
+    XR( audio_rate,            44100, 1, INT_MAX-1, unsigned,  add_integer_with_range, (unsigned)var_InheritInteger ) \
+    X(  audio_packetized,      true,             bool,         add_bool,               var_InheritBool ) \
+    XR( video_track_count,     0, 0, INT_MAX,    ssize_t,      add_integer_with_range, var_InheritInteger ) \
+    X(  video_chroma,          "I420",           vlc_fourcc_t, add_string,             var_InheritFourcc ) \
+    XR( video_width,           640, 0, INT_MAX,  unsigned,     add_integer_with_range, (unsigned)var_InheritInteger ) \
+    XR( video_height,          480, 0, INT_MAX,  unsigned,     add_integer_with_range, (unsigned)var_InheritInteger ) \
+    XR( video_frame_rate,      25, 0, INT_MAX-1, unsigned,     add_integer_with_range, (unsigned)var_InheritInteger ) \
+    XR( video_frame_rate_base, 1, 0, INT_MAX-1,  unsigned,     add_integer_with_range, (unsigned)var_InheritInteger ) \
+    X(  video_packetized,      true,             bool,         add_bool,               var_InheritBool ) \
+    XR( sub_track_count,       0, 0, INT_MAX,    ssize_t,      add_integer_with_range, var_InheritInteger ) \
+    X(  sub_packetized,        true,             bool,         add_bool,               var_InheritBool ) \
+    XR( title_count,           0, 0, INT_MAX,    ssize_t,      add_integer_with_range, var_InheritInteger ) \
+    XR( chapter_count,         0, 0, INT_MAX,    ssize_t,      add_integer_with_range, var_InheritInteger ) \
+    X(  null_names,            false,            bool,         add_bool,               var_InheritBool ) \
+    XR( program_count,         0, 0, INT_MAX,    ssize_t,      add_integer_with_range, var_InheritInteger ) \
+    X(  can_seek,              true,             bool,         add_bool,               var_InheritBool ) \
+    X(  can_pause,             true,             bool,         add_bool,               var_InheritBool ) \
+    X(  can_control_pace,      true,             bool,         add_bool,               var_InheritBool ) \
+    X(  can_control_rate,      true,             bool,         add_bool,               var_InheritBool ) \
+    X(  can_record,            true,             bool,         add_bool,               var_InheritBool ) \
+    X(  error,                 false,            bool,         add_bool,               var_InheritBool ) \
+    X(  add_video_track_at,    VLC_TICK_INVALID, vlc_tick_t,   add_integer,            var_InheritInteger ) \
+    X(  add_audio_track_at,    VLC_TICK_INVALID, vlc_tick_t,   add_integer,            var_InheritInteger ) \
+    X(  add_spu_track_at,      VLC_TICK_INVALID, vlc_tick_t,   add_integer,            var_InheritInteger )
 
 struct demux_sys
 {
@@ -277,7 +263,7 @@ Control(demux_t *demux, int query, va_list args)
                         return VLC_ENOMEM;
                     }
                 }
-                *va_arg(args, int *) = sys->title_count;
+                *va_arg(args, int *) = (int)sys->title_count;
                 *va_arg(args, int *) = 0;
                 *va_arg(args, int *) = 0;
                 return VLC_SUCCESS;
@@ -445,31 +431,6 @@ InitVideoTracks(demux_t *demux, int group, size_t count)
     if (count == 0)
         return VLC_SUCCESS;
 
-    const vlc_chroma_description_t *desc =
-        vlc_fourcc_GetChromaDescription(sys->video_chroma);
-    if (!desc || desc->plane_count == 0)
-        sys->video_chroma = 0;
-
-    const bool frame_rate_ok =
-        sys->video_frame_rate != 0 && sys->video_frame_rate != UINT_MAX &&
-        sys->video_frame_rate_base != 0 && sys->video_frame_rate_base != UINT_MAX;
-    const bool chroma_ok = sys->video_chroma != 0;
-    const bool size_ok = sys->video_width != UINT_MAX &&
-                         sys->video_height != UINT_MAX;
-
-    if (sys->video_frame_rate == 0 || sys->video_frame_rate_base == 0
-     || sys->video_chroma == 0)
-    if (!frame_rate_ok || !chroma_ok || !size_ok)
-    {
-        if (!frame_rate_ok)
-            msg_Err(demux, "Invalid video frame rate");
-        if (!chroma_ok)
-            msg_Err(demux, "Invalid video chroma");
-        if (!size_ok)
-            msg_Err(demux, "Invalid video size");
-        return VLC_EGENERIC;
-    }
-
     for (size_t i = 0; i < count; ++i)
     {
         es_format_t fmt;
@@ -493,22 +454,6 @@ InitAudioTracks(demux_t *demux, int group, size_t count)
 
     if (count == 0)
         return VLC_SUCCESS;
-
-    const bool rate_ok = sys->audio_rate > 0 && sys->audio_rate != UINT_MAX;
-    const bool format_ok = aout_BitsPerSample(sys->audio_format) != 0;
-    const bool channels_ok = sys->audio_channels > 0 &&
-                             sys->audio_channels <= AOUT_CHAN_MAX;
-
-    if (!rate_ok || !format_ok || !channels_ok)
-    {
-        if (!rate_ok)
-            msg_Err(demux, "Invalid audio rate");
-        if (!format_ok)
-            msg_Err(demux, "Invalid audio format");
-        if (!channels_ok)
-            msg_Err(demux, "Invalid audio channels");
-        return VLC_EGENERIC;
-    }
 
     uint16_t physical_channels = 0;
     switch (sys->audio_channels)
@@ -603,14 +548,52 @@ Demux(demux_t *demux)
     if (sys->add_video_track_at != VLC_TICK_INVALID &&
         sys->add_video_track_at <= sys->pts)
     {
-        InitVideoTracks(demux, 0, 1);
-        sys->add_video_track_at = VLC_TICK_INVALID;
+        const bool frame_rate_ok =
+            sys->video_frame_rate != 0 && sys->video_frame_rate < INT_MAX &&
+            sys->video_frame_rate_base != 0 && sys->video_frame_rate_base < INT_MAX;
+        const bool chroma_ok = sys->video_chroma != 0;
+        const bool size_ok = sys->video_width < INT_MAX &&
+                             sys->video_height < INT_MAX;
+
+        if (sys->video_frame_rate == 0 || sys->video_frame_rate_base == 0
+         || sys->video_chroma == 0)
+        {
+            if (!frame_rate_ok || !chroma_ok || !size_ok)
+            {
+                if (!frame_rate_ok)
+                    msg_Err(demux, "Invalid video frame rate");
+                if (!chroma_ok)
+                    msg_Err(demux, "Invalid video chroma");
+                if (!size_ok)
+                    msg_Err(demux, "Invalid video size");
+                return VLC_EGENERIC;
+            }
+        }
+        else
+        {
+            InitVideoTracks(demux, 0, 1);
+            sys->add_video_track_at = VLC_TICK_INVALID;
+        }
     }
     if (sys->add_audio_track_at != VLC_TICK_INVALID &&
         sys->add_audio_track_at <= sys->pts)
     {
-        InitAudioTracks(demux, 0, 1);
-        sys->add_audio_track_at = VLC_TICK_INVALID;
+        const bool rate_ok = sys->audio_rate > 0 && sys->audio_rate < INT_MAX;
+        const bool format_ok = aout_BitsPerSample(sys->audio_format) != 0;
+        const bool channels_ok = sys->audio_channels > 0 &&
+                                 sys->audio_channels <= AOUT_CHAN_MAX;
+
+        if (!rate_ok)
+            msg_Err(demux, "Invalid audio rate");
+        else if (!format_ok)
+            msg_Err(demux, "Invalid audio format");
+        else if (!channels_ok)
+            msg_Err(demux, "Invalid audio channels");
+        else
+        {
+            InitAudioTracks(demux, 0, 1);
+            sys->add_audio_track_at = VLC_TICK_INVALID;
+        }
     }
     if (sys->add_spu_track_at != VLC_TICK_INVALID &&
         sys->add_spu_track_at <= sys->pts)
@@ -658,32 +641,22 @@ Open(demux_t *demux)
 #undef XR
 #undef X
 
-    if (sys->chapter_count > 0 && sys->title_count == 0)
-        sys->title_count++;
-
-    const bool length_ok = sys->length >= 0;
-    const bool tracks_ok = sys->video_track_count >= 0 &&
-                           sys->audio_track_count >= 0 &&
-                           sys->sub_track_count >= 0;
-    const bool titles_ok = sys->title_count >= 0;
-    const bool chapters_ok = sys->chapter_count >= 0;
-    const bool programs_ok = sys->program_count >= 0;
-
-    if (!length_ok || !tracks_ok || !titles_ok || !chapters_ok || !programs_ok)
+    if (aout_BitsPerSample(sys->audio_format) == 0)
     {
-        if (!length_ok)
-            msg_Err(demux, "Invalid length");
-        if (!tracks_ok)
-            msg_Err(demux, "Invalid track count");
-        if (!titles_ok)
-            msg_Err(demux, "Invalid title count");
-        if (!chapters_ok)
-            msg_Err(demux, "Invalid chapter count");
-        if (!programs_ok)
-            msg_Err(demux, "Invalid program count");
+        msg_Err(demux, "Invalid audio format");
+        return VLC_EGENERIC;
+    }
+    if (sys->video_chroma == 0)
+    {
+        msg_Err(demux, "Invalid video chroma");
         return VLC_EGENERIC;
     }
 
+    if (sys->chapter_count > 0 && sys->title_count == 0)
+        sys->title_count = 1;
+
+    /* note: tests currently expect to be able to give value zero, so don't
+       change lower bound of option to 1 to get rid of this! */
     if (sys->program_count == 0)
         sys->program_count = 1;
     size_t track_count = (sys->video_track_count + sys->audio_track_count +
