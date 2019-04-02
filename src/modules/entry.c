@@ -37,6 +37,9 @@
 #include "config/configuration.h"
 #include "libvlc.h"
 
+typedef int (*vlc_activate_cb)(vlc_object_t*);
+typedef void (*vlc_deactivate_cb)(vlc_object_t*);
+
 module_t *vlc_module_create(vlc_plugin_t *plugin)
 {
     module_t *module = malloc (sizeof (*module));
@@ -324,12 +327,12 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
 
         case VLC_MODULE_CB_OPEN:
             module->activate_name = va_arg(ap, const char *);
-            module->pf_activate = va_arg (ap, void *);
+            module->pf_activate = va_arg (ap, vlc_activate_cb);
             break;
 
         case VLC_MODULE_CB_CLOSE:
             module->deactivate_name = va_arg(ap, const char *);
-            module->pf_deactivate = va_arg (ap, void *);
+            module->pf_deactivate = va_arg (ap, vlc_deactivate_cb);
             break;
 
         case VLC_MODULE_NO_UNLOAD:
