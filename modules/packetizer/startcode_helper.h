@@ -68,10 +68,7 @@ static inline const uint8_t * startcode_FindAnnexB_AVX2( const uint8_t *p, const
     if( alignedend > p )
     {
 #ifdef CAN_COMPILE_AVX2
-        __asm__ volatile(
-            "vpxor   %%ymm1, %%ymm1, %%ymm1\n"
-            ::: "ymm1"
-        );
+        __asm__ volatile( "vpxor %%ymm1, %%ymm1, %%ymm1\n" ::: "ymm1" );
 #else
         __m256i zeros = _mm256_set1_epi8( 0x00 );
 #endif
@@ -109,6 +106,11 @@ static inline const uint8_t * startcode_FindAnnexB_AVX2( const uint8_t *p, const
             if( match & 0xF0000000 )
                 TRY_MATCH(p, 28);
         }
+#ifdef CAN_COMPILE_AVX2
+        asm volatile( "vzeroupper\n" ::: );
+#else
+        _mm256_zeroupper();
+#endif
     }
 
     for (; p <= end; p++) {
