@@ -51,20 +51,26 @@
 
 typedef struct vlc_modcap
 {
-    char *name;
     module_t **modv;
     size_t modc;
 } vlc_modcap_t;
 
-static int vlc_modcap_cmp(const void *a, const void *b)
+typedef struct vlc_modcap_custom
 {
-    const vlc_modcap_t *capa = a, *capb = b;
+    char *name;
+    module_t **modv;
+    size_t modc;
+} vlc_modcap_custom_t;
+
+static int vlc_modcap_custom_cmp(const void *a, const void *b)
+{
+    const vlc_modcap_custom_t *capa = a, *capb = b;
     return strcmp(capa->name, capb->name);
 }
 
-static void vlc_modcap_free(void *data)
+static void vlc_modcap_custom_free(void *data)
 {
-    vlc_modcap_t *cap = data;
+    vlc_modcap_custom_t *cap = data;
 
     free(cap->modv);
     free(cap->name);
@@ -79,10 +85,15 @@ static int vlc_module_cmp (const void *a, const void *b)
     return (*mb)->i_score - (*ma)->i_score;
 }
 
-static void vlc_modcap_sort(const void *node, const VISIT which,
+static void vlc_modcap_sort(vlc_modcap_t *cap)
+{
+    qsort(cap->modv, cap->modc, sizeof (*cap->modv), vlc_module_cmp);
+}
+
+static void vlc_modcap_custom_sort(const void *node, const VISIT which,
                             const int depth)
 {
-    vlc_modcap_t *const *cp = node, *cap = *cp;
+    vlc_modcap_custom_t *const *cp = node, *cap = *cp;
 
     if (which != postorder && which != leaf)
         return;
@@ -95,62 +106,96 @@ static struct
 {
     vlc_mutex_t lock;
     block_t *caches;
-    void *caps_tree;
+    vlc_modcap_t caps_tree[(size_t)VLC_CAP_MAX];
+    void *custom_caps_tree;
     unsigned usage;
-} modules = { VLC_STATIC_MUTEX, NULL, NULL, 0 };
+} modules = { VLC_STATIC_MUTEX, NULL, {}, NULL, 0 };
 
 vlc_plugin_t *vlc_plugins = NULL;
+
+/* reset/init the array */
+static void vlc_reset_builtin_cap_tree() {
+    for (size_t i = 0; i < (size_t)VLC_CAP_MAX; i++)
+    {
+        vlc_modcap_t* cap = &modules.caps_tree[i];
+        if (cap->modv != NULL)
+            free(cap->modv);
+        cap->modc = 0;
+    }
+}
 
 /**
  * Add a module to the pre-organised sets
  */
 static int vlc_module_store(module_t *mod)
 {
-    /* Some plugins authors choose to call add_submodule() without having
-       actually setup the initial module with a capability and callbacks; where
-       a plugin has multiple modules, this is sometimes done deliberately in
-       order that the initial module is utilised for holding name and help text
-       properties that apply to that group of modules as a whole, being used
-       for instance in help output against the plugin's option set. We have no
-       interest in recording such entries in the capability tree, so we skip it. */
-    if (unlikely(mod->capability == VLC_CAP_INVALID))
-        return 0;
-
-    const char *name = (mod->capability == VLC_CAP_CUSTOM)
-        ? vlc_module_get_custom_capability(mod) : vlc_module_cap_get_textid(mod->capability);
-
-    vlc_modcap_t *cap = malloc(sizeof (*cap));
-    if (unlikely(cap == NULL))
-        return -1;
-
-    cap->name = strdup(name);
-    cap->modv = NULL;
-    cap->modc = 0;
-
-    if (unlikely(cap->name == NULL))
-        goto error;
-
-    vlc_modcap_t **cp = tsearch(cap, &modules.caps_tree, vlc_modcap_cmp);
-    if (unlikely(cp == NULL))
-        goto error;
-
-    if (*cp != cap)
+    switch (mod->capability)
     {
-        vlc_modcap_free(cap);
-        cap = *cp;
+        case VLC_CAP_INVALID:
+            /* Some plugins authors choose to call add_submodule() without
+               having actually setup the initial module with a capability and
+               callbacks; where a plugin has multiple modules, this is
+               sometimes done deliberately in order that the initial module is
+               utilised for holding name and help text properties that apply to
+               that group of modules as a whole, being used for instance in
+               help output against the plugin's option set. We have no interest
+               in recording such entries in the capability tree, so we skip it. */
+            break;
+        case VLC_CAP_CUSTOM:
+        {
+            const char *name = vlc_module_get_custom_capability(mod);
+
+            vlc_modcap_custom_t *cap = malloc(sizeof (*cap));
+            if (unlikely(cap == NULL))
+                return -1;
+
+            cap->name = strdup(name);
+            cap->modv = NULL;
+            cap->modc = 0;
+
+            if (unlikely(cap->name == NULL))
+            {
+                vlc_modcap_custom_free(cap);
+                return -1;
+            }
+
+            vlc_modcap_custom_t **cp = tsearch(cap, &modules.custom_caps_tree, vlc_modcap_custom_cmp);
+            if (unlikely(cp == NULL))
+            {
+                vlc_modcap_custom_free(cap);
+                return -1;
+            }
+
+            if (*cp != cap)
+            {
+                vlc_modcap_custom_free(cap);
+                cap = *cp;
+            }
+
+            module_t **modv = realloc(cap->modv, sizeof (*modv) * (cap->modc + 1));
+            if (unlikely(modv == NULL))
+                return -1;
+
+            cap->modv = modv;
+            cap->modv[cap->modc] = mod;
+            cap->modc++;
+            break;
+        }
+        default:
+        {
+            vlc_modcap_t* cap = &modules.caps_tree[(size_t)mod->capability];
+
+            module_t **modv = realloc(cap->modv, sizeof (*modv) * (cap->modc + 1));
+            if (unlikely(modv == NULL))
+                return -1;
+
+            cap->modv = modv;
+            cap->modv[cap->modc] = mod;
+            cap->modc++;
+            break;
+        }
     }
-
-    module_t **modv = realloc(cap->modv, sizeof (*modv) * (cap->modc + 1));
-    if (unlikely(modv == NULL))
-        return -1;
-
-    cap->modv = modv;
-    cap->modv[cap->modc] = mod;
-    cap->modc++;
     return 0;
-error:
-    vlc_modcap_free(cap);
-    return -1;
 }
 
 /**
@@ -607,6 +652,7 @@ void module_InitBank (void)
          * library just as another module, and for instance the configuration
          * options of core will be available in the module bank structure just
          * as for every other module. */
+        memset(&modules.caps_tree, 0, sizeof(modules.caps_tree));
         vlc_plugin_t *plugin = module_InitStatic(vlc_entry__core);
         if (likely(plugin != NULL))
             vlc_plugin_store(plugin);
@@ -632,7 +678,7 @@ void module_EndBank (bool b_plugins)
 {
     vlc_plugin_t *libs = NULL;
     block_t *caches = NULL;
-    void *caps_tree = NULL;
+    void *custom_caps_tree = NULL;
 
     /* If plugins were _not_ loaded, then the caller still has the bank lock
      * from module_InitBank(). */
@@ -647,14 +693,15 @@ void module_EndBank (bool b_plugins)
         config_UnsortConfig ();
         libs = vlc_plugins;
         caches = modules.caches;
-        caps_tree = modules.caps_tree;
+        custom_caps_tree = modules.custom_caps_tree;
         vlc_plugins = NULL;
         modules.caches = NULL;
-        modules.caps_tree = NULL;
+        modules.custom_caps_tree = NULL;
+        vlc_reset_builtin_cap_tree();
     }
     vlc_mutex_unlock (&modules.lock);
 
-    tdestroy(caps_tree, vlc_modcap_free);
+    tdestroy(custom_caps_tree, vlc_modcap_custom_free);
 
     while (libs != NULL)
     {
@@ -689,7 +736,9 @@ void module_LoadPlugins(vlc_object_t *obj)
         config_UnsortConfig ();
         config_SortConfig ();
 
-        twalk(modules.caps_tree, vlc_modcap_sort);
+        for (size_t i = 0; i < (size_t)VLC_CAP_MAX; i++)
+            vlc_modcap_sort(&modules.caps_tree[(size_t)i]);
+        twalk(modules.custom_caps_tree, vlc_modcap_custom_sort);
     }
     vlc_mutex_unlock (&modules.lock);
 
@@ -741,31 +790,44 @@ module_t **module_list_get (size_t *n)
     return tab;
 }
 
-/**
- * Gets a sorted list of all VLC modules with a given custom capability.
- * The list is sorted from the highest module score to the lowest.
- * @param list pointer to the table of modules [OUT]
- * @param name name of capability of modules to look for
- * @return the number of matching found, or -1 on error (*list is then NULL).
- * @note *list must be freed with module_list_free().
- */
-ssize_t module_list_cap (module_t ***restrict list, const char *name)
+ssize_t module_list_cap (module_t ***restrict list, enum vlc_module_cap id, const char *name)
 {
-    const vlc_modcap_t **cp = tfind(&name, &modules.caps_tree, vlc_modcap_cmp);
-    if (cp == NULL)
+    assert(id != VLC_CAP_INVALID);
+
+    module_t **caps = NULL;
+    size_t n;
+
+    switch (id)
     {
-        *list = NULL;
-        return 0;
+        case VLC_CAP_CUSTOM:
+        {
+            assert(name != NULL);
+            const vlc_modcap_custom_t **set = tfind(&name,
+                &modules.custom_caps_tree, vlc_modcap_custom_cmp);
+            if (set == NULL)
+            {
+                *list = NULL;
+                return 0;
+            }
+            caps = (*set)->modv;
+            n = (*set)->modc;
+            break;
+        }
+        default:
+        {
+            const vlc_modcap_t* set = &modules.caps_tree[(size_t)id];
+            caps = set->modv;
+            n = set->modc;
+            break;
+        }
     }
 
-    const vlc_modcap_t *cap = *cp;
-    size_t n = cap->modc;
     module_t **tab = vlc_alloc (n, sizeof (*tab));
     *list = tab;
     if (unlikely(tab == NULL))
         return -1;
 
-    memcpy(tab, cap->modv, sizeof (*tab) * n);
+    memcpy(tab, caps, sizeof (*tab) * n);
     return n;
 }
 
