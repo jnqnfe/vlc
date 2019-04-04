@@ -36,7 +36,10 @@
                  "ymm4", "ymm5", "ymm6", "ymm7" ); \
     } while(0)
 
-#define AVX2_END  __asm__ __volatile__ ( "sfence" ::: "memory" )
+#define AVX2_END __asm__ __volatile__ ( " \
+    sfence                              \n\
+    vzeroupper                          \n\
+    " ::: "memory" )
 
 #define AVX2_INIT_16_ALIGNED "                                                \n\
 vmovdqa     (%[u]), %%xmm0   # Load 16 Cb into lower half     ... u2  u1  u0  \n\
@@ -390,7 +393,9 @@ vmovdqu    %%ymm3, 96(%[b])        # Store ABGR31 ... ABGR24                    
         AVX2_INSTRUCTIONS                   \
     } while(0)
 
-#define AVX2_END  _mm_sfence()
+#define AVX2_END  \
+    _mm_sfence(); \
+    _mm256_zeroupper();
 
 #define AVX2_INIT_16_ALIGNED                       \
     ymm0 = _mm256_inserti128_si256(ymm0, *((__m128i*)p_u), 0); \

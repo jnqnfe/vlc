@@ -306,7 +306,10 @@ movdqu    %%xmm1, 16(%1)  # Store high UYVY                             \n\
         p_u += 16; p_v += 16;            \
     } while(0)
 
-#define AVX2_END  __asm__ __volatile__ ( "sfence" ::: "memory" )
+#define AVX2_END __asm__ __volatile__ ( " \
+    sfence                              \n\
+    vzeroupper                          \n\
+    " ::: "memory" )
 
 #define AVX2_INIT_ALIGNED "                                                   \n\
 vmovdqa     (%[y1]), %%ymm0  # Load 32 Y1                     ... y2  y1  y0  \n\
@@ -411,7 +414,9 @@ vmovdqu    %%ymm4, 32(%[l2])       # Store high UYVY                            
         p_u += 16; p_v += 16;                   \
     } while(0)
 
-#define AVX2_END  _mm_sfence()
+#define AVX2_END  \
+    _mm_sfence(); \
+    _mm256_zeroupper();
 
 #define AVX2_INIT_ALIGNED                       \
     ymm0 = _mm256_load_si256((__m256i *)p_y1);  \
