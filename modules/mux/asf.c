@@ -30,6 +30,7 @@
 #endif
 
 #include <assert.h>
+#include <limits.h>
 
 #include <vlc_common.h>
 #include <vlc_plugin.h>
@@ -84,10 +85,10 @@ vlc_plugin_begin ()
                                  COMMENT_LONGTEXT, true )
     add_string( SOUT_CFG_PREFIX "rating",  "", RATING_TEXT,
                                  RATING_LONGTEXT, true )
-    add_integer( SOUT_CFG_PREFIX "packet-size", 4096, PACKETSIZE_TEXT,
-                                 PACKETSIZE_LONGTEXT, true )
-    add_integer( SOUT_CFG_PREFIX "bitrate-override", 0, BITRATE_TEXT,
-                                 BITRATE_LONGTEXT, true )
+    add_integer_with_range( SOUT_CFG_PREFIX "packet-size", 4096, 0, INT_MAX,
+                                 PACKETSIZE_TEXT, PACKETSIZE_LONGTEXT, true )
+    add_integer_with_range( SOUT_CFG_PREFIX "bitrate-override", 0, 0, INT_MAX,
+                                 BITRATE_TEXT, BITRATE_LONGTEXT, true )
 vlc_plugin_end ()
 
 /*****************************************************************************
