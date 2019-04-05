@@ -229,7 +229,7 @@ vlc_plugin_begin ()
     add_string( SOUT_CFG_PREFIX "csa-ck",  NULL, CK_TEXT,   CK_LONGTEXT,   true)
     add_string( SOUT_CFG_PREFIX "csa2-ck", NULL, CK2_TEXT,  CK2_LONGTEXT,  true)
     add_string( SOUT_CFG_PREFIX "csa-use", "1",  CU_TEXT,   CU_LONGTEXT,   true)
-    add_integer(SOUT_CFG_PREFIX "csa-pkt", 188,  CPKT_TEXT, CPKT_LONGTEXT, true)
+    add_integer_with_range(SOUT_CFG_PREFIX "csa-pkt", 188, 12, 188,  CPKT_TEXT, CPKT_LONGTEXT, true)
 vlc_plugin_end ()
 
 /*****************************************************************************
@@ -510,12 +510,6 @@ static csa_t *csaSetup( vlc_object_t *p_this )
     free( use_val.psz_string );
 
     p_sys->i_csa_pkt_size = var_GetInteger( p_mux, SOUT_CFG_PREFIX "csa-pkt" );
-    if( p_sys->i_csa_pkt_size < 12 || p_sys->i_csa_pkt_size > 188 )
-    {
-        msg_Err( p_mux, "wrong packet size %d specified",
-            p_sys->i_csa_pkt_size );
-        p_sys->i_csa_pkt_size = 188;
-    }
 
     msg_Dbg( p_mux, "encrypting %d bytes of packet", p_sys->i_csa_pkt_size );
 
