@@ -102,16 +102,25 @@ static struct
 vlc_plugin_t *vlc_plugins = NULL;
 
 /**
- * Adds a module to the bank
+ * Add a module to the pre-organised sets
  */
 static int vlc_module_store(module_t *mod)
 {
-    const char *name = module_get_capability(mod);
+    /* Some plugins authors choose to call add_submodule() without having
+       actually setup the initial module with a capability and callbacks; where
+       a plugin has multiple modules, this is sometimes done deliberately in
+       order that the initial module is utilised for holding name and help text
+       properties that apply to that group of modules as a whole, being used
+       for instance in help output against the plugin's option set. We have no
+       interest in recording such entries in the capability tree, so we skip it. */
+    if (unlikely(mod->psz_capability == NULL))
+        return 0;
+
     vlc_modcap_t *cap = malloc(sizeof (*cap));
     if (unlikely(cap == NULL))
         return -1;
 
-    cap->name = strdup(name);
+    cap->name = strdup(mod->psz_capability);
     cap->modv = NULL;
     cap->modc = 0;
 
@@ -148,9 +157,11 @@ static void vlc_plugin_store(vlc_plugin_t *lib)
 {
     vlc_mutex_assert(&modules.lock);
 
+    /* Add the plugin to the link list */
     lib->next = vlc_plugins;
     vlc_plugins = lib;
 
+    /* Add modules to the pre-organised sets */
     for (module_t *m = lib->module; m != NULL; m = m->next)
         vlc_module_store(m);
 }
