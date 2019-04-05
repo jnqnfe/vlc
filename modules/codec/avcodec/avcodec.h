@@ -88,12 +88,11 @@ int ffmpeg_OpenCodec( decoder_t *p_dec, AVCodecContext *, const AVCodec * );
 #define FAST_LONGTEXT N_( \
     "Allow non specification compliant speedup tricks. Faster but error-prone.")
 
-#define SKIP_FRAME_TEXT N_("Skip frame (default=0)")
+#define SKIP_FRAME_TEXT N_("Skip frame")
 #define SKIP_FRAME_LONGTEXT N_( \
-    "Force skipping of frames to speed up decoding " \
-    "(-1=None, 0=Default, 1=B-frames, 2=P-frames, 3=B+P frames, 4=all frames)." )
+    "Force skipping of frames to speed up decoding." )
 
-#define SKIP_IDCT_TEXT N_("Skip idct (default=0)")
+#define SKIP_IDCT_TEXT N_("Skip idct")
 #define SKIP_IDCT_LONGTEXT N_( \
     "Force skipping of idct to speed up decoding for frame types " \
     "(-1=None, 0=Default, 1=B-frames, 2=P-frames, 3=B+P frames, 4=all frames)." )
@@ -187,7 +186,7 @@ int ffmpeg_OpenCodec( decoder_t *p_dec, AVCodecContext *, const AVCodec * );
 
 #define ENC_STRICT_TEXT N_( "Strict standard compliance" )
 #define ENC_STRICT_LONGTEXT N_( "Force a strict standard " \
-  "compliance when encoding (accepted values: -2 to 2)." )
+  "compliance when encoding." )
 
 #define ENC_LUMI_MASKING_TEXT N_( "Luminance masking" )
 #define ENC_LUMI_MASKING_LONGTEXT N_( "Raise the quantizer for " \

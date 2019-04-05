@@ -53,18 +53,15 @@ static void Close ( demux_t * );
 
 #define NOISE_LONGTEXT N_("Enable noise reduction algorithm.")
 #define REVERB_LONGTEXT N_("Enable reverberation" )
-#define REVERB_LEVEL_LONGTEXT N_( "Reverberation level (from 0 " \
-                "to 100, default value is 0)." )
+#define REVERB_LEVEL_LONGTEXT N_( "Reverberation level (default value is 0)." )
 #define REVERB_DELAY_LONGTEXT N_("Reverberation delay, in milliseconds." \
                 " Usual values are from 40 to 200ms." )
 #define MEGABASS_LONGTEXT N_( "Enable megabass mode" )
-#define MEGABASS_LEVEL_LONGTEXT N_("Megabass mode level (from 0 to 100, " \
-                "default value is 0)." )
+#define MEGABASS_LEVEL_LONGTEXT N_("Megabass mode level (default value is 0)." )
 #define MEGABASS_RANGE_LONGTEXT N_("Megabass mode cutoff frequency, in Hz. " \
                 "This is the maximum frequency for which the megabass " \
-                "effect applies. Valid values are from 10 to 100 Hz." )
-#define SURROUND_LEVEL_LONGTEXT N_( "Surround effect level (from 0 to 100, " \
-                "default value is 0)." )
+                "effect applies." )
+#define SURROUND_LEVEL_LONGTEXT N_( "Surround effect level (default value is 0)." )
 #define SURROUND_DELAY_LONGTEXT N_("Surround delay, in milliseconds. Usual values are " \
                 "from 5 to 40 ms." )
 

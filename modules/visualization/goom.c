@@ -50,7 +50,7 @@ static void Close        ( filter_t * );
 
 #define SPEED_TEXT N_("Animation speed")
 #define SPEED_LONGTEXT N_("This allows you to set the animation speed " \
-  "(between 1 and 10, defaults to 6).")
+  "(defaults to 6).")
 
 #define MAX_SPEED 10
 

@@ -53,10 +53,10 @@ static int DenoiseCallback( vlc_object_t *p_this, char const *psz_var,
 
 #define FILTER_PREFIX       "hqdn3d-"
 
-#define LUMA_SPAT_TEXT          N_("Spatial luma strength (0-254)")
-#define CHROMA_SPAT_TEXT        N_("Spatial chroma strength (0-254)")
-#define LUMA_TEMP_TEXT          N_("Temporal luma strength (0-254)")
-#define CHROMA_TEMP_TEXT        N_("Temporal chroma strength (0-254)")
+#define LUMA_SPAT_TEXT          N_("Spatial luma strength")
+#define CHROMA_SPAT_TEXT        N_("Spatial chroma strength")
+#define LUMA_TEMP_TEXT          N_("Temporal luma strength")
+#define CHROMA_TEMP_TEXT        N_("Temporal chroma strength")
 
 vlc_plugin_begin()
     set_shortname(N_("HQ Denoiser 3D"))

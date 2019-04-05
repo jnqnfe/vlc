@@ -170,7 +170,7 @@ static int MakeupGainCallback   ( vlc_object_t *, char const *, vlc_value_t,
 #define KNEE_LONGTEXT N_( "Set the knee radius in decibels." )
 
 #define MAKEUP_GAIN_TEXT N_( "Makeup gain (dB)" )
-#define MAKEUP_GAIN_LONGTEXT N_( "Set the makeup gain in decibels (0 ... 24)." )
+#define MAKEUP_GAIN_LONGTEXT N_( "Set the makeup gain in decibels." )
 
 vlc_plugin_begin()
     set_shortname( N_("Compressor") )

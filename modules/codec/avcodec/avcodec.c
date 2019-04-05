@@ -46,11 +46,11 @@
  ****************************************************************************/
 static const int  frame_skip_list[] = { -1, 0, 1, 2, 3, 4 };
 static const char *const frame_skip_list_text[] =
-  { N_("None"), N_("Default"), N_("Non-ref"), N_("Bidir"), N_("Non-key"), N_("All") };
+  { N_("None"), N_("Default"), N_("Non-ref (B-frames)"), N_("Bidir (P-frames)"), N_("Non-key (B+P frames)"), N_("All") };
 
 static const int  nloopf_list[] = { 0, 1, 2, 3, 4 };
 static const char *const nloopf_list_text[] =
-  { N_("None"), N_("Non-ref"), N_("Bidir"), N_("Non-key"), N_("All") };
+  { N_("None"), N_("Non-ref (B-frames)"), N_("Bidir (P-frames)"), N_("Non-key (B+P frames)"), N_("All") };
 
 #ifdef ENABLE_SOUT
 static const char *const enc_hq_list[] = { "rd", "bits", "simple" };

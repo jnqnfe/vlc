@@ -59,7 +59,6 @@ static void FilterHough   ( filter_t *, picture_t *, picture_t * );
  * Module descriptor
  *****************************************************************************/
 #define MODE_TEXT N_("Distort mode")
-#define MODE_LONGTEXT N_("Distort mode, one of \"gradient\", \"edge\" and \"hough\".")
 
 #define GRADIENT_TEXT N_("Gradient image type")
 #define GRADIENT_LONGTEXT N_("Gradient image type (0 or 1). 0 will " \
@@ -86,7 +85,7 @@ vlc_plugin_begin ()
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_string( FILTER_PREFIX "mode", "gradient",
-                MODE_TEXT, MODE_LONGTEXT, false )
+                MODE_TEXT, NULL, false )
         change_string_list( mode_list, mode_list_text )
 
     add_integer_with_range( FILTER_PREFIX "type", 0, 0, 1,

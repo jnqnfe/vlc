@@ -49,10 +49,10 @@ static int  Create    ( filter_t * );
 static void Destroy   ( filter_t * );
 
 #define WINDOW_TEXT N_("Window size")
-#define WINDOW_LONGTEXT N_("Number of frames (0 to 100)")
+#define WINDOW_LONGTEXT N_("Number of frames")
 
 #define SFTN_TEXT N_("Softening value")
-#define SFTN_LONGTEXT N_("Number of frames consider for smoothening (0 to 30)")
+#define SFTN_LONGTEXT N_("Number of frames consider for smoothening")
 
 #define FILTER_PREFIX "antiflicker-"
 

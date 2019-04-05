@@ -44,8 +44,8 @@
 #include <vlc_picture.h>
 #include "filter_picture.h"
 
-#define SIG_TEXT N_("Sharpen strength (0-2)")
-#define SIG_LONGTEXT N_("Set the Sharpen strength, between 0 and 2. Defaults to 0.05.")
+#define SIG_TEXT N_("Sharpen strength")
+#define SIG_LONGTEXT N_("Set the Sharpen strength. Defaults to 0.05.")
 
 /*****************************************************************************
  * Local prototypes

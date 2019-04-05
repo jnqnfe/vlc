@@ -37,12 +37,12 @@
 #define ADAPTER_TEXT N_("DVB adapter")
 #define ADAPTER_LONGTEXT N_( \
     "If there is more than one digital broadcasting adapter, " \
-    "the adapter number must be selected. Numbering starts from zero.")
+    "the adapter number must be selected.")
 
 #define DEVICE_TEXT N_("DVB device")
 #define DEVICE_LONGTEXT N_( \
     "If the adapter provides multiple independent tuner devices, " \
-    "the device number must be selected. Numbering starts from zero.")
+    "the device number must be selected.")
 #define BUDGET_TEXT N_("Do not demultiplex")
 #define BUDGET_LONGTEXT N_( \
     "Only useful programs are normally demultiplexed from the transponder. " \
@@ -201,8 +201,7 @@ static const char *const polarization_user[] = { N_("Unspecified (0V)"),
 #define SATNO_LONGTEXT N_( \
     "If the satellite receiver is connected to multiple " \
     "low noise block-downconverters (LNB) through a DiSEqC 1.0 switch, " \
-    "the correct LNB can be selected (1 to 4). " \
-    "If there is no switch, this parameter should be 0.")
+    "the correct LNB can be selected.")
 #ifdef HAVE_LINUX_DVB
 static const int satno_vlc[] = { 0, 1, 2, 3, 4 };
 static const char *const satno_user[] = { N_("Unspecified"),
@@ -214,8 +213,7 @@ static const char *const satno_user[] = { N_("Unspecified"),
     "If the satellite receiver is connected to multiple " \
     "low noise block-downconverters (LNB) through a cascade formed from " \
     "DiSEqC 1.1 uncommitted switch and DiSEqC 1.0 committed switch, " \
-    "the correct uncommitted LNB can be selected (1 to 4). " \
-    "If there is no uncommitted switch, this parameter should be 0.")
+    "the correct uncommitted LNB can be selected.")
 
 /* BDA module additional DVB-S Parameters */
 #define NETID_TEXT N_("Network identifier")

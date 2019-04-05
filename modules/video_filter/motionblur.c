@@ -53,8 +53,7 @@ static int MotionBlurCallback( vlc_object_t *, char const *,
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-#define FACTOR_TEXT N_("Blur factor (1-127)")
-#define FACTOR_LONGTEXT N_("The degree of blurring from 1 to 127.")
+#define FACTOR_TEXT N_("Blur factor")
 
 #define FILTER_PREFIX "blur-"
 
@@ -66,7 +65,7 @@ vlc_plugin_begin ()
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_integer_with_range( FILTER_PREFIX "factor", 80, 1, 127,
-                            FACTOR_TEXT, FACTOR_LONGTEXT, false )
+                            FACTOR_TEXT, NULL, false )
 vlc_plugin_end ()
 
 static const char *const ppsz_filter_options[] = {

@@ -1179,9 +1179,7 @@ CloseDeinterlace(filter_t *const filter)
  * Module descriptor *
  *********************/
 
-#define DENOISE_SIGMA_TEXT N_("Denoise strength (0-2)")
-#define DENOISE_SIGMA_LONGTEXT N_( \
-    "Set the Denoise strength, between 0 and 2. Defaults to 1.")
+#define DENOISE_SIGMA_TEXT N_("Denoise strength")
 
 vlc_plugin_begin()
     set_shortname(N_("VAAPI filters"))
@@ -1213,5 +1211,5 @@ vlc_plugin_begin()
 
     set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_float_with_range("denoise-sigma", 1.f, .0f, 0.f,
-                         DENOISE_SIGMA_TEXT, DENOISE_SIGMA_LONGTEXT, false)
+                         DENOISE_SIGMA_TEXT, NULL, false)
 vlc_plugin_end()

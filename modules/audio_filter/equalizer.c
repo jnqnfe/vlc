@@ -73,7 +73,6 @@ static void Close( filter_t * );
          "intense effect.")
 
 #define PREAMP_TEXT N_("Global gain (dB)" )
-#define PREAMP_LONGTEXT N_("Set the global gain in dB (-20 ... 20)." )
 
 vlc_plugin_begin ()
     set_description( N_("Equalizer with 10 bands") )
@@ -92,7 +91,7 @@ vlc_plugin_begin ()
     add_bool( "equalizer-vlcfreqs", true, VLC_BANDS_TEXT,
               VLC_BANDS_LONGTEXT, true )
     add_float( "equalizer-preamp", 12.0f, PREAMP_TEXT,
-               PREAMP_LONGTEXT, true )
+               NULL, true )
 vlc_plugin_end ()
 
 /*****************************************************************************

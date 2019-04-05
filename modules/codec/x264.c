@@ -98,17 +98,16 @@ static void x264_log( void *, int i_level, const char *psz, va_list );
     "I-frame. Large values use more I-frames " \
     "than necessary, thus wasting bits. -1 disables scene-cut detection, so " \
     "I-frames are inserted only every other keyint frames, which probably " \
-    "leads to ugly encoding artifacts. Range 1 to 100." )
+    "leads to ugly encoding artifacts." )
 
 
 #define BFRAMES_TEXT N_("B-frames between I and P")
 #define BFRAMES_LONGTEXT N_( "Number of consecutive B-frames between I and " \
-    "P-frames. Range 1 to 16." )
+    "P-frames." )
 
 #define B_ADAPT_TEXT N_("Adaptive B-frame decision")
 #define B_ADAPT_LONGTEXT N_( "Force the specified number of " \
-    "consecutive B-frames to be used, except possibly before an I-frame. " \
-    "Range 0 to 2." )
+    "consecutive B-frames to be used, except possibly before an I-frame. " )
 
 #define B_BIAS_TEXT N_("Influence (bias) B-frames usage")
 #define B_BIAS_LONGTEXT N_( "Bias the choice to use B-frames. Positive values " \
@@ -137,7 +136,7 @@ static void x264_log( void *, int i_level, const char *psz, va_list );
 #define REF_LONGTEXT N_( "Number of previous frames used as predictors. " \
     "This is effective in Anime, but seems to make little difference in " \
     "live-action source material. Some decoders are unable to deal with " \
-    "large frameref values. Range 1 to 16." )
+    "large frameref values." )
 
 #define NF_TEXT N_("Skip loop filter")
 #define NF_LONGTEXT N_( "Deactivate the deblocking loop filter (decreases quality).")
@@ -165,12 +164,12 @@ static void x264_log( void *, int i_level, const char *psz, va_list );
 
 #define FRAMEPACKING_TEXT N_("Frame packing")
 #define FRAMEPACKING_LONGTEXT N_( "For stereoscopic videos define frame arrangement:\n" \
-    " 0: checkerboard - pixels are alternatively from L and R\n" \
-    " 1: column alternation - L and R are interlaced by column\n" \
-    " 2: row alternation - L and R are interlaced by row\n" \
-    " 3: side by side - L is on the left, R on the right\n" \
-    " 4: top bottom - L is on top, R on bottom\n" \
-    " 5: frame alternation - one view per frame" )
+    " - checkerboard: pixels are alternatively from L and R\n" \
+    " - column alternation: L and R are interlaced by column\n" \
+    " - row alternation: L and R are interlaced by row\n" \
+    " - side by side: L is on the left, R on the right\n" \
+    " - top bottom: L is on top, R on bottom\n" \
+    " - frame alternation: one view per frame" )
 
 #define INTRAREFRESH_TEXT N_("Use Periodic Intra Refresh")
 #define INTRAREFRESH_LONGTEXT N_("Use Periodic Intra Refresh instead of IDR frames")
@@ -191,10 +190,10 @@ static void x264_log( void *, int i_level, const char *psz, va_list );
 #define QP_TEXT N_("Set QP")
 #define QP_LONGTEXT N_( "This selects the quantizer to use. " \
     "Lower values result in better fidelity, but higher bitrates. 26 is a " \
-    "good default value. Range 0 (lossless) to 51." )
+    "good default value. 0 is lossless." )
 
 #define CRF_TEXT N_("Quality-based VBR")
-#define CRF_LONGTEXT N_( "1-pass Quality-based VBR. Range 0 to 51." )
+#define CRF_LONGTEXT N_( "1-pass Quality-based VBR." )
 
 #define QPMIN_TEXT N_("Min QP")
 #define QPMIN_LONGTEXT N_( "Minimum quantizer parameter. 15 to 35 seems to " \
@@ -217,7 +216,7 @@ static void x264_log( void *, int i_level, const char *psz, va_list );
 
 #define VBV_INIT_TEXT N_("Initial VBV buffer occupancy")
 #define VBV_INIT_LONGTEXT N_( "Sets the initial buffer occupancy as a " \
-    "fraction of the buffer size. Range 0.0 to 1.0.")
+    "fraction of the buffer size.")
 
 #define AQ_MODE_TEXT N_("How AQ distributes bits")
 #define AQ_MODE_LONGTEXT N_("Defines bitdistribution mode for AQ, default 1\n" \
@@ -233,11 +232,9 @@ static void x264_log( void *, int i_level, const char *psz, va_list );
 
 /* IP Ratio < 1 is technically valid but should never improve quality */
 #define IPRATIO_TEXT N_("QP factor between I and P")
-#define IPRATIO_LONGTEXT N_( "QP factor between I and P. Range 1.0 to 2.0.")
 
 /* PB ratio < 1 is not valid and breaks ratecontrol */
 #define PBRATIO_TEXT N_("QP factor between P and B")
-#define PBRATIO_LONGTEXT N_( "QP factor between P and B. Range 1.0 to 2.0.")
 
 #define CHROMA_QP_OFFSET_TEXT N_("QP difference between chroma and luma")
 
@@ -297,7 +294,7 @@ static void x264_log( void *, int i_level, const char *psz, va_list );
 #define MERANGE_LONGTEXT N_( "Maximum distance to search for " \
     "motion estimation, measured from predicted position(s). " \
     "Default of 16 is good for most footage, high motion sequences may " \
-    "benefit from settings between 24 and 32. Range 0 to 64." )
+    "benefit from settings between 24 and 32." )
 
 #define MVRANGE_TEXT N_("Maximum motion vector length")
 #define MVRANGE_LONGTEXT N_( "Maximum motion vector length in pixels. " \
@@ -316,7 +313,7 @@ static void x264_log( void *, int i_level, const char *psz, va_list );
     "quality")
 #define SUBME_LONGTEXT N_( "This parameter controls quality versus speed " \
     "tradeoffs involved in the motion estimation decision process " \
-    "(lower = quicker and higher = better quality). Range 1 to 9." )
+    "(lower = quicker and higher = better quality)." )
 
 #define B_RDO_LONGTEXT N_( "RD based mode decision for B-frames. This " \
     "requires subme 6 (or higher).")
@@ -358,12 +355,10 @@ static void x264_log( void *, int i_level, const char *psz, va_list );
     "10 to 1000 seems to be a useful range." )
 
 #define DEADZONE_INTER_TEXT N_("Inter luma quantization deadzone")
-#define DEADZONE_INTER_LONGTEXT N_( "Set the size of the inter luma quantization deadzone. " \
-    "Range 0 to 32." )
+#define DEADZONE_INTER_LONGTEXT N_( "Set the size of the inter luma quantization deadzone." )
 
 #define DEADZONE_INTRA_TEXT N_("Intra luma quantization deadzone")
-#define DEADZONE_INTRA_LONGTEXT N_( "Set the size of the intra luma quantization deadzone. " \
-    "Range 0 to 32." )
+#define DEADZONE_INTRA_LONGTEXT N_( "Set the size of the intra luma quantization deadzone." )
 
 /* Input/Output */
 
@@ -559,12 +554,10 @@ vlc_plugin_begin ()
                VBV_INIT_LONGTEXT, true )
         change_float_range( 0, 1 )
 
-    add_float( SOUT_CFG_PREFIX "ipratio", 1.40, IPRATIO_TEXT,
-               IPRATIO_LONGTEXT, true )
+    add_float( SOUT_CFG_PREFIX "ipratio", 1.40, IPRATIO_TEXT, NULL, true )
         change_float_range( 1, 2 )
 
-    add_float( SOUT_CFG_PREFIX "pbratio", 1.30, PBRATIO_TEXT,
-               PBRATIO_LONGTEXT, true )
+    add_float( SOUT_CFG_PREFIX "pbratio", 1.30, PBRATIO_TEXT, NULL, true )
         change_float_range( 1, 2 )
 
     add_integer( SOUT_CFG_PREFIX "chroma-qp-offset", 0, CHROMA_QP_OFFSET_TEXT,

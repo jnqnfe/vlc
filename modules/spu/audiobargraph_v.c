@@ -49,10 +49,7 @@
 #define TRANS_LONGTEXT N_("Bargraph transparency value " \
   "(from 0 for full transparency to 255 for full opacity).")
 #define POS_TEXT N_("Bargraph position")
-#define POS_LONGTEXT N_(\
-  "Enforce the bargraph position on the video " \
-  "(0=center, 1=left, 2=right, 4=top, 8=bottom, you can " \
-  "also use combinations of these values, eg 6 = top-right).")
+#define POS_LONGTEXT N_("Enforce the bargraph position on the video.")
 #define BARWIDTH_TEXT N_("Bar width (pixels)")
 #define BARWIDTH_LONGTEXT N_("Width in pixels of each bar in the BarGraph to be displayed." )
 #define BARHEIGHT_TEXT N_("Bar Height (pixels)")

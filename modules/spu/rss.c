@@ -155,10 +155,7 @@ typedef struct
     " #00FF00 = green, #FFFF00 = yellow (red + green), #FFFFFF = white" )
 
 #define POS_TEXT N_("Text position")
-#define POS_LONGTEXT N_( \
-  "You can enforce the text position on the video " \
-  "(0=center, 1=left, 2=right, 4=top, 8=bottom; you can " \
-  "also use combinations of these values, eg 6 = top-right).")
+#define POS_LONGTEXT N_("You can enforce the text position on the video.")
 
 #define TITLE_TEXT N_("Title display mode")
 #define TITLE_LONGTEXT N_("Title display mode. Default is 0 (hidden) if the feed has an image and feed images are enabled, 1 otherwise.")

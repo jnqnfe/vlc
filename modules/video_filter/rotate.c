@@ -53,7 +53,7 @@ static int RotateCallback( vlc_object_t *p_this, char const *psz_var,
                            void *p_data );
 
 #define ANGLE_TEXT N_("Angle (degrees)")
-#define ANGLE_LONGTEXT N_("Angle in degrees (0 to 359)")
+#define ANGLE_LONGTEXT N_("Angle in degrees")
 #define MOTION_TEXT N_("Use motion sensors")
 #define MOTION_LONGTEXT N_("Use HDAPS, AMS, APPLESMC or UNIMOTION motion " \
     "sensors to rotate the video")

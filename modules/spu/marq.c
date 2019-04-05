@@ -119,9 +119,7 @@ typedef struct
 
 #define POS_TEXT N_("Marquee position")
 #define POS_LONGTEXT N_( \
-  "You can enforce the marquee position on the video " \
-  "(0=center, 1=left, 2=right, 4=top, 8=bottom, you can " \
-  "also use combinations of these values, eg 6 = top-right).")
+  "You can enforce the marquee position on the video.")
 
 static const int pi_pos_values[] = { 0, 1, 2, 4, 8, 5, 6, 9, 10 };
 static const char *const ppsz_pos_descriptions[] =

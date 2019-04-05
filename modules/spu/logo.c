@@ -65,10 +65,7 @@
 #define OPACITY_LONGTEXT N_("Logo opacity value " \
   "(from 0 for full transparency to 255 for full opacity)." )
 #define POS_TEXT N_("Logo position")
-#define POS_LONGTEXT N_( \
-  "Enforce the logo position on the video " \
-  "(0=center, 1=left, 2=right, 4=top, 8=bottom, you can " \
-  "also use combinations of these values, eg 6 = top-right).")
+#define POS_LONGTEXT N_("Enforce the logo position on the video.")
 
 #define LOGO_HELP N_("Use a local picture as logo on the video")
 
