@@ -86,10 +86,12 @@ vlc_plugin_begin ()
         TRANS_TEXT, TRANS_LONGTEXT, false)
     add_integer(CFG_PREFIX "position", -1, POS_TEXT, POS_LONGTEXT, false)
         change_integer_list(pi_pos_values, ppsz_pos_descriptions)
-    add_integer(CFG_PREFIX "barWidth", 10, BARWIDTH_TEXT, BARWIDTH_LONGTEXT, true)
+    add_integer(CFG_PREFIX "barwidth", 10, BARWIDTH_TEXT, BARWIDTH_LONGTEXT, true)
         change_integer_range(0, INT_MAX)
-    add_integer(CFG_PREFIX "barHeight", 400, BARHEIGHT_TEXT, BARHEIGHT_LONGTEXT, true)
+    add_integer(CFG_PREFIX "barheight", 400, BARHEIGHT_TEXT, BARHEIGHT_LONGTEXT, true)
         change_integer_range(0, INT_MAX)
+    add_obsolete_integer(CFG_PREFIX "barWidth") /* since 4.0.0 */
+    add_obsolete_integer(CFG_PREFIX "barHeight") /* since 4.0.0 */
 vlc_plugin_end ()
 
 
