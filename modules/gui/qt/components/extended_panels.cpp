@@ -169,7 +169,7 @@ ExtVideo::ExtVideo( intf_thread_t *_p_intf, QTabWidget *_parent ) :
 
     SETUP_VFILTER( gradient )
     SETUP_VFILTER_OPTION( gradientModeCombo, currentIndexChanged( QString ) )
-    SETUP_VFILTER_OPTION( gradientTypeCheck, stateChanged( int ) )
+    SETUP_VFILTER_OPTION( gradientColorCheck, stateChanged( int ) )
     SETUP_VFILTER_OPTION( gradientCartoonCheck, stateChanged( int ) )
 
     SETUP_VFILTER( motionblur )
