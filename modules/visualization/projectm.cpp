@@ -41,6 +41,7 @@
 #ifdef HAVE_XLOCALE_H
 # include <xlocale.h>
 #endif
+#include <limits.h>
 
 /*****************************************************************************
  * Module descriptor
@@ -104,11 +105,11 @@ vlc_plugin_begin ()
     add_loadfile("projectm-menu-font", FONT_PATH_MENU,
                  MENU_FONT_TXT, NULL)
 #endif
-    add_integer( "projectm-width", 800, WIDTH_TEXT, NULL, false )
-    add_integer( "projectm-height", 500, HEIGHT_TEXT, NULL, false )
-    add_integer( "projectm-meshx", 32, MESHX_TEXT, NULL, false )
-    add_integer( "projectm-meshy", 24, MESHY_TEXT, NULL, false )
-    add_integer( "projectm-texture-size", 1024, TEXTURE_TEXT, NULL, false )
+    add_integer_with_range( "projectm-width", 800, 0, INT_MAX, WIDTH_TEXT, NULL, false )
+    add_integer_with_range( "projectm-height", 500, 0, INT_MAX, HEIGHT_TEXT, NULL, false )
+    add_integer_with_range( "projectm-meshx", 32, 0, INT_MAX, MESHX_TEXT, NULL, false )
+    add_integer_with_range( "projectm-meshy", 24, 0, INT_MAX, MESHY_TEXT, NULL, false )
+    add_integer_with_range( "projectm-texture-size", 1024, 0, INT_MAX, TEXTURE_TEXT, NULL, false )
 vlc_plugin_end ()
 
 
