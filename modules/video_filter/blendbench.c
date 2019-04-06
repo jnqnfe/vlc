@@ -28,6 +28,8 @@
 # include "config.h"
 #endif
 
+#include <limits.h>
+
 #include <vlc_common.h>
 #include <vlc_plugin.h>
 #include <vlc_sout.h>
@@ -68,7 +70,7 @@ vlc_plugin_begin ()
     set_subcategory( SUBCAT_VIDEO_VFILTER )
 
     set_section( N_("Benchmarking"), NULL )
-    add_integer( CFG_PREFIX "loops", 1000, LOOPS_TEXT, NULL, false )
+    add_integer_with_range( CFG_PREFIX "loops", 1000, 0, INT_MAX, LOOPS_TEXT, NULL, false )
     add_integer_with_range( CFG_PREFIX "alpha", 128, 0, 255, ALPHA_TEXT,
               NULL, false )
 
