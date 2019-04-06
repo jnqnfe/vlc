@@ -48,7 +48,7 @@
 #define RENDERER_CFG_PREFIX "sout-renderer-"
 
 #define add_renderer_opts(prefix) \
-    add_integer(RENDERER_CFG_PREFIX "show-perf-warning", 1, \
+    add_integer_with_range(RENDERER_CFG_PREFIX "show-perf-warning", 1, 0, 1, \
             PERF_TEXT, PERF_LONGTEXT, true ) \
         change_private() \
     add_bool(prefix "audio-passthrough", false, \
