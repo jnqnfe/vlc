@@ -30,6 +30,7 @@
 #endif
 #include <string.h>
 #include <math.h>
+#include <limits.h>
 
 #include <vlc_common.h>
 #include <vlc_plugin.h>
@@ -86,7 +87,9 @@ vlc_plugin_begin ()
     add_integer(CFG_PREFIX "position", -1, POS_TEXT, POS_LONGTEXT, false)
         change_integer_list(pi_pos_values, ppsz_pos_descriptions)
     add_integer(CFG_PREFIX "barWidth", 10, BARWIDTH_TEXT, BARWIDTH_LONGTEXT, true)
+        change_integer_range(0, INT_MAX)
     add_integer(CFG_PREFIX "barHeight", 400, BARHEIGHT_TEXT, BARHEIGHT_LONGTEXT, true)
+        change_integer_range(0, INT_MAX)
 vlc_plugin_end ()
 
 
