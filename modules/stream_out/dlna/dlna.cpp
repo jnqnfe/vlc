@@ -407,7 +407,7 @@ int sout_stream_sys_t::UpdateOutput( sout_stream_t *p_stream )
     if ( !canRemux )
     {
         if ( !perf_warning_shown && i_codec_video == 0 && p_original_video
-          && var_InheritInteger( p_stream, RENDERER_CFG_PREFIX "show-perf-warning" ) )
+          && var_InheritBool( p_stream, RENDERER_CFG_PREFIX "show-perf-warning" ) )
         {
             int res = vlc_dialog_wait_question( p_stream,
                           VLC_DIALOG_QUESTION_WARNING,
@@ -420,7 +420,7 @@ int sout_stream_sys_t::UpdateOutput( sout_stream_t *p_stream )
                  return false;
             perf_warning_shown = true;
             if ( res == 2 )
-                config_PutInt(RENDERER_CFG_PREFIX "show-perf-warning", 0 );
+                config_PutInt(RENDERER_CFG_PREFIX "show-perf-warning", (int)false );
         }
 
         const int i_quality = var_InheritInteger( p_stream, SOUT_CFG_PREFIX "conversion-quality" );
