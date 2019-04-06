@@ -41,6 +41,7 @@
 #endif
 
 #include <math.h>
+#include <limits.h>
 
 #include "visual/fft.h"
 #include "visual/window.h"
@@ -65,8 +66,8 @@ vlc_plugin_begin()
     set_capability(VLC_CAP_VISUALIZATION, 0, Open, Close)
 
     set_subcategory(SUBCAT_AUDIO_VISUAL)
-    add_integer("glspectrum-width", 400, WIDTH_TEXT, WIDTH_LONGTEXT, false)
-    add_integer("glspectrum-height", 300, HEIGHT_TEXT, HEIGHT_LONGTEXT, false)
+    add_integer_with_range("glspectrum-width", 400, 0, INT_MAX, WIDTH_TEXT, WIDTH_LONGTEXT, false)
+    add_integer_with_range("glspectrum-height", 300, 0, INT_MAX, HEIGHT_TEXT, HEIGHT_LONGTEXT, false)
 vlc_plugin_end()
 
 
