@@ -68,6 +68,7 @@
 #include <ctype.h>
 #include <errno.h>
 #include <assert.h>
+#include <limits.h>
 
 /*****************************************************************************
  * Module descriptor
@@ -226,7 +227,7 @@ vlc_plugin_begin ()
     add_integer_with_range( SOUT_CFG_PREFIX "port-video", 0, 0, 65535,
                             PORT_VIDEO_TEXT, PORT_VIDEO_LONGTEXT, true )
 
-    add_integer( SOUT_CFG_PREFIX "ttl", -1, TTL_TEXT,
+    add_integer_with_range( SOUT_CFG_PREFIX "ttl", -1, -1, INT_MAX, TTL_TEXT,
                  TTL_LONGTEXT, true )
     add_bool( SOUT_CFG_PREFIX "rtcp-mux", false,
               RTCP_MUX_TEXT, RTCP_MUX_LONGTEXT, false )
