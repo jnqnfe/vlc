@@ -121,12 +121,6 @@ int DBMSDIOutput::Open()
 
     int i_card_index = var_InheritInteger(p_stream, CFG_PREFIX "card-index");
 
-    if (i_card_index < 0)
-    {
-        msg_Err(p_stream, "Invalid card index %d", i_card_index);
-        goto error;
-    }
-
     decklink_iterator = CreateDeckLinkIteratorInstance();
     if (!decklink_iterator)
     {

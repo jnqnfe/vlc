@@ -26,6 +26,8 @@
  * Preamble
  *****************************************************************************/
 
+#include <limits.h>
+
 #include "sdiout.hpp"
 
 #include "DBMSDIOutput.hpp"
@@ -179,7 +181,7 @@ vlc_plugin_begin ()
 
     set_subcategory(SUBCAT_SOUT_STREAM)
     set_section(N_("DeckLink General Options"), NULL)
-    add_integer(CFG_PREFIX "card-index", 0,
+    add_integer_with_range(CFG_PREFIX "card-index", 0, 0, INT_MAX,
                 CARD_INDEX_TEXT, CARD_INDEX_LONGTEXT, true)
 
     set_section(N_("DeckLink Video Options"), NULL)
