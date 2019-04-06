@@ -134,6 +134,7 @@ enum vlc_module_properties
 #define CONFIG_ITEM_FLOAT            (CONFIG_ITEM_CLASS_FLOAT   | 0x00) /* Float option */
 #define CONFIG_ITEM_INTEGER          (CONFIG_ITEM_CLASS_INTEGER | 0x00) /* Integer option */
 #define CONFIG_ITEM_RGB              (CONFIG_ITEM_CLASS_INTEGER | 0x01) /* RGB color option */
+#define CONFIG_ITEM_RGBA             (CONFIG_ITEM_CLASS_INTEGER | 0x02) /* RGBA color option */
 #define CONFIG_ITEM_STRING           (CONFIG_ITEM_CLASS_STRING  | 0x00) /* String option */
 #define CONFIG_ITEM_PASSWORD         (CONFIG_ITEM_CLASS_STRING  | 0x01) /* Password option (*) */
 #define CONFIG_ITEM_KEY              (CONFIG_ITEM_CLASS_STRING  | 0x02) /* Hot key option */
@@ -438,6 +439,10 @@ VLC_METADATA_EXPORTS
 #define add_rgb(name, value, text, longtext) \
     add_int_inner(CONFIG_ITEM_RGB, name, text, longtext, value) \
     change_integer_range( 0, 0xFFFFFF )
+
+#define add_rgba(name, value, text, longtext) \
+    add_int_inner(CONFIG_ITEM_RGBA, name, text, longtext, value) \
+    change_integer_range( 0, 0xFFFFFFFF )
 
 #define add_key(name, value, text, longtext) \
     add_string_inner(CONFIG_ITEM_KEY, "global-" name, text, longtext, \

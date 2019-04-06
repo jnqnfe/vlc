@@ -103,6 +103,7 @@ ConfigControl *ConfigControl::createControl( vlc_object_t *p_this,
         p_control = new StringConfigControl( p_this, p_item, parent, true );
         break;
     case CONFIG_ITEM_RGB:
+    case CONFIG_ITEM_RGBA:
         p_control = new ColorConfigControl( p_this, p_item, parent );
         break;
     case CONFIG_ITEM_INTEGER:
