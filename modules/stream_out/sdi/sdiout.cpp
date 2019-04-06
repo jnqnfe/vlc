@@ -192,7 +192,7 @@ vlc_plugin_begin ()
                 MODE_TEXT, MODE_LONGTEXT, true)
     add_bool(CFG_PREFIX "tenbits", true,
                 VIDEO_TENBITS_TEXT, VIDEO_TENBITS_LONGTEXT, true)
-    add_integer(CFG_PREFIX "nosignal-delay", 5,
+    add_integer_with_range(CFG_PREFIX "nosignal-delay", 5, 0, INT_MAX,
                 NOSIGNAL_INDEX_TEXT, NOSIGNAL_INDEX_LONGTEXT, true)
     add_integer(CFG_PREFIX "afd-line", 16,
                 AFDLINE_INDEX_TEXT, AFDLINE_INDEX_LONGTEXT, true)
