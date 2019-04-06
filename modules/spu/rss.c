@@ -35,6 +35,7 @@
 #endif
 
 #include <time.h>
+#include <limits.h>
 
 #include <vlc_common.h>
 #include <vlc_plugin.h>
@@ -211,9 +212,12 @@ vlc_plugin_begin ()
     set_section( N_("Misc"), NULL )
     add_integer( CFG_PREFIX "speed", 100000, SPEED_TEXT, SPEED_LONGTEXT,
                  false )
+        change_integer_range( 0, INT_MAX )
     add_integer( CFG_PREFIX "length", 60, LENGTH_TEXT, LENGTH_LONGTEXT,
                  false )
+        change_integer_range( 0, INT_MAX )
     add_integer( CFG_PREFIX "ttl", 1800, TTL_TEXT, TTL_LONGTEXT, false )
+        change_integer_range( 0, INT_MAX )
     add_bool( CFG_PREFIX "images", true, IMAGE_TEXT, IMAGE_LONGTEXT, false )
     add_integer( CFG_PREFIX "title", default_title, TITLE_TEXT, TITLE_LONGTEXT,
                  false )
@@ -262,7 +266,7 @@ static int CreateFilter( filter_t *p_filter )
     p_sys->i_length = var_CreateGetInteger( p_filter, CFG_PREFIX "length" );
     p_sys->b_images = var_CreateGetBool( p_filter, CFG_PREFIX "images" );
 
-    i_ttl = __MAX( 0, var_CreateGetInteger( p_filter, CFG_PREFIX "ttl" ) );
+    i_ttl = var_CreateGetInteger( p_filter, CFG_PREFIX "ttl" );
 
     p_sys->psz_marquee = malloc( p_sys->i_length + 1 );
     if( p_sys->psz_marquee == NULL )
