@@ -705,8 +705,6 @@ static int spectrometer_Run(visual_effect_t * p_effect, vlc_object_t *p_aout,
 
     band_sep_angle = 360.0 / i_nb_bands;
     section_sep_angle = 360.0 / i_sections;
-    if( i_peak_height < 1 )
-        i_peak_height = 1;
     max_band_length = p_effect->i_height / 2 - ( i_rad + i_peak_height + 1 );
 
     i_band_width = floor( 360 / i_nb_bands - i_separ );

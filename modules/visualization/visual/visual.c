@@ -167,7 +167,7 @@ vlc_plugin_begin ()
              PEAKS_TEXT, NULL, true )
     add_integer("spect-peak-width", 61,
              PEAK_WIDTH_TEXT, PEAK_WIDTH_LONGTEXT, true )
-    add_integer("spect-peak-height", 1,
+    add_integer_with_range("spect-peak-height", 1, 1, INT_MAX,
              PEAK_HEIGHT_TEXT, PEAK_HEIGHT_LONGTEXT, true )
 vlc_plugin_end ()
 
