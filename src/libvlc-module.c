@@ -1564,6 +1564,7 @@ vlc_module_begin ()
     add_module("audio-resampler", "audio resampler", NULL,
                AUDIO_RESAMPLER_TEXT, AUDIO_RESAMPLER_LONGTEXT)
 
+    set_subcategory( SUBCAT_AUDIO_MISC )
 
 /* Video options */
     set_category( CAT_VIDEO )
