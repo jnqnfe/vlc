@@ -36,6 +36,7 @@
 #include <vlc_filter.h>
 
 #include <goom/goom.h>
+#include <limits.h>
 
 /*****************************************************************************
  * Module descriptor
@@ -61,9 +62,9 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_VISUALIZATION, 0, Open, Close )
 
     set_subcategory( SUBCAT_AUDIO_VISUAL )
-    add_integer( "goom-width", 800,
+    add_integer_with_range( "goom-width", 800, 0, INT_MAX,
                  WIDTH_TEXT, RES_LONGTEXT, false )
-    add_integer( "goom-height", 500,
+    add_integer_with_range( "goom-height", 500,, 0, INT_MAX,
                  HEIGHT_TEXT, RES_LONGTEXT, false )
     add_integer_with_range( "goom-speed", 6, 1, 10,
                  SPEED_TEXT, SPEED_LONGTEXT, false )
