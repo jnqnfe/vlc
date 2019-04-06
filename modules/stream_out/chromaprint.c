@@ -62,7 +62,8 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_SOUT_STREAM, 0, Open, Close )
 
     set_subcategory( SUBCAT_SOUT_STREAM )
-    add_integer( "duration", 90, DURATION_TEXT, DURATION_LONGTEXT, true )
+    add_integer( "chromaprint-duration", 90, DURATION_TEXT, DURATION_LONGTEXT, true )
+    add_obsolete_integer( "duration" ) /* since 4.0.0 */
 vlc_plugin_end ()
 
 typedef struct sout_stream_id_sys_t sout_stream_id_sys_t;
@@ -100,7 +101,7 @@ static int Open( sout_stream_t *p_stream )
     p_sys->b_finished = false;
     p_sys->b_done = false;
     p_sys->i_total_samples = 0;
-    p_sys->i_duration = var_InheritInteger( p_stream, "duration" );
+    p_sys->i_duration = var_InheritInteger( p_stream, "chromaprint-duration" );
     p_sys->p_data = var_InheritAddress( p_stream, "fingerprint-data" );
     if ( !p_sys->p_data )
     {
