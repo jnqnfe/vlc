@@ -88,9 +88,11 @@ static void Destroy( filter_t * );
     "255 = totally opaque." )
 #define COLOR_TEXT N_("Text default color")
 #define COLOR_LONGTEXT N_("The color of the text that will be rendered on "\
-    "the video. This must be an hexadecimal (like HTML colors). The first two "\
-    "chars are for red, then green, then blue. #000000 = black, #FF0000 = red,"\
-    " #00FF00 = green, #FFFF00 = yellow (red + green), #FFFFFF = white" )
+    "the video. This is taken as a single integer, where individual bytes "\
+    "represent individual red, green and blue color components (like HTML "\
+    "colors), in RGB order. I.e. the RGB components map to an integer like so "\
+    "(in hexadecimal form): 0x00RRGGBB. Examples: black = 0x0; red = 0xFF0000); "\
+    "green = 0xFF00h; yellow = 0xFFFF00h; white = 0xFFFFFF." )
 
 #define BOLD_TEXT N_("Force bold")
 
