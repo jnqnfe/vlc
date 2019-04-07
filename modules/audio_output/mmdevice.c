@@ -1471,7 +1471,7 @@ vlc_module_begin()
     set_category(CAT_AUDIO)
     set_subcategory(SUBCAT_AUDIO_AOUT)
     set_callbacks(Open, Close)
-    add_module("mmdevice-backend", "aout stream", "any",
+    add_module("mmdevice-backend", VLC_CAP_STR_AOUT_STREAM, "any",
                N_("Output back-end"), N_("Audio output back-end interface."))
     add_integer( "mmdevice-passthrough", MM_PASSTHROUGH_DEFAULT,
                  MM_PASSTHROUGH_TEXT, MM_PASSTHROUGH_LONGTEXT, false )

@@ -394,7 +394,7 @@ vlc_module_begin () set_shortname ("Vulkan")
 
     set_category (CAT_VIDEO)
     set_subcategory (SUBCAT_VIDEO_VOUT)
-    add_module ("vk", "vulkan", NULL, VK_TEXT, PROVIDER_LONGTEXT)
+    add_module ("vk", VLC_CAP_STR_VULKAN, NULL, VK_TEXT, PROVIDER_LONGTEXT)
 
     set_section("Scaling", NULL)
     add_integer("upscaler-preset", SCALE_BUILTIN,

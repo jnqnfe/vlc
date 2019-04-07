@@ -69,7 +69,7 @@ vlc_module_begin ()
 
     set_category (CAT_VIDEO)
     set_subcategory (SUBCAT_VIDEO_VOUT)
-    add_module("gl", "opengl", NULL, GL_TEXT, PROVIDER_LONGTEXT)
+    add_module("gl", VLC_CAP_STR_OPENGL, NULL, GL_TEXT, PROVIDER_LONGTEXT)
 #endif
 
     add_glopts ()

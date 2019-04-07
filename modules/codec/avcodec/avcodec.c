@@ -128,7 +128,7 @@ vlc_module_begin ()
 
     add_integer( "avcodec-debug", 0, DEBUG_TEXT, NULL, true )
     add_string( "avcodec-codec", NULL, CODEC_TEXT, CODEC_LONGTEXT, true )
-    add_module("avcodec-hw", "hw decoder", "any", HW_TEXT, HW_LONGTEXT)
+    add_module("avcodec-hw", VLC_CAP_STR_HW_DECODER, "any", HW_TEXT, HW_LONGTEXT)
 #if defined(FF_THREAD_FRAME)
     add_integer( "avcodec-threads", 0, THREADS_TEXT, THREADS_LONGTEXT, true );
 #endif

@@ -49,7 +49,7 @@ vlc_module_begin ()
 
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
-    add_module("demuxdump-access", "sout access", "file",
+    add_module("demuxdump-access", VLC_CAP_STR_SOUT_ACCESS, "file",
                ACCESS_TEXT, NULL)
     add_savefile("demuxdump-file", "stream-demux.dump",
                  FILE_TEXT, FILE_LONGTEXT)

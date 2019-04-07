@@ -160,7 +160,7 @@ vlc_module_begin ()
     add_string( CFG_PREFIX "chroma", NULL, CHROMA_TEXT, CHROMA_LONGTEXT,
                 false )
 
-    add_module_list(CFG_PREFIX "vfilter", "video filter", NULL,
+    add_module_list(CFG_PREFIX "vfilter", VLC_CAP_STR_VIDEO_FILTER, NULL,
                     VFILTER_TEXT, VFILTER_LONGTEXT)
 
     add_integer_with_range( CFG_PREFIX "alpha", 255, 0, 255,
