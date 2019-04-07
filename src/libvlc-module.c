@@ -1528,20 +1528,20 @@ vlc_module_begin ()
               AUDIO_TIME_STRETCH_TEXT, AUDIO_TIME_STRETCH_LONGTEXT, false )
 
     set_subcategory( SUBCAT_AUDIO_AOUT )
-    add_module("aout", "audio output", NULL, AOUT_TEXT, AOUT_LONGTEXT)
+    add_module("aout", VLC_CAP_STR_AUDIO_OUTPUT, NULL, AOUT_TEXT, AOUT_LONGTEXT)
         change_short('A')
     add_string( "role", "video", ROLE_TEXT, ROLE_LONGTEXT, true )
         change_string_list( ppsz_roles, ppsz_roles_text )
 
     set_subcategory( SUBCAT_AUDIO_AFILTER )
-    add_module_list("audio-filter", "audio filter", NULL,
+    add_module_list("audio-filter", VLC_CAP_STR_AUDIO_FILTER, NULL,
                     AUDIO_FILTER_TEXT, AUDIO_FILTER_LONGTEXT)
     set_subcategory( SUBCAT_AUDIO_VISUAL )
-    add_module("audio-visual", "visualization", "none",
+    add_module("audio-visual", VLC_CAP_STR_VISUALIZATION, "none",
                AUDIO_VISUAL_TEXT, AUDIO_VISUAL_LONGTEXT)
 
     set_subcategory( SUBCAT_AUDIO_RESAMPLER )
-    add_module("audio-resampler", "audio resampler", NULL,
+    add_module("audio-resampler", VLC_CAP_STR_AUDIO_RESAMPLER, NULL,
                AUDIO_RESAMPLER_TEXT, AUDIO_RESAMPLER_LONGTEXT)
 
 /* Video options */
@@ -1651,11 +1651,11 @@ vlc_module_begin ()
         change_safe()
 
     set_subcategory( SUBCAT_VIDEO_VOUT )
-    add_module("vout", "vout display", NULL, VOUT_TEXT, VOUT_LONGTEXT)
+    add_module("vout", VLC_CAP_STR_VOUT_DISPLAY, NULL, VOUT_TEXT, VOUT_LONGTEXT)
         change_short('V')
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )
-    add_module_list("video-filter", "video filter", NULL,
+    add_module_list("video-filter", VLC_CAP_STR_VIDEO_FILTER, NULL,
                     VIDEO_FILTER_TEXT, VIDEO_FILTER_LONGTEXT)
 
     set_subcategory( SUBCAT_VIDEO_SPLITTER )
@@ -1672,7 +1672,7 @@ vlc_module_begin ()
     add_bool( "spu", 1, SPU_TEXT, SPU_LONGTEXT, false )
         change_safe ()
     add_bool( "osd", 1, OSD_TEXT, OSD_LONGTEXT, false )
-    add_module("text-renderer", "text renderer", NULL,
+    add_module("text-renderer", VLC_CAP_STR_TEXT_RENDERER, NULL,
                TEXTRENDERER_TEXT, TEXTRENDERER_LONGTEXT)
 
     set_section( N_("Subtitles") , NULL )
@@ -1697,9 +1697,9 @@ vlc_module_begin ()
                SUB_TEXT_SCALE_TEXT, SUB_TEXT_SCALE_LONGTEXT, false )
         change_volatile  ()
     set_section( N_( "Overlays" ) , NULL )
-    add_module_list("sub-source", "sub source", NULL,
+    add_module_list("sub-source", VLC_CAP_STR_SUB_SOURCE, NULL,
                     SUB_SOURCE_TEXT, SUB_SOURCE_LONGTEXT)
-    add_module_list("sub-filter", "sub filter", NULL,
+    add_module_list("sub-filter", VLC_CAP_STR_SUB_FILTER, NULL,
                     SUB_FILTER_TEXT, SUB_FILTER_LONGTEXT)
 
     set_section( N_( "Multiple Subtitles" ) , NULL )
@@ -1918,11 +1918,11 @@ vlc_module_begin ()
     add_category_hint(N_("Input access and codecs"), CODEC_CAT_LONGTEXT)
     set_subcategory( SUBCAT_INPUT_ACCESS )
 
-    add_module("access", "access", NULL, ACCESS_TEXT, ACCESS_LONGTEXT)
+    add_module("access", VLC_CAP_STR_ACCESS, NULL, ACCESS_TEXT, ACCESS_LONGTEXT)
 
     set_subcategory( SUBCAT_INPUT_DEMUX )
 
-    add_module("demux", "demux", "any", DEMUX_TEXT, DEMUX_LONGTEXT)
+    add_module("demux", VLC_CAP_STR_DEMUX, "any", DEMUX_TEXT, DEMUX_LONGTEXT)
     add_string( "demux-filter", NULL, DEMUX_FILTER_TEXT, DEMUX_FILTER_LONGTEXT, true )
 
     set_subcategory( SUBCAT_INPUT_ACODEC )
@@ -1935,7 +1935,7 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_INPUT_SCODEC )
     set_subcategory( SUBCAT_INPUT_STREAM_FILTER )
 
-    add_module_list("stream-filter", "stream_filter", NULL,
+    add_module_list("stream-filter", VLC_CAP_STR_STREAM_FILTER, NULL,
                     STREAM_FILTER_TEXT, STREAM_FILTER_LONGTEXT)
 
 /* Stream output options */
@@ -1968,16 +1968,16 @@ vlc_module_begin ()
                                ANN_SAPINTV_LONGTEXT, true )
 
     set_subcategory( SUBCAT_SOUT_MUX )
-    add_module("mux", "sout mux", NULL, MUX_TEXT, MUX_LONGTEXT)
+    add_module("mux", VLC_CAP_STR_SOUT_MUX, NULL, MUX_TEXT, MUX_LONGTEXT)
     set_subcategory( SUBCAT_SOUT_ACO )
-    add_module("access_output", "sout access", NULL,
+    add_module("access_output", VLC_CAP_STR_SOUT_ACCESS, NULL,
                ACCESS_OUTPUT_TEXT, ACCESS_OUTPUT_LONGTEXT)
     add_integer( "ttl", -1, TTL_TEXT, TTL_LONGTEXT, true )
     add_string( "miface", NULL, MIFACE_TEXT, MIFACE_LONGTEXT, true )
     add_integer( "dscp", 0, DSCP_TEXT, DSCP_LONGTEXT, true )
 
     set_subcategory( SUBCAT_SOUT_PACKETIZER )
-    add_module("packetizer", "packetizer", NULL,
+    add_module("packetizer", VLC_CAP_STR_PACKETIZER, NULL,
                PACKETIZER_TEXT, PACKETIZER_LONGTEXT)
 
     set_subcategory( SUBCAT_SOUT_VOD )
@@ -1987,7 +1987,7 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_ADVANCED_MISC )
     add_category_hint(N_("Advanced"), NULL)
     set_section( N_("Special modules"), NULL )
-    add_module("vod-server", "vod server", NULL,
+    add_module("vod-server", VLC_CAP_STR_VOD_SERVER, NULL,
                VOD_SERVER_TEXT, VOD_SERVER_LONGTEXT)
 
     set_section( N_("Plugins" ), NULL )
