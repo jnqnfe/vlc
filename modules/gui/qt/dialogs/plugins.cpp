@@ -164,7 +164,7 @@ inline void PluginTab::FillTree()
 
         QStringList qs_item;
         qs_item << qfu( module_get_name( p_module, true ) )
-                << qfu( vlc_module_get_capability_str( p_module ) )
+                << qfu( vlc_module_get_capability_name( p_module ) )
                 << QString::number( module_get_score( p_module ) );
 #ifndef DEBUG
         if( qs_item.at(1).isEmpty() ) continue;
