@@ -320,11 +320,6 @@ module_t *module_find (const char *name)
     return NULL;
 }
 
-bool module_exists (const char * psz_name)
-{
-    return module_find (psz_name) != NULL;
-}
-
 module_config_item_t *module_config_get( const module_t *module,
                                          unsigned *restrict psize )
 {
