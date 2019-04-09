@@ -779,6 +779,29 @@ module_t **module_list_get (size_t *n)
     return tab;
 }
 
+module_t **vlc_module_list_have_config (size_t *n)
+{
+    assert (n != NULL);
+
+    module_t **tab = malloc(vlc_plugins_count * sizeof (*tab));
+    if (unlikely(tab == NULL))
+    {
+        *n = 0;
+        return NULL;
+    }
+
+    size_t i = 0;
+    for (vlc_plugin_t *lib = vlc_plugins; lib != NULL; lib = lib->next)
+    {
+        /* first module's attributes are used to represent plugin and thus its
+           option set! */
+        if (lib->conf.count > 0)
+            tab[i++] = lib->module;
+    }
+    *n = i;
+    return tab;
+}
+
 ssize_t vlc_module_list_cap_ext (module_t ***restrict list, enum vlc_module_cap id, const char *name)
 {
     assert(id != VLC_CAP_INVALID);

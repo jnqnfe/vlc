@@ -240,7 +240,8 @@ VLC_API void module_config_free( module_config_item_t *tab);
 /**
  * Frees a list of VLC modules.
  *
- * \param list list obtained by module_list_get() or vlc_module_list_cap_ext()
+ * \param list list obtained by module_list_get(), vlc_module_list_cap_ext()
+ *             or vlc_module_list_have_config()
  */
 VLC_API void module_list_free(module_t **);
 
@@ -252,6 +253,19 @@ VLC_API void module_list_free(module_t **);
  *         or NULL in case of error (in that case, *n is zeroed).
  */
 VLC_API module_t ** module_list_get(size_t *n) VLC_USED;
+
+/**
+ * Gets the list of VLC modules that have a config set.
+ *
+ * \note: Only those with at least one proper config item are included; so
+ *        called "special"/"hint" items (like those selecting category) do not
+ *        count.
+ *
+ * \param n [OUT] pointer to the number of modules
+ * \return table of module pointers (release with module_list_free()),
+ *         or NULL in case of error (in that case, *n is zeroed).
+ */
+VLC_API module_t ** vlc_module_list_have_config(size_t *n) VLC_USED;
 
 /**
  * Gets a sorted list of all VLC modules with a given capability.

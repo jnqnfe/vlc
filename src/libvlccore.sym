@@ -258,6 +258,7 @@ module_gettext
 vlc_module_list_cap_ext
 module_list_free
 module_list_get
+vlc_module_list_have_config
 vlc_module_need_ext
 module_unneed
 vlc_module_load_ext
