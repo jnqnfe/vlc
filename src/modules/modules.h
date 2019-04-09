@@ -114,21 +114,6 @@ void module_LoadPlugins(vlc_object_t *);
 void module_EndBank (bool);
 int module_Map(struct vlc_logger *, vlc_plugin_t *);
 
-/**
- * Gets a sorted list of all VLC modules with a given capability.
- *
- * The list is sorted from the highest module score to the lowest.
- *
- * \note *list must be freed with module_list_free().
- *
- * \param list pointer to the table of modules [OUT]
- * \param id capability of modules to look for (use VLC_CAP_CUSTOM with
- *           requests for custom string based capabilities)
- * \param name name of custom capability of modules to look for
- * \return the number of matching found, or -1 on error (*list is then NULL).
- */
-ssize_t module_list_cap (module_t ***list, enum vlc_module_cap id, const char *name);
-
 int vlc_bindtextdomain (const char *);
 
 /* Low-level OS-dependent handler */

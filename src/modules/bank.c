@@ -778,7 +778,7 @@ module_t **module_list_get (size_t *n)
     return tab;
 }
 
-ssize_t module_list_cap (module_t ***restrict list, enum vlc_module_cap id, const char *name)
+ssize_t vlc_module_list_cap_ext (module_t ***restrict list, enum vlc_module_cap id, const char *name)
 {
     assert(id != VLC_CAP_INVALID);
 

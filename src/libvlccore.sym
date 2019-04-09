@@ -255,6 +255,7 @@ module_get_name
 module_get_object
 module_get_score
 module_gettext
+vlc_module_list_cap_ext
 module_list_free
 module_list_get
 vlc_module_need_ext

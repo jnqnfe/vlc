@@ -146,7 +146,8 @@ module_t *(vlc_module_load_ext)(struct vlc_logger *log,
     const char *cap_name = (cap == VLC_CAP_CUSTOM) ? custom_cap :
         vlc_module_cap_get_textid(cap);
 
-    total = module_list_cap (&mods, cap, cap_name);
+    total = vlc_module_list_cap_ext (&mods, cap, cap_name);
+
     vlc_debug(log, "looking for %s module matching \"%s\": %zd candidates",
               cap_name, name, total);
     if (total <= 0)

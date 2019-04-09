@@ -238,9 +238,9 @@ VLC_API module_config_item_t *module_config_get(const module_t *module,
 VLC_API void module_config_free( module_config_item_t *tab);
 
 /**
- * Frees a flat list of VLC modules.
+ * Frees a list of VLC modules.
  *
- * \param list list obtained by module_list_get()
+ * \param list list obtained by module_list_get() or vlc_module_list_cap_ext()
  */
 VLC_API void module_list_free(module_t **);
 
@@ -252,6 +252,26 @@ VLC_API void module_list_free(module_t **);
  *         or NULL in case of error (in that case, *n is zeroed).
  */
 VLC_API module_t ** module_list_get(size_t *n) VLC_USED;
+
+/**
+ * Gets a sorted list of all VLC modules with a given capability.
+ *
+ * The list is sorted from the highest module score to the lowest.
+ *
+ * \note *list must be freed with module_list_free().
+ * \note macros vlc_module_list_cap() and vlc_module_list_cap_custom() are
+ * provided for specifically 'built-in' and 'custom' capabilities respectively.
+ *
+ * \param list pointer to the table of modules [OUT]
+ * \param id capability of modules to look for; use VLC_CAP_CUSTOM for those
+ *           with a custom capability
+ * \param name custom capability name (use NULL where non-custom)
+ * \return the number of matching found, or -1 on error (*list is then NULL).
+ */
+VLC_API ssize_t vlc_module_list_cap_ext (module_t ***list, enum vlc_module_cap id, const char *name) VLC_USED;
+
+#define vlc_module_list_cap(l, c)        vlc_module_list_cap_ext(l, c, NULL)
+#define vlc_module_list_cap_custom(l, c) vlc_module_list_cap_ext(l, VLC_CAP_CUSTOM, c)
 
 /**
  * Gets the internal name of a module.
