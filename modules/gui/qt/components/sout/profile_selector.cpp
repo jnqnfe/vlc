@@ -473,41 +473,44 @@ VLCProfileEditor::VLCProfileEditor( const QString& qs_name, const QString& value
 
 void VLCProfileEditor::loadCapabilities()
 {
-    size_t count;
-    module_t **p_all = module_list_get (&count);
-
-    /* Parse the module list for capabilities and probe each of them */
+    module_t **module_list = NULL;
+    ssize_t count = vlc_module_list_cap( &module_list, VLC_CAP_SOUT_MUX );
+    assert(count >= 0);
+    for (size_t i = 0; i < (size_t)count; i++)
+    {
+        module_t *p_module = module_list[i];
+        caps["muxers"].insert( module_get_object( p_module ) );
+    }
+    module_list_free(module_list);
+/*
+    count = vlc_module_list_cap( &module_list, VLC_CAP_ENCODER );
+    assert(count >= 0);
     for (size_t i = 0; i < count; i++)
     {
-        module_t *p_module = p_all[i];
-
-        enum vlc_module_cap cap = vlc_module_get_capability( p_module );
-        if( cap == VLC_CAP_SOUT_MUX )
-            caps["muxers"].insert( module_get_object( p_module ) );
-//        else if ( cap == VLC_CAP_ENCODER )
-//            caps["encoders"].insert( module_get_object( p_module ) );
+        module_t *p_module = module_list[i];
+        caps["encoders"].insert( module_get_object( p_module ) );
     }
-    module_list_free (p_all);
+    module_list_free(module_list);
+*/
 }
 
 inline void VLCProfileEditor::registerFilters()
 {
-    size_t count;
-    module_t **p_all = module_list_get (&count);
+    module_t **vf_list = NULL, **af_list = NULL;
+    ssize_t vf_count = vlc_module_list_cap( &vf_list, VLC_CAP_VIDEO_FILTER );
+    ssize_t af_count = vlc_module_list_cap( &af_list, VLC_CAP_AUDIO_FILTER );
+    assert(vf_count >= 0);
+    assert(af_count >= 0);
 
-    for (size_t i = 0; i < count; i++)
+    QListWidget *listWidget = NULL;
+    QListWidgetItem *item;
+
+    for (size_t i = 0; i < (size_t)vf_count; i++)
     {
-        module_t *p_module = p_all[i];
+        module_t *p_module = vf_list[i];
         if ( module_get_score( p_module ) > 0 ) continue;
 
-        enum vlc_module_cap capability = vlc_module_get_capability( p_module );
-        QListWidget *listWidget = NULL;
-        QListWidgetItem *item;
-
-        if ( capability == VLC_CAP_VIDEO_FILTER )
-            listWidget = ui.valueholder_video_filters;
-        else if ( capability == VLC_CAP_AUDIO_FILTER )
-            listWidget = ui.valueholder_audio_filters;
+        listWidget = ui.valueholder_video_filters;
 
         if ( !listWidget ) continue;
 
@@ -517,7 +520,24 @@ inline void VLCProfileEditor::registerFilters()
         item->setData( Qt::UserRole, QString( module_get_object( p_module ) ) );
         listWidget->addItem( item );
     }
-    module_list_free (p_all);
+    module_list_free (vf_list);
+
+    for (size_t i = 0; i < (size_t)af_count; i++)
+    {
+        module_t *p_module = af_list[i];
+        if ( module_get_score( p_module ) > 0 ) continue;
+
+        listWidget = ui.valueholder_audio_filters;
+
+        if ( !listWidget ) continue;
+
+        item = new QListWidgetItem( module_get_name( p_module, true ) );
+        item->setCheckState( Qt::Unchecked );
+        item->setToolTip( QString( module_get_help( p_module ) ) );
+        item->setData( Qt::UserRole, QString( module_get_object( p_module ) ) );
+        listWidget->addItem( item );
+    }
+    module_list_free (af_list);
 
     ui.valueholder_video_filters->sortItems();
     ui.valueholder_audio_filters->sortItems();
