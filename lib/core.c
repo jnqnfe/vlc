@@ -162,15 +162,16 @@ static libvlc_module_description_t *module_description_list_get(
     libvlc_module_description_t *p_list = NULL,
                           *p_actual = NULL,
                           *p_previous = NULL;
-    size_t count;
-    module_t **module_list = module_list_get( &count );
 
-    for (size_t i = 0; i < count; i++)
+    assert(capability != VLC_CAP_CUSTOM);
+
+    module_t **module_list = NULL;
+    ssize_t count = vlc_module_list_cap( &module_list, capability );
+    assert(count >= 0);
+
+    for (ssize_t i = 0; i < count; i++)
     {
         module_t *p_module = module_list[i];
-
-        if( vlc_module_get_capability( p_module ) != capability )
-            continue;
 
         p_actual = ( libvlc_module_description_t * ) malloc( sizeof( libvlc_module_description_t ) );
         if ( p_actual == NULL )

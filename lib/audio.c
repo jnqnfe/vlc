@@ -61,16 +61,15 @@ static audio_output_t *GetAOut( libvlc_media_player_t *mp )
 libvlc_audio_output_t *
         libvlc_audio_output_list_get( libvlc_instance_t *p_instance )
 {
-    size_t count;
-    module_t **module_list = module_list_get( &count );
+    module_t **module_list = NULL;
+    ssize_t count = vlc_module_list_cap( &module_list, VLC_CAP_AUDIO_OUTPUT );
+    assert(count >= 0);
+
     libvlc_audio_output_t *list = NULL;
 
-    for (size_t i = 0; i < count; i++)
+    for (ssize_t i = 0; i < count; i++)
     {
         module_t *module = module_list[i];
-
-        if( vlc_module_get_capability( module ) != VLC_CAP_AUDIO_OUTPUT )
-            continue;
 
         libvlc_audio_output_t *item = malloc( sizeof( *item ) );
         if( unlikely(item == NULL) )
