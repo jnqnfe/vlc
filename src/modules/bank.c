@@ -112,6 +112,7 @@ static struct
 } modules = { VLC_STATIC_MUTEX, NULL, {}, NULL, 0 };
 
 vlc_plugin_t *vlc_plugins = NULL;
+size_t vlc_plugins_count = 0;
 
 /* reset/init the array */
 static void vlc_reset_builtin_cap_tree() {
@@ -129,6 +130,9 @@ static void vlc_reset_builtin_cap_tree() {
  */
 static int vlc_module_store(module_t *mod)
 {
+    /* increment counter even if VLC_CAP_INVALID, it should be a complete count */
+    vlc_plugins_count++;
+
     switch (mod->capability)
     {
         case VLC_CAP_INVALID:
@@ -695,6 +699,7 @@ void module_EndBank (bool b_plugins)
         caches = modules.caches;
         custom_caps_tree = modules.custom_caps_tree;
         vlc_plugins = NULL;
+        vlc_plugins_count = 0;
         modules.caches = NULL;
         modules.custom_caps_tree = NULL;
         vlc_reset_builtin_cap_tree();
@@ -755,24 +760,23 @@ void module_list_free (module_t **list)
 
 module_t **module_list_get (size_t *n)
 {
-    module_t **tab = NULL;
-    size_t i = 0;
-
     assert (n != NULL);
 
+    module_t **tab = malloc(vlc_plugins_count * sizeof (*tab));
+    if (unlikely(tab == NULL))
+    {
+        *n = 0;
+        return NULL;
+    }
+
+    size_t i = 0;
     for (vlc_plugin_t *lib = vlc_plugins; lib != NULL; lib = lib->next)
     {
-        module_t **nt = realloc(tab, (i + lib->modules_count) * sizeof (*tab));
-        if (unlikely(nt == NULL))
-        {
-            free (tab);
-            *n = 0;
-            return NULL;
-        }
-
-        tab = nt;
         for (module_t *m = lib->module; m != NULL; m = m->next)
+        {
+            assert(i < vlc_plugins_count);
             tab[i++] = m;
+        }
     }
     *n = i;
     return tab;
