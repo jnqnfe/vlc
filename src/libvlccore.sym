@@ -258,7 +258,6 @@ module_gettext
 module_list_free
 module_list_get
 vlc_module_need_ext
-vlc_module_provides
 module_unneed
 vlc_module_load_ext
 vlc_module_unload

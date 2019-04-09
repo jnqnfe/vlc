@@ -42,17 +42,6 @@
 #include "vlc_arrays.h"
 #include "modules/modules.h"
 
-bool vlc_module_provides(const module_t *m, enum vlc_module_cap cap,
-                     const char *custom_cap)
-{
-    assert(cap != VLC_CAP_INVALID);
-    if (cap != VLC_CAP_CUSTOM)
-        return vlc_module_get_capability(m) == cap;
-    if (custom_cap == NULL)
-        return false;
-    return !strcmp(vlc_module_get_custom_capability(m), custom_cap);
-}
-
 const char *module_get_object( const module_t *m )
 {
     if (unlikely(m->i_shortcuts == 0))

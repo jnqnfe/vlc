@@ -254,23 +254,6 @@ VLC_API void module_list_free(module_t **);
 VLC_API module_t ** module_list_get(size_t *n) VLC_USED;
 
 /**
- * Checks whether a module implements a capability.
- *
- * \param m the module
- * \param cap the capability to check (set to VLC_CAP_CUSTOM to check a custom string)
- * \param custom_cap the string form of a custom capability to check
- * \retval true if the module has the capability
- * \retval false if the module has another capability
- */
-VLC_API bool vlc_module_provides(const module_t *m, enum vlc_module_cap cap, const char *custom_cap);
-
-/* deprecated */
-VLC_DEPRECATED static inline bool module_provides(const module_t *m, const char *cap)
-{
-    return vlc_module_provides(m, vlc_module_cap_from_textid(cap), cap);
-}
-
-/**
  * Gets the internal name of a module.
  *
  * \param m the module
@@ -386,6 +369,33 @@ static inline const char *vlc_module_get_capability_name (const module_t *m)
  * return the score for the capability
  */
 VLC_API int module_get_score(const module_t *m) VLC_USED;
+
+/**
+ * Checks whether a module implements a capability.
+ *
+ * \param m the module
+ * \param cap the capability to check (set to VLC_CAP_CUSTOM to check a custom string)
+ * \param custom_cap the string form of a custom capability to check
+ * \retval true if the module has the capability
+ * \retval false if the module has another capability
+ */
+static inline bool vlc_module_provides(const module_t *m,
+                                       enum vlc_module_cap cap,
+                                       const char *custom_cap)
+{
+    assert(cap != VLC_CAP_INVALID);
+    if (cap != VLC_CAP_CUSTOM)
+        return vlc_module_get_capability(m) == cap;
+    if (custom_cap == NULL)
+        return false;
+    return !strcmp(vlc_module_get_custom_capability(m), custom_cap);
+}
+
+/* deprecated */
+VLC_DEPRECATED static inline bool module_provides(const module_t *m, const char *cap)
+{
+    return vlc_module_provides(m, vlc_module_cap_from_textid(cap), cap);
+}
 
 /**
  * Translates a string using the module's text domain
