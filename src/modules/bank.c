@@ -747,10 +747,7 @@ void module_LoadPlugins(vlc_object_t *obj)
     }
     vlc_mutex_unlock (&modules.lock);
 
-    size_t count;
-    module_t **list = module_list_get (&count);
-    module_list_free (list);
-    msg_Dbg (obj, "plug-ins loaded: %zu modules", count);
+    msg_Dbg (obj, "plug-ins loaded: %zu modules", vlc_plugins_count);
 }
 
 void module_list_free (module_t **list)
