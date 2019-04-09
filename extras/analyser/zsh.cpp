@@ -245,7 +245,7 @@ int main(int argc, const char **argv)
     size_t modules = 0;
     module_t **mod_list;
 
-    mod_list = module_list_get(&modules);
+    mod_list = vlc_module_list_have_config(&modules);
     if (!mod_list || modules == 0)
     {
         libvlc_release(libvlc);

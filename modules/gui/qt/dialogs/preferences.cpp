@@ -177,7 +177,7 @@ void PrefsDialog::setAdvanced()
     if( !advanced_tree )
     {
         /* Creation */
-        p_list = module_list_get( &count );
+        p_list = vlc_module_list_have_config( &count );
         advanced_tree = new PrefsTree( p_intf, simple_tree_panel, p_list, count );
         /* and connections */
         CONNECT( advanced_tree,

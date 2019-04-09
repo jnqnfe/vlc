@@ -478,7 +478,7 @@
 
     /* List the modules */
     size_t count, i;
-    module_t ** modules = module_list_get(&count);
+    module_t ** modules = vlc_module_list_have_config(&count);
     if (!modules) return nil;
 
     /* Build a tree of the plugins */
@@ -494,8 +494,6 @@
         module_t * p_module = modules[i];
         bool mod_is_main = module_is_main(p_module);
 
-        /* Exclude empty plugins (submodules don't have config */
-        /* options, they are stored in the parent module) */
         if (mod_is_main) {
             pluginItem = self;
             _configItems = module_config_get(p_module, &confsize);

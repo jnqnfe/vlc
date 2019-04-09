@@ -115,7 +115,7 @@ static int build_lists(data_t* data)
         return -1;
     }
 
-    module_t **mod_list = module_list_get(&data->set_count);
+    module_t **mod_list = vlc_module_list_have_config(&data->set_count);
     if (mod_list == NULL)
     {
         fprintf(stderr, "ERROR: FAILED TO GET MODULES LIST\n");
