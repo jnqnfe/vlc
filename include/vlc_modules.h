@@ -221,19 +221,28 @@ VLC_USED static inline bool vlc_module_exists (const char * name)
 /**
  * Gets the table of module configuration items.
  *
+ * \note Most users of this function will not be interested in 'private'
+ * options (those not displayed in the GUI, like --help), nor obsolete items.
+ * You can filter those out using true for both of the latter parameters, or
+ * use the vlc_module_config_get() convenience macro.
+ *
  * \note Use module_config_free() to release the allocated memory.
  *
  * \param module the module
  * \param psize the size of the configuration returned
+ * \param fpriv whether or not to filter private options (true = filtered out)
+ * \param fobs whether or not to filter obsolete options (true = filtered out)
  * \return the configuration as an array, or NULL if the module has no config items
  */
-VLC_API module_config_item_t *module_config_get(const module_t *module,
-                                           unsigned *restrict psize) VLC_USED;
+VLC_API module_config_item_t *vlc_module_config_get_ext(const module_t *module,
+                                                        unsigned *restrict psize,
+                                                        bool fpriv, bool fobs) VLC_USED;
+#define module_config_get(m, s) vlc_module_config_get_ext(m, s, true, true)
 
 /**
  * Releases a configuration items table.
  *
- * \param tab base address of a table returned by module_config_get()
+ * \param tab base address of a table returned by vlc_module_config_get_ext()
  */
 VLC_API void module_config_free( module_config_item_t *tab);
 

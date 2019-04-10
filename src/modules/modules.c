@@ -310,8 +310,9 @@ module_t *module_find (const char *name)
     return NULL;
 }
 
-module_config_item_t *module_config_get( const module_t *module,
-                                         unsigned *restrict psize )
+module_config_item_t *vlc_module_config_get_ext( const module_t *module,
+                                                 unsigned *restrict psize,
+                                                 bool fpriv, bool fobs )
 {
     const vlc_plugin_t *plugin = module->plugin;
 
@@ -336,8 +337,9 @@ module_config_item_t *module_config_get( const module_t *module,
     for( i = 0, j = 0; i < size; i++ )
     {
         const module_config_item_t *item = plugin->conf.items + i;
-        if( item->b_internal /* internal option */
-         || item->b_removed /* removed option */ )
+        if( fpriv && item->b_internal ) /* internal option */
+            continue;
+        if( fobs && item->b_removed ) /* removed option */
             continue;
 
         memcpy( config + j, item, sizeof( *config ) );
