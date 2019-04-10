@@ -41,9 +41,9 @@ typedef struct vlc_plugin_t
     struct
     {
         module_config_item_t *items; /**< Table of configuration items */
-        size_t size; /**< Total count of all items */
-        size_t count; /**< Count of real options (excludes hints) */
-        size_t booleans; /**< Count of options that are of boolean type */
+        uint16_t size; /**< Total count of all items */
+        uint16_t count; /**< Count of real options (excludes hints) */
+        uint16_t booleans; /**< Count of options that are of boolean type */
     } conf;
 
 #ifdef HAVE_DYNAMIC_PLUGINS

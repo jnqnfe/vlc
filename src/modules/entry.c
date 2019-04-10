@@ -178,6 +178,7 @@ static module_config_item_t *vlc_config_create(vlc_plugin_t *plugin, int type)
         if (type == CONFIG_ITEM_BOOL)
             plugin->conf.booleans++;
     }
+    assert(plugin->conf.size < (UINT16_MAX - 1));
     plugin->conf.size++;
 
     return tab;
