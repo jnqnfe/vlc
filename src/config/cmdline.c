@@ -32,6 +32,7 @@
 #include <vlc_plugin.h>
 
 #include "vlc_getopt.h"
+#include "vlc_jaro_winkler.h"
 
 #include "configuration.h"
 #include "modules/modules.h"
@@ -129,6 +130,7 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
             if( p_longopts[i_index].name == NULL ) continue;
             p_longopts[i_index].flag = &flag;
             p_longopts[i_index].val = 0;
+            p_longopts[i_index].is_obsolete = p_item->b_removed;
 
             if( CONFIG_CLASS(p_item->i_type) != CONFIG_ITEM_BOOL )
                 p_longopts[i_index].has_arg = true;
@@ -144,6 +146,7 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
                     continue;
                 p_longopts[i_index].name = psz_name;
                 p_longopts[i_index].has_arg = false;
+                p_longopts[i_index].is_obsolete = p_item->b_removed;
                 p_longopts[i_index].flag = &flag;
                 p_longopts[i_index].val = 1;
                 i_index++;
@@ -152,6 +155,7 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
                     continue;
                 p_longopts[i_index].name = psz_name;
                 p_longopts[i_index].has_arg = false;
+                p_longopts[i_index].is_obsolete = p_item->b_removed;
                 p_longopts[i_index].flag = &flag;
                 p_longopts[i_index].val = 1;
             }
@@ -279,13 +283,35 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
                 fputs( "vlc: missing mandatory argument ", stderr );
             else
                 fputs( "vlc: unknown option ", stderr );
+
             if( state.opt )
-            {
                 fprintf( stderr, "`-%c'\n", state.opt );
-            }
+            else if ( i_cmd == ':' )
+                fprintf( stderr, "`%s'\n", ppsz_argv[state.ind-1] );
             else
             {
-                fprintf( stderr, "`%s'\n", ppsz_argv[state.ind-1] );
+                fprintf( stderr, "`%s'", ppsz_argv[state.ind-1] );
+
+                /* suggestion matching */
+                double jw_filter = 0.8, best_metric = jw_filter, metric;
+                const char *best = NULL;
+                const char *jw_a = ppsz_argv[state.ind-1] + 2;
+                for (size_t i = 0; i < (size_t)i_opts; i++) {
+                    if (p_longopts[i].is_obsolete)
+                        continue;
+                    const char *jw_b = p_longopts[i].name;
+                    if (jaro_winkler(jw_a, jw_b, &metric) == 0) { //ignore malloc failed calls
+                        if (metric > best_metric || (!best && metric >= jw_filter)) {
+                            best = jw_b;
+                            best_metric = metric;
+                        }
+                    }
+                }
+                if (best) {
+                    fprintf( stderr, "; did you mean `--%s'?\n", best );
+                }
+                else
+                    fprintf( stderr, "\n" );
             }
             fputs( "Try `vlc --help' for more information.\n", stderr );
             goto out;

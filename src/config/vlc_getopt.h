@@ -77,6 +77,12 @@ typedef struct vlc_getopt_s
    false if the option does not take an argument,
    true if the option requires an argument.
 
+   The field `is_obsolete` is a custom VLC addition, tracking whether or not
+   an option is obsolete (such options in VLC remain in existance for some
+   time, with a different error printed compared to that used for unknown
+   options). We store this here as a convenience; it is read by the
+   'suggestion matching' feature, which needs to ignore such options.
+
    If the field `flag' is not NULL, it points to a variable that is set
    to the value given in the field `val' when the option is found, but
    left unchanged if the option is not found.
@@ -92,6 +98,7 @@ struct vlc_option
 {
     const char *name;
     bool has_arg;
+    bool is_obsolete;
     int *flag;
     int val;
 };
