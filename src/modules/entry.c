@@ -379,9 +379,12 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
             break;
 
         case VLC_CONFIG_SHORTCUT:
-            item->i_short = va_arg (ap, int);
+        {
+            char c = va_arg (ap, int);
+            assert(c != '\0' && c != '?' && c != ':');
+            item->i_short = c;
             break;
-
+        }
         case VLC_CONFIG_SAFE:
             item->b_safe = true;
             break;
