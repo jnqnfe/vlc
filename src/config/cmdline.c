@@ -57,7 +57,7 @@
 int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
                         const char *ppsz_argv[], int *pindex )
 {
-    int i_cmd, i_index, i_opts, i_shortopts, flag, i_verbose = 0;
+    int i_cmd, i_index, i_opts, i_shortopts = 0, flag, i_verbose = 0;
     struct vlc_option *p_longopts;
     const char **argv_copy = NULL;
 #define b_ignore_errors (pindex == NULL)
@@ -104,8 +104,12 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
         ppsz_argv = argv_copy;
     }
 
-    i_shortopts = 0;
     memset(&pp_shortopts, 0, 256 * sizeof(pp_shortopts[0]));
+
+    /* Indicate that we want to know the difference between unknown opt and
+       missing data issues */
+    psz_shortopts[0] = ':';
+    i_shortopts = 1;
 
     /* Fill the p_longopts and psz_shortopts structures */
     i_index = 0;
@@ -237,7 +241,7 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
         }
 
         /* A short option has been recognized */
-        if( pp_shortopts[i_cmd] != NULL )
+        if( i_cmd != '?' && i_cmd != ':' && pp_shortopts[i_cmd] != NULL )
         {
             const char *name = pp_shortopts[i_cmd]->psz_name;
             switch( CONFIG_CLASS(pp_shortopts[i_cmd]->i_type) )
@@ -271,8 +275,10 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
         /* Internal error: unknown option */
         if( !b_ignore_errors )
         {
-            fputs( "vlc: unknown option"
-                     " or missing mandatory argument ", stderr );
+            if (i_cmd == ':')
+                fputs( "vlc: missing mandatory argument ", stderr );
+            else
+                fputs( "vlc: unknown option ", stderr );
             if( state.opt )
             {
                 fprintf( stderr, "`-%c'\n", state.opt );
