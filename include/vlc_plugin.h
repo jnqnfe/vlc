@@ -36,8 +36,7 @@ enum vlc_module_properties
 
     /* DO NOT EVER REMOVE, INSERT OR REPLACE ANY ITEM! It would break the ABI!
      * Append new items at the end ONLY. */
-    VLC_MODULE_CPU_REQUIREMENT=0x100,
-    VLC_MODULE_SHORTCUT,
+    VLC_MODULE_SHORTCUT=0x100,
     VLC_MODULE_CAPABILITY,
     VLC_MODULE_SCORE,
     VLC_MODULE_CB_OPEN,
@@ -61,14 +60,8 @@ enum vlc_module_properties
     VLC_CONFIG_RANGE,
     /* minimum value (args=int64_t/double/const char * twice) */
 
-    VLC_CONFIG_ADVANCED_RESERVED,
-    /* reserved - do not use */
-
     VLC_CONFIG_VOLATILE,
     /* don't write variable to storage (args=none) */
-
-    VLC_CONFIG_PERSISTENT_OBSOLETE,
-    /* unused (ignored) */
 
     VLC_CONFIG_PRIVATE,
     /* hide from user (args=none) */
@@ -82,20 +75,11 @@ enum vlc_module_properties
     VLC_CONFIG_SHORTCUT,
     /* one-character (short) command line option name (args=char) */
 
-    VLC_CONFIG_OLDNAME_OBSOLETE,
-    /* unused (ignored) */
-
     VLC_CONFIG_SAFE,
     /* tag as modifiable by untrusted input item "sources" (args=none) */
 
     VLC_CONFIG_DESC,
     /* description (args=const char *, const char *, const char *) */
-
-    VLC_CONFIG_LIST_OBSOLETE,
-    /* unused (ignored) */
-
-    VLC_CONFIG_ADD_ACTION_OBSOLETE,
-    /* unused (ignored) */
 
     VLC_CONFIG_LIST,
     /* list of suggested values
@@ -218,8 +202,8 @@ enum vlc_module_properties
 /**
  * Current plugin ABI version
  */
-# define MODULE_SYMBOL 4_0_6
-# define MODULE_SUFFIX "__4_0_6"
+# define MODULE_SYMBOL 4_0_7
+# define MODULE_SUFFIX "__4_0_7"
 
 /*****************************************************************************
  * Add a few defines. You do not want to read this section. Really.
