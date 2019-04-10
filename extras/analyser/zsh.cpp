@@ -203,7 +203,7 @@ static void PrintModule(const module_t *mod)
         capabilities.insert(mpair(cap, name));
 
     unsigned int cfg_size = 0;
-    module_config_item_t *cfg_list = vlc_module_config_get(mod, &cfg_size);
+    module_config_item_t *cfg_list = vlc_module_config_get_ext(mod, &cfg_size, false, true);
 
     for (unsigned int j = 0; j < cfg_size; ++j)
     {
@@ -224,7 +224,7 @@ static void PrintModule(const module_t *mod)
 static void ParseModule(const module_t *mod)
 {
     unsigned int cfg_size = 0;
-    module_config_item_t *cfg_list = vlc_module_config_get(mod, &cfg_size);
+    module_config_item_t *cfg_list = vlc_module_config_get_ext(mod, &cfg_size, false, true);
 
     for (unsigned int j = 0; j < cfg_size; ++j)
     {
@@ -268,18 +268,6 @@ int main(int argc, const char **argv)
     std::cout << "_arguments -S -s \\\n";
     for (module_t **mod = mod_list; mod < max; mod++)
         ParseModule(*mod);
-    std::cout << "  \"(--module)-p[print help on module]:print help on module:($vlc_modules)\"\\\n";
-    std::cout << "  \"(-p)--module[print help on module]:print help on module:($vlc_modules)\"\\\n";
-    std::cout << "  \"(--help)-h[print help]\"\\\n";
-    std::cout << "  \"(-h)--help[print help]\"\\\n";
-    std::cout << "  \"(--longhelp)-H[print detailed help]\"\\\n";
-    std::cout << "  \"(-H)--longhelp[print detailed help]\"\\\n";
-    std::cout << "  \"(--list)-l[print a list of available modules]\"\\\n";
-    std::cout << "  \"(-l)--list[print a list of available modules]\"\\\n";
-    std::cout << "  \"--reset-config[reset the current config to the default values]\"\\\n";
-    std::cout << "  \"--config[use alternate config file]\"\\\n";
-    std::cout << "  \"--reset-plugins-cache[resets the current plugins cache]\"\\\n";
-    std::cout << "  \"--version[print version information]\"\\\n";
     std::cout << "  \"*:Playlist item:->mrl\" && ret=0\n\n";
 
     std::cout << "case $state in\n";
