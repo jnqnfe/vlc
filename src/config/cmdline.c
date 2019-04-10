@@ -105,10 +105,7 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
     }
 
     i_shortopts = 0;
-    for( i_index = 0; i_index < 256; i_index++ )
-    {
-        pp_shortopts[i_index] = NULL;
-    }
+    memset(&pp_shortopts, 0, 256 * sizeof(pp_shortopts[0]));
 
     /* Fill the p_longopts and psz_shortopts structures */
     i_index = 0;
