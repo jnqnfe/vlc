@@ -35,9 +35,13 @@
 #include "vlc_jaro_winkler.h"
 
 #include "configuration.h"
+#include "console.h"
 #include "modules/modules.h"
 
 #include <assert.h>
+
+#define RED TS_RED_BOLD
+#define YELLOW TS_YELLOW_BOLD
 
 #undef config_LoadCmdLine
 /**
@@ -182,6 +186,10 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
     psz_shortopts[i_shortopts] = '\0';
 
     int ret = -1;
+    bool color = false;
+#ifndef _WIN32
+    color = (isatty(STDERR_FILENO));
+#endif
 
     /*
      * Parse the command line options
@@ -209,8 +217,8 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
                 /* Check if the option is deprecated */
                 if( p_conf->b_removed )
                 {
-                    fprintf(stderr,
-                            "Warning: option --%s no longer exists.\n",
+                    fprintf(stderr, "%s: option --%s no longer exists.\n",
+                            color ? YELLOW "Warning" TS_RESET : "Warning",
                             psz_full_name);
                     continue;
                 }
@@ -281,9 +289,11 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
         if( !b_ignore_errors )
         {
             if (i_cmd == ':')
-                fputs( "vlc: missing mandatory argument ", stderr );
+                fprintf(stderr, "%s: vlc: missing mandatory argument ",
+                        color ? RED "Error" TS_RESET : "Error");
             else
-                fputs( "vlc: unknown option ", stderr );
+                fprintf(stderr, "%s: vlc: unknown option ",
+                        color ? RED "Error" TS_RESET : "Error");
 
             if( state.opt )
                 fprintf( stderr, "`-%c'\n", state.opt );
