@@ -217,9 +217,11 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
                 /* Check if the option is deprecated */
                 if( p_conf->b_removed )
                 {
-                    fprintf(stderr, "%s: option --%s no longer exists.\n",
-                            color ? YELLOW "Warning" TS_RESET : "Warning",
-                            psz_full_name);
+                    fprintf(stderr, color ?
+                                    YELLOW "%s:" TS_RESET " %s --%s %s.\n" :
+                                           "%s:"          " %s --%s %s.\n",
+                            _( "Warning" ), _( "option" ), psz_full_name,
+                            _( "no longer exists" ));
                     continue;
                 }
 
@@ -289,11 +291,15 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
         if( !b_ignore_errors )
         {
             if (i_cmd == ':')
-                fprintf(stderr, "%s: vlc: missing mandatory argument ",
-                        color ? RED "Error" TS_RESET : "Error");
+                fprintf(stderr, color ?
+                                RED "%s:" TS_RESET " vlc: %s " :
+                                    "%s:"          " vlc: %s ",
+                        _( "Error" ), _( "missing mandatory argument" ));
             else
-                fprintf(stderr, "%s: vlc: unknown option ",
-                        color ? RED "Error" TS_RESET : "Error");
+                fprintf(stderr, color ?
+                                RED "%s:" TS_RESET " vlc: %s " :
+                                    "%s:"          " vlc: %s ",
+                        _( "Error" ), _( "unknown option" ));
 
             if( state.opt )
                 fprintf( stderr, "`-%c'\n", state.opt );
@@ -319,12 +325,12 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
                     }
                 }
                 if (best) {
-                    fprintf( stderr, "; did you mean `--%s'?\n", best );
+                    fprintf( stderr, "; %s `--%s'?\n", _( "did you mean" ), best );
                 }
                 else
                     fprintf( stderr, "\n" );
             }
-            fputs( "Try `vlc --help' for more information.\n", stderr );
+            fprintf( stderr, "%s\n", _( "Try `vlc --help' for more information." ) );
             goto out;
         }
     }
