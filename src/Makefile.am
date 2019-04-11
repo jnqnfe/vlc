@@ -201,6 +201,7 @@ libvlccore_la_SOURCES = \
 	revision.c \
 	version.c \
 	config/configuration.h \
+	config/console.h \
 	config/core.c \
 	config/chain.c \
 	config/file.c \
