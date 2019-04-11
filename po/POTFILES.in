@@ -45,6 +45,7 @@ include/vlc_threads.h
 include/vlc_tls.h
 include/vlc_update.h
 include/vlc_url.h
+include/vlc_util.h
 include/vlc_variables.h
 include/vlc/vlc.h
 include/vlc_vlm.h

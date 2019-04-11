@@ -103,6 +103,7 @@ pluginsinclude_HEADERS = \
 	../include/vlc_timestamp_helper.h \
 	../include/vlc_tls.h \
 	../include/vlc_url.h \
+	../include/vlc_util.h\
 	../include/vlc_variables.h \
 	../include/vlc_vector.h \
 	../include/vlc_video_splitter.h \
