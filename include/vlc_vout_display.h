@@ -125,14 +125,6 @@ enum {
      */
     VOUT_DISPLAY_RESET_PICTURES, /* const vout_display_cfg_t *, es_format_t * */
 
-#if defined(__OS2__)
-    /* Ask the module to acknowledge/refuse the fullscreen state change after
-     * being requested (externally or by VOUT_DISPLAY_EVENT_FULLSCREEN */
-    VOUT_DISPLAY_CHANGE_FULLSCREEN VLC_DEPRECATED_ENUM,     /* bool fs */
-    /* Ask the module to acknowledge/refuse the window management state change
-     * after being requested externally or by VOUT_DISPLAY_WINDOW_STATE */
-    VOUT_DISPLAY_CHANGE_WINDOW_STATE VLC_DEPRECATED_ENUM,   /* unsigned state */
-#endif
     /* Ask the module to acknowledge the display size change */
     VOUT_DISPLAY_CHANGE_DISPLAY_SIZE,   /* const vout_display_cfg_t *p_cfg */
 
