@@ -36,6 +36,7 @@
 #include <stdnoreturn.h>
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 
 #include <math.h>
 #include <stdlib.h>                                                /* free() */

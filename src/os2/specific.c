@@ -23,6 +23,7 @@
 #endif
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include "../libvlc.h"
 #include <vlc_playlist.h>
 #include <vlc_interface.h>

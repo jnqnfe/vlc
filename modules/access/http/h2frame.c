@@ -30,6 +30,7 @@
 #include <errno.h>
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 
 #include "conn.h"
 #include "hpack.h"

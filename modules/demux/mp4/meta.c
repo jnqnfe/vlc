@@ -25,6 +25,8 @@
 #include "../meta_engine/ID3Genres.h"  /* for ATOM_gnre */
 #include "languages.h"
 
+#include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_meta.h>
 #include <vlc_charset.h>
 

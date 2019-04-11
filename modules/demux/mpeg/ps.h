@@ -20,7 +20,12 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#ifndef MPEG_PS_H
+#define MPEG_PS_H
+
 #include <assert.h>
+#include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_demux.h>
 #include "timestamps.h"
 
@@ -721,3 +726,5 @@ static inline int ps_psm_fill( ps_psm_t *p_psm, block_t *p_pkt,
 
     return VLC_SUCCESS;
 }
+
+#endif

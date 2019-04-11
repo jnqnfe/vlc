@@ -20,6 +20,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include <vlc_common.h>
+#include <vlc_util.h>
 #include "sdi.h"
 
 static inline uint32_t av_le2ne32(uint32_t val)

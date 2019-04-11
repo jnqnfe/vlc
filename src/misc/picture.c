@@ -34,6 +34,7 @@
 #include <limits.h>
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include "picture.h"
 #include <vlc_image.h>
 #include <vlc_block.h>

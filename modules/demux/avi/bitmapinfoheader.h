@@ -20,7 +20,12 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
+
+#ifndef AVI_BMIH_H
+#define AVI_BMIH_H
+
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_es.h>
 #include <vlc_codecs.h>
 #include <limits.h>
@@ -304,3 +309,5 @@ static inline VLC_BITMAPINFOHEADER * CreateBitmapInfoHeader( const es_format_t *
     *pi_total = sizeof(VLC_BITMAPINFOHEADER) + i_bih_extra +  i_bmiColors;
     return p_bih;
 }
+
+#endif

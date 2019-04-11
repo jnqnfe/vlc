@@ -20,6 +20,9 @@
 #ifndef ID3TAG_H
 #define ID3TAG_H
 
+#include <vlc_common.h>
+#include <vlc_util.h>
+
 static uint32_t ID3TAG_ReadSize( const uint8_t *p_buffer, bool b_syncsafe )
 {
     if( !b_syncsafe )

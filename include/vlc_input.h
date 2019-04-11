@@ -33,6 +33,8 @@
  * Input thread interface
  */
 
+#include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_es.h>
 #include <vlc_meta.h>
 #include <vlc_epg.h>

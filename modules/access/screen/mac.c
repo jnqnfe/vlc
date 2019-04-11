@@ -32,6 +32,7 @@
 #endif
 
 #import <vlc_common.h>
+#import <vlc_util.h>
 #import <vlc_block.h>
 
 #import "screen.h"

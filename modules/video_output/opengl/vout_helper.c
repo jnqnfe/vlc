@@ -33,6 +33,7 @@
 #include <math.h>
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_picture_pool.h>
 #include <vlc_subpicture.h>
 #include <vlc_opengl.h>

@@ -32,6 +32,7 @@
 #include <time.h>
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_http.h>
 #include <vlc_strings.h>
 #include <vlc_memstream.h>

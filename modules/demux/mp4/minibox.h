@@ -18,6 +18,12 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#ifndef MP4_MINIBOX_H
+#define MP4_MINIBOX_H
+
+#include <vlc_common.h>
+#include <vlc_util.h>
+
 typedef struct
 {
     const uint8_t *p_buffer;
@@ -54,3 +60,5 @@ static bool mp4_box_iterator_Next( mp4_box_iterator_t *p_it )
     }
     return false;
 }
+
+#endif

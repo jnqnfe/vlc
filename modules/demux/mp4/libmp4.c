@@ -25,6 +25,7 @@
 #endif
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_stream.h>                               /* vlc_stream_Peek*/
 #include <vlc_strings.h>                              /* vlc_ascii_tolower */
 

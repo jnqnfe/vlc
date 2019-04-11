@@ -24,6 +24,8 @@
 #include "SDIStream.hpp"
 #include "sdiout.hpp"
 
+#include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_modules.h>
 #include <vlc_meta.h>
 #include <vlc_block.h>

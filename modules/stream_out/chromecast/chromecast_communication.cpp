@@ -27,6 +27,8 @@
 # include "config.h"
 #endif
 
+#include <vlc_common.h>
+#include <vlc_util.h>
 #include "chromecast.h"
 #ifdef HAVE_POLL
 # include <poll.h>

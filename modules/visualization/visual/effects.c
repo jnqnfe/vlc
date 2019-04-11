@@ -29,6 +29,7 @@
 #endif
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_picture.h>
 #include <vlc_block.h>
 

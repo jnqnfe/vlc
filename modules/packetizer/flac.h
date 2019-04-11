@@ -17,7 +17,12 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
+
+#ifndef FLAC_H
+#define FLAC_H
+
 #include <vlc_common.h>
+#include <vlc_util.h>
 
 #define FLAC_HEADER_SIZE_MAX 16
 #define FLAC_STREAMINFO_SIZE 34
@@ -271,3 +276,5 @@ static inline int FLAC_ParseSyncInfo(const uint8_t *p_buf,
 
     return b_guessing ? -1 : 1;
 }
+
+#endif

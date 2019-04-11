@@ -27,6 +27,8 @@
 #ifndef VLC_A52_H_
 #define VLC_A52_H_
 
+#include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_bits.h>
 
 /**

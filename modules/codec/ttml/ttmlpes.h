@@ -18,7 +18,11 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#ifndef TTML_PES_H
+#define TTML_PES_H
+
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_block.h>
 #include <vlc_stream.h>
 
@@ -133,3 +137,5 @@ static int ParsePESEncap( decoder_t *p_dec,
     block_Release( p_block );
     return VLC_SUCCESS;
 }
+
+#endif

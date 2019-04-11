@@ -20,6 +20,11 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#ifndef XIPH_H
+#define XIPH_H
+
+#include <vlc_common.h>
+#include <vlc_util.h>
 #include <assert.h>
 #define XIPH_MAX_HEADER_COUNT (256)
 
@@ -189,3 +194,4 @@ static inline int xiph_AppendHeaders(int *extra_size, void **extra,
     return VLC_SUCCESS;
 }
 
+#endif

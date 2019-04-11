@@ -24,6 +24,9 @@
 # include "config.h"
 #endif
 
+#include <vlc_common.h>
+#include <vlc_util.h>
+
 #include <math.h>
 #include "window.h"
 #include "window_presets.h"

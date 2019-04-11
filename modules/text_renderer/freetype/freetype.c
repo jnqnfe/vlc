@@ -35,6 +35,7 @@
 #include <math.h>
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_plugin.h>
 #include <vlc_input.h>                             /* vlc_input_attachment_* */
 #include <vlc_filter.h>                                      /* filter_sys_t */

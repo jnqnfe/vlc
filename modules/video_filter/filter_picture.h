@@ -20,6 +20,12 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#ifndef VF_FILTER_PICTURE_H
+#define VF_FILTER_PICTURE_H
+
+#include <vlc_common.h>
+#include <vlc_util.h>
+
 /* FIXME: do all of these really have square pixels? */
 #define CASE_PLANAR_YUV_SQUARE              \
         case VLC_CODEC_I420:   \
@@ -162,3 +168,5 @@ static inline picture_t *CopyInfoAndRelease( picture_t *p_outpic, picture_t *p_i
 
     return p_outpic;
 }
+
+#endif

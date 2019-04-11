@@ -23,6 +23,9 @@
 #ifndef VLC_TIMESTAMP_H
 #define VLC_TIMESTAMP_H 1
 
+#include <vlc_common.h>
+#include <vlc_util.h>
+
 /* Implementation of a circular buffer of timestamps with overwriting
  * of older values. MediaCodec has only one type of timestamp, if a
  * block has no PTS, we send the DTS instead. Some hardware decoders

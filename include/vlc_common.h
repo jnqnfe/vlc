@@ -654,7 +654,6 @@ VLC_API const char * VLC_Compiler( void ) VLC_USED;
 #include "vlc_objects.h"
 #include "vlc_variables.h"
 #include "vlc_configuration.h"
-#include "vlc_util.h"
 
 #if defined( _WIN32 ) || defined( __OS2__ )
 #   define DIR_SEP_CHAR '\\'

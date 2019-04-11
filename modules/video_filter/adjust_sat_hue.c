@@ -26,6 +26,8 @@
 #   include "config.h"
 #endif
 
+#include <vlc_common.h>
+#include <vlc_util.h>
 #include <assert.h>
 #include <vlc_filter.h>
 #include <vlc_picture.h>

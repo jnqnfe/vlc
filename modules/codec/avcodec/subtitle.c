@@ -29,6 +29,7 @@
 #include <assert.h>
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_codec.h>
 #include <vlc_avcodec.h>
 

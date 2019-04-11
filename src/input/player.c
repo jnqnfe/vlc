@@ -25,6 +25,7 @@
 #include <limits.h>
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include "player.h"
 #include <vlc_aout.h>
 #include <vlc_interface.h>

@@ -29,6 +29,7 @@
 #include <assert.h>
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_es.h>
 
 #define MAX_OP_NAME_LEN 6

@@ -34,6 +34,7 @@
 #include <sys/mman.h>
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_block.h>
 
 #include "v4l2.h"

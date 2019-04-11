@@ -30,6 +30,7 @@
 #include <stdatomic.h>
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_vout_display.h>
 #include <vlc_vout.h>
 #include <vlc_block.h>

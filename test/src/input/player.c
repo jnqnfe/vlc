@@ -24,6 +24,7 @@
 #include <math.h>
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_player.h>
 #include <vlc_vector.h>
 

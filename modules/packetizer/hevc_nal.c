@@ -27,6 +27,7 @@
 #include "iso_color_tables.h"
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_bits.h>
 
 #include <limits.h>

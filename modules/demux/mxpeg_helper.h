@@ -20,6 +20,12 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#ifndef MXPEG_HELPER_H
+#define MXPEG_HELPER_H
+
+#include <vlc_common.h>
+#include <vlc_util.h>
+
 /**
  * Finds FF XX in the first size byte of data
  */
@@ -90,3 +96,5 @@ static bool IsMxpeg(stream_t *s)
 
     return true;
 }
+
+#endif

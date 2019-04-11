@@ -30,6 +30,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import <vlc_common.h>
+#import <vlc_util.h>
 #import <vlc_url.h>
 
 #import "extensions/NSString+Helpers.h"

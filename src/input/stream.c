@@ -33,6 +33,7 @@
 #include <errno.h>
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_block.h>
 #include <vlc_access.h>
 #include <vlc_charset.h>

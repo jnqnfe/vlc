@@ -21,6 +21,7 @@
 #endif
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 
 #ifndef _DVBPSI_DVBPSI_H_
  #include <dvbpsi/dvbpsi.h>

@@ -21,6 +21,8 @@
 # include "config.h"
 #endif
 
+#include <vlc_common.h>
+#include <vlc_util.h>
 #include "sdiout.hpp"
 #include "AES3Audio.hpp"
 #include <algorithm>

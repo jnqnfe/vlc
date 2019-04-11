@@ -38,6 +38,8 @@ extern "C" {
 
 #include "../../packetizer/iso_color_tables.h"
 
+#include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_codecs.h>
 #include <stdexcept>
 #include <limits>

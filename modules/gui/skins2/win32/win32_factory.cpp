@@ -45,6 +45,9 @@
 #include "../commands/cmd_dialogs.hpp"
 #include "../commands/cmd_minimize.hpp"
 
+#include <vlc_common.h>
+#include <vlc_util.h>
+
 // Custom message for the notifications of the system tray
 #define MY_WM_TRAYACTION (WM_APP + 1)
 

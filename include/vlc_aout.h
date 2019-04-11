@@ -25,6 +25,9 @@
 
 #include <assert.h>
 
+#include <vlc_common.h>
+#include <vlc_util.h>
+
 /**
  * \defgroup audio_output Audio output
  * \ingroup output

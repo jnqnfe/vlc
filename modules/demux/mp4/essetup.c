@@ -30,6 +30,8 @@
 #include "../../packetizer/iso_color_tables.h"
 #include "mpeg4.h"
 
+#include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_demux.h>
 #include <vlc_aout.h>
 #include <assert.h>

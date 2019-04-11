@@ -25,6 +25,7 @@
 #define LIBVLC_INPUT_STREAM_H 1
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_stream.h>
 #include "input_internal.h"
 

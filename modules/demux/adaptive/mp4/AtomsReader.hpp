@@ -21,6 +21,7 @@
 #define ATOMSREADER_HPP
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_stream.h>
 extern "C" {
 #include "../../demux/mp4/libmp4.h"

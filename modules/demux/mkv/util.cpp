@@ -24,6 +24,9 @@
 #include "util.hpp"
 #include "demux.hpp"
 
+#include <vlc_common.h>
+#include <vlc_util.h>
+
 namespace mkv {
 
 /*****************************************************************************

@@ -35,6 +35,7 @@
 #endif
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_memstream.h>
 #include <vlc_url.h>
 #include <vlc_fs.h>

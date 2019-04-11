@@ -21,6 +21,8 @@
 
 #include "hxxx_nal.h"
 
+#include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_block.h>
 
 static bool block_WillRealloc( block_t *p_block, ssize_t i_prebody, size_t i_body )

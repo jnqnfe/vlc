@@ -22,6 +22,8 @@
 # include "config.h"
 #endif
 
+#include <vlc_common.h>
+#include <vlc_util.h>
 #include "Ancillary.hpp"
 #include "V210.hpp"
 #include <cassert>

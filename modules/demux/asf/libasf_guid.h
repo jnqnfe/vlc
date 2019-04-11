@@ -23,6 +23,8 @@
 #ifndef LIBASG_GUID_H
 #define LIBASG_GUID_H
 
+#include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_codecs.h>
 
 /*****************************************************************************

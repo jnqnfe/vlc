@@ -25,6 +25,8 @@
 #include <jni.h>
 #include <pthread.h>
 #include <assert.h>
+#include <vlc_common.h>
+#include <vlc_util.h>
 
 typedef ANativeWindow* (*ptr_ANativeWindow_fromSurface)(JNIEnv*, jobject);
 typedef ANativeWindow* (*ptr_ANativeWindow_fromSurfaceTexture)(JNIEnv*, jobject);

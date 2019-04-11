@@ -23,6 +23,9 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+#include <vlc_common.h>
+#include <vlc_util.h>
+
 /**
  * \defgroup vector Vector
  * \ingroup cext

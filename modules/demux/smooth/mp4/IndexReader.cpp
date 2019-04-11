@@ -21,6 +21,8 @@
 # include "config.h"
 #endif
 
+#include <vlc_common.h>
+#include <vlc_util.h>
 #include "IndexReader.hpp"
 #include "../adaptive/playlist/BaseRepresentation.h"
 #include "../adaptive/playlist/BaseAdaptationSet.h"

@@ -31,6 +31,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <vlc_common.h>
+#include <vlc_util.h>
 
 #include <vlc_es_out.h>
 #include <vlc_block.h>

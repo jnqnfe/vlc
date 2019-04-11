@@ -21,6 +21,7 @@
 #define HXXX_NAL_H
 
 #include <vlc_common.h>
+#include <vlc_util.h>
 #include <vlc_es.h>
 #include "startcode_helper.h"
 
