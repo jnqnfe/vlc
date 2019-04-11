@@ -398,27 +398,6 @@ static int Control( vout_display_t *vd, int query, va_list args )
 
     switch (query)
     {
-    case VOUT_DISPLAY_CHANGE_FULLSCREEN:
-    {
-        bool fs = va_arg(args, int);
-
-        WinPostMsg( sys->client, WM_VLC_FULLSCREEN_CHANGE, MPFROMLONG(fs), 0 );
-        return VLC_SUCCESS;
-    }
-
-    case VOUT_DISPLAY_CHANGE_WINDOW_STATE:
-    {
-        const unsigned state = va_arg( args, unsigned );
-        const bool is_on_top = (state & VOUT_WINDOW_STATE_ABOVE) != 0;
-
-        if( is_on_top )
-            WinSetWindowPos( sys->frame, HWND_TOP, 0, 0, 0, 0, SWP_ZORDER );
-
-        sys->is_on_top = is_on_top;
-
-        return VLC_SUCCESS;
-    }
-
     case VOUT_DISPLAY_CHANGE_DISPLAY_SIZE:
     {
         const vout_display_cfg_t *cfg = va_arg(args, const vout_display_cfg_t *);
