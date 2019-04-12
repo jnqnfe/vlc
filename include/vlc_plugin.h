@@ -146,7 +146,18 @@ enum vlc_module_properties
 #define CONFIG_ITEM_DIRECTORY        (CONFIG_ITEM_CLASS_STRING  | 0x09) /* Directory option */
 #define CONFIG_ITEM_FONT             (CONFIG_ITEM_CLASS_STRING  | 0x0A) /* Font option */
 
+#define CONFIG_CLASS(x) ((x) & CONFIG_ITEM_CLASS_MASK)
+
+/* is proper option, not a special hint type? */
 #define CONFIG_ITEM(x) (((x) & CONFIG_ITEM_CLASS_MASK) != CONFIG_ITEM_CLASS_SPECIAL)
+
+#define IsConfigStringType(type) \
+    (CONFIG_CLASS(type) == CONFIG_ITEM_CLASS_STRING)
+#define IsConfigIntegerType(type) \
+    (CONFIG_CLASS(type) & \
+     (CONFIG_ITEM_CLASS_INTEGER | CONFIG_ITEM_CLASS_BOOL | CONFIG_ITEM_CLASS_INFO))
+#define IsConfigFloatType(type) \
+    (CONFIG_CLASS(type) == CONFIG_ITEM_CLASS_FLOAT)
 
 /* Hidden categories and subcategories */
 /* Any options under this will be hidden in the GUI preferences, but will be
