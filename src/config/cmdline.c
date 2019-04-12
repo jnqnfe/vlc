@@ -294,7 +294,7 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
                 fprintf(stderr, color ?
                                 RED "%s:" TS_RESET " %s " :
                                     "%s:"          " %s ",
-                        _( "Error" ), _( "missing mandatory argument" ));
+                        _( "Error" ), _( "missing mandatory data value for" ));
             else
                 fprintf(stderr, color ?
                                 RED "%s:" TS_RESET " %s " :
