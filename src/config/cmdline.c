@@ -292,13 +292,13 @@ int config_LoadCmdLine( vlc_object_t *p_this, int i_argc,
         {
             if (i_cmd == ':')
                 fprintf(stderr, color ?
-                                RED "%s:" TS_RESET " vlc: %s " :
-                                    "%s:"          " vlc: %s ",
+                                RED "%s:" TS_RESET " %s " :
+                                    "%s:"          " %s ",
                         _( "Error" ), _( "missing mandatory argument" ));
             else
                 fprintf(stderr, color ?
-                                RED "%s:" TS_RESET " vlc: %s " :
-                                    "%s:"          " vlc: %s ",
+                                RED "%s:" TS_RESET " %s " :
+                                    "%s:"          " %s ",
                         _( "Error" ), _( "unknown option" ));
 
             if( state.opt )
