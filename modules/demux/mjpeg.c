@@ -43,7 +43,7 @@
  *****************************************************************************/
 static int  Open ( demux_t * );
 
-#define FPS_TEXT N_("Frames per Second")
+#define FPS_TEXT N_("Frames per second")
 #define FPS_LONGTEXT N_("This is the desired frame rate when " \
     "playing MJPEG from a file. Use 0 (this is the default value) for a " \
     "live stream (from a camera).")

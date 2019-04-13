@@ -62,15 +62,15 @@ static int AdjustCallback( vlc_object_t *p_this, char const *psz_var,
 #define THRES_LONGTEXT N_("When this mode is enabled, pixels will be " \
         "shown as black or white. The threshold value will be the brightness " \
         "defined below." )
-#define CONT_TEXT N_("Image contrast")
+#define CONT_TEXT N_("Contrast")
 #define CONT_LONGTEXT N_("Set the image contrast. Defaults to 1.")
-#define HUE_TEXT N_("Image hue")
+#define HUE_TEXT N_("Hue")
 #define HUE_LONGTEXT N_("Set the image hue. Defaults to 0.")
-#define SAT_TEXT N_("Image saturation")
+#define SAT_TEXT N_("Saturation")
 #define SAT_LONGTEXT N_("Set the image saturation. Defaults to 1.")
-#define LUM_TEXT N_("Image brightness")
+#define LUM_TEXT N_("Brightness")
 #define LUM_LONGTEXT N_("Set the image brightness. Defaults to 1.")
-#define GAMMA_TEXT N_("Image gamma")
+#define GAMMA_TEXT N_("Gamma")
 #define GAMMA_LONGTEXT N_("Set the image gamma. Defaults to 1.")
 
 vlc_plugin_begin ()

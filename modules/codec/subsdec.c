@@ -166,13 +166,9 @@ static const char *const ppsz_justification_text[] = {
     N_("Auto"),N_("Center"),N_("Left"),N_("Right")
 };
 
-#define ENCODING_TEXT N_("Subtitle text encoding")
-#define ENCODING_LONGTEXT N_("Set the encoding used in text subtitles")
-#define ALIGN_TEXT N_("Subtitle justification")
-#define ALIGN_LONGTEXT N_("Set the justification of subtitles")
-#define AUTODETECT_UTF8_TEXT N_("UTF-8 subtitle autodetection")
-#define AUTODETECT_UTF8_LONGTEXT N_("This enables automatic detection of " \
-            "UTF-8 encoding within subtitle files.")
+#define ENCODING_TEXT N_("Text encoding")
+#define ALIGN_TEXT N_("Justification")
+#define AUTODETECT_UTF8_TEXT N_("UTF-8 auto-detection")
 
 static int  OpenDecoder   ( decoder_t * );
 static void CloseDecoder  ( decoder_t * );
@@ -184,14 +180,12 @@ vlc_plugin_begin ()
 
     set_subcategory( SUBCAT_INPUT_SCODEC )
 
-    add_integer( "subsdec-align", -1, ALIGN_TEXT, ALIGN_LONGTEXT,
-                 false )
+    add_integer( "subsdec-align", -1, ALIGN_TEXT, NULL, false )
         change_integer_list( pi_justification, ppsz_justification_text )
-    add_string( "subsdec-encoding", "",
-                ENCODING_TEXT, ENCODING_LONGTEXT, false )
+    add_string( "subsdec-encoding", "", ENCODING_TEXT, NULL, false )
         change_string_list( ppsz_encodings, ppsz_encoding_names )
     add_bool( "subsdec-autodetect-utf8", true,
-              AUTODETECT_UTF8_TEXT, AUTODETECT_UTF8_LONGTEXT, false )
+              AUTODETECT_UTF8_TEXT, NULL, false )
 vlc_plugin_end ()
 
 /*****************************************************************************

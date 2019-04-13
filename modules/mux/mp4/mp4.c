@@ -479,7 +479,7 @@ static int AddStream(sout_mux_t *p_mux, sout_input_t *p_input)
     case AUDIO_ES:
         if(!trackfmt.audio.i_rate)
         {
-            msg_Warn( p_mux, "no audio rate given for stream %d, assuming 48KHz",
+            msg_Warn( p_mux, "no audio rate given for stream %d, assuming 48kHz",
                       p_sys->i_nb_streams );
             trackfmt.audio.i_rate = 48000;
         }

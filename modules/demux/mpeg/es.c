@@ -50,7 +50,7 @@ static int  OpenAudio( demux_t * );
 static int  OpenVideo( demux_t * );
 static void Close    ( demux_t * );
 
-#define FPS_TEXT N_("Frames per Second")
+#define FPS_TEXT N_("Frames per second")
 #define FPS_LONGTEXT N_("This is the frame rate used as a fallback when " \
     "playing MPEG video elementary streams.")
 

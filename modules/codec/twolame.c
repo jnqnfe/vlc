@@ -58,7 +58,7 @@ static block_t *Encode   ( encoder_t *, block_t * );
 #define ENC_MODE_LONGTEXT N_( "Handling mode for stereo streams" )
 #define ENC_VBR_TEXT N_("VBR mode")
 #define ENC_VBR_LONGTEXT N_( \
-  "Use Variable BitRate. Default is to use Constant BitRate (CBR)." )
+  "Use variable bitrate (VBR) instead of constant bitrate (CBR)." )
 #define ENC_PSY_TEXT N_("Psycho-acoustic model (-1 for none)")
 
 static const int pi_stereo_values[] = { 0, 1, 2 };

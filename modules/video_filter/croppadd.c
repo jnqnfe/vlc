@@ -43,29 +43,29 @@ static void CloseFilter( filter_t * );
 
 static picture_t *Filter( filter_t *, picture_t * );
 
-#define CROPTOP_TEXT N_( "Pixels to crop from top" )
+#define CROPTOP_TEXT N_( "Top (pixels)" )
 #define CROPTOP_LONGTEXT N_( \
     "Number of pixels to crop from the top of the image." )
-#define CROPBOTTOM_TEXT N_( "Pixels to crop from bottom" )
+#define CROPBOTTOM_TEXT N_( "Bottom (pixels)" )
 #define CROPBOTTOM_LONGTEXT N_( \
     "Number of pixels to crop from the bottom of the image." )
-#define CROPLEFT_TEXT N_( "Pixels to crop from left" )
+#define CROPLEFT_TEXT N_( "Left (pixels)" )
 #define CROPLEFT_LONGTEXT N_( \
     "Number of pixels to crop from the left of the image." )
-#define CROPRIGHT_TEXT N_( "Pixels to crop from right" )
+#define CROPRIGHT_TEXT N_( "Right (pixels)" )
 #define CROPRIGHT_LONGTEXT N_( \
     "Number of pixels to crop from the right of the image." )
 
-#define PADDTOP_TEXT N_( "Pixels to padd to top" )
+#define PADDTOP_TEXT N_( "Top (pixels)" )
 #define PADDTOP_LONGTEXT N_( \
     "Number of pixels to padd to the top of the image after cropping." )
-#define PADDBOTTOM_TEXT N_( "Pixels to padd to bottom" )
+#define PADDBOTTOM_TEXT N_( "Bottom (pixels)" )
 #define PADDBOTTOM_LONGTEXT N_( \
     "Number of pixels to padd to the bottom of the image after cropping." )
-#define PADDLEFT_TEXT N_( "Pixels to padd to left" )
+#define PADDLEFT_TEXT N_( "Left (pixels)" )
 #define PADDLEFT_LONGTEXT N_( \
     "Number of pixels to padd to the left of the image after cropping." )
-#define PADDRIGHT_TEXT N_( "Pixels to padd to right" )
+#define PADDRIGHT_TEXT N_( "Right (pixels)" )
 #define PADDRIGHT_LONGTEXT N_( \
     "Number of pixels to padd to the right of the image after cropping." )
 

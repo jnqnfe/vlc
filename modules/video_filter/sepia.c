@@ -55,7 +55,7 @@ static const char *const ppsz_filter_options[] = {
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-#define SEPIA_INTENSITY_TEXT N_("Sepia intensity")
+#define SEPIA_INTENSITY_TEXT N_("Intensity")
 
 #define CFG_PREFIX "sepia-"
 

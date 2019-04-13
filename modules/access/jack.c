@@ -58,7 +58,7 @@ static void Close( demux_t * );
 #define PACE_TEXT N_( "Pace" )
 #define PACE_LONGTEXT N_( \
     "Read the audio stream at VLC pace rather than Jack pace." )
-#define AUTO_CONNECT_TEXT N_( "Auto connection" )
+#define AUTO_CONNECT_TEXT N_( "Automatically connect" )
 #define AUTO_CONNECT_LONGTEXT N_( \
     "Automatically connect VLC input ports to available output ports." )
 

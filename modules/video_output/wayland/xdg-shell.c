@@ -708,7 +708,7 @@ vlc_plugin_begin()
     set_shortname(N_("XDG shell"))
     set_description(N_("XDG shell surface"))
 #else
-    set_shortname(N_("WL shell"))
+    set_shortname(N_("Wayland shell"))
     set_description(N_("Wayland shell surface"))
 #endif
     set_capability(VLC_CAP_VOUT_WINDOW, PRIO, Open, NULL)

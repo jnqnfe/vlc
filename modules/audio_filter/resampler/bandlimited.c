@@ -305,7 +305,7 @@ static int OpenFilter( filter_t *p_filter )
     p_sys->b_first = true;
     p_filter->pf_audio_filter = Resample;
 
-    msg_Dbg( p_filter, "%4.4s/%iKHz/%i->%4.4s/%iKHz/%i",
+    msg_Dbg( p_filter, "%4.4s/%ikHz/%i->%4.4s/%ikHz/%i",
              (char *)&p_filter->fmt_in.i_codec,
              p_filter->fmt_in.audio.i_rate,
              p_filter->fmt_in.audio.i_channels,

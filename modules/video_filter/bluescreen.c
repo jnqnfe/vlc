@@ -39,20 +39,20 @@
     "background (like weather forecasts). You can choose the \"key\" " \
     "color for blending (blue by default)." )
 
-#define BLUESCREENU_TEXT N_("Bluescreen U value")
+#define BLUESCREENU_TEXT N_("U value")
 #define BLUESCREENU_LONGTEXT N_( \
         "\"U\" value for the bluescreen key color " \
         "(in YUV values). From 0 to 255. Defaults to 120 for blue." )
-#define BLUESCREENV_TEXT N_("Bluescreen V value")
+#define BLUESCREENV_TEXT N_("V value")
 #define BLUESCREENV_LONGTEXT N_( \
         "\"V\" value for the bluescreen key color " \
         "(in YUV values). From 0 to 255. Defaults to 90 for blue." )
-#define BLUESCREENUTOL_TEXT N_("Bluescreen U tolerance")
+#define BLUESCREENUTOL_TEXT N_("U tolerance")
 #define BLUESCREENUTOL_LONGTEXT N_( \
         "Tolerance of the bluescreen blender " \
         "on color variations for the U plane. A value between 10 and 20 " \
         "seems sensible." )
-#define BLUESCREENVTOL_TEXT N_("Bluescreen V tolerance")
+#define BLUESCREENVTOL_TEXT N_("V tolerance")
 #define BLUESCREENVTOL_LONGTEXT N_( \
         "Tolerance of the bluescreen blender " \
         "on color variations for the V plane. A value between 10 and 20 " \

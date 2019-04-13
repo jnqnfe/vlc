@@ -94,7 +94,7 @@ static void Close( sout_access_out_t * );
 #define KEYFILE_TEXT N_("AES key file")
 #define KEYFILE_LONGTEXT N_("File containing the 16 bytes encryption key")
 
-#define KEYLOADFILE_TEXT N_("File where vlc reads key-uri and keyfile-location")
+#define KEYLOADFILE_TEXT N_("File containing key-uri and keyfile-location")
 #define KEYLOADFILE_LONGTEXT N_("File is read when segment starts and is assumed to be in format: "\
                                 "key-uri\\nkey-file. File is read on the segment opening and "\
                                 "values are used on that segment.")

@@ -72,7 +72,7 @@
 
 #define RADIO_DEVICE_TEXT N_( "Radio device" )
 #define RADIO_DEVICE_LONGTEXT N_("Radio tuner device node." )
-#define FREQUENCY_TEXT N_("Frequency (Hz or KHz)")
+#define FREQUENCY_TEXT N_("Frequency (Hz or kHz)")
 #define FREQUENCY_LONGTEXT N_( \
     "Tuner frequency in Hz or kHz (see debug output)." )
 #define TUNER_AUDIO_MODE_TEXT N_("Audio mode")

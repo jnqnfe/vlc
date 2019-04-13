@@ -41,7 +41,7 @@
 static int  Open ( demux_t * );
 static void Close( demux_t * );
 
-#define FPS_TEXT N_("Frames per Second")
+#define FPS_TEXT N_("Frames per second")
 #define FPS_LONGTEXT N_("This is the desired frame rate when " \
     "playing raw video streams. In the form 30000/1001 or 29.97")
 
@@ -53,8 +53,8 @@ static void Close( demux_t * );
 #define HEIGHT_LONGTEXT N_("This specifies the height in pixels of the raw " \
     "video stream. (0 means use preset).")
 
-#define CHROMA_TEXT N_("Force chroma (Use carefully)")
-#define CHROMA_LONGTEXT N_("Force chroma. This is a four character string.")
+#define CHROMA_TEXT N_("Force chroma (fourcc)")
+#define CHROMA_LONGTEXT N_("Force chroma. Use carefully.")
 
 #define ASPECT_RATIO_TEXT N_("Aspect ratio")
 #define ASPECT_RATIO_LONGTEXT N_( \

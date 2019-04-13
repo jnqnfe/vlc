@@ -1059,12 +1059,12 @@ Equalizer::Equalizer( intf_thread_t *p_intf, QWidget *parent )
         { "equalizer-bands", qtr("170 Hz"), qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
         { "equalizer-bands", qtr("310 Hz"), qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
         { "equalizer-bands", qtr("600 Hz"), qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
-        { "equalizer-bands", qtr("1 KHz"),  qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
-        { "equalizer-bands", qtr("3 KHz"),  qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
-        { "equalizer-bands", qtr("6 KHz"),  qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
-        { "equalizer-bands", qtr("12 KHz"), qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
-        { "equalizer-bands", qtr("14 KHz"), qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
-        { "equalizer-bands", qtr("16 KHz"), qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
+        { "equalizer-bands", qtr("1 kHz"),  qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
+        { "equalizer-bands", qtr("3 kHz"),  qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
+        { "equalizer-bands", qtr("6 kHz"),  qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
+        { "equalizer-bands", qtr("12 kHz"), qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
+        { "equalizer-bands", qtr("14 kHz"), qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
+        { "equalizer-bands", qtr("16 kHz"), qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
     };
     const FilterSliderData::slider_data_t iso_bands[10] =
     {
@@ -1073,11 +1073,11 @@ Equalizer::Equalizer( intf_thread_t *p_intf, QWidget *parent )
         { "equalizer-bands", qtr("125 Hz"), qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
         { "equalizer-bands", qtr("250 Hz"), qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
         { "equalizer-bands", qtr("500 Hz"), qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
-        { "equalizer-bands", qtr("1 KHz"),  qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
-        { "equalizer-bands", qtr("2 KHz"),  qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
-        { "equalizer-bands", qtr("4 KHz"),  qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
-        { "equalizer-bands", qtr("8 KHz"),  qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
-        { "equalizer-bands", qtr("16 KHz"), qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
+        { "equalizer-bands", qtr("1 kHz"),  qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
+        { "equalizer-bands", qtr("2 kHz"),  qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
+        { "equalizer-bands", qtr("4 kHz"),  qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
+        { "equalizer-bands", qtr("8 kHz"),  qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
+        { "equalizer-bands", qtr("16 kHz"), qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 },
     };
     const FilterSliderData::slider_data_t preamp_vals =
         { "equalizer-preamp", qtr("Preamp"),  qtr("dB"), -20.0f, 20.0f, 0.0f, 0.1f, 1.0 };

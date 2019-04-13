@@ -486,7 +486,7 @@ static void WindowClose( vout_window_t *pWnd )
 #define SKINS2_PLAYLIST N_("Use a skinned playlist")
 #define SKINS2_VIDEO N_("Display video in a skinned window if any")
 #define SKINS2_VIDEO_LONG N_( \
-    "When set to 'no', this parameter is intended to give old skins a chance" \
+    "When disabled, this parameter is intended to give old skins a chance" \
     " to play back video even though no video tag is implemented")
 
 vlc_plugin_begin ()

@@ -58,7 +58,7 @@ static void Close(demux_t *);
 
 #define CHROMA_TEXT N_("Forced chroma (fourcc)")
 #define CHROMA_LONGTEXT N_( \
-    "If non empty and image-decode is true, the image will be " \
+    "If non empty and the `decode` option is enabled, the image will be " \
     "converted to the specified chroma.")
 
 #define DURATION_TEXT N_("Duration (secs)")

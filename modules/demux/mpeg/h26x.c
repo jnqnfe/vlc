@@ -46,7 +46,7 @@
 static int  Open ( demux_t * );
 static void Close( demux_t * );
 
-#define FPS_TEXT N_("Frames per Second")
+#define FPS_TEXT N_("Frames per second")
 #define FPS_LONGTEXT N_("Desired frame rate for the stream. (Use 0.0 to request default).")
 
 #ifdef PLUGIN_NAME_IS_hevc

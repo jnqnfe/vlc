@@ -257,12 +257,12 @@
       <Slider id="Unnamed Slider #63" x="141" y="36" points="(0,115),(0,5)" value="equalizer.band(1)" tooltiptext="170Hz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
       <Slider id="Unnamed Slider #64" x="161" y="36" points="(0,115),(0,5)" value="equalizer.band(2)" tooltiptext="310Hz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
       <Slider id="Unnamed Slider #65" x="181" y="36" points="(0,115),(0,5)" value="equalizer.band(3)" tooltiptext="600Hz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
-      <Slider id="Unnamed Slider #66" x="201" y="36" points="(0,115),(0,5)" value="equalizer.band(4)" tooltiptext="1KHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
-      <Slider id="Unnamed Slider #67" x="221" y="36" points="(0,115),(0,5)" value="equalizer.band(5)" tooltiptext="3KHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
-      <Slider id="Unnamed Slider #68" x="241" y="36" points="(0,115),(0,5)" value="equalizer.band(6)" tooltiptext="6KHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
-      <Slider id="Unnamed Slider #69" x="261" y="36" points="(0,115),(0,5)" value="equalizer.band(7)" tooltiptext="12KHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
-      <Slider id="Unnamed Slider #70" x="281" y="36" points="(0,115),(0,5)" value="equalizer.band(8)" tooltiptext="14KHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
-      <Slider id="Unnamed Slider #71" x="301" y="36" points="(0,115),(0,5)" value="equalizer.band(9)" tooltiptext="16KHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
+      <Slider id="Unnamed Slider #66" x="201" y="36" points="(0,115),(0,5)" value="equalizer.band(4)" tooltiptext="1kHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
+      <Slider id="Unnamed Slider #67" x="221" y="36" points="(0,115),(0,5)" value="equalizer.band(5)" tooltiptext="3kHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
+      <Slider id="Unnamed Slider #68" x="241" y="36" points="(0,115),(0,5)" value="equalizer.band(6)" tooltiptext="6kHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
+      <Slider id="Unnamed Slider #69" x="261" y="36" points="(0,115),(0,5)" value="equalizer.band(7)" tooltiptext="12kHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
+      <Slider id="Unnamed Slider #70" x="281" y="36" points="(0,115),(0,5)" value="equalizer.band(8)" tooltiptext="14kHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
+      <Slider id="Unnamed Slider #71" x="301" y="36" points="(0,115),(0,5)" value="equalizer.band(9)" tooltiptext="16kHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
       <Checkbox state="equalizer.isEnabled" up1="eq.png.led.off" up2="eq.png.led.on" down1="none" down2="none" over1="none" over2="none" action1="equalizer.enable()" action2="equalizer.disable()" tooltiptext1="Enable Equalizer" tooltiptext2="Disable Equalizer" id="eq.onoff.lef1" x="29" y="72"/>
       <Checkbox state="equalizer.isEnabled" up1="eq.png.knob.normal" up2="eq.png.knob.normal" down1="eq.png.knob.down" down2="eq.png.knob.down" over1="eq.png.knob.hover" over2="eq.png.knob.hover" action1="equalizer.enable()" action2="equalizer.disable()" tooltiptext1="Enable Equalizer" tooltiptext2="Disable Equalizer" id="eq.onoff.lef2" x="18" y="86"/>
     </Layout>
@@ -342,12 +342,12 @@
       <Slider id="fsc.Unnamed Slider #63" x="141" y="36" points="(0,115),(0,5)" value="equalizer.band(1)" tooltiptext="170Hz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
       <Slider id="fsc.Unnamed Slider #64" x="161" y="36" points="(0,115),(0,5)" value="equalizer.band(2)" tooltiptext="310Hz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
       <Slider id="fsc.Unnamed Slider #65" x="181" y="36" points="(0,115),(0,5)" value="equalizer.band(3)" tooltiptext="600Hz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
-      <Slider id="fsc.Unnamed Slider #66" x="201" y="36" points="(0,115),(0,5)" value="equalizer.band(4)" tooltiptext="1KHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
-      <Slider id="fsc.Unnamed Slider #67" x="221" y="36" points="(0,115),(0,5)" value="equalizer.band(5)" tooltiptext="3KHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
-      <Slider id="fsc.Unnamed Slider #68" x="241" y="36" points="(0,115),(0,5)" value="equalizer.band(6)" tooltiptext="6KHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
-      <Slider id="fsc.Unnamed Slider #69" x="261" y="36" points="(0,115),(0,5)" value="equalizer.band(7)" tooltiptext="12KHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
-      <Slider id="fsc.Unnamed Slider #70" x="281" y="36" points="(0,115),(0,5)" value="equalizer.band(8)" tooltiptext="14KHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
-      <Slider id="fsc.Unnamed Slider #71" x="301" y="36" points="(0,115),(0,5)" value="equalizer.band(9)" tooltiptext="16KHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
+      <Slider id="fsc.Unnamed Slider #66" x="201" y="36" points="(0,115),(0,5)" value="equalizer.band(4)" tooltiptext="1kHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
+      <Slider id="fsc.Unnamed Slider #67" x="221" y="36" points="(0,115),(0,5)" value="equalizer.band(5)" tooltiptext="3kHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
+      <Slider id="fsc.Unnamed Slider #68" x="241" y="36" points="(0,115),(0,5)" value="equalizer.band(6)" tooltiptext="6kHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
+      <Slider id="fsc.Unnamed Slider #69" x="261" y="36" points="(0,115),(0,5)" value="equalizer.band(7)" tooltiptext="12kHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
+      <Slider id="fsc.Unnamed Slider #70" x="281" y="36" points="(0,115),(0,5)" value="equalizer.band(8)" tooltiptext="14kHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
+      <Slider id="fsc.Unnamed Slider #71" x="301" y="36" points="(0,115),(0,5)" value="equalizer.band(9)" tooltiptext="16kHz" up="eq.png.slider.normal" down="eq.png.slider.hover" over="eq.png.slider.hover"/>
       <Checkbox state="equalizer.isEnabled" up1="eq.png.led.off" up2="eq.png.led.on" down1="none" down2="none" over1="none" over2="none" action1="equalizer.enable()" action2="equalizer.disable()" tooltiptext1="Enable Equalizer" tooltiptext2="Disable Equalizer" id="fsc.eq.onoff.lef1" x="29" y="72"/>
       <Checkbox state="equalizer.isEnabled" up1="eq.png.knob.normal" up2="eq.png.knob.normal" down1="eq.png.knob.down" down2="eq.png.knob.down" over1="eq.png.knob.hover" over2="eq.png.knob.hover" action1="equalizer.enable()" action2="equalizer.disable()" tooltiptext1="Enable Equalizer" tooltiptext2="Disable Equalizer" id="fsc.eq.onoff.lef2" x="18" y="86"/>
     </Layout>

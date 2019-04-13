@@ -1027,9 +1027,9 @@ vlc_plugin_begin ()
                 N_( "Address of the musicbrainz server to use." ), true )
 #ifdef HAVE_LIBCDDB
     add_string( "cddb-server", "freedb.videolan.org", N_( "CDDB Server" ),
-            N_( "Address of the CDDB server to use." ), true )
+            NULL, true )
     add_integer( "cddb-port", 80, N_( "CDDB port" ),
-            N_( "CDDB Server port to use." ), true )
+            NULL, true )
         change_integer_range( 1, 65535 )
 #endif
 vlc_plugin_end ()

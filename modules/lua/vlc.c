@@ -45,10 +45,10 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-#define INTF_TEXT N_("Lua interface")
+#define INTF_TEXT N_("Interface")
 #define INTF_LONGTEXT N_("Lua interface module to load")
 
-#define CONFIG_TEXT N_("Lua interface configuration")
+#define CONFIG_TEXT N_("Interface configuration")
 #define CONFIG_LONGTEXT N_("Lua interface configuration string. Format is: '[\"<interface module name>\"] = { <option> = <value>, ...}, ...'.")
 #define PASS_TEXT N_( "Password" )
 #define PASS_LONGTEXT N_( "A single password restricts access " \
@@ -125,11 +125,11 @@ vlc_plugin_begin ()
 
         add_string( "lua-intf", "dummy", INTF_TEXT, INTF_LONGTEXT, false )
         add_string( "lua-config", "", CONFIG_TEXT, CONFIG_LONGTEXT, false )
-    set_section( N_("Lua HTTP"), 0 )
+    set_section( N_("HTTP"), 0 )
         add_password("http-password", NULL, PASS_TEXT, PASS_LONGTEXT)
         add_string ( "http-src",  NULL, SRC_TEXT,  NULL,  true )
         add_bool   ( "http-index", false, INDEX_TEXT, INDEX_LONGTEXT, true )
-    set_section( N_("Lua Telnet"), 0 )
+    set_section( N_("Telnet"), 0 )
         add_string( "telnet-host", "localhost", TELNETHOST_TEXT,
                     TELNETHOST_LONGTEXT, true )
         add_integer( "telnet-port", TELNETPORT_DEFAULT, TELNETPORT_TEXT,

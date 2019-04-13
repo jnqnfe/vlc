@@ -88,7 +88,7 @@
 
 #define RADIUS_TEXT N_( "Base pixel radius" )
 #define RADIUS_LONGTEXT N_( \
-        "Defines radius size in pixels, of base of bands(beginning)." )
+        "Defines radius size in pixels, of base of bands (beginning)." )
 
 #define SSECT_TEXT N_( "Spectral sections" )
 #define SSECT_LONGTEXT N_( \

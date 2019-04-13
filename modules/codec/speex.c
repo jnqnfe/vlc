@@ -57,24 +57,13 @@ static void CloseEncoder ( encoder_t * );
 #define ENC_CFG_PREFIX "sout-speex-"
 
 #define ENC_MODE_TEXT N_("Mode" )
-#define ENC_MODE_LONGTEXT N_( \
-    "Enforce the mode of the encoder." )
-
 #define ENC_QUALITY_TEXT N_("Encoding quality")
-#define ENC_QUALITY_LONGTEXT N_( \
-    "Enforce a quality between 0 (low) and 10 (high)." )
-
 #define ENC_COMPLEXITY_TEXT N_("Encoding complexity" )
-#define ENC_COMPLEXITY_LONGTEXT N_( \
-    "Enforce the complexity of the encoder." )
-
-#define ENC_MAXBITRATE_TEXT N_( "Maximal bitrate" )
-#define ENC_MAXBITRATE_LONGTEXT N_( \
-    "Enforce the maximal VBR bitrate" )
+#define ENC_MAXBITRATE_TEXT N_( "Maximal VBR bitrate" )
 
 #define ENC_CBR_TEXT N_( "CBR encoding" )
 #define ENC_CBR_LONGTEXT N_( \
-    "Enforce a constant bitrate encoding (CBR) instead of default " \
+    "Use a constant bitrate encoding (CBR) instead of default " \
     "variable bitrate encoding (VBR)." )
 
 #define ENC_VAD_TEXT N_( "Voice activity detection" )
@@ -107,22 +96,22 @@ vlc_plugin_begin ()
 
     set_subcategory( SUBCAT_INPUT_ACODEC )
     add_integer( ENC_CFG_PREFIX "mode", 0, ENC_MODE_TEXT,
-                 ENC_MODE_LONGTEXT, false )
+                 NULL, false )
         change_integer_list( pi_enc_mode_values, ppsz_enc_mode_descriptions )
 
     add_integer( ENC_CFG_PREFIX "complexity", 3, ENC_COMPLEXITY_TEXT,
-                 ENC_COMPLEXITY_LONGTEXT, false )
+                 NULL, false )
         change_integer_range( 1, 10 )
 
     add_bool( ENC_CFG_PREFIX "cbr", false, ENC_CBR_TEXT,
                  ENC_CBR_LONGTEXT, false )
 
     add_float( ENC_CFG_PREFIX "quality", 8.0, ENC_QUALITY_TEXT,
-               ENC_QUALITY_LONGTEXT, false )
+                 NULL, false )
         change_float_range( 0.0, 10.0 )
 
     add_integer( ENC_CFG_PREFIX "max-bitrate", 0, ENC_MAXBITRATE_TEXT,
-                 ENC_MAXBITRATE_LONGTEXT, false )
+                 NULL, false )
         change_integer_range( 0, INT_MAX )
 
     add_bool( ENC_CFG_PREFIX "vad", true, ENC_VAD_TEXT,

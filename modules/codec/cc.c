@@ -55,8 +55,7 @@ static int  Open ( decoder_t * );
 static void Close( decoder_t * );
 
 #define OPAQUE_TEXT N_("Opacity")
-#define OPAQUE_LONGTEXT N_("Setting to true " \
-        "makes the text to be boxed and maybe easier to read." )
+#define OPAQUE_LONGTEXT N_("Makes the text boxed and maybe easier to read." )
 
 vlc_plugin_begin ()
     set_shortname( N_("CC 608/708"))

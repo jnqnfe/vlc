@@ -125,8 +125,7 @@ int ffmpeg_OpenCodec( decoder_t *p_dec, AVCodecContext *, const AVCodec * );
 #define ENC_BFRAMES_LONGTEXT N_( "Number of " \
   "B frames that will be coded between two reference frames." )
 
-#define ENC_VT_TEXT N_( "Video bitrate tolerance" )
-#define ENC_VT_LONGTEXT N_( "Video bitrate tolerance in kbit/s." )
+#define ENC_VT_TEXT N_( "Video bitrate tolerance (kbit/s)" )
 
 #define ENC_INTERLACE_TEXT N_( "Interlaced encoding" )
 #define ENC_INTERLACE_LONGTEXT N_( "Enable dedicated " \

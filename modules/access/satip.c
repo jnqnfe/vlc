@@ -57,8 +57,8 @@
 static int satip_open(stream_t *);
 static void satip_close(stream_t *);
 
-#define BUFFER_TEXT N_("Receive buffer")
-#define BUFFER_LONGTEXT N_("UDP receive buffer size (bytes)")
+#define BUFFER_TEXT N_("Receive buffer (bytes)")
+#define BUFFER_LONGTEXT N_("UDP receive buffer size")
 
 #define MULTICAST_TEXT N_("Request multicast stream")
 #define MULTICAST_LONGTEXT N_("Request server to send stream as multicast")

@@ -66,7 +66,7 @@ typedef struct
     bool            b_synced;
 } decoder_sys_t;
 
-#define DYNRNG_TEXT N_("A/52 dynamic range compression")
+#define DYNRNG_TEXT N_("Dynamic range compression")
 #define DYNRNG_LONGTEXT N_( \
     "Dynamic range compression makes the loud sounds softer, and the soft " \
     "sounds louder, so you can more easily listen to the stream in a noisy " \

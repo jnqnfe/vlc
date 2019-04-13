@@ -41,74 +41,74 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-#define VENC_TEXT N_("Video encoder")
+#define VENC_TEXT N_("Encoder")
 #define VENC_LONGTEXT N_( \
     "This is the video encoder module that will be used (and its associated "\
     "options).")
-#define VCODEC_TEXT N_("Destination video codec")
+#define VCODEC_TEXT N_("Destination codec (fourcc)")
 #define VCODEC_LONGTEXT N_( \
     "This is the video codec that will be used.")
-#define VB_TEXT N_("Video bitrate")
+#define VB_TEXT N_("Bitrate")
 #define VB_LONGTEXT N_( \
     "Target bitrate of the transcoded video stream." )
-#define SCALE_TEXT N_("Video scaling")
+#define SCALE_TEXT N_("Scaling")
 #define SCALE_LONGTEXT N_( \
     "Scale factor to apply to the video while transcoding (eg: 0.25)")
-#define FPS_TEXT N_("Video frame-rate")
+#define FPS_TEXT N_("Frame-rate")
 #define FPS_LONGTEXT N_( \
     "Target output frame rate for the video stream." )
-#define DEINTERLACE_TEXT N_("Deinterlace video")
+#define DEINTERLACE_TEXT N_("Deinterlace")
 #define DEINTERLACE_LONGTEXT N_( \
     "Deinterlace the video before encoding." )
 #define DEINTERLACE_MODULE_TEXT N_("Deinterlace module")
 #define DEINTERLACE_MODULE_LONGTEXT N_( \
     "Specify the deinterlace module to use." )
-#define WIDTH_TEXT N_("Video width")
+#define WIDTH_TEXT N_("Width")
 #define WIDTH_LONGTEXT N_( \
     "Output video width." )
-#define HEIGHT_TEXT N_("Video height")
+#define HEIGHT_TEXT N_("Height")
 #define HEIGHT_LONGTEXT N_( \
     "Output video height." )
-#define MAXWIDTH_TEXT N_("Maximum video width")
+#define MAXWIDTH_TEXT N_("Maximum width")
 #define MAXWIDTH_LONGTEXT N_( \
     "Maximum output video width." )
-#define MAXHEIGHT_TEXT N_("Maximum video height")
+#define MAXHEIGHT_TEXT N_("Maximum height")
 #define MAXHEIGHT_LONGTEXT N_( \
     "Maximum output video height." )
-#define VFILTER_TEXT N_("Video filter")
+#define VFILTER_TEXT N_("Filters")
 #define VFILTER_LONGTEXT N_( \
     "Video filters will be applied to the video streams (after overlays " \
     "are applied). You can enter a colon-separated list of filters." )
 
-#define AENC_TEXT N_("Audio encoder")
+#define AENC_TEXT N_("Encoder")
 #define AENC_LONGTEXT N_( \
     "This is the audio encoder module that will be used (and its associated "\
     "options).")
-#define ACODEC_TEXT N_("Destination audio codec")
+#define ACODEC_TEXT N_("Destination codec (fourcc)")
 #define ACODEC_LONGTEXT N_( \
     "This is the audio codec that will be used.")
-#define AB_TEXT N_("Audio bitrate")
+#define AB_TEXT N_("Bitrate")
 #define AB_LONGTEXT N_( \
     "Target bitrate of the transcoded audio stream." )
-#define ARATE_TEXT N_("Audio sample rate")
+#define ARATE_TEXT N_("Sample rate")
 #define ARATE_LONGTEXT N_( \
  "Sample rate of the transcoded audio stream (11250, 22500, 44100 or 48000).")
-#define ALANG_TEXT N_("Audio language")
+#define ALANG_TEXT N_("Language")
 #define ALANG_LONGTEXT N_( \
     "This is the language of the audio stream.")
-#define ACHANS_TEXT N_("Audio channels")
+#define ACHANS_TEXT N_("Channels")
 #define ACHANS_LONGTEXT N_( \
     "Number of audio channels in the transcoded streams." )
-#define AFILTER_TEXT N_("Audio filter")
+#define AFILTER_TEXT N_("Filters")
 #define AFILTER_LONGTEXT N_( \
     "Audio filters will be applied to the audio streams (after conversion " \
     "filters are applied). You can enter a colon-separated list of filters." )
 
-#define SENC_TEXT N_("Subtitle encoder")
+#define SENC_TEXT N_("Encoder")
 #define SENC_LONGTEXT N_( \
     "This is the subtitle encoder module that will be used (and its " \
     "associated options)." )
-#define SCODEC_TEXT N_("Destination subtitle codec")
+#define SCODEC_TEXT N_("Destination codec (fourcc)")
 #define SCODEC_LONGTEXT N_( \
     "This is the subtitle codec that will be used." )
 

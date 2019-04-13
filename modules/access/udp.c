@@ -230,7 +230,8 @@ static void Close( stream_t *p_access )
     net_Close( sys->fd );
 }
 
-#define TIMEOUT_TEXT N_("UDP Source timeout (secs), -1 is infinite.")
+#define TIMEOUT_TEXT N_("Source timeout (secs)")
+#define TIMEOUT_LONGTEXT N_("UDP source timeout (secs), -1 is infinite.")
 
 vlc_plugin_begin()
     set_shortname(N_("UDP"))
@@ -240,5 +241,5 @@ vlc_plugin_begin()
 
     set_subcategory(SUBCAT_INPUT_ACCESS)
     add_obsolete_integer("udp-buffer") /* since 3.0.0 */
-    add_integer_with_range("udp-timeout", -1, -1, INT_MAX, TIMEOUT_TEXT, NULL, true)
+    add_integer_with_range("udp-timeout", -1, -1, INT_MAX, TIMEOUT_TEXT, TIMEOUT_LONGTEXT, true)
 vlc_plugin_end()

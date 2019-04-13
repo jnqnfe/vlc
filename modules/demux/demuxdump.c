@@ -29,8 +29,8 @@
 #include <vlc_demux.h>
 #include <vlc_sout.h>
 
-#define ACCESS_TEXT N_("Dump module")
-#define FILE_TEXT N_("Dump filename")
+#define ACCESS_TEXT N_("Module")
+#define FILE_TEXT N_("Filename")
 #define FILE_LONGTEXT N_( \
     "Name of the file to which the raw stream will be dumped." )
 #define APPEND_TEXT N_("Append to existing file")

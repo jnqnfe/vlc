@@ -161,7 +161,7 @@ typedef struct
 #define TITLE_TEXT N_("Title display mode")
 #define TITLE_LONGTEXT N_("Title display mode. Default is 0 (hidden) if the feed has an image and feed images are enabled, 1 otherwise.")
 
-#define RSS_HELP N_("Display a RSS or ATOM Feed on your video")
+#define RSS_HELP N_("Display a RSS or ATOM feed on your video")
 
 static const int pi_pos_values[] = { 0, 1, 2, 4, 8, 5, 6, 9, 10 };
 static const char *const ppsz_pos_descriptions[] =

@@ -41,7 +41,7 @@
 static int  Open ( demux_t * );
 static void Close( demux_t * );
 
-#define FPS_TEXT N_("Frames per Second")
+#define FPS_TEXT N_("Frames per second")
 #define FPS_LONGTEXT N_("Desired frame rate for the VC-1 stream.")
 
 vlc_plugin_begin ()

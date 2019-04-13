@@ -288,7 +288,7 @@ vlc_plugin_begin()
     add_bool("http-continuous", false, N_("Continuous stream"),
              N_("Keep reading a resource that keeps being updated."), true)
         change_volatile()
-    add_bool("http-forward-cookies", true, N_("Cookies forwarding"),
+    add_bool("http-forward-cookies", true, N_("Cookie forwarding"),
              N_("Forward cookies across HTTP redirections."), true)
     add_string("http-referrer", NULL, N_("Referrer"),
                N_("Provide the referral URL, i.e. HTTP \"Referer\" (sic)."),

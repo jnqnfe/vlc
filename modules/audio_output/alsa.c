@@ -67,10 +67,10 @@ static int Open (audio_output_t *);
 static void Close (audio_output_t *);
 static int EnumDevices(char const *, char ***, char ***);
 
-#define AUDIO_DEV_TEXT N_("Audio output device")
+#define AUDIO_DEV_TEXT N_("Device")
 #define AUDIO_DEV_LONGTEXT N_("Audio output device (using ALSA syntax).")
 
-#define AUDIO_CHAN_TEXT N_("Audio output channels")
+#define AUDIO_CHAN_TEXT N_("Channels")
 #define AUDIO_CHAN_LONGTEXT N_("Channels available for audio output. " \
     "If the input has more channels than the output, it will be down-mixed. " \
     "This parameter is ignored when digital pass-through is active.")
@@ -83,7 +83,7 @@ static const char *const channels_text[] = {
     N_("Surround 5.0"), N_("Surround 5.1"), N_("Surround 7.1"),
 };
 
-#define PASSTHROUGH_TEXT N_("Audio passthrough mode")
+#define PASSTHROUGH_TEXT N_("Passthrough mode")
 static const int passthrough_modes[] = {
     PASSTHROUGH_NONE, PASSTHROUGH_SPDIF, PASSTHROUGH_HDMI,
 };

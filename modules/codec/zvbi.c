@@ -62,8 +62,7 @@ static void Close( decoder_t * );
         "Default page is index 100.")
 
 #define OPAQUE_TEXT N_("Opacity")
-#define OPAQUE_LONGTEXT N_("Setting to true " \
-        "makes the text to be boxed and maybe easier to read." )
+#define OPAQUE_LONGTEXT N_("Enabling makes the text boxed and maybe easier to read." )
 
 #define POS_TEXT N_("Teletext alignment")
 #define POS_LONGTEXT N_( \

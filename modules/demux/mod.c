@@ -51,8 +51,6 @@
 static int Open ( demux_t * );
 static void Close ( demux_t * );
 
-#define NOISE_LONGTEXT N_("Enable noise reduction algorithm.")
-#define REVERB_LONGTEXT N_("Enable reverberation" )
 #define REVERB_LEVEL_LONGTEXT N_( "Reverberation level (default value is 0)." )
 #define REVERB_DELAY_LONGTEXT N_("Reverberation delay, in milliseconds." \
                 " Usual values are from 40 to 200ms." )
@@ -74,10 +72,10 @@ vlc_plugin_begin ()
     set_subcategory( SUBCAT_INPUT_DEMUX )
 
     add_bool( "mod-noisereduction", true, N_("Noise reduction"),
-              NOISE_LONGTEXT, false )
+              NULL, false )
 
-    add_bool( "mod-reverb", false, N_("Reverb"),
-              REVERB_LONGTEXT, false )
+    add_bool( "mod-reverb", false, N_("Reverberation"),
+              NULL, false )
     add_integer_with_range( "mod-reverb-level", 0, 0, 100,
              N_("Reverberation level"), REVERB_LEVEL_LONGTEXT, true )
     add_integer_with_range( "mod-reverb-delay", 40, 0, 1000,

@@ -36,7 +36,7 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-#define YUV_FILE_TEXT N_("device, fifo or filename")
+#define YUV_FILE_TEXT N_("Device, fifo or filename")
 #define YUV_FILE_LONGTEXT N_("device, fifo or filename to write yuv frames too.")
 
 #define CHROMA_TEXT N_("Chroma (fourcc)")

@@ -56,7 +56,7 @@ static void Close   ( intf_thread_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_( "Notify" ) )
-    set_description( N_("LibNotify Notification Plugin") )
+    set_description( N_("LibNotify notification") )
     set_capability( VLC_CAP_INTERFACE, 0, Open, Close )
 
     set_subcategory( SUBCAT_INTERFACE_CONTROL )

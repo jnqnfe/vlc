@@ -366,17 +366,17 @@ static const char *const screensaver_texts[] = {
     "picture quality, for instance deinterlacing, or distort " \
     "the video.")
 
-#define SNAP_PATH_TEXT N_("Video snapshot directory (or filename)")
+#define SNAP_PATH_TEXT N_("Directory (or filename)")
 #define SNAP_PATH_LONGTEXT N_( \
     "Directory where the video snapshots will be stored.")
 
-#define SNAP_PREFIX_TEXT N_("Video snapshot file prefix")
+#define SNAP_PREFIX_TEXT N_("File prefix")
 
-#define SNAP_FORMAT_TEXT N_("Video snapshot format")
+#define SNAP_FORMAT_TEXT N_("Format")
 #define SNAP_FORMAT_LONGTEXT N_( \
     "Image format which will be used to store the video snapshots" )
 
-#define SNAP_PREVIEW_TEXT N_("Display video snapshot preview")
+#define SNAP_PREVIEW_TEXT N_("Display video preview")
 #define SNAP_PREVIEW_LONGTEXT N_( \
     "Display the snapshot preview in the screen's top-left corner.")
 
@@ -384,13 +384,13 @@ static const char *const screensaver_texts[] = {
 #define SNAP_SEQUENTIAL_LONGTEXT N_( \
     "Use sequential numbers instead of timestamps for snapshot numbering")
 
-#define SNAP_WIDTH_TEXT N_("Video snapshot width")
+#define SNAP_WIDTH_TEXT N_("Width")
 #define SNAP_WIDTH_LONGTEXT N_( \
     "You can enforce the width of the video snapshot. By default " \
     "it will keep the original width (-1). Using 0 will scale the width " \
     "to keep the aspect ratio." )
 
-#define SNAP_HEIGHT_TEXT N_("Video snapshot height")
+#define SNAP_HEIGHT_TEXT N_("Height")
 #define SNAP_HEIGHT_LONGTEXT N_( \
     "You can enforce the height of the video snapshot. By default " \
     "it will keep the original height (-1). Using 0 will scale the height " \
@@ -776,10 +776,8 @@ static const char *const ppsz_prefres[] = {
 # define VCD_DEVICE     "D:"
 
 #else
-# define DVD_DEV_LONGTEXT N_( \
-    "This is the default DVD device to use.")
-# define VCD_DEV_LONGTEXT N_( \
-    "This is the default VCD device to use." )
+# define DVD_DEV_LONGTEXT NULL
+# define VCD_DEV_LONGTEXT NULL
 
 # if defined(__OpenBSD__)
 #  define DVD_DEVICE     "/dev/cd0c"
@@ -1015,7 +1013,7 @@ static const char *const ppsz_prefres[] = {
     "priorities. You can use it to tune VLC priority against other " \
     "programs, or against other VLC instances.")
 
-#define VLM_CONF_TEXT N_("VLM configuration file")
+#define VLM_CONF_TEXT N_("Configuration file")
 #define VLM_CONF_LONGTEXT N_( \
     "Read a VLM configuration file as soon as VLM is started." )
 
@@ -1040,9 +1038,9 @@ static const char *const ppsz_prefres[] = {
 #define DAEMON_LONGTEXT N_( \
      "Runs VLC as a background daemon process.")
 
-#define PIDFILE_TEXT N_("Write process id to file")
+#define PIDFILE_TEXT N_("Write process ID to file")
 #define PIDFILE_LONGTEXT N_( \
-       "Writes process id into specified file.")
+       "Writes process ID into specified file.")
 
 #define ONEINSTANCE_TEXT N_("Allow only one running instance")
 #define ONEINSTANCE_LONGTEXT N_( \

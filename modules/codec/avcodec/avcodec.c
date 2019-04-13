@@ -151,8 +151,7 @@ vlc_plugin_begin ()
               ENC_INTERLACE_LONGTEXT, true )
     add_bool( ENC_CFG_PREFIX "interlace-me", true, ENC_INTERLACE_ME_TEXT,
               ENC_INTERLACE_ME_LONGTEXT, true )
-    add_integer( ENC_CFG_PREFIX "vt", 0, ENC_VT_TEXT,
-                 ENC_VT_LONGTEXT, true )
+    add_integer( ENC_CFG_PREFIX "vt", 0, ENC_VT_TEXT, NULL, true )
     add_bool( ENC_CFG_PREFIX "pre-me", false, ENC_PRE_ME_TEXT,
               NULL, true )
     add_integer( ENC_CFG_PREFIX "rc-buffer-size", 0,
