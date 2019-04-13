@@ -380,6 +380,9 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
 
         case VLC_CONFIG_NAME:
         {
+            if (unlikely(!CONFIG_ITEM(item->i_type)))
+                break;
+
             const char *name = va_arg (ap, const char *);
 
             if (unlikely(name == NULL))
@@ -418,6 +421,9 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
 
         case VLC_CONFIG_RANGE:
         {
+            if (unlikely(!CONFIG_ITEM(item->i_type)))
+                break;
+
             if (IsConfigFloatType (item->i_type))
             {
                 /* note, module_value_t uses float, but floats are converted
@@ -434,23 +440,30 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
         }
 
         case VLC_CONFIG_VOLATILE:
-            item->b_unsaveable = true;
+            if (CONFIG_ITEM(item->i_type))
+                item->b_unsaveable = true;
             break;
 
         case VLC_CONFIG_PRIVATE:
-            item->b_internal = true;
+            if (CONFIG_ITEM(item->i_type))
+                item->b_internal = true;
             break;
 
         case VLC_CONFIG_REMOVED:
-            item->b_removed = true;
+            if (CONFIG_ITEM(item->i_type))
+                item->b_removed = true;
             break;
 
         case VLC_CONFIG_CAPABILITY:
-            item->psz_type = va_arg (ap, const char *);
+            if (CONFIG_ITEM(item->i_type))
+                item->psz_type = va_arg (ap, const char *);
             break;
 
         case VLC_CONFIG_SHORTCUT:
         {
+            if (unlikely(!CONFIG_ITEM(item->i_type)))
+                break;
+
             /* note, char is expanded to int when passed variadically */
             char c = (char)va_arg (ap, int);
             if (unlikely(c == '\0' || c == '?' || c == ':'))
@@ -463,7 +476,8 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
             break;
         }
         case VLC_CONFIG_SAFE:
-            item->b_safe = true;
+            if (CONFIG_ITEM(item->i_type))
+                item->b_safe = true;
             break;
 
         case VLC_CONFIG_DESC:
@@ -473,6 +487,9 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
 
         case VLC_CONFIG_LIST:
         {
+            if (unlikely(!CONFIG_ITEM(item->i_type)))
+                break;
+
             size_t len = va_arg (ap, size_t);
 
             if (unlikely(item->list_count != 0 || item->list.psz_cb != NULL))
@@ -511,6 +528,9 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
 
         case VLC_CONFIG_LIST_CB:
         {
+            if (unlikely(!CONFIG_ITEM(item->i_type)))
+                break;
+
             void *cb;
 
             item->list_cb_name = va_arg(ap, const char *);
