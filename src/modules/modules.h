@@ -24,6 +24,7 @@
 # define LIBVLC_MODULES_H 1
 
 #include <stdatomic.h>
+#include <vlc_plugin.h>
 #include <vlc_module_caps.h>
 
 /** VLC plugin */
@@ -65,7 +66,7 @@ extern struct vlc_plugin_t *vlc_plugins;
 #define MODULE_SHORTCUT_MAX 20
 
 /** Plugin entry point prototype */
-typedef int vlc_plugin_cb (int (*)(void *, void *, int, ...), void *);
+typedef int vlc_plugin_cb (vlc_descriptor_cb, vlc_plugin_t *);
 
 /** Core module */
 vlc_plugin_cb vlc_entry__core;

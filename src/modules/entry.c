@@ -142,15 +142,18 @@ void vlc_plugin_destroy(vlc_plugin_t *plugin)
     free(plugin);
 }
 
-static module_config_item_t *vlc_config_create(vlc_plugin_t *plugin, int type)
+static module_config_item_t *vlc_config_create(vlc_plugin_t *plugin)
 {
     unsigned confsize = plugin->conf.size;
     module_config_item_t *tab = plugin->conf.items;
 
+    if (unlikely(plugin->conf.size == UINT16_MAX))
+        return NULL;
+
     if ((confsize & 0xf) == 0)
     {
         tab = realloc_or_free (tab, (confsize + 17) * sizeof (*tab));
-        if (tab == NULL)
+        if (unlikely(tab == NULL))
             return NULL;
 
         plugin->conf.items = tab;
@@ -160,25 +163,6 @@ static module_config_item_t *vlc_config_create(vlc_plugin_t *plugin, int type)
     tab += confsize;
     tab->owner = plugin;
 
-    if (IsConfigIntegerBasedType (type))
-    {
-        tab->max.i = INT64_MAX;
-        tab->min.i = INT64_MIN;
-    }
-    else if( IsConfigFloatType (type))
-    {
-        tab->max.f = FLT_MAX;
-        tab->min.f = -FLT_MAX;
-    }
-    tab->i_type = type;
-
-    if (CONFIG_ITEM(type))
-    {
-        plugin->conf.count++;
-        if (type == CONFIG_ITEM_BOOL)
-            plugin->conf.booleans++;
-    }
-    assert(plugin->conf.size < (UINT16_MAX - 1));
     plugin->conf.size++;
 
     return tab;
@@ -190,11 +174,10 @@ static module_config_item_t *vlc_config_create(vlc_plugin_t *plugin, int type)
  * This callback populates modules, configuration items and properties of a
  * plug-in from the plug-in descriptor.
  */
-static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
+static int vlc_plugin_desc_cb(vlc_plugin_t *plugin, enum vlc_plugin_desc_actions action, void *target, ...)
 {
-    vlc_plugin_t *plugin = ctx;
-    module_t *module = tgt;
-    module_config_item_t *item = tgt;
+    module_t *module = target;
+    module_config_item_t **item = target;
     va_list ap;
     int ret = 0;
 
@@ -217,14 +200,14 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
 
 #define print_config_error(msg) \
     do { \
-        const char* err_cfg_name = (item && item->psz_name != NULL) ? item->psz_name : "NULL"; \
+        const char* err_cfg_name = (item && *item && (*item)->psz_name != NULL) ? (*item)->psz_name : "NULL"; \
         fprintf(stderr, "%s: %s\n", _("LibVLC plugin config error"), msg); \
         print_err_plugin_path \
         fprintf(stderr, "    %s: %s\n", _("option name"), err_cfg_name); \
     } while (0)
 
-    va_start (ap, propid);
-    switch (propid)
+    va_start (ap, target);
+    switch (action)
     {
         case VLC_MODULE_CREATE:
         {
@@ -261,21 +244,91 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
             break;
         }
 
-        case VLC_CONFIG_CREATE:
+        case VLC_CONFIG_CREATE_SPECIAL:
+        case VLC_CONFIG_CREATE_OBSOLETE:
+        case VLC_CONFIG_CREATE_COMMON:
+        case VLC_CONFIG_CREATE_MOD_SELECT:
         {
-            int type = va_arg (ap, int);
-            module_config_item_t **pp = va_arg (ap, module_config_item_t **);
+            config_item_params_t *params = va_arg (ap, config_item_params_t *);
 
-            item = vlc_config_create(plugin, type);
-            if (unlikely(item == NULL))
+            module_config_item_t *new_item = vlc_config_create(plugin);
+            if (unlikely(new_item == NULL))
             {
+                print_config_error(_("too many config items, or malloc failure"));
                 ret = -1;
                 break;
             }
-            *pp = item;
+            *item = new_item;
+
+            uint16_t type;
+            switch (action)
+            {
+                case VLC_CONFIG_CREATE_SPECIAL:
+                    type =
+                    new_item->i_type = params->special.type;
+                    new_item->orig.i = /* FIXME: old code put it in both of these */
+                    new_item->value.i = params->special.id;
+                    new_item->psz_text = params->special.text;
+                    new_item->psz_longtext = params->special.longtext;
+                    break;
+                case VLC_CONFIG_CREATE_OBSOLETE:
+                    type =
+                    new_item->i_type = params->obsolete.type;
+                    new_item->psz_name = params->obsolete.name;
+                    new_item->b_removed = 1;
+                    break;
+                case VLC_CONFIG_CREATE_COMMON:
+                    type =
+                    new_item->i_type = params->basic_item.type;
+                    new_item->psz_name = params->basic_item.name;
+                    new_item->orig = params->basic_item.default_val;
+                    new_item->value = params->basic_item.default_val;
+                    new_item->psz_text = params->basic_item.text;
+                    new_item->psz_longtext = params->basic_item.longtext;
+
+                    if (IsConfigIntegerBasedType (type))
+                    {
+                        new_item->max.i = INT64_MAX;
+                        new_item->min.i = INT64_MIN;
+                    }
+                    else if (IsConfigFloatType (type))
+                    {
+                        new_item->max.f = FLT_MAX;
+                        new_item->min.f = -FLT_MAX;
+                    }
+                    if (IsConfigStringType (type))
+                    {
+                        new_item->orig.psz = (new_item->orig.psz) ? strdup(new_item->orig.psz) : NULL;
+                        new_item->value.psz = (new_item->value.psz) ? strdup(new_item->value.psz) : NULL;
+                    }
+                    break;
+                case VLC_CONFIG_CREATE_MOD_SELECT:
+                    type =
+                    new_item->i_type = params->mod_select_item.type;
+                    new_item->psz_name = params->mod_select_item.name;
+                    new_item->psz_type = params->mod_select_item.cap;
+                    new_item->min.i = params->mod_select_item.subcategory;
+                    new_item->max.i = 0;
+                    new_item->psz_text = params->mod_select_item.text;
+                    new_item->psz_longtext = params->mod_select_item.longtext;
+                    break;
+                default:
+                    unreachable();
+                    break;
+            }
+            if (CONFIG_ITEM(type))
+            {
+                plugin->conf.count++;
+                if (CONFIG_CLASS(type) == CONFIG_ITEM_CLASS_BOOL)
+                    plugin->conf.booleans++;
+            }
+            if (unlikely(action != VLC_CONFIG_CREATE_SPECIAL && new_item->psz_name == NULL))
+            {
+                print_config_error(_("name cannot be null"));
+                ret = -1;
+            }
             break;
         }
-
         case VLC_MODULE_SHORTCUT:
         {
             unsigned i_shortcuts = va_arg (ap, unsigned);
@@ -303,7 +356,6 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
                 pp[i] = tab[i];
             break;
         }
-
         case VLC_MODULE_CAPABILITY:
             module->capability = va_arg (ap, enum vlc_module_cap);
             if (unlikely(!vlc_module_int_is_valid_cap((int)module->capability)))
@@ -360,7 +412,6 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
             module->psz_longname = value;
             break;
         }
-
         case VLC_MODULE_SHORTNAME:
             module->psz_shortname = va_arg (ap, const char *);
             break;
@@ -378,175 +429,178 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
             plugin->textdomain = va_arg(ap, const char *);
             break;
 
-        case VLC_CONFIG_NAME:
-        {
-            if (unlikely(!CONFIG_ITEM(item->i_type)))
-                break;
-
-            const char *name = va_arg (ap, const char *);
-
-            if (unlikely(name == NULL))
-            {
-                print_config_error(_("name cannot be null"));
-                ret = -1;
-            }
-            else
-                item->psz_name = name;
-            break;
-        }
-
-        case VLC_CONFIG_VALUE:
-        {
-            if (IsConfigIntegerBasedType (item->i_type)
-             || !CONFIG_ITEM(item->i_type))
-            {
-                item->orig.i =
-                item->value.i = va_arg (ap, int64_t);
-            }
-            else
-            if (IsConfigFloatType (item->i_type))
-            {
-                item->orig.f =
-                item->value.f = va_arg (ap, double);
-            }
-            else
-            if (IsConfigStringType (item->i_type))
-            {
-                const char *value = va_arg (ap, const char *);
-                item->value.psz = value ? strdup (value) : NULL;
-                item->orig.psz = (char *)value;
-            }
-            break;
-        }
-
-        case VLC_CONFIG_RANGE:
-        {
-            if (unlikely(!CONFIG_ITEM(item->i_type)))
-                break;
-
-            if (IsConfigFloatType (item->i_type))
-            {
-                /* note, module_value_t uses float, but floats are converted
-                   to double when passed variadically */
-                item->min.f = va_arg (ap, double);
-                item->max.f = va_arg (ap, double);
-            }
-            else
-            {
-                item->min.i = va_arg (ap, int64_t);
-                item->max.i = va_arg (ap, int64_t);
-            }
-            break;
-        }
-
         case VLC_CONFIG_VOLATILE:
-            if (CONFIG_ITEM(item->i_type))
-                item->b_unsaveable = true;
+            if (CONFIG_ITEM((*item)->i_type))
+                (*item)->b_unsaveable = true;
             break;
 
         case VLC_CONFIG_PRIVATE:
-            if (CONFIG_ITEM(item->i_type))
-                item->b_internal = true;
+            if (CONFIG_ITEM((*item)->i_type))
+                (*item)->b_internal = true;
             break;
 
         case VLC_CONFIG_REMOVED:
-            if (CONFIG_ITEM(item->i_type))
-                item->b_removed = true;
+            if (CONFIG_ITEM((*item)->i_type))
+                (*item)->b_removed = true;
             break;
 
-        case VLC_CONFIG_CAPABILITY:
-            if (CONFIG_ITEM(item->i_type))
-                item->psz_type = va_arg (ap, const char *);
+        case VLC_CONFIG_SAFE:
+            if (CONFIG_ITEM((*item)->i_type))
+                (*item)->b_safe = true;
             break;
 
-        case VLC_CONFIG_SHORTCUT:
+        case VLC_CONFIG_SHORT:
         {
-            if (unlikely(!CONFIG_ITEM(item->i_type)))
+            config_item_params_t *params = va_arg (ap, config_item_params_t *);
+            if (unlikely(!CONFIG_ITEM((*item)->i_type)))
                 break;
 
-            /* note, char is expanded to int when passed variadically */
-            char c = (char)va_arg (ap, int);
+            char c = params->short_char.ch;
             if (unlikely(c == '\0' || c == '?' || c == ':'))
             {
                 print_config_error(_("invalid short option"));
                 ret = -1;
             }
             else
-                item->i_short = c;
+                (*item)->i_short = c;
             break;
         }
-        case VLC_CONFIG_SAFE:
-            if (CONFIG_ITEM(item->i_type))
-                item->b_safe = true;
-            break;
-
-        case VLC_CONFIG_DESC:
-            item->psz_text = va_arg (ap, const char *);
-            item->psz_longtext = va_arg (ap, const char *);
-            break;
-
-        case VLC_CONFIG_LIST:
+        case VLC_CONFIG_INT_RANGE:
         {
-            if (unlikely(!CONFIG_ITEM(item->i_type)))
+            config_item_params_t *params = va_arg (ap, config_item_params_t *);
+            if (unlikely(!IsConfigIntegerType((*item)->i_type)))
+            {
+                print_config_error(_("int range only applies to int items"));
+                ret = -1;
                 break;
-
-            size_t len = va_arg (ap, size_t);
-
-            if (unlikely(item->list_count != 0 || item->list.psz_cb != NULL))
+            }
+            (*item)->min.i = params->integer_range.min;
+            (*item)->max.i = params->integer_range.max;
+            break;
+        }
+        case VLC_CONFIG_FLOAT_RANGE:
+        {
+            config_item_params_t *params = va_arg (ap, config_item_params_t *);
+            if (unlikely(!IsConfigFloatType((*item)->i_type)))
+            {
+                print_config_error(_("float range only applies to float items"));
+                ret = -1;
+                break;
+            }
+            (*item)->min.f = params->float_range.min;
+            (*item)->max.f = params->float_range.max;
+            break;
+        }
+        case VLC_CONFIG_STRING_LIST:
+        {
+            config_item_params_t *params = va_arg (ap, config_item_params_t *);
+            if (unlikely(!IsConfigStringType((*item)->i_type)))
+            {
+                print_config_error(_("string list only applies to string items"));
+                ret = -1;
+                break;
+            }
+            if (unlikely((*item)->list_count != 0 || (*item)->list_cb_name != NULL))
             {
                 print_config_error(_("list properties already set"));
                 ret = -1;
                 break;
             }
+
+            size_t len = params->string_list.count;
             if (unlikely(len == 0))
                 break; /* nothing to do */
-            /* Copy values */
-            if (IsConfigIntegerBasedType (item->i_type))
-                item->list.i = va_arg(ap, const int *);
-            else
-            if (IsConfigStringType (item->i_type))
-            {
-                const char *const *src = va_arg (ap, const char *const *);
-                const char **dst = xmalloc (sizeof (const char *) * len);
 
-                memcpy(dst, src, sizeof (const char *) * len);
-                item->list.psz = dst;
-            }
-            else
-                break;
+            /* Copy values */
+            const char *const *src = params->string_list.list;
+            const char **dst = xmalloc (sizeof (const char *) * len);
+
+            memcpy(dst, src, sizeof (const char *) * len);
+            (*item)->list.psz = dst;
 
             /* Copy textual descriptions */
             /* XXX: item->list_text[len + 1] is probably useless. */
-            const char *const *text = va_arg (ap, const char *const *);
+            const char *const *text = params->string_list.text;
             const char **dtext = xmalloc (sizeof (const char *) * (len + 1));
 
             memcpy(dtext, text, sizeof (const char *) * len);
-            item->list_text = dtext;
-            item->list_count = len;
+            (*item)->list_text = dtext;
+            (*item)->list_count = len;
             break;
         }
-
-        case VLC_CONFIG_LIST_CB:
+        case VLC_CONFIG_INT_LIST:
         {
-            if (unlikely(!CONFIG_ITEM(item->i_type)))
+            config_item_params_t *params = va_arg (ap, config_item_params_t *);
+            if (unlikely(!IsConfigIntegerType((*item)->i_type)))
+            {
+                print_config_error(_("int list only applies to int items"));
+                ret = -1;
                 break;
+            }
+            if (unlikely((*item)->list_count != 0 || (*item)->list_cb_name != NULL))
+            {
+                print_config_error(_("list properties already set"));
+                ret = -1;
+                break;
+            }
 
-            void *cb;
+            size_t len = params->int_list.count;
+            if (unlikely(len == 0))
+                break; /* nothing to do */
 
-            item->list_cb_name = va_arg(ap, const char *);
-            cb = va_arg(ap, void *);
+            /* Copy values */
+            (*item)->list.i = params->int_list.list;
 
-            if (IsConfigIntegerBasedType (item->i_type))
-               item->list.i_cb = cb;
-            else
-            if (IsConfigStringType (item->i_type))
-               item->list.psz_cb = cb;
+            /* Copy textual descriptions */
+            /* XXX: item->list_text[len + 1] is probably useless. */
+            const char *const *text = params->int_list.text;
+            const char **dtext = xmalloc (sizeof (const char *) * (len + 1));
 
+            memcpy(dtext, text, sizeof (const char *) * len);
+            (*item)->list_text = dtext;
+            (*item)->list_count = len;
             break;
         }
-
+        case VLC_CONFIG_STRING_LIST_CB:
+        {
+            config_item_params_t *params = va_arg (ap, config_item_params_t *);
+            if (unlikely(!IsConfigStringType((*item)->i_type)))
+            {
+                print_config_error(_("string list callback only applies to string items"));
+                ret = -1;
+                break;
+            }
+            if (unlikely((*item)->list_count != 0 || (*item)->list_cb_name != NULL))
+            {
+                print_config_error(_("list properties already set"));
+                ret = -1;
+                break;
+            }
+            (*item)->list_cb_name = params->string_list_cb.name;
+            (*item)->list.psz_cb = params->string_list_cb.cb;
+            break;
+        }
+        case VLC_CONFIG_INT_LIST_CB:
+        {
+            config_item_params_t *params = va_arg (ap, config_item_params_t *);
+            if (unlikely(!IsConfigIntegerType((*item)->i_type)))
+            {
+                print_config_error(_("int list callback only applies to int items"));
+                ret = -1;
+                break;
+            }
+            if (unlikely((*item)->list_count != 0 || (*item)->list_cb_name != NULL))
+            {
+                print_config_error(_("list properties already set"));
+                ret = -1;
+                break;
+            }
+            (*item)->list_cb_name = params->int_list_cb.name;
+            (*item)->list.i_cb = params->int_list_cb.cb;
+            break;
+        }
         default:
-            fprintf(stderr, "%s (%d)\n", _("LibVLC plugin error: unknown property"), propid);
+            fprintf(stderr, "%s (%d)\n", _("LibVLC plugin error: unknown descriptor action"), (int)action);
             ret = -1;
             break;
     }
@@ -605,28 +659,44 @@ static int vlc_plugin_symbol_compare(const void *a, const void *b)
  * This callback generates a mapping of plugin symbol names to symbol
  * addresses.
  */
-static int vlc_plugin_gpa_cb(void *ctx, void *tgt, int propid, ...)
+static int vlc_plugin_gpa_cb(vlc_plugin_t *plugin, enum vlc_plugin_desc_actions action, void *target, ...)
 {
-    void **rootp = ctx;
+    void **rootp = (void **) plugin;
     const char *name;
     void *addr;
+    va_list ap;
+    config_item_params_t *cfg_params;
 
-    (void) tgt;
+    (void) target;
 
-    switch (propid)
+    switch (action)
     {
         case VLC_MODULE_CB_OPEN:
-        case VLC_MODULE_CB_CLOSE:
-        case VLC_CONFIG_LIST_CB:
-        {
-            va_list ap;
-
-            va_start(ap, propid);
+            va_start(ap, target);
             name = va_arg(ap, const char *);
-            addr = va_arg(ap, void *);
+            addr = (void *) va_arg(ap, vlc_activate_cb);
             va_end (ap);
             break;
-        }
+        case VLC_MODULE_CB_CLOSE:
+            va_start(ap, target);
+            name = va_arg(ap, const char *);
+            addr = (void *) va_arg(ap, vlc_deactivate_cb);
+            va_end (ap);
+            break;
+        case VLC_CONFIG_STRING_LIST_CB:
+            va_start(ap, target);
+            cfg_params = va_arg (ap, config_item_params_t *);
+            name = cfg_params->string_list_cb.name;
+            addr = (void *) cfg_params->string_list_cb.cb;
+            va_end (ap);
+            break;
+        case VLC_CONFIG_INT_LIST_CB:
+            va_start(ap, target);
+            cfg_params = va_arg (ap, config_item_params_t *);
+            name = cfg_params->int_list_cb.name;
+            addr = (void *) cfg_params->int_list_cb.cb;
+            va_end (ap);
+            break;
         default:
             return 0;
     }
@@ -664,9 +734,9 @@ static int vlc_plugin_gpa_cb(void *ctx, void *tgt, int propid, ...)
  */
 static void *vlc_plugin_get_symbols(vlc_plugin_cb *entry)
 {
-    void *root = NULL;
+    vlc_plugin_t *root = NULL;
 
-    if (entry(vlc_plugin_gpa_cb, &root))
+    if (entry(vlc_plugin_gpa_cb, root))
     {
         tdestroy(root, free);
         return NULL;

@@ -58,8 +58,9 @@ struct config_category_t
 
 typedef union
 {
-    char       *psz;
+    char        *psz;
     int64_t     i;
+    bool        b;
     float       f;
 } module_value_t;
 
