@@ -48,6 +48,10 @@ static const int  frame_skip_list[] = { -1, 0, 1, 2, 3, 4 };
 static const char *const frame_skip_list_text[] =
   { N_("None"), N_("Default"), N_("Non-ref (B-frames)"), N_("Bidir (P-frames)"), N_("Non-key (B+P frames)"), N_("All") };
 
+static const int  idct_skip_list[] = { -1, 0, 1, 2, 3, 4 };
+static const char *const idct_skip_list_text[] =
+  { N_("None"), N_("Default"), N_("Non-ref (B-frames)"), N_("Bidir (P-frames)"), N_("Non-key (B+P frames)"), N_("All") };
+
 static const int  nloopf_list[] = { 0, 1, 2, 3, 4 };
 static const char *const nloopf_list_text[] =
   { N_("None"), N_("Non-ref (B-frames)"), N_("Bidir (P-frames)"), N_("Non-key (B+P frames)"), N_("All") };
@@ -114,6 +118,7 @@ vlc_plugin_begin ()
     add_integer( "avcodec-skip-idct", 0, SKIP_IDCT_TEXT,
         SKIP_IDCT_LONGTEXT, true )
         change_integer_range( -1, 4 )
+        change_integer_list( idct_skip_list, idct_skip_list_text )
     add_obsolete_integer( "avcodec-vismv" ) /* removed since 3.0.0 */
     add_bool( "avcodec-fast", false, FAST_TEXT, FAST_LONGTEXT, false )
     add_integer ( "avcodec-skiploopfilter", 0, SKIPLOOPF_TEXT,
