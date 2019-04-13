@@ -258,9 +258,7 @@ static const char *const ppsz_color_descriptions[] = {
     "Kate is a codec for text and image based overlays.\n" \
     "The Tiger rendering library is needed to render complex Kate streams, " \
     "but VLC can still render static text and image based subtitles if " \
-    "it is not available.\n" \
-    "Note that changing settings below will not take effect until a new stream is played. " \
-    "This will hopefully be fixed soon." \
+    "it is not available." \
     )
 
 vlc_plugin_begin ()
