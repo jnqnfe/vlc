@@ -160,7 +160,7 @@ static module_config_item_t *vlc_config_create(vlc_plugin_t *plugin, int type)
     tab += confsize;
     tab->owner = plugin;
 
-    if (IsConfigIntegerType (type))
+    if (IsConfigIntegerBasedType (type))
     {
         tab->max.i = INT64_MAX;
         tab->min.i = INT64_MIN;
@@ -394,7 +394,7 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
 
         case VLC_CONFIG_VALUE:
         {
-            if (IsConfigIntegerType (item->i_type)
+            if (IsConfigIntegerBasedType (item->i_type)
              || !CONFIG_ITEM(item->i_type))
             {
                 item->orig.i =
@@ -484,7 +484,7 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
             if (unlikely(len == 0))
                 break; /* nothing to do */
             /* Copy values */
-            if (IsConfigIntegerType (item->i_type))
+            if (IsConfigIntegerBasedType (item->i_type))
                 item->list.i = va_arg(ap, const int *);
             else
             if (IsConfigStringType (item->i_type))
@@ -516,7 +516,7 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
             item->list_cb_name = va_arg(ap, const char *);
             cb = va_arg(ap, void *);
 
-            if (IsConfigIntegerType (item->i_type))
+            if (IsConfigIntegerBasedType (item->i_type))
                item->list.i_cb = cb;
             else
             if (IsConfigStringType (item->i_type))
@@ -707,7 +707,7 @@ int vlc_plugin_resolve(vlc_plugin_t *plugin, vlc_plugin_cb entry)
         if (vlc_plugin_get_symbol(syms, item->list_cb_name, &cb))
             goto error;
 
-        if (IsConfigIntegerType (item->i_type))
+        if (IsConfigIntegerBasedType (item->i_type))
             item->list.i_cb = cb;
         else
         if (IsConfigStringType (item->i_type))

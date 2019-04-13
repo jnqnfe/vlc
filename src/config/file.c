@@ -453,7 +453,7 @@ int config_SaveConfigFile (vlc_object_t *p_this)
              || p_item->b_unsaveable)          /* ignore volatile option */
                 continue;
 
-            if (IsConfigIntegerType (p_item->i_type))
+            if (IsConfigIntegerBasedType (p_item->i_type))
             {
                 int64_t val = p_item->value.i;
                 config_Write (file, p_item->psz_text,

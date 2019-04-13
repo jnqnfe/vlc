@@ -83,7 +83,7 @@ int64_t config_GetInt(const char *psz_name)
 
     /* sanity checks */
     assert(p_config != NULL);
-    assert(IsConfigIntegerType(p_config->i_type));
+    assert(IsConfigIntegerBasedType(p_config->i_type));
 
     int64_t val;
 
@@ -159,7 +159,7 @@ void config_PutInt(const char *psz_name, int64_t i_value )
 
     /* sanity checks */
     assert(p_config != NULL);
-    assert(IsConfigIntegerType(p_config->i_type));
+    assert(IsConfigIntegerBasedType(p_config->i_type));
 
     if (i_value < p_config->min.i)
         i_value = p_config->min.i;
@@ -498,7 +498,7 @@ void config_ResetAll(void)
         {
             module_config_item_t *p_config = p->conf.items + i;
 
-            if (IsConfigIntegerType (p_config->i_type))
+            if (IsConfigIntegerBasedType (p_config->i_type))
                 p_config->value.i = p_config->orig.i;
             else
             if (IsConfigFloatType (p_config->i_type))

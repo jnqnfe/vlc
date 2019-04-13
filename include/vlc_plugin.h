@@ -141,7 +141,7 @@ enum vlc_module_properties
 
 #define IsConfigStringType(type) \
     (CONFIG_CLASS(type) == CONFIG_ITEM_CLASS_STRING)
-#define IsConfigIntegerType(type) \
+#define IsConfigIntegerBasedType(type) \
     (CONFIG_CLASS(type) & \
      (CONFIG_ITEM_CLASS_INTEGER | CONFIG_ITEM_CLASS_BOOL | CONFIG_ITEM_CLASS_INFO))
 #define IsConfigFloatType(type) \
