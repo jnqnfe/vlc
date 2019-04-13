@@ -48,7 +48,7 @@ VLC_API bool vlc_placebo_FormatSupported(const struct pl_gpu *, vlc_fourcc_t);
 
 // Shared options strings/structs for libplacebo options
 
-#define RENDER_INTENT_TEXT "Rendering intent for color conversion"
+#define RENDER_INTENT_TEXT "Rendering intent"
 #define RENDER_INTENT_LONGTEXT "The mapping type used to convert between color spaces."
 
 static const int intent_values[] = {
@@ -138,7 +138,7 @@ static const char * const trc_text[] = {
 };
 
 
-#define TONEMAPPING_TEXT "Tone-mapping algorithm"
+#define TONEMAPPING_TEXT "Algorithm"
 #define TONEMAPPING_LONGTEXT "Algorithm to use when converting from wide gamut to standard gamut, or from HDR to SDR."
 
 static const int tone_values[] = {
@@ -159,10 +159,10 @@ static const char * const tone_text[] = {
     "Hard clip out-of-gamut",
 };
 
-#define TONEMAP_PARAM_TEXT "Tone-mapping parameter"
+#define TONEMAP_PARAM_TEXT "Parameter"
 #define TONEMAP_PARAM_LONGTEXT "This parameter can be used to tune the tone-mapping curve. Specifics depend on the curve used. If left as 0, the curve's preferred default is used."
 
-#define TONEMAP_DESAT_TEXT "Tone-mapping desaturation coefficient"
+#define TONEMAP_DESAT_TEXT "Desaturation coefficient"
 #define TONEMAP_DESAT_LONGTEXT "How strongly to desaturate bright spectral colors towards white. 0.0 disables this behavior."
 
 #define DESAT_STRENGTH_TEXT "Desaturation strength"
@@ -198,7 +198,7 @@ static const char * const tone_text[] = {
 #define SCENE_THRESHOLD_HIGH_TEXT "Scene change upper threshold"
 #define SCENE_THRESHOLD_HIGH_LONGTEXT "This sets the upper boundary of a brightness change indicating a scene change. Brightness changes that exceed this value will instantly replace the detected peak, bypassing all smoothing. Setting this to a negative number disables this logic."
 
-#define DITHER_TEXT "Dithering algorithm"
+#define DITHER_TEXT "Algorithm"
 #define DITHER_LONGTEXT "The algorithm to use when dithering to a lower bit depth."
 
 static const int dither_values[] = {
@@ -217,13 +217,13 @@ static const char * const dither_text[] = {
     "White noise (fast but low quality)",
 };
 
-#define DITHER_SIZE_TEXT "Dither LUT size (log 2)"
+#define DITHER_SIZE_TEXT "LUT size (log 2)"
 #define DITHER_SIZE_LONGTEXT "Controls the size of the dither matrix, as a power of two (e.g. the default of 6 corresponds to a 64x64 matrix). Does not affect all algorithms."
 
 #define TEMPORAL_DITHER_TEXT "Temporal dithering"
 #define TEMPORAL_DITHER_LONGTEXT "Enables perturbing the dither matrix across frames. This reduces the persistence of dithering artifacts, but can cause flickering on some (cheap) LCD screens."
 
-#define DITHER_DEPTH_TEXT "Dither depth override (0 = auto)"
+#define DITHER_DEPTH_TEXT "Depth override (0 = auto)"
 #define DITHER_DEPTH_LONGTEXT "Overrides the detected framebuffer depth. Useful to dither to lower bit depths than otherwise required."
 
 enum {
