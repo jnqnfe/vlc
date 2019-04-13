@@ -67,7 +67,7 @@ static const char *const ppsz_scheme_descriptions[] = {
     };
 
 vlc_plugin_begin()
-    set_description(N_("Convert 3D picture to anaglyph image video filter"));
+    set_description(N_("Convert 3D picture to anaglyph"));
     set_shortname(N_("Anaglyph"))
     set_capability(VLC_CAP_VIDEO_FILTER, 0, Create, Destroy)
 
