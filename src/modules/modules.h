@@ -65,10 +65,10 @@ extern struct vlc_plugin_t *vlc_plugins;
 #define MODULE_SHORTCUT_MAX 20
 
 /** Plugin entry point prototype */
-typedef int (*vlc_plugin_cb) (int (*)(void *, void *, int, ...), void *);
+typedef int vlc_plugin_cb (int (*)(void *, void *, int, ...), void *);
 
 /** Core module */
-int vlc_entry__core (int (*)(void *, void *, int, ...), void *);
+vlc_plugin_cb vlc_entry__core;
 
 /**
  * Internal module descriptor
@@ -105,8 +105,8 @@ void vlc_plugin_destroy(vlc_plugin_t *);
 module_t *vlc_module_create(vlc_plugin_t *);
 void vlc_module_destroy (module_t *);
 
-vlc_plugin_t *vlc_plugin_describe(vlc_plugin_cb, const char*);
-int vlc_plugin_resolve(vlc_plugin_t *, vlc_plugin_cb);
+vlc_plugin_t *vlc_plugin_describe(vlc_plugin_cb*, const char*);
+int vlc_plugin_resolve(vlc_plugin_t *, vlc_plugin_cb*);
 
 void module_InitBank (void);
 void module_LoadPlugins(vlc_object_t *);

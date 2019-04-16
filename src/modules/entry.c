@@ -564,7 +564,7 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
  *
  * This loads the plug-in meta-data in memory.
  */
-vlc_plugin_t *vlc_plugin_describe(vlc_plugin_cb entry, const char *path)
+vlc_plugin_t *vlc_plugin_describe(vlc_plugin_cb *entry, const char *path)
 {
     vlc_plugin_t *plugin = vlc_plugin_create();
     if (unlikely(plugin == NULL))
@@ -662,7 +662,7 @@ static int vlc_plugin_gpa_cb(void *ctx, void *tgt, int propid, ...)
  * The result must be freed with vlc_plugin_free_symbols(). The result is only
  * meaningful until the plugin is unloaded.
  */
-static void *vlc_plugin_get_symbols(vlc_plugin_cb entry)
+static void *vlc_plugin_get_symbols(vlc_plugin_cb *entry)
 {
     void *root = NULL;
 
@@ -699,7 +699,7 @@ static int vlc_plugin_get_symbol(void *root, const char *name,
     return 0;
 }
 
-int vlc_plugin_resolve(vlc_plugin_t *plugin, vlc_plugin_cb entry)
+int vlc_plugin_resolve(vlc_plugin_t *plugin, vlc_plugin_cb *entry)
 {
     void *syms = vlc_plugin_get_symbols(entry);
     int ret = -1;

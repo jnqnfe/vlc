@@ -221,7 +221,7 @@ static void vlc_plugin_store(vlc_plugin_t *lib)
 /**
  * Registers a statically-linked plug-in.
  */
-static vlc_plugin_t *module_InitStatic(vlc_plugin_cb entry)
+static vlc_plugin_t *module_InitStatic(vlc_plugin_cb *entry)
 {
     /* Initializes the statically-linked library */
     vlc_plugin_t *lib = vlc_plugin_describe(entry, "<static>");
@@ -237,7 +237,7 @@ static vlc_plugin_t *module_InitStatic(vlc_plugin_cb entry)
 
 #if defined(__ELF__) || !HAVE_DYNAMIC_PLUGINS
 VLC_WEAK
-extern vlc_plugin_cb vlc_static_modules[];
+extern vlc_plugin_cb *vlc_static_modules[];
 
 static void module_InitStaticModules(void)
 {
@@ -281,7 +281,7 @@ static vlc_plugin_t *module_InitDynamic(vlc_object_t *obj, const char *path,
     }
 
     /* Try to resolve the symbol */
-    vlc_plugin_cb entry = vlc_dlsym(handle, vlc_entry_name);
+    vlc_plugin_cb *entry = vlc_dlsym(handle, vlc_entry_name);
     if (entry == NULL)
     {
         msg_Warn (obj, "cannot find plug-in entry point in %s", path);
@@ -580,7 +580,7 @@ int module_Map(struct vlc_logger *log, vlc_plugin_t *plugin)
         return -1;
     }
 
-    vlc_plugin_cb entry = vlc_dlsym(handle, vlc_entry_name);
+    vlc_plugin_cb *entry = vlc_dlsym(handle, vlc_entry_name);
     if (entry == NULL)
     {
         vlc_error(log, "cannot find plug-in entry point in %s",
