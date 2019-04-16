@@ -39,7 +39,7 @@ static int  OpenDecoder   ( vlc_object_t * );
 static int  OpenPacketizer( vlc_object_t * );
 static void Close         ( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
 
     set_description( N_("AES3/SMPTE 302M audio decoder") )
     set_capability( VLC_CAP_AUDIO_DECODER, 100 )
@@ -53,7 +53,7 @@ vlc_module_begin ()
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_ACODEC )
 
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * decoder_sys_t : aes3 decoder descriptor

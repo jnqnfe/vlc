@@ -29,14 +29,14 @@
 
 static int Open (vlc_object_t *);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname (N_("Karaoke"))
     set_description (N_("Simple Karaoke filter"))
     set_capability (VLC_CAP_AUDIO_FILTER, 0)
     set_callbacks (Open, NULL)
     //set_category (CAT_AUDIO)
     //set_subcategory (SUBCAT_AUDIO_AFILTER)
-vlc_module_end ()
+vlc_plugin_end ()
 
 static block_t *Process (filter_t *, block_t *);
 

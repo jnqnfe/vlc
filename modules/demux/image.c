@@ -73,7 +73,7 @@ static void Close(vlc_object_t *);
     "Use real-time mode suitable for being used as a master input and " \
     "real-time input slaves.")
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_description(N_("Image demuxer"))
     set_shortname(N_("Image"))
     set_capability(VLC_CAP_DEMUX, 10)
@@ -95,7 +95,7 @@ vlc_module_begin()
         change_safe()
     add_bool("image-realtime", false, RT_TEXT, RT_LONGTEXT, true)
         change_safe()
-vlc_module_end()
+vlc_plugin_end()
 
 /*****************************************************************************
  * Local prototypes

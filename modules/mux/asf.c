@@ -68,7 +68,7 @@ static void Close  ( vlc_object_t * );
 #define BITRATE_LONGTEXT N_("Do not try to guess ASF bitrate. Setting this, allows you to control how Windows Media Player will cache streamed content. Set to audio+video bitrate in bytes")
 
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("ASF muxer") )
     set_shortname( "ASF" )
     set_capability( VLC_CAP_SOUT_MUX, 5 )
@@ -91,7 +91,7 @@ vlc_module_begin ()
                                  PACKETSIZE_LONGTEXT, true )
     add_integer( SOUT_CFG_PREFIX "bitrate-override", 0, BITRATE_TEXT,
                                  BITRATE_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Locales prototypes

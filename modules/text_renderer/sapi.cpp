@@ -51,14 +51,14 @@ static int RenderText(filter_t *,
                       subpicture_region_t *,
                       const vlc_fourcc_t *);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description(N_("Speech synthesis for Windows"))
     set_capability(VLC_CAP_TEXT_RENDERER, 0)
     set_callbacks(Create, Destroy)
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_SUBPIC)
     add_integer("sapi-voice", -1, "Voice Index", NULL, false)
-vlc_module_end ()
+vlc_plugin_end ()
 
 struct filter_sys_t
 {

@@ -55,7 +55,7 @@ static void CloseRD( vlc_object_t * );
 VLC_SD_PROBE_HELPER("avahi", N_("Zeroconf network services"), SD_CAT_LAN)
 VLC_RD_PROBE_HELPER( "avahi_renderer", "Avahi Zeroconf renderer Discovery" )
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "Avahi" )
     set_description( N_("Zeroconf services") )
     set_capability( VLC_CAP_SERVICES_DISCOVERY, 0 )
@@ -76,7 +76,7 @@ vlc_module_begin ()
     //set_subcategory( SUBCAT_PLAYLIST_SD )
     //set_category( CAT_SOUT )
     //set_subcategory( SUBCAT_SOUT_RENDERER )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local structures

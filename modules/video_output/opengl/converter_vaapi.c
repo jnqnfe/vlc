@@ -392,11 +392,11 @@ error:
     return VLC_EGENERIC;
 }
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description("VA-API OpenGL surface converter")
     set_capability(VLC_CAP_GLCONV, 1)
     set_callbacks(Open, Close)
     add_shortcut("vaapi")
     //set_category(CAT_VIDEO)
     //set_subcategory(SUBCAT_VIDEO_VOUT)
-vlc_module_end ()
+vlc_plugin_end ()

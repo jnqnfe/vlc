@@ -41,14 +41,14 @@ static int       ActivateConverter  ( vlc_object_t * );
 static int       ActivateFilter     ( vlc_object_t * );
 static void      Destroy            ( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Video filtering using a chain of video filter modules") )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 1 )
     set_callbacks( ActivateConverter, Destroy )
     add_submodule ()
         set_capability( VLC_CAP_VIDEO_FILTER, 0 )
         set_callbacks( ActivateFilter, Destroy )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes.

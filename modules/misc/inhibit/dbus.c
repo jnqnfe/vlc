@@ -228,11 +228,11 @@ static void Close (vlc_object_t *obj)
 /*
  * Module descriptor
  */
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname (N_("D-Bus screensaver"))
     set_description (N_("D-Bus screen saver inhibition"))
     set_capability (VLC_CAP_INHIBIT, 20)
     set_callbacks (Open, Close)
     //set_category (CAT_ADVANCED)
     //set_subcategory (SUBCAT_ADVANCED_MISC)
-vlc_module_end ()
+vlc_plugin_end ()

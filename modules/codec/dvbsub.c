@@ -115,7 +115,7 @@ static void CloseEncoder( vlc_object_t * );
 static block_t *Encode  ( encoder_t *, subpicture_t * );
 #endif
 
-vlc_module_begin ()
+vlc_plugin_begin ()
 #   define DVBSUB_CFG_PREFIX "dvbsub-"
     set_description( N_("DVB subtitles decoder") )
     set_shortname( N_("DVB subtitles") )
@@ -140,7 +140,7 @@ vlc_module_begin ()
     add_integer( ENC_CFG_PREFIX "x", -1, ENC_POSX_TEXT, ENC_POSX_LONGTEXT, false )
     add_integer( ENC_CFG_PREFIX "y", -1, ENC_POSY_TEXT, ENC_POSY_LONGTEXT, false )
 #endif
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_enc_options[] = { "x", "y", NULL };
 

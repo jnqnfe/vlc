@@ -178,7 +178,7 @@ typedef struct
 
 #define AUDIOTRACK_SESSION_ID_TEXT " Id of audio session the AudioTrack must be attached to"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "AudioTrack" )
     set_description( "Android AudioTrack audio output" )
     set_capability( VLC_CAP_AUDIO_OUTPUT, 180 )
@@ -190,7 +190,7 @@ vlc_module_begin ()
     add_integer( "audiotrack-session-id", 0,
             AUDIOTRACK_SESSION_ID_TEXT, NULL, true )
         change_private()
-vlc_module_end ()
+vlc_plugin_end ()
 
 #define THREAD_NAME "android_audiotrack"
 #define GET_ENV() android_getEnv( VLC_OBJECT(p_aout), THREAD_NAME )

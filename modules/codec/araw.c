@@ -45,7 +45,7 @@ static void DecoderClose( vlc_object_t * );
 static int  EncoderOpen ( vlc_object_t * );
 #endif
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     /* audio decoder module */
     set_description( N_("Raw/Log Audio decoder") )
     set_capability( VLC_CAP_AUDIO_DECODER, 100 )
@@ -61,7 +61,7 @@ vlc_module_begin ()
 
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_ACODEC )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

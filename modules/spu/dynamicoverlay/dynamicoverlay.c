@@ -62,7 +62,7 @@ static int AdjustCallback( vlc_object_t *p_this, char const *psz_var,
 #define OUTPUT_TEXT N_("Output FIFO")
 #define OUTPUT_LONGTEXT N_("FIFO which will be written to for responses")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Dynamic video overlay") )
     set_shortname( N_("Overlay" ))
     set_capability( VLC_CAP_SUB_SOURCE, 0 )
@@ -74,7 +74,7 @@ vlc_module_begin ()
     add_loadfile("overlay-input", NULL, INPUT_TEXT, INPUT_LONGTEXT)
     /* Note: add_loadfile as O_WRONLY w/o O_CREAT, i.e. FIFO must exist */
     add_loadfile("overlay-output", NULL, OUTPUT_TEXT, OUTPUT_LONGTEXT)
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_filter_options[] = {
     "input", "output", NULL

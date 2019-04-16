@@ -108,7 +108,7 @@ static const int format_int[] = {
 #define FILE_TEXT N_("Output file")
 #define FILE_LONGTEXT N_("File to which the audio samples will be written to (\"-\" for stdout).")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("File audio output") )
     set_shortname( N_("File") )
     set_capability( VLC_CAP_AUDIO_OUTPUT, 0 )
@@ -125,7 +125,7 @@ vlc_module_begin ()
                  CHANNELS_TEXT, CHANNELS_LONGTEXT, true )
         change_integer_range( 0, 6 )
     add_bool( "audiofile-wav", true, WAV_TEXT, WAV_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static int Start( audio_output_t *p_aout, audio_sample_format_t *restrict fmt )
 {

@@ -757,7 +757,7 @@ Close(vlc_object_t *obj)
 #define CI_CUSTOM_FILTER_LONGTEXT N_( \
     "Example: 'CICrystallize', 'CIBumpDistortion', 'CIThermal', 'CIComicEffect'")
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_capability(VLC_CAP_VIDEO_FILTER, 0)
     set_description(N_("Mac OS X hardware video filters"))
 
@@ -792,6 +792,6 @@ vlc_module_begin()
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_string("ci-filter", "CIComicEffect", CI_CUSTOM_FILTER_TEXT, CI_CUSTOM_FILTER_LONGTEXT, true);
-vlc_module_end()
+vlc_plugin_end()
 
 #pragma clang diagnostic pop

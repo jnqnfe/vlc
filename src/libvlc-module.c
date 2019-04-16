@@ -1482,7 +1482,7 @@ static const char *const mouse_wheel_texts[] = {
  *           b_advanced_option )
  */
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("core program") )
     set_capability( VLC_CAP_CORE, 0 )
 
@@ -2759,7 +2759,7 @@ vlc_module_begin ()
     add_obsolete_info( "no-version" )
     add_obsolete_info( "noversion" )
 
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * End configuration.

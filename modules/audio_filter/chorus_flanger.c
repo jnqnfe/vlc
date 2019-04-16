@@ -71,7 +71,7 @@ struct filter_sys_t
  *****************************************************************************/
 
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help( N_("Add a delay effect to the sound") )
 
     set_description( N_("Sound Delay") )
@@ -96,7 +96,7 @@ vlc_module_begin ()
         N_("Wet mix"), N_("Level of delayed signal"), true )
     add_float_with_range( "dry-mix", 0.4, -0.999, 0.999,
         N_("Dry Mix"), N_("Level of input signal"), true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /**
  * small_value: Helper function

@@ -156,7 +156,7 @@ static const char * const present_text[] = {
 #define XSTR(x) #x
 #define STR(x) XSTR(x)
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname ("Vulkan/" STR(PLATFORM_NAME))
     set_description ("Vulkan context (" STR(PLATFORM_NAME) ")")
     set_capability (VLC_CAP_VULKAN, 10)
@@ -183,4 +183,4 @@ vlc_module_begin ()
     add_integer("present-mode", VK_PRESENT_MODE_FIFO_KHR,
             PRESENT_MODE_TEXT, PRESENT_MODE_LONGTEXT, false)
             change_integer_list(present_values, present_text)
-vlc_module_end ()
+vlc_plugin_end ()

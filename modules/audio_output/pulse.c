@@ -38,7 +38,7 @@
 static int  Open        ( vlc_object_t * );
 static void Close       ( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "PulseAudio" )
     set_description( N_("Pulseaudio audio output") )
     set_capability( VLC_CAP_AUDIO_OUTPUT, 160 )
@@ -46,7 +46,7 @@ vlc_module_begin ()
     set_callbacks( Open, Close )
     //set_category( CAT_AUDIO )
     //set_subcategory( SUBCAT_AUDIO_AOUT )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /* NOTE:
  * Be careful what you do when the PulseAudio mainloop is held, which is to say

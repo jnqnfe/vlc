@@ -87,7 +87,7 @@ static void CloseIn ( vlc_object_t * );
 #define SOUT_CFG_PREFIX_OUT "sout-bridge-out-"
 #define SOUT_CFG_PREFIX_IN "sout-bridge-in-"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Bridge"))
     set_description( N_("Bridge stream output"))
 
@@ -129,7 +129,7 @@ vlc_module_begin ()
     add_bool( SOUT_CFG_PREFIX_IN "placeholder-switch-on-iframe", true,
               PLACEHOLDER_IFRAME_TEXT, PLACEHOLDER_IFRAME_LONGTEXT, false )
 
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

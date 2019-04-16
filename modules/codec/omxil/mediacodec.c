@@ -179,7 +179,7 @@ static void RemoveInflightPictures(decoder_t *);
 
 #define CFG_PREFIX "mediacodec-"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description("Video decoder using Android MediaCodec via NDK")
     set_capability(VLC_CAP_VIDEO_DECODER, 800)
     set_callbacks(OpenDecoderNdk, CloseDecoder)
@@ -211,7 +211,7 @@ vlc_module_begin ()
              MEDIACODEC_AUDIO_TEXT, MEDIACODEC_AUDIO_LONGTEXT, true)
     add_bool(CFG_PREFIX "tunneled-playback", false,
              MEDIACODEC_TUNNELEDPLAYBACK_TEXT, NULL, true)
-vlc_module_end ()
+vlc_plugin_end ()
 
 static void CSDFree(decoder_t *p_dec)
 {

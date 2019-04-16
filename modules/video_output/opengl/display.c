@@ -43,7 +43,7 @@ static void Close(vout_display_t *vd);
 #define PROVIDER_LONGTEXT N_( \
     "Extension through which to use the Open Graphics Library (OpenGL).")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
 #if defined (USE_OPENGL_ES2)
 # define API VLC_OPENGL_ES2
 # define MODULE_VARNAME "gles2"
@@ -73,7 +73,7 @@ vlc_module_begin ()
 #endif
 
     add_glopts ()
-vlc_module_end ()
+vlc_plugin_end ()
 
 struct vout_display_sys_t
 {

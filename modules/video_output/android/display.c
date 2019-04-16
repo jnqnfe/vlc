@@ -58,7 +58,7 @@ static int OpenOpaque(vout_display_t *vd, const vout_display_cfg_t *cfg,
 static void Close(vout_display_t *vd);
 static void SubpicturePrepare(vout_display_t *vd, subpicture_t *subpicture);
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_description("Android video output")
     set_capability(VLC_CAP_VOUT_DISPLAY, 260)
     add_shortcut("android-display")
@@ -73,7 +73,7 @@ vlc_module_begin()
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_string(CFG_PREFIX "chroma", NULL, CHROMA_TEXT, CHROMA_LONGTEXT, true)
-vlc_module_end()
+vlc_plugin_end()
 
 /*****************************************************************************
  * Local prototypes

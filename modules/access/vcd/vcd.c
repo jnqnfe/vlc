@@ -44,7 +44,7 @@ static void Close( vlc_object_t * );
 
 #define HELP_TEXT N_("Usage hint: [vcd:][device][#[title][,[chapter]]]")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help (HELP_TEXT)
     set_shortname( N_("VCD"))
     set_description( N_("VCD input") )
@@ -53,7 +53,7 @@ vlc_module_begin ()
     add_shortcut( "vcd", "svcd" )
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_ACCESS )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

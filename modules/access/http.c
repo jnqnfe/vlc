@@ -63,7 +63,7 @@ static void Close( vlc_object_t * );
     "Automatically try to reconnect to the stream in case of a sudden " \
     "disconnect." )
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("HTTP input") )
     set_capability( VLC_CAP_ACCESS, 0 )
     set_shortname( N_( "HTTP(S)" ) )
@@ -75,7 +75,7 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_INPUT_ACCESS )
     add_bool( "http-reconnect", false, RECONNECT_TEXT,
               RECONNECT_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

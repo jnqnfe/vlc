@@ -121,7 +121,7 @@ static const char *const mode_list[] = { "red", "green", "blue", "white" };
 static const char *const mode_list_text[] = { N_("Red"), N_("Green"),
                                               N_("Blue"), N_("White") };
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help(BALL_HELP)
 
     set_description( N_("Ball video filter") )
@@ -148,7 +148,7 @@ vlc_module_begin ()
 
     add_bool( FILTER_PREFIX "edge-visible", true,
               EDGE_VISIBLE_TEXT, NULL, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_filter_options[] = {
     "color", "speed", "size",

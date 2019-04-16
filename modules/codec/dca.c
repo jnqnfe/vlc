@@ -66,7 +66,7 @@ typedef struct
     "compression the playback will be more adapted to a movie theater or a " \
     "listening room.")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "DCA" )
     set_description( N_("DTS Coherent Acoustics audio decoder") )
     set_capability( VLC_CAP_AUDIO_DECODER, 60 )
@@ -75,7 +75,7 @@ vlc_module_begin ()
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACODEC )
     add_bool( "dts-dynrng", true, DYNRNG_TEXT, DYNRNG_LONGTEXT, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*
  * helper function to interleave channels

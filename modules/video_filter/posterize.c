@@ -63,7 +63,7 @@ static const char *const ppsz_filter_options[] = {
 
 #define CFG_PREFIX "posterize-"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help( N_("Posterize video by lowering the number of colors") )
 
     set_description( N_("Posterize video filter") )
@@ -76,7 +76,7 @@ vlc_module_begin ()
     add_integer_with_range( CFG_PREFIX "level", 6, 2, 256,
                            POSTERIZE_LEVEL_TEXT, POSTERIZE_LEVEL_LONGTEXT,
                            false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * callback prototypes

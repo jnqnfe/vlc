@@ -59,7 +59,7 @@ static void CloseCommon   ( vlc_object_t * );
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Pseudo raw video decoder") )
     set_capability( VLC_CAP_VIDEO_DECODER, 50 )
     set_callbacks( OpenDecoder, CloseCommon )
@@ -71,7 +71,7 @@ vlc_module_begin ()
 
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_VCODEC )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /**
  * Common initialization for decoder and packetizer

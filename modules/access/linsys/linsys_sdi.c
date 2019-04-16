@@ -89,7 +89,7 @@ static void Close( vlc_object_t * );
 static int  DemuxOpen ( vlc_object_t * );
 static void DemuxClose( vlc_object_t * );
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_description( N_("SDI Input") )
     set_shortname( N_("SDI") )
     set_capability( VLC_CAP_ACCESS, 0 )
@@ -111,7 +111,7 @@ vlc_module_begin()
     add_string( "linsys-sdi-telx", "", TELX_TEXT, TELX_LONGTEXT, true )
     add_string( "linsys-sdi-telx-lang", "", TELX_LANG_TEXT, TELX_LANG_LONGTEXT,
                 true )
-vlc_module_end()
+vlc_plugin_end()
 
 /*****************************************************************************
  * Local prototypes

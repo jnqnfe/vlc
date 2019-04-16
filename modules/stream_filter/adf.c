@@ -34,14 +34,14 @@
 
 static int Open( vlc_object_t * );
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname( "adf" )
     set_capability( VLC_CAP_STREAM_FILTER, 330 )
     set_description( N_( "ADF stream filter" ) )
     set_callbacks( Open, NULL )
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_STREAM_FILTER )
-vlc_module_end()
+vlc_plugin_end()
 
 static int Control( stream_t *p_stream, int i_query, va_list args )
 {

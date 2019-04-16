@@ -56,7 +56,7 @@ static int   FindDesignated ( addons_finder_t *p_finder );
  * Module descriptor
  ****************************************************************************/
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname(N_("Videolan.org's addons finder"))
     add_shortcut(ADDONS_MODULE_SHORTCUT)
     set_description(N_("addons.videolan.org addons finder"))
@@ -71,7 +71,7 @@ add_submodule ()
 
     //set_category(CAT_ADVANCED)
     //set_subcategory(SUBCAT_ADVANCED_MISC)
-vlc_module_end ()
+vlc_plugin_end ()
 
 struct addons_finder_sys_t
 {

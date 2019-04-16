@@ -74,7 +74,7 @@ static void Close          (vlc_object_t *);
     "This option allows you to specify the directory the ncurses filebrowser " \
     "will show you initially.")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname("Ncurses")
     set_description(N_("Ncurses interface"))
     set_capability(VLC_CAP_INTERFACE, 10)
@@ -84,7 +84,7 @@ vlc_module_begin ()
     set_category(CAT_INTERFACE)
     set_subcategory(SUBCAT_INTERFACE_MAIN)
     add_directory("browse-dir", NULL, BROWSE_TEXT, BROWSE_LONGTEXT)
-vlc_module_end ()
+vlc_plugin_end ()
 
 #include "eject.c"
 

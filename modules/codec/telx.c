@@ -66,7 +66,7 @@ static int  Decode( decoder_t *, block_t * );
         "interpretation mistake. Try using this wrong interpretation if " \
         "your subtitles don't appear.")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Teletext subtitles decoder") )
     set_shortname( "Teletext" )
     set_capability( VLC_CAP_SPU_DECODER, 50 )
@@ -81,7 +81,7 @@ vlc_module_begin ()
     add_bool( "telx-french-workaround", false,
               FRENCH_WORKAROUND_TEXT, FRENCH_WORKAROUND_LONGTEXT, true )
 
-vlc_module_end ()
+vlc_plugin_end ()
 
 /****************************************************************************
  * Local structures

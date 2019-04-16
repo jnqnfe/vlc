@@ -131,7 +131,7 @@ static const char *const continue_playback_list_text[] = {
 #define VOLUME_MAX_TEXT N_("Maximum Volume displayed")
 
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_description(N_("Mac OS X interface"))
     set_capability(VLC_CAP_INTERFACE, 200)
     set_callbacks(OpenIntf, CloseIntf)
@@ -183,7 +183,7 @@ vlc_module_begin()
     add_integer("macosx-vdev", 0, VDEV_TEXT, VDEV_LONGTEXT, false)
     add_float_with_range("macosx-opaqueness", 1, 0, 1, OPAQUENESS_TEXT, OPAQUENESS_LONGTEXT, true);
     add_bool("macosx-black", false, BLACK_TEXT, BLACK_LONGTEXT, false)
-vlc_module_end()
+vlc_plugin_end()
 
 /* the following is fake code to make the pseudo VLC target for the macOS module compile and link */
 #ifdef MACOS_PSEUDO_VLC

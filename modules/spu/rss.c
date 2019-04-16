@@ -185,7 +185,7 @@ static const char *const ppsz_title_modes[] =
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help(RSS_HELP)
 
     set_capability( VLC_CAP_SUB_SOURCE, 1 )
@@ -223,7 +223,7 @@ vlc_module_begin ()
     add_integer( CFG_PREFIX "title", default_title, TITLE_TEXT, TITLE_LONGTEXT,
                  false )
         change_integer_list( pi_title_modes, ppsz_title_modes )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_filter_options[] = {
     "urls", "x", "y", "position", "opacity", "color", "size", "speed", "length",

@@ -41,9 +41,9 @@
  * Module descriptor
  *****************************************************************************/
 #ifndef MERGE_FFMPEG
-vlc_module_begin ()
+vlc_plugin_begin ()
     AVPARSER_MODULE
-vlc_module_end ()
+vlc_plugin_end ()
 #endif
 
 /*****************************************************************************

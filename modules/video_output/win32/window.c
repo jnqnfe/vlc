@@ -779,11 +779,11 @@ static int Open(vout_window_t *wnd)
     return VLC_SUCCESS;
 }
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("Win32 window"))
     set_description(N_("Win32 window"))
     set_capability(VLC_CAP_VOUT_WINDOW, 10)
     set_callbacks(Open, NULL)
     //set_category(CAT_VIDEO)
     //set_subcategory(SUBCAT_VIDEO_VOUT)
-vlc_module_end()
+vlc_plugin_end()

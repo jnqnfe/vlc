@@ -541,7 +541,7 @@ static void Close (vlc_object_t *obj)
     free(sys);
 }
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_description(N_("Stream prefetch filter"))
     set_capability(VLC_CAP_STREAM_FILTER, 0)
     set_callbacks(Open, Close)
@@ -555,4 +555,4 @@ vlc_module_begin()
     add_integer("prefetch-seek-threshold", 1 << 14, N_("Seek threshold"),
                 N_("Prefetch forward seek threshold (bytes)"), true)
         change_integer_range(0, UINT64_C(1) << 60)
-vlc_module_end()
+vlc_plugin_end()

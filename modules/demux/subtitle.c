@@ -59,7 +59,7 @@ static const char *const ppsz_sub_type[] =
     "subviewer1", "sbv"
 };
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Subtitles"))
     set_description( N_("Text subtitle parser") )
     set_capability( VLC_CAP_DEMUX, 0 )
@@ -73,7 +73,7 @@ vlc_module_begin ()
         change_string_list( ppsz_sub_type, ppsz_sub_type )
     add_string( "sub-description", NULL, N_("Subtitle description"),
                 SUB_DESCRIPTION_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Prototypes:

@@ -42,7 +42,7 @@ static int OpenEncoder ( vlc_object_t * );
 static block_t * Encode( encoder_t *, subpicture_t * );
 #endif
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("tx3g subtitles decoder") )
     set_shortname( N_("tx3g subtitles") )
     set_capability( VLC_CAP_SPU_DECODER, 100 )
@@ -56,7 +56,7 @@ vlc_module_begin ()
 #endif
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_SCODEC )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /****************************************************************************
  * Local structs

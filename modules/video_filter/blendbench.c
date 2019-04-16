@@ -60,7 +60,7 @@ static picture_t *Filter( filter_t *, picture_t * );
 
 #define CFG_PREFIX "blendbench-"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Blending benchmark filter") )
     set_shortname( N_("Blendbench" ))
     set_capability( VLC_CAP_VIDEO_FILTER, 0 )
@@ -85,7 +85,7 @@ vlc_module_begin ()
                  BLEND_IMAGE_TEXT, BLEND_IMAGE_LONGTEXT)
     add_string( CFG_PREFIX "blend-chroma", "YUVA", BLEND_CHROMA_TEXT,
               NULL, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_filter_options[] = {
     "loops", "alpha", "base-image", "base-chroma", "blend-image",

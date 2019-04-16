@@ -146,7 +146,7 @@ struct aout_sys_t
 
 #define VOLUME_TEXT N_("Audio volume")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "WaveOut" )
     set_description( N_("WaveOut audio output") )
     set_capability( VLC_CAP_AUDIO_OUTPUT, 50 )
@@ -163,7 +163,7 @@ vlc_module_begin ()
     add_integer ("waveout-audio-channels", 9, AUDIO_CHAN_TEXT,
                  AUDIO_CHAN_LONGTEXT, false)
         change_integer_range(1,9)
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Opens the audio device

@@ -54,7 +54,7 @@ static int  OpenEncoder   ( vlc_object_t * );
 static void CloseEncoder  ( vlc_object_t * );
 #endif
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Opus audio decoder") )
     set_capability( VLC_CAP_AUDIO_DECODER, 100 )
     set_shortname( N_("Opus") )
@@ -70,7 +70,7 @@ vlc_module_begin ()
 
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_ACODEC )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * decoder_sys_t : opus decoder descriptor

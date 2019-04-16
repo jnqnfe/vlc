@@ -46,7 +46,7 @@
 static int      Open                    (vlc_object_t *);
 static void     Close                   (vlc_object_t *);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname("auhal")
     set_description(N_("HAL AudioUnit output"))
     set_capability(VLC_CAP_AUDIO_OUTPUT, 101)
@@ -59,7 +59,7 @@ vlc_module_begin ()
         change_integer_range(0, AOUT_VOLUME_MAX)
     add_string("auhal-audio-device", "", DEVICE_TEXT, NULL, true)
     add_string("auhal-warned-devices", "", NULL, NULL, true)
-vlc_module_end ()
+vlc_plugin_end ()
 
 #pragma mark -
 #pragma mark private declarations

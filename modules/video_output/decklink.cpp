@@ -235,7 +235,7 @@ static void CloseAudio          (vlc_object_t *);
  * Module descriptor
  *****************************************************************************/
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("DecklinkOutput"))
     set_description(N_("Output module to write to Blackmagic SDI card"))
 
@@ -287,7 +287,7 @@ vlc_module_begin()
                 RATE_TEXT, RATE_LONGTEXT, true)
     add_integer(AUDIO_CFG_PREFIX "audio-channels", 2,
                 CHANNELS_TEXT, CHANNELS_LONGTEXT, true)
-vlc_module_end ()
+vlc_plugin_end ()
 
 /* Protects decklink_sys_t creation/deletion */
 static vlc_mutex_t sys_lock = VLC_STATIC_MUTEX;

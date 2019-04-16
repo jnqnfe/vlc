@@ -53,7 +53,7 @@ static int DecodeBlock  ( decoder_t *, block_t * );
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("SDL Image decoder"))
     set_description( N_("SDL_image video decoder") )
     set_capability( VLC_CAP_VIDEO_DECODER, 60 )
@@ -61,7 +61,7 @@ vlc_module_begin ()
     add_shortcut( "sdl_image" )
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_VCODEC )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const struct supported_fmt_t
 {

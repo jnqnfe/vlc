@@ -319,11 +319,11 @@ static void Close(vlc_object_t *obj)
     free(sys);
 }
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_capability(VLC_CAP_STREAM_FILTER, 0)
     add_shortcut("cache")
     set_description(N_("Block stream cache"))
     set_callbacks(Open, Close)
     //set_category(CAT_INPUT)
     //set_subcategory(SUBCAT_INPUT_STREAM_FILTER)
-vlc_module_end()
+vlc_plugin_end()

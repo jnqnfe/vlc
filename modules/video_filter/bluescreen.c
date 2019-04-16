@@ -73,7 +73,7 @@ static int BluescreenCallback( vlc_object_t *, char const *,
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help( BLUESCREEN_HELP )
 
     set_description( N_("Bluescreen video filter") )
@@ -94,7 +94,7 @@ vlc_module_begin ()
     add_integer_with_range( CFG_PREFIX "vt", 17, 0, 255,
                             BLUESCREENVTOL_TEXT, BLUESCREENVTOL_LONGTEXT,
                             false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_filter_options[] = {
     "u", "v", "ut", "vt", NULL

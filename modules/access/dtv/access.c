@@ -239,7 +239,7 @@ static const char *const satno_user[] = { N_("Unspecified"),
 static int  Open (vlc_object_t *);
 static void Close (vlc_object_t *);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname (N_("DTV"))
     set_description (N_("Digital Television and Radio"))
     set_capability (VLC_CAP_ACCESS, 0)
@@ -420,7 +420,7 @@ vlc_module_begin ()
     add_integer ("dvb-minor-channel", 0, MINOR_CHANNEL_TEXT, NULL, true)
     add_integer ("dvb-physical-channel", 0, PHYSICAL_CHANNEL_TEXT, NULL, true)
 #endif
-vlc_module_end ()
+vlc_plugin_end ()
 
 typedef struct
 {

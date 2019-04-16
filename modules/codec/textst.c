@@ -47,13 +47,13 @@ typedef struct
     uint32_t palette[256];
 } decoder_sys_t;
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_description(N_("HDMV TextST subtitles decoder"))
     set_capability(VLC_CAP_SPU_DECODER, 10)
     set_callbacks(Open, Close)
     //set_category(CAT_INPUT)
     //set_subcategory(SUBCAT_INPUT_SCODEC)
-vlc_module_end()
+vlc_plugin_end()
 
 #define BD_TEXTST_DATA_STRING      1
 #define BD_TEXTST_DATA_FONT_ID     2

@@ -74,7 +74,7 @@ static void Close (vlc_object_t *);
     "S/PDIF can be used by default when " \
     "your hardware supports it as well as the audio stream being played.")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "OSS" )
     set_description (N_("Open Sound System audio output"))
     set_capability( VLC_CAP_AUDIO_OUTPUT, 100 )
@@ -86,7 +86,7 @@ vlc_module_begin ()
                 AUDIO_DEV_TEXT, AUDIO_DEV_LONGTEXT, false)
     add_bool("oss-spdif", false, SPDIF_TEXT, SPDIF_LONGTEXT, true)
     add_sw_gain ()
-vlc_module_end ()
+vlc_plugin_end ()
 
 static int TimeGet (audio_output_t *, vlc_tick_t *);
 static void Play(audio_output_t *, block_t *, vlc_tick_t);

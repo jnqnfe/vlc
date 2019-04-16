@@ -43,7 +43,7 @@ LRESULT CALLBACK WMHOTKEYPROC( HWND, UINT, WPARAM, LPARAM );
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname( N_("Global Hotkeys") )
     set_description( N_("Global Hotkeys interface") )
     set_capability( VLC_CAP_INTERFACE, 0 )
@@ -51,7 +51,7 @@ vlc_module_begin()
     add_shortcut( "globalhotkeys" )
     //set_category( CAT_INTERFACE )
     //set_subcategory( SUBCAT_INTERFACE_HOTKEYS )
-vlc_module_end()
+vlc_plugin_end()
 
 struct intf_sys_t
 {

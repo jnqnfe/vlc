@@ -39,14 +39,14 @@
 static int      Open    ( vlc_object_t * );
 static void     Close   ( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Duplicate stream output") )
     set_capability( VLC_CAP_SOUT_STREAM, 50 )
     add_shortcut( "duplicate", "dup" )
     set_callbacks( Open, Close )
     //set_category( CAT_SOUT )
     //set_subcategory( SUBCAT_SOUT_STREAM )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

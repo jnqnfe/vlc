@@ -73,7 +73,7 @@ static const char *const accessibility_list_text[] = {
 #define ACCESS_GROUP_LONGTEXT N_("Keychain access group as defined by the app entitlements.")
 
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("Keychain keystore"))
     set_description(N_("Keystore for iOS, macOS and tvOS"))
     set_capability(VLC_CAP_KEYSTORE, 100)
@@ -86,7 +86,7 @@ vlc_module_begin()
     add_integer("keychain-accessibility-type", 0, ACCESSIBILITY_TYPE_TEXT, NULL, true)
         change_integer_list(accessibility_list, accessibility_list_text)
     add_string("keychain-access-group", NULL, ACCESS_GROUP_TEXT, ACCESS_GROUP_LONGTEXT, true)
-vlc_module_end ()
+vlc_plugin_end ()
 
 static NSMutableDictionary * CreateQuery(vlc_keystore *p_keystore)
 {

@@ -108,7 +108,7 @@ static block_t *Encode( encoder_t *p_enc, picture_t *p_pict );
 
 #define ENC_POSTPROCESS_TEXT N_("Post processing quality")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "Theora" )
     set_description( N_("Theora video decoder") )
     set_capability( VLC_CAP_VIDEO_DECODER, 100 )
@@ -139,7 +139,7 @@ vlc_module_begin ()
                  ENC_QUALITY_LONGTEXT, false )
 #endif
 
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_enc_options[] = {
     "quality", NULL

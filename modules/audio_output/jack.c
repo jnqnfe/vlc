@@ -95,7 +95,7 @@ static int  GraphChange  ( void *p_arg );
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "JACK" )
     set_description( N_("JACK audio output") )
     set_capability( VLC_CAP_AUDIO_OUTPUT, 100 )
@@ -110,7 +110,7 @@ vlc_module_begin ()
     add_string( "jack-name", "", JACK_NAME_TEXT, NULL, false)
 
     add_sw_gain( )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 static int Start( audio_output_t *p_aout, audio_sample_format_t *restrict fmt )

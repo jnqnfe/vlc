@@ -84,7 +84,7 @@ static block_t *EncodeBlock(encoder_t *, picture_t *);
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("PNG video decoder") )
     set_capability( VLC_CAP_VIDEO_DECODER, 1000 )
     set_callbacks( OpenDecoder, CloseDecoder )
@@ -100,7 +100,7 @@ vlc_module_begin ()
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_VCODEC )
     //set_section(N_("Encoding"), NULL)
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * OpenDecoder: probe the decoder and return score

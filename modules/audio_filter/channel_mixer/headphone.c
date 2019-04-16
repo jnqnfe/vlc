@@ -70,7 +70,7 @@ static block_t *Convert( filter_t *, block_t * );
      "Dolby Surround encoded streams won't be decoded before being " \
      "processed by this filter. Enabling this setting is not recommended.")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help( MODULE_DESCRIPTION )
 
     set_description( N_("Headphone virtual spatialization effect") )
@@ -87,7 +87,7 @@ vlc_module_begin ()
               HEADPHONE_COMPENSATE_LONGTEXT, true )
     add_bool( "headphone-dolby", false, HEADPHONE_DOLBY_TEXT,
               HEADPHONE_DOLBY_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

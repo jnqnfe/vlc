@@ -74,7 +74,7 @@ typedef struct
     "compression the playback will be more adapted to a movie theater or a " \
     "listening room.")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "A/52" )
     set_description( N_("ATSC A/52 (AC-3) audio decoder") )
     set_capability( VLC_CAP_AUDIO_DECODER, 60 )
@@ -83,7 +83,7 @@ vlc_module_begin ()
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACODEC )
     add_bool( "a52-dynrng", true, DYNRNG_TEXT, DYNRNG_LONGTEXT, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*
  * helper function to interleave channels

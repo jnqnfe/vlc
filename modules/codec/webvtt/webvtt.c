@@ -35,7 +35,7 @@
  * Modules descriptor.
  *****************************************************************************/
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_capability( VLC_CAP_SPU_DECODER, 10 )
     set_shortname( N_("WEBVTT decoder"))
     set_description( N_("WEBVTT subtitles decoder") )
@@ -63,7 +63,7 @@ vlc_module_begin ()
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_SCODEC )
     //set_subcategory( SUBCAT_INPUT_DEMUX )
-vlc_module_end ()
+vlc_plugin_end ()
 
 struct webvtt_text_parser_t
 {

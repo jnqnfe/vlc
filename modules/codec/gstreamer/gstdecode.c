@@ -90,7 +90,7 @@ static void Flush( decoder_t * );
     "that follow. Note: Currently this feature is unstable, enable it at " \
     "your own risk."
 
-vlc_module_begin( )
+vlc_plugin_begin( )
     set_help( HELP_TEXT )
     set_shortname( "GstDecode" )
     add_shortcut( "gstdecode" )
@@ -107,7 +107,7 @@ vlc_module_begin( )
         USEDECODEBIN_LONGTEXT, false )
     add_bool( "use-vlcpool", false, USEVLCPOOL_TEXT,
         USEVLCPOOL_LONGTEXT, false )
-vlc_module_end( )
+vlc_plugin_end( )
 
 void gst_vlc_dec_ensure_empty_queue( decoder_t *p_dec )
 {

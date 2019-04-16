@@ -34,13 +34,13 @@
 
 static int Open(vlc_object_t *);
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_description(N_("XWD image decoder"))
     set_capability(VLC_CAP_VIDEO_DECODER, 50)
     set_callbacks(Open, NULL)
     //set_category(CAT_INPUT)
     //set_subcategory(SUBCAT_INPUT_VCODEC)
-vlc_module_end()
+vlc_plugin_end()
 
 static int Decode(decoder_t *, block_t *);
 

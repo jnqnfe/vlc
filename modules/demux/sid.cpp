@@ -48,14 +48,14 @@
 static int  Open (vlc_object_t *);
 static void Close (vlc_object_t *);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname ("sid")
     set_description ( N_("C64 sid demuxer") )
     set_capability (VLC_CAP_DEMUX, 100)
     set_callbacks (Open, Close)
     //set_category (CAT_INPUT)
     //set_subcategory (SUBCAT_INPUT_DEMUX)
-vlc_module_end ()
+vlc_plugin_end ()
 
 namespace {
 

@@ -241,7 +241,7 @@ static const char *const ppsz_region_code_text[] = {
 static int  blurayOpen (vlc_object_t *);
 static void blurayClose(vlc_object_t *);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname(N_("Blu-ray"))
     set_description(N_("Blu-ray Disc support (libbluray)"))
     set_capability(VLC_CAP_ACCESS, 500)
@@ -265,7 +265,7 @@ vlc_module_begin ()
 //    set_category( CAT_INPUT )
 //    set_subcategory( SUBCAT_INPUT_DEMUX )
 //#endif
-vlc_module_end ()
+vlc_plugin_end ()
 
 /* libbluray's overlay.h defines 2 types of overlay (bd_overlay_plane_e). */
 #define MAX_OVERLAY 2

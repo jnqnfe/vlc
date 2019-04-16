@@ -367,7 +367,7 @@ static void Close(vlc_object_t *obj)
         smbc_close(sys->i_smb);
 }
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_help(N_("Samba (Windows network shares) input"))
 
     set_shortname("SMB")
@@ -381,4 +381,4 @@ vlc_module_begin()
     add_string("smb-user", NULL, SMB_USER_TEXT, SMB_USER_LONGTEXT, false)
     add_password("smb-pwd", NULL, SMB_PASS_TEXT, SMB_PASS_LONGTEXT)
     add_string("smb-domain", NULL, SMB_DOMAIN_TEXT, SMB_DOMAIN_LONGTEXT, false)
-vlc_module_end()
+vlc_plugin_end()

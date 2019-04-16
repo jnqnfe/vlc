@@ -261,7 +261,7 @@ static void SubsdelayEntryNewStopValueUpdated( subsdelay_heap_entry_t *p_entry )
  * Module descriptor
  *****************************************************************************/
 
-vlc_module_begin()
+vlc_plugin_begin()
         set_help( SUBSDELAY_HELP )
 
         set_shortname( N_("Subsdelay") )
@@ -290,7 +290,7 @@ vlc_module_begin()
 
         add_integer( CFG_MIN_STOP_START_INTERVAL, 1000, MIN_STOP_START_INTERVAL_TEXT,
                      MIN_STOP_START_INTERVAL_LONGTEXT, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char * const ppsz_filter_options[] = { "mode", "factor", "overlap", NULL };
 

@@ -38,7 +38,7 @@ static int  Open (vlc_object_t *);
 static const char *const fps_values[] = { "24/1", "25/1", "30000/1001", "30/1" };
 static const char *const fps_texts[] = { "24", "25", "29.97", "30" };
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname (N_("Time code"))
     set_description (N_("Time code subpicture elementary stream generator"))
     set_capability (VLC_CAP_ACCESS, 0)
@@ -49,7 +49,7 @@ vlc_module_begin ()
     add_string ("timecode-fps", "25/1", FPS_TEXT, NULL, false)
         change_string_list (fps_values, fps_texts)
         change_safe ()
-vlc_module_end ()
+vlc_plugin_end ()
 
 typedef struct
 {

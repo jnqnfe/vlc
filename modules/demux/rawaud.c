@@ -58,7 +58,7 @@ static void Close( vlc_object_t * );
 # define FOURCC_DEFAULT "s16l"
 #endif
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname( "Raw Audio" )
     set_description( N_("Raw audio demuxer") )
     set_capability( VLC_CAP_DEMUX, 0 )
@@ -75,7 +75,7 @@ vlc_module_begin()
                 FOURCC_TEXT, FOURCC_LONGTEXT, false )
         change_safe()
     add_string( "rawaud-lang", "eng", LANG_TEXT, LANG_LONGTEXT, false)
-vlc_module_end()
+vlc_plugin_end()
 
 /*****************************************************************************
  * Definitions of structures used by this plugin

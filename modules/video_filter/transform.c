@@ -54,7 +54,7 @@ static const char * const type_list_text[] = { N_("Rotate by 90 degrees"),
     N_("Flip horizontally"), N_("Flip vertically"),
     N_("Transpose"), N_("Anti-transpose") };
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_help(N_("Rotate or flip the video"))
 
     set_description(N_("Video transformation filter"))
@@ -68,7 +68,7 @@ vlc_module_begin()
     add_string(CFG_PREFIX "type", "90", TYPE_TEXT, NULL, false)
         change_string_list(type_list, type_list_text)
         change_safe()
-vlc_module_end()
+vlc_plugin_end()
 
 /*****************************************************************************
  * Local prototypes

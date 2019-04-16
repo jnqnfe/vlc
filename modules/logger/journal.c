@@ -75,7 +75,7 @@ static const struct vlc_logger_operations *Open(vlc_object_t *obj, void **sysp)
     return &ops;
 }
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("Journal"))
     set_description(N_("SystemD journal logger"))
     set_capability(VLC_CAP_LOGGER, 30)
@@ -83,4 +83,4 @@ vlc_module_begin()
     add_shortcut("journal")
     //set_category(CAT_ADVANCED)
     //set_subcategory(SUBCAT_ADVANCED_MISC)
-vlc_module_end()
+vlc_plugin_end()

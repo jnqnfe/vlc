@@ -108,7 +108,7 @@ static_assert( ARRAY_SIZE( pi_logics ) == ARRAY_SIZE( ppsz_logics ),
 static_assert( ARRAY_SIZE( pi_logics ) == ARRAY_SIZE( ppsz_logics_values ),
     "pi_logics and ppsz_logics_values shall have the same number of elements" );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
         set_shortname( N_("Adaptive"))
         set_description( N_("Unified adaptive streaming for DASH/HLS") )
         set_capability( VLC_CAP_DEMUX, 12 )
@@ -124,7 +124,7 @@ vlc_module_begin ()
                      ADAPT_HEIGHT_TEXT, NULL, false )
         add_integer( "adaptive-bw",     250, ADAPT_BW_TEXT,     ADAPT_BW_LONGTEXT,     false )
         add_bool   ( "adaptive-use-access", false, ADAPT_ACCESS_TEXT, ADAPT_ACCESS_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

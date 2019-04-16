@@ -55,7 +55,7 @@ static block_t *DoPitchWork( filter_t *, block_t * );
 # define MODULES_SHORTNAME N_("Scaletempo")
 #endif
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( MODULE_DESC )
     set_shortname( MODULES_SHORTNAME )
     set_capability( VLC_CAP_AUDIO_FILTER, 0 )
@@ -78,7 +78,7 @@ vlc_module_begin ()
         N_("Pitch Shift"), N_("Pitch shift in semitones."), false )
 #endif
 
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*
  * Scaletempo works by producing audio in constant sized chunks (a "stride") but

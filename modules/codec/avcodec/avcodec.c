@@ -71,7 +71,7 @@ static const char *const enc_hq_list_text[] = {
         "delivered by the FFmpeg library. This includes (MS)MPEG4, DivX, SV1,"\
         "H261, H263, H264, WMV, WMA, AAC, AMR, DV, MJPEG and other codecs")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help( HELP_TEXT )
     set_shortname( "FFmpeg")
 
@@ -202,7 +202,7 @@ vlc_module_begin ()
     add_submodule ()
         AVPARSER_MODULE
 #endif
-vlc_module_end ()
+vlc_plugin_end ()
 
 AVCodecContext *ffmpeg_AllocContext( decoder_t *p_dec,
                                      const AVCodec **restrict codecp )

@@ -74,7 +74,7 @@ static picture_t *Filter( filter_t *, picture_t * );
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Croppadd") )
     set_description( N_("Video cropping filter") )
     set_capability( VLC_CAP_VIDEO_FILTER, 0 )
@@ -102,7 +102,7 @@ vlc_module_begin ()
                                 PADDLEFT_TEXT, PADDLEFT_LONGTEXT, false )
         add_integer_with_range( CFG_PREFIX "paddright", 0, 0, INT_MAX,
                                 PADDRIGHT_TEXT, PADDRIGHT_LONGTEXT, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_filter_options[] = {
     "croptop", "cropbottom", "cropleft", "cropright",

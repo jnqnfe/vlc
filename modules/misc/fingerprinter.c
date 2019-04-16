@@ -68,14 +68,14 @@ static void *Run(void *);
 /*****************************************************************************
  * Module descriptor
  ****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname(N_("acoustid"))
     set_description(N_("Track fingerprinter (based on Acoustid)"))
     set_capability(VLC_CAP_FINGERPRINTER, 10)
     set_callbacks(Open, Close)
     //set_category(CAT_ADVANCED)
     //set_subcategory(SUBCAT_ADVANCED_MISC)
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Requests lifecycle

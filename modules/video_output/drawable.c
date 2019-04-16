@@ -42,7 +42,7 @@ static void Close(vout_window_t *);
 /*
  * Module descriptor
  */
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname (N_("Drawable"))
     set_description (N_("Embedded window video"))
     set_capability (VLC_CAP_VOUT_WINDOW, 70)
@@ -53,7 +53,7 @@ vlc_module_begin ()
     set_subcategory (SUBCAT_VIDEO_VOUT)
     add_integer ("drawable-hwnd", 0, HWND_TEXT, HWND_LONGTEXT, true)
         change_volatile ()
-vlc_module_end ()
+vlc_plugin_end ()
 
 /* Keep a list of busy drawables, so we don't overlap videos if there are
  * more than one video track in the stream. */

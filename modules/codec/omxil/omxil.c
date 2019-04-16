@@ -85,7 +85,7 @@ static OMX_ERRORTYPE OmxFillBufferDone( OMX_HANDLETYPE, OMX_PTR,
         "Enable OMX direct rendering.")
 
 #define CFG_PREFIX "omxil-"
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Audio/Video decoder (using OpenMAX IL)") )
     set_capability( VLC_CAP_VIDEO_DECODER, 80 )
     set_callbacks( OpenDecoder, CloseGeneric )
@@ -105,7 +105,7 @@ vlc_module_begin ()
     //set_subcategory( SUBCAT_INPUT_VCODEC )
     //set_section( N_("Decoding") , NULL )
     //set_section( N_("Encoding") , NULL )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * ImplementationSpecificWorkarounds: place-holder for implementation

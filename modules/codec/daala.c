@@ -112,7 +112,7 @@ static const char *const enc_chromafmt_list_text[] = {
 #define ENC_KEYINT_LONGTEXT N_( \
   "Enforce a keyframe interval between 1 and 1000." )
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "Daala" )
     set_description( N_("Daala video decoder") )
     set_capability( VLC_CAP_VIDEO_DECODER, 100 )
@@ -149,7 +149,7 @@ vlc_module_begin ()
                 ENC_CHROMAFMT_LONGTEXT, false )
     change_string_list( enc_chromafmt_list, enc_chromafmt_list_text )
 #endif
-vlc_module_end ()
+vlc_plugin_end ()
 
 #ifdef ENABLE_SOUT
 static const char *const ppsz_enc_options[] = {

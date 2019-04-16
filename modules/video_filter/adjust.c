@@ -73,7 +73,7 @@ static int AdjustCallback( vlc_object_t *p_this, char const *psz_var,
 #define GAMMA_TEXT N_("Image gamma (0-10)")
 #define GAMMA_LONGTEXT N_("Set the image gamma, between 0.01 and 10. Defaults to 1.")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Image properties filter") )
     set_shortname( N_("Image adjust" ))
     set_capability( VLC_CAP_VIDEO_FILTER, 0 )
@@ -100,7 +100,7 @@ vlc_module_begin ()
     add_bool( "brightness-threshold", false,
               THRES_TEXT, THRES_LONGTEXT, false )
         change_safe()
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_filter_options[] = {
     "contrast", "brightness", "hue", "saturation", "gamma",

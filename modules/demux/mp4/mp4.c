@@ -57,7 +57,7 @@ static void Close( vlc_object_t * );
     "Duration in seconds before simulating an end of file. " \
     "A negative value means an unlimited play time.")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("MP4 stream demuxer") )
     set_shortname( N_("MP4") )
     set_capability( VLC_CAP_DEMUX, 240 )
@@ -79,7 +79,7 @@ vlc_module_begin ()
     add_float( "heif-image-duration", HEIF_DEFAULT_DURATION,
                HEIF_DURATION_TEXT, HEIF_DURATION_LONGTEXT, false )
         change_safe()
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

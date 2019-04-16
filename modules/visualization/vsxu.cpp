@@ -54,7 +54,7 @@ static void Close        ( vlc_object_t * );
 #define HEIGHT_TEXT N_("Video height")
 #define HEIGHT_LONGTEXT N_("The height of the video window, in pixels.")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("vsxu"))
     set_description( N_("vsxu") )
     set_capability( VLC_CAP_VISUALIZATION, 0 )
@@ -67,7 +67,7 @@ vlc_module_begin ()
                  false )
     add_integer( "vsxu-height", 800, HEIGHT_TEXT, HEIGHT_LONGTEXT,
                  false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

@@ -68,7 +68,7 @@ static void GLESReleaseCurrent(vlc_gl_t *);
 /**
  * Module declaration
  */
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname("iOS vout")
     set_description("iOS OpenGL video output")
     set_capability(VLC_CAP_VOUT_DISPLAY, 300)
@@ -78,7 +78,7 @@ vlc_module_begin ()
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_glopts()
-vlc_module_end ()
+vlc_plugin_end ()
 
 @interface VLCOpenGLES2VideoView : UIView {
     vout_display_t *_voutDisplay;

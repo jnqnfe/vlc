@@ -294,7 +294,7 @@ static void Close( vlc_object_t *p_this );
                                     "in the Phosphor framerate doubler. "\
                                     "Default: Low.")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Deinterlacing video filter") )
     set_shortname( N_("Deinterlace" ))
     set_capability( VLC_CAP_VIDEO_FILTER, 0 )
@@ -315,7 +315,7 @@ vlc_module_begin ()
                 PHOSPHOR_DIMMER_LONGTEXT, true )
         change_integer_list( phosphor_dimmer_list, phosphor_dimmer_list_text )
         change_safe ()
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local data

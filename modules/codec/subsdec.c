@@ -177,7 +177,7 @@ static const char *const ppsz_justification_text[] = {
 static int  OpenDecoder   ( vlc_object_t * );
 static void CloseDecoder  ( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Subtitles"))
     set_description( N_("Text subtitle decoder") )
     set_capability( VLC_CAP_SPU_DECODER, 50 )
@@ -194,7 +194,7 @@ vlc_module_begin ()
         change_string_list( ppsz_encodings, ppsz_encoding_names )
     add_bool( "subsdec-autodetect-utf8", true,
               AUTODETECT_UTF8_TEXT, AUTODETECT_UTF8_LONGTEXT, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

@@ -56,7 +56,7 @@ static void Close  ( vlc_object_t * );
 #define CFG_ENCODER_TEXT    N_("Encoder")
 #define CFG_KEYWORDS_TEXT   N_("Keywords")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("AVI muxer") )
     set_capability( VLC_CAP_SOUT_MUX, 5 )
     add_shortcut( "avi" )
@@ -75,7 +75,7 @@ vlc_module_begin ()
                 "VLC Media Player - " VERSION_MESSAGE,
                                                    CFG_ENCODER_TEXT, NULL, true )
     add_string( SOUT_CFG_PREFIX "keywords", NULL,  CFG_KEYWORDS_TEXT, NULL, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

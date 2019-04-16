@@ -433,7 +433,7 @@ static const int framepacking_list[] =
 static const char *const framepacking_list_text[] =
   { "", N_("checkerboard"), N_("column alternation"), N_("row alternation"), N_("side by side"), N_("top bottom"), N_("frame alternation"), N_("2D") };
 
-vlc_module_begin ()
+vlc_plugin_begin ()
 #ifdef MODULE_NAME_IS_x26410b
     set_description( N_("H.264/MPEG-4 Part 10/AVC encoder (x264 10-bit)"))
     set_capability( VLC_CAP_ENCODER, 0 )
@@ -712,7 +712,7 @@ vlc_module_begin ()
     add_string( SOUT_CFG_PREFIX "options", NULL, X264_OPTIONS_TEXT,
                 X264_OPTIONS_LONGTEXT, true )
 
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

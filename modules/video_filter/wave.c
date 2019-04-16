@@ -47,7 +47,7 @@ static picture_t *Filter( filter_t *, picture_t * );
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Wave video filter") )
     set_shortname( N_( "Wave" ))
     set_capability( VLC_CAP_VIDEO_FILTER, 0 )
@@ -55,7 +55,7 @@ vlc_module_begin ()
     set_callbacks( Create, NULL )
     //set_category( CAT_VIDEO )
     //set_subcategory( SUBCAT_VIDEO_VFILTER )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * filter_sys_t: Distort video output method descriptor

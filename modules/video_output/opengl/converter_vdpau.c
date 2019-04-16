@@ -201,7 +201,7 @@ DecoderContextOpen(vlc_decoder_device *device, vout_window_t *window)
     return VLC_SUCCESS;
 }
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description("VDPAU OpenGL surface converter")
     set_capability(VLC_CAP_GLCONV, 2)
     set_callbacks(Open, Close)
@@ -213,4 +213,4 @@ vlc_module_begin ()
 
     //set_category(CAT_VIDEO)
     //set_subcategory(SUBCAT_VIDEO_VOUT)
-vlc_module_end ()
+vlc_plugin_end ()

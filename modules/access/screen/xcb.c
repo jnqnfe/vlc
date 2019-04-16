@@ -66,7 +66,7 @@ static void Close (vlc_object_t *);
 /*
  * Module descriptor
  */
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname (N_("Screen"))
     set_description (N_("Screen capture (with X11/XCB)"))
     set_capability (VLC_CAP_ACCESS, 0)
@@ -90,7 +90,7 @@ vlc_module_begin ()
         change_safe ()
     add_bool ("screen-follow-mouse", false, FOLLOW_MOUSE_TEXT,
               FOLLOW_MOUSE_LONGTEXT, true)
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*
  * Local prototypes

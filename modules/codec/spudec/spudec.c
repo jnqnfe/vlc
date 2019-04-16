@@ -45,7 +45,7 @@ static void Close         ( vlc_object_t * );
 #define DVDSUBTRANS_DISABLE_LONGTEXT N_("Removes all transparency effects " \
                                         "used in DVD subtitles.")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("DVD subtitles decoder") )
     set_shortname( N_("DVD subtitles") )
     set_capability( VLC_CAP_SPU_DECODER, 75 )
@@ -60,7 +60,7 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_INPUT_SCODEC )
     add_bool( "dvdsub-transparency", false,
               DVDSUBTRANS_DISABLE_TEXT, DVDSUBTRANS_DISABLE_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

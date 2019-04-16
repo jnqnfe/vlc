@@ -280,7 +280,7 @@ static void Close(vlc_object_t *obj)
     free(sys);
 }
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_description(N_("HTTPS input"))
     set_shortname(N_("HTTPS"))
     set_capability(VLC_CAP_ACCESS, 2)
@@ -306,4 +306,4 @@ vlc_module_begin()
                   "e.g. \"FooBar/1.2.3\"."), true)
         change_safe()
         change_private()
-vlc_module_end()
+vlc_plugin_end()

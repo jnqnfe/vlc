@@ -61,7 +61,7 @@ typedef struct
     };
 } filter_sys_t;
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description("Conversions from/to CoreVideo buffers")
     set_capability(VLC_CAP_VIDEO_CONVERTER, 10)
     set_callbacks(Open, Close)
@@ -70,7 +70,7 @@ vlc_module_begin ()
     set_description("Conversions between CoreVideo buffers")
     set_callbacks(Open_CVPX_to_CVPX, Close_CVPX_to_CVPX)
 #endif
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /********************************

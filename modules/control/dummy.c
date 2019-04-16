@@ -35,7 +35,7 @@
 
 static int Open( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Dummy") )
     set_description( N_("Dummy interface") )
     set_capability( VLC_CAP_INTERFACE, 0 )
@@ -46,7 +46,7 @@ vlc_module_begin ()
 #if defined(_WIN32) && !VLC_WINSTORE_APP
     add_obsolete_bool( "dummy-quiet" ) /* since 4.0.0 */
 #endif
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Open: initialize dummy interface

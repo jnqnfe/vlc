@@ -38,7 +38,7 @@ VLC_SD_PROBE_HELPER("disc", N_("Discs"), SD_CAT_DEVICES)
 /*
  * Module descriptor
  */
-vlc_module_begin ()
+vlc_plugin_begin ()
     add_submodule ()
     set_shortname (N_("Discs"))
     set_description (N_("Discs"))
@@ -50,7 +50,7 @@ vlc_module_begin ()
 
     //set_category (CAT_PLAYLIST)
     //set_subcategory (SUBCAT_PLAYLIST_SD)
-vlc_module_end ()
+vlc_plugin_end ()
 
 /**
  * Probes and initializes.

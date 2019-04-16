@@ -87,7 +87,7 @@ static const char *const button_list[] = { "left", "middle", "right" };
 static const char *const button_list_text[] =
                                    { N_("Left"), N_("Middle"), N_("Right") };
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Gestures"))
     set_description( N_("Mouse gestures control interface") )
     set_capability( VLC_CAP_INTERFACE, 0 )
@@ -100,7 +100,7 @@ vlc_module_begin ()
     add_string( "gestures-button", BUTTON_DEFAULT,
                 BUTTON_TEXT, BUTTON_LONGTEXT, false )
         change_string_list( button_list, button_list_text )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static void player_on_vout_changed(vlc_player_t *player,
                                    enum vlc_player_vout_action action,

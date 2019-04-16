@@ -183,7 +183,7 @@ static void Close( vlc_object_t * );
 #define SOUT_CFG_PREFIX "sout-rtp-"
 #define MAX_EMPTY_BLOCKS 200
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("RTP"))
     set_description( N_("RTP stream output") )
     set_capability( VLC_CAP_SOUT_STREAM, 0 )
@@ -253,7 +253,7 @@ vlc_module_begin ()
     add_string( "sout-rtsp-user", "",
                 RTSP_USER_TEXT, RTSP_USER_LONGTEXT, true )
     add_password("sout-rtsp-pwd", "", RTSP_PASS_TEXT, RTSP_PASS_LONGTEXT)
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Exported prototypes

@@ -257,11 +257,11 @@ Open(vlc_decoder_device *device, vout_window_t *window)
 # define DESCRIPTION_SUFFIX "DRM"
 #endif
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description("VA-API decoder device for " DESCRIPTION_SUFFIX)
     set_capability(VLC_CAP_HW_DECODER_DEVICE, PRIORITY)
     set_callbacks(Open, Close)
     add_shortcut("vaapi", SHORTCUT)
     //set_category(CAT_VIDEO)
     //set_subcategory(SUBCAT_VIDEO_VOUT)
-vlc_module_end ()
+vlc_plugin_end ()

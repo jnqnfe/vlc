@@ -49,7 +49,7 @@ static void Close( vlc_object_t * );
 
 #define SOUT_CFG_PREFIX "sout-display-"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Display"))
     set_description( N_("Display stream output") )
     set_capability( VLC_CAP_SOUT_STREAM, 50 )
@@ -64,7 +64,7 @@ vlc_module_begin ()
               VIDEO_LONGTEXT, true )
     add_integer( SOUT_CFG_PREFIX "delay", 100, DELAY_TEXT,
                  DELAY_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

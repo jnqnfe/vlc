@@ -62,7 +62,7 @@ static block_t *Encode(encoder_t *p_enc, picture_t *p_pict);
  * Module descriptor
  *****************************************************************************/
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname("vpx")
     set_description(N_("WebM video decoder"))
     set_capability(VLC_CAP_VIDEO_DECODER, 60)
@@ -81,7 +81,7 @@ vlc_module_begin ()
                  QUALITY_MODE_LONGTEXT, true )
         change_integer_range( 0, 2 )
 #endif
-vlc_module_end ()
+vlc_plugin_end ()
 
 static void vpx_err_msg(vlc_object_t *this, struct vpx_codec_ctx *ctx,
                         const char *msg)

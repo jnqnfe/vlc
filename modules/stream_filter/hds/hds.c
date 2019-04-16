@@ -202,14 +202,14 @@ static unsigned char amf_object_end[] = { 0x0, 0x0, 0x9 };
 static int  Open( vlc_object_t * );
 static void Close( vlc_object_t * );
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_description( N_("HTTP Dynamic Streaming") )
     set_shortname( "Dynamic Streaming")
     set_capability( VLC_CAP_STREAM_FILTER, 330 )
     set_callbacks( Open, Close )
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_STREAM_FILTER )
-vlc_module_end()
+vlc_plugin_end()
 
 static ssize_t Read( stream_t *, void *, size_t );
 static int   Control( stream_t *, int , va_list );

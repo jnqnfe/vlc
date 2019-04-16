@@ -50,7 +50,7 @@
 static int  Open ( vlc_object_t * );
 static void Close( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help(CLONE_HELP)
 
     set_description( N_("Clone video filter") )
@@ -64,7 +64,7 @@ vlc_module_begin ()
     add_integer( CFG_PREFIX "count", 2, COUNT_TEXT, COUNT_LONGTEXT, false )
     add_module_list(CFG_PREFIX "vout-list", VLC_CAP_STR_VOUT_DISPLAY, NULL,
                     VOUTLIST_TEXT, VOUTLIST_LONGTEXT)
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

@@ -55,7 +55,7 @@ static void CloseDecoder(vlc_object_t *);
 #define THREAD_TILES_LONGTEXT N_( "Max number of threads used for tile decoding, default 0=auto" )
 
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname("dav1d")
     set_description(N_("Dav1d video decoder"))
     set_capability(VLC_CAP_VIDEO_DECODER, 10000)
@@ -67,7 +67,7 @@ vlc_module_begin ()
                 THREAD_FRAMES_TEXT, THREAD_FRAMES_LONGTEXT, false)
     add_integer("dav1d-thread-tiles", 0,
                 THREAD_TILES_TEXT, THREAD_TILES_LONGTEXT, false)
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * decoder_sys_t: libaom decoder descriptor

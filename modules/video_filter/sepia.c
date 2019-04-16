@@ -59,7 +59,7 @@ static const char *const ppsz_filter_options[] = {
 
 #define CFG_PREFIX "sepia-"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help( N_("Gives video a warmer tone by applying sepia effect") )
 
     set_description( N_("Sepia video filter") )
@@ -71,7 +71,7 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_integer_with_range( CFG_PREFIX "intensity", 120, 0, 255,
                            SEPIA_INTENSITY_TEXT, NULL, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * callback prototypes

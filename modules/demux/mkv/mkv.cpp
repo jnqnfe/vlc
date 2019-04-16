@@ -48,7 +48,7 @@ static void Close( vlc_object_t * );
 } // namespace
 
 using namespace mkv;
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "Matroska" )
     set_description( N_("Matroska stream demuxer" ) )
     set_capability( VLC_CAP_DEMUX, 50 )
@@ -81,7 +81,7 @@ vlc_module_begin ()
     add_bool( "mkv-preload-clusters", false,
             N_("Preload clusters"),
             N_("Find all cluster positions by jumping cluster-to-cluster before playback"), true );
-vlc_module_end ()
+vlc_plugin_end ()
 
 namespace mkv {
 

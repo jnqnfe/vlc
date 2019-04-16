@@ -73,7 +73,7 @@ static const char *const ppsz_rotation_descriptions[] = { N_("0"), N_("0/180"), 
 static int  Open ( vlc_object_t * );
 static void Close( vlc_object_t * );
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_description( N_("Puzzle interactive game video filter") )
     set_shortname( N_( "Puzzle" ))
     set_capability( VLC_CAP_VIDEO_FILTER, 0 )
@@ -103,7 +103,7 @@ vlc_module_begin()
     add_integer( CFG_PREFIX "mode", 0,
               MODE_TEXT, MODE_LONGTEXT, false )
         change_integer_list(pi_mode_values, ppsz_mode_descriptions )
-vlc_module_end()
+vlc_plugin_end()
 
 /*****************************************************************************
  * Local prototypes

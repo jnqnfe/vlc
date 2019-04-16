@@ -41,13 +41,13 @@ static void Close   ( vlc_object_t * );
 
 #define SOUT_CFG_PREFIX "sout-autodel-"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Autodel"))
     set_description( N_("Automatically add/delete input streams"))
     set_capability( VLC_CAP_SOUT_STREAM, 50 )
     add_shortcut( "autodel" )
     set_callbacks( Open, Close )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

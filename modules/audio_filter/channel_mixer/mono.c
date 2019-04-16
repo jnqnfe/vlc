@@ -93,7 +93,7 @@ static const char *const ppsz_pos_descriptions[] =
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Stereo to mono downmixer") )
     set_capability( VLC_CAP_AUDIO_FILTER, 0 )
     set_callbacks( OpenFilter, CloseFilter )
@@ -106,7 +106,7 @@ vlc_module_begin ()
     add_integer( MONO_CFG "channel", -1, MONO_CHANNEL_TEXT,
         MONO_CHANNEL_LONGTEXT, false )
         change_integer_list( pi_pos_values, ppsz_pos_descriptions )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /* Init() and ComputeChannelOperations() -
  * Code taken from modules/audio_filter/channel_mixer/headphone.c

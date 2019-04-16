@@ -545,7 +545,7 @@ static void D3D11CloseAdjust(vlc_object_t *obj)
     free(sys);
 }
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_description(N_("Direct3D11 adjust filter"))
     set_capability(VLC_CAP_VIDEO_FILTER, 0)
     set_callbacks(D3D11OpenAdjust, D3D11CloseAdjust)
@@ -584,4 +584,4 @@ vlc_module_begin()
     add_bool( "brightness-threshold", false,
               THRES_TEXT, THRES_LONGTEXT, false )
         change_safe()
-vlc_module_end()
+vlc_plugin_end()

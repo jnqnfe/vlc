@@ -195,7 +195,7 @@ static const int rc_method_list[] =
 static const char *const rc_method_text[] =
     { "cbr", "vbr", "qp", "avbr" };
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description(N_("Intel QuickSync Video encoder for MPEG4-Part10/MPEG2 (aka H.264/H.262)"))
     set_shortname("qsv")
     set_capability(VLC_CAP_ENCODER, 0)
@@ -250,7 +250,7 @@ vlc_module_begin ()
     add_integer(SOUT_CFG_PREFIX "async-depth", 4, ASYNC_DEPTH_TEXT, ASYNC_DEPTH_LONGTEXT, true)
         change_integer_range(1, 32)
 
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

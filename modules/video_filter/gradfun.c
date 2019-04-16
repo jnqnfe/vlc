@@ -54,7 +54,7 @@ static void Close(vlc_object_t *);
 #define STRENGTH_TEXT N_("Strength")
 #define STRENGTH_LONGTEXT N_("Strength used to modify the value of a pixel")
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_help(N_("Debanding algorithm"))
 
     set_description(N_("Gradfun video filter"))
@@ -68,7 +68,7 @@ vlc_module_begin()
                            RADIUS_TEXT, RADIUS_LONGTEXT, false)
     add_float_with_range(CFG_PREFIX "strength", 1.2, STRENGTH_MIN, STRENGTH_MAX,
                          STRENGTH_TEXT, STRENGTH_LONGTEXT, false)
-vlc_module_end()
+vlc_plugin_end()
 
 /*****************************************************************************
  * Local prototypes

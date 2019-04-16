@@ -83,7 +83,7 @@ static int  OpenSub  ( vlc_object_t * );
 static int  OpenVideo( vlc_object_t * );
 static void Close    ( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help(LOGO_HELP)
 
     set_capability( VLC_CAP_SUB_SOURCE, 0 )
@@ -111,7 +111,7 @@ vlc_module_begin ()
         OPACITY_TEXT, OPACITY_LONGTEXT, false )
     add_integer( CFG_PREFIX "position", -1, POS_TEXT, POS_LONGTEXT, false )
         change_integer_list( pi_pos_values, ppsz_pos_descriptions )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

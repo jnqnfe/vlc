@@ -64,7 +64,7 @@ static void Close(vlc_object_t *);
 #define NETSYNC_TIMEOUT_LONGTEXT N_("Length of time (in ms) " \
   "until aborting data reception.")
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("Network Sync"))
     set_description(N_("Network synchronization"))
     set_capability(VLC_CAP_INTERFACE, 0)
@@ -78,7 +78,7 @@ vlc_module_begin()
                 true)
     add_integer("netsync-timeout", 500,
                  NETSYNC_TIMEOUT_TEXT, NETSYNC_TIMEOUT_LONGTEXT, true)
-vlc_module_end()
+vlc_plugin_end()
 
 /*****************************************************************************
  * Local prototypes

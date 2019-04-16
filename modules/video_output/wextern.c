@@ -38,14 +38,14 @@
 
 static int Open(vout_window_t *);
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("Callback window"))
     set_description(N_("External callback window"))
     set_capability(VLC_CAP_VOUT_WINDOW, 0)
     set_callbacks(Open, NULL)
     //set_category(CAT_VIDEO)
     //set_subcategory(SUBCAT_VIDEO_VOUT)
-vlc_module_end()
+vlc_plugin_end()
 
 typedef struct {
     void                                     *opaque;

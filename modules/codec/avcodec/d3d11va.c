@@ -62,13 +62,13 @@ static int Open(vlc_va_t *, AVCodecContext *, enum PixelFormat,
                 const es_format_t *, picture_sys_d3d11_t *p_sys);
 static void Close(vlc_va_t *, void **);
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_description(N_("Direct3D11 Video Acceleration"))
     set_capability(VLC_CAP_HW_DECODER, 110)
     set_callbacks(Open, Close)
     //set_category(CAT_INPUT)
     //set_subcategory(SUBCAT_INPUT_VCODEC)
-vlc_module_end()
+vlc_plugin_end()
 
 /*
  * In this mode libavcodec doesn't need the whole array on texture on startup

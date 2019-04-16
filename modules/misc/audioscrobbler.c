@@ -126,7 +126,7 @@ static void *Run            (void *);
 #define CLIENT_NAME     PACKAGE
 #define CLIENT_VERSION  VERSION
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname(N_("Audioscrobbler"))
     set_description(N_("Submission of played songs to last.fm"))
     set_capability(VLC_CAP_INTERFACE, 0)
@@ -139,7 +139,7 @@ vlc_module_begin ()
     add_password("lastfm-password", "", PASSWORD_TEXT, PASSWORD_LONGTEXT)
     add_string("scrobbler-url", "post.audioscrobbler.com",
                 URL_TEXT, URL_LONGTEXT, false)
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * DeleteSong : Delete the char pointers in a song

@@ -132,7 +132,7 @@ VLC_RD_PROBE_HELPER( "upnp_renderer", N_("UPnP Renderer Discovery") )
 /*
  * Module descriptor
  */
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname( "UPnP" );
     set_description( N_( "Universal Plug'n'Play" ) );
     set_capability( VLC_CAP_SERVICES_DISCOVERY, 0 );
@@ -180,7 +180,7 @@ vlc_module_begin()
     add_string(SOUT_CFG_PREFIX "base_url", NULL, BASE_URL_TEXT, BASE_URL_LONGTEXT, false)
     add_string(SOUT_CFG_PREFIX "url", NULL, URL_TEXT, URL_LONGTEXT, false)
     add_renderer_opts(SOUT_CFG_PREFIX)
-vlc_module_end()
+vlc_plugin_end()
 
 /*
  * Extracts the result document from a SOAP response

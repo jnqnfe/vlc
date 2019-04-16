@@ -55,7 +55,7 @@ static int Open(vout_display_t *vd, const vout_display_cfg_t *cfg,
                 video_format_t *fmtp, vlc_video_context *context);
 static void Close(vout_display_t *vd);
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_description(N_("Video memory output"))
     set_shortname(N_("Video memory"))
     set_capability(VLC_CAP_VOUT_DISPLAY, 0)
@@ -71,7 +71,7 @@ vlc_module_begin()
         change_private()
     add_string("vmem-chroma", "RV16", T_CHROMA, LT_CHROMA, true)
         change_private()
-vlc_module_end()
+vlc_plugin_end()
 
 /*****************************************************************************
  * Local prototypes

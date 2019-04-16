@@ -57,7 +57,7 @@
 static int  Open ( vlc_object_t * );
 static void Close( vlc_object_t * );
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_description( N_("Wall video filter") )
     set_shortname( N_("Image wall" ))
     set_capability( VLC_CAP_VIDEO_SPLITTER, 0 )
@@ -73,7 +73,7 @@ vlc_module_begin()
     add_string( CFG_PREFIX "active", NULL, ACTIVE_TEXT, ACTIVE_LONGTEXT,
                  true )
     add_obsolete_string( CFG_PREFIX "element-aspect" ) /* since 4.0.0 */
-vlc_module_end()
+vlc_plugin_end()
 
 /*****************************************************************************
  * Local prototypes

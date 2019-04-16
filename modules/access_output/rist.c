@@ -854,7 +854,7 @@ failed:
     "This Stream name will be sent to the receiver using the rist RTCP channel" )
 
 /* Module descriptor */
-vlc_module_begin()
+vlc_plugin_begin()
 
     set_shortname( N_("RIST") )
     set_description( N_("RIST stream output") )
@@ -874,4 +874,4 @@ vlc_module_begin()
             SSRC_TEXT, SSRC_LONGTEXT, true )
     add_string( SOUT_CFG_PREFIX "stream-name", NULL, NAME_TEXT, NAME_LONGTEXT, true )
 
-vlc_module_end ()
+vlc_plugin_end ()

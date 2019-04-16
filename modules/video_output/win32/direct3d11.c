@@ -70,7 +70,7 @@ static void Close(vout_display_t *);
 #define HW_BLENDING_LONGTEXT N_(\
     "Try to use hardware acceleration for subtitle/OSD blending.")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help(D3D11_HELP)
 
     set_shortname("Direct3D11")
@@ -88,7 +88,7 @@ vlc_module_begin ()
     add_integer("winrt-d3dcontext",    0x0, NULL, NULL, true) /* ID3D11DeviceContext* */
     add_integer("winrt-swapchain",     0x0, NULL, NULL, true) /* IDXGISwapChain1*     */
 #endif
-vlc_module_end ()
+vlc_plugin_end ()
 
 struct vout_display_sys_t
 {

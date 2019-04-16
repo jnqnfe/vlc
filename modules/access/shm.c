@@ -79,7 +79,7 @@ static const char *const depth_texts[] = {
 /*
  * Module descriptor
  */
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname (N_("Framebuffer input"))
     set_description (N_("Shared memory framebuffer"))
     set_capability (VLC_CAP_ACCESS, 0)
@@ -108,7 +108,7 @@ vlc_module_begin ()
     add_integer ("shm-id", (int64_t)IPC_PRIVATE, ID_TEXT, ID_LONGTEXT, false)
         change_volatile ()
 #endif
-vlc_module_end ()
+vlc_plugin_end ()
 
 typedef struct demux_sys_t demux_sys_t;
 

@@ -71,7 +71,7 @@
 
 static int vlc_sd_probe_Open( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
         set_shortname( N_("Lua") )
         set_description( N_("Lua interpreter") )
         set_capability( VLC_CAP_INTERFACE, 0 )
@@ -150,7 +150,7 @@ vlc_module_begin ()
 
         add_string( "lua-sd", "", NULL, NULL, false )
             change_volatile()
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  *

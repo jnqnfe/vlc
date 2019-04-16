@@ -61,7 +61,7 @@ static const char *const ppsz_kva_video_mode[] = {
 static const char *const ppsz_kva_video_mode_text[] = {
     N_("Auto"), N_("SNAP"), N_("WarpOverlay!"), N_("VMAN"), N_("DIVE") };
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "KVA" )
     set_description( N_("K Video Acceleration video output") )
     set_capability( VLC_CAP_VOUT_DISPLAY, 100 )
@@ -74,7 +74,7 @@ vlc_module_begin ()
                 KVA_VIDEO_MODE_LONGTEXT, false )
         change_string_list( ppsz_kva_video_mode, ppsz_kva_video_mode_text )
     add_bool( "kva-fixt23", false, KVA_FIXT23_TEXT, KVA_FIXT23_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * vout_display_sys_t: video output method descriptor

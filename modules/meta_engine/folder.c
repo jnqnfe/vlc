@@ -63,7 +63,7 @@ static int FindMeta( vlc_object_t * );
  * Module descriptor
  *****************************************************************************/
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_( "Folder" ) )
     set_description( N_("Folder meta data") )
     set_capability( VLC_CAP_ART_FINDER, 90 )
@@ -72,7 +72,7 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_PLAYLIST_GENERAL )
     add_loadfile("album-art-filename", NULL, N_("Album art filename"),
                  N_("Filename to look for album art in current directory"))
-vlc_module_end ()
+vlc_plugin_end ()
 
 static bool ProbeArtFile(input_item_t *item,
                          const char *dirpath, const char *filename)

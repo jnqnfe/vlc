@@ -98,7 +98,7 @@ static void GLConvClose(vlc_object_t *);
 
 static int FindShadersCallback(const char *, char ***, char ***);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help(D3D9_HELP)
 
     set_shortname("Direct3D9")
@@ -123,7 +123,7 @@ vlc_module_begin ()
         change_string_cb(FindShadersCallback)
     add_loadfile("direct3d9-shader-file", NULL,
                  PIXEL_SHADER_FILE_TEXT, PIXEL_SHADER_FILE_LONGTEXT)
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes.

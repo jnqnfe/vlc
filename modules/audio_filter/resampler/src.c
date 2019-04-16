@@ -54,7 +54,7 @@ static int Open (vlc_object_t *);
 static int OpenResampler (vlc_object_t *);
 static void Close (vlc_object_t *);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname (N_("SRC resampler"))
     set_description (N_("Secret Rabbit Code (libsamplerate) resampler") )
     set_capability (VLC_CAP_AUDIO_CONVERTER, 50)
@@ -69,7 +69,7 @@ vlc_module_begin ()
     add_integer ("src-converter-type", SRC_SINC_FASTEST,
                  SRC_CONV_TYPE_TEXT, SRC_CONV_TYPE_LONGTEXT, true)
         change_integer_list (conv_type_values, conv_type_texts)
-vlc_module_end ()
+vlc_plugin_end ()
 
 static block_t *Resample (filter_t *, block_t *);
 

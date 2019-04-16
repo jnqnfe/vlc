@@ -81,7 +81,7 @@
 static int  Open ( vlc_object_t * );
 static void Close( vlc_object_t * );
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname( N_("RDP") )
     add_shortcut( "rdp" )
     set_description( N_("RDP Remote Desktop") )
@@ -98,7 +98,7 @@ vlc_module_begin()
 
     add_bool( CFG_PREFIX "encrypt", false, RDP_ENCRYPT, NULL, true )
         change_safe()
-vlc_module_end()
+vlc_plugin_end()
 
 #define RDP_MAX_FD 32
 

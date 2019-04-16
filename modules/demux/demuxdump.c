@@ -40,7 +40,7 @@
 static int  Open( vlc_object_t * );
 static void Close ( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname("Dump")
     set_description( N_("File dumper") )
     set_capability( VLC_CAP_DEMUX, 0 )
@@ -55,7 +55,7 @@ vlc_module_begin ()
                  FILE_TEXT, FILE_LONGTEXT)
     add_bool( "demuxdump-append", false, APPEND_TEXT, APPEND_LONGTEXT,
               false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 #define DUMP_BLOCKSIZE  16384
 

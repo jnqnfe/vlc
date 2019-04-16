@@ -65,7 +65,7 @@
 static int  Open  (vlc_object_t *);
 static void Close (vlc_object_t *);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description (N_("FluidSynth MIDI synthesizer"))
     set_capability (VLC_CAP_AUDIO_DECODER, 100)
     set_shortname (N_("FluidSynth"))
@@ -84,7 +84,7 @@ vlc_module_begin ()
     add_integer ("synth-sample-rate", 44100,
                  SAMPLE_RATE_TEXT, NULL, true)
         change_integer_range (22050, 96000)
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 typedef struct

@@ -52,7 +52,7 @@ VLC_RD_PROBE_HELPER( "microdns_renderer", "mDNS renderer Discovery" )
 /*
  * Module descriptor
  */
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname( "mDNS" )
     set_description( N_( "mDNS Network Discovery" ) )
     set_capability( VLC_CAP_SERVICES_DISCOVERY, 0 )
@@ -73,7 +73,7 @@ vlc_module_begin()
     //set_subcategory( SUBCAT_PLAYLIST_SD )
     //set_category( CAT_SOUT )
     //set_subcategory( SUBCAT_SOUT_RENDERER )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const struct
 {

@@ -130,7 +130,7 @@ static const char *const ts_standards_list_text[] =
 #define STANDARD_LONGTEXT N_( "Selects mode for digital TV standard. " \
                               "This feature affects EPG information and subtitles." )
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("MPEG Transport Stream demuxer") )
     set_shortname ( "MPEG-TS" )
     set_capability( VLC_CAP_DEMUX, 10 )
@@ -161,7 +161,7 @@ vlc_module_begin ()
     add_bool( "ts-pmtfix-waitdata", true, TS_SKIP_GHOST_PROGRAM_TEXT, NULL, true )
     add_bool( "ts-patfix", true, TS_PATFIX_TEXT, NULL, true )
     add_bool( "ts-pcr-offsetfix", true, TS_OFFSETFIX_TEXT, NULL, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

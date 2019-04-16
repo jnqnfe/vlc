@@ -31,11 +31,11 @@
 
 static int Open (vlc_object_t *);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description (N_("ARM NEON video chroma conversions"))
     set_capability (VLC_CAP_VIDEO_CONVERTER, 250)
     set_callbacks (Open, NULL)
-vlc_module_end ()
+vlc_plugin_end ()
 
 #define DEFINE_PACK(pack, pict) \
     struct yuv_pack pack = { (pict)->Y_PIXELS, (pict)->Y_PITCH }

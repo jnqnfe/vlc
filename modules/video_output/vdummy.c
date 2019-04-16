@@ -43,7 +43,7 @@ static int OpenDummy(vout_display_t *vd, const vout_display_cfg_t *cfg,
 static int OpenStats(vout_display_t *vd, const vout_display_cfg_t *cfg,
                      video_format_t *fmtp, vlc_video_context *context);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Dummy") )
     set_description( N_("Dummy video output") )
     set_capability( VLC_CAP_VOUT_DISPLAY, 0 )
@@ -59,7 +59,7 @@ vlc_module_begin ()
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VOUT )
     add_string( "dummy-chroma", NULL, CHROMA_TEXT, CHROMA_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

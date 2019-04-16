@@ -94,7 +94,7 @@ static void Close( vlc_object_t * );
     "to too small buffer.")
 #define DEFAULT_FRAME_BUFFER_SIZE 250000
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("RTP/RTSP/SDP demuxer (using Live555)" ) )
     set_capability( VLC_CAP_DEMUX, 50 )
     set_shortname( "RTP/RTSP")
@@ -141,7 +141,7 @@ vlc_module_begin ()
         add_integer( "rtsp-frame-buffer-size", DEFAULT_FRAME_BUFFER_SIZE,
                      FRAME_BUFFER_SIZE_TEXT, FRAME_BUFFER_SIZE_LONGTEXT,
                      true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

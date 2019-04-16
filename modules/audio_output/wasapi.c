@@ -641,11 +641,11 @@ static void Stop(aout_stream_t *s)
     free(sys);
 }
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname("WASAPI")
     set_description(N_("Windows Audio Session API output"))
     set_capability(VLC_CAP_AOUT_STREAM, 50)
     set_callbacks(Start, Stop)
     //set_category(CAT_AUDIO)
     //set_subcategory(SUBCAT_AUDIO_AOUT)
-vlc_module_end()
+vlc_plugin_end()

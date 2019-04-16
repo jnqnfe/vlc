@@ -708,7 +708,7 @@ static const char *filter_descs[] = {
     N_("Bilinear"), N_("Fast"), N_("Good"), N_("Best"),
 };
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("RENDER"))
     set_description(N_("X11 RENDER video output (XCB)"))
     set_capability(VLC_CAP_VOUT_DISPLAY, 200)
@@ -719,4 +719,4 @@ vlc_module_begin()
     add_string("x11-render-filter", "good", N_("Scaling mode"),
                NULL, true)
         change_string_list(filter_names, filter_descs)
-vlc_module_end()
+vlc_plugin_end()

@@ -61,7 +61,7 @@ static void    Close  ( vlc_object_t * );
 
 #define SOUT_CFG_PREFIX "sout-ps-"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("PS muxer") )
     set_shortname( "MPEG-PS" )
     set_capability( VLC_CAP_SOUT_MUX, 50 )
@@ -74,7 +74,7 @@ vlc_module_begin ()
                  DTS_LONGTEXT, true )
     add_integer( SOUT_CFG_PREFIX "pes-max-size", PES_PAYLOAD_SIZE_MAX,
                  PES_SIZE_TEXT, PES_SIZE_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Exported prototypes

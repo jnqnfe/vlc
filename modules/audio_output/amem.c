@@ -30,7 +30,7 @@
 static int Open (vlc_object_t *);
 static void Close (vlc_object_t *);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname (N_("Audio memory"))
     set_description (N_("Audio memory output"))
     set_capability (VLC_CAP_AUDIO_OUTPUT, 0)
@@ -49,7 +49,7 @@ vlc_module_begin ()
                  N_("Channels count"), NULL, false)
         change_integer_range (1, AOUT_CHAN_MAX)
         change_private()
-vlc_module_end ()
+vlc_plugin_end ()
 
 typedef struct
 {

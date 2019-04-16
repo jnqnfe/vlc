@@ -52,7 +52,7 @@ static void     Close   ( vlc_object_t * );
 
 #define SOUT_CFG_PREFIX "sout-record-"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Record stream output") )
     set_capability( VLC_CAP_SOUT_STREAM, 0 )
     add_shortcut( "record" )
@@ -63,7 +63,7 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_SOUT_STREAM )
     add_string( SOUT_CFG_PREFIX "dst-prefix", "", DST_PREFIX_TEXT,
                 DST_PREFIX_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /* */
 static const char *const ppsz_sout_options[] = {

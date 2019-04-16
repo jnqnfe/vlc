@@ -58,7 +58,7 @@ static void Close( vlc_object_t * );
 #define OPAQUE_LONGTEXT N_("Setting to true " \
         "makes the text to be boxed and maybe easier to read." )
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("CC 608/708"))
     set_description( N_("Closed Captions decoder") )
     set_capability( VLC_CAP_SPU_DECODER, 50 )
@@ -68,7 +68,7 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_INPUT_SCODEC )
     add_bool( "cc-opaque", true,
                  OPAQUE_TEXT, OPAQUE_LONGTEXT, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

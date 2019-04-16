@@ -54,7 +54,7 @@ static int  OpenBzip2 (vlc_object_t *);
 static int  OpenXZ (vlc_object_t *);
 static void Close (vlc_object_t *);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description (N_("LZMA decompression"))
     set_capability (VLC_CAP_STREAM_FILTER, 320)
     set_callbacks (OpenXZ, Close)
@@ -70,7 +70,7 @@ vlc_module_begin ()
 
     //set_category (CAT_INPUT)
     //set_subcategory (SUBCAT_INPUT_STREAM_FILTER)
-vlc_module_end ()
+vlc_plugin_end ()
 
 typedef struct
 {

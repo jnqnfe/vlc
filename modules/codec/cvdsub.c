@@ -47,7 +47,7 @@ static int  DecoderOpen   ( vlc_object_t * );
 static int  PacketizerOpen( vlc_object_t * );
 static void DecoderClose  ( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("CVD subtitle decoder") )
     set_capability( VLC_CAP_SPU_DECODER, 50 )
     set_callbacks( DecoderOpen, DecoderClose )
@@ -56,7 +56,7 @@ vlc_module_begin ()
     set_description( N_("Chaoji VCD subtitle packetizer") )
     set_capability( VLC_CAP_PACKETIZER, 50 )
     set_callbacks( PacketizerOpen, DecoderClose )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

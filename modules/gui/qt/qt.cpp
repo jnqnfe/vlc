@@ -250,7 +250,7 @@ static const char *const psz_raise_list_text[] =
     { N_( "Never" ), N_( "Video" ), N_( "Audio" ), _( "Audio/Video" ) };
 
 /**********************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "Qt" )
     set_description( N_("Qt interface") )
     set_capability( VLC_CAP_INTERFACE, 151 )
@@ -362,7 +362,7 @@ vlc_module_begin ()
     add_integer( "qt-auto-raise", MainInterface::RAISE_VIDEO, AUTORAISE_ON_PLAYBACK_TEXT,
                  AUTORAISE_ON_PLAYBACK_LONGTEXT, false )
             change_integer_list( i_raise_list, psz_raise_list_text )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************/
 

@@ -91,7 +91,7 @@ static const char *const passthrough_modes_text[] = {
     N_("None"), N_("S/PDIF"), N_("HDMI"),
 };
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "ALSA" )
     set_description( N_("ALSA audio output") )
     set_capability( VLC_CAP_AUDIO_OUTPUT, 150 )
@@ -109,7 +109,7 @@ vlc_module_begin ()
                 NULL, false)
         change_integer_list(passthrough_modes, passthrough_modes_text)
     add_sw_gain ()
-vlc_module_end ()
+vlc_plugin_end ()
 
 /** Helper for ALSA -> VLC debugging output */
 static void Dump (vlc_object_t *obj, const char *msg,

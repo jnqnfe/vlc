@@ -135,7 +135,7 @@ static const char *const ppsz_pos_descriptions[] =
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help(MARQUEE_HELP)
 
     set_capability( VLC_CAP_SUB_SOURCE, 0 )
@@ -172,7 +172,7 @@ vlc_module_begin ()
                  false )
     add_integer( CFG_PREFIX "refresh", 1000, REFRESH_TEXT,
                  REFRESH_LONGTEXT, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_filter_options[] = {
     "marquee", "x", "y", "position", "color", "size", "timeout", "refresh",

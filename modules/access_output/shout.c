@@ -106,7 +106,7 @@ static void Close( vlc_object_t * );
                            "website. Requires the bitrate information specified for " \
                            "shoutcast. Requires Ogg streaming for icecast." )
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("IceCAST output") )
     set_shortname( "Shoutcast" )
     set_capability( VLC_CAP_SOUT_ACCESS, 0 )
@@ -135,7 +135,7 @@ vlc_module_begin ()
                 QUALITY_TEXT, QUALITY_LONGTEXT, false )
     add_bool(   SOUT_CFG_PREFIX "public", false,
                 PUBLIC_TEXT, PUBLIC_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Exported prototypes

@@ -73,7 +73,7 @@ typedef struct
                "This value is a positive floating point number. A value " \
                "between 0.5 and 10 seems sensible." )
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Volume normalizer") )
     set_shortname( N_("Volume normalizer") )
     add_shortcut( "volnorm" )
@@ -86,7 +86,7 @@ vlc_module_begin ()
                  true )
     add_float( "norm-max-level", 2.0, LEVEL_TEXT,
                LEVEL_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Open: initialize and create stuff

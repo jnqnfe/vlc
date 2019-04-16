@@ -60,7 +60,7 @@ static void CloseFrag  (vlc_object_t *);
 
 #define SOUT_CFG_PREFIX "sout-mp4-"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description(N_("MP4/MOV muxer"))
     set_shortname("MP4")
     set_capability(VLC_CAP_SOUT_MUX, 5)
@@ -79,7 +79,7 @@ add_submodule ()
     add_bool(SOUT_CFG_PREFIX "faststart", true,
               FASTSTART_TEXT, FASTSTART_LONGTEXT,
               true)
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Exported prototypes

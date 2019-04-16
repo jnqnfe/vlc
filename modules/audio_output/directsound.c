@@ -66,7 +66,7 @@ static const char *const speaker_list[] = { "Windows default", "Mono", "Stereo",
 #define VOLUME_TEXT N_("Audio volume")
 #define VOLUME_LONGTEXT N_("Audio volume in hundredths of decibels (dB).")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("DirectX audio output") )
     set_shortname( "DirectX" )
     set_capability( VLC_CAP_AUDIO_OUTPUT, 100 )
@@ -90,7 +90,7 @@ vlc_module_begin ()
     add_float( "directx-volume", 1.0f,
                  VOLUME_TEXT, VOLUME_LONGTEXT, true )
         change_float_range( 0.f, 2.f )
-vlc_module_end ()
+vlc_plugin_end ()
 
 typedef struct aout_stream_sys
 {

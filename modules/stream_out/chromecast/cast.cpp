@@ -209,7 +209,7 @@ static const char *const ppsz_sout_options[] = {
 #define HTTPD_BUFFER_MAX INT64_C(32 * 1024 * 1024) /* 32 MB */
 #define HTTPD_BUFFER_COPY_MAX INT64_C(10 * 1024 * 1024) /* 10 MB */
 
-vlc_module_begin ()
+vlc_plugin_begin ()
 
     set_shortname(N_("Chromecast"))
     set_description(N_("Chromecast stream output"))
@@ -241,7 +241,7 @@ vlc_module_begin ()
     add_renderer_opts(SOUT_CFG_PREFIX)
     //set_subcategory(SUBCAT_SOUT_ACO)
 
-vlc_module_end ()
+vlc_plugin_end ()
 
 static void *ProxyAdd(sout_stream_t *p_stream, const es_format_t *p_fmt)
 {

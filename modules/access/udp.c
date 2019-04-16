@@ -233,7 +233,7 @@ static void Close( vlc_object_t *p_this )
 
 #define TIMEOUT_TEXT N_("UDP Source timeout (sec)")
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("UDP"))
     set_description(N_("UDP input"))
     set_capability(VLC_CAP_ACCESS, 0)
@@ -244,4 +244,4 @@ vlc_module_begin()
     set_subcategory(SUBCAT_INPUT_ACCESS)
     add_obsolete_integer("udp-buffer") /* since 3.0.0 */
     add_integer("udp-timeout", -1, TIMEOUT_TEXT, NULL, true)
-vlc_module_end()
+vlc_plugin_end()

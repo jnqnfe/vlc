@@ -52,7 +52,7 @@ static int vlc_sd_probe_Open (vlc_object_t *);
 /*
  * Module descriptor
  */
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname (N_("Video capture"))
     set_description (N_("Video capture (Video4Linux)"))
     set_capability (VLC_CAP_SERVICES_DISCOVERY, 0)
@@ -77,7 +77,7 @@ vlc_module_begin ()
 
     //set_category (CAT_PLAYLIST)
     //set_subcategory (SUBCAT_PLAYLIST_SD)
-vlc_module_end ()
+vlc_plugin_end ()
 
 static int vlc_sd_probe_Open (vlc_object_t *obj)
 {

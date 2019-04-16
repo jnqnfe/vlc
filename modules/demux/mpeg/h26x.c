@@ -46,7 +46,7 @@ static void Close( vlc_object_t * );
 #define FPS_TEXT N_("Frames per Second")
 #define FPS_LONGTEXT N_("Desired frame rate for the stream.")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "H264")
     set_description( N_("H264 video demuxer" ) )
     set_capability( VLC_CAP_DEMUX, 6 )
@@ -68,7 +68,7 @@ vlc_module_begin ()
 
     set_section( N_("HEVC/H.265 video demuxer" ), NULL )
     add_float( "hevc-fps", 0.0, FPS_TEXT, FPS_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

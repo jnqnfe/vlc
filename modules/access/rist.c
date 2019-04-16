@@ -1128,7 +1128,7 @@ failed:
 }
 
 /* Module descriptor */
-vlc_module_begin ()
+vlc_plugin_begin ()
 
     set_shortname( N_("RIST") )
     set_description( N_("RIST input") )
@@ -1160,4 +1160,4 @@ vlc_module_begin ()
         "Send nack messages even when we have not confirmed that the encoder is on our local " \
         "network.", true )
 
-vlc_module_end ()
+vlc_plugin_end ()

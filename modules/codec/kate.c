@@ -263,7 +263,7 @@ static const char *const ppsz_color_descriptions[] = {
     "This will hopefully be fixed soon." \
     )
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help( HELP_TEXT )
 
     set_shortname( N_("Kate"))
@@ -326,7 +326,7 @@ vlc_module_begin ()
                             TIGER_DEFAULT_BACKGROUND_ALPHA_TEXT, TIGER_DEFAULT_BACKGROUND_ALPHA_LONGTEXT,
                             true);
 #endif
-vlc_module_end ()
+vlc_plugin_end ()
 
 static int OpenCommon( vlc_object_t *p_this, bool b_packetizer )
 {

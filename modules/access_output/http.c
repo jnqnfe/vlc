@@ -61,7 +61,7 @@ static void Close( vlc_object_t * );
                              "to the Cubemap reflector.")
 
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("HTTP stream output") )
     set_capability( VLC_CAP_SOUT_ACCESS, 0 )
     set_shortname( "HTTP" )
@@ -77,7 +77,7 @@ vlc_module_begin ()
                 MIME_TEXT, MIME_LONGTEXT, true )
     add_bool( SOUT_CFG_PREFIX "metacube", false,
               METACUBE_TEXT, METACUBE_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

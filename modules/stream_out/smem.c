@@ -91,7 +91,7 @@ static void Close( vlc_object_t * );
 #define SOUT_PREFIX_VIDEO SOUT_CFG_PREFIX"video-"
 #define SOUT_PREFIX_AUDIO SOUT_CFG_PREFIX"audio-"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Smem"))
     set_description( N_("Stream output to memory buffer") )
     set_capability( VLC_CAP_SOUT_STREAM, 0 )
@@ -114,7 +114,7 @@ vlc_module_begin ()
         change_volatile()
     add_bool( SOUT_CFG_PREFIX "time-sync", true, T_TIME_SYNC, LT_TIME_SYNC, true )
         change_private()
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

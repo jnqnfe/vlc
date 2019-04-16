@@ -734,7 +734,7 @@ error:
     change_volatile() \
     change_safe()
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_description("mock access demux")
     set_capability(VLC_CAP_ACCESS, 0)
     set_callbacks(Open, Close)
@@ -743,6 +743,6 @@ vlc_module_begin()
     set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_ACCESS)
     LIST_OPTIONS
-vlc_module_end()
+vlc_plugin_end()
 
 #undef X

@@ -187,7 +187,7 @@ static void DemuxClose ( vlc_object_t * );
 
 using namespace dshow;
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("DirectShow") )
     set_description( N_("DirectShow input") )
     add_shortcut( "dshow" )
@@ -261,7 +261,7 @@ vlc_module_begin ()
                  AUDIO_SAMPLERATE_LONGTEXT, true )
     add_integer( "dshow-audio-bitspersample", 0, AUDIO_BITSPERSAMPLE_TEXT,
                  AUDIO_BITSPERSAMPLE_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 namespace dshow {
 

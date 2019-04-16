@@ -113,7 +113,7 @@
 static int  Open         ( vlc_object_t * );
 static void Close        ( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Visualizer"))
     set_description( N_("Visualizer filter") )
     set_capability( VLC_CAP_VISUALIZATION, 0 )
@@ -167,7 +167,7 @@ vlc_module_begin ()
              PEAK_WIDTH_TEXT, PEAK_WIDTH_LONGTEXT, true )
     add_integer("spect-peak-height", 1,
              PEAK_HEIGHT_TEXT, PEAK_HEIGHT_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

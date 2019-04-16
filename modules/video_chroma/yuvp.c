@@ -43,11 +43,11 @@
 static int  Open ( vlc_object_t * );
 static void Close( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("YUVP converter") )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 10 )
     set_callbacks( Open, Close )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /****************************************************************************
  * Local prototypes

@@ -57,7 +57,7 @@ static void Close( vlc_object_t * );
 #define TIMEOUT_TEXT N_("TCP/UDP timeout (ms)")
 #define TIMEOUT_LONGTEXT N_("Amount of time (in ms) to wait before aborting network reception of data. Note that there will be 10 retries before completely giving up.")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "MMS" )
     set_description( N_("Microsoft Media Server (MMS) input") )
     set_capability( VLC_CAP_ACCESS, -1 )
@@ -70,7 +70,7 @@ vlc_module_begin ()
     add_bool( "mms-all", false, ALL_TEXT, ALL_LONGTEXT, true )
     add_integer( "mms-maxbitrate", 0, BITRATE_TEXT, BITRATE_LONGTEXT , false )
     add_obsolete_string( "mmsh-proxy" ) /* since 3.0.0 */
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

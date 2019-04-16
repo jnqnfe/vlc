@@ -46,7 +46,7 @@ static int  Open ( vlc_object_t * );
     "playing MJPEG from a file. Use 0 (this is the default value) for a " \
     "live stream (from a camera).")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "MJPEG")
     set_description( N_("M-JPEG camera demuxer") )
     set_capability( VLC_CAP_DEMUX, 5 )
@@ -54,7 +54,7 @@ vlc_module_begin ()
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
     add_float( "mjpeg-fps", 0.0, FPS_TEXT, FPS_LONGTEXT, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

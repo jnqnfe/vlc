@@ -70,14 +70,14 @@ typedef struct
 #define TEMPLATE_LONGTEXT N_( "Location of a file holding a SVG template "\
         "for automatic string conversion" )
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_capability( VLC_CAP_TEXT_RENDERER, 99 )
     add_shortcut( "svg" )
     set_callbacks( Create, Destroy )
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_SCODEC )
     add_string( "svg-template-file", "", TEMPLATE_TEXT, TEMPLATE_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static void svg_RescaletoFit  ( filter_t *, int *width, int *height, float * );
 static picture_t * svg_RenderPicture ( filter_t *p_filter, const char * );

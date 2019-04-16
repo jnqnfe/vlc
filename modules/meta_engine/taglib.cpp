@@ -141,13 +141,13 @@ static vlc_mutex_t taglib_lock = VLC_STATIC_MUTEX;
 static int ReadMeta    ( vlc_object_t * );
 static int WriteMeta   ( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_capability( VLC_CAP_META_READER, 1000 )
     set_callbacks( ReadMeta, NULL )
     add_submodule ()
         set_capability( VLC_CAP_META_WRITER, 50 )
         set_callbacks( WriteMeta, NULL )
-vlc_module_end ()
+vlc_plugin_end ()
 
 class VlcIostream : public IOStream
 {

@@ -224,11 +224,11 @@ static void Close(vlc_va_t *va, void **hwctx)
     free(sys);
 }
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_description(N_("VDPAU video decoder"))
     set_capability(VLC_CAP_HW_DECODER, 100)
     set_callbacks(Open, Close)
     add_shortcut("vdpau")
     //set_category(CAT_INPUT)
     //set_subcategory(SUBCAT_INPUT_VCODEC)
-vlc_module_end()
+vlc_plugin_end()

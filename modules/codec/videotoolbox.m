@@ -78,7 +78,7 @@ static void CloseDecoder(vlc_object_t *);
 #define VT_FORCE_CVPX_CHROMA_LONG "Values can be 'BGRA', 'y420', '420f', '420v', '2vuy'. \
     By Default, the best chroma is choosen by the VT decoder."
 
-vlc_module_begin()
+vlc_plugin_begin()
 set_description(N_("VideoToolbox video decoder"))
 set_capability(VLC_CAP_VIDEO_DECODER, 800)
 set_callbacks(OpenDecoder, CloseDecoder)
@@ -89,7 +89,7 @@ add_obsolete_bool("videotoolbox-temporal-deinterlacing") /* since 4.0.0 */
 add_bool("videotoolbox", true, VT_ENABLE_TEXT, NULL, false)
 add_bool("videotoolbox-hw-decoder-only", true, VT_REQUIRE_HW_DEC, VT_REQUIRE_HW_DEC, false)
 add_string("videotoolbox-cvpx-chroma", "", VT_FORCE_CVPX_CHROMA, VT_FORCE_CVPX_CHROMA_LONG, true);
-vlc_module_end()
+vlc_plugin_end()
 
 #pragma mark - local prototypes
 

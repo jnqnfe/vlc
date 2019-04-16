@@ -271,7 +271,7 @@ static const char *const psz_tuner_audio_modes_list_text[] = {
       N_("Dual mono" )
 };
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("V4L") )
     set_description( N_("Video4Linux input") )
     add_shortcut( "v4l", "v4l2" )
@@ -419,7 +419,7 @@ vlc_module_begin ()
     add_string( CFG_PREFIX "set-ctrls", NULL, S_CTRLS_TEXT,
               S_CTRLS_LONGTEXT, true )
         change_safe()
-vlc_module_end ()
+vlc_plugin_end ()
 
 /**
  * Parses a V4L2 MRL into VLC object variables.

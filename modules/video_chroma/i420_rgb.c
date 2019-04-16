@@ -67,7 +67,7 @@ static picture_t *I420_A8B8G8R8_Filter( filter_t *, picture_t * );
 static int  Activate   ( vlc_object_t * );
 static void Deactivate ( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
 #if defined (AVX2)
     set_description( N_( "AVX2 I420,IYUV,YV12 to "
                         "RV15,RV16,RV32 conversions") )
@@ -85,7 +85,7 @@ vlc_module_begin ()
 # define vlc_CPU_capable() (true)
 #endif
     set_callbacks( Activate, Deactivate )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Activate: allocate a chroma function

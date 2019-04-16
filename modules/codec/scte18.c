@@ -37,14 +37,14 @@
 static int  Open (vlc_object_t *);
 static void Close(vlc_object_t *);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description(N_("SCTE-18 decoder"))
     set_shortname(N_("SCTE-18"))
     set_capability( VLC_CAP_SPU_DECODER, 51)
     set_callbacks(Open, Close)
     //set_category(CAT_INPUT)
     //set_subcategory(SUBCAT_INPUT_SCODEC)
-vlc_module_end ()
+vlc_plugin_end ()
 
 typedef struct
 {

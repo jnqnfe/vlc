@@ -58,7 +58,7 @@ static int DenoiseCallback( vlc_object_t *p_this, char const *psz_var,
 #define LUMA_TEMP_TEXT          N_("Temporal luma strength (0-254)")
 #define CHROMA_TEMP_TEXT        N_("Temporal chroma strength (0-254)")
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("HQ Denoiser 3D"))
     set_description(N_("High Quality 3D Denoiser filter"))
     set_capability(VLC_CAP_VIDEO_FILTER, 0)
@@ -75,7 +75,7 @@ vlc_module_begin()
             LUMA_TEMP_TEXT, NULL, false)
     add_float_with_range(FILTER_PREFIX "chroma-temp", 4.5, 0.0, 254.0,
             CHROMA_TEMP_TEXT, NULL, false)
-vlc_module_end()
+vlc_plugin_end()
 
 static const char *const filter_options[] = {
     "luma-spat", "chroma-spat", "luma-temp", "chroma-temp", NULL

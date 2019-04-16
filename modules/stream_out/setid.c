@@ -57,7 +57,7 @@ static void Close     ( vlc_object_t * );
 #define SOUT_CFG_PREFIX_ID   "sout-setid-"
 #define SOUT_CFG_PREFIX_LANG "sout-setlang-"
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname( N_("Set ID"))
     set_description( N_("Change the id of an elementary stream"))
     set_capability( VLC_CAP_SOUT_STREAM, 50 )
@@ -83,7 +83,7 @@ vlc_module_begin()
     add_integer( SOUT_CFG_PREFIX_LANG "id", 0, ID_TEXT, ID_LONGTEXT, false )
     add_string( SOUT_CFG_PREFIX_LANG "lang", "eng", LANG_TEXT, LANG_LONGTEXT,
                 false );
-vlc_module_end()
+vlc_plugin_end()
 
 
 /*****************************************************************************

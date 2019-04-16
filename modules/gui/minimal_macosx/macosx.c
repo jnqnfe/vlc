@@ -48,7 +48,7 @@ int  WindowOpen   ( vout_window_t * );
  * Module descriptor
  *****************************************************************************/
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     /* Minimal interface. see intf.m */
     set_shortname( "Minimal Macosx" )
     add_shortcut( "minimal_macosx", "miosx" )
@@ -65,5 +65,5 @@ vlc_module_begin ()
     /* Kept so that module is found by cat-based module control */
     set_category( CAT_INTERFACE )
     set_subcategory( SUBCAT_INTERFACE_MAIN )
-vlc_module_end ()
+vlc_plugin_end ()
 

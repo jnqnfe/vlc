@@ -70,7 +70,7 @@ static const int channel_flag[] =
     AOUT_CHAN_MIDDLELEFT, AOUT_CHAN_MIDDLERIGHT, AOUT_CHAN_LFE
 };
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Audio channel remapper") )
     set_capability( VLC_CAP_AUDIO_FILTER, 0 )
     set_callbacks( OpenFilter, CloseFilter )
@@ -91,7 +91,7 @@ vlc_module_begin ()
     add_bool( REMAP_CFG "normalize", true, "Normalize channels",
             "When mapping more than one channel to a single output channel, "
             "normalize the output accordingly.", false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

@@ -777,7 +777,7 @@ static int Open(vout_display_t *vd, const vout_display_cfg_t *cfg,
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname("kms")
     set_description("Linux kernel mode setting video output")
     set_capability(VLC_CAP_VOUT_DISPLAY, 30)
@@ -790,4 +790,4 @@ vlc_module_begin ()
                 true)
     add_string( "kms-drm-chroma", NULL, DRM_CHROMA_TEXT, DRM_CHROMA_LONGTEXT,
                 true)
-vlc_module_end ()
+vlc_plugin_end ()

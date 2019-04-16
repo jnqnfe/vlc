@@ -65,7 +65,7 @@ static const signed char pi_kernel_y[3][3] = {
     {1, 2, 1}
 };
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help( EDGE_DETECTION_LONGTEXT )
     set_description( EDGE_DETECTION_DESCRIPTION )
     set_shortname( EDGE_DETECTION_TEXT )
@@ -73,7 +73,7 @@ vlc_module_begin ()
     set_callbacks( Open, Close )
     //set_category( CAT_VIDEO )
     //set_subcategory( SUBCAT_VIDEO_VFILTER )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /* Store the filter chain */
 typedef struct

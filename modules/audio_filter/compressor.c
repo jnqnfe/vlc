@@ -172,7 +172,7 @@ static int MakeupGainCallback   ( vlc_object_t *, char const *, vlc_value_t,
 #define MAKEUP_GAIN_TEXT N_( "Makeup gain" )
 #define MAKEUP_GAIN_LONGTEXT N_( "Set the makeup gain in dB (0 ... 24)." )
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname( N_("Compressor") )
     set_description( N_("Dynamic range compressor") )
     set_capability( VLC_CAP_AUDIO_FILTER, 0 )
@@ -195,7 +195,7 @@ vlc_module_begin()
                KNEE_TEXT, KNEE_LONGTEXT, false )
     add_float_with_range( "compressor-makeup-gain", 7.0, 0.0, 24.0,
                MAKEUP_GAIN_TEXT, MAKEUP_GAIN_LONGTEXT, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Open: initialize interface

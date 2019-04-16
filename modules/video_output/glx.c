@@ -265,11 +265,11 @@ static void Close(vlc_gl_t *gl)
     free (sys);
 }
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname (N_("GLX"))
     set_description (N_("GLX extension for OpenGL"))
     set_capability (VLC_CAP_OPENGL, 20)
     set_callbacks (Open, Close)
     //set_category (CAT_VIDEO)
     //set_subcategory (SUBCAT_VIDEO_VOUT)
-vlc_module_end ()
+vlc_plugin_end ()

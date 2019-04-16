@@ -63,7 +63,7 @@ static int SharpenCallback( vlc_object_t *, char const *,
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help(SHARPEN_HELP)
 
     set_description( N_("Sharpen video filter") )
@@ -77,7 +77,7 @@ vlc_module_begin ()
     add_float_with_range( FILTER_PREFIX "sigma", 0.05, 0.0, 2.0,
         SIG_TEXT, SIG_LONGTEXT, false )
     change_safe()
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_filter_options[] = {
     "sigma", NULL

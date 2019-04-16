@@ -38,7 +38,7 @@ static void Close (vlc_object_t *);
 
 VLC_SD_PROBE_HELPER("pulse", N_("Audio capture"), SD_CAT_DEVICES);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname (N_("Audio capture"))
     set_description (N_("Audio capture (PulseAudio)"))
     set_capability (VLC_CAP_SERVICES_DISCOVERY, 0)
@@ -49,7 +49,7 @@ vlc_module_begin ()
 
     //set_category (CAT_PLAYLIST)
     //set_subcategory (SUBCAT_PLAYLIST_SD)
-vlc_module_end ()
+vlc_plugin_end ()
 
 typedef struct
 {

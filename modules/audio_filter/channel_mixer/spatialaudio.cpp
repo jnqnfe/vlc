@@ -60,7 +60,7 @@ static int Open( vlc_object_t * );
 static void Close( vlc_object_t * );
 static void Flush( filter_t * );
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname("Spatialaudio")
     set_description(N_("Ambisonics renderer and binauralizer"))
     set_capability(VLC_CAP_AUDIO_RENDERER, 1)
@@ -78,7 +78,7 @@ vlc_module_begin()
     add_bool(CFG_PREFIX "headphones", false,
              HEADPHONES_TEXT, HEADPHONES_LONGTEXT, true)
     add_loadfile("hrtf-file", NULL, HRTF_FILE_TEXT, HRTF_FILE_LONGTEXT)
-vlc_module_end()
+vlc_plugin_end()
 
 #define AMB_BLOCK_TIME_LEN 1024
 

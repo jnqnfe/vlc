@@ -1189,7 +1189,7 @@ CloseDeinterlace(vlc_object_t * obj)
 #define DENOISE_SIGMA_LONGTEXT \
     "Set the Denoise strength, between 0 and 2. Defaults to 1."
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("VAAPI filters"))
     set_description(N_("Video Accelerated API filters"))
     set_capability(VLC_CAP_VIDEO_FILTER, 0)
@@ -1218,4 +1218,4 @@ vlc_module_begin()
     set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_float_with_range("denoise-sigma", 1.f, .0f, 0.f,
                          DENOISE_SIGMA_TEXT, DENOISE_SIGMA_LONGTEXT, false)
-vlc_module_end()
+vlc_plugin_end()

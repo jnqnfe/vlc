@@ -79,7 +79,7 @@ static void Close( vlc_object_t * );
 #define FPS_LONGTEXT N_( \
     "Default frame rate for chapter import." )
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help( HELP_TEXT )
 
     set_shortname( N_("VDR") )
@@ -94,7 +94,7 @@ vlc_module_begin ()
         CHAPTER_OFFSET_TEXT, CHAPTER_OFFSET_LONGTEXT, true )
     add_float_with_range( "vdr-fps", 25, 1, 1000,
         FPS_TEXT, FPS_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes, constants, structures

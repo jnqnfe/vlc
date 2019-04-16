@@ -209,7 +209,7 @@ static void CloseDemux ( vlc_object_t *p_this )
     free( p_demux->p_sys );
 }
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Stats"))
 #ifdef ENABLE_SOUT
     set_description( N_("Stats encoder function") )
@@ -237,4 +237,4 @@ vlc_module_begin ()
         set_capability( VLC_CAP_DEMUX, 0 )
         add_shortcut( "stats" )
         set_callbacks( OpenDemux, CloseDemux )
-vlc_module_end ()
+vlc_plugin_end ()

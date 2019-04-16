@@ -69,7 +69,7 @@ static int  OpenSub  (vlc_object_t *);
 static int  OpenVideo(vlc_object_t *);
 static void Close    (vlc_object_t *);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_capability(VLC_CAP_SUB_SOURCE, 0)
     set_callbacks(OpenSub, Close)
     set_description(N_("Audio Bar Graph Video sub source"))
@@ -93,7 +93,7 @@ vlc_module_begin ()
         change_integer_list(pi_pos_values, ppsz_pos_descriptions)
     add_integer(CFG_PREFIX "barWidth", 10, BARWIDTH_TEXT, BARWIDTH_LONGTEXT, true)
     add_integer(CFG_PREFIX "barHeight", 400, BARHEIGHT_TEXT, BARHEIGHT_LONGTEXT, true)
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

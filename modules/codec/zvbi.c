@@ -90,7 +90,7 @@ static const char *const level_descriptions[] =
 static const int level_zvbi_values[] =
 { VBI_WST_LEVEL_1, VBI_WST_LEVEL_1p5, VBI_WST_LEVEL_2p5, VBI_WST_LEVEL_3p5 };
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("VBI and Teletext decoder") )
     set_shortname( N_("VBI & Teletext") )
     set_capability( VLC_CAP_SPU_DECODER, 51 )
@@ -108,7 +108,7 @@ vlc_module_begin ()
               TELX_TEXT, TELX_LONGTEXT, false )
     add_integer( "vbi-level", 3, LEVEL_TEXT, NULL, false )
         change_integer_list( level_values, level_descriptions );
-vlc_module_end ()
+vlc_plugin_end ()
 
 /****************************************************************************
  * Local structures

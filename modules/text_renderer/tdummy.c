@@ -30,12 +30,12 @@
 
 static int OpenRenderer( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Dummy") )
     set_description( N_("Dummy font renderer") )
     set_capability( VLC_CAP_TEXT_RENDERER, 1 )
     set_callbacks( OpenRenderer, NULL )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 static int RenderText( filter_t *p_filter, subpicture_region_t *p_region_out,

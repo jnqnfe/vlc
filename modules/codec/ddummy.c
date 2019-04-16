@@ -41,7 +41,7 @@ static int OpenDecoder( vlc_object_t * );
 static int OpenDecoderDump( vlc_object_t * );
 static void CloseDecoder( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Dummy") )
     set_description( N_("Dummy decoder") )
     set_capability( VLC_CAP_SPU_DECODER, 0 )
@@ -77,7 +77,7 @@ vlc_module_begin ()
     set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_SCODEC )
     add_bool( "dummy-save-es", false, SAVE_TEXT, SAVE_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

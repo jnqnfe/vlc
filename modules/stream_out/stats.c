@@ -47,7 +47,7 @@ static void Close   ( vlc_object_t * );
 
 #define SOUT_CFG_PREFIX "sout-stats-"
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname( N_("Stats"))
     set_description( N_("Writes statistic info about stream"))
     set_capability( VLC_CAP_SOUT_STREAM, 0 )
@@ -58,7 +58,7 @@ vlc_module_begin()
     set_subcategory( SUBCAT_SOUT_STREAM )
     add_string( SOUT_CFG_PREFIX "output", "", OUTPUT_TEXT, OUTPUT_LONGTEXT, false );
     add_string( SOUT_CFG_PREFIX "prefix", "stats", PREFIX_TEXT, NULL, false );
-vlc_module_end()
+vlc_plugin_end()
 
 
 /*****************************************************************************

@@ -65,7 +65,7 @@ static const char *const ppsz_color_descriptions[] = {
 
 #define CFG_PREFIX "colorthres-"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help(COLOR_HELP)
 
     set_description( N_("Color threshold filter") )
@@ -81,7 +81,7 @@ vlc_module_begin ()
                  N_("Saturation threshold"), NULL, false )
     add_integer( CFG_PREFIX "similaritythres", 15,
                  N_("Similarity threshold"), NULL, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_filter_options[] = {
     "color", "saturationthres", "similaritythres", NULL

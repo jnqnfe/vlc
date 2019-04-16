@@ -139,7 +139,7 @@ static int yCallback( vlc_object_t *, char const *,
 
 #define CFG_PREFIX "sout-mosaic-bridge-"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_( "Mosaic bridge" ) )
     set_description(N_("Mosaic bridge stream output") )
     set_capability( VLC_CAP_SOUT_STREAM, 0 )
@@ -167,7 +167,7 @@ vlc_module_begin ()
                             ALPHA_TEXT, ALPHA_LONGTEXT, false )
     add_integer( CFG_PREFIX "x", -1, X_TEXT, X_LONGTEXT, false )
     add_integer( CFG_PREFIX "y", -1, Y_TEXT, Y_LONGTEXT, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_sout_options[] = {
     "id", "width", "height", "sar", "vfilter", "chroma", "alpha", "x", "y", NULL

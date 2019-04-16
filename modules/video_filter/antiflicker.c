@@ -63,7 +63,7 @@ static void Destroy   ( vlc_object_t * );
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Antiflicker video filter") )
     set_shortname( N_( "antiflicker" ))
     set_capability( VLC_CAP_VIDEO_FILTER, 0 )
@@ -77,7 +77,7 @@ vlc_module_begin ()
 
     add_integer_with_range( FILTER_PREFIX "softening-size", 10, 0, MAX_SOFTENING_SZ,
         SFTN_TEXT, SFTN_LONGTEXT, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * filter_sys_t: Distort video output method descriptor

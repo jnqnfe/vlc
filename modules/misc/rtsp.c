@@ -72,7 +72,7 @@ static void Close( vlc_object_t * );
     "the timeout option entirely. This is needed by some IPTV STBs (such as " \
     "those made by HansunTech) which get confused by it. The default is 5." )
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("RTSP VoD" ) )
     set_description( N_("Legacy RTSP VoD server") )
     set_capability( VLC_CAP_VOD_SERVER, 1 )
@@ -86,7 +86,7 @@ vlc_module_begin ()
                  THROTTLE_LONGTEXT, true )
     add_integer( "rtsp-session-timeout", 5, SESSION_TIMEOUT_TEXT,
                  SESSION_TIMEOUT_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Exported prototypes

@@ -70,7 +70,7 @@ static int Open(vout_display_t *vd, const vout_display_cfg_t *cfg,
                 video_format_t *fmt, vlc_video_context *context);
 static void Close(vout_display_t *vd);
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("MMAL vout"))
     set_description(N_("MMAL-based vout plugin for Raspberry Pi"))
     set_capability(VLC_CAP_VOUT_DISPLAY, 90)
@@ -86,7 +86,7 @@ vlc_module_begin()
                     NULL, false)
     add_bool(MMAL_NATIVE_INTERLACED, false, MMAL_NATIVE_INTERLACE_TEXT,
                     MMAL_NATIVE_INTERLACE_LONGTEXT, false)
-vlc_module_end()
+vlc_plugin_end()
 
 struct dmx_region_t {
     struct dmx_region_t *next;

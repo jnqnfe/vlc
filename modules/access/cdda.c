@@ -995,7 +995,7 @@ static void Close(vlc_object_t *obj)
 
 #define HELP_TEXT N_("Usage hint: [cdda:][device][@[track]]")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help (HELP_TEXT)
 
     set_shortname( N_("Audio CD") )
@@ -1026,4 +1026,4 @@ vlc_module_begin ()
             N_( "CDDB Server port to use." ), true )
         change_integer_range( 1, 65535 )
 #endif
-vlc_module_end ()
+vlc_plugin_end ()

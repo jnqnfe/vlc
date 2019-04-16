@@ -67,7 +67,7 @@ static const char *const ppsz_indexes[] = { N_("Ask for action"),
                                             N_("Never fix"),
                                             N_("Fix when necessary")};
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "AVI" )
     set_description( N_("AVI demuxer") )
     set_capability( VLC_CAP_DEMUX, 212 )
@@ -80,7 +80,7 @@ vlc_module_begin ()
     add_integer( "avi-index", 0,
               INDEX_TEXT, INDEX_LONGTEXT, false )
         change_integer_list( pi_index, ppsz_indexes )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

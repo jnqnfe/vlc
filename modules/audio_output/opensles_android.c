@@ -130,7 +130,7 @@ static void Close (vlc_object_t *);
  * Module descriptor
  *****************************************************************************/
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description("OpenSLES audio output")
     set_shortname("OpenSLES")
     set_capability(VLC_CAP_AUDIO_OUTPUT, 170)
@@ -138,7 +138,7 @@ vlc_module_begin ()
     set_callbacks(Open, Close)
     //set_category(CAT_AUDIO)
     //set_subcategory(SUBCAT_AUDIO_AOUT)
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  *

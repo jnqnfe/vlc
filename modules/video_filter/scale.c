@@ -43,11 +43,11 @@ static picture_t *Filter( filter_t *, picture_t * );
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Video scaling filter") )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 10 )
     set_callbacks( OpenFilter, NULL )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * OpenFilter: probe the filter and return score

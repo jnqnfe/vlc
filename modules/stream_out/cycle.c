@@ -323,7 +323,7 @@ static void Close(vlc_object_t *obj)
     free(sys);
 }
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("cycle"))
     set_description(N_("Cyclic stream output"))
     set_capability(VLC_CAP_SOUT_STREAM, 0)
@@ -331,4 +331,4 @@ vlc_module_begin()
     add_shortcut("cycle")
     //set_category(CAT_SOUT)
     //set_subcategory(SUBCAT_SOUT_STREAM)
-vlc_module_end()
+vlc_plugin_end()

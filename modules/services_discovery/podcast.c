@@ -56,7 +56,7 @@ VLC_SD_PROBE_HELPER("podcast", N_("Podcasts"), SD_CAT_INTERNET)
 #define URLS_LONGTEXT N_("Enter the list of podcasts to retrieve, " \
                          "separated by '|' (pipe)." )
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "Podcast")
     set_description( N_("Podcasts") )
     set_capability( VLC_CAP_SERVICES_DISCOVERY, 0 )
@@ -68,7 +68,7 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_PLAYLIST_SD )
     add_string( "podcast-urls", NULL,
                 URLS_TEXT, URLS_LONGTEXT, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

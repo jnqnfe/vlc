@@ -171,7 +171,7 @@ static const char *const ppsz_align_descriptions[] =
 
 #define CFG_PREFIX "mosaic-"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Mosaic video sub source") )
     set_shortname( N_("Mosaic") )
     set_capability( VLC_CAP_SUB_SOURCE, 0 )
@@ -222,7 +222,7 @@ vlc_module_begin ()
 
     add_integer( CFG_PREFIX "delay", 0, DELAY_TEXT, DELAY_LONGTEXT,
                  false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_filter_options[] = {
     "alpha", "height", "width", "align", "xoffset", "yoffset",

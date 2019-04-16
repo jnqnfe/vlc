@@ -62,7 +62,7 @@ static void Close( vlc_object_t * );
 #define AUTO_CONNECT_LONGTEXT N_( \
     "Automatically connect VLC input ports to available output ports." )
 
-vlc_module_begin ()
+vlc_plugin_begin ()
      set_description( N_("JACK audio input") )
      set_capability( VLC_CAP_ACCESS, 0 )
      set_shortname( N_( "JACK Input" ) )
@@ -75,7 +75,7 @@ vlc_module_begin ()
          PACE_TEXT, PACE_LONGTEXT, true )
      add_bool( "jack-input-auto-connect", false,
          AUTO_CONNECT_TEXT, AUTO_CONNECT_LONGTEXT, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

@@ -54,7 +54,7 @@ static void Close        ( vlc_object_t * );
 
 #define MAX_SPEED 10
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Goom"))
     set_description( N_("Goom effect") )
     set_capability( VLC_CAP_VISUALIZATION, 0 )
@@ -69,7 +69,7 @@ vlc_module_begin ()
                  HEIGHT_TEXT, RES_LONGTEXT, false )
     add_integer_with_range( "goom-speed", 6, 1, 10,
                  SPEED_TEXT, SPEED_LONGTEXT, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

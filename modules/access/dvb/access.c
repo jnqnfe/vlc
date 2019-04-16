@@ -74,7 +74,7 @@ static void Close( vlc_object_t *p_this );
 
 #define SCAN_NIT_TEXT N_("Use NIT for scanning services")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("DVB") )
     set_description( N_("DVB input with v4l2 support") )
     set_capability( VLC_CAP_ACCESS, 0 )
@@ -93,7 +93,7 @@ vlc_module_begin ()
     add_string( "dvb-scanlist", NULL, SCANLIST_TEXT, SCANLIST_LONGTEXT,
                 true )
     add_bool( "dvb-scan-nit", true, SCAN_NIT_TEXT, NULL, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

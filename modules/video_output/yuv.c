@@ -53,7 +53,7 @@ static int Open(vout_display_t *vd, const vout_display_cfg_t *cfg,
                 video_format_t *fmtp, vlc_video_context *context);
 static void Close(vout_display_t *vd);
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("YUV output"))
     set_description(N_("YUV video output"))
     set_capability(VLC_CAP_VOUT_DISPLAY, 0)
@@ -67,7 +67,7 @@ vlc_module_begin()
                 CHROMA_TEXT, CHROMA_LONGTEXT, true)
     add_bool  (CFG_PREFIX "yuv4mpeg2", false,
                 YUV4MPEG2_TEXT, YUV4MPEG2_LONGTEXT, true)
-vlc_module_end()
+vlc_plugin_end()
 
 /*****************************************************************************
  * Local prototypes

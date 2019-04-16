@@ -385,7 +385,7 @@ static void Close( vlc_object_t * p_this )
 #define SYNC_TEXT N_("Synchronous writing")
 #define SYNC_LONGTEXT N_( "Open the file with synchronous writing.")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("File stream output") )
     set_shortname( N_("File" ))
     set_capability( VLC_CAP_SOUT_ACCESS, 50 )
@@ -404,4 +404,4 @@ vlc_module_begin ()
     add_bool( SOUT_CFG_PREFIX "sync", false, SYNC_TEXT,SYNC_LONGTEXT,
               false )
 #endif
-vlc_module_end ()
+vlc_plugin_end ()

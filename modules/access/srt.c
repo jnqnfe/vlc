@@ -413,7 +413,7 @@ static void Close(vlc_object_t *p_this)
 }
 
 /* Module descriptor */
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_( "SRT" ) )
     set_description( N_( "SRT input" ) )
     set_capability(VLC_CAP_ACCESS, 0)
@@ -437,4 +437,4 @@ vlc_module_begin ()
     add_integer( SRT_PARAM_KEY_LENGTH, SRT_DEFAULT_KEY_LENGTH,
             SRT_KEY_LENGTH_TEXT, NULL, false )
     change_integer_list( srt_key_lengths, srt_key_length_names )
-vlc_module_end ()
+vlc_plugin_end ()

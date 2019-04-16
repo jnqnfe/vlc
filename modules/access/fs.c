@@ -30,7 +30,7 @@
 #include "fs.h"
 #include <vlc_plugin.h>
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("File input") )
     set_shortname( N_("File") )
     set_capability( VLC_CAP_ACCESS, 50 )
@@ -52,4 +52,4 @@ vlc_module_begin ()
     add_bool("list-special-files", false, N_("List special files"),
              N_("Include devices and pipes when listing directories"), true)
     add_obsolete_string("directory-sort") /* since 3.0.0 */
-vlc_module_end ()
+vlc_plugin_end ()

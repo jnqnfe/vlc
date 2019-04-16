@@ -40,7 +40,7 @@ static void Close(vlc_gl_t *);
 
 #define HW_GPU_AFFINITY_TEXT N_("GPU affinity")
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname("WGL")
     set_description(N_("WGL extension for OpenGL"))
     set_capability(VLC_CAP_OPENGL, 50)
@@ -50,7 +50,7 @@ vlc_module_begin()
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_integer("gpu-affinity", -1, HW_GPU_AFFINITY_TEXT, NULL, true)
-vlc_module_end()
+vlc_plugin_end()
 
 /*****************************************************************************
  * Local prototypes.

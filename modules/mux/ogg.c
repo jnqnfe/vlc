@@ -55,7 +55,7 @@ static void Close  ( vlc_object_t * );
 
 #define SOUT_CFG_PREFIX "sout-ogg-"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Ogg/OGM muxer") )
     set_capability( VLC_CAP_SOUT_MUX, 10 )
     add_shortcut( "ogg", "ogm" )
@@ -67,7 +67,7 @@ vlc_module_begin ()
                             INDEXINTVL_TEXT, INDEXINTVL_LONGTEXT, true )
     add_float_with_range( SOUT_CFG_PREFIX "indexratio", 1.0, 1.0, 1000,
                           INDEXRATIO_TEXT, INDEXRATIO_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

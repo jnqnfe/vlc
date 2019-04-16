@@ -925,7 +925,7 @@ static const char *const algo_names[] = {
     N_("Bob"), N_("Temporal"), N_("Temporal-spatial"),
 };
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("VDPAU"))
     set_description(N_("VDPAU surface conversions"))
     set_capability(VLC_CAP_VIDEO_CONVERTER, 10)
@@ -949,4 +949,4 @@ vlc_module_begin()
         N_("Noise reduction level"), NULL, true)
     add_integer_with_range("vdpau-scaling", 0, 0, 9,
        N_("Scaling quality"), N_("High quality scaling level"), true)
-vlc_module_end()
+vlc_plugin_end()

@@ -104,7 +104,7 @@
 
 VLC_SD_PROBE_HELPER("sap", N_("Network streams (SAP)"), SD_CAT_LAN)
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("SAP"))
     set_description( N_("Network streams (SAP)") )
     set_capability( VLC_CAP_SERVICES_DISCOVERY, 0 )
@@ -128,7 +128,7 @@ vlc_module_begin ()
                SAP_PARSE_TEXT,SAP_PARSE_LONGTEXT, true )
     add_bool( "sap-strict", false,
                SAP_STRICT_TEXT,SAP_STRICT_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

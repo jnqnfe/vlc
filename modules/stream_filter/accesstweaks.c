@@ -32,7 +32,7 @@
 
 static int  Open(vlc_object_t *);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname("accesstweaks")
     set_capability (VLC_CAP_STREAM_FILTER, 301)
     /* Developers only module, no translation please */
@@ -48,7 +48,7 @@ vlc_module_begin ()
         change_volatile ()
     add_bool("stream-size", true, "Expose stream size if known", NULL, false)
         change_volatile()
-vlc_module_end ()
+vlc_plugin_end ()
 
 typedef struct
 {

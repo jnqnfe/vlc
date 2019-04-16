@@ -101,7 +101,7 @@ static const char *const ppsz_audioconns_text[] = {
 #define ASPECT_RATIO_LONGTEXT N_(\
     "Aspect ratio (4:3, 16:9). Default assumes square pixels.")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname(N_("DeckLink"))
     set_description(N_("Blackmagic DeckLink SDI input"))
     add_shortcut("decklink")
@@ -127,7 +127,7 @@ vlc_module_begin ()
     add_string("decklink-aspect-ratio", NULL,
                 ASPECT_RATIO_TEXT, ASPECT_RATIO_LONGTEXT, true)
     add_bool("decklink-tenbits", false, N_("10 bits"), N_("10 bits"), true)
-vlc_module_end ()
+vlc_plugin_end ()
 
 static int Control(demux_t *, int, va_list);
 

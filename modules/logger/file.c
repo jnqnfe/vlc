@@ -228,7 +228,7 @@ static const char *const verbosity_text[] = { N_("Default"), N_("Info"), N_("Err
 #define LOGVERBOSE_LONGTEXT N_("Select the logging verbosity or " \
 "default to use the same verbosity given by --verbose.")
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("Logger"))
     set_description(N_("File logger"))
     set_capability(VLC_CAP_LOGGER, 15)
@@ -242,4 +242,4 @@ vlc_module_begin()
         change_string_list(mode_list, mode_list_text)
     add_integer("log-verbose", -1, LOGVERBOSE_TEXT, LOGVERBOSE_LONGTEXT, false)
         change_integer_list(verbosity_values, verbosity_text)
-vlc_module_end ()
+vlc_plugin_end ()

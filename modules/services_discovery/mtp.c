@@ -39,7 +39,7 @@ static void Close( vlc_object_t * );
 
 VLC_SD_PROBE_HELPER("mtp", N_("MTP devices"), SD_CAT_DEVICES)
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname( "MTP" )
     set_description( N_( "MTP devices" ) )
     set_capability( VLC_CAP_SERVICES_DISCOVERY, 0 )
@@ -50,7 +50,7 @@ vlc_module_begin()
 
     //set_category( CAT_PLAYLIST )
     //set_subcategory( SUBCAT_PLAYLIST_SD )
-vlc_module_end()
+vlc_plugin_end()
 
 
 /*****************************************************************************

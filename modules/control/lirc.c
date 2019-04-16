@@ -54,7 +54,7 @@
 static int  Open    ( vlc_object_t * );
 static void Close   ( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Infrared") )
     set_description( N_("Infrared remote control interface") )
     set_capability( VLC_CAP_INTERFACE, 0 )
@@ -64,7 +64,7 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_INTERFACE_CONTROL )
     add_string( "lirc-file", NULL,
                 LIRC_TEXT, LIRC_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * intf_sys_t: description and status of FB interface

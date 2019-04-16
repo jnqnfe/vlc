@@ -65,7 +65,7 @@ static picture_t *I422_Y211_Filter  ( filter_t *, picture_t * );
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
 #if defined (MODULE_NAME_IS_i422_yuy2)
     set_description( N_("Conversions from " SRC_FOURCC " to " DEST_FOURCC) )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 80 )
@@ -83,7 +83,7 @@ vlc_module_begin ()
 # define VLC_TARGET VLC_AVX
 #endif
     set_callbacks( Activate, NULL )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Activate: allocate a chroma function

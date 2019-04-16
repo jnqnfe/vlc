@@ -196,7 +196,7 @@ static const char *const ts_standards_list_text[] =
 
 #define BLOCK_FLAG_NO_KEYFRAME (1 << BLOCK_FLAG_PRIVATE_SHIFT) /* This is not a key frame for bitrate shaping */
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("TS muxer (libdvbpsi)") )
     set_shortname( "MPEG-TS")
     set_capability( VLC_CAP_SOUT_MUX, 120 )
@@ -237,7 +237,7 @@ vlc_module_begin ()
     add_string( SOUT_CFG_PREFIX "csa2-ck", NULL, CK2_TEXT,  CK2_LONGTEXT,  true)
     add_string( SOUT_CFG_PREFIX "csa-use", "1",  CU_TEXT,   CU_LONGTEXT,   true)
     add_integer(SOUT_CFG_PREFIX "csa-pkt", 188,  CPKT_TEXT, CPKT_LONGTEXT, true)
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local data structures

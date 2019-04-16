@@ -55,7 +55,7 @@ static int Open(vout_display_t *vd, const vout_display_cfg_t *cfg,
                 video_format_t *fmtp, vlc_video_context *context);
 static void Close(vout_display_t *vd);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Flaschen") )
     set_description( N_("Flaschen-Taschen video output") )
     set_capability( VLC_CAP_VOUT_DISPLAY, 0 )
@@ -67,7 +67,7 @@ vlc_module_begin ()
     add_string( "flaschen-display", NULL, T_FLDISPLAY, LT_FLDISPLAY, true )
     add_integer("flaschen-width", 25, T_WIDTH, NULL, false)
     add_integer("flaschen-height", 20, T_HEIGHT, NULL, false)
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

@@ -58,7 +58,7 @@ typedef struct
 #define GAIN_VALUE_TEXT N_( "Gain multiplier" )
 #define GAIN_VALUE_LONGTEXT N_( "Increase or decrease the gain (default 1.0)" )
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname( N_("Gain") )
     set_description( N_("Gain control filter") )
     set_capability( VLC_CAP_AUDIO_FILTER, 0 )
@@ -68,7 +68,7 @@ vlc_module_begin()
     set_subcategory( SUBCAT_AUDIO_AFILTER )
     add_float( "gain-value", 1.0, GAIN_VALUE_TEXT,
                GAIN_VALUE_LONGTEXT, false )
-vlc_module_end()
+vlc_plugin_end()
 
 
 /*****************************************************************************

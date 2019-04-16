@@ -93,7 +93,7 @@ static void Close( vlc_object_t * );
 #   define SCREEN_FPS 5
 #endif
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Screen Input") )
     set_shortname( N_("Screen" ))
     set_capability( VLC_CAP_ACCESS, 0 )
@@ -127,7 +127,7 @@ vlc_module_begin ()
     add_integer( "screen-display-id", 0, DISPLAY_ID_TEXT, DISPLAY_ID_LONGTEXT, true )
     add_integer( "screen-index", 0, INDEX_TEXT, INDEX_LONGTEXT, true )
 #endif
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

@@ -44,7 +44,7 @@ static int  Open (vout_display_t *, const vout_display_cfg_t *,
                   video_format_t *, vlc_video_context *);
 static void Close(vout_display_t *);
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname("OpenGL")
     set_description(N_("OpenGL video output for Windows"))
     set_capability(VLC_CAP_VOUT_DISPLAY, 275)
@@ -54,7 +54,7 @@ vlc_module_begin()
     set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_glopts()
-vlc_module_end()
+vlc_plugin_end()
 
 /*****************************************************************************
  * Local prototypes.

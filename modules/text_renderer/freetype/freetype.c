@@ -140,7 +140,7 @@ static const char *const ppsz_text_direction[] = {
 };
 #endif
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Text renderer"))
     set_description( N_("Freetype2 font renderer") )
     set_capability( VLC_CAP_TEXT_RENDERER, 100 )
@@ -220,7 +220,7 @@ vlc_module_begin ()
         change_integer_list( pi_text_direction, ppsz_text_direction )
         change_safe()
 #endif
-vlc_module_end ()
+vlc_plugin_end ()
 
 /* */
 static void YUVFromRGB( uint32_t i_argb,

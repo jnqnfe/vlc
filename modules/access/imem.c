@@ -113,7 +113,7 @@ static const char *cat_texts[] = {
 #define SIZE_LONGTEXT N_(\
     "Size of stream in bytes")
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("Memory input"))
     set_description(N_("Memory input"))
     add_shortcut("imem")
@@ -178,7 +178,7 @@ vlc_module_begin()
     add_integer ("imem-size", 0, SIZE_TEXT, SIZE_LONGTEXT, true)
         change_private()
         change_safe()
-vlc_module_end()
+vlc_plugin_end()
 
 /*****************************************************************************
  * Exported API

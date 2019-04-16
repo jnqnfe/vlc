@@ -47,12 +47,12 @@
 static int  Open ( vlc_object_t * );
 static void Close( vlc_object_t * );
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname( N_("DC1394") )
     set_description( N_("IIDC Digital Camera (FireWire) input") )
     set_capability( VLC_CAP_ACCESS, 0 )
     set_callbacks( Open, Close )
-vlc_module_end()
+vlc_plugin_end()
 
 typedef struct
 {

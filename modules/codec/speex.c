@@ -90,7 +90,7 @@ static const char * const ppsz_enc_mode_descriptions[] = {
     N_("Narrow-band (8kHz)"), N_("Wide-band (16kHz)"), N_("Ultra-wideband (32kHz)"), NULL
 };
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Speex audio decoder") )
     set_capability( VLC_CAP_AUDIO_DECODER, 100 )
     set_shortname( N_("Speex") )
@@ -136,7 +136,7 @@ vlc_module_begin ()
     /* TODO agc, noise suppression, */
 #endif
 
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_enc_options[] = {
     "mode", "complexity", "cbr", "quality", "max-bitrate", "vad", "dtx", NULL

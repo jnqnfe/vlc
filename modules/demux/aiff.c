@@ -42,14 +42,14 @@
  *****************************************************************************/
 static int  Open    ( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("AIFF demuxer" ) )
     set_capability( VLC_CAP_DEMUX, 10 )
     set_callbacks( Open, NULL )
     add_shortcut( "aiff" )
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_DEMUX )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

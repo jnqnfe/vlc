@@ -91,7 +91,7 @@ static void Close (vlc_object_t *);
 /*
  * Module descriptor
  */
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname (N_("RTP"))
     set_description (N_("Real-Time Protocol (RTP) input"))
     set_capability (VLC_CAP_ACCESS, 0)
@@ -129,7 +129,7 @@ vlc_module_begin ()
     add_string ("rtp-dynamic-pt", NULL, RTP_DYNAMIC_PT_TEXT,
                 RTP_DYNAMIC_PT_LONGTEXT, true)
         change_string_list (dynamic_pt_list, dynamic_pt_list_text)
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*
  * TODO: so much stuff

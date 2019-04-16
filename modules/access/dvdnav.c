@@ -81,7 +81,7 @@ static void Close( vlc_object_t * );
 
 static int  DemuxOpen ( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("DVD with menus") )
     set_description( N_("DVDnav Input") )
     set_capability( VLC_CAP_ACCESS, 305 )
@@ -102,7 +102,7 @@ vlc_module_begin ()
 
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_DEMUX )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /* Shall we use libdvdnav's read ahead cache? */
 #ifdef __OS2__

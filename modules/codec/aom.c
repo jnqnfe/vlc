@@ -63,7 +63,7 @@ static const char *const ppsz_enc_bitdepth_text [] =
  * Module descriptor
  *****************************************************************************/
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname("aom")
     set_description(N_("AOM video decoder"))
     set_capability(VLC_CAP_VIDEO_DECODER, 100)
@@ -89,7 +89,7 @@ vlc_module_begin ()
     add_bool( SOUT_CFG_PREFIX "row-mt", false, "Row Multithreading", NULL, true )
 #endif
 #endif
-vlc_module_end ()
+vlc_plugin_end ()
 
 static void aom_err_msg(vlc_object_t *this, aom_codec_ctx_t *ctx,
                         const char *msg)

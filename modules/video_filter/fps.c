@@ -41,7 +41,7 @@ static picture_t *Filter( filter_t *p_filter, picture_t *p_picture);
 
 #define FPS_TEXT N_( "Frame rate" )
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("FPS conversion video filter") )
     set_shortname( N_("FPS Converter" ))
     set_capability( VLC_CAP_VIDEO_FILTER, 0 )
@@ -51,7 +51,7 @@ vlc_module_begin ()
     set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_string( CFG_PREFIX "fps", NULL, FPS_TEXT, NULL, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_filter_options[] = {
     "fps",

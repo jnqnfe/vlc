@@ -90,7 +90,7 @@ static void SavePicture( filter_t *, picture_t * );
 #define SCENE_HELP N_("Send your video to picture files")
 #define CFG_PREFIX "scene-"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help(SCENE_HELP)
 
     set_shortname( N_( "Scene filter" ) )
@@ -118,7 +118,7 @@ vlc_module_begin ()
     /* Snapshot method */
     add_integer_with_range( CFG_PREFIX "ratio", 50, 1, INT_MAX,
                             RATIO_TEXT, RATIO_LONGTEXT, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_vfilter_options[] = {
     "format", "width", "height", "ratio", "prefix", "path", "replace", NULL

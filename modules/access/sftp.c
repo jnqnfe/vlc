@@ -58,7 +58,7 @@ static void Close( vlc_object_t* );
 #define PASS_LONGTEXT N_("Password that will be used for the connection, " \
         "if no username or password are set in URL.")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "SFTP" )
     set_description( N_("SFTP input") )
     set_capability( VLC_CAP_ACCESS, 0 )
@@ -70,7 +70,7 @@ vlc_module_begin ()
     add_integer( "sftp-port", 22, PORT_TEXT, PORT_LONGTEXT, true )
     add_string( "sftp-user", NULL, USER_TEXT, USER_LONGTEXT, false )
     add_password("sftp-pwd", NULL, PASS_TEXT, PASS_LONGTEXT)
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

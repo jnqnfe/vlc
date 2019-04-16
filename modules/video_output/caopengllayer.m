@@ -51,13 +51,13 @@ static int Open(vout_display_t *vd, const vout_display_cfg_t *cfg,
                 video_format_t *fmt, vlc_video_context *context);
 static void Close(vout_display_t *vd);
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_description(N_("Core Animation OpenGL Layer (Mac OS X)"))
     set_capability(VLC_CAP_VOUT_DISPLAY, 0)
     set_callbacks(Open, Close)
     //set_category(CAT_VIDEO)
     //set_subcategory(SUBCAT_VIDEO_VOUT)
-vlc_module_end()
+vlc_plugin_end()
 
 static picture_pool_t *Pool (vout_display_t *vd, unsigned requested_count);
 static void PictureRender   (vout_display_t *vd, picture_t *pic, subpicture_t *subpicture,

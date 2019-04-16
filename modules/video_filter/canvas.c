@@ -100,7 +100,7 @@ static picture_t *Filter( filter_t *, picture_t * );
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help( CANVAS_HELP )
 
     set_shortname( N_("Canvas") )
@@ -121,7 +121,7 @@ vlc_module_begin ()
 
     add_bool( CFG_PREFIX "padd", true,
               PADD_TEXT, PADD_LONGTEXT, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_filter_options[] = {
     "width", "height", "aspect", "padd", NULL

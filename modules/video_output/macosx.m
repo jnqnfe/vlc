@@ -70,7 +70,7 @@ static void OpenglSwap (vlc_gl_t *gl);
 /**
  * Module declaration
  */
-vlc_module_begin ()
+vlc_plugin_begin ()
     /* Will be loaded even without interface module. see voutgl.m */
     set_shortname ("Mac OS X")
     set_description (N_("Mac OS X OpenGL video output"))
@@ -81,7 +81,7 @@ vlc_module_begin ()
     set_category (CAT_VIDEO)
     set_subcategory (SUBCAT_VIDEO_VOUT)
     add_glopts ()
-vlc_module_end ()
+vlc_plugin_end ()
 
 /**
  * Obj-C protocol declaration that drawable-nsobject should follow

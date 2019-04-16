@@ -92,7 +92,7 @@ static int  OpenClient  (vlc_tls_client_t *);
     static int  OpenServer  (vlc_tls_server_t *crd, const char *cert, const char *key);
 #endif
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description(N_("TLS support for OS X and iOS"))
     set_capability(VLC_CAP_TLS_CLIENT, 2)
     set_callbacks(OpenClient, NULL)
@@ -111,7 +111,7 @@ vlc_module_begin ()
 
     //set_category(CAT_ADVANCED)
     //set_subcategory(SUBCAT_ADVANCED_NETWORK)
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 #define cfKeyHost CFSTR("host")

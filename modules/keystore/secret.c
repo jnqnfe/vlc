@@ -35,7 +35,7 @@
 static int Open(vlc_object_t *);
 static void Close(vlc_object_t *);
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("libsecret keystore"))
     set_description(N_("Secrets are stored via libsecret"))
     set_capability(VLC_CAP_KEYSTORE, 100)
@@ -44,7 +44,7 @@ vlc_module_begin()
     cannot_unload_broken_library()
     //set_category(CAT_ADVANCED)
     //set_subcategory(SUBCAT_ADVANCED_MISC)
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_keys[] = {
     "protocol",

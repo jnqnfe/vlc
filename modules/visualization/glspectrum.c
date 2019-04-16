@@ -58,7 +58,7 @@ static void Close(vlc_object_t *);
 #define HEIGHT_TEXT N_("Video height")
 #define HEIGHT_LONGTEXT N_("The height of the visualization window, in pixels.")
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("glSpectrum"))
     set_description(N_("3D OpenGL spectrum visualization"))
     set_capability(VLC_CAP_VISUALIZATION, 0)
@@ -69,7 +69,7 @@ vlc_module_begin()
     set_subcategory(SUBCAT_AUDIO_VISUAL)
     add_integer("glspectrum-width", 400, WIDTH_TEXT, WIDTH_LONGTEXT, false)
     add_integer("glspectrum-height", 300, HEIGHT_TEXT, HEIGHT_LONGTEXT, false)
-vlc_module_end()
+vlc_plugin_end()
 
 
 /*****************************************************************************

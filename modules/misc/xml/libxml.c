@@ -262,7 +262,7 @@ static void ReaderClose( vlc_object_t *p_this )
     free( p_sys );
 }
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("XML Parser (using libxml2)") )
     set_capability( VLC_CAP_XML, 10 )
     set_callbacks( Open, Close )
@@ -275,4 +275,4 @@ vlc_module_begin ()
     set_capability( VLC_CAP_XML_READER, 10 )
     set_callbacks( ReaderOpen, ReaderClose )
 
-vlc_module_end ()
+vlc_plugin_end ()

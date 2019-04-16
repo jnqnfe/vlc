@@ -47,7 +47,7 @@ static void ProcessEQ( const float *, float *, float *, unsigned, unsigned,
                        const float *, unsigned );
 static block_t *DoWork( filter_t *, block_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Parametric Equalizer") )
     set_shortname( N_("Parametric Equalizer" ) )
     set_capability( VLC_CAP_AUDIO_FILTER, 0 )
@@ -76,7 +76,7 @@ vlc_module_begin ()
                           N_("Freq 3 gain (dB)"),NULL,false )
     add_float_with_range( "param-eq-q3", 3, 0.1, 100.0,
                           N_("Freq 3 Q"),NULL,false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

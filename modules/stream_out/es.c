@@ -73,7 +73,7 @@ static void     Close   ( vlc_object_t * );
 
 #define SOUT_CFG_PREFIX "sout-es-"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "ES" )
     set_description( N_("Elementary stream output") )
     set_capability( VLC_CAP_SOUT_STREAM, 50 )
@@ -106,7 +106,7 @@ vlc_module_begin ()
                 MUXV_LONGTEXT, true )
     add_string( SOUT_CFG_PREFIX "dst-video", "", DESTV_TEXT,
                 DESTV_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Exported prototypes

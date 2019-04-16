@@ -62,7 +62,7 @@ static const char *const ppsz_component_descriptions[] = {
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Extract RGB component video filter") )
     set_shortname( N_("Extract" ))
     set_capability( VLC_CAP_VIDEO_FILTER, 0 )
@@ -74,7 +74,7 @@ vlc_module_begin ()
     add_integer_with_range( FILTER_PREFIX "component", 0xFF0000, 1, 0xFFFFFF,
                             COMPONENT_TEXT, COMPONENT_LONGTEXT, false )
         change_integer_list( pi_component_values, ppsz_component_descriptions )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_filter_options[] = {
     "component", NULL

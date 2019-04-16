@@ -41,7 +41,7 @@ static int Open(vout_display_t *vd, const vout_display_cfg_t *cfg,
                 video_format_t *fmtp, vlc_video_context *context);
 static void Close(vout_display_t *vd);
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("VDPAU"))
     set_description(N_("VDPAU output"))
     set_capability(VLC_CAP_VOUT_DISPLAY, 0)
@@ -49,7 +49,7 @@ vlc_module_begin()
     add_shortcut("vdpau")
     //set_category(CAT_VIDEO)
     //set_subcategory(SUBCAT_VIDEO_VOUT)
-vlc_module_end()
+vlc_plugin_end()
 
 struct vout_display_sys_t
 {

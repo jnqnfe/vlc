@@ -333,7 +333,7 @@ static void Close(vlc_object_t *p_this)
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
 set_shortname(N_("AVFoundation Audio Capture"))
 set_description(N_("AVFoundation audio capture module."))
 add_shortcut("qtsound")
@@ -341,4 +341,4 @@ set_capability(VLC_CAP_ACCESS, 0)
 set_callbacks(Open, Close)
 //set_category(CAT_INPUT)
 //set_subcategory(SUBCAT_INPUT_ACCESS)
-vlc_module_end ()
+vlc_plugin_end ()

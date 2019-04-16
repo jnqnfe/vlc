@@ -73,7 +73,7 @@ typedef struct
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help( HELP_TEXT )
 
     set_shortname( N_("Stereo Enhancer") )
@@ -91,7 +91,7 @@ vlc_module_begin ()
         CROSSFEED_TEXT, CROSSFEED_LONGTEXT, true )
     add_float_with_range( CONFIG_PREFIX "dry-mix", 0.8, 0.0, 1.0,
         DRYMIX_TEXT, DRYMIX_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Open: Allocate buffer

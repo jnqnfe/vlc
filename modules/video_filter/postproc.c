@@ -79,7 +79,7 @@ static int PPNameCallback( vlc_object_t *, char const *,
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Video post processing filter") )
     set_shortname( N_("Postproc" ) )
     add_shortcut( "postprocess", "pp" ) /* name is "postproc" */
@@ -92,7 +92,7 @@ vlc_module_begin ()
                             PP_QUALITY_MAX, Q_TEXT, Q_LONGTEXT, false )
         change_safe()
     add_string( FILTER_PREFIX "name", "default", NAME_TEXT, NULL, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_filter_options[] = {
     "q", "name", NULL

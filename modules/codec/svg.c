@@ -57,7 +57,7 @@ static int DecodeBlock  ( decoder_t *, block_t * );
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("SVG video decoder") )
     set_capability( VLC_CAP_VIDEO_DECODER, 100 )
     set_callbacks( OpenDecoder, CloseDecoder )
@@ -74,7 +74,7 @@ vlc_module_begin ()
         change_safe()
 
     add_float( "svg-scale", -1.0, TEXT_SCALE, LONG_TEXT_SCALE, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 typedef struct
 {

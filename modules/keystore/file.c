@@ -49,7 +49,7 @@ static int OpenCrypt(vlc_object_t *);
 static void CloseCrypt(vlc_object_t *);
 #endif
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("File keystore (plaintext)"))
     set_description(N_("Secrets are stored on a file without any encryption"))
     set_callbacks(Open, Close)
@@ -69,7 +69,7 @@ vlc_module_begin()
     set_subcategory(SUBCAT_ADVANCED_MISC)
     add_savefile("keystore-file", NULL, NULL, NULL)
         change_private()
-vlc_module_end ()
+vlc_plugin_end ()
 
 struct vlc_keystore_sys
 {

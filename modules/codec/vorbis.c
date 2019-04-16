@@ -183,7 +183,7 @@ static block_t *Encode   ( encoder_t *, block_t * );
 #define ENC_CBR_LONGTEXT N_( \
   "Force a constant bitrate encoding (CBR)." )
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "Vorbis" )
     set_description( N_("Vorbis audio decoder") )
 #ifdef MODULE_NAME_IS_tremor
@@ -218,7 +218,7 @@ vlc_module_begin ()
                  ENC_CBR_LONGTEXT, false )
 #endif
 
-vlc_module_end ()
+vlc_plugin_end ()
 
 #ifdef HAVE_VORBIS_ENCODER
 static const char *const ppsz_enc_options[] = {

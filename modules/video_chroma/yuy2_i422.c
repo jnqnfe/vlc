@@ -51,11 +51,11 @@ static picture_t *UYVY_I422_Filter    ( filter_t *, picture_t * );
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Conversions from " SRC_FOURCC " to " DEST_FOURCC) )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 80 )
     set_callbacks( Activate, NULL )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Activate: allocate a chroma function

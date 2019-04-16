@@ -65,7 +65,7 @@ static int  Open( vlc_object_t * );
 static void Close( vlc_object_t * );
 static block_t *DoWork( filter_t *, block_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Audio part of the BarGraph function") )
     set_shortname( N_("Audiobar Graph") )
     set_capability( VLC_CAP_AUDIO_FILTER, 0 )
@@ -79,7 +79,7 @@ vlc_module_begin ()
     add_integer( CFG_PREFIX "time_window", 5000, TIME_WINDOW_TEXT, TIME_WINDOW_LONGTEXT, false )
     add_float( CFG_PREFIX "alarm_threshold", 0.02, ALARM_THRESHOLD_TEXT, ALARM_THRESHOLD_LONGTEXT, false )
     add_integer( CFG_PREFIX "repetition_time", 2000, REPETITION_TIME_TEXT, REPETITION_TIME_LONGTEXT, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 typedef struct ValueDate_t {
     float value;

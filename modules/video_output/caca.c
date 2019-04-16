@@ -528,11 +528,11 @@ static void Close(vlc_object_t *object)
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname("Caca")
     set_description(N_("Color ASCII art video output"))
     set_capability(VLC_CAP_VOUT_DISPLAY, 15)
     set_callbacks(Open, Close)
     //set_category(CAT_VIDEO)
     //set_subcategory(SUBCAT_VIDEO_VOUT)
-vlc_module_end()
+vlc_plugin_end()

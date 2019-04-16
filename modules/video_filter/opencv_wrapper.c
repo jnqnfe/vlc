@@ -65,7 +65,7 @@ static const char *const output_list[] = { "none", "input", "processed"};
 static const char *const output_list_text[] = { N_("Don't display any video"),
   N_("Display the input video"), N_("Display the processed video")};
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("OpenCV video filter wrapper") )
     set_shortname( N_("OpenCV" ))
     set_capability( VLC_CAP_VIDEO_FILTER, 0 )
@@ -89,7 +89,7 @@ vlc_module_begin ()
     add_string( "opencv-filter-name", "none",
                           N_("OpenCV internal filter name"),
                           N_("Name of internal OpenCV plugin filter to use"), false);
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

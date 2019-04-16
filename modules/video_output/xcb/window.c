@@ -937,7 +937,7 @@ static void EmClose (vout_window_t *wnd)
 /*
  * Module descriptor
  */
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname (N_("X window"))
     set_description (N_("X11 video window (XCB)"))
     set_capability (VLC_CAP_VOUT_WINDOW, 10)
@@ -955,4 +955,4 @@ vlc_module_begin ()
     add_string ("x11-display", NULL, DISPLAY_TEXT, DISPLAY_LONGTEXT, true)
     add_integer ("drawable-xid", 0, XID_TEXT, XID_LONGTEXT, true)
         change_volatile ()
-vlc_module_end ()
+vlc_plugin_end ()

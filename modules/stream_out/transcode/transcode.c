@@ -141,7 +141,7 @@ static void Close( vlc_object_t * );
 
 #define SOUT_CFG_PREFIX "sout-transcode-"
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Transcode"))
     set_description( N_("Transcode stream output") )
     set_capability( VLC_CAP_SOUT_STREAM, 50 )
@@ -215,7 +215,7 @@ vlc_module_begin ()
     add_bool( SOUT_CFG_PREFIX "high-priority", false, HP_TEXT, HP_LONGTEXT,
               true )
 
-vlc_module_end ()
+vlc_plugin_end ()
 
 static const char *const ppsz_sout_options[] = {
     "venc", "vcodec", "vb",

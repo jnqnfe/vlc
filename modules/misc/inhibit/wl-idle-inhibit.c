@@ -142,11 +142,11 @@ static void Close(vlc_object_t *obj)
     wl_event_queue_destroy(sys->eventq);
 }
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("WL idle"))
     set_description(N_("Wayland idle inhibitor"))
     set_capability(VLC_CAP_INHIBIT, 30)
     set_callbacks(Open, Close)
     //set_category(CAT_ADVANCED)
     //set_subcategory(SUBCAT_ADVANCED_MISC)
-vlc_module_end()
+vlc_plugin_end()

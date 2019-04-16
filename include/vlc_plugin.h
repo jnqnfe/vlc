@@ -259,7 +259,7 @@ EXTERN_SYMBOL typedef int (*vlc_descriptor_cb) (vlc_plugin_t *, enum vlc_plugin_
  * plugin, providing details on module, submodules, and config. A copy is
  * taken of data provided, since plugins are dynamically loaded/unloaded.
  */
-#define vlc_module_begin() \
+#define vlc_plugin_begin() \
 EXTERN_SYMBOL DLL_SYMBOL \
 int CDECL_SYMBOL __VLC_SYMBOL(vlc_entry) (vlc_descriptor_cb, vlc_plugin_t *); \
 EXTERN_SYMBOL DLL_SYMBOL \
@@ -273,7 +273,7 @@ int CDECL_SYMBOL __VLC_SYMBOL(vlc_entry) (vlc_descriptor_cb desc_cb, vlc_plugin_
     if (vlc_module_set_va (VLC_MODULE_NAME, (MODULE_STRING))) \
         goto error;
 
-#define vlc_module_end() \
+#define vlc_plugin_end() \
     (void) config; \
     (void) cfg_params; \
     return 0; \

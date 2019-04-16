@@ -1925,7 +1925,7 @@ static void Deactivate( vlc_object_t *p_this )
     "open." )
 #endif
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_("RC"))
     set_description(N_("Remote control interface"))
     set_capability(VLC_CAP_INTERFACE, 20)
@@ -1946,4 +1946,4 @@ vlc_module_begin()
 #endif
 #endif
     add_string("rc-host", NULL, HOST_TEXT, HOST_LONGTEXT, true)
-vlc_module_end()
+vlc_plugin_end()

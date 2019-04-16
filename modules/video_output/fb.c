@@ -75,7 +75,7 @@ static int Open(vout_display_t *vd, const vout_display_cfg_t *cfg,
                 video_format_t *fmtp, vlc_video_context *context);
 static void Close(vout_display_t *vd);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname("Framebuffer")
     set_description(N_("GNU/Linux framebuffer video output"))
     set_capability(VLC_CAP_VOUT_DISPLAY, 30)
@@ -89,7 +89,7 @@ vlc_module_begin ()
     add_integer("fb-mode", 4, FB_MODE_TEXT, FB_MODE_LONGTEXT,
                  true)
     add_obsolete_bool("fb-hw-accel") /* since 4.0.0 */
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

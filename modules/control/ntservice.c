@@ -63,7 +63,7 @@ static void Close   ( vlc_object_t * );
     "properly configured. Use a comma separated list of interface modules. " \
     "(common values are: logger, sap, rc, http)")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("NT Service"))
     set_description( N_("Windows Service interface") )
     set_capability( VLC_CAP_INTERFACE, 0 )
@@ -81,7 +81,7 @@ vlc_module_begin ()
                  OPTIONS_TEXT, OPTIONS_LONGTEXT, true )
     add_string ( "ntservice-extraintf", NULL,
                  EXTRAINTF_TEXT, EXTRAINTF_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 struct intf_sys_t
 {

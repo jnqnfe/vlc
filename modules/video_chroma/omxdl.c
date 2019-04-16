@@ -32,11 +32,11 @@
 static int Open (vlc_object_t *);
 static int OpenScaler (vlc_object_t *);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description (N_("OpenMAX DL image processing"))
     set_capability (VLC_CAP_VIDEO_CONVERTER, 90)
     set_callbacks (Open, NULL)
-vlc_module_end ()
+vlc_plugin_end ()
 
 #define SRC_WIDTH  (filter->fmt_in.video.i_width)
 #define SRC_HEIGHT (filter->fmt_in.video.i_height)

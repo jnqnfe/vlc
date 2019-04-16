@@ -85,7 +85,7 @@ static int Import_Dir( vlc_object_t *p_this )
     return VLC_SUCCESS;
 }
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname( N_("Directory") )
     set_description( N_("Directory import") )
     add_shortcut( "directory" )
@@ -93,4 +93,4 @@ vlc_module_begin()
     set_callbacks( Import_Dir, NULL )
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_DEMUX )
-vlc_module_end()
+vlc_plugin_end()

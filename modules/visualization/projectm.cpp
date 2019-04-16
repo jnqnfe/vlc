@@ -86,7 +86,7 @@ static void Close        ( vlc_object_t * );
 #define FONT_PATH_MENU DEFAULT_MONOSPACE_FONT_FILE
 #endif
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("projectM"))
     set_description( N_("libprojectM effect") )
     set_capability( VLC_CAP_VISUALIZATION, 0 )
@@ -111,7 +111,7 @@ vlc_module_begin ()
     add_integer( "projectm-meshx", 32, MESHX_TEXT, NULL, false )
     add_integer( "projectm-meshy", 24, MESHY_TEXT, NULL, false )
     add_integer( "projectm-texture-size", 1024, TEXTURE_TEXT, NULL, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

@@ -172,7 +172,7 @@ static int OpenSDIOutput(vlc_object_t *p_this)
  * Module descriptor
  *****************************************************************************/
 
-vlc_module_begin ()
+vlc_plugin_begin ()
 
     set_shortname(N_("SDI output"))
     set_description(N_("SDI stream output"))
@@ -212,4 +212,4 @@ vlc_module_begin ()
                 CHANNELS_TEXT, CHANNELS_LONGTEXT, true)
     add_string(CFG_PREFIX "audio", "", AUDIO_TEXT, AUDIO_LONGTEXT, true)
 
-vlc_module_end ()
+vlc_plugin_end ()

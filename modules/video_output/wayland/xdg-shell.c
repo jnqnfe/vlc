@@ -697,7 +697,7 @@ static void Close(vout_window_t *wnd)
 #define OUTPUT_LONGTEXT N_( \
     "Fullscreen mode with use the output with this name by default.")
 
-vlc_module_begin()
+vlc_plugin_begin()
 #ifdef XDG_SHELL
     set_shortname(N_("XDG shell"))
     set_description(N_("XDG shell surface"))
@@ -718,4 +718,4 @@ vlc_module_begin()
     add_integer("wl-output", 0, OUTPUT_TEXT, OUTPUT_LONGTEXT, true)
         change_integer_range(0, UINT32_MAX)
         change_volatile()
-vlc_module_end()
+vlc_plugin_end()

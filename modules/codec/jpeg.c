@@ -105,7 +105,7 @@ static block_t *EncodeBlock(encoder_t *, picture_t *);
 /*
  * Module descriptor
  */
-vlc_module_begin()
+vlc_plugin_begin()
     /* decoder main module */
     set_description(N_("JPEG image decoder"))
     set_capability(VLC_CAP_VIDEO_DECODER, 1000)
@@ -124,7 +124,7 @@ vlc_module_begin()
     set_section(N_("Encoding"), NULL)
     add_integer_with_range(ENC_CFG_PREFIX "quality", 95, 0, 100,
                            ENC_QUALITY_TEXT, ENC_QUALITY_LONGTEXT, true)
-vlc_module_end()
+vlc_plugin_end()
 
 
 /*

@@ -50,7 +50,7 @@
 #define SKIP_ADS_LONGTEXT N_( "Use playlist options usually used to prevent " \
     "ads skipping to detect ads and prevent adding them to the playlist." )
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     add_shortcut( "playlist" )
 
     set_shortname( N_("Playlist") )
@@ -128,7 +128,7 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_INPUT_DEMUX )
     add_bool( "playlist-skip-ads", true,
               SKIP_ADS_TEXT, SKIP_ADS_LONGTEXT, false )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /**
  * Resolves a playlist location.

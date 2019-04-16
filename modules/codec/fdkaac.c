@@ -101,7 +101,7 @@ static const int pi_aot_values[] = { PROFILE_AAC_LC, PROFILE_AAC_HE, PROFILE_AAC
 static const char *const ppsz_aot_descriptions[] =
 { N_("AAC-LC"), N_("HE-AAC"), N_("HE-AAC-v2"), N_("AAC-LD"), N_("AAC-ELD") };
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname(N_("FDKAAC"))
     set_description(N_("FDK-AAC Audio encoder"))
     set_capability(VLC_CAP_ENCODER, 150)
@@ -123,7 +123,7 @@ vlc_module_begin ()
     add_integer(ENC_CFG_PREFIX "signaling", SIGNALING_COMPATIBLE, SIGNALING_TEXT,
              SIGNALING_LONGTEXT, true)
     change_integer_range (0, 2)
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

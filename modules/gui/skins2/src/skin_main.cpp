@@ -494,7 +494,7 @@ static void WindowClose( vout_window_t *pWnd )
     "When set to 'no', this parameter is intended to give old skins a chance" \
     " to play back video even though no video tag is implemented")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Skins"))
     set_description( N_("Skinnable Interface") )
     set_capability( VLC_CAP_INTERFACE, 30 )
@@ -524,4 +524,4 @@ vlc_module_begin ()
               NULL, false );
     add_bool( "skinned-video", true, SKINS2_VIDEO,
               SKINS2_VIDEO_LONG, false );
-vlc_module_end ()
+vlc_plugin_end ()

@@ -58,7 +58,7 @@ static void Close( vlc_object_t * );
 #define ASPECT_RATIO_LONGTEXT N_( \
     "Aspect ratio (4:3, 16:9). Default assumes square pixels." )
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "Raw Video" )
     set_description( N_("Raw video demuxer") )
     set_capability( VLC_CAP_DEMUX, 10 )
@@ -74,7 +74,7 @@ vlc_module_begin ()
                 true )
     add_string( "rawvid-aspect-ratio", NULL,
                 ASPECT_RATIO_TEXT, ASPECT_RATIO_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Definitions of structures used by this plugin

@@ -154,7 +154,7 @@ static void Flush( decoder_t * );
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
 
     add_shortcut( "flac" )
     set_description( N_("Flac audio decoder") )
@@ -172,7 +172,7 @@ vlc_module_begin ()
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_ACODEC )
 
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Interleave: helper function to interleave channels

@@ -63,7 +63,7 @@ static int OpenConverter( vlc_object_t * );
 static int OpenResampler( vlc_object_t * );
 static void Close( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("SoX Resampler") )
     set_capability ( VLC_CAP_AUDIO_CONVERTER, 51 )
     set_callbacks( OpenConverter, Close )
@@ -79,7 +79,7 @@ vlc_module_begin ()
                 SOXR_QUALITY_TEXT, NULL, true )
         change_integer_list( soxr_resampler_quality_vlclist,
                              soxr_resampler_quality_vlctext )
-vlc_module_end ()
+vlc_plugin_end ()
 
 typedef struct
 {

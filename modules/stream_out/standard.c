@@ -87,7 +87,7 @@ static void     Close   ( vlc_object_t * );
 #define SRT_SHORTCUT
 #endif
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Standard"))
     set_description( N_("Standard stream output") )
     set_capability( VLC_CAP_SOUT_STREAM, 50 )
@@ -107,7 +107,7 @@ vlc_module_begin ()
     add_string( SOUT_CFG_PREFIX "url", "", URL_TEXT, URL_LONGTEXT, true )
     add_string( SOUT_CFG_PREFIX "email", "", EMAIL_TEXT, EMAIL_LONGTEXT, true )
     add_obsolete_string( SOUT_CFG_PREFIX "phone" ) /* since 3.0.0 */
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 /*****************************************************************************

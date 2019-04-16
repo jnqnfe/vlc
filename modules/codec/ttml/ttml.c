@@ -40,7 +40,7 @@
  * Modules descriptor.
  *****************************************************************************/
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_capability( VLC_CAP_SPU_DECODER, 10 )
     set_shortname( N_("TTML decoder"))
     set_description( N_("TTML subtitles decoder") )
@@ -58,7 +58,7 @@ vlc_module_begin ()
     add_integer( "ttml-align", 0, ALIGN_TEXT, ALIGN_LONGTEXT, false )
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_DEMUX )
-vlc_module_end ()
+vlc_plugin_end ()
 
 
 int tt_node_NameCompare( const char* psz_tagname, const char* psz_pattern )

@@ -64,7 +64,7 @@ VLC_SD_PROBE_HELPER( "dsm", N_("Windows networks"), SD_CAT_LAN )
 
 #define DSM_HELP N_("libdsm's SMB (Windows network shares) input and browser")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_help(DSM_HELP)
     set_shortname( "dsm" )
     set_description( N_("libdsm SMB input") )
@@ -87,7 +87,7 @@ vlc_module_begin ()
     add_string( "smb-domain", NULL, SMB_DOMAIN_TEXT, SMB_DOMAIN_LONGTEXT, false )
     //set_category( CAT_PLAYLIST )
     //set_subcategory( SUBCAT_PLAYLIST_SD )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

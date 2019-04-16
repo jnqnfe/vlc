@@ -85,7 +85,7 @@
 static int  Open ( vlc_object_t * );
 static void Close( vlc_object_t * );
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_description( N_("HD-SDI Input") )
     set_shortname( N_("HD-SDI") )
     set_capability( VLC_CAP_ACCESS, 0 )
@@ -103,7 +103,7 @@ vlc_module_begin()
         VIDEO_ASPECT_TEXT, VIDEO_ASPECT_LONGTEXT, true )
     add_string( "linsys-hdsdi-audio", "0=1,1",
         AUDIO_TEXT, AUDIO_LONGTEXT, true )
-vlc_module_end()
+vlc_plugin_end()
 
 /*****************************************************************************
  * Local prototypes

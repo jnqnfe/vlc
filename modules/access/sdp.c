@@ -31,7 +31,7 @@
 
 static int Open (vlc_object_t *);
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname (N_("SDP"))
     set_description (N_("Session Description Protocol"))
     set_capability (VLC_CAP_ACCESS, 0)
@@ -39,7 +39,7 @@ vlc_module_begin ()
     add_shortcut ("sdp")
     //set_category (CAT_INPUT)
     //set_subcategory (SUBCAT_INPUT_ACCESS)
-vlc_module_end()
+vlc_plugin_end()
 
 static ssize_t Read (stream_t *, void *, size_t);
 static int Seek (stream_t *, uint64_t);

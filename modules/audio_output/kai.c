@@ -105,7 +105,7 @@ static const char *const ppsz_kai_audio_device[] = {
 static const char *const ppsz_kai_audio_device_text[] = {
     N_("Auto"), "DART", "UNIAUD" };
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "KAI" )
     set_description( N_("K Audio Interface audio output") )
     set_capability( VLC_CAP_AUDIO_OUTPUT, 100 )
@@ -120,7 +120,7 @@ vlc_module_begin ()
     add_bool( "kai-audio-exclusive-mode", false,
               KAI_AUDIO_EXCLUSIVE_MODE_TEXT, KAI_AUDIO_EXCLUSIVE_MODE_LONGTEXT,
               true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Open: open the audio device

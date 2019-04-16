@@ -57,7 +57,7 @@ static int  OpenForce( vlc_object_t * );
 static int  Open   ( vlc_object_t * );
 static void Close  ( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("MPEG-PS demuxer") )
     set_shortname( N_("PS") )
     set_capability( VLC_CAP_DEMUX, 1 )
@@ -75,7 +75,7 @@ vlc_module_begin ()
     add_bool( "ps-trust-timestamps", true, TIME_TEXT,
                  TIME_LONGTEXT, true )
         change_safe ()
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

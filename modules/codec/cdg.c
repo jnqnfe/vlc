@@ -81,14 +81,14 @@ static int Render( decoder_sys_t *p_cdg, picture_t *p_picture );
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("CDG video decoder") )
     set_capability( VLC_CAP_VIDEO_DECODER, 1000 )
     set_callbacks( Open, Close )
     add_shortcut( "cdg" )
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_VCODEC )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Open: probe the decoder and return score

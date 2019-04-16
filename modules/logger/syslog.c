@@ -150,7 +150,7 @@ static const struct vlc_logger_operations *Open(vlc_object_t *obj,
 #define SYSLOG_FACILITY_TEXT N_("Facility")
 #define SYSLOG_FACILITY_LONGTEXT N_("System logging facility.")
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname(N_( "syslog" ))
     set_description(N_("System logger (syslog)"))
     set_capability(VLC_CAP_LOGGER, 20)
@@ -167,4 +167,4 @@ vlc_module_begin()
     add_string("syslog-facility", fac_names[0], SYSLOG_FACILITY_TEXT,
                SYSLOG_FACILITY_LONGTEXT, true)
         change_string_list(fac_names, fac_names)
-vlc_module_end()
+vlc_plugin_end()

@@ -63,7 +63,7 @@ static const char *const ppsz_mode_descriptions[] =
   N_("Area"), N_("Luma bicubic / chroma bilinear"), N_("Gauss"),
   N_("SincR"), N_("Lanczos"), N_("Bicubic spline") };
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("Video scaling filter") )
     set_shortname( N_("Swscale" ) )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 150 )
@@ -72,7 +72,7 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_integer( "swscale-mode", 2, SCALEMODE_TEXT, NULL, true )
         change_integer_list( pi_mode_values, ppsz_mode_descriptions )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /* Version checking */
 #if LIBSWSCALE_VERSION_INT >= ((0<<16)+(5<<8)+0)

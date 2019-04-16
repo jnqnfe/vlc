@@ -74,7 +74,7 @@ const char *const rgb_chromas_v[] = { "RV32", "RV24", "RV16", "RGB8" };
 static int  Open ( vlc_object_t * );
 static void Close( vlc_object_t * );
 
-vlc_module_begin()
+vlc_plugin_begin()
     set_shortname( N_("VNC") )
     add_shortcut( "vnc" )
     set_description( N_("VNC client access") )
@@ -108,7 +108,7 @@ vlc_module_begin()
     add_integer( CFG_PREFIX "quality-level", 9, RFB_QUALITY, RFB_QUALITY_LONGTEXT, true )
         change_integer_range (1, 9)
         change_safe()
-vlc_module_end()
+vlc_plugin_end()
 
 typedef struct
 {

@@ -78,7 +78,7 @@ static void OutClose( vlc_object_t * );
 #define LOGIN_DIALOG_TEXT _("Please enter a valid login and password for " \
         "the ftp connexion to %s")
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "FTP" )
     set_description( N_("FTP input") )
     set_capability( VLC_CAP_ACCESS, 0 )
@@ -105,7 +105,7 @@ vlc_module_begin ()
 //    set_subcategory( SUBCAT_SOUT_ACO )
 //#endif
 
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

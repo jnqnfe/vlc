@@ -751,7 +751,7 @@ static const char *const priorities_text[] = {
     N_("Export (include insecure ciphers)"),
 };
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "GNU TLS" )
     set_description( N_("GNU TLS transport layer security") )
     set_capability( VLC_CAP_TLS_CLIENT, 1 )
@@ -773,4 +773,4 @@ vlc_module_begin ()
     add_string ("gnutls-priorities", "NORMAL", PRIORITIES_TEXT,
                 PRIORITIES_LONGTEXT, false)
         change_string_list (priorities_values, priorities_text)
-vlc_module_end ()
+vlc_plugin_end ()

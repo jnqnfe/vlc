@@ -55,14 +55,14 @@
 static int  Create ( vlc_object_t * );
 static void Destroy( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( N_("Subtitles (advanced)"))
     set_description( N_("Subtitle renderers using libass") )
     set_capability( VLC_CAP_SPU_DECODER, 100 )
     set_callbacks( Create, Destroy )
     //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_SCODEC )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes

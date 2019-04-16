@@ -68,7 +68,7 @@
 static int  Open ( vlc_object_t * );
 static void Close( vlc_object_t * );
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_description( N_("MPEG-I/II video packetizer") )
     set_shortname( N_("MPEG Video") )
     set_capability( VLC_CAP_PACKETIZER, 50 )
@@ -78,7 +78,7 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_SOUT_PACKETIZER )
     add_bool( "packetizer-mpegvideo-sync-iframe", false, SYNC_INTRAFRAME_TEXT,
               SYNC_INTRAFRAME_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 enum mpeg_startcode_e
 {

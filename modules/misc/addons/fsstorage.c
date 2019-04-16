@@ -77,7 +77,7 @@ static bool  FileBelongsToManagedAddon( addons_finder_t *p_finder,
  * Module descriptor
  ****************************************************************************/
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname(N_("addons local storage"))
     add_shortcut("addons.store.install")
     set_description(N_("Addons local storage installer"))
@@ -92,7 +92,7 @@ add_submodule ()
 
     //set_category(CAT_ADVANCED)
     //set_subcategory(SUBCAT_ADVANCED_MISC)
-vlc_module_end ()
+vlc_plugin_end ()
 
 static char * getAddonInstallDir( addon_type_t t )
 {

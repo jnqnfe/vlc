@@ -68,7 +68,7 @@ static void Close  ( vlc_object_t * );
 #define SURROUND_DELAY_LONGTEXT N_("Surround delay, in ms. Usual values are " \
                 "from 5 to 40 ms." )
 
-vlc_module_begin ()
+vlc_plugin_begin ()
     set_shortname( "MOD")
     set_description( N_("MOD demuxer (libmodplug)" ) )
     set_capability( VLC_CAP_DEMUX, 10 )
@@ -101,7 +101,7 @@ vlc_module_begin ()
               N_("Surround level"), SURROUND_LEVEL_LONGTEXT, true )
     add_integer_with_range( "mod-surround-delay", 5, 0, 1000,
               N_("Surround delay (ms)"), SURROUND_DELAY_LONGTEXT, true )
-vlc_module_end ()
+vlc_plugin_end ()
 
 /*****************************************************************************
  * Local prototypes
