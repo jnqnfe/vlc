@@ -25,6 +25,7 @@
 # define LIBVLC_PLUGIN_MACROS_H 1
 
 #include <vlc_module_caps.h>
+#include <assert.h>
 
 /**
  * \file
@@ -666,6 +667,7 @@ typedef union
     vlc_config_set( VLC_CONFIG_FLOAT_RANGE );
 
 #define change_string_list( _list, list_text ) \
+    static_assert((sizeof(_list) / sizeof(*_list)) == (sizeof(list_text) / sizeof(*list_text)), "array count mismatch"); \
     cfg_params = (config_item_params_t) { .string_list = { \
         .list = (const char *const *) &(_list), \
         .text = (const char *const *) &(list_text), \
@@ -674,6 +676,7 @@ typedef union
     vlc_config_set( VLC_CONFIG_STRING_LIST );
 
 #define change_integer_list( _list, list_text ) \
+    static_assert((sizeof(_list) / sizeof(*_list)) == (sizeof(list_text) / sizeof(*list_text)), "array count mismatch"); \
     cfg_params = (config_item_params_t) { .int_list = { \
         .list = (const int *) &(_list), \
         .text = (const char *const *) &(list_text), \
