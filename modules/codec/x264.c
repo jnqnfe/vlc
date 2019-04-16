@@ -510,9 +510,7 @@ vlc_module_begin ()
 
     add_string( SOUT_CFG_PREFIX "profile", "high", PROFILE_TEXT,
                PROFILE_LONGTEXT, false )
-        vlc_config_set (VLC_CONFIG_LIST,
-            (sizeof(x264_profile_names) / sizeof (char*)) - 1,
-            x264_profile_names, x264_profile_names);
+        change_string_list( x264_profile_names, x264_profile_names )
 
 
     add_bool( SOUT_CFG_PREFIX "interlaced", false, INTERLACED_TEXT, INTERLACED_LONGTEXT,
@@ -527,9 +525,7 @@ vlc_module_begin ()
     add_integer( SOUT_CFG_PREFIX "slice-max-mbs", 0, SLICE_MAX_MBS, SLICE_MAX_MBS_LONGTEXT, true )
 
     add_string( SOUT_CFG_PREFIX "hrd", "none", HRD_TEXT, HRD_TEXT, true )
-        vlc_config_set (VLC_CONFIG_LIST,
-            (sizeof(x264_nal_hrd_names) / sizeof (char*)) - 1,
-            x264_nal_hrd_names, x264_nal_hrd_names);
+        change_string_list( x264_nal_hrd_names, x264_nal_hrd_names )
 
 
 /* Ratecontrol */
@@ -709,13 +705,9 @@ vlc_module_begin ()
                 STATS_LONGTEXT, true )
 
     add_string( SOUT_CFG_PREFIX "preset", NULL , PRESET_TEXT , NULL, false )
-        vlc_config_set (VLC_CONFIG_LIST,
-            (sizeof(x264_preset_names) / sizeof (char*)) - 1,
-            x264_preset_names, x264_preset_names);
+        change_string_list( x264_preset_names, x264_preset_names )
     add_string( SOUT_CFG_PREFIX "tune", NULL , TUNE_TEXT, NULL, false )
-        vlc_config_set (VLC_CONFIG_LIST,
-            (sizeof(x264_tune_names) / sizeof (char*)) - 1,
-            x264_tune_names, x264_tune_names);
+        change_string_list( x264_tune_names, x264_tune_names )
 
     add_string( SOUT_CFG_PREFIX "options", NULL, X264_OPTIONS_TEXT,
                 X264_OPTIONS_LONGTEXT, true )
