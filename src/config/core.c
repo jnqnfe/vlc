@@ -416,7 +416,7 @@ int config_SortConfig (void)
     size_t nconf = 0;
 
     for (p = vlc_plugins; p != NULL; p = p->next)
-         nconf += p->conf.size;
+         nconf += p->conf.count;
 
     module_config_item_t **clist = vlc_alloc (nconf, sizeof (*clist));
     if (unlikely(clist == NULL))
