@@ -206,6 +206,9 @@ ssize_t config_GetIntChoices(const char *name,
     size_t count = cfg->list_count;
     if (count == 0)
     {
+        if (cfg->list_cb_name == NULL)
+            return 0;
+
         if (module_Map(NULL, cfg->owner))
         {
             errno = EIO;
@@ -339,6 +342,9 @@ ssize_t config_GetPszChoices(const char *name,
     size_t count = cfg->list_count;
     if (count == 0)
     {
+        if (cfg->list_cb_name == NULL)
+            return 0;
+
         if (module_Map(NULL, cfg->owner))
         {
             errno = EIO;
