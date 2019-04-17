@@ -286,9 +286,9 @@ create_toolbar_item(NSString *itemIdent, NSString *name, NSString *desc, NSStrin
     } else if ([itemIdent isEqual: VLCVideoSettingToolbarIdentifier]) {
         CreateToolbarItem(_NS("Video"), _NS("Video Settings"), @"VLCVideoCone", showVideoSettings);
     } else if ([itemIdent isEqual: VLCOSDSettingToolbarIdentifier]) {
-        CreateToolbarItem(_NS(SUBPIC_TITLE), _NS("Subtitle & On Screen Display Settings"), @"VLCSubtitleCone", showOSDSettings);
+        CreateToolbarItem(_NS("Subtitles / OSD"), _NS("Subtitle & On Screen Display Settings"), @"VLCSubtitleCone", showOSDSettings);
     } else if ([itemIdent isEqual: VLCInputSettingToolbarIdentifier]) {
-        CreateToolbarItem(_NS(INPUT_TITLE), _NS("Input & Codec Settings"), @"VLCInputCone", showInputSettings);
+        CreateToolbarItem(_NS("Input / Codecs"), _NS("Input & Codec Settings"), @"VLCInputCone", showInputSettings);
     } else if ([itemIdent isEqual: VLCMediaLibrarySettingToolbarIdentifier]) {
         CreateToolbarItem(_NS("Media Library"), _NS("Media Library settings"), @"NXHelpBacktrack", showMediaLibrarySettings);
     } else if ([itemIdent isEqual: VLCHotkeysSettingToolbarIdentifier]) {
