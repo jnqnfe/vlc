@@ -112,6 +112,8 @@
 #define SCODEC_LONGTEXT N_( \
     "This is the subtitle codec that will be used." )
 
+#define SOVERLAY_TEXT N_("Overlay")
+
 #define SFILTER_TEXT N_("Overlays")
 #define SFILTER_LONGTEXT N_( \
     "This allows you to add overlays (also known as \"subpictures\") on the "\
@@ -199,8 +201,7 @@ vlc_plugin_begin ()
                SENC_TEXT, SENC_LONGTEXT)
     add_string( SOUT_CFG_PREFIX "scodec", NULL, SCODEC_TEXT,
                 SCODEC_LONGTEXT, false )
-    add_bool( SOUT_CFG_PREFIX "soverlay", false, SCODEC_TEXT,
-               SCODEC_LONGTEXT, false )
+    add_bool( SOUT_CFG_PREFIX "soverlay", false, SOVERLAY_TEXT, NULL, false )
     add_module_list(SOUT_CFG_PREFIX "sfilter", VLC_CAP_STR_SUB_SOURCE, NULL,
                     SFILTER_TEXT, SFILTER_LONGTEXT)
 
