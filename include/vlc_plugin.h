@@ -25,6 +25,7 @@
 # define LIBVLC_PLUGIN_MACROS_H 1
 
 #include <vlc_module_caps.h>
+#include <vlc_configuration.h>
 #include <vlc_config_cat.h>
 #include <assert.h>
 
@@ -82,60 +83,6 @@ enum vlc_plugin_desc_actions
 
     /* --> Insert new VLC_CONFIG_* entries here <-- */
 };
-
-/* Configuration item class/subtype masks */
-#define CONFIG_ITEM_CLASS_MASK   0xFF00
-#define CONFIG_ITEM_SUBTYPE_MASK 0x00FF
-
-/* Configuration item classes */
-#define CONFIG_ITEM_CLASS_INVALID    0x0000 /* For init */
-#define CONFIG_ITEM_CLASS_SPECIAL    0x0100 /* For hint/category items */
-#define CONFIG_ITEM_CLASS_INFO       0x0200 /* Info flag option (e.g. --help) */
-#define CONFIG_ITEM_CLASS_BOOL       0x0400 /* Boolean flag option */
-#define CONFIG_ITEM_CLASS_FLOAT      0x0800 /* Float data-value option */
-#define CONFIG_ITEM_CLASS_INTEGER    0x1000 /* Integer data-value option */
-#define CONFIG_ITEM_CLASS_STRING     0x2000 /* String data-value option */
-
-/* Configuration hint types */
-#define CONFIG_HINT_CATEGORY         (CONFIG_ITEM_CLASS_SPECIAL | 0x01) /* Set category (help output) */
-#define CONFIG_CATEGORY              (CONFIG_ITEM_CLASS_SPECIAL | 0x02) /* Set category (GUI) */
-#define CONFIG_SUBCATEGORY           (CONFIG_ITEM_CLASS_SPECIAL | 0x03) /* Set subcategory (GUI) */
-#define CONFIG_SECTION               (CONFIG_ITEM_CLASS_SPECIAL | 0x04) /* Start of new section */
-
-/* Configuration item types */
-#define CONFIG_ITEM_INVALID          (CONFIG_ITEM_CLASS_INVALID | 0x00)
-#define CONFIG_ITEM_INFO             (CONFIG_ITEM_CLASS_INFO    | 0x00) /* Info request option */
-#define CONFIG_ITEM_BOOL             (CONFIG_ITEM_CLASS_BOOL    | 0x00) /* Bool option */
-#define CONFIG_ITEM_FLOAT            (CONFIG_ITEM_CLASS_FLOAT   | 0x00) /* Float option */
-#define CONFIG_ITEM_INTEGER          (CONFIG_ITEM_CLASS_INTEGER | 0x00) /* Integer option */
-#define CONFIG_ITEM_RGB              (CONFIG_ITEM_CLASS_INTEGER | 0x01) /* RGB color option */
-#define CONFIG_ITEM_RGBA             (CONFIG_ITEM_CLASS_INTEGER | 0x02) /* RGBA color option */
-#define CONFIG_ITEM_STRING           (CONFIG_ITEM_CLASS_STRING  | 0x00) /* String option */
-#define CONFIG_ITEM_PASSWORD         (CONFIG_ITEM_CLASS_STRING  | 0x01) /* Password option (*) */
-#define CONFIG_ITEM_KEY              (CONFIG_ITEM_CLASS_STRING  | 0x02) /* Hot key option */
-#define CONFIG_ITEM_MODULE           (CONFIG_ITEM_CLASS_STRING  | 0x03) /* Module option */
-#define CONFIG_ITEM_MODULE_CAT       (CONFIG_ITEM_CLASS_STRING  | 0x04) /* Module option */
-#define CONFIG_ITEM_MODULE_LIST      (CONFIG_ITEM_CLASS_STRING  | 0x05) /* Module option */
-#define CONFIG_ITEM_MODULE_LIST_CAT  (CONFIG_ITEM_CLASS_STRING  | 0x06) /* Module option */
-#define CONFIG_ITEM_LOADFILE         (CONFIG_ITEM_CLASS_STRING  | 0x07) /* Read file option */
-#define CONFIG_ITEM_SAVEFILE         (CONFIG_ITEM_CLASS_STRING  | 0x08) /* Written file option */
-#define CONFIG_ITEM_DIRECTORY        (CONFIG_ITEM_CLASS_STRING  | 0x09) /* Directory option */
-#define CONFIG_ITEM_FONT             (CONFIG_ITEM_CLASS_STRING  | 0x0A) /* Font option */
-
-#define CONFIG_CLASS(x) ((x) & CONFIG_ITEM_CLASS_MASK)
-
-/* is proper option, not a special hint type? */
-#define CONFIG_ITEM(x) (((x) & CONFIG_ITEM_CLASS_MASK) != CONFIG_ITEM_CLASS_SPECIAL)
-
-#define IsConfigStringType(type) \
-    (CONFIG_CLASS(type) == CONFIG_ITEM_CLASS_STRING)
-#define IsConfigIntegerBasedType(type) \
-    (CONFIG_CLASS(type) & \
-     (CONFIG_ITEM_CLASS_INTEGER | CONFIG_ITEM_CLASS_BOOL | CONFIG_ITEM_CLASS_INFO))
-#define IsConfigIntegerType(type) \
-    (CONFIG_CLASS(type) == CONFIG_ITEM_CLASS_INTEGER)
-#define IsConfigFloatType(type) \
-    (CONFIG_CLASS(type) == CONFIG_ITEM_CLASS_FLOAT)
 
 /**
  * Current plugin ABI version
