@@ -25,6 +25,7 @@
 # define LIBVLC_PLUGIN_MACROS_H 1
 
 #include <vlc_module_caps.h>
+#include <vlc_config_cat.h>
 #include <assert.h>
 
 /**
@@ -135,61 +136,6 @@ enum vlc_plugin_desc_actions
     (CONFIG_CLASS(type) == CONFIG_ITEM_CLASS_INTEGER)
 #define IsConfigFloatType(type) \
     (CONFIG_CLASS(type) == CONFIG_ITEM_CLASS_FLOAT)
-
-/* Hidden categories and subcategories */
-/* Any options under this will be hidden in the GUI preferences, but will be
-   listed in cmdline help output. */
-#define CAT_HIDDEN -1
-#define SUBCAT_HIDDEN -1
-
-/* Categories and subcategories */
-#define CAT_INTERFACE 1
-#define SUBCAT_INTERFACE_GENERAL 101
-#define SUBCAT_INTERFACE_MAIN 102
-#define SUBCAT_INTERFACE_CONTROL 103
-#define SUBCAT_INTERFACE_HOTKEYS 104
-
-#define CAT_AUDIO 2
-#define SUBCAT_AUDIO_GENERAL 201
-#define SUBCAT_AUDIO_AOUT 202
-#define SUBCAT_AUDIO_AFILTER 203
-#define SUBCAT_AUDIO_VISUAL 204
-#define SUBCAT_AUDIO_RESAMPLER 206
-
-#define CAT_VIDEO 3
-#define SUBCAT_VIDEO_GENERAL 301
-#define SUBCAT_VIDEO_VOUT 302
-#define SUBCAT_VIDEO_VFILTER 303
-#define SUBCAT_VIDEO_SUBPIC 305
-#define SUBCAT_VIDEO_SPLITTER 306
-
-#define CAT_INPUT 4
-#define SUBCAT_INPUT_GENERAL 401
-#define SUBCAT_INPUT_ACCESS 402
-#define SUBCAT_INPUT_DEMUX 403
-#define SUBCAT_INPUT_VCODEC 404
-#define SUBCAT_INPUT_ACODEC 405
-#define SUBCAT_INPUT_SCODEC 406
-#define SUBCAT_INPUT_STREAM_FILTER 407
-
-#define CAT_SOUT 5
-#define SUBCAT_SOUT_GENERAL 501
-#define SUBCAT_SOUT_STREAM 502
-#define SUBCAT_SOUT_MUX 503
-#define SUBCAT_SOUT_ACO 504
-#define SUBCAT_SOUT_PACKETIZER 505
-#define SUBCAT_SOUT_VOD 507
-#define SUBCAT_SOUT_RENDERER 508
-
-#define CAT_ADVANCED 6
-#define SUBCAT_ADVANCED_MISC 602
-#define SUBCAT_ADVANCED_NETWORK 603
-
-#define CAT_PLAYLIST 7
-#define SUBCAT_PLAYLIST_GENERAL 701
-#define SUBCAT_PLAYLIST_SD 702
-#define SUBCAT_PLAYLIST_EXPORT 703
-
 
 /**
  * Current plugin ABI version
