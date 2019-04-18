@@ -390,6 +390,8 @@ typedef union
 
 /* "Special" (hint) type entries */
 
+/* this is only needed by core now */
+#ifndef __PLUGIN__
 #define set_category( _id ) \
     cfg_params = (config_item_params_t) { .special = { \
         .type = CONFIG_CATEGORY, \
@@ -398,6 +400,7 @@ typedef union
         .longtext = NULL \
     } }; \
     add_special_type_inner()
+#endif
 
 #define set_subcategory( _id ) \
     cfg_params = (config_item_params_t) { .special = { \
