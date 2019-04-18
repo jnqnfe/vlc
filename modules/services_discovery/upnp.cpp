@@ -133,8 +133,8 @@ VLC_RD_PROBE_HELPER( "upnp_renderer", N_("UPnP Renderer Discovery") )
  * Module descriptor
  */
 vlc_plugin_begin()
-    set_shortname( "UPnP" );
-    set_description( N_( "Universal Plug'n'Play" ) );
+    set_shortname( "UPnP" )
+    set_description( N_( "Universal Plug'n'Play" ) )
     set_capability( VLC_CAP_SERVICES_DISCOVERY, 0, SD::OpenSD, SD::CloseSD )
 
     add_submodule()
@@ -155,7 +155,7 @@ vlc_plugin_begin()
         add_shortcut("dlna")
         set_capability(VLC_CAP_SOUT_STREAM, 0, DLNA::OpenSout, DLNA::CloseSout)
 
-    set_subcategory( SUBCAT_PLAYLIST_SD );
+    set_subcategory( SUBCAT_PLAYLIST_SD )
     add_string( "satip-channelist", "auto", SATIP_CHANNEL_LIST, NULL, false )
     change_string_list( ppsz_satip_channel_lists, ppsz_readible_satip_channel_lists )
     add_string( "satip-channellist-url", NULL, SATIP_CHANNEL_LIST_URL, NULL, false )
