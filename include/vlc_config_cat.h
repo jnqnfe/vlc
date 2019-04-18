@@ -334,4 +334,20 @@ static inline int vlc_config_CategoryFromSubcategory( int subcat )
     }
 }
 
+VLC_USED
+static inline bool vlc_config_SubcategoryIsGeneral(int subcat)
+{
+    if (subcat == SUBCAT_VIDEO_GENERAL ||
+        subcat == SUBCAT_INPUT_GENERAL ||
+        subcat == SUBCAT_INTERFACE_GENERAL ||
+        subcat == SUBCAT_SOUT_GENERAL||
+        subcat == SUBCAT_PLAYLIST_GENERAL||
+        subcat == SUBCAT_AUDIO_GENERAL||
+        subcat == SUBCAT_ADVANCED_MISC)
+    {
+        return true;
+    }
+    return false;
+}
+
 #endif /* VLC_CONFIG_CATS_H */

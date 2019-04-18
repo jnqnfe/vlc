@@ -456,19 +456,6 @@
     return nil;
 }
 
-- (bool)isSubCategoryGeneral:(int)category
-{
-    if (category == SUBCAT_VIDEO_GENERAL ||
-          category == SUBCAT_INPUT_GENERAL ||
-          category == SUBCAT_INTERFACE_GENERAL ||
-          category == SUBCAT_SOUT_GENERAL||
-          category == SUBCAT_PLAYLIST_GENERAL||
-          category == SUBCAT_AUDIO_GENERAL) {
-        return true;
-    }
-    return false;
-}
-
 /* Creates and returns the array of children
  * Loads children incrementally */
 - (NSMutableArray *)children
@@ -527,7 +514,7 @@
                         [[self children] addObject:categoryItem];
                 }
 
-                if (categoryItem && ![self isSubCategoryGeneral:lastsubcat]) {
+                if (categoryItem && !vlc_config_SubcategoryIsGeneral(lastsubcat)) {
                     subCategoryItem = [categoryItem itemRepresentingSubCategory:lastsubcat];
                     if (!subCategoryItem) {
                         subCategoryItem = [VLCTreeSubCategoryItem subCategoryTreeItemWithSubCategory:lastsubcat];
@@ -542,7 +529,7 @@
                 continue;
 
             if (mod_is_main) {
-                if (categoryItem && [self isSubCategoryGeneral:lastsubcat]) {
+                if (categoryItem && vlc_config_SubcategoryIsGeneral(lastsubcat)) {
                     [[categoryItem options] addObject:[[VLCTreeLeafItem alloc] initWithConfigItem:&p_configs[j]]];
                 } else if (subCategoryItem) {
                     [[subCategoryItem options] addObject:[[VLCTreeLeafItem alloc] initWithConfigItem:&p_configs[j]]];
