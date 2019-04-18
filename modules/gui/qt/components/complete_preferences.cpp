@@ -200,9 +200,13 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
             const module_config_item_t *p_item = p_config + i;
 
             if( p_item->i_type == CONFIG_CATEGORY )
-                i_category = p_item->value.i;
-            else if( p_item->i_type == CONFIG_SUBCATEGORY )
+                continue; /* not used in plugins anymore, ignore */
+
+            if( p_item->i_type == CONFIG_SUBCATEGORY )
+            {
                 i_subcategory = p_item->value.i;
+                i_category = vlc_config_CategoryFromSubcategory( i_subcategory );
+            }
 
             if( CONFIG_ITEM(p_item->i_type) )
                 b_options = true;

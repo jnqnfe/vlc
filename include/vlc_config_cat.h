@@ -282,4 +282,56 @@ static inline const char *config_CategoryHelpGet( int i_value )
     return NULL;
 }
 
+VLC_USED
+static inline int vlc_config_CategoryFromSubcategory( int subcat )
+{
+    switch (subcat)
+    {
+        case SUBCAT_INTERFACE_GENERAL:
+        case SUBCAT_INTERFACE_MAIN:
+        case SUBCAT_INTERFACE_CONTROL:
+        case SUBCAT_INTERFACE_HOTKEYS:
+            return CAT_INTERFACE;
+        case SUBCAT_AUDIO_GENERAL:
+        case SUBCAT_AUDIO_AOUT:
+        case SUBCAT_AUDIO_AFILTER:
+        case SUBCAT_AUDIO_VISUAL:
+        case SUBCAT_AUDIO_RESAMPLER:
+            return CAT_AUDIO;
+        case SUBCAT_VIDEO_GENERAL:
+        case SUBCAT_VIDEO_VOUT:
+        case SUBCAT_VIDEO_VFILTER:
+        case SUBCAT_VIDEO_SUBPIC:
+        case SUBCAT_VIDEO_SPLITTER:
+            return CAT_VIDEO;
+        case SUBCAT_INPUT_GENERAL:
+        case SUBCAT_INPUT_ACCESS:
+        case SUBCAT_INPUT_DEMUX:
+        case SUBCAT_INPUT_VCODEC:
+        case SUBCAT_INPUT_ACODEC:
+        case SUBCAT_INPUT_SCODEC:
+        case SUBCAT_INPUT_STREAM_FILTER:
+            return CAT_INPUT;
+        case SUBCAT_SOUT_GENERAL:
+        case SUBCAT_SOUT_STREAM:
+        case SUBCAT_SOUT_MUX:
+        case SUBCAT_SOUT_ACO:
+        case SUBCAT_SOUT_PACKETIZER:
+        case SUBCAT_SOUT_VOD:
+        case SUBCAT_SOUT_RENDERER:
+            return CAT_SOUT;
+        case SUBCAT_ADVANCED_MISC:
+        case SUBCAT_ADVANCED_NETWORK:
+            return CAT_ADVANCED;
+        case SUBCAT_PLAYLIST_GENERAL:
+        case SUBCAT_PLAYLIST_SD:
+        case SUBCAT_PLAYLIST_EXPORT:
+            return CAT_PLAYLIST;
+        case SUBCAT_HIDDEN:
+            return CAT_HIDDEN;
+        default:
+            unreachable();
+    }
+}
+
 #endif /* VLC_CONFIG_CATS_H */

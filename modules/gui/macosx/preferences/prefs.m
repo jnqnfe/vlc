@@ -488,6 +488,7 @@
         VLCTreeSubCategoryItem * subCategoryItem = nil;
         VLCTreePluginItem * pluginItem = nil;
         module_config_item_t *p_configs = NULL;
+        int lastcat = 0;
         int lastsubcat = 0;
         unsigned int confsize;
 
@@ -507,26 +508,25 @@
         for (unsigned int j = 0; j < confsize; j++) {
             int configType = p_configs[j].i_type;
 
-            if (configType == CONFIG_CATEGORY) {
-                if( p_configs[j].value.i == CAT_HIDDEN ) {
-                    categoryItem = nil;
-                    continue;
-                }
-                categoryItem = [self itemRepresentingCategory:(int)p_configs[j].value.i];
-                if (!categoryItem) {
-                    categoryItem = [VLCTreeCategoryItem categoryTreeItemWithCategory:(int)p_configs[j].value.i];
-                    if (categoryItem)
-                        [[self children] addObject:categoryItem];
-                }
-                continue;
-            }
+            if (configType == CONFIG_CATEGORY)
+                continue; /* ignore */
 
             if (configType == CONFIG_SUBCATEGORY) {
                 lastsubcat = (int)p_configs[j].value.i;
                 if( lastsubcat == SUBCAT_HIDDEN ) {
+                    categoryItem = nil;
                     subCategoryItem = nil;
                     continue;
                 }
+                lastcat = vlc_config_CategoryFromSubcategory(lastsubcat);
+
+                categoryItem = [self itemRepresentingCategory:lastcat];
+                if (!categoryItem) {
+                    categoryItem = [VLCTreeCategoryItem categoryTreeItemWithCategory:lastcat];
+                    if (categoryItem)
+                        [[self children] addObject:categoryItem];
+                }
+
                 if (categoryItem && ![self isSubCategoryGeneral:lastsubcat]) {
                     subCategoryItem = [categoryItem itemRepresentingSubCategory:lastsubcat];
                     if (!subCategoryItem) {

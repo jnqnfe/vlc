@@ -43,12 +43,11 @@
  *    entries would just have empty panels).
  * 3) Other modules (currently) have their options located under a single tree
  *    node attached to one of the core cat/subcat nodes. The location for this
- *    is chosen based upon the first cat and subcat encountered in the module's
- *    option set. (If the subcat does not belong to the cat, then the node is
- *    attached directly to the cat; If the module's option set has options
- *    before the cat/subcat hint entries, this does not matter; If no cat or
- *    subcat hint is provided in the option set, then no node is created (i.e.
- *    that module's options will not be available in the prefs GUI).
+ *    is chosen based upon the first subcat encountered in the module's option
+ *    set; If the module's option set has options before the subcat hint entry,
+ *    this does not matter; If no subcat hint is provided in the option set,
+ *    then no node is created (i.e. that module's options will not be available
+ *    in the prefs GUI).
  */
 
 class AdvPrefsPanel;
