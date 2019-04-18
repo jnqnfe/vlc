@@ -74,7 +74,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_AUDIO_DECODER, 0 )
     set_callbacks( OpenDecoderDump, CloseDecoder )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_SCODEC )
     add_bool( "dummy-save-es", false, SAVE_TEXT, SAVE_LONGTEXT, true )
 vlc_plugin_end ()

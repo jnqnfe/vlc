@@ -42,12 +42,10 @@ void OutCloseAvio(vlc_object_t *);
         add_shortcut( "avio", "rtmp" )                                           \
         set_callbacks( OutOpenAvio, OutCloseAvio)                                \
                                                                                  \
-    set_category(CAT_INPUT)                                                      \
     set_subcategory(SUBCAT_INPUT_ACCESS)                                         \
     set_section(N_("Input"), NULL )                                              \
     add_string("avio-options", NULL, AV_OPTIONS_TEXT, AV_OPTIONS_LONGTEXT, true) \
                                                                                  \
-    set_category( CAT_SOUT )                                                     \
     set_subcategory( SUBCAT_SOUT_ACO )                                           \
     set_section(N_("Stream output"), NULL )                                      \
     add_string("sout-avio-options", NULL, AV_OPTIONS_TEXT, AV_OPTIONS_LONGTEXT, true)

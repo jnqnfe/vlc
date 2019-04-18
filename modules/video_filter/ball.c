@@ -130,7 +130,6 @@ vlc_plugin_begin ()
     add_shortcut( "ball" )
     set_callbacks( Create, Destroy )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
 
     add_string( FILTER_PREFIX "color", "red",

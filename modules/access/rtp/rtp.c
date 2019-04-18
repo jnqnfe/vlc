@@ -100,7 +100,6 @@ vlc_plugin_begin ()
     add_shortcut ("dccp", "rtptcp", /* "tcp" is already taken :( */
                   "rtp", "udplite")
 
-    set_category (CAT_INPUT)
     set_subcategory (SUBCAT_INPUT_DEMUX)
 
     add_integer ("rtcp-port", 0, RTCP_PORT_TEXT,

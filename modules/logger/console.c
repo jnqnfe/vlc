@@ -170,7 +170,6 @@ vlc_plugin_begin()
     set_capability(VLC_CAP_LOGGER, 10)
     set_callbacks(Open, NULL)
 
-    set_category(CAT_ADVANCED)
     set_subcategory(SUBCAT_ADVANCED_MISC)
     add_bool("quiet", false, QUIET_TEXT, QUIET_LONGTEXT, false)
         change_short('q')

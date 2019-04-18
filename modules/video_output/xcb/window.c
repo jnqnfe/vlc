@@ -950,7 +950,6 @@ vlc_plugin_begin ()
     set_callbacks(EmOpen, NULL)
     add_shortcut ("embed-xid")
 
-    set_category (CAT_VIDEO)
     set_subcategory (SUBCAT_VIDEO_VOUT)
     add_string ("x11-display", NULL, DISPLAY_TEXT, DISPLAY_LONGTEXT, true)
     add_integer ("drawable-xid", 0, XID_TEXT, XID_LONGTEXT, true)

@@ -73,7 +73,6 @@ vlc_plugin_begin ()
     set_callbacks( OpenResampler, Close )
     add_shortcut( "soxr" )
 
-    set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_RESAMPLER )
     add_integer( "soxr-resampler-quality", 2,
                 SOXR_QUALITY_TEXT, NULL, true )

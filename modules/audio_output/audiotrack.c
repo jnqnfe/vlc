@@ -185,7 +185,6 @@ vlc_plugin_begin ()
     add_shortcut( "audiotrack" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AOUT )
     add_integer( "audiotrack-session-id", 0,
             AUDIOTRACK_SESSION_ID_TEXT, NULL, true )

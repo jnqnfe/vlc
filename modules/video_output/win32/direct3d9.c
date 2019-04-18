@@ -114,7 +114,6 @@ vlc_plugin_begin ()
     set_callbacks(GLConvOpen, GLConvClose)
 #endif
 
-    set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_bool("direct3d9-hw-blending", true, HW_BLENDING_TEXT, HW_BLENDING_LONGTEXT, true)
     add_bool("directx-hw-yuv", true, HW_YUV_TEXT, HW_YUV_LONGTEXT, true)

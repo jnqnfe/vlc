@@ -96,7 +96,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_SPU_DECODER, 51 )
     set_callbacks( Open, Close )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_SCODEC )
     add_integer_with_range( "vbi-page", 100, 0, 'z' << 16,
                  PAGE_TEXT, PAGE_LONGTEXT, false )

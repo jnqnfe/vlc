@@ -75,7 +75,6 @@ vlc_plugin_begin ()
     set_callbacks(OpenEncoder, CloseEncoder)
 
 #   define ENC_CFG_PREFIX "sout-vpx-"
-    set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_VCODEC)
     add_integer( ENC_CFG_PREFIX "quality-mode", VPX_DL_GOOD_QUALITY, QUALITY_MODE_TEXT,
                  QUALITY_MODE_LONGTEXT, true )

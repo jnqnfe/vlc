@@ -253,7 +253,6 @@ vlc_plugin_begin ()
 #endif
                  )
 
-    set_category (CAT_INPUT)
     set_subcategory (SUBCAT_INPUT_ACCESS)
 #ifdef HAVE_LINUX_DVB
     add_integer ("dvb-adapter", 0, ADAPTER_TEXT, ADAPTER_LONGTEXT, false)

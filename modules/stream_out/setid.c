@@ -71,7 +71,6 @@ vlc_plugin_begin()
     add_shortcut( "setlang" );
     set_callbacks( OpenLang, Close )
 
-    set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_STREAM )
 
     set_section( N_("Set ES id"), NULL )

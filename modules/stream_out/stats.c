@@ -54,7 +54,6 @@ vlc_plugin_begin()
     add_shortcut( "stats" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_STREAM )
     add_string( SOUT_CFG_PREFIX "output", "", OUTPUT_TEXT, OUTPUT_LONGTEXT, false );
     add_string( SOUT_CFG_PREFIX "prefix", "stats", PREFIX_TEXT, NULL, false );

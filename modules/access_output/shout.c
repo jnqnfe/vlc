@@ -113,7 +113,6 @@ vlc_plugin_begin ()
     add_shortcut( "shout" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_ACO )
     add_string( SOUT_CFG_PREFIX "name", "VLC media player - Live stream",
                 NAME_TEXT, NAME_LONGTEXT, false )

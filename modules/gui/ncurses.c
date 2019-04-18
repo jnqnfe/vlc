@@ -81,7 +81,6 @@ vlc_plugin_begin ()
     set_callbacks(Open, Close)
     add_shortcut("curses")
 
-    set_category(CAT_INTERFACE)
     set_subcategory(SUBCAT_INTERFACE_MAIN)
     add_directory("browse-dir", NULL, BROWSE_TEXT, BROWSE_LONGTEXT)
 vlc_plugin_end ()

@@ -80,12 +80,10 @@ vlc_plugin_begin ()
 
     VLC_SD_PROBE_SUBMODULE
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACCESS )
     add_string( "smb-user", NULL, SMB_USER_TEXT, SMB_USER_LONGTEXT, false )
     add_password("smb-pwd", NULL, SMB_PASS_TEXT, SMB_PASS_LONGTEXT)
     add_string( "smb-domain", NULL, SMB_DOMAIN_TEXT, SMB_DOMAIN_LONGTEXT, false )
-    //set_category( CAT_PLAYLIST )
     //set_subcategory( SUBCAT_PLAYLIST_SD )
 vlc_plugin_end ()
 

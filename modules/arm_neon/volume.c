@@ -36,7 +36,6 @@ vlc_plugin_begin()
     set_description(N_("ARM NEON audio volume"))
     set_capability(VLC_CAP_AUDIO_VOLUME, 10)
     set_callbacks(Probe, NULL)
-    //set_category(CAT_AUDIO)
     //set_subcategory(SUBCAT_AUDIO_AFILTER)
 vlc_plugin_end()
 

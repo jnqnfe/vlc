@@ -83,7 +83,6 @@ set_description(N_("VideoToolbox video decoder"))
 set_capability(VLC_CAP_VIDEO_DECODER, 800)
 set_callbacks(OpenDecoder, CloseDecoder)
 
-set_category(CAT_INPUT)
 set_subcategory(SUBCAT_INPUT_VCODEC)
 add_obsolete_bool("videotoolbox-temporal-deinterlacing") /* since 4.0.0 */
 add_bool("videotoolbox", true, VT_ENABLE_TEXT, NULL, false)

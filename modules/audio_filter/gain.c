@@ -64,7 +64,6 @@ vlc_plugin_begin()
     set_capability( VLC_CAP_AUDIO_FILTER, 0 )
     set_callbacks( Open, Close )
 
-    set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AFILTER )
     add_float( "gain-value", 1.0, GAIN_VALUE_TEXT,
                GAIN_VALUE_LONGTEXT, false )

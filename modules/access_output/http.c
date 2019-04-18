@@ -68,7 +68,6 @@ vlc_plugin_begin ()
     add_shortcut( "http", "https", "mmsh" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_ACO )
     add_string( SOUT_CFG_PREFIX "user", "",
                 USER_TEXT, USER_LONGTEXT, true )

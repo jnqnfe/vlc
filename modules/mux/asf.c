@@ -75,7 +75,6 @@ vlc_plugin_begin ()
     add_shortcut( "asf", "asfh" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_MUX )
     add_string( SOUT_CFG_PREFIX "title", "", TITLE_TEXT, TITLE_LONGTEXT,
                                  true )

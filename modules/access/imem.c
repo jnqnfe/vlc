@@ -125,7 +125,6 @@ vlc_plugin_begin()
         set_capability(VLC_CAP_ACCESS, 0)
         set_callbacks(OpenAccess, CloseAccess)
 
-    set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_ACCESS)
 
     add_string ("imem-get", "0", GET_TEXT, GET_LONGTEXT, true)

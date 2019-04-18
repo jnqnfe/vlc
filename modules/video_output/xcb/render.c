@@ -714,7 +714,7 @@ vlc_plugin_begin()
     set_capability(VLC_CAP_VOUT_DISPLAY, 200)
     set_callbacks(Open, Close)
     add_shortcut("x11-render", "xcb-render", "render")
-    set_category(CAT_VIDEO)
+
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_string("x11-render-filter", "good", N_("Scaling mode"),
                NULL, true)

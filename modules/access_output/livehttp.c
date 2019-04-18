@@ -112,7 +112,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_SOUT_ACCESS, 0 )
     set_callbacks( Open, Close )
 
-    set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_ACO )
     add_integer( SOUT_CFG_PREFIX "seglen", 10, SEGLEN_TEXT, SEGLEN_LONGTEXT, false )
     add_integer( SOUT_CFG_PREFIX "numsegs", 0, NUMSEGS_TEXT, NUMSEGS_LONGTEXT, false )

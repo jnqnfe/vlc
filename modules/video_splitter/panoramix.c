@@ -83,7 +83,6 @@ vlc_plugin_begin()
     add_shortcut( "panoramix" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_SPLITTER )
 
     add_integer( CFG_PREFIX "cols", -1, COLS_TEXT, COLS_LONGTEXT, true )

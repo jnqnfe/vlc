@@ -136,7 +136,6 @@ vlc_plugin_begin ()
     set_capability(VLC_CAP_AUDIO_OUTPUT, 170)
     add_shortcut("opensles", "android")
     set_callbacks(Open, Close)
-    //set_category(CAT_AUDIO)
     //set_subcategory(SUBCAT_AUDIO_AOUT)
 vlc_plugin_end ()
 

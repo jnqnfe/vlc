@@ -69,7 +69,6 @@ vlc_plugin_begin ()
         set_capability( VLC_CAP_DEMUX, 239 )
         set_callbacks( OpenHEIF, CloseHEIF )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
 
     set_section("Hacks", NULL)

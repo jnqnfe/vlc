@@ -122,7 +122,6 @@ static void msg_print(intf_thread_t *p_intf, const char *psz_fmt, ...)
 # include "intromsg.h"
 #endif
 
-
 /*****************************************************************************
  * parse_MRL: build a input item from a full mrl
  *****************************************************************************
@@ -1932,7 +1931,6 @@ vlc_plugin_begin()
     set_callbacks(Activate, Deactivate)
     add_shortcut("cli", "rc", "oldrc")
 
-    set_category(CAT_INTERFACE)
     set_subcategory(SUBCAT_INTERFACE_MAIN)
     add_bool("rc-show-pos", false, POS_TEXT, POS_LONGTEXT, true)
 #ifdef _WIN32

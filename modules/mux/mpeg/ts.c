@@ -203,7 +203,6 @@ vlc_plugin_begin ()
     add_shortcut( "ts" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_MUX )
     add_string( SOUT_CFG_PREFIX "standard", "dvb", STANDARD_TEXT, NULL, true )
         change_string_list( ts_standards_list, ts_standards_list_text )

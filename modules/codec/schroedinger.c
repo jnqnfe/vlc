@@ -371,7 +371,6 @@ vlc_plugin_begin ()
     set_callbacks( OpenEncoder, CloseEncoder )
     add_shortcut( "schroedinger", "schro" )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_VCODEC )
     set_section( N_("Encoding") , NULL )
 

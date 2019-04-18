@@ -61,7 +61,6 @@ vlc_plugin_begin ()
     add_shortcut( "vsxu" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_VISUAL )
     add_integer( "vsxu-width", 1280, WIDTH_TEXT, WIDTH_LONGTEXT,
                  false )

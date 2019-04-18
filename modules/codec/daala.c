@@ -132,7 +132,6 @@ vlc_plugin_begin ()
     set_callbacks( OpenEncoder, CloseEncoder )
     add_shortcut( "daala" )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_VCODEC )
 
 #   define ENC_CFG_PREFIX "sout-daala-"

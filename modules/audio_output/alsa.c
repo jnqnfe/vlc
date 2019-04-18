@@ -97,7 +97,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_AUDIO_OUTPUT, 150 )
     set_callbacks( Open, Close )
 
-    set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AOUT )
     add_string ("alsa-audio-device", "default",
                 AUDIO_DEV_TEXT, AUDIO_DEV_LONGTEXT, false)

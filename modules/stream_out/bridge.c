@@ -102,9 +102,7 @@ vlc_plugin_begin ()
     set_callbacks( OpenIn, CloseIn )
 
     /* Only usable with VLM. No category so not in gui preferences */
-    //set_category( CAT_SOUT )
     //set_subcategory( SUBCAT_SOUT_STREAM )
-    set_category( CAT_HIDDEN )
     set_subcategory( SUBCAT_HIDDEN )
 
     /* Bridge out */

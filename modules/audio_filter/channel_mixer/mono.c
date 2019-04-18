@@ -99,7 +99,6 @@ vlc_plugin_begin ()
     set_callbacks( OpenFilter, CloseFilter )
     set_shortname( "Mono" )
 
-    set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AFILTER )
     add_bool( MONO_CFG "downmix", true, MONO_DOWNMIX_TEXT,
               MONO_DOWNMIX_LONGTEXT, false )

@@ -114,7 +114,6 @@ vlc_plugin_begin ()
         set_capability( VLC_CAP_DEMUX, 12 )
         set_callbacks( Open, Close )
 
-        set_category( CAT_INPUT )
         set_subcategory( SUBCAT_INPUT_DEMUX )
         add_string( "adaptive-logic",  "", ADAPT_LOGIC_TEXT, NULL, false )
             change_string_list( ppsz_logics_values, ppsz_logics )

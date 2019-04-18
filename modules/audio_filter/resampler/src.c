@@ -64,7 +64,6 @@ vlc_plugin_begin ()
     set_capability (VLC_CAP_AUDIO_RESAMPLER, 50)
     set_callbacks (OpenResampler, Close)
 
-    set_category (CAT_AUDIO)
     set_subcategory (SUBCAT_AUDIO_RESAMPLER)
     add_integer ("src-converter-type", SRC_SINC_FASTEST,
                  SRC_CONV_TYPE_TEXT, SRC_CONV_TYPE_LONGTEXT, true)

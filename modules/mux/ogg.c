@@ -61,7 +61,6 @@ vlc_plugin_begin ()
     add_shortcut( "ogg", "ogm" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_MUX )
     add_integer_with_range( SOUT_CFG_PREFIX "indexintvl", 1000, 0, INT_MAX,
                             INDEXINTVL_TEXT, INDEXINTVL_LONGTEXT, true )

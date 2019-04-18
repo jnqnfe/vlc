@@ -80,7 +80,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_AUDIO_OUTPUT, 100 )
     set_callbacks (Open, Close)
 
-    set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AOUT )
     add_string ("oss-audio-device", "",
                 AUDIO_DEV_TEXT, AUDIO_DEV_LONGTEXT, false)

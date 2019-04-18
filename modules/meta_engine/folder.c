@@ -68,7 +68,7 @@ vlc_plugin_begin ()
     set_description( N_("Folder meta data") )
     set_capability( VLC_CAP_ART_FINDER, 90 )
     set_callbacks( FindMeta, NULL )
-    set_category( CAT_PLAYLIST )
+
     set_subcategory( SUBCAT_PLAYLIST_GENERAL )
     add_loadfile("album-art-filename", NULL, N_("Album art filename"),
                  N_("Filename to look for album art in current directory"))

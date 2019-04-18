@@ -56,7 +56,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_PACKETIZER, 50 )
     set_callbacks( PacketizerOpen, Close )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_SCODEC )
     add_bool( "dvdsub-transparency", false,
               DVDSUBTRANS_DISABLE_TEXT, DVDSUBTRANS_DISABLE_LONGTEXT, true )

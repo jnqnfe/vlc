@@ -268,7 +268,6 @@ vlc_plugin_begin ()
         set_capability( VLC_CAP_VOUT_WINDOW, 0 )
         set_callbacks( WindowOpen, NULL )
 
-    set_category( CAT_INTERFACE )
     set_subcategory( SUBCAT_INTERFACE_MAIN )
 
     add_bool( "qt-minimal-view", false, QT_MINIMAL_MODE_TEXT,

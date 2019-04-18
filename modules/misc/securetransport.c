@@ -109,7 +109,6 @@ vlc_plugin_begin ()
         set_callbacks(OpenServer, NULL)
 #endif /* !TARGET_OS_IPHONE */
 
-    //set_category(CAT_ADVANCED)
     //set_subcategory(SUBCAT_ADVANCED_NETWORK)
 vlc_plugin_end ()
 

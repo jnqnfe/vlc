@@ -49,7 +49,6 @@ vlc_plugin_begin ()
     set_callbacks (OpenResampler, Close)
     add_shortcut ("speex")
 
-    set_category (CAT_AUDIO)
     set_subcategory (SUBCAT_AUDIO_RESAMPLER)
     add_integer ("speex-resampler-quality", 4,
                  QUALITY_TEXT, QUALITY_LONGTEXT, true)

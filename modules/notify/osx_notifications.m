@@ -338,6 +338,5 @@ vlc_plugin_begin()
     set_callbacks(Open, Close)
 
     /* Kept so that module is found by cat-based module control */
-    set_category(CAT_INTERFACE)
     set_subcategory(SUBCAT_INTERFACE_CONTROL)
 vlc_plugin_end()

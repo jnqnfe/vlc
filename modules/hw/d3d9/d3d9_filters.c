@@ -476,7 +476,6 @@ vlc_plugin_begin()
     set_callbacks( D3D9OpenCPUConverter, D3D9CloseCPUConverter )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 10 )
 
-    set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_float_with_range( "contrast", 1.0, 0.0, 2.0,
                           CONT_TEXT, CONT_LONGTEXT, false )

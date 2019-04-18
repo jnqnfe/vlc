@@ -62,7 +62,6 @@ vlc_plugin_begin ()
     set_callbacks( Open, Close )
     add_shortcut( "flaschen" )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VOUT )
     add_string( "flaschen-display", NULL, T_FLDISPLAY, LT_FLDISPLAY, true )
     add_integer("flaschen-width", 25, T_WIDTH, NULL, false)

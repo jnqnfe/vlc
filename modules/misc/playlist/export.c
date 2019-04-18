@@ -68,7 +68,6 @@ vlc_plugin_begin ()
         set_capability( VLC_CAP_PLAYLIST_EXPORT, 0 )
         set_callbacks( Export_HTML, NULL )
 
-    //set_category( CAT_PLAYLIST )
     //set_subcategory( SUBCAT_PLAYLIST_EXPORT )
 
 vlc_plugin_end ()

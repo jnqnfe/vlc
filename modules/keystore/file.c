@@ -65,7 +65,6 @@ vlc_plugin_begin()
         add_shortcut("file_crypt")
 #endif
 
-    set_category(CAT_ADVANCED)
     set_subcategory(SUBCAT_ADVANCED_MISC)
     add_savefile("keystore-file", NULL, NULL, NULL)
         change_private()

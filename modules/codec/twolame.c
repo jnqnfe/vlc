@@ -75,7 +75,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_ENCODER, 120 )
     set_callbacks( OpenEncoder, CloseEncoder )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACODEC )
 
     add_float( ENC_CFG_PREFIX "quality", 0.0, ENC_QUALITY_TEXT,

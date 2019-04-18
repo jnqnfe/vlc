@@ -79,7 +79,6 @@ vlc_plugin_begin ()
     add_shortcut("direct3d11")
     set_callbacks(Open, Close)
 
-    set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
 
     add_bool("direct3d11-hw-blending", true, HW_BLENDING_TEXT, HW_BLENDING_LONGTEXT, true)

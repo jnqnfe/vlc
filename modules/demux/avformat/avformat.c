@@ -49,7 +49,6 @@ vlc_plugin_begin ()
     set_callbacks( avformat_OpenMux, avformat_CloseMux )
 #endif
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
     set_section( N_("Demuxer"), NULL )
     add_string( "avformat-format", NULL, FORMAT_TEXT, FORMAT_LONGTEXT, true )

@@ -73,7 +73,6 @@ vlc_plugin_begin()
     set_callbacks(OpenBinauralizer, Close)
     add_shortcut("binauralizer")
 
-    set_category(CAT_AUDIO)
     set_subcategory(SUBCAT_AUDIO_AFILTER)
     add_bool(CFG_PREFIX "headphones", false,
              HEADPHONES_TEXT, HEADPHONES_LONGTEXT, true)

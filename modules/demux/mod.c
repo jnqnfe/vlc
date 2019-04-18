@@ -75,7 +75,6 @@ vlc_plugin_begin ()
     set_callbacks( Open, Close )
     add_shortcut( "mod" )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
 
     add_bool( "mod-noisereduction", true, N_("Noise reduction"),

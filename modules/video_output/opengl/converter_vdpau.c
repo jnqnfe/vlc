@@ -211,6 +211,5 @@ vlc_plugin_begin ()
         set_capability(VLC_CAP_HW_DECODER_DEVICE, 3)
         set_callbacks(DecoderContextOpen, DecoderContextClose)
 
-    //set_category(CAT_VIDEO)
     //set_subcategory(SUBCAT_VIDEO_VOUT)
 vlc_plugin_end ()

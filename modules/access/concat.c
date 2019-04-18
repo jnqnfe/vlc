@@ -311,7 +311,6 @@ vlc_plugin_begin()
     set_callbacks(Open, Close)
     add_shortcut("concast", "list")
 
-    set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_ACCESS)
     add_string("concat-list", NULL, INPUT_LIST_TEXT, INPUT_LIST_LONGTEXT, true)
 vlc_plugin_end()

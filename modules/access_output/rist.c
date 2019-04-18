@@ -862,7 +862,6 @@ vlc_plugin_begin()
     add_shortcut( "rist", "tr06" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_ACO )
     add_integer( SOUT_CFG_PREFIX "packet-size", RIST_TARGET_PACKET_SIZE,
             N_("RIST target packet size (bytes)"), NULL, true )

@@ -91,7 +91,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_AUDIO_RESAMPLER, 20 )
     set_callbacks( OpenFilter, CloseFilter )
 
-    //set_category( CAT_AUDIO )
     //set_subcategory( SUBCAT_AUDIO_RESAMPLER )
 vlc_plugin_end ()
 

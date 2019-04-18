@@ -73,7 +73,6 @@ vlc_plugin_begin ()
     set_callbacks (Open, Close)
     add_shortcut ("screen", "window")
 
-    set_category (CAT_INPUT)
     set_subcategory (SUBCAT_INPUT_ACCESS)
     add_float ("screen-fps", 2.0, FPS_TEXT, FPS_LONGTEXT, true)
     add_integer ("screen-left", 0, LEFT_TEXT, LEFT_LONGTEXT, true)

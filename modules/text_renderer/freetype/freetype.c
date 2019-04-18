@@ -147,7 +147,6 @@ vlc_plugin_begin ()
     add_shortcut( "text" )
     set_callbacks( Create, Destroy )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_SUBPIC )
 
 #ifdef HAVE_GET_FONT_BY_FAMILY_NAME

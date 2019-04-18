@@ -101,7 +101,6 @@ vlc_plugin_begin()
         set_capability( VLC_CAP_DEMUX, 0 )
         set_callbacks( DemuxOpen, DemuxClose )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACCESS )
     add_integer( "linsys-sdi-link", 0, LINK_TEXT, LINK_LONGTEXT, true )
     add_integer( "linsys-sdi-id-video", 0, VIDEO_TEXT, VIDEO_LONGTEXT, true )

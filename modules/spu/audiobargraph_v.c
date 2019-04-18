@@ -83,7 +83,6 @@ vlc_plugin_begin ()
     set_description(N_("Audio Bar Graph Video sub source"))
     add_shortcut("audiobargraph_v")
 
-    set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_SUBPIC)
     add_integer(CFG_PREFIX "x", 0, POSX_TEXT, POSX_LONGTEXT, true)
     add_integer(CFG_PREFIX "y", 0, POSY_TEXT, POSY_LONGTEXT, true)

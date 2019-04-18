@@ -269,7 +269,6 @@ vlc_plugin_begin()
         set_capability( VLC_CAP_SUB_FILTER, 0 )
         set_callbacks( SubsdelayCreate, SubsdelayDestroy )
 
-        set_category( CAT_VIDEO )
         set_subcategory( SUBCAT_VIDEO_SUBPIC )
 
         add_integer( CFG_MODE, 1, MODE_TEXT, MODE_LONGTEXT, false )

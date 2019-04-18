@@ -234,7 +234,6 @@ vlc_plugin_begin()
     set_capability(VLC_CAP_LOGGER, 15)
     set_callbacks(Open, NULL)
 
-    set_category(CAT_ADVANCED)
     set_subcategory(SUBCAT_ADVANCED_MISC)
     add_bool("file-logging", false, FILE_LOG_TEXT, FILE_LOG_LONGTEXT, false)
     add_savefile("logfile", NULL, LOGFILE_NAME_TEXT, LOGFILE_NAME_LONGTEXT)

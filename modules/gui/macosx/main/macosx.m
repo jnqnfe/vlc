@@ -142,7 +142,6 @@ vlc_plugin_begin()
         set_capability(VLC_CAP_VOUT_WINDOW, 100)
         set_callbacks(WindowOpen, NULL)
 
-    set_category(CAT_INTERFACE)
     set_subcategory(SUBCAT_INTERFACE_MAIN)
 
     set_section(N_("Appearance"), 0)

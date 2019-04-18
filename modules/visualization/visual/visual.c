@@ -120,7 +120,6 @@ vlc_plugin_begin ()
     set_callbacks( Open, Close )
     add_shortcut( "visualizer")
 
-    set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_VISUAL )
 
     set_section( N_( "General") , NULL )

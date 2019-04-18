@@ -100,7 +100,6 @@ vlc_plugin_begin( )
     set_capability( VLC_CAP_VIDEO_DECODER, 50 )
     set_callbacks( OpenDecoder, CloseDecoder )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_VCODEC )
     //set_section( N_( "Decoding" ) , NULL )
     add_bool( "use-decodebin", true, USEDECODEBIN_TEXT,

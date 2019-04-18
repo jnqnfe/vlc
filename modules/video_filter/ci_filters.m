@@ -789,7 +789,6 @@ vlc_plugin_begin()
     set_callbacks(OpenCustom, Close)
     add_shortcut("ci")
 
-    set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_string("ci-filter", "CIComicEffect", CI_CUSTOM_FILTER_TEXT, CI_CUSTOM_FILTER_LONGTEXT, true);
 vlc_plugin_end()

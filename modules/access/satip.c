@@ -72,7 +72,6 @@ vlc_plugin_begin()
     set_callbacks(satip_open, satip_close)
     add_shortcut("rtsp", "satip")
 
-    set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_ACCESS)
     add_integer("satip-buffer", 0x400000, BUFFER_TEXT, BUFFER_LONGTEXT, true)
     add_bool("satip-multicast", false, MULTICAST_TEXT, MULTICAST_LONGTEXT, true)

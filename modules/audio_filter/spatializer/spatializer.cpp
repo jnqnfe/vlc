@@ -69,7 +69,6 @@ vlc_plugin_begin ()
     set_callbacks( Open, Close )
     add_shortcut( "spatializer" )
 
-    set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AFILTER )
     add_float_with_range( "spatializer-roomsize", 0.85, 0., 1.1,
                             ROOMSIZE_TEXT, ROOMSIZE_LONGTEXT, false )

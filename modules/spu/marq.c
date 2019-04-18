@@ -144,7 +144,6 @@ vlc_plugin_begin ()
     set_callbacks( CreateFilter, DestroyFilter )
     add_shortcut( "time" )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_SUBPIC )
 
     add_string( CFG_PREFIX "marquee", "VLC", MSG_TEXT, MSG_LONGTEXT,

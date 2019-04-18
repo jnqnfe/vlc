@@ -70,7 +70,6 @@ vlc_plugin_begin()
         add_shortcut("android-opaque")
         set_callbacks(OpenOpaque, Close)
 
-    set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_string(CFG_PREFIX "chroma", NULL, CHROMA_TEXT, CHROMA_LONGTEXT, true)
 vlc_plugin_end()

@@ -49,7 +49,6 @@ vlc_plugin_begin ()
     set_callbacks (Open, NULL)
     add_shortcut ("embed-hwnd")
 
-    set_category (CAT_VIDEO)
     set_subcategory (SUBCAT_VIDEO_VOUT)
     add_integer ("drawable-hwnd", 0, HWND_TEXT, HWND_LONGTEXT, true)
         change_volatile ()

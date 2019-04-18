@@ -764,7 +764,6 @@ vlc_plugin_begin ()
         set_callbacks(OpenServer, NULL)
 #endif
 
-    set_category( CAT_ADVANCED )
     set_subcategory( SUBCAT_ADVANCED_NETWORK )
     add_bool("gnutls-system-trust", true, SYSTEM_TRUST_TEXT,
              SYSTEM_TRUST_LONGTEXT, true)

@@ -101,7 +101,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_ENCODER, 0 )
     set_callbacks( OpenEncoder, CloseGeneric )
 
-    //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_VCODEC )
     //set_section( N_("Decoding") , NULL )
     //set_section( N_("Encoding") , NULL )

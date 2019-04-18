@@ -250,13 +250,11 @@ vlc_plugin_begin()
     set_callbacks (OpenAudio, CloseAudio)
 
     /* disabled so that all options actually appear under video */
-    //set_category(CAT_INPUT)
     //set_subcategory(SUBCAT_INPUT_GENERAL)
     set_section(N_("DeckLink General Options"), NULL)
     add_integer(CFG_PREFIX "card-index", 0,
                 CARD_INDEX_TEXT, CARD_INDEX_LONGTEXT, true)
 
-    set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
     set_section(N_("DeckLink Video Options"), NULL)
     add_string(VIDEO_CFG_PREFIX "video-connection", "sdi",
@@ -279,7 +277,6 @@ vlc_plugin_begin()
     add_loadfile(VIDEO_CFG_PREFIX "nosignal-image", NULL,
                  NOSIGNAL_IMAGE_TEXT, NULL)
 
-    set_category(CAT_AUDIO)
     set_subcategory(SUBCAT_AUDIO_AOUT)
 
     set_section(N_("DeckLink Audio Options"), NULL)

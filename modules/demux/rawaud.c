@@ -65,7 +65,6 @@ vlc_plugin_begin()
     set_callbacks( Open, Close )
     add_shortcut( "rawaud" )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
     add_integer( "rawaud-channels", 2, CHANNELS_TEXT, CHANNELS_LONGTEXT, false )
         change_safe()

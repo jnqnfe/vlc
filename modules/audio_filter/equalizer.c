@@ -82,7 +82,6 @@ vlc_plugin_begin ()
     set_callbacks( Open, Close )
     add_shortcut( "equalizer" )
 
-    set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AFILTER )
     add_string( "equalizer-preset", "flat", PRESET_TEXT,
                 PRESET_LONGTEXT, false )

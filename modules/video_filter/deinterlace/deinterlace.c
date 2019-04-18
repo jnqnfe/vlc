@@ -301,7 +301,6 @@ vlc_plugin_begin ()
     add_shortcut( "deinterlace" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_string( FILTER_CFG_PREFIX "mode", "blend", SOUT_MODE_TEXT,
                 SOUT_MODE_LONGTEXT, false )

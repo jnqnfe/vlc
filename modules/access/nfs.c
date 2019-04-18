@@ -60,7 +60,6 @@ vlc_plugin_begin()
     add_shortcut("nfs")
     set_callbacks(Open, Close)
 
-    set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_ACCESS)
     add_bool("nfs-auto-guid", true, AUTO_GUID_TEXT, AUTO_GUID_LONGTEXT, true)
 vlc_plugin_end()

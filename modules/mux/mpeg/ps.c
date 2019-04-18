@@ -68,7 +68,6 @@ vlc_plugin_begin ()
     add_shortcut( "ps", "mpeg1", "dvd" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_MUX )
     add_integer( SOUT_CFG_PREFIX "dts-delay", 200, DTS_TEXT,
                  DTS_LONGTEXT, true )

@@ -146,7 +146,6 @@ vlc_plugin_begin ()
     add_shortcut( "mosaic-bridge" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_STREAM )
 
     add_string( CFG_PREFIX "id", "Id", ID_TEXT, ID_LONGTEXT,

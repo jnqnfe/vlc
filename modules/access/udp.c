@@ -240,7 +240,6 @@ vlc_plugin_begin()
     add_shortcut("udp", "udpstream", "udp4", "udp6")
     set_callbacks(Open, Close)
 
-    set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_ACCESS)
     add_obsolete_integer("udp-buffer") /* since 3.0.0 */
     add_integer("udp-timeout", -1, TIMEOUT_TEXT, NULL, true)

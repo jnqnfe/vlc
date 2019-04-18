@@ -49,7 +49,6 @@ vlc_plugin_begin ()
     set_shortname( N_( "Magnify" ))
     set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     set_callbacks( Create, Destroy )
-    //set_category( CAT_VIDEO )
     //set_subcategory( SUBCAT_VIDEO_VFILTER )
 vlc_plugin_end ()
 

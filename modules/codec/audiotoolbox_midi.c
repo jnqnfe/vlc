@@ -58,7 +58,6 @@ vlc_plugin_begin()
     set_shortname(N_("AUMIDI"))
     set_callbacks(Open, Close)
 
-    set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_ACODEC)
     add_loadfile(CFG_PREFIX "soundfont", "",
                  SOUNDFONT_TEXT, SOUNDFONT_LONGTEXT)

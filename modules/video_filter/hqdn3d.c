@@ -65,7 +65,6 @@ vlc_plugin_begin()
     add_shortcut("hqdn3d")
     set_callbacks(Open, Close)
 
-    set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_float_with_range(FILTER_PREFIX "luma-spat", 4.0, 0.0, 254.0,
             LUMA_SPAT_TEXT, NULL, false)

@@ -49,7 +49,6 @@ vlc_plugin_begin()
     set_capability( VLC_CAP_INTERFACE, 0 )
     set_callbacks( Open, Close )
     add_shortcut( "globalhotkeys" )
-    //set_category( CAT_INTERFACE )
     //set_subcategory( SUBCAT_INTERFACE_HOTKEYS )
 vlc_plugin_end()
 

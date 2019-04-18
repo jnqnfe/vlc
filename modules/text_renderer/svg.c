@@ -74,7 +74,7 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_TEXT_RENDERER, 99 )
     add_shortcut( "svg" )
     set_callbacks( Create, Destroy )
-    set_category( CAT_INPUT )
+
     set_subcategory( SUBCAT_INPUT_SCODEC )
     add_string( "svg-template-file", "", TEMPLATE_TEXT, TEMPLATE_LONGTEXT, true )
 vlc_plugin_end ()

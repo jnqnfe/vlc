@@ -783,7 +783,6 @@ vlc_plugin_begin ()
     set_capability(VLC_CAP_VOUT_DISPLAY, 30)
     set_callbacks(Open, Close)
 
-    set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_loadfile(KMS_VAR, "/dev/dri/card0", DEVICE_TEXT, DEVICE_LONGTEXT)
     add_string( "kms-vlc-chroma", NULL, VLC_CHROMA_TEXT, VLC_CHROMA_LONGTEXT,

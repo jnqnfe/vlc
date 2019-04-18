@@ -44,7 +44,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_SOUT_STREAM, 50 )
     add_shortcut( "duplicate", "dup" )
     set_callbacks( Open, Close )
-    //set_category( CAT_SOUT )
     //set_subcategory( SUBCAT_SOUT_STREAM )
 vlc_plugin_end ()
 

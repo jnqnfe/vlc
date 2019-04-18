@@ -59,7 +59,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_VIDEO_DECODER, 60 )
     set_callbacks( OpenDecoder, CloseDecoder )
     add_shortcut( "sdl_image" )
-    //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_VCODEC )
 vlc_plugin_end ()
 

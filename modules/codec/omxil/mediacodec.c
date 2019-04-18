@@ -201,7 +201,6 @@ vlc_plugin_begin ()
         set_callbacks(OpenDecoderJni, CloseDecoder)
         add_shortcut("mediacodec_jni")
 
-    set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_VCODEC)
     set_section(N_("Decoding"), NULL)
     add_bool("mediacodec", true, MEDIACODEC_ENABLE_TEXT, NULL, false)

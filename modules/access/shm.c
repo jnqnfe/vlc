@@ -86,7 +86,6 @@ vlc_plugin_begin ()
     set_callbacks (Open, Close)
     add_shortcut ("shm")
 
-    set_category (CAT_INPUT)
     set_subcategory (SUBCAT_INPUT_ACCESS)
     add_float ("shm-fps", 10.0, FPS_TEXT, FPS_LONGTEXT, true)
     add_integer ("shm-depth", 0, DEPTH_TEXT, DEPTH_LONGTEXT, true)

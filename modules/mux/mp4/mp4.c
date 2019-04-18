@@ -74,7 +74,6 @@ add_submodule ()
     set_capability(VLC_CAP_SOUT_MUX, 0)
     set_callbacks(Open, CloseFrag)
 
-    set_category(CAT_SOUT)
     set_subcategory(SUBCAT_SOUT_MUX)
     add_bool(SOUT_CFG_PREFIX "faststart", true,
               FASTSTART_TEXT, FASTSTART_LONGTEXT,

@@ -60,7 +60,6 @@ vlc_plugin_begin ()
         set_callbacks( OpenHEVC, Close )
         add_shortcut( "hevc", "h265" )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
 
     set_section( N_("H264 video demuxer" ), NULL )

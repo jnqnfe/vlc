@@ -42,7 +42,6 @@ vlc_plugin_begin()
     set_callbacks(Open, Close)
     /* Since we can't destroy gdbus_shared_thread_func */
     cannot_unload_broken_library()
-    //set_category(CAT_ADVANCED)
     //set_subcategory(SUBCAT_ADVANCED_MISC)
 vlc_plugin_end ()
 

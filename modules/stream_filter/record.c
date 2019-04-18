@@ -46,7 +46,6 @@ vlc_plugin_begin()
     set_description( N_("Internal stream record") )
     set_capability( VLC_CAP_STREAM_FILTER, 0 )
     set_callbacks( Open, Close )
-    //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_STREAM_FILTER )
 vlc_plugin_end()
 

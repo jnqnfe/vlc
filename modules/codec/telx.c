@@ -72,7 +72,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_SPU_DECODER, 50 )
     set_callbacks( Open, Close )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_SCODEC )
     add_integer( "telx-override-page", -1,
                  OVERRIDE_PAGE_TEXT, OVERRIDE_PAGE_LONGTEXT, true )

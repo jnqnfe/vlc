@@ -59,7 +59,6 @@ vlc_plugin_begin ()
     set_callbacks( EncoderOpen, NULL )
 #endif
 
-    //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_ACODEC )
 vlc_plugin_end ()
 

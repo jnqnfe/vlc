@@ -68,7 +68,6 @@ vlc_plugin_begin ()
     add_shortcut( "kva" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VOUT )
     add_string( "kva-video-mode", ppsz_kva_video_mode[0], KVA_VIDEO_MODE_TEXT,
                 KVA_VIDEO_MODE_LONGTEXT, false )

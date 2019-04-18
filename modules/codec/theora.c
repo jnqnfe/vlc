@@ -130,7 +130,6 @@ vlc_plugin_begin ()
 #endif
 
 #   define DEC_CFG_PREFIX "theora-"
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_VCODEC )
     add_integer( DEC_CFG_PREFIX "postproc", -1, ENC_POSTPROCESS_TEXT, NULL, true )
 #ifdef ENABLE_SOUT

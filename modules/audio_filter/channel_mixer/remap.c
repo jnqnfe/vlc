@@ -76,7 +76,6 @@ vlc_plugin_begin ()
     set_callbacks( OpenFilter, CloseFilter )
     set_shortname( "Remap" )
 
-    set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AFILTER )
 
 #define CHANNEL( idx ) \

@@ -40,7 +40,6 @@ vlc_plugin_begin ()
     set_callbacks(Open, NULL)
     add_shortcut("tweaks")
 
-    set_category (CAT_INPUT)
     set_subcategory (SUBCAT_INPUT_STREAM_FILTER)
     add_bool("seek", true, "Expose seeking capability", NULL, false)
         change_volatile ()

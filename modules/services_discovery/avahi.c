@@ -72,9 +72,7 @@ vlc_plugin_begin ()
 
     VLC_RD_PROBE_SUBMODULE
 
-    //set_category( CAT_PLAYLIST )
     //set_subcategory( SUBCAT_PLAYLIST_SD )
-    //set_category( CAT_SOUT )
     //set_subcategory( SUBCAT_SOUT_RENDERER )
 vlc_plugin_end ()
 

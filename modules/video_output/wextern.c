@@ -43,7 +43,6 @@ vlc_plugin_begin()
     set_description(N_("External callback window"))
     set_capability(VLC_CAP_VOUT_WINDOW, 0)
     set_callbacks(Open, NULL)
-    //set_category(CAT_VIDEO)
     //set_subcategory(SUBCAT_VIDEO_VOUT)
 vlc_plugin_end()
 

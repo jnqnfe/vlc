@@ -93,7 +93,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_INTERFACE, 0 )
     set_callbacks( Open, Close )
 
-    set_category( CAT_INTERFACE )
     set_subcategory( SUBCAT_INTERFACE_CONTROL )
     add_integer( "gestures-threshold", 30,
                  THRESHOLD_TEXT, THRESHOLD_LONGTEXT, true )

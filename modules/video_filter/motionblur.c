@@ -65,7 +65,6 @@ vlc_plugin_begin ()
     add_shortcut( "blur" )
     set_callbacks( Create, Destroy )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_integer_with_range( FILTER_PREFIX "factor", 80, 1, 127,
                             FACTOR_TEXT, FACTOR_LONGTEXT, false )

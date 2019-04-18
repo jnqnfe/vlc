@@ -74,7 +74,6 @@ vlc_plugin_begin ()
     add_shortcut( "m4v" )
     add_shortcut( "mp4v" )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
     add_float( "es-fps", 25, FPS_TEXT, FPS_LONGTEXT, false )
 vlc_plugin_end ()

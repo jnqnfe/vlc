@@ -59,7 +59,6 @@ vlc_plugin_begin ()
     set_shortname( N_("Record") )
     set_callbacks( Open, Close )
 
-    set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_STREAM )
     add_string( SOUT_CFG_PREFIX "dst-prefix", "", DST_PREFIX_TEXT,
                 DST_PREFIX_LONGTEXT, true )

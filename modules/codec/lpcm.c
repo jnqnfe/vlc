@@ -71,7 +71,6 @@ vlc_plugin_begin ()
     add_shortcut( "lpcm" )
 #endif
 
-    //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_ACODEC )
 
 vlc_plugin_end ()

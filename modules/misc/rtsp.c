@@ -79,7 +79,6 @@ vlc_plugin_begin ()
     set_callbacks( Open, Close )
     add_shortcut( "rtsp" )
 
-    set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_VOD )
     add_string( "rtsp-raw-mux", "ts", RAWMUX_TEXT, NULL, true )
     add_integer( "rtsp-throttle-users", 0, THROTTLE_TEXT,

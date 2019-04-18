@@ -1004,7 +1004,6 @@ vlc_plugin_begin ()
     set_callbacks(Open, Close)
     add_shortcut( "cdda", "cddasimple" )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACCESS )
 
     add_loadfile("cd-audio", CD_DEVICE, CDAUDIO_DEV_TEXT, CDAUDIO_DEV_LONGTEXT)

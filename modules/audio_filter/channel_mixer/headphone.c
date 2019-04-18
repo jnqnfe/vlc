@@ -79,7 +79,6 @@ vlc_plugin_begin ()
     set_callbacks( OpenFilter, CloseFilter )
     add_shortcut( "headphone" )
 
-    set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AFILTER )
     add_integer( "headphone-dim", 10, HEADPHONE_DIM_TEXT,
                  HEADPHONE_DIM_LONGTEXT, false )

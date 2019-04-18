@@ -79,7 +79,6 @@ vlc_plugin_begin()
     set_capability(VLC_CAP_KEYSTORE, 100)
     set_callbacks(Open, NULL)
 
-    set_category(CAT_ADVANCED)
     set_subcategory(SUBCAT_ADVANCED_MISC)
     add_integer("keychain-synchronize", 1, SYNC_ITEMS_TEXT, SYNC_ITEMS_LONGTEXT, true)
         change_integer_list(sync_list, sync_list_text)

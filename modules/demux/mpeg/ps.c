@@ -70,7 +70,6 @@ vlc_plugin_begin ()
     set_callbacks( Open, Close )
     add_shortcut( "ps" )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
     add_bool( "ps-trust-timestamps", true, TIME_TEXT,
                  TIME_LONGTEXT, true )

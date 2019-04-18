@@ -156,7 +156,6 @@ vlc_plugin_begin()
     set_capability(VLC_CAP_LOGGER, 20)
     set_callbacks(Open, NULL)
 
-    set_category(CAT_ADVANCED)
     set_subcategory(SUBCAT_ADVANCED_MISC)
     add_bool("syslog", false, SYSLOG_TEXT, SYSLOG_LONGTEXT,
              false)

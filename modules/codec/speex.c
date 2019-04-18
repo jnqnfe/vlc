@@ -107,7 +107,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_ENCODER, 100 )
     set_callbacks( OpenEncoder, CloseEncoder )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACODEC )
     add_integer( ENC_CFG_PREFIX "mode", 0, ENC_MODE_TEXT,
                  ENC_MODE_LONGTEXT, false )

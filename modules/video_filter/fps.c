@@ -48,7 +48,6 @@ vlc_plugin_begin ()
     add_shortcut( "fps" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_string( CFG_PREFIX "fps", NULL, FPS_TEXT, NULL, false )
 vlc_plugin_end ()

@@ -55,7 +55,6 @@ vlc_plugin_begin ()
     set_callbacks( Open, Close )
 
 #   define ARIBSUB_CFG_PREFIX "aribsub-"
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_SCODEC )
     add_bool( ARIBSUB_CFG_PREFIX "ignore-ruby", false, IGNORE_RUBY_TEXT, IGNORE_RUBY_LONGTEXT, true )
     add_bool( ARIBSUB_CFG_PREFIX "use-coretext", false, USE_CORETEXT_TEXT, USE_CORETEXT_LONGTEXT, true )

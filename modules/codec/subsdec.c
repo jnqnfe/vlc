@@ -183,7 +183,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_SPU_DECODER, 50 )
     set_callbacks( OpenDecoder, CloseDecoder )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_SCODEC )
 
     add_integer( "subsdec-align", -1, ALIGN_TEXT, ALIGN_LONGTEXT,

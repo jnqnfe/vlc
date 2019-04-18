@@ -39,7 +39,6 @@ vlc_plugin_begin()
     set_capability( VLC_CAP_STREAM_FILTER, 330 )
     set_description( N_( "ADF stream filter" ) )
     set_callbacks( Open, NULL )
-    //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_STREAM_FILTER )
 vlc_plugin_end()
 

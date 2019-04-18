@@ -428,6 +428,5 @@ vlc_plugin_begin ()
     set_callbacks (OpenGLES2, Close)
     add_shortcut ("egl")
 
-    //set_category (CAT_VIDEO)
     //set_subcategory (SUBCAT_VIDEO_VOUT)
 vlc_plugin_end ()

@@ -51,7 +51,6 @@ vlc_plugin_begin()
     add_shortcut("glwin32", "opengl")
     set_callbacks(Open, Close)
 
-    set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_glopts()
 vlc_plugin_end()

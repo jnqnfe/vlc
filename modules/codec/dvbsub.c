@@ -130,7 +130,6 @@ vlc_plugin_begin ()
     set_callbacks( OpenEncoder, CloseEncoder )
 #endif
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_SCODEC )
     add_integer( DVBSUB_CFG_PREFIX "position", 8, POS_TEXT, POS_LONGTEXT, true )
         change_integer_list( pi_pos_values, ppsz_pos_descriptions )

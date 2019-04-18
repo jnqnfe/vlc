@@ -712,7 +712,6 @@ vlc_plugin_begin()
 #endif
     set_callbacks(Open, NULL)
 
-    set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_string("wl-display", NULL, DISPLAY_TEXT, DISPLAY_LONGTEXT, true)
     add_integer("wl-output", 0, OUTPUT_TEXT, OUTPUT_LONGTEXT, true)

@@ -194,7 +194,6 @@ vlc_plugin_begin ()
     set_description( N_("RSS and Atom feed display") )
     add_shortcut( "rss", "atom" )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_SUBPIC )
     add_string( CFG_PREFIX "urls", NULL, MSG_TEXT, MSG_LONGTEXT, false )
 

@@ -200,7 +200,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_ACCESS, 0 )
     set_callbacks( AccessOpen, AccessClose )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACCESS )
     add_string( "dshow-vdev", NULL, VDEV_TEXT, VDEV_LONGTEXT, false)
         change_string_cb( FindDevices )

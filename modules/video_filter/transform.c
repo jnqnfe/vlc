@@ -63,7 +63,6 @@ vlc_plugin_begin()
     add_shortcut("transform")
     set_callbacks(Open, Close)
 
-    set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_string(CFG_PREFIX "type", "90", TYPE_TEXT, NULL, false)
         change_string_list(type_list, type_list_text)

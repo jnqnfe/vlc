@@ -60,7 +60,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_INTERFACE, 0 )
     set_callbacks( Open, Close )
 
-    set_category( CAT_INTERFACE )
     set_subcategory( SUBCAT_INTERFACE_CONTROL )
     add_string( "lirc-file", NULL,
                 LIRC_TEXT, LIRC_LONGTEXT, true )

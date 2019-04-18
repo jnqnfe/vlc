@@ -59,7 +59,6 @@ vlc_plugin_begin ()
     add_shortcut( "clone" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_SPLITTER )
     add_integer( CFG_PREFIX "count", 2, COUNT_TEXT, COUNT_LONGTEXT, false )
     add_module_list(CFG_PREFIX "vout-list", VLC_CAP_STR_VOUT_DISPLAY, NULL,

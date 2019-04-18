@@ -64,7 +64,6 @@ vlc_plugin_begin ()
 
     VLC_SD_PROBE_SUBMODULE
 
-    set_category( CAT_PLAYLIST )
     set_subcategory( SUBCAT_PLAYLIST_SD )
     add_string( "podcast-urls", NULL,
                 URLS_TEXT, URLS_LONGTEXT, false )

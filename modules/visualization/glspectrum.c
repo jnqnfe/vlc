@@ -65,7 +65,6 @@ vlc_plugin_begin()
     add_shortcut("glspectrum")
     set_callbacks(Open, Close)
 
-    set_category(CAT_AUDIO)
     set_subcategory(SUBCAT_AUDIO_VISUAL)
     add_integer("glspectrum-width", 400, WIDTH_TEXT, WIDTH_LONGTEXT, false)
     add_integer("glspectrum-height", 300, HEIGHT_TEXT, HEIGHT_LONGTEXT, false)

@@ -79,7 +79,6 @@ vlc_plugin_begin()
     set_capability(VLC_CAP_DEMUX, 10)
     set_callbacks(Open, Close)
 
-    set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_DEMUX)
     add_integer("image-id", -1, ID_TEXT, ID_LONGTEXT, true)
         change_safe()

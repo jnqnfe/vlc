@@ -392,7 +392,6 @@ vlc_plugin_begin () set_shortname ("Vulkan")
     set_callbacks (Open, Close)
     add_shortcut ("vulkan", "vk")
 
-    set_category (CAT_VIDEO)
     set_subcategory (SUBCAT_VIDEO_VOUT)
     add_module ("vk", VLC_CAP_STR_VULKAN, NULL, VK_TEXT, PROVIDER_LONGTEXT)
 

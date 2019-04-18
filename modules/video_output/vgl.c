@@ -159,6 +159,5 @@ vlc_plugin_begin()
     set_callbacks(Open, Close)
     add_shortcut("vglmem")
 
-    //set_category(CAT_VIDEO)
     //set_subcategory(SUBCAT_VIDEO_VOUT)
 vlc_plugin_end()

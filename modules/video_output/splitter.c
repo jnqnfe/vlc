@@ -335,7 +335,7 @@ vlc_plugin_begin()
     set_description(N_("Video splitter display plugin"))
     set_capability(VLC_CAP_VOUT_DISPLAY, 0)
     set_callbacks(vlc_vidsplit_Open, vlc_vidsplit_Close)
-    set_category(CAT_VIDEO)
+
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_module("video-splitter", VLC_CAP_STR_VIDEO_SPLITTER, NULL,
                N_("Video splitter module"), NULL)

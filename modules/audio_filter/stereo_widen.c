@@ -81,7 +81,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_AUDIO_FILTER, 0 )
     set_callbacks( Open, Close )
 
-    set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AFILTER )
     add_float_with_range( CONFIG_PREFIX "delay", 20, 1, 100,
         DELAY_TEXT, DELAY_LONGTEXT, true )

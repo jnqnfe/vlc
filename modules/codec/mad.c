@@ -75,7 +75,6 @@ vlc_plugin_begin ()
     set_description( N_("MPEG audio layer I/II/III decoder") )
     set_capability( VLC_CAP_AUDIO_DECODER, 99 )
     set_callbacks( Open, Close )
-    //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_ACODEC )
 vlc_plugin_end ()
 

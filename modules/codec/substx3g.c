@@ -54,7 +54,6 @@ vlc_plugin_begin ()
         set_capability( VLC_CAP_ENCODER, 101 )
         set_callbacks( OpenEncoder, NULL )
 #endif
-    //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_SCODEC )
 vlc_plugin_end ()
 

@@ -55,7 +55,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_PACKETIZER, 50 )
     set_callbacks( PacketizerOpen, DecoderClose )
 
-    //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_SCODEC )
 vlc_plugin_end ()
 

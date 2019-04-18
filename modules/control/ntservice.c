@@ -69,7 +69,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_INTERFACE, 0 )
     set_callbacks( Activate, Close )
 
-    set_category( CAT_INTERFACE )
     set_subcategory( SUBCAT_INTERFACE_CONTROL )
     add_bool( "ntservice-install", false,
               INSTALL_TEXT, INSTALL_LONGTEXT, true )

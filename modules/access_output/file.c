@@ -392,7 +392,6 @@ vlc_plugin_begin ()
     add_shortcut( "file", "stream", "fd" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_ACO )
     add_bool( SOUT_CFG_PREFIX "overwrite", true, OVERWRITE_TEXT,
               OVERWRITE_LONGTEXT, true )

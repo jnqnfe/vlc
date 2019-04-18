@@ -159,19 +159,15 @@ vlc_plugin_begin()
         add_shortcut("dlna")
         set_callbacks(DLNA::OpenSout, DLNA::CloseSout)
 
-    set_category( CAT_PLAYLIST );
     set_subcategory( SUBCAT_PLAYLIST_SD );
     add_string( "satip-channelist", "auto", SATIP_CHANNEL_LIST, NULL, false )
     change_string_list( ppsz_satip_channel_lists, ppsz_readible_satip_channel_lists )
     add_string( "satip-channellist-url", NULL, SATIP_CHANNEL_LIST_URL, NULL, false )
 
-    //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_ACCESS )
 
-    //set_category( CAT_SOUT )
     //set_subcategory( SUBCAT_SOUT_RENDERER )
 
-    set_category(CAT_SOUT)
     set_subcategory(SUBCAT_SOUT_STREAM)
     add_string(SOUT_CFG_PREFIX "ip", NULL, IP_ADDR_TEXT, IP_ADDR_LONGTEXT, false)
     add_integer(SOUT_CFG_PREFIX "port", NULL, PORT_TEXT, PORT_LONGTEXT, false)

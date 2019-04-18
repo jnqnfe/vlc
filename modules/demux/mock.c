@@ -740,7 +740,6 @@ vlc_plugin_begin()
     set_callbacks(Open, Close)
     add_shortcut("mock")
 
-    set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_ACCESS)
     LIST_OPTIONS
 vlc_plugin_end()

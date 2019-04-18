@@ -70,7 +70,6 @@ vlc_plugin_begin()
     set_capability(VLC_CAP_INTERFACE, 0)
     set_callbacks(Open, Close)
 
-    set_category(CAT_ADVANCED)
     set_subcategory(SUBCAT_ADVANCED_MISC)
     add_bool("netsync-master", false,
               NETSYNC_TEXT, NETSYNC_LONGTEXT, true)

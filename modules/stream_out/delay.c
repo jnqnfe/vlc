@@ -56,7 +56,6 @@ vlc_plugin_begin()
     add_shortcut( "delay" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_STREAM )
     add_integer( SOUT_CFG_PREFIX "id", 0, ID_TEXT, ID_LONGTEXT,
                  false )

@@ -45,7 +45,6 @@ vlc_plugin_begin ()
     set_description( N_("Copy packetizer") )
     set_capability( VLC_CAP_PACKETIZER, 1 )
     set_callbacks( Open, Close )
-    //set_category( CAT_SOUT )
     //set_subcategory( SUBCAT_SOUT_PACKETIZER )
 vlc_plugin_end ()
 

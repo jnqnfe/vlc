@@ -82,7 +82,6 @@ vlc_plugin_begin ()
     add_shortcut( "bluescreen" )
     set_callbacks( Create, Destroy )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_integer_with_range( CFG_PREFIX "u", 120, 0, 255,
                             BLUESCREENU_TEXT, BLUESCREENU_LONGTEXT, false )

@@ -44,7 +44,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_SOUT_ACCESS, 0 )
     add_shortcut( "dummy" )
     set_callbacks( Open, NULL )
-    //set_category( CAT_SOUT )
     //set_subcategory( SUBCAT_SOUT_ACO )
 vlc_plugin_end ()
 

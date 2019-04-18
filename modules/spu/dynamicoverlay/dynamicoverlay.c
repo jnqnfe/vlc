@@ -69,7 +69,6 @@ vlc_plugin_begin ()
     add_shortcut( "overlay" )
     set_callbacks( Create, Destroy )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_loadfile("overlay-input", NULL, INPUT_TEXT, INPUT_LONGTEXT)
     /* Note: add_loadfile as O_WRONLY w/o O_CREAT, i.e. FIFO must exist */

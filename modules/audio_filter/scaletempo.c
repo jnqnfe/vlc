@@ -65,7 +65,6 @@ vlc_plugin_begin ()
     set_callbacks( Open, Close )
 #endif
 
-    set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AFILTER )
     add_integer_with_range( "scaletempo-stride", 30, 1, 2000,
         N_("Stride Length"), N_("Length in milliseconds to output each stride"), true )

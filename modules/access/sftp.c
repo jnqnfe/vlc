@@ -65,7 +65,6 @@ vlc_plugin_begin ()
     add_shortcut( "sftp" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACCESS )
     add_integer( "sftp-port", 22, PORT_TEXT, PORT_LONGTEXT, true )
     add_string( "sftp-user", NULL, USER_TEXT, USER_LONGTEXT, false )

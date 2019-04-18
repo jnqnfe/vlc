@@ -86,7 +86,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     set_callbacks( OpenPostproc, ClosePostproc )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_integer_with_range( FILTER_PREFIX "q", PP_QUALITY_MAX, 0,
                             PP_QUALITY_MAX, Q_TEXT, Q_LONGTEXT, false )

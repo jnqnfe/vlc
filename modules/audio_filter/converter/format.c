@@ -48,7 +48,6 @@ vlc_plugin_begin()
     set_description(N_("Audio filter for PCM format conversion"))
     set_capability(VLC_CAP_AUDIO_CONVERTER, 1)
     set_callbacks(Open, NULL)
-    //set_category(CAT_AUDIO)
     //set_subcategory(SUBCAT_AUDIO_AFILTER)
 vlc_plugin_end()
 

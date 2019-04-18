@@ -70,7 +70,6 @@ vlc_plugin_begin ()
     add_shortcut( "rotate" )
     set_callbacks( Create, Destroy )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_float( FILTER_PREFIX "angle", 30., ANGLE_TEXT, ANGLE_LONGTEXT, false )
     add_bool( FILTER_PREFIX "use-motion", false, MOTION_TEXT,

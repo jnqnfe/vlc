@@ -934,7 +934,6 @@ vlc_plugin_begin()
     add_submodule()
     set_callbacks(YCbCrOpen, NULL)
 
-    set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_integer("vdpau-deinterlace",
                 VDP_VIDEO_MIXER_FEATURE_DEINTERLACE_TEMPORAL_SPATIAL,

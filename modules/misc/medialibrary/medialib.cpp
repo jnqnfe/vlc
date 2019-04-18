@@ -1428,7 +1428,7 @@ vlc_plugin_begin()
     set_description(N_( "Organize your media" ))
     set_capability(VLC_CAP_MEDIALIBRARY, 100)
     set_callbacks(Open, Close)
-    set_category(CAT_ADVANCED)
+
     set_subcategory(SUBCAT_ADVANCED_MISC)
     add_string( "ml-folders", nullptr, ML_FOLDER_TEXT, ML_FOLDER_LONGTEXT, false )
 vlc_plugin_end()

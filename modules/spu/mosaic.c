@@ -177,7 +177,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_SUB_SOURCE, 0 )
     set_callbacks( CreateFilter, DestroyFilter )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_SUBPIC)
     add_integer_with_range( CFG_PREFIX "alpha", 255, 0, 255,
                             ALPHA_TEXT, ALPHA_LONGTEXT, false )

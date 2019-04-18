@@ -55,7 +55,6 @@ vlc_plugin_begin ()
     set_callbacks( Open, Close )
     add_shortcut( "mka", "mkv" )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
 
     add_bool( "mkv-use-ordered-chapters", true,

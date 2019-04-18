@@ -227,7 +227,6 @@ vlc_plugin_begin ()
         set_capability(VLC_CAP_SOUT_ACCESS, 0)
         set_callbacks(AccessOpen, AccessClose)
 
-    set_category(CAT_SOUT)
     set_subcategory(SUBCAT_SOUT_STREAM)
     add_string(SOUT_CFG_PREFIX "ip", NULL, NULL, NULL, false)
         change_private()

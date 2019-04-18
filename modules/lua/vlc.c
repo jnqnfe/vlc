@@ -130,7 +130,6 @@ vlc_plugin_begin ()
 
     VLC_SD_PROBE_SUBMODULE
 
-    set_category( CAT_INTERFACE )
     set_subcategory( SUBCAT_INTERFACE_MAIN )
 
         add_string( "lua-intf", "dummy", INTF_TEXT, INTF_LONGTEXT, false )

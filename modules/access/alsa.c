@@ -61,7 +61,6 @@ vlc_plugin_begin ()
     add_shortcut ("alsa")
     set_callbacks (Open, Close)
 
-    set_category (CAT_INPUT)
     set_subcategory (SUBCAT_INPUT_ACCESS)
     add_bool ("alsa-stereo", true, STEREO_TEXT, NULL, true)
     add_integer ("alsa-samplerate", 48000, RATE_TEXT, NULL, true)

@@ -77,7 +77,6 @@ vlc_plugin_begin ()
         set_capability( VLC_CAP_AOUT_STREAM, 30 )
         set_callbacks( StreamStart, StreamStop )
 
-    set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AOUT )
     add_string( "directx-audio-device", NULL,
              DEVICE_TEXT, DEVICE_LONGTEXT, false )

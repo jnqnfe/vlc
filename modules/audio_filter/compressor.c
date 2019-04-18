@@ -179,7 +179,6 @@ vlc_plugin_begin()
     set_callbacks( Open, Close )
     add_shortcut( "compressor" )
 
-    set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AFILTER )
     add_float_with_range( "compressor-rms-peak", 0.2, 0.0, 1.0,
                RMS_PEAK_TEXT, RMS_PEAK_LONGTEXT, false )

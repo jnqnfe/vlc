@@ -118,7 +118,6 @@ vlc_plugin_begin ()
         set_capability( VLC_CAP_DEMUX, 51 )
         set_callbacks( OpenDemux, CloseDemux )
 
-    set_category( CAT_PLAYLIST )
     set_subcategory( SUBCAT_PLAYLIST_SD )
     add_string( "sap-addr", NULL,
                 SAP_ADDR_TEXT, SAP_ADDR_LONGTEXT, true )

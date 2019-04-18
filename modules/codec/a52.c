@@ -80,7 +80,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_AUDIO_DECODER, 60 )
     set_callbacks( Open, Close )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACODEC )
     add_bool( "a52-dynrng", true, DYNRNG_TEXT, DYNRNG_LONGTEXT, false )
 vlc_plugin_end ()

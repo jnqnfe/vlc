@@ -53,7 +53,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_AUDIO_FILTER, 0 )
     set_callbacks( Open, Close )
 
-    set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_AFILTER )
     add_float( "param-eq-lowf", 100, N_("Low freq (Hz)"),NULL, false )
     add_float_with_range( "param-eq-lowgain", 0, -20.0, 20.0,

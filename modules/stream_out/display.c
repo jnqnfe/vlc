@@ -56,7 +56,6 @@ vlc_plugin_begin ()
     add_shortcut( "display" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_STREAM )
     add_bool( SOUT_CFG_PREFIX "audio", true, AUDIO_TEXT,
               AUDIO_LONGTEXT, true )

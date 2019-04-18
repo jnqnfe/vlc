@@ -98,7 +98,6 @@ vlc_plugin_begin ()
     add_shortcut( "smem" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_SOUT )
     set_subcategory( SUBCAT_SOUT_STREAM )
     add_string( SOUT_PREFIX_VIDEO "prerender-callback", "0", T_VIDEO_PRERENDER_CALLBACK, LT_VIDEO_PRERENDER_CALLBACK, true )
         change_volatile()

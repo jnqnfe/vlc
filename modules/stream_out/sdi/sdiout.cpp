@@ -180,7 +180,6 @@ vlc_plugin_begin ()
     add_shortcut("sdiout")
     set_callbacks(OpenSDIOutput, CloseSDIOutput)
 
-    set_category(CAT_SOUT)
     set_subcategory(SUBCAT_SOUT_STREAM)
     set_section(N_("DeckLink General Options"), NULL)
     add_integer(CFG_PREFIX "card-index", 0,

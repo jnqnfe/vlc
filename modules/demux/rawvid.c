@@ -65,7 +65,6 @@ vlc_plugin_begin ()
     set_callbacks( Open, Close )
     add_shortcut( "rawvideo" )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
     add_string( "rawvid-fps", NULL, FPS_TEXT, FPS_LONGTEXT, false )
     add_integer( "rawvid-width", 0, WIDTH_TEXT, WIDTH_LONGTEXT, 0 )

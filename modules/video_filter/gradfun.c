@@ -62,7 +62,6 @@ vlc_plugin_begin()
     set_capability(VLC_CAP_VIDEO_FILTER, 0)
     set_callbacks(Open, Close)
 
-    set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_integer_with_range(CFG_PREFIX "radius", 16, RADIUS_MIN, RADIUS_MAX,
                            RADIUS_TEXT, RADIUS_LONGTEXT, false)

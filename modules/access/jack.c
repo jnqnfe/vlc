@@ -69,7 +69,6 @@ vlc_plugin_begin ()
      add_shortcut( "jack" )
      set_callbacks( Open, Close )
 
-     set_category( CAT_INPUT )
      set_subcategory( SUBCAT_INPUT_ACCESS )
      add_bool( "jack-input-use-vlc-pace", false,
          PACE_TEXT, PACE_LONGTEXT, true )

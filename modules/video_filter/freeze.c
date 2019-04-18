@@ -79,7 +79,6 @@ vlc_plugin_begin()
     set_shortname(   N_("Freeze" ) )
     set_capability(  VLC_CAP_VIDEO_FILTER, 0 )
     set_callbacks( Open, Close )
-    //set_category( CAT_VIDEO )
     //set_subcategory( SUBCAT_VIDEO_VFILTER )
 vlc_plugin_end()
 

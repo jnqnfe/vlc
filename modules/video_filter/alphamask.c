@@ -68,7 +68,6 @@ vlc_plugin_begin ()
     add_shortcut( "alphamask", "mask" )
     set_callbacks( Create, Destroy )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_loadfile(CFG_PREFIX "mask", NULL, MASK_TEXT, MASK_LONGTEXT)
 vlc_plugin_end ()

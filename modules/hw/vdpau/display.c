@@ -47,7 +47,6 @@ vlc_plugin_begin()
     set_capability(VLC_CAP_VOUT_DISPLAY, 0)
     set_callbacks(Open, Close)
     add_shortcut("vdpau")
-    //set_category(CAT_VIDEO)
     //set_subcategory(SUBCAT_VIDEO_VOUT)
 vlc_plugin_end()
 

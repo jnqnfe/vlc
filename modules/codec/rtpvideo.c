@@ -45,7 +45,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_ENCODER, 50 )
     set_callbacks( OpenEncoder, NULL )
     add_shortcut( "rtpvideo" )
-    //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_VCODEC )
 vlc_plugin_end ()
 

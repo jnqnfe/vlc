@@ -505,7 +505,6 @@ vlc_plugin_begin ()
         set_capability( VLC_CAP_VOUT_WINDOW, 51 )
         set_callbacks( WindowOpen, NULL )
 
-    set_category( CAT_INTERFACE )
     set_subcategory( SUBCAT_INTERFACE_MAIN )
     add_loadfile("skins2-last", "", SKINS2_LAST, SKINS2_LAST_LONG)
     add_string( "skins2-config", "", SKINS2_CONFIG, SKINS2_CONFIG_LONG,

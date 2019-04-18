@@ -53,7 +53,6 @@ vlc_plugin_begin ()
     set_callbacks (Open, Close)
     add_shortcut ("opengles2", "gles2")
 
-    set_category (CAT_VIDEO)
     set_subcategory (SUBCAT_VIDEO_VOUT)
     add_module("gles2", "opengl es2", NULL, GLES2_TEXT, PROVIDER_LONGTEXT)
 
@@ -67,7 +66,6 @@ vlc_plugin_begin ()
     set_callbacks (Open, Close)
     add_shortcut ("opengl", "gl")
 
-    set_category (CAT_VIDEO)
     set_subcategory (SUBCAT_VIDEO_VOUT)
     add_module("gl", VLC_CAP_STR_OPENGL, NULL, GL_TEXT, PROVIDER_LONGTEXT)
 #endif

@@ -59,7 +59,6 @@ vlc_plugin_begin ()
     set_description( N_("H.264 video packetizer") )
     set_capability( VLC_CAP_PACKETIZER, 50 )
     set_callbacks( Open, Close )
-    //set_category( CAT_SOUT )
     //set_subcategory( SUBCAT_SOUT_PACKETIZER )
 vlc_plugin_end ()
 

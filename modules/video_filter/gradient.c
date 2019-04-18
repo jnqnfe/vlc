@@ -85,7 +85,6 @@ vlc_plugin_begin ()
     add_shortcut( "gradient" )
     set_callbacks( Create, Destroy )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_string( FILTER_PREFIX "mode", "gradient",
                 MODE_TEXT, MODE_LONGTEXT, false )

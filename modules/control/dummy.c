@@ -41,7 +41,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_INTERFACE, 0 )
     set_callbacks( Open, NULL )
 
-    //set_category( CAT_INTERFACE )
     //set_subcategory( SUBCAT_INTERFACE_CONTROL )
 #if defined(_WIN32) && !VLC_WINSTORE_APP
     add_obsolete_bool( "dummy-quiet" ) /* since 4.0.0 */

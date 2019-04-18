@@ -287,7 +287,6 @@ vlc_plugin_begin()
     add_shortcut("https", "http")
     set_callbacks(Open, Close)
 
-    set_category(CAT_INPUT)
     set_subcategory(SUBCAT_INPUT_ACCESS)
     add_bool("http-continuous", false, N_("Continuous stream"),
              N_("Keep reading a resource that keeps being updated."), true)

@@ -1468,7 +1468,6 @@ vlc_plugin_begin()
     set_capability(VLC_CAP_AUDIO_OUTPUT, 150)
     set_callbacks(Open, Close)
 
-    set_category(CAT_AUDIO)
     set_subcategory(SUBCAT_AUDIO_AOUT)
     set_callbacks(Open, Close)
     add_module("mmdevice-backend", VLC_CAP_STR_AOUT_STREAM, "any",

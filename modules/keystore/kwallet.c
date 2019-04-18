@@ -49,7 +49,6 @@ vlc_plugin_begin()
     set_description( N_("Secrets are stored via KWallet") )
     set_capability( VLC_CAP_KEYSTORE, 100 )
     set_callbacks( Open, Close )
-    //set_category( CAT_ADVANCED )
     //set_subcategory( SUBCAT_ADVANCED_MISC )
 vlc_plugin_end()
 

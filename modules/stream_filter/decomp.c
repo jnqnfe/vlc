@@ -68,7 +68,6 @@ vlc_plugin_begin ()
     set_description (N_("gzip decompression"))
     set_callbacks (OpenGzip, Close)
 
-    //set_category (CAT_INPUT)
     //set_subcategory (SUBCAT_INPUT_STREAM_FILTER)
 vlc_plugin_end ()
 

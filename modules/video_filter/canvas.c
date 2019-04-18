@@ -108,7 +108,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     set_callbacks( Activate, Destroy )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
 
     add_integer_with_range( CFG_PREFIX "width", 0, 0, INT_MAX,

@@ -64,7 +64,6 @@ vlc_plugin_begin ()
     add_shortcut( "svg" )
 
     /* svg options */
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_VCODEC )
     add_integer_with_range( "svg-width", -1, 1, 65535,
                             TEXT_WIDTH, LONG_TEXT_WIDTH, false )

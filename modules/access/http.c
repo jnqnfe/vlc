@@ -71,7 +71,6 @@ vlc_plugin_begin ()
     add_shortcut( "http", "unsv", "itpc", "icyx" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACCESS )
     add_bool( "http-reconnect", false, RECONNECT_TEXT,
               RECONNECT_LONGTEXT, true )

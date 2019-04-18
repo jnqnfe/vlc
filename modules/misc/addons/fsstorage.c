@@ -90,7 +90,6 @@ add_submodule ()
     set_capability( VLC_CAP_ADDONS_FINDER, 0 )
     set_callbacks( OpenLister, CloseLister )
 
-    //set_category(CAT_ADVANCED)
     //set_subcategory(SUBCAT_ADVANCED_MISC)
 vlc_plugin_end ()
 

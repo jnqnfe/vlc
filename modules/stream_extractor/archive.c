@@ -56,7 +56,6 @@ vlc_plugin_begin()
         set_capability( VLC_CAP_STREAM_EXTRACTOR, 99 )
         set_callbacks( ExtractorOpen, ExtractorClose );
 
-    //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_STREAM_FILTER )
 vlc_plugin_end()
 

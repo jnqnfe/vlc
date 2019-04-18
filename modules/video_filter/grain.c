@@ -65,7 +65,7 @@ vlc_plugin_begin()
     set_shortname( N_("Grain"))
     set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     set_callbacks(Open, Close)
-    set_category(CAT_VIDEO)
+
     set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_float_with_range(CFG_PREFIX "variance", 2.0, VARIANCE_MIN, VARIANCE_MAX,
                          VARIANCE_TEXT, VARIANCE_LONGTEXT, false)

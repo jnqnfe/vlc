@@ -64,7 +64,6 @@ vlc_plugin_begin ()
     add_shortcut( "mms", "mmsu", "mmst", "mmsh" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_ACCESS )
     add_integer( "mms-timeout", 5000, TIMEOUT_TEXT, TIMEOUT_LONGTEXT, true )
     add_bool( "mms-all", false, ALL_TEXT, ALL_LONGTEXT, true )

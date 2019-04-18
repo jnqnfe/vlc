@@ -47,7 +47,6 @@ vlc_plugin_begin()
     set_callbacks(Open, Close)
     add_shortcut("wgl")
 
-    set_category(CAT_VIDEO)
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_integer("gpu-affinity", -1, HW_GPU_AFFINITY_TEXT, NULL, true)
 vlc_plugin_end()

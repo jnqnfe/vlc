@@ -64,7 +64,6 @@ vlc_plugin_begin()
     add_shortcut( "wall" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_SPLITTER )
     add_integer( CFG_PREFIX "cols", 3, COLS_TEXT, COLS_LONGTEXT, false )
     change_integer_range( 1, COL_MAX )

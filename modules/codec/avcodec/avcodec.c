@@ -101,7 +101,6 @@ vlc_plugin_begin ()
     set_callbacks( InitVideoEnc, EndVideoEnc )
 #endif /* ENABLE_SOUT */
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_VCODEC )
     set_section( N_("Decoding") , NULL )
 

@@ -91,7 +91,6 @@ vlc_plugin_begin ()
     set_callbacks(OpenPacketizer, CloseDecoder)
     add_shortcut("oggspots")
 
-    //set_category(CAT_INPUT)
     //set_subcategory(SUBCAT_INPUT_VCODEC)
 vlc_plugin_end ()
 

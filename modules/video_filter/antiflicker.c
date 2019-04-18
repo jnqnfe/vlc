@@ -70,7 +70,6 @@ vlc_plugin_begin ()
     add_shortcut( "antiflicker" )
     set_callbacks( Create, Destroy )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_integer_with_range( FILTER_PREFIX "window-size", 10, 0, MAX_WINDOW_SZ,
         WINDOW_TEXT, WINDOW_LONGTEXT, false )

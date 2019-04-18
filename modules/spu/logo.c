@@ -99,7 +99,6 @@ vlc_plugin_begin ()
     set_description( N_("Logo video filter") )
     add_shortcut( "logo" )
 
-    set_category( CAT_VIDEO )
     set_subcategory( SUBCAT_VIDEO_SUBPIC )
     add_loadfile(CFG_PREFIX "file", NULL, FILE_TEXT, FILE_LONGTEXT)
     add_integer( CFG_PREFIX "x", -1, POSX_TEXT, POSX_LONGTEXT, true )

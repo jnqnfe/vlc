@@ -51,7 +51,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_DEMUX, 1 )
     set_callbacks( Open, Close )
     add_shortcut( "vobsub", "subtitle" )
-    //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_DEMUX )
 vlc_plugin_end ()
 

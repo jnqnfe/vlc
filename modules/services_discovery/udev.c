@@ -75,7 +75,6 @@ vlc_plugin_begin ()
 
     VLC_SD_PROBE_SUBMODULE
 
-    //set_category (CAT_PLAYLIST)
     //set_subcategory (SUBCAT_PLAYLIST_SD)
 vlc_plugin_end ()
 

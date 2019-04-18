@@ -93,7 +93,6 @@ vlc_plugin_begin ()
     add_shortcut( "projectm" )
     set_callbacks( Open, Close )
 
-    set_category( CAT_AUDIO )
     set_subcategory( SUBCAT_AUDIO_VISUAL )
 #ifndef HAVE_PROJECTM2
     add_loadfile("projectm-config", "/usr/share/projectM/config.inp",

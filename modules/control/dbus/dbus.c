@@ -165,7 +165,6 @@ vlc_plugin_begin ()
     set_description( N_("D-Bus control interface") )
     set_capability( VLC_CAP_INTERFACE, 0 )
     set_callbacks( Open, Close )
-    //set_category( CAT_INTERFACE )
 vlc_plugin_end ()
 
 /*****************************************************************************

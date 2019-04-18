@@ -53,10 +53,8 @@ vlc_plugin_begin ()
         set_callbacks( tt_OpenDemux, tt_CloseDemux )
         add_shortcut( "ttml" )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_SCODEC )
     add_integer( "ttml-align", 0, ALIGN_TEXT, ALIGN_LONGTEXT, false )
-    //set_category( CAT_INPUT )
     //set_subcategory( SUBCAT_INPUT_DEMUX )
 vlc_plugin_end ()
 

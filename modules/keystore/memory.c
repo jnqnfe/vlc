@@ -42,7 +42,6 @@ vlc_plugin_begin()
     set_capability(VLC_CAP_KEYSTORE, 0)
     set_callbacks(Open, Close)
     add_shortcut("memory")
-    //set_category(CAT_ADVANCED)
     //set_subcategory(SUBCAT_ADVANCED_MISC)
 vlc_plugin_end ()
 

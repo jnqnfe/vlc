@@ -66,7 +66,6 @@ vlc_plugin_begin ()
     set_callbacks( Open, Close )
     add_shortcut( "subtitle" )
 
-    set_category( CAT_INPUT )
     set_subcategory( SUBCAT_INPUT_DEMUX )
     add_string( "sub-type", "auto", N_("Subtitle format"),
                 SUB_TYPE_LONGTEXT, true )
