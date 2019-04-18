@@ -34,11 +34,17 @@
  * This file implements plugin (module) macros used to define a vlc plugin.
  */
 
+/**
+ * Current plugin ABI version
+ */
+# define MODULE_SYMBOL 4_0_10
+# define MODULE_SUFFIX "__4_0_10"
+
 /* Descriptor callback actions, ignore this! */
 enum vlc_plugin_desc_actions
 {
     /* WARNING: MAKING ANY CHANGES, OTHER THAN INSERTING NEW ITEMS AT THE END
-     * (OF BLOCKS, WHERE MARKED) IS AN ABI BREAK, REQUIRING A BUMP TO THE BELOW
+     * (OF BLOCKS, WHERE MARKED) IS AN ABI BREAK, REQUIRING A BUMP TO THE
      * DEFINED ABI NUMBER! */
 
     VLC_MODULE_CREATE,
@@ -83,12 +89,6 @@ enum vlc_plugin_desc_actions
 
     /* --> Insert new VLC_CONFIG_* entries here <-- */
 };
-
-/**
- * Current plugin ABI version
- */
-# define MODULE_SYMBOL 4_0_10
-# define MODULE_SUFFIX "__4_0_10"
 
 /*****************************************************************************
  * Plugin descriptor setup, ignore this!
