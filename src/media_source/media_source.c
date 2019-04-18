@@ -33,7 +33,7 @@
 #include "media_tree.h"
 
 #ifdef TEST_MEDIA_SOURCE
-#define vlc_module_name "test"
+#define vlc_plugin_name "test"
 #endif /* TEST_MEDIA_SOURCE */
 
 typedef struct

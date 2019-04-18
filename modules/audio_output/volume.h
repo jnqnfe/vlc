@@ -27,7 +27,7 @@
 #include <vlc_aout.h>
 
 #define add_sw_gain() \
-        add_float(MODULE_STRING"-gain", 1., N_("Software gain"), \
+        add_float(PLUGIN_STRING"-gain", 1., N_("Software gain"), \
                   N_("This linear gain will be applied in software."), true) \
              change_float_range(0., 8.)
 
@@ -47,7 +47,7 @@ static int aout_SoftVolumeSet(audio_output_t *aout, float volume)
         return -1;
     sys->soft_gain = gain;
     if (var_InheritBool(aout, "volume-save"))
-        config_PutFloat(MODULE_STRING"-gain", gain);
+        config_PutFloat(PLUGIN_STRING"-gain", gain);
 
     aout_VolumeReport(aout, volume);
     return 0;
@@ -68,7 +68,7 @@ static int aout_SoftMuteSet (audio_output_t *aout, bool mute)
 static void aout_SoftVolumeInit(audio_output_t *aout)
 {
     aout_sys_t *sys = aout->sys;
-    float gain = var_InheritFloat(aout, MODULE_STRING"-gain");
+    float gain = var_InheritFloat(aout, PLUGIN_STRING"-gain");
     bool mute = var_InheritBool(aout, "mute");
 
     aout->volume_set = aout_SoftVolumeSet;

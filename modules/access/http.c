@@ -30,8 +30,8 @@
 # include "config.h"
 #endif
 
-#undef MODULE_STRING
-#define MODULE_STRING "oldhttp"
+#undef PLUGIN_STRING
+#define PLUGIN_STRING "oldhttp"
 
 #include <errno.h>
 

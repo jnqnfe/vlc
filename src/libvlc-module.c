@@ -23,8 +23,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-// Pretend we are a builtin module
-#define MODULE_NAME core
+// Pretend we are a built-in plugin
+#define PLUGIN_NAME core
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
@@ -2766,5 +2766,5 @@ vlc_plugin_end ()
  *****************************************************************************/
 
 #ifdef HAVE_DYNAMIC_PLUGINS
-const char vlc_module_name[] = "main";
+const char vlc_plugin_name[] = "main";
 #endif

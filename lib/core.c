@@ -237,4 +237,4 @@ int64_t libvlc_clock(void)
     return US_FROM_VLC_TICK(vlc_tick_now());
 }
 
-const char vlc_module_name[] = "libvlc";
+const char vlc_plugin_name[] = "libvlc";

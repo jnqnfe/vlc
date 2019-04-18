@@ -187,7 +187,7 @@ vlc_plugin_end()
 
 /* the following is fake code to make the pseudo VLC target for the macOS module compile and link */
 #ifdef MACOS_PSEUDO_VLC
-const char vlc_module_name[] = "macos-pseudo-vlc";
+const char vlc_plugin_name[] = "macos-pseudo-vlc";
 
 int main(int argc, char *argv[])
 {

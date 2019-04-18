@@ -109,12 +109,12 @@ enum vlc_plugin_desc_actions
 #ifdef __PLUGIN__
 # define __VLC_MY_DESCRIPTOR_SYMBOL __VLC_PLUGIN_DESCRIPTOR_SYMBOL
 # define __VLC_MY_EXTRA_SYMBOL( symbol  ) __VLC_EXTRA_SYMBOL( __VLC_SYMBOL_PREFIX, symbol, PLUGIN_ABI_VERSION )
-# define VLC_MODULE_NAME_HIDDEN_SYMBOL \
-    const char vlc_module_name[] = MODULE_STRING;
+# define VLC_PLUGIN_NAME_HIDDEN_SYMBOL \
+    const char vlc_plugin_name[] = PLUGIN_STRING;
 #else
-# define __VLC_MY_DESCRIPTOR_SYMBOL __VLC_DESCRIPTOR_SYMBOL( __VLC_SYMBOL_PREFIX, MODULE_NAME )
-# define __VLC_MY_EXTRA_SYMBOL( symbol  ) __VLC_EXTRA_SYMBOL( __VLC_SYMBOL_PREFIX, symbol, MODULE_NAME )
-# define VLC_MODULE_NAME_HIDDEN_SYMBOL
+# define __VLC_MY_DESCRIPTOR_SYMBOL __VLC_DESCRIPTOR_SYMBOL( __VLC_SYMBOL_PREFIX, PLUGIN_NAME )
+# define __VLC_MY_EXTRA_SYMBOL( symbol  ) __VLC_EXTRA_SYMBOL( __VLC_SYMBOL_PREFIX, symbol, PLUGIN_NAME )
+# define VLC_PLUGIN_NAME_HIDDEN_SYMBOL
 #endif
 
 #define CDECL_SYMBOL
@@ -164,7 +164,7 @@ int CDECL_SYMBOL __VLC_MY_DESCRIPTOR_SYMBOL (vlc_descriptor_cb desc_cb, vlc_plug
     config_item_params_t cfg_params; \
     if (vlc_plugin_set_va (VLC_MODULE_CREATE, &module)) \
         goto error; \
-    if (vlc_module_set_va (VLC_MODULE_NAME, (MODULE_STRING))) \
+    if (vlc_module_set_va (VLC_MODULE_NAME, (PLUGIN_STRING))) \
         goto error;
 
 #define vlc_plugin_end() \
@@ -174,7 +174,7 @@ int CDECL_SYMBOL __VLC_MY_DESCRIPTOR_SYMBOL (vlc_descriptor_cb desc_cb, vlc_plug
 error: \
     return -1; \
 } \
-VLC_MODULE_NAME_HIDDEN_SYMBOL \
+VLC_PLUGIN_NAME_HIDDEN_SYMBOL \
 VLC_METADATA_EXPORTS
 
 /*****************************************************************************

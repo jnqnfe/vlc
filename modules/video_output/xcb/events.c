@@ -34,7 +34,7 @@
 
 #include "events.h"
 
-const char vlc_module_name[] = "xcb";
+const char vlc_plugin_name[] = "xcb";
 
 #pragma GCC visibility push(default)
 

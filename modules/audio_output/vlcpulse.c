@@ -34,7 +34,7 @@
 #include <unistd.h>
 #include <pwd.h>
 
-const char vlc_module_name[] = "vlcpulse";
+const char vlc_plugin_name[] = "vlcpulse";
 
 #undef vlc_pa_error
 void vlc_pa_error (vlc_object_t *obj, const char *msg, pa_context *ctx)
