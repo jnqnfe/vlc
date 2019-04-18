@@ -37,8 +37,7 @@
 /**
  * Current plugin ABI version
  */
-# define MODULE_SYMBOL 4_0_10
-# define MODULE_SUFFIX "__4_0_10"
+#define PLUGIN_ABI_VERSION 4_0_10
 
 /* Descriptor callback actions, ignore this! */
 enum vlc_plugin_desc_actions
@@ -94,26 +93,27 @@ enum vlc_plugin_desc_actions
  * Plugin descriptor setup, ignore this!
  *****************************************************************************/
 
-/* Explanation:
- *
- * if linking a module statically, we will need:
- * #define MODULE_FUNC( zog ) module_foo_zog
- *
- * this can't easily be done with the C preprocessor, thus a few ugly hacks.
- */
+#define __VLC_SYMBOL_PREFIX vlc_entry
 
-/* I need to do _this_ to change « foo bar » to « module_foo_bar » ! */
-#define CONCATENATE( y, z ) CRUDE_HACK( y, z )
-#define CRUDE_HACK( y, z )  y##__##z
+#define __VLC_DESCRIPTOR_SYMBOL( y, z ) __VLC_SYMBOL( y, z )
+#define __VLC_EXTRA_SYMBOL( x, y, z ) __VLC_SYMBOL( x##_##y, z )
+#define __VLC_SYMBOL( y, z )  y##__##z
 
-/* If the module is built-in, then we need to define foo_InitModule instead
- * of InitModule. Same for Activate- and DeactivateModule. */
+#define XSTRINGIFY( s ) STRINGIFY( s )
+#define STRINGIFY( s ) #s
+
+#define __VLC_PLUGIN_DESCRIPTOR_SYMBOL __VLC_DESCRIPTOR_SYMBOL( __VLC_SYMBOL_PREFIX, PLUGIN_ABI_VERSION )
+
+/* If the module is built-in, then we need to define vlc_entry_FOO instead
+ * of vlc_entry_ABIVERSION. */
 #ifdef __PLUGIN__
-# define __VLC_SYMBOL( symbol  ) CONCATENATE( symbol, MODULE_SYMBOL )
+# define __VLC_MY_DESCRIPTOR_SYMBOL __VLC_PLUGIN_DESCRIPTOR_SYMBOL
+# define __VLC_MY_EXTRA_SYMBOL( symbol  ) __VLC_EXTRA_SYMBOL( __VLC_SYMBOL_PREFIX, symbol, PLUGIN_ABI_VERSION )
 # define VLC_MODULE_NAME_HIDDEN_SYMBOL \
     const char vlc_module_name[] = MODULE_STRING;
 #else
-# define __VLC_SYMBOL( symbol )  CONCATENATE( symbol, MODULE_NAME )
+# define __VLC_MY_DESCRIPTOR_SYMBOL __VLC_DESCRIPTOR_SYMBOL( __VLC_SYMBOL_PREFIX, MODULE_NAME )
+# define __VLC_MY_EXTRA_SYMBOL( symbol  ) __VLC_EXTRA_SYMBOL( __VLC_SYMBOL_PREFIX, symbol, MODULE_NAME )
 # define VLC_MODULE_NAME_HIDDEN_SYMBOL
 #endif
 
@@ -155,9 +155,9 @@ EXTERN_SYMBOL typedef int (*vlc_descriptor_cb) (vlc_plugin_t *, enum vlc_plugin_
  */
 #define vlc_plugin_begin() \
 EXTERN_SYMBOL DLL_SYMBOL \
-int CDECL_SYMBOL __VLC_SYMBOL(vlc_entry) (vlc_descriptor_cb, vlc_plugin_t *); \
+int CDECL_SYMBOL __VLC_MY_DESCRIPTOR_SYMBOL (vlc_descriptor_cb, vlc_plugin_t *); \
 EXTERN_SYMBOL DLL_SYMBOL \
-int CDECL_SYMBOL __VLC_SYMBOL(vlc_entry) (vlc_descriptor_cb desc_cb, vlc_plugin_t *context) \
+int CDECL_SYMBOL __VLC_MY_DESCRIPTOR_SYMBOL (vlc_descriptor_cb desc_cb, vlc_plugin_t *context) \
 { \
     module_t *module; \
     module_config_item_t *config = NULL; \
@@ -608,9 +608,9 @@ typedef union
 /* Meta data plugin exports */
 #define VLC_META_EXPORT( name, value ) \
     EXTERN_SYMBOL DLL_SYMBOL const char * CDECL_SYMBOL \
-    __VLC_SYMBOL(vlc_entry_ ## name) (void); \
+    __VLC_MY_EXTRA_SYMBOL(name) (void); \
     EXTERN_SYMBOL DLL_SYMBOL const char * CDECL_SYMBOL \
-    __VLC_SYMBOL(vlc_entry_ ## name) (void) \
+    __VLC_MY_EXTRA_SYMBOL(name) (void) \
     { \
          return value; \
     }

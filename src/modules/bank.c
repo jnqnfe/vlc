@@ -256,7 +256,7 @@ static void module_InitStaticModules(void) { }
 #endif
 
 #ifdef HAVE_DYNAMIC_PLUGINS
-static const char vlc_entry_name[] = "vlc_entry" MODULE_SUFFIX;
+static const char vlc_entry_name[] = XSTRINGIFY(__VLC_PLUGIN_DESCRIPTOR_SYMBOL);
 
 /**
  * Loads a dynamically-linked plug-in into memory and initialize it.
