@@ -108,7 +108,7 @@ void CommonPlacePicture(vlc_object_t *obj, display_win32_area_t *area, vout_disp
     /* Update the window position and size */
     vout_display_cfg_t place_cfg = area->vdcfg;
 
-#if (defined(MODULE_NAME_IS_glwin32))
+#if (defined(PLUGIN_NAME_IS_glwin32))
     /* Reverse vertical alignment as the GL tex are Y inverted */
     if (place_cfg.align.vertical == VLC_VIDEO_ALIGN_TOP)
         place_cfg.align.vertical = VLC_VIDEO_ALIGN_BOTTOM;

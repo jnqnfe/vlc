@@ -22,18 +22,18 @@ libi420_rgb_plugin_la_SOURCES = video_chroma/i420_rgb.c video_chroma/i420_rgb.h 
 
 libi420_yuy2_plugin_la_SOURCES = video_chroma/i420_yuy2.c video_chroma/i420_yuy2.h
 libi420_yuy2_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) \
-	-DMODULE_NAME_IS_i420_yuy2
+	-DPLUGIN_NAME_IS_i420_yuy2
 
 libi420_nv12_plugin_la_SOURCES = video_chroma/i420_nv12.c
 libi420_nv12_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) \
-	-DMODULE_NAME_IS_i420_nv12
+	-DPLUGIN_NAME_IS_i420_nv12
 libi420_nv12_plugin_la_LIBADD = libchroma_copy.la
 
 libi422_i420_plugin_la_SOURCES = video_chroma/i422_i420.c
 
 libi422_yuy2_plugin_la_SOURCES = video_chroma/i422_yuy2.c video_chroma/i422_yuy2.h
 libi422_yuy2_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) \
-	-DMODULE_NAME_IS_i422_yuy2
+	-DPLUGIN_NAME_IS_i422_yuy2
 
 librv32_plugin_la_SOURCES = video_chroma/rv32.c
 
@@ -62,7 +62,7 @@ EXTRA_LTLIBRARIES += libswscale_plugin.la libchroma_omx_plugin.la
 # AltiVec
 libi420_yuy2_altivec_plugin_la_SOURCES = video_chroma/i420_yuy2.c video_chroma/i420_yuy2.h
 libi420_yuy2_altivec_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) \
-	-DMODULE_NAME_IS_i420_yuy2_altivec
+	-DPLUGIN_NAME_IS_i420_yuy2_altivec
 libi420_yuy2_altivec_plugin_la_CFLAGS = $(AM_CFLAGS) $(ALTIVEC_CFLAGS)
 
 if HAVE_ALTIVEC
@@ -77,11 +77,11 @@ libi420_rgb_sse2_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) -DSSE2
 
 libi420_yuy2_sse2_plugin_la_SOURCES = video_chroma/i420_yuy2.c video_chroma/i420_yuy2.h
 libi420_yuy2_sse2_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) \
-	-DMODULE_NAME_IS_i420_yuy2_sse2
+	-DPLUGIN_NAME_IS_i420_yuy2_sse2
 
 libi422_yuy2_sse2_plugin_la_SOURCES = video_chroma/i422_yuy2.c video_chroma/i422_yuy2.h
 libi422_yuy2_sse2_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) \
-	-DMODULE_NAME_IS_i422_yuy2_sse2
+	-DPLUGIN_NAME_IS_i422_yuy2_sse2
 
 if HAVE_SSE2
 chroma_LTLIBRARIES += \
@@ -97,11 +97,11 @@ libi420_rgb_avx2_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) -DAVX2
 
 libi420_yuy2_avx2_plugin_la_SOURCES = video_chroma/i420_yuy2.c video_chroma/i420_yuy2.h
 libi420_yuy2_avx2_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) \
-	-DMODULE_NAME_IS_i420_yuy2_avx2
+	-DPLUGIN_NAME_IS_i420_yuy2_avx2
 
 libi422_yuy2_avx2_plugin_la_SOURCES = video_chroma/i422_yuy2.c video_chroma/i422_yuy2.h
 libi422_yuy2_avx2_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) \
-	-DMODULE_NAME_IS_i422_yuy2_avx2
+	-DPLUGIN_NAME_IS_i422_yuy2_avx2
 
 if HAVE_AVX2
 chroma_LTLIBRARIES += \

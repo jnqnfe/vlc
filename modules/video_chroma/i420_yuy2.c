@@ -35,7 +35,7 @@
 #include <vlc_picture.h>
 #include <vlc_cpu.h>
 
-#if defined (MODULE_NAME_IS_i420_yuy2_altivec) && defined(HAVE_ALTIVEC_H)
+#if defined (PLUGIN_NAME_IS_i420_yuy2_altivec) && defined(HAVE_ALTIVEC_H)
 #   include <altivec.h>
 #endif
 
@@ -43,16 +43,16 @@
 
 #define SRC_FOURCC  "I420,IYUV,YV12"
 
-#if defined (MODULE_NAME_IS_i420_yuy2)
+#if defined (PLUGIN_NAME_IS_i420_yuy2)
 #    define DEST_FOURCC "YUY2,YUNV,YVYU,UYVY,UYNV,Y422,IUYV,Y211"
 #    define VLC_TARGET
-#elif defined (MODULE_NAME_IS_i420_yuy2_sse2)
+#elif defined (PLUGIN_NAME_IS_i420_yuy2_sse2)
 #    define DEST_FOURCC "YUY2,YUNV,YVYU,UYVY,UYNV,Y422,IUYV"
 #    define VLC_TARGET VLC_SSE
-#elif defined (MODULE_NAME_IS_i420_yuy2_altivec)
+#elif defined (PLUGIN_NAME_IS_i420_yuy2_altivec)
 #    define DEST_FOURCC "YUY2,YUNV,YVYU,UYVY,UYNV,Y422"
 #    define VLC_TARGET
-#elif defined (MODULE_NAME_IS_i420_yuy2_avx2)
+#elif defined (PLUGIN_NAME_IS_i420_yuy2_avx2)
 #    define DEST_FOURCC "YUY2,YUNV,YVYU,UYVY,UYNV,Y422,IUYV"
 #    define VLC_TARGET VLC_AVX
 #endif
@@ -68,11 +68,11 @@ static void I420_UYVY           ( filter_t *, picture_t *, picture_t * );
 static picture_t *I420_YUY2_Filter    ( filter_t *, picture_t * );
 static picture_t *I420_YVYU_Filter    ( filter_t *, picture_t * );
 static picture_t *I420_UYVY_Filter    ( filter_t *, picture_t * );
-#if !defined (MODULE_NAME_IS_i420_yuy2_altivec)
+#if !defined (PLUGIN_NAME_IS_i420_yuy2_altivec)
 static void I420_IUYV           ( filter_t *, picture_t *, picture_t * );
 static picture_t *I420_IUYV_Filter    ( filter_t *, picture_t * );
 #endif
-#if defined (MODULE_NAME_IS_i420_yuy2)
+#if defined (PLUGIN_NAME_IS_i420_yuy2)
 static void I420_Y211           ( filter_t *, picture_t *, picture_t * );
 static picture_t *I420_Y211_Filter    ( filter_t *, picture_t * );
 #endif
@@ -81,20 +81,20 @@ static picture_t *I420_Y211_Filter    ( filter_t *, picture_t * );
  * Module descriptor.
  *****************************************************************************/
 vlc_plugin_begin ()
-#if defined (MODULE_NAME_IS_i420_yuy2)
+#if defined (PLUGIN_NAME_IS_i420_yuy2)
     set_description( N_("Conversions from " SRC_FOURCC " to " DEST_FOURCC) )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 80 )
 # define vlc_CPU_capable() (true)
-#elif defined (MODULE_NAME_IS_i420_yuy2_sse2)
+#elif defined (PLUGIN_NAME_IS_i420_yuy2_sse2)
     set_description( N_("SSE2 conversions from " SRC_FOURCC " to " DEST_FOURCC) )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 250 )
 # define vlc_CPU_capable() vlc_CPU_SSE2()
-#elif defined (MODULE_NAME_IS_i420_yuy2_altivec)
+#elif defined (PLUGIN_NAME_IS_i420_yuy2_altivec)
     set_description(
             _("AltiVec conversions from " SRC_FOURCC " to " DEST_FOURCC) );
     set_capability( VLC_CAP_VIDEO_CONVERTER, 250 )
 # define vlc_CPU_capable() vlc_CPU_ALTIVEC()
-#elif defined (MODULE_NAME_IS_i420_yuy2_avx2)
+#elif defined (PLUGIN_NAME_IS_i420_yuy2_avx2)
     set_description( N_("AVX2 conversions from " SRC_FOURCC " to " DEST_FOURCC) )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 260 )
 # define vlc_CPU_capable() vlc_CPU_AVX2()
@@ -141,13 +141,13 @@ static int Activate( vlc_object_t *p_this )
                 case VLC_CODEC_UYVY:
                     p_filter->pf_video_filter = I420_UYVY_Filter;
                     break;
-#if !defined (MODULE_NAME_IS_i420_yuy2_altivec)
+#if !defined (PLUGIN_NAME_IS_i420_yuy2_altivec)
                 case VLC_FOURCC('I','U','Y','V'):
                     p_filter->pf_video_filter = I420_IUYV_Filter;
                     break;
 #endif
 
-#if defined (MODULE_NAME_IS_i420_yuy2)
+#if defined (PLUGIN_NAME_IS_i420_yuy2)
                 case VLC_CODEC_Y211:
                     p_filter->pf_video_filter = I420_Y211_Filter;
                     break;
@@ -180,10 +180,10 @@ static inline unsigned long long read_cycles(void)
 VIDEO_FILTER_WRAPPER( I420_YUY2 )
 VIDEO_FILTER_WRAPPER( I420_YVYU )
 VIDEO_FILTER_WRAPPER( I420_UYVY )
-#if !defined (MODULE_NAME_IS_i420_yuy2_altivec)
+#if !defined (PLUGIN_NAME_IS_i420_yuy2_altivec)
 VIDEO_FILTER_WRAPPER( I420_IUYV )
 #endif
-#if defined (MODULE_NAME_IS_i420_yuy2)
+#if defined (PLUGIN_NAME_IS_i420_yuy2)
 VIDEO_FILTER_WRAPPER( I420_Y211 )
 #endif
 
@@ -201,7 +201,7 @@ static void I420_YUY2( filter_t *p_filter, picture_t *p_source,
 
     int i_x, i_y;
 
-#if defined (MODULE_NAME_IS_i420_yuy2_altivec)
+#if defined (PLUGIN_NAME_IS_i420_yuy2_altivec)
 #define VEC_NEXT_LINES( ) \
     p_line1  = p_line2; \
     p_line2 += p_dest->p->i_pitch; \
@@ -294,7 +294,7 @@ static void I420_YUY2( filter_t *p_filter, picture_t *p_source,
                                - p_dest->p->i_visible_pitch
                                - ( p_filter->fmt_out.video.i_x_offset * 2 );
 
-#if !defined(MODULE_NAME_IS_i420_yuy2_sse2) && !defined(MODULE_NAME_IS_i420_yuy2_avx2)
+#if !defined(PLUGIN_NAME_IS_i420_yuy2_sse2) && !defined(PLUGIN_NAME_IS_i420_yuy2_avx2)
     for( i_y = (p_filter->fmt_in.video.i_y_offset + p_filter->fmt_in.video.i_visible_height) / 2 ; i_y-- ; )
     {
         p_line1 = p_line2;
@@ -321,11 +321,11 @@ static void I420_YUY2( filter_t *p_filter, picture_t *p_source,
         p_line2 += i_dest_margin;
     }
 
-#if defined (MODULE_NAME_IS_i420_yuy2_altivec)
+#if defined (PLUGIN_NAME_IS_i420_yuy2_altivec)
     }
 #endif
 
-#elif defined(MODULE_NAME_IS_i420_yuy2_sse2)
+#elif defined(PLUGIN_NAME_IS_i420_yuy2_sse2)
 
     /* SSE2 aligned store/load is faster, requires 16-byte alignment */
 
@@ -385,7 +385,7 @@ static void I420_YUY2( filter_t *p_filter, picture_t *p_source,
     /* make sure all SSE2 stores are visible thereafter */
     SSE2_END;
 
-#elif defined(MODULE_NAME_IS_i420_yuy2_avx2)
+#elif defined(PLUGIN_NAME_IS_i420_yuy2_avx2)
 
     /* AVX2 aligned store/load can require 32-byte alignment */
 
@@ -449,7 +449,7 @@ static void I420_YUY2( filter_t *p_filter, picture_t *p_source,
     }
     /* make sure all AVX2 stores are visible thereafter */
     AVX2_END;
-#endif // defined(MODULE_NAME_IS_i420_yuy2_avx2)
+#endif // defined(PLUGIN_NAME_IS_i420_yuy2_avx2)
 }
 
 /*****************************************************************************
@@ -466,7 +466,7 @@ static void I420_YVYU( filter_t *p_filter, picture_t *p_source,
 
     int i_x, i_y;
 
-#if defined (MODULE_NAME_IS_i420_yuy2_altivec)
+#if defined (PLUGIN_NAME_IS_i420_yuy2_altivec)
 #define VEC_NEXT_LINES( ) \
     p_line1  = p_line2; \
     p_line2 += p_dest->p->i_pitch; \
@@ -556,7 +556,7 @@ static void I420_YVYU( filter_t *p_filter, picture_t *p_source,
                                - p_dest->p->i_visible_pitch
                                - ( p_filter->fmt_out.video.i_x_offset * 2 );
 
-#if !defined(MODULE_NAME_IS_i420_yuy2_sse2) && !defined(MODULE_NAME_IS_i420_yuy2_avx2)
+#if !defined(PLUGIN_NAME_IS_i420_yuy2_sse2) && !defined(PLUGIN_NAME_IS_i420_yuy2_avx2)
     for( i_y = (p_filter->fmt_in.video.i_y_offset + p_filter->fmt_in.video.i_visible_height) / 2 ; i_y-- ; )
     {
         p_line1 = p_line2;
@@ -583,11 +583,11 @@ static void I420_YVYU( filter_t *p_filter, picture_t *p_source,
         p_line2 += i_dest_margin;
     }
 
-#if defined (MODULE_NAME_IS_i420_yuy2_altivec)
+#if defined (PLUGIN_NAME_IS_i420_yuy2_altivec)
     }
 #endif
 
-#elif defined(MODULE_NAME_IS_i420_yuy2_sse2)
+#elif defined(PLUGIN_NAME_IS_i420_yuy2_sse2)
 
     /* SSE2 aligned store/load is faster, requires 16-byte alignment */
 
@@ -647,7 +647,7 @@ static void I420_YVYU( filter_t *p_filter, picture_t *p_source,
     /* make sure all SSE2 stores are visible thereafter */
     SSE2_END;
 
-#elif defined(MODULE_NAME_IS_i420_yuy2_avx2)
+#elif defined(PLUGIN_NAME_IS_i420_yuy2_avx2)
 
     /* AVX2 aligned store/load can require 32-byte alignment */
 
@@ -711,7 +711,7 @@ static void I420_YVYU( filter_t *p_filter, picture_t *p_source,
     }
     /* make sure all AVX2 stores are visible thereafter */
     AVX2_END;
-#endif // defined(MODULE_NAME_IS_i420_yuy2_avx2)
+#endif // defined(PLUGIN_NAME_IS_i420_yuy2_avx2)
 }
 
 /*****************************************************************************
@@ -728,7 +728,7 @@ static void I420_UYVY( filter_t *p_filter, picture_t *p_source,
 
     int i_x, i_y;
 
-#if defined (MODULE_NAME_IS_i420_yuy2_altivec)
+#if defined (PLUGIN_NAME_IS_i420_yuy2_altivec)
 #define VEC_NEXT_LINES( ) \
     p_line1  = p_line2; \
     p_line2 += p_dest->p->i_pitch; \
@@ -818,7 +818,7 @@ static void I420_UYVY( filter_t *p_filter, picture_t *p_source,
                                - p_dest->p->i_visible_pitch
                                - ( p_filter->fmt_out.video.i_x_offset * 2 );
 
-#if !defined(MODULE_NAME_IS_i420_yuy2_sse2) && !defined(MODULE_NAME_IS_i420_yuy2_avx2)
+#if !defined(PLUGIN_NAME_IS_i420_yuy2_sse2) && !defined(PLUGIN_NAME_IS_i420_yuy2_avx2)
     for( i_y = (p_filter->fmt_in.video.i_y_offset + p_filter->fmt_in.video.i_visible_height) / 2 ; i_y-- ; )
     {
         p_line1 = p_line2;
@@ -845,11 +845,11 @@ static void I420_UYVY( filter_t *p_filter, picture_t *p_source,
         p_line2 += i_dest_margin;
     }
 
-#if defined (MODULE_NAME_IS_i420_yuy2_altivec)
+#if defined (PLUGIN_NAME_IS_i420_yuy2_altivec)
     }
 #endif
 
-#elif defined(MODULE_NAME_IS_i420_yuy2_sse2)
+#elif defined(PLUGIN_NAME_IS_i420_yuy2_sse2)
 
     /* SSE2 aligned store/load is faster, requires 16-byte alignment */
 
@@ -909,7 +909,7 @@ static void I420_UYVY( filter_t *p_filter, picture_t *p_source,
     /* make sure all SSE2 stores are visible thereafter */
     SSE2_END;
 
-#elif defined(MODULE_NAME_IS_i420_yuy2_avx2)
+#elif defined(PLUGIN_NAME_IS_i420_yuy2_avx2)
 
     /* AVX2 aligned store/load can require 32-byte alignment */
 
@@ -973,10 +973,10 @@ static void I420_UYVY( filter_t *p_filter, picture_t *p_source,
     }
     /* make sure all AVX2 stores are visible thereafter */
     AVX2_END;
-#endif // defined(MODULE_NAME_IS_i420_yuy2_avx2)
+#endif // defined(PLUGIN_NAME_IS_i420_yuy2_avx2)
 }
 
-#if !defined (MODULE_NAME_IS_i420_yuy2_altivec)
+#if !defined (PLUGIN_NAME_IS_i420_yuy2_altivec)
 /*****************************************************************************
  * I420_IUYV: planar YUV 4:2:0 to interleaved packed UYVY 4:2:2
  *****************************************************************************/
@@ -987,12 +987,12 @@ static void I420_IUYV( filter_t *p_filter, picture_t *p_source,
     /* FIXME: TODO ! */
     msg_Err( p_filter, "I420_IUYV unimplemented, please harass <sam@zoy.org>" );
 }
-#endif // !defined (MODULE_NAME_IS_i420_yuy2_altivec)
+#endif // !defined (PLUGIN_NAME_IS_i420_yuy2_altivec)
 
 /*****************************************************************************
  * I420_Y211: planar YUV 4:2:0 to packed YUYV 2:1:1
  *****************************************************************************/
-#if defined (MODULE_NAME_IS_i420_yuy2)
+#if defined (PLUGIN_NAME_IS_i420_yuy2)
 static void I420_Y211( filter_t *p_filter, picture_t *p_source,
                                            picture_t *p_dest )
 {

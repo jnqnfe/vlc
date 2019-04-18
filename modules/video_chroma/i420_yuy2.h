@@ -22,7 +22,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#if defined( MODULE_NAME_IS_i420_yuy2_sse2 )
+#if defined( PLUGIN_NAME_IS_i420_yuy2_sse2 )
 
 #if defined(CAN_COMPILE_SSE2)
 
@@ -285,7 +285,7 @@ movdqu    %%xmm1, 16(%1)  # Store high UYVY                             \n\
 
 #endif
 
-#elif defined( MODULE_NAME_IS_i420_yuy2_avx2 )
+#elif defined( PLUGIN_NAME_IS_i420_yuy2_avx2 )
 
 #if defined(CAN_COMPILE_AVX2)
 

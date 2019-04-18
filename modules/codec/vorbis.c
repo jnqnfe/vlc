@@ -41,7 +41,7 @@
 
 #include <ogg/ogg.h>
 
-#ifdef MODULE_NAME_IS_tremor
+#ifdef PLUGIN_NAME_IS_tremor
 # include <tremor/ivorbiscodec.h>
 # define INTERLEAVE_TYPE int32_t
 
@@ -186,7 +186,7 @@ static block_t *Encode   ( encoder_t *, block_t * );
 vlc_plugin_begin ()
     set_shortname( "Vorbis" )
     set_description( N_("Vorbis audio decoder") )
-#ifdef MODULE_NAME_IS_tremor
+#ifdef PLUGIN_NAME_IS_tremor
     set_capability( VLC_CAP_AUDIO_DECODER, 90 )
 #else
     set_capability( VLC_CAP_AUDIO_DECODER, 100 )
@@ -256,7 +256,7 @@ static int OpenCommon( vlc_object_t *p_this, bool b_packetizer )
     }
     else
     {
-#ifdef MODULE_NAME_IS_tremor
+#ifdef PLUGIN_NAME_IS_tremor
         p_dec->fmt_out.i_codec = VLC_CODEC_S32N;
 #else
         p_dec->fmt_out.i_codec = VLC_CODEC_FL32;
@@ -513,7 +513,7 @@ static void Interleave( INTERLEAVE_TYPE *p_out, const INTERLEAVE_TYPE **pp_in,
     for( int j = 0; j < i_samples; j++ )
         for( int i = 0; i < i_nb_channels; i++ )
         {
-#ifdef MODULE_NAME_IS_tremor
+#ifdef PLUGIN_NAME_IS_tremor
             union { int32_t i; uint32_t u;} spl;
 
             spl.u = ((uint32_t)pp_in[i][j]) << 8;
