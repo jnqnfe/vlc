@@ -378,7 +378,7 @@ static void print_item(const module_t *m, const module_config_item_t *item,
                 for (size_t i = 0; i < (size_t)i_count; i++)
                     len += strlen(ppsz_values[i]) + 1;
 
-                typebuf = malloc(len);
+                typebuf = (len) ? malloc(len) : NULL;
                 if (typebuf == NULL)
                     goto end_string;
 
@@ -423,7 +423,7 @@ static void print_item(const module_t *m, const module_config_item_t *item,
                     len += strlen(ppsz_texts[i])
                            + 4 * sizeof (int64_t) + 5;
 
-                typebuf = malloc(len);
+                typebuf = (len) ? malloc(len) : NULL;
                 if (typebuf == NULL)
                     goto end_integer;
 
