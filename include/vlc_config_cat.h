@@ -210,9 +210,9 @@ static const struct config_category_t categories_array[] =
 
     { CAT_AUDIO,                   N_("Audio"),               AUDIO_HELP         },
     { SUBCAT_AUDIO_GENERAL,        N_("Audio"),               AUDIO_GENERAL_HELP },
-    { SUBCAT_AUDIO_RESAMPLER,      N_("Audio resampler"),     AFILTER_HELP       },
     { SUBCAT_AUDIO_AFILTER,        N_("Filters"),             AFILTER_HELP       },
     { SUBCAT_AUDIO_AOUT,           N_("Output modules"),      AOUT_HELP          },
+    { SUBCAT_AUDIO_RESAMPLER,      N_("Resampler"),           AFILTER_HELP       },
     { SUBCAT_AUDIO_VISUAL,         N_("Visualizations"),      AVISUAL_HELP       },
 
     { CAT_VIDEO,                   N_("Video"),               VIDEO_HELP         },
