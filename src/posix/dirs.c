@@ -213,7 +213,7 @@ static char *config_GetTypeDir (const char *xdg_name)
             char *out;
             if (strncmp (ptr, "$HOME", 5))
             {
-                path = malloc (linelen);
+                path = (linelen > 0) ? malloc (linelen) : NULL;
                 if (path == NULL)
                     continue;
                 out = path;
@@ -222,7 +222,7 @@ static char *config_GetTypeDir (const char *xdg_name)
             {   /* Prefix with $HOME */
                 const size_t homelen = strlen (home);
                 ptr += 5;
-                path = malloc (homelen + linelen - 5);
+                path = ((homelen + linelen - 5) > 0) ? malloc (homelen + linelen - 5) : NULL;
                 if (path == NULL)
                     continue;
                 memcpy (path, home, homelen);
