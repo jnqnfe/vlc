@@ -1818,7 +1818,7 @@ static int MP4_ReadBox_esds( stream_t *p_stream, MP4_Box_t *p_box )
         MP4_READBOX_EXIT( 0 );
 
     es_descriptor.p_decConfigDescr->i_decoder_specific_info_len = i_len;
-    es_descriptor.p_decConfigDescr->p_decoder_specific_info = malloc( i_len );
+    es_descriptor.p_decConfigDescr->p_decoder_specific_info = (i_len > 0) ? malloc( i_len ) : NULL;
     if( unlikely( es_descriptor.p_decConfigDescr->p_decoder_specific_info == NULL ) )
         MP4_READBOX_EXIT( 0 );
 
@@ -1954,7 +1954,7 @@ static int MP4_ReadBox_vpcC( stream_t *p_stream, MP4_Box_t *p_box )
 
     if( p_vpcC->i_codec_init_datasize )
     {
-        p_vpcC->p_codec_init_data = malloc( i_read );
+        p_vpcC->p_codec_init_data = (i_read > 0) ? malloc( i_read ) : NULL;
         if( !p_vpcC->p_codec_init_data )
             MP4_READBOX_EXIT( 0 );
         memcpy( p_vpcC->p_codec_init_data, p_peek, i_read );
@@ -3266,7 +3266,7 @@ static int MP4_ReadBox_cmvd( stream_t *p_stream, MP4_Box_t *p_box )
 
     p_box->data.p_cmvd->i_compressed_size = i_read;
 
-    if( !( p_box->data.p_cmvd->p_data = malloc( i_read ) ) )
+    if( !( p_box->data.p_cmvd->p_data = (i_read > 0) ? malloc( i_read ) : NULL ) )
         MP4_READBOX_EXIT( 0 );
 
     /* now copy compressed data */
@@ -4051,7 +4051,7 @@ static int MP4_ReadBox_sdtp( stream_t *p_stream, MP4_Box_t *p_box )
     MP4_GETVERSIONFLAGS( p_box->data.p_sdtp );
     i_sample_count = i_read;
 
-    p_sdtp->p_sample_table = malloc( i_sample_count );
+    p_sdtp->p_sample_table = (i_sample_count > 0) ? malloc( i_sample_count ) : NULL;
     if( unlikely(p_sdtp->p_sample_table == NULL) )
         MP4_READBOX_EXIT( 0 );
 
@@ -4283,8 +4283,8 @@ static int MP4_ReadBox_Reference( stream_t *p_stream, MP4_Box_t *p_box )
             p_data->i_reference_count )
         MP4_READBOX_EXIT( 0 );
 
-    p_data->p_references = malloc( sizeof(*p_data->p_references) *
-                                   p_data->i_reference_count );
+    p_data->p_references = (p_data->i_reference_count <= 0) ? NULL :
+        malloc( sizeof(*p_data->p_references) * p_data->i_reference_count );
     if( !p_data->p_references )
         MP4_READBOX_EXIT( 0 );
     for( uint16_t i=0; i<p_data->i_reference_count; i++ )
@@ -4420,8 +4420,8 @@ static int MP4_ReadBox_iloc( stream_t *p_stream, MP4_Box_t *p_box )
             MP4_READBOX_EXIT( 0 );
         }
 
-        p_data->p_items[i].p_extents = malloc( p_data->p_items[i].i_extent_count *
-                                               sizeof(p_data->p_items[i].p_extents[0]) );
+        p_data->p_items[i].p_extents = (p_data->p_items[i].i_extent_count <= 0) ? NULL :
+            malloc( p_data->p_items[i].i_extent_count * sizeof(p_data->p_items[i].p_extents[0]) );
         for( uint16_t j=0; j<p_data->p_items[i].i_extent_count; j++ )
         {
             if( i_version > 0 )
@@ -4622,7 +4622,8 @@ static int MP4_ReadBox_ipma( stream_t *p_stream, MP4_Box_t *p_box )
         MP4_READBOX_EXIT( 0 );
     }
 
-    p_data->p_entries = malloc( sizeof(p_data->p_entries[0]) * p_data->i_entry_count );
+    p_data->p_entries = (p_data->i_entry_count <= 0) ? NULL :
+        malloc( sizeof(p_data->p_entries[0]) * p_data->i_entry_count );
     if( !p_data->p_entries )
     {
         p_data->i_entry_count = 0;
@@ -4649,7 +4650,7 @@ static int MP4_ReadBox_ipma( stream_t *p_stream, MP4_Box_t *p_box )
             MP4_READBOX_EXIT( 0 );
         }
 
-        p_data->p_entries[i].p_assocs =
+        p_data->p_entries[i].p_assocs = (p_data->p_entries[i].i_association_count <= 0) ? NULL :
                 malloc( sizeof(p_data->p_entries[i].p_assocs[0]) *
                         p_data->p_entries[i].i_association_count );
         if( !p_data->p_entries[i].p_assocs )

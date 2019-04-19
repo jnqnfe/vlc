@@ -189,7 +189,7 @@ static uint8_t * AVCi_create_AnnexB( uint16_t i_res, bool b_interlaced, int *pi_
                      &p_sps, &i_sps, &p_pps, &i_pps ) )
     {
         int i_size = i_pps + i_sps + 2 * 5;
-        if( (p_data = (uint8_t *) malloc(i_size)) )
+        if( (p_data = (i_size > 0 ) ? (uint8_t *) malloc(i_size) : NULL) )
         {
             *pi_avcC = i_size;
             memcpy(p_data, rgi_startcode, 4);

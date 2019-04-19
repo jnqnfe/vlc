@@ -1321,7 +1321,7 @@ int SetupSpuES( demux_t *p_demux, mp4_track_t *p_track, MP4_Box_t *p_sample )
                 p_track->b_forced_spu = true;
             }
 
-            p_track->fmt.p_extra = malloc( p_text->i_data );
+            p_track->fmt.p_extra = (p_text->i_data > 0) ? malloc( p_text->i_data ) : NULL;
             if( p_track->fmt.p_extra )
             {
                 memcpy( p_track->fmt.p_extra, p_text->p_data, p_text->i_data );

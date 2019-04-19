@@ -347,7 +347,8 @@ static int SetPictureProperties( demux_t *p_demux, uint32_t i_item_id,
                        ((fmt->i_codec == VLC_CODEC_HEVC && p_prop->i_type == ATOM_hvcC) ||
                         (fmt->i_codec == VLC_CODEC_H264 && p_prop->i_type == ATOM_avcC) ))
                     {
-                        fmt->p_extra = malloc( p_prop->data.p_binary->i_blob );
+                        fmt->p_extra = (p_prop->data.p_binary->i_blob <= 0) ? NULL :
+                            malloc( p_prop->data.p_binary->i_blob );
                         if( fmt->p_extra )
                         {
                             fmt->i_extra = p_prop->data.p_binary->i_blob;
@@ -359,7 +360,8 @@ static int SetPictureProperties( demux_t *p_demux, uint32_t i_item_id,
                     if( fmt->i_codec == VLC_CODEC_AV1 && !fmt->i_extra &&
                         p_prop->data.p_av1C->i_av1C >= 4 )
                     {
-                        fmt->p_extra = malloc( p_prop->data.p_av1C->i_av1C );
+                        fmt->p_extra = (p_prop->data.p_av1C->i_av1C <= 0) ? NULL :
+                            malloc( p_prop->data.p_av1C->i_av1C );
                         if( fmt->p_extra )
                         {
                             fmt->i_extra = p_prop->data.p_av1C->i_av1C ;
