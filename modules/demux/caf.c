@@ -518,7 +518,7 @@ static int ReadDescChunk( demux_t *p_demux )
     return VLC_SUCCESS;
 }
 
-/*  This is lifted from cafdec.c in libavformat (function read_kuki_chunk). Appearantly the
+/*  This is lifted from cafdec.c in libavformat (function read_kuki_chunk). Apparently the
     alac library expects the cookie to be of length 36, but current alac files
     have a cookie length of 24.
  */
@@ -541,7 +541,7 @@ static int ProcessALACCookie( demux_t *p_demux, const uint8_t *p, uint64_t i_siz
     }
 
     p_sys->fmt.i_extra = i_extra;
-    p_sys->fmt.p_extra = malloc( i_extra );
+    p_sys->fmt.p_extra = (i_extra) ? malloc( i_extra ) : NULL;
 
     if( !p_sys->fmt.p_extra )
         return VLC_ENOMEM;
