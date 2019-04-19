@@ -200,9 +200,15 @@ static int vlc_cache_load_config(module_config_item_t *cfg, block_t *file)
         cfg->value.psz = (psz != NULL) ? strdup (cfg->orig.psz) : NULL;
 
         if (cfg->list_count)
+        {
             cfg->list.psz = xmalloc (cfg->list_count * sizeof (char *));
+            cfg->list_cb_name = NULL;
+        }
         else
+        {
             LOAD_STRING(cfg->list_cb_name);
+            cfg->list.psz = NULL;
+        }
         for (unsigned i = 0; i < cfg->list_count; i++)
         {
             LOAD_STRING (cfg->list.psz[i]);
@@ -228,7 +234,7 @@ static int vlc_cache_load_config(module_config_item_t *cfg, block_t *file)
         LOAD_ARRAY(cfg->list.i, cfg->list_count);
     }
 
-    cfg->list_text = xmalloc (cfg->list_count * sizeof (char *));
+    cfg->list_text = (cfg->list_count) ? xmalloc (cfg->list_count * sizeof (char *)) : NULL;
     for (unsigned i = 0; i < cfg->list_count; i++)
     {
         LOAD_STRING (cfg->list_text[i]);
@@ -301,7 +307,7 @@ static int vlc_cache_load_module(vlc_plugin_t *plugin, block_t *file)
         goto error;
     else
     {
-        module->pp_shortcuts =
+        module->pp_shortcuts = (module->i_shortcuts <= 0) ? NULL :
             xmalloc (sizeof (*module->pp_shortcuts) * module->i_shortcuts);
         for (unsigned j = 0; j < module->i_shortcuts; j++)
             LOAD_STRING(module->pp_shortcuts[j]);
