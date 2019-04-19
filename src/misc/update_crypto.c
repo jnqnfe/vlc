@@ -203,7 +203,8 @@ static size_t parse_signature_v4_packet( signature_packet_t *p_sig,
     if( i_read + 4 > i_sig_len )
         return 0;
 
-    p_sig->specific.v4.hashed_data = (uint8_t*) malloc( i_hashed_data_len );
+    p_sig->specific.v4.hashed_data = (i_hashed_data_len) ?
+        (uint8_t*) malloc( i_hashed_data_len ) : NULL;
     if( !p_sig->specific.v4.hashed_data )
         return 0;
     memcpy( p_sig->specific.v4.hashed_data, p_buf, i_hashed_data_len );
@@ -218,7 +219,8 @@ static size_t parse_signature_v4_packet( signature_packet_t *p_sig,
     if( i_read + 2 > i_sig_len )
         return 0;
 
-    p_sig->specific.v4.unhashed_data = (uint8_t*) malloc( i_unhashed_data_len );
+    p_sig->specific.v4.unhashed_data = (i_unhashed_data_len) ?
+        (uint8_t*) malloc( i_unhashed_data_len ) : NULL;
     if( !p_sig->specific.v4.unhashed_data )
         return 0;
 
@@ -609,6 +611,8 @@ int parse_public_key( const uint8_t *p_key_data, size_t i_key_len,
     const uint8_t *pos = p_key_data;
     const uint8_t *max_pos = pos + i_key_len;
 
+    assert(i_key_len > 0);
+
     int i_status = 0;
 #define PUBLIC_KEY_FOUND    0x01
 #define USER_ID_FOUND       0x02
@@ -949,7 +953,7 @@ public_key_t *download_key( vlc_object_t *p_this,
         return NULL;
     }
 
-    uint8_t *p_buf = (uint8_t*)malloc( i_size );
+    uint8_t *p_buf = (i_size) ? (uint8_t*)malloc( i_size ) : NULL;
     if( !p_buf )
     {
         vlc_stream_Delete( p_stream );
@@ -1017,7 +1021,7 @@ int download_signature( vlc_object_t *p_this, signature_packet_t *p_sig,
     }
 
     msg_Dbg( p_this, "Downloading signature (%"PRIu64" bytes)", i_size );
-    uint8_t *p_buf = (uint8_t*)malloc( i_size );
+    uint8_t *p_buf = (i_size) ? (uint8_t*)malloc( i_size ) : NULL;
     if( !p_buf )
     {
         vlc_stream_Delete( p_stream );
