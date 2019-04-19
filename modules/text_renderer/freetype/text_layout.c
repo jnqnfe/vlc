@@ -1706,7 +1706,7 @@ static int LayoutRubyText( filter_t *p_filter,
 {
     unsigned int i_max_advance_x;
 
-    text_style_t **pp_styles = malloc(sizeof(*pp_styles) * i_uchars);
+    text_style_t **pp_styles = (i_uchars) ? malloc(sizeof(*pp_styles) * i_uchars) : NULL;
     for(int i=0;i<i_uchars;i++)
         pp_styles[i] = p_style;
 
