@@ -815,7 +815,7 @@ static uint8_t* download_chunk( stream_t *s,
         return NULL;
     }
 
-    uint8_t* data = malloc( size );
+    uint8_t* data = (size) ? malloc( size ) : NULL;
     if( ! data )
     {
         msg_Err(s, "Couldn't allocate chunk" );
@@ -1142,7 +1142,7 @@ static void* live_thread( void* p )
         else
         {
             int64_t size = stream_Size( download_stream );
-            uint8_t* data = malloc( size );
+            uint8_t* data = (size) ? malloc( size ) : NULL;
             int read = vlc_stream_Read( download_stream, data,
                                     size );
             if( read < size )
