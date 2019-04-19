@@ -58,12 +58,11 @@ static void Close( demux_t * );
     "A negative value means an unlimited play time.")
 
 vlc_plugin_begin ()
-    set_description( N_("MP4 stream demuxer") )
-    set_shortname( N_("MP4") )
+    set_description( "MP4" )
+    set_shortname( "MP4" )
     set_capability( VLC_CAP_DEMUX, 240, Open, Close )
 
     add_submodule()
-        set_description( N_("HEIF demuxer") )
         set_shortname( "heif" )
         set_capability( VLC_CAP_DEMUX, 239, OpenHEIF, CloseHEIF )
 

@@ -184,8 +184,8 @@ static void Close( sout_stream_t * );
 #define MAX_EMPTY_BLOCKS 200
 
 vlc_plugin_begin ()
-    set_shortname( N_("RTP"))
-    set_description( N_("RTP stream output") )
+    set_shortname( "RTP" )
+    set_description( "RTP" )
     add_shortcut( "rtp", "vod" )
     set_capability( VLC_CAP_SOUT_STREAM, 0, Open, Close )
 

@@ -90,7 +90,7 @@ static const int level_zvbi_values[] =
 { VBI_WST_LEVEL_1, VBI_WST_LEVEL_1p5, VBI_WST_LEVEL_2p5, VBI_WST_LEVEL_3p5 };
 
 vlc_plugin_begin ()
-    set_description( N_("VBI and Teletext decoder") )
+    set_description( N_("VBI and Teletext") )
     set_shortname( N_("VBI & Teletext") )
     set_capability( VLC_CAP_SPU_DECODER, 51, Open, Close )
 

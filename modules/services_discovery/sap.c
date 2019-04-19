@@ -105,7 +105,7 @@
 VLC_SD_PROBE_HELPER("sap", N_("Network streams (SAP)"), SD_CAT_LAN)
 
 vlc_plugin_begin ()
-    set_shortname( N_("SAP"))
+    set_shortname( "SAP" )
     set_description( N_("Network streams (SAP)") )
     set_capability( VLC_CAP_SERVICES_DISCOVERY, 0, Open, Close )
 

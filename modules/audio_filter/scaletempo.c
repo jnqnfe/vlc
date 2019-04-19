@@ -48,16 +48,17 @@ static block_t *DoWork( filter_t *, block_t * );
 static int  OpenPitch( filter_t * );
 static void ClosePitch( filter_t * );
 static block_t *DoPitchWork( filter_t *, block_t * );
-# define MODULE_DESC N_("Pitch Shifter")
-# define MODULES_SHORTNAME N_("Audio pitch changer")
+# define MODULES_NAME N_("Pitch shifter")
+# define MODULE_HELP N_("Audio pitch changer")
 #else
-# define MODULE_DESC N_("Audio tempo scaler synched with rate")
-# define MODULES_SHORTNAME N_("Scaletempo")
+# define MODULES_NAME N_("Scaletempo")
+# define MODULE_HELP N_("Audio tempo scaler synched with rate")
 #endif
 
 vlc_plugin_begin ()
-    set_description( MODULE_DESC )
-    set_shortname( MODULES_SHORTNAME )
+    set_help( MODULE_HELP )
+    set_description( MODULES_NAME )
+    set_shortname( MODULES_NAME )
 #ifdef PITCH_SHIFTER
     set_capability( VLC_CAP_AUDIO_FILTER, 0, OpenPitch, ClosePitch )
 #else

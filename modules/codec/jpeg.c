@@ -107,14 +107,15 @@ static block_t *EncodeBlock(encoder_t *, picture_t *);
  */
 vlc_plugin_begin()
     /* decoder main module */
-    set_description(N_("JPEG image decoder"))
+    set_description("JPEG")
+    set_shortname("JPEG")
     add_shortcut("jpeg")
     set_capability(VLC_CAP_VIDEO_DECODER, 1000, OpenDecoder, CloseDecoder)
 
     /* encoder submodule */
     add_submodule()
     add_shortcut("jpeg")
-    set_description(N_("JPEG image encoder"))
+    set_description("JPEG")
     set_capability(VLC_CAP_ENCODER, 1000, OpenEncoder, CloseEncoder)
 
     set_subcategory(SUBCAT_INPUT_VCODEC)

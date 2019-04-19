@@ -72,8 +72,8 @@ static void DemuxClose( demux_t * );
 #define CFG_PREFIX "oss-"
 
 vlc_plugin_begin ()
-    set_shortname( N_("OSS") )
-    set_description( N_("OSS input") )
+    set_shortname( "OSS" )
+    set_description( "OSS" )
     add_shortcut( "oss" )
     set_capability( VLC_CAP_ACCESS, 0, DemuxOpen, DemuxClose )
 

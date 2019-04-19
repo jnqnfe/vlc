@@ -51,7 +51,9 @@ static picture_t *GREY_YUY2_Filter( filter_t *, picture_t * );
  * Module descriptor.
  *****************************************************************************/
 vlc_plugin_begin ()
-    set_description( N_("Conversions from " SRC_FOURCC " to " DEST_FOURCC) )
+    set_shortname( N_("Grey to YUY") )
+    set_description( N_("Grey to YUY") )
+    set_help( N_("Conversions from " SRC_FOURCC " to " DEST_FOURCC) )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 80, Activate, NULL )
 vlc_plugin_end ()
 

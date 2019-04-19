@@ -46,7 +46,7 @@ static void Close(vout_display_t *);
 
 vlc_plugin_begin()
     set_shortname("OpenGL")
-    set_description(N_("OpenGL video output for Windows"))
+    set_description(N_("OpenGL for Windows"))
     add_shortcut("glwin32", "opengl")
     set_capability(VLC_CAP_VOUT_DISPLAY, 275, Open, Close)
 

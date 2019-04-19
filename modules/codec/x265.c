@@ -43,7 +43,7 @@ static int  Open (encoder_t *);
 static void Close(encoder_t *);
 
 vlc_plugin_begin ()
-    set_description(N_("H.265/HEVC encoder (x265)"))
+    set_description("H.265/HEVC (x265)")
     set_capability(VLC_CAP_ENCODER, 200, Open, Close)
     //set_subcategory(SUBCAT_INPUT_VCODEC)
 vlc_plugin_end ()

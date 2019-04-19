@@ -55,7 +55,7 @@ static const char *const rate_names[] = { N_("192000 Hz"), N_("176400 Hz"),
 vlc_plugin_begin ()
     set_help (HELP_TEXT)
 
-    set_shortname (N_("ALSA"))
+    set_shortname ("ALSA")
     set_description (N_("ALSA audio capture"))
     add_shortcut ("alsa")
     set_capability (VLC_CAP_ACCESS, 0, Open, Close)

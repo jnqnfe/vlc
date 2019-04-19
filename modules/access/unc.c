@@ -372,7 +372,7 @@ vlc_plugin_begin()
     set_help(N_("Microsoft Windows networking (UNC) input"))
 
     set_shortname("UNC")
-    set_description(N_("UNC input"))
+    set_description("UNC")
     add_shortcut("smb")
     set_capability(VLC_CAP_ACCESS, 0, Open, Close)
 

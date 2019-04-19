@@ -39,7 +39,8 @@
 static int  OpenFilter( filter_t * );
 
 vlc_plugin_begin ()
-    set_description( N_("Audio filter for simple channel mixing") )
+    set_help( N_("Audio filter for simple channel mixing") )
+    set_description( N_("Simple") )
     set_capability( VLC_CAP_AUDIO_CONVERTER, 10, OpenFilter, NULL )
     //set_subcategory( SUBCAT_AUDIO_AFILTER )
 vlc_plugin_end ()

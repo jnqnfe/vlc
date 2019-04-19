@@ -175,7 +175,7 @@ static void CloseDecoder  ( decoder_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("Subtitles"))
-    set_description( N_("Text subtitle decoder") )
+    set_description( N_("Text subtitles") )
     set_capability( VLC_CAP_SPU_DECODER, 50, OpenDecoder, CloseDecoder )
 
     set_subcategory( SUBCAT_INPUT_SCODEC )

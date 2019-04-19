@@ -76,7 +76,7 @@ static void Close(demux_t *);
     "real-time input slaves.")
 
 vlc_plugin_begin()
-    set_description(N_("Image demuxer"))
+    set_description(N_("Image"))
     set_shortname(N_("Image"))
     set_capability(VLC_CAP_DEMUX, 10, Open, Close)
 

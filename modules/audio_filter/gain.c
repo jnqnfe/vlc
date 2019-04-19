@@ -60,7 +60,7 @@ typedef struct
 
 vlc_plugin_begin()
     set_shortname( N_("Gain") )
-    set_description( N_("Gain control filter") )
+    set_description( N_("Gain control") )
     set_capability( VLC_CAP_AUDIO_FILTER, 0, Open, Close )
 
     set_subcategory( SUBCAT_AUDIO_AFILTER )

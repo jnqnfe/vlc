@@ -69,17 +69,23 @@ static void Deactivate ( filter_t * );
 
 vlc_plugin_begin ()
 #if defined (AVX2)
-    set_description( N_( "AVX2 I420,IYUV,YV12 to "
+    set_shortname( N_("i420 to RGB") )
+    set_description( N_("i420 to RGB") )
+    set_help( N_( "AVX2 accelerated I420,IYUV,YV12 to "
                         "RV15,RV16,RV32 conversions") )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 130, Activate, Deactivate )
 # define vlc_CPU_capable() vlc_CPU_AVX2()
 #elif defined (SSE2)
-    set_description( N_( "SSE2 I420,IYUV,YV12 to "
+    set_shortname( N_("i420 to RGB") )
+    set_description( N_("i420 to RGB") )
+    set_help( N_( "SSE2 accelerated I420,IYUV,YV12 to "
                         "RV15,RV16,RV24,RV32 conversions") )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 120, Activate, Deactivate )
 # define vlc_CPU_capable() vlc_CPU_SSE2()
 #else
-    set_description( N_("I420,IYUV,YV12 to "
+    set_shortname( N_("i420 to RGB") )
+    set_description( N_("i420 to RGB") )
+    set_help( N_("I420,IYUV,YV12 to "
                        "RGB8,RV15,RV16,RV24,RV32 conversions") )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 80, Activate, Deactivate )
 # define vlc_CPU_capable() (true)

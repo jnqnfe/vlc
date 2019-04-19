@@ -68,7 +68,7 @@ static const char *const ppsz_color_descriptions[] = {
 vlc_plugin_begin ()
     set_help(COLOR_HELP)
 
-    set_description( N_("Color threshold filter") )
+    set_description( N_("Color threshold") )
     set_shortname( N_("Color threshold" ))
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 

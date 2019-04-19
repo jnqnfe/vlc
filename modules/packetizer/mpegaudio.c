@@ -82,7 +82,7 @@ static void Close( decoder_t * );
  * Module descriptor
  *****************************************************************************/
 vlc_plugin_begin ()
-    set_description( N_("MPEG audio layer I/II/III packetizer") )
+    set_description( N_("MPEG audio layer I/II/III") )
     set_capability( VLC_CAP_PACKETIZER, 10, Open, Close )
     //set_subcategory( SUBCAT_INPUT_ACODEC )
 vlc_plugin_end ()

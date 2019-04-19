@@ -34,8 +34,9 @@ static int Open (vlc_inhibit_t *);
 static void Close (vlc_inhibit_t *);
 
 vlc_plugin_begin ()
-    set_shortname (N_("XDG-screensaver") )
-    set_description (N_("XDG screen saver inhibition") )
+    set_shortname (N_("XDG idle") )
+    set_description (N_("XDG idle inhibitor") )
+    set_help (N_("XDG screen saver inhibition") )
     set_capability (VLC_CAP_INHIBIT, 10, Open, Close)
     //set_subcategory (SUBCAT_ADVANCED_MISC)
 vlc_plugin_end ()

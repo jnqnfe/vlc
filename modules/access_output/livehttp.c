@@ -106,8 +106,8 @@ static void Close( sout_access_out_t * );
 #define INITIAL_SEG_LONGTEXT N_("The number of the first segment generated")
 
 vlc_plugin_begin ()
-    set_description( N_("HTTP Live streaming output") )
-    set_shortname( N_("LiveHTTP" ))
+    set_description( N_("HTTP Live streaming") )
+    set_shortname( "LiveHTTP" )
     add_shortcut( "livehttp" )
     set_capability( VLC_CAP_SOUT_ACCESS, 0, Open, Close )
 

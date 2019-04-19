@@ -82,7 +82,7 @@ static int  Open ( demux_t * );
 static void Close( demux_t * );
 
 vlc_plugin_begin()
-    set_shortname( N_("RDP") )
+    set_shortname( "RDP" )
     add_shortcut( "rdp" )
     set_description( N_("RDP Remote Desktop") )
     set_capability( VLC_CAP_ACCESS, 0, Open, Close )

@@ -416,7 +416,7 @@ static int OpenGL(vlc_gl_t *gl, unsigned width, unsigned height)
 }
 
 vlc_plugin_begin ()
-    set_shortname (N_("EGL"))
+    set_shortname ("EGL")
     set_description (N_("EGL extension for OpenGL"))
     add_shortcut ("egl")
     set_capability (VLC_CAP_OPENGL, 50, OpenGL, Close)

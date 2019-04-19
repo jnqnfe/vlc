@@ -58,7 +58,8 @@ static int   Send( sout_stream_t *, void *, block_t * );
 #define DURATION_LONGTEXT N_("Default: 90 (seconds)")
 
 vlc_plugin_begin ()
-    set_description( N_("Chromaprint stream output") )
+    set_shortname( "Chromaprint" )
+    set_description( "Chromaprint" )
     add_shortcut( "chromaprint" )
     set_capability( VLC_CAP_SOUT_STREAM, 0, Open, Close )
 

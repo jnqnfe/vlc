@@ -68,7 +68,7 @@ typedef struct
 
 vlc_plugin_begin ()
     set_shortname( "DCA" )
-    set_description( N_("DTS Coherent Acoustics audio decoder") )
+    set_description( N_("DTS Coherent Acoustics") )
     set_capability( VLC_CAP_AUDIO_DECODER, 60, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_ACODEC )

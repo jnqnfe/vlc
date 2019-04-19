@@ -76,7 +76,7 @@ typedef struct
 vlc_plugin_begin ()
     set_help( HELP_TEXT )
 
-    set_shortname( N_("Stereo Enhancer") )
+    set_shortname( N_("Stereo enhancer") )
     set_description( N_("Simple stereo widening effect") )
     set_capability( VLC_CAP_AUDIO_FILTER, 0, Open, Close )
 

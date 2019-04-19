@@ -39,7 +39,7 @@
 static int  Open ( sout_access_out_t * );
 
 vlc_plugin_begin ()
-    set_description( N_("Dummy stream output") )
+    set_description( N_("Dummy output") )
     set_shortname( N_( "Dummy" ))
     add_shortcut( "dummy" )
     set_capability( VLC_CAP_SOUT_ACCESS, 0, Open, NULL )

@@ -59,7 +59,8 @@ static void Close     ( sout_stream_t * );
 
 vlc_plugin_begin()
     set_shortname( N_("Set ID"))
-    set_description( N_("Change the ID of an elementary stream"))
+    set_description( N_("Set ID"))
+    set_help( N_("Change the ID of an elementary stream"))
     add_shortcut( "setid" )
     set_capability( VLC_CAP_SOUT_STREAM, 50, OpenId, Close )
 

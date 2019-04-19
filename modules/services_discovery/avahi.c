@@ -64,7 +64,7 @@ vlc_plugin_begin ()
     VLC_SD_PROBE_SUBMODULE
 
     add_submodule() \
-        set_description( N_( "Avahi Renderer Discovery" ) )
+        set_description( "Avahi" )
         add_shortcut( "mdns_renderer", "avahi_renderer" )
         set_capability( VLC_CAP_RENDERER_DISCOVERY, 0, OpenRD, CloseRD )
 

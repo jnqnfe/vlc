@@ -48,7 +48,7 @@ typedef struct
 } decoder_sys_t;
 
 vlc_plugin_begin()
-    set_description(N_("HDMV TextST subtitles decoder"))
+    set_description("HDMV TextST")
     set_capability(VLC_CAP_SPU_DECODER, 10, Open, Close)
     //set_subcategory(SUBCAT_INPUT_SCODEC)
 vlc_plugin_end()

@@ -60,7 +60,7 @@ static const char *const ppsz_sub_type[] =
 };
 
 vlc_plugin_begin ()
-    set_shortname( N_("Subtitles"))
+    set_shortname( N_("Subtitles") )
     set_description( N_("Text subtitle parser") )
     add_shortcut( "subtitle" )
     set_capability( VLC_CAP_DEMUX, 0, Open, Close )

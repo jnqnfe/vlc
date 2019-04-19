@@ -329,7 +329,7 @@ static int vlc_vidsplit_Open(vout_display_t *vd,
 
 vlc_plugin_begin()
     set_shortname(N_("Splitter"))
-    set_description(N_("Video splitter display plugin"))
+    set_description(N_("Video splitter"))
     set_capability(VLC_CAP_VOUT_DISPLAY, 0, vlc_vidsplit_Open, vlc_vidsplit_Close)
 
     set_subcategory(SUBCAT_VIDEO_VOUT)

@@ -77,7 +77,7 @@ static void Close(vout_display_t *vd);
 
 vlc_plugin_begin ()
     set_shortname("Framebuffer")
-    set_description(N_("GNU/Linux framebuffer video output"))
+    set_description(N_("GNU/Linux framebuffer"))
     set_capability(VLC_CAP_VOUT_DISPLAY, 30, Open, Close)
 
     set_subcategory(SUBCAT_VIDEO_VOUT)

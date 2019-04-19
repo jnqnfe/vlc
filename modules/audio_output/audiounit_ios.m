@@ -635,8 +635,9 @@ Open(audio_output_t *aout)
 #pragma mark module descriptor
 
 vlc_plugin_begin ()
-    set_shortname("audiounit_ios")
-    set_description("AudioUnit output for iOS")
+    set_shortname("AudioUnit")
+    set_description("AudioUnit (iOS)")
+    add_shortcut("audiounit_ios")
     set_capability(VLC_CAP_AUDIO_OUTPUT, 101, Open, Close)
     add_sw_gain()
     //set_subcategory(SUBCAT_AUDIO_AOUT)

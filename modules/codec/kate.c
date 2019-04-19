@@ -264,14 +264,14 @@ static const char *const ppsz_color_descriptions[] = {
 vlc_plugin_begin ()
     set_help( HELP_TEXT )
 
-    set_shortname( N_("Kate"))
-    set_description( N_("Kate overlay decoder") )
+    set_shortname( "Kate" )
+    set_description( "Kate" )
     add_shortcut( "kate" )
     set_capability( VLC_CAP_SPU_DECODER, 50, OpenDecoder, CloseDecoder )
 
 #ifdef ENABLE_PACKETIZER
     add_submodule ()
-    set_description( N_("Kate text subtitles packetizer") )
+    set_description( "Kate" )
     add_shortcut( "kate" )
     set_capability( VLC_CAP_PACKETIZER, 100, OpenPacketizer, CloseDecoder )
 #endif

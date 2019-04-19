@@ -56,7 +56,8 @@ static void Close  ( sout_mux_t * );
 #define SOUT_CFG_PREFIX "sout-ogg-"
 
 vlc_plugin_begin ()
-    set_description( N_("Ogg/OGM muxer") )
+    set_description( "Ogg" )
+    set_shortname( "Ogg" )
     add_shortcut( "ogg", "ogm" )
     set_capability( VLC_CAP_SOUT_MUX, 10, Open, Close )
 

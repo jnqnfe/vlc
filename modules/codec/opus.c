@@ -55,14 +55,14 @@ static void CloseEncoder  ( encoder_t * );
 #endif
 
 vlc_plugin_begin ()
-    set_description( N_("Opus audio decoder") )
-    set_shortname( N_("Opus") )
+    set_description( "Opus" )
+    set_shortname( "Opus" )
     set_capability( VLC_CAP_AUDIO_DECODER, 100, OpenDecoder, CloseDecoder )
 
 #ifdef ENABLE_SOUT
     add_submodule ()
-    set_description( N_("Opus audio encoder") )
-    set_shortname( N_("Opus") )
+    set_description( "Opus" )
+    set_shortname( "Opus" )
     set_capability( VLC_CAP_ENCODER, 150, OpenEncoder, CloseEncoder )
 #endif
 

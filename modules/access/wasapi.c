@@ -486,8 +486,8 @@ static void Close (demux_t *demux)
 #define LOOPBACK_LONGTEXT N_("Record an audio rendering endpoint.")
 
 vlc_plugin_begin()
-    set_shortname(N_("WASAPI"))
-    set_description(N_("Windows Audio Session API input"))
+    set_shortname("WASAPI")
+    set_description(N_("Windows Audio Session API"))
     add_shortcut("wasapi")
     set_capability(VLC_CAP_ACCESS, 0, Open, Close)
 

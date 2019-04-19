@@ -528,7 +528,7 @@ static void Close(vout_display_t *vd)
  *****************************************************************************/
 vlc_plugin_begin()
     set_shortname("Caca")
-    set_description(N_("Color ASCII art video output"))
+    set_description(N_("Color ASCII art"))
     set_capability(VLC_CAP_VOUT_DISPLAY, 15, Open, Close)
     //set_subcategory(SUBCAT_VIDEO_VOUT)
 vlc_plugin_end()

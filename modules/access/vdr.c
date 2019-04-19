@@ -82,7 +82,7 @@ static void Close( stream_t * );
 vlc_plugin_begin ()
     set_help( HELP_TEXT )
 
-    set_shortname( N_("VDR") )
+    set_shortname( "VDR" )
     set_description( N_("VDR recordings") )
     add_shortcut( "vdr", "directory", "dir", "file" )
     set_capability( VLC_CAP_ACCESS, 60, Open, Close )

@@ -97,7 +97,7 @@ static int  GraphChange  ( void *p_arg );
  *****************************************************************************/
 vlc_plugin_begin ()
     set_shortname( "JACK" )
-    set_description( N_("JACK audio output") )
+    set_description( "JACK" )
     set_capability( VLC_CAP_AUDIO_OUTPUT, 100, Open, Close )
 
     set_subcategory( SUBCAT_AUDIO_AOUT )

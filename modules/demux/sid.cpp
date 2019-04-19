@@ -49,8 +49,8 @@ static int  Open (demux_t *);
 static void Close (demux_t *);
 
 vlc_plugin_begin ()
-    set_shortname ("sid")
-    set_description ( N_("C64 sid demuxer") )
+    set_shortname ("Sid")
+    set_description ( N_("C64 sid") )
     set_capability (VLC_CAP_DEMUX, 100, Open, Close)
     //set_subcategory (SUBCAT_INPUT_DEMUX)
 vlc_plugin_end ()

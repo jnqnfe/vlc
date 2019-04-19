@@ -77,7 +77,7 @@ static void Close( video_splitter_t * );
 vlc_plugin_begin()
     set_help(PANORAMIX_HELP)
 
-    set_description( N_("Panoramix: wall with overlap video filter") )
+    set_description( N_("Panoramix: wall with overlap") )
     set_shortname( N_("Panoramix" ))
     add_shortcut( "panoramix" )
     set_capability( VLC_CAP_VIDEO_SPLITTER, 0, Open, Close )

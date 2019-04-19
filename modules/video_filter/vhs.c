@@ -102,7 +102,7 @@ static int  Open ( filter_t * );
 static void Close( filter_t * );
 
 vlc_plugin_begin()
-    set_description( N_("VHS movie effect video filter") )
+    set_description( N_("VHS movie effect") )
     set_shortname(   N_("VHS movie" ) )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Open, Close )
     //set_subcategory( SUBCAT_VIDEO_VFILTER )

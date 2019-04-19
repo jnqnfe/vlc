@@ -65,9 +65,9 @@ VLC_SD_PROBE_HELPER( "dsm", N_("Windows networks"), SD_CAT_LAN )
 
 vlc_plugin_begin ()
     set_help(DSM_HELP)
-    set_shortname( "dsm" )
-    set_description( N_("libdsm SMB input") )
-    add_shortcut( "smb", "cifs" )
+    set_shortname( "DSM" )
+    set_description( N_("SMB (using libdsm)") )
+    add_shortcut( "dsm", "smb", "cifs" )
     set_capability( VLC_CAP_ACCESS, 20, Open, Close )
 
     add_submodule()

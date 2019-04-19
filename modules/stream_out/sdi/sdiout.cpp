@@ -174,8 +174,8 @@ static int OpenSDIOutput(sout_stream_t *p_stream)
 
 vlc_plugin_begin ()
 
-    set_shortname(N_("SDI output"))
-    set_description(N_("SDI stream output"))
+    set_shortname("SDI")
+    set_description("SDI")
     add_shortcut("sdiout")
     set_capability(VLC_CAP_SOUT_STREAM, 0, OpenSDIOutput, CloseSDIOutput)
 

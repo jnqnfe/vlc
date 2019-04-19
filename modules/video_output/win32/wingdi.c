@@ -48,7 +48,7 @@ static void Close(vout_display_t *);
 
 vlc_plugin_begin ()
     set_shortname("GDI")
-    set_description(N_("Windows GDI video output"))
+    set_description("Windows GDI")
     set_capability(VLC_CAP_VOUT_DISPLAY, 110, Open, Close)
     //set_subcategory(SUBCAT_VIDEO_VOUT)
 vlc_plugin_end ()

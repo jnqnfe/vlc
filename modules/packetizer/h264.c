@@ -56,7 +56,7 @@ static int  Open ( decoder_t * );
 static void Close( decoder_t * );
 
 vlc_plugin_begin ()
-    set_description( N_("H.264 video packetizer") )
+    set_description( "H.264" )
     set_capability( VLC_CAP_PACKETIZER, 50, Open, Close )
     //set_subcategory( SUBCAT_SOUT_PACKETIZER )
 vlc_plugin_end ()

@@ -67,7 +67,7 @@ static void satip_close(stream_t *);
 
 vlc_plugin_begin()
     set_shortname("satip")
-    set_description( N_("SAT>IP Receiver Plugin") )
+    set_description( N_("SAT>IP receiver") )
     set_capability(VLC_CAP_ACCESS, 201, satip_open, satip_close)
     add_shortcut("rtsp", "satip")
 

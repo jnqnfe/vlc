@@ -49,10 +49,9 @@ static int  Open ( demux_t * );
     "live stream (from a camera).")
 
 vlc_plugin_begin ()
-    set_shortname( "MJPEG")
-    set_description( N_("M-JPEG camera demuxer") )
+    set_shortname( "MJPEG" )
+    set_description( N_("M-JPEG camera") )
     set_capability( VLC_CAP_DEMUX, 5, Open, NULL )
-
     set_subcategory( SUBCAT_INPUT_DEMUX )
     add_float_with_range( "mjpeg-fps", 0.0, 0.0, FLT_MAX, FPS_TEXT, FPS_LONGTEXT, false )
 vlc_plugin_end ()

@@ -74,9 +74,9 @@ static void Close( demux_t * );
 
 /* Module descriptor */
 vlc_plugin_begin()
-    set_shortname( N_( "DCP" ) )
+    set_shortname( "DCP" )
     add_shortcut( "dcp" )
-    set_description( N_( "Digital Cinema Package module" ) )
+    set_description( N_( "Digital Cinema Package" ) )
     set_capability( VLC_CAP_ACCESS, 0, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_ACCESS )

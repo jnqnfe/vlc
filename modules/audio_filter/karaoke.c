@@ -31,7 +31,7 @@ static int Open (filter_t *);
 
 vlc_plugin_begin ()
     set_shortname (N_("Karaoke"))
-    set_description (N_("Simple Karaoke filter"))
+    set_description (N_("Karaoke"))
     set_capability (VLC_CAP_AUDIO_FILTER, 0, Open, NULL)
     //set_subcategory (SUBCAT_AUDIO_AFILTER)
 vlc_plugin_end ()

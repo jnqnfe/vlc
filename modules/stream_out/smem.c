@@ -92,8 +92,8 @@ static void Close( sout_stream_t * );
 #define SOUT_PREFIX_AUDIO SOUT_CFG_PREFIX"audio-"
 
 vlc_plugin_begin ()
-    set_shortname( N_("Smem"))
-    set_description( N_("Stream output to memory buffer") )
+    set_shortname( "Smem" )
+    set_description( N_("Memory buffer ouput") )
     add_shortcut( "smem" )
     set_capability( VLC_CAP_SOUT_STREAM, 0, Open, Close )
 

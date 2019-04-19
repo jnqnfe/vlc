@@ -227,8 +227,9 @@ static void Close (vlc_inhibit_t *ih)
  * Module descriptor
  */
 vlc_plugin_begin ()
-    set_shortname (N_("D-Bus screensaver"))
-    set_description (N_("D-Bus screen saver inhibition"))
+    set_shortname (N_("D-Bus idle"))
+    set_description (N_("D-Bus idle inhibitor"))
+    set_help (N_("D-Bus screen saver inhibition"))
     set_capability (VLC_CAP_INHIBIT, 20, Open, Close)
     //set_subcategory (SUBCAT_ADVANCED_MISC)
 vlc_plugin_end ()

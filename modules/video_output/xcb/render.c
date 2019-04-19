@@ -707,8 +707,8 @@ static const char *filter_descs[] = {
 };
 
 vlc_plugin_begin()
-    set_shortname(N_("RENDER"))
-    set_description(N_("X11 RENDER video output (XCB)"))
+    set_shortname("RENDER")
+    set_description("X11 RENDER (XCB)")
     add_shortcut("x11-render", "xcb-render", "render")
     set_capability(VLC_CAP_VOUT_DISPLAY, 200, Open, Close)
 

@@ -202,7 +202,7 @@ static void Close(intf_thread_t *intf)
 
 vlc_plugin_begin()
     set_shortname(N_("WinMsg"))
-    set_description(N_("Windows messages interface"))
+    set_description(N_("Windows messages"))
     set_capability(VLC_CAP_INTERFACE, 0, Open, Close)
 
     /* Kept so that module is found by cat-based module control */

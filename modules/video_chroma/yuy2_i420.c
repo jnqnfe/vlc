@@ -53,7 +53,9 @@ static picture_t *UYVY_I420_Filter    ( filter_t *, picture_t * );
  * Module descriptor
  *****************************************************************************/
 vlc_plugin_begin ()
-    set_description( N_("Conversions from " SRC_FOURCC " to " DEST_FOURCC) )
+    set_shortname( N_("YUY2 to i420") )
+    set_description( N_("YUY2 to i420") )
+    set_help( N_("Conversions from " SRC_FOURCC " to " DEST_FOURCC) )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 80, Activate, NULL )
 vlc_plugin_end ()
 

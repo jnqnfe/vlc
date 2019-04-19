@@ -45,7 +45,7 @@ static block_t *DoWork( filter_t *, block_t * );
  * Module descriptor
  *****************************************************************************/
 vlc_plugin_begin ()
-    set_description( N_("Nearest-neighbor audio resampler") )
+    set_description( N_("Nearest-neighbor") )
     set_capability( VLC_CAP_AUDIO_CONVERTER, 2, Create, NULL )
 
     add_submodule()

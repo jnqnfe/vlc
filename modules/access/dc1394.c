@@ -48,8 +48,8 @@ static int  Open ( demux_t * );
 static void Close( demux_t * );
 
 vlc_plugin_begin()
-    set_shortname( N_("DC1394") )
-    set_description( N_("IIDC Digital Camera (FireWire) input") )
+    set_shortname( "DC1394" )
+    set_description( N_("IIDC Digital Camera (FireWire)") )
     set_capability( VLC_CAP_ACCESS, 0, Open, Close )
 vlc_plugin_end()
 

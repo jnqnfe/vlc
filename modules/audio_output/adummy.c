@@ -33,7 +33,7 @@ static int Open( audio_output_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("Dummy") )
-    set_description( N_("Dummy audio output") )
+    set_description( N_("Dummy output") )
     add_shortcut( "dummy" )
     set_capability( VLC_CAP_AUDIO_OUTPUT, 0, Open, NULL )
 vlc_plugin_end ()

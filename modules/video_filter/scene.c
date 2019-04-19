@@ -93,7 +93,7 @@ static void SavePicture( filter_t *, picture_t * );
 vlc_plugin_begin ()
     set_help(SCENE_HELP)
 
-    set_shortname( N_( "Scene filter" ) )
+    set_shortname( N_( "Scene" ) )
     set_description( N_( "Scene video filter" ) )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 

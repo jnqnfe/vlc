@@ -234,8 +234,8 @@ static void Close( stream_t *p_access )
 #define TIMEOUT_LONGTEXT N_("UDP source timeout (secs), -1 is infinite.")
 
 vlc_plugin_begin()
-    set_shortname(N_("UDP"))
-    set_description(N_("UDP input"))
+    set_shortname("UDP")
+    set_description("UDP")
     add_shortcut("udp", "udpstream", "udp4", "udp6")
     set_capability(VLC_CAP_ACCESS, 0, Open, Close)
 

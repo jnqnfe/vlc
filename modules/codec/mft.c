@@ -59,7 +59,7 @@ static int  Open(decoder_t *);
 static void Close(decoder_t *);
 
 vlc_plugin_begin()
-    set_description(N_("Media Foundation Transform decoder"))
+    set_description(N_("Media Foundation Transform"))
     add_shortcut("mft")
     set_capability(VLC_CAP_VIDEO_DECODER, 1, Open, Close)
 

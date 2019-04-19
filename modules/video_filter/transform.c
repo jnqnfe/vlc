@@ -57,7 +57,7 @@ static const char * const type_list_text[] = { N_("Rotate by 90 degrees"),
 vlc_plugin_begin()
     set_help(N_("Rotate or flip the video"))
 
-    set_description(N_("Video transformation filter"))
+    set_description(N_("Video transformation"))
     set_shortname(N_("Transformation"))
     add_shortcut("transform")
     set_capability(VLC_CAP_VIDEO_FILTER, 0, Open, Close)

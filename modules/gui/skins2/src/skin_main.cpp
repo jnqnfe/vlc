@@ -491,7 +491,7 @@ static void WindowClose( vout_window_t *pWnd )
 
 vlc_plugin_begin ()
     set_shortname( N_("Skins"))
-    set_description( N_("Skinnable Interface") )
+    set_description( N_("Skinnable") )
     add_shortcut( "skins" )
     set_capability( VLC_CAP_INTERFACE, 30, Open, Close )
 

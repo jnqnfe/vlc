@@ -96,8 +96,8 @@ static void Close( demux_t * );
 #define DEFAULT_FRAME_BUFFER_SIZE 250000
 
 vlc_plugin_begin ()
-    set_description( N_("RTP/RTSP/SDP demuxer (using Live555)" ) )
-    set_shortname( "RTP/RTSP")
+    set_description( N_("RTP/RTSP/SDP (using Live555)" ) )
+    set_shortname( "RTP/RTSP" )
     add_shortcut( "live", "livedotcom" )
     set_capability( VLC_CAP_DEMUX, 50, Open, Close )
 

@@ -331,8 +331,8 @@ static void Close(demux_t *p_demux)
  * Module descriptor
  *****************************************************************************/
 vlc_plugin_begin ()
-set_shortname(N_("AVFoundation Audio Capture"))
-set_description(N_("AVFoundation audio capture module."))
+set_shortname(N_("AVFoundation Audio"))
+set_description(N_("AVFoundation audio capture"))
 add_shortcut("qtsound")
 set_capability(VLC_CAP_ACCESS, 0, Open, Close)
 //set_subcategory(SUBCAT_INPUT_ACCESS)

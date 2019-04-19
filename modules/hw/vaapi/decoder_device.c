@@ -258,7 +258,9 @@ Open(vlc_decoder_device *device, vout_window_t *window)
 #endif
 
 vlc_plugin_begin ()
-    set_description("VA-API decoder device for " DESCRIPTION_SUFFIX)
+    set_shortname("VA-API decoder device")
+    set_description("VA-API decoder device")
+    set_help("VA-API decoder device for " DESCRIPTION_SUFFIX)
     add_shortcut("vaapi", SHORTCUT)
     set_capability(VLC_CAP_HW_DECODER_DEVICE, PRIORITY, Open, Close)
     //set_subcategory(SUBCAT_VIDEO_VOUT)

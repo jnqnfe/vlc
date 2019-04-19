@@ -77,10 +77,10 @@ static const char *const enc_hq_list_text[] = {
 
 vlc_plugin_begin ()
     set_help( HELP_TEXT )
-    set_shortname( "FFmpeg")
+    set_shortname( "FFmpeg" )
 
     /* decoder main module */
-    set_description( N_("FFmpeg audio/video decoder") )
+    set_description( "FFmpeg" )
 
     add_shortcut("ffmpeg")
     set_capability(VLC_CAP_VIDEO_DECODER, 70, InitVideoDec, EndVideoDec)
@@ -97,7 +97,7 @@ vlc_plugin_begin ()
     /* encoder submodule */
     add_submodule ()
     add_shortcut( "ffmpeg" )
-    set_description( N_("FFmpeg audio/video encoder") )
+    set_description( "FFmpeg" )
     set_capability( VLC_CAP_ENCODER, 100, InitVideoEnc, EndVideoEnc )
 #endif /* ENABLE_SOUT */
 

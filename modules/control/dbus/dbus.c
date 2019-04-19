@@ -162,7 +162,7 @@ static void player_vout_on_fullscreen_changed(vlc_player_t *,
  *****************************************************************************/
 vlc_plugin_begin ()
     set_shortname( N_("DBus"))
-    set_description( N_("D-Bus control interface") )
+    set_description( N_("D-Bus control") )
     set_capability( VLC_CAP_INTERFACE, 0, Open, Close )
 vlc_plugin_end ()
 

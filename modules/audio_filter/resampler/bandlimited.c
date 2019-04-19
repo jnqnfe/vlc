@@ -83,7 +83,7 @@ typedef struct
  * Module descriptor
  *****************************************************************************/
 vlc_plugin_begin ()
-    set_description( N_("Audio filter for band-limited interpolation resampling") )
+    set_description( N_("Band-limited interpolation resampling") )
     set_capability( VLC_CAP_AUDIO_CONVERTER, 20, OpenFilter, CloseFilter )
 
     add_submodule()

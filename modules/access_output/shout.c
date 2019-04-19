@@ -107,7 +107,7 @@ static void Close( sout_access_out_t * );
                            "shoutcast. Requires Ogg streaming for icecast." )
 
 vlc_plugin_begin ()
-    set_description( N_("IceCAST output") )
+    set_description( "IceCAST" )
     set_shortname( "Shoutcast" )
     add_shortcut( "shout" )
     set_capability( VLC_CAP_SOUT_ACCESS, 0, Open, Close )

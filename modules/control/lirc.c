@@ -56,7 +56,7 @@ static void Close   ( intf_thread_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("Infrared") )
-    set_description( N_("Infrared remote control interface") )
+    set_description( N_("Infrared remote control") )
     set_capability( VLC_CAP_INTERFACE, 0, Open, Close )
 
     set_subcategory( SUBCAT_INTERFACE_CONTROL )

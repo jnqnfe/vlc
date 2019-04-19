@@ -63,8 +63,8 @@ static void Close( demux_t * );
     "Automatically connect VLC input ports to available output ports." )
 
 vlc_plugin_begin ()
-     set_description( N_("JACK audio input") )
-     set_shortname( N_( "JACK Input" ) )
+     set_description( "JACK" )
+     set_shortname( "JACK" )
      add_shortcut( "jack" )
      set_capability( VLC_CAP_ACCESS, 0, Open, Close )
 

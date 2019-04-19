@@ -41,7 +41,7 @@ static block_t *Encode( encoder_t *p_enc, picture_t *p_pict );
  * Module descriptor
  *****************************************************************************/
 vlc_plugin_begin ()
-    set_description( N_("Raw video encoder for RTP") )
+    set_description( N_("Raw video for RTP") )
     add_shortcut( "rtpvideo" )
     set_capability( VLC_CAP_ENCODER, 50, OpenEncoder, NULL )
     //set_subcategory( SUBCAT_INPUT_VCODEC )

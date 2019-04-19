@@ -76,7 +76,7 @@ static void Close          (intf_thread_t *);
 
 vlc_plugin_begin ()
     set_shortname("Ncurses")
-    set_description(N_("Ncurses interface"))
+    set_description("Ncurses")
     add_shortcut("curses")
     set_capability(VLC_CAP_INTERFACE, 10, Open, Close)
 

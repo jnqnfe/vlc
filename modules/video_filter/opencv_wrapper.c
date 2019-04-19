@@ -66,8 +66,8 @@ static const char *const output_list_text[] = { N_("Don't display any video"),
   N_("Display the input video"), N_("Display the processed video")};
 
 vlc_plugin_begin ()
-    set_description( N_("OpenCV video filter wrapper") )
-    set_shortname( N_("OpenCV" ))
+    set_description( N_("OpenCV wrapper") )
+    set_shortname( N_("OpenCV") )
     add_shortcut( "opencv_wrapper" )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 

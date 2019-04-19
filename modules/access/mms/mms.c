@@ -59,7 +59,7 @@ static void Close( demux_t * );
 
 vlc_plugin_begin ()
     set_shortname( "MMS" )
-    set_description( N_("Microsoft Media Server (MMS) input") )
+    set_description( N_("Microsoft Media Server (MMS)") )
     add_shortcut( "mms", "mmsu", "mmst", "mmsh" )
     set_capability( VLC_CAP_ACCESS, -1, Open, Close )
 

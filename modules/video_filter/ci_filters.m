@@ -758,30 +758,37 @@ vlc_plugin_begin()
     set_description(N_("Mac OS X hardware video filters"))
 
     add_submodule()
+    set_shortname(N_("CI Adjust"))
     add_shortcut("adjust")
     set_capability(VLC_CAP_VIDEO_FILTER, 0, OpenAdjust, Close)
 
     add_submodule()
+    set_shortname(N_("CI Invert"))
     add_shortcut("invert")
     set_capability(VLC_CAP_VIDEO_FILTER, 0, OpenInvert, Close)
 
     add_submodule()
+    set_shortname(N_("CI Posterize"))
     add_shortcut("posterize")
     set_capability(VLC_CAP_VIDEO_FILTER, 0, OpenPosterize, Close)
 
     add_submodule()
+    set_shortname(N_("CI Sepia"))
     add_shortcut("sepia")
     set_capability(VLC_CAP_VIDEO_FILTER, 0, OpenSepia, Close)
 
     add_submodule()
+    set_shortname(N_("CI Sharpen"))
     add_shortcut("sharpen")
     set_capability(VLC_CAP_VIDEO_FILTER, 0, OpenSharpen, Close)
 
     add_submodule()
+    set_shortname(N_("CI Psychedelic"))
     add_shortcut("psychedelic")
     set_capability(VLC_CAP_VIDEO_FILTER, 0, OpenPsychedelic, Close)
 
     add_submodule()
+    set_shortname(N_("CI"))
     add_shortcut("ci")
     set_capability(VLC_CAP_VIDEO_FILTER, 0, OpenCustom, Close)
 

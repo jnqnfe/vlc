@@ -68,14 +68,14 @@ static int  OpenVideo(filter_t *);
 static void Close    (filter_t *);
 
 vlc_plugin_begin ()
-    set_description(N_("Audio Bar Graph Video sub source"))
+    set_description(N_("Audio Bar Graph Video"))
     set_shortname(N_("Audio Bar Graph Video"))
     add_shortcut("audiobargraph_v")
     set_capability(VLC_CAP_SUB_SOURCE, 0, OpenSub, Close)
 
     /* video output filter submodule */
     add_submodule ()
-    set_description(N_("Audio Bar Graph Video sub source"))
+    set_description(N_("Audio Bar Graph Video"))
     add_shortcut("audiobargraph_v")
     set_capability(VLC_CAP_VIDEO_FILTER, 0, OpenVideo, Close)
 

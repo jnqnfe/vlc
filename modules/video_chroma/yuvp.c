@@ -43,7 +43,9 @@
 static int  Open ( filter_t * );
 
 vlc_plugin_begin ()
-    set_description( N_("YUVP converter") )
+    set_shortname( "YUVP" )
+    set_description( "YUVP" )
+    set_help( N_("YUVP converter") )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 10, Open, NULL )
 vlc_plugin_end ()
 

@@ -39,7 +39,8 @@ static int Create( filter_t * );
 static void Destroy( filter_t * );
 
 vlc_plugin_begin ()
-    set_description( N_("Audio filter for trivial channel mixing") )
+    set_help( N_("Audio filter for trivial channel mixing") )
+    set_description( N_("Trivial") )
     set_capability( VLC_CAP_AUDIO_CONVERTER, 1, Create, Destroy )
     //set_subcategory( SUBCAT_AUDIO_AFILTER )
 vlc_plugin_end ()

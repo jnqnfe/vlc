@@ -148,8 +148,9 @@ static void CloseInhibit(vlc_inhibit_t *ih)
 }
 
 vlc_plugin_begin()
-    set_shortname(N_("macOS sleep inhibition"))
-    set_description(N_("macOS screen and idle sleep inhibition"))
+    set_shortname(N_("macOS idle"))
+    set_description(N_("macOS idle inhibitor"))
+    set_help(N_("macOS screen and idle sleep inhibition"))
     set_capability(VLC_CAP_INHIBIT, 10, OpenInhibit, CloseInhibit)
     //set_subcategory(SUBCAT_ADVANCED_MISC)
 vlc_plugin_end()

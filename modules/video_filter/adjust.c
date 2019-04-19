@@ -74,8 +74,9 @@ static int AdjustCallback( vlc_object_t *p_this, char const *psz_var,
 #define GAMMA_LONGTEXT N_("Set the image gamma. Defaults to 1.")
 
 vlc_plugin_begin ()
-    set_description( N_("Image properties filter") )
-    set_shortname( N_("Image adjust" ))
+    set_help( N_("Image property adjustment") )
+    set_description( N_("Image adjust") )
+    set_shortname( N_("Image adjust") )
     add_shortcut( "adjust" )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 

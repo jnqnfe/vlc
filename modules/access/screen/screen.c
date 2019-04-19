@@ -94,7 +94,7 @@ static void Close( demux_t * );
 #endif
 
 vlc_plugin_begin ()
-    set_description( N_("Screen Input") )
+    set_description( N_("Screen capture") )
     set_shortname( N_("Screen" ))
     add_shortcut( "screen" )
     set_capability( VLC_CAP_ACCESS, 0, Open, Close )

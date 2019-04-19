@@ -273,13 +273,13 @@ static const char *const psz_tuner_audio_modes_list_text[] = {
 
 vlc_plugin_begin ()
     set_shortname( N_("V4L") )
-    set_description( N_("Video4Linux input") )
+    set_description( N_("Video4Linux") )
     add_shortcut( "v4l", "v4l2" )
     set_capability( VLC_CAP_ACCESS, 2, DemuxOpen, DemuxClose )
 
     add_submodule ()
     add_shortcut( "v4l", "v4l2", "v4l2c" )
-    set_description( N_("Video4Linux compressed A/V input") )
+    set_description( N_("Video4Linux compressed A/V") )
     /* use these when open as access_demux fails; VLC will use another demux */
     set_capability( VLC_CAP_ACCESS, 0, AccessOpen, AccessClose )
 

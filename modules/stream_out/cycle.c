@@ -322,7 +322,7 @@ static void Close(sout_stream_t *stream)
 }
 
 vlc_plugin_begin()
-    set_shortname(N_("cycle"))
+    set_shortname(N_("Cycle"))
     set_description(N_("Cyclic stream output"))
     add_shortcut("cycle")
     set_capability(VLC_CAP_SOUT_STREAM, 0, Open, Close)

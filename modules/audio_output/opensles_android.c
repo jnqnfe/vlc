@@ -131,7 +131,7 @@ static void Close (audio_output_t *);
  *****************************************************************************/
 
 vlc_plugin_begin ()
-    set_description("OpenSLES audio output")
+    set_description("OpenSLES")
     set_shortname("OpenSLES")
     add_shortcut("opensles", "android")
     set_capability(VLC_CAP_AUDIO_OUTPUT, 170, Open, Close)

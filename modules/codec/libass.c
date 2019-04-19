@@ -56,8 +56,8 @@ static int  Create ( decoder_t * );
 static void Destroy( decoder_t * );
 
 vlc_plugin_begin ()
-    set_shortname( N_("Subtitles (advanced)"))
-    set_description( N_("Subtitle renderers using libass") )
+    set_shortname( "SSA/ASS" )
+    set_description( N_("SSA/ASS (using libass)") )
     set_capability( VLC_CAP_SPU_DECODER, 100, Create, Destroy )
     //set_subcategory( SUBCAT_INPUT_SCODEC )
 vlc_plugin_end ()

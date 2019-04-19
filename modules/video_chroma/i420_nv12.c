@@ -230,6 +230,7 @@ static void Delete(filter_t *p_filter)
  * Module descriptor
  *****************************************************************************/
 vlc_plugin_begin ()
+    set_shortname( N_("i420 to NV12") )
     set_description( N_("YUV planar to semiplanar conversions") )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 160, Create, Delete )
 vlc_plugin_end ()

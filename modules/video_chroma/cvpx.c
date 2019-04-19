@@ -62,11 +62,15 @@ typedef struct
 } filter_sys_t;
 
 vlc_plugin_begin ()
-    set_description("Conversions from/to CoreVideo buffers")
+    set_description( N_("CoreVideo (from/to)") )
+    set_shortname( "CoreVideo" )
+    set_help("Conversions from/to CoreVideo buffers")
     set_capability(VLC_CAP_VIDEO_CONVERTER, 10, Open, Close)
 #if !TARGET_OS_IPHONE
     add_submodule()
-    set_description("Conversions between CoreVideo buffers")
+    set_description( N_("CoreVideo (between)") )
+    set_shortname( "CoreVideo" )
+    set_help("Conversions between CoreVideo buffers")
     set_capability(VLC_CAP_VIDEO_CONVERTER, 10, Open_CVPX_to_CVPX, Close_CVPX_to_CVPX)
 #endif
 vlc_plugin_end ()

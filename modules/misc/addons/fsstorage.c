@@ -76,7 +76,7 @@ static bool  FileBelongsToManagedAddon( addons_finder_t *p_finder,
  ****************************************************************************/
 
 vlc_plugin_begin ()
-    set_shortname(N_("addons local storage"))
+    set_shortname(N_("Addons local storage"))
     add_shortcut("addons.store.install")
     set_description(N_("Addons local storage installer"))
     set_capability(VLC_CAP_ADDONS_STORAGE, 10, OpenStorage, NULL)

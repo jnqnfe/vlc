@@ -1183,25 +1183,25 @@ CloseDeinterlace(filter_t *const filter)
 
 vlc_plugin_begin()
     set_shortname(N_("VAAPI filters"))
-    set_description(N_("Video Accelerated API filters"))
+    set_help(N_("Video Accelerated API filters"))
 
     add_submodule()
-    set_description(N_("VAAPI adjust filter"))
+    set_description(N_("VAAPI adjust"))
     add_shortcut("adjust")
     set_capability(VLC_CAP_VIDEO_FILTER, 0, OpenAdjust, CloseAdjust)
 
     add_submodule()
-    set_description(N_("VAAPI deinterlace filter"))
+    set_description(N_("VAAPI deinterlace"))
     add_shortcut("deinterlace")
     set_capability(VLC_CAP_VIDEO_FILTER, 0, OpenDeinterlace, CloseDeinterlace)
 
     add_submodule()
-    set_description(N_("VAAPI denoise filter"))
+    set_description(N_("VAAPI denoise"))
     add_shortcut("denoise")
     set_capability(VLC_CAP_VIDEO_FILTER, 0, OpenDenoiseFilter, CloseBasicFilter)
 
     add_submodule()
-    set_description(N_("VAAPI sharpen filter"))
+    set_description(N_("VAAPI sharpen"))
     add_shortcut("sharpen")
     set_capability(VLC_CAP_VIDEO_FILTER, 0, OpenSharpenFilter, CloseBasicFilter)
 

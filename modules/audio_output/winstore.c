@@ -317,7 +317,7 @@ static void Close(audio_output_t *aout)
 
 vlc_plugin_begin()
     set_shortname("winstore")
-    set_description("Windows Store audio output")
+    set_description("Windows Store")
     add_shortcut("wasapi")
     set_capability(VLC_CAP_AUDIO_OUTPUT, 0, Open, Close)
     //set_subcategory(SUBCAT_AUDIO_AOUT)

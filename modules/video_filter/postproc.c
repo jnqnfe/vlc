@@ -80,8 +80,8 @@ static int PPNameCallback( vlc_object_t *, char const *,
  * Module descriptor
  *****************************************************************************/
 vlc_plugin_begin ()
-    set_description( N_("Video post processing filter") )
-    set_shortname( N_("Postproc" ) )
+    set_description( N_("Video post processing") )
+    set_shortname( N_("Postproc") )
     add_shortcut( "postprocess", "pp" ) /* name is "postproc" */
     set_capability( VLC_CAP_VIDEO_FILTER, 0, OpenPostproc, ClosePostproc )
 

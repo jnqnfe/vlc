@@ -66,8 +66,8 @@ static int EraseCallback( vlc_object_t *, char const *,
 vlc_plugin_begin ()
     set_help(ERASE_HELP)
 
-    set_description( N_("Erase video filter") )
-    set_shortname( N_( "Erase" ))
+    set_description( N_("Erase") )
+    set_shortname( N_("Erase") )
     add_shortcut( "erase" )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 

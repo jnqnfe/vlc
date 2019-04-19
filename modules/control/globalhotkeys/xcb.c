@@ -48,7 +48,7 @@ static void Close( intf_thread_t * );
  *****************************************************************************/
 vlc_plugin_begin()
     set_shortname( N_("Global Hotkeys") )
-    set_description( N_("Global Hotkeys interface") )
+    set_description( N_("Global Hotkeys") )
     add_shortcut( "globalhotkeys" )
     set_capability( VLC_CAP_INTERFACE, 0, Open, Close )
     //set_subcategory( SUBCAT_INTERFACE_HOTKEYS )

@@ -39,8 +39,8 @@ static int OpenResampler (filter_t *);
 static void Close (filter_t *);
 
 vlc_plugin_begin ()
-    set_shortname (N_("Speex resampler"))
-    set_description (N_("Speex resampler") )
+    set_shortname ("Speex")
+    set_description ("Speex")
     set_capability (VLC_CAP_AUDIO_CONVERTER, 0, Open, Close)
 
     add_submodule ()

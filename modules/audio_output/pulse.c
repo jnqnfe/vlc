@@ -40,7 +40,7 @@ static void Close ( audio_output_t * );
 
 vlc_plugin_begin ()
     set_shortname( "PulseAudio" )
-    set_description( N_("Pulseaudio audio output") )
+    set_description( "Pulseaudio" )
     add_shortcut( "pulseaudio", "pa" )
     set_capability( VLC_CAP_AUDIO_OUTPUT, 160, Open, Close )
     //set_subcategory( SUBCAT_AUDIO_AOUT )

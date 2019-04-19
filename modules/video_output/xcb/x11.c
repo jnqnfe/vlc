@@ -350,8 +350,8 @@ error:
  * Module descriptor
  */
 vlc_plugin_begin()
-    set_shortname(N_("X11"))
-    set_description(N_("X11 video output (XCB)"))
+    set_shortname("X11")
+    set_description("X11 (XCB)")
     add_shortcut("xcb-x11", "x11")
     set_capability(VLC_CAP_VOUT_DISPLAY, 100, Open, Close)
     //set_subcategory(SUBCAT_VIDEO_VOUT)

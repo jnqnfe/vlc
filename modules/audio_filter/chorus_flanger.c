@@ -75,7 +75,7 @@ struct filter_sys_t
 vlc_plugin_begin ()
     set_help( N_("Add a delay effect to the sound") )
 
-    set_description( N_("Sound Delay") )
+    set_description( N_("Sound delay") )
     set_shortname( N_("Delay") )
     add_shortcut( "delay" )
     set_capability( VLC_CAP_AUDIO_FILTER, 0, Open, Close )

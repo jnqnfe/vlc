@@ -87,8 +87,8 @@ static int  Open ( demux_t * );
 static void Close( demux_t * );
 
 vlc_plugin_begin()
-    set_description( N_("HD-SDI Input") )
-    set_shortname( N_("HD-SDI") )
+    set_description( "HD-SDI" )
+    set_shortname( "HD-SDI" )
     add_shortcut( "linsys-hdsdi" )
     set_capability( VLC_CAP_ACCESS, 0, Open, Close )
 

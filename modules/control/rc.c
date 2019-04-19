@@ -1924,7 +1924,7 @@ static void Deactivate( intf_thread_t *p_intf )
 
 vlc_plugin_begin()
     set_shortname(N_("RC"))
-    set_description(N_("Remote control interface"))
+    set_description(N_("Remote control"))
     add_shortcut("cli", "rc", "oldrc")
     set_capability(VLC_CAP_INTERFACE, 20, Activate, Deactivate)
 

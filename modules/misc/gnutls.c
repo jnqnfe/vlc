@@ -753,7 +753,7 @@ static const char *const priorities_text[] = {
 
 vlc_plugin_begin ()
     set_shortname( "GNU TLS" )
-    set_description( N_("GNU TLS transport layer security") )
+    set_description( N_("GNU TLS (transport layer security)") )
     set_capability( VLC_CAP_TLS_CLIENT, 1, OpenClient, NULL )
 
 #ifdef ENABLE_SOUT

@@ -424,8 +424,8 @@ static void Close( sout_access_out_t *p_access )
 
 /* Module descriptor */
 vlc_plugin_begin()
-    set_shortname( N_( "SRT" ) )
-    set_description( N_( "SRT stream output" ) )
+    set_shortname( "SRT" )
+    set_description( "SRT" )
     add_shortcut( "srt" )
     set_capability( VLC_CAP_SOUT_ACCESS, 0, Open, Close )
 

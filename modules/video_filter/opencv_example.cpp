@@ -74,7 +74,7 @@ static picture_t *Filter( filter_t *, picture_t * );
  * Module descriptor
  *****************************************************************************/
 vlc_plugin_begin ()
-    set_description( N_("OpenCV face detection example filter") )
+    set_description( N_("OpenCV face detection example") )
     set_shortname( N_( "OpenCV example" ))
     add_shortcut( "opencv_example" )
     set_capability_custom( "opencv internal filter", 1, OpenFilter, CloseFilter )

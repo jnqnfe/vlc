@@ -52,6 +52,7 @@ static int RenderText(filter_t *,
                       const vlc_fourcc_t *);
 
 vlc_plugin_begin ()
+    set_shortname("SAPI")
     set_description(N_("Speech synthesis for Windows"))
     set_capability(VLC_CAP_TEXT_RENDERER, 0, Create, Destroy)
 

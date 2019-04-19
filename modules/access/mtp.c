@@ -53,8 +53,8 @@ static int  Open ( stream_t * );
 static void Close( stream_t * );
 
 vlc_plugin_begin()
-    set_description( N_("MTP input") )
-    set_shortname( N_("MTP") )
+    set_description( "MTP" )
+    set_shortname( "MTP" )
     add_shortcut( "mtp" )
     set_capability( VLC_CAP_ACCESS, 0, Open, Close )
     //set_subcategory( SUBCAT_INPUT_ACCESS )

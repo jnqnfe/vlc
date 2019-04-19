@@ -164,8 +164,8 @@ static const struct vlc_logger_operations *Open(vlc_object_t *obj,
 #define QUIET_LONGTEXT N_("Turn off all messages on the console.")
 
 vlc_plugin_begin()
-    set_shortname(N_("Console log"))
-    set_description(N_("Console logger"))
+    set_shortname(N_("Console"))
+    set_description(N_("Console"))
     set_capability(VLC_CAP_LOGGER, 10, Open, NULL)
 
     set_subcategory(SUBCAT_ADVANCED_MISC)

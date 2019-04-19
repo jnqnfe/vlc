@@ -57,8 +57,8 @@ static void Destroy   ( filter_t * );
 vlc_plugin_begin ()
     set_help(GAUSSIAN_HELP)
 
-    set_description( N_("Gaussian blur video filter") )
-    set_shortname( N_( "Gaussian Blur" ))
+    set_description( N_("Gaussian blur") )
+    set_shortname( N_("Gaussian blur") )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )

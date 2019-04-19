@@ -75,7 +75,7 @@ static int  Open ( filter_t * );
 static void Close( filter_t * );
 
 vlc_plugin_begin()
-    set_description( N_("Freezing interactive video filter") )
+    set_description( N_("Freezing interactive") )
     set_shortname(   N_("Freeze" ) )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Open, Close )
     //set_subcategory( SUBCAT_VIDEO_VFILTER )

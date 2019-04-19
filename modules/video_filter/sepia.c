@@ -62,7 +62,7 @@ static const char *const ppsz_filter_options[] = {
 vlc_plugin_begin ()
     set_help( N_("Gives video a warmer tone by applying sepia effect") )
 
-    set_description( N_("Sepia video filter") )
+    set_description( N_("Sepia") )
     set_shortname( N_("Sepia" ) )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 

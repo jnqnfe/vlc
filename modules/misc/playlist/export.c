@@ -45,22 +45,22 @@ int xspf_export_playlist( vlc_playlist_export * );
 vlc_plugin_begin ()
 
     add_submodule ()
-        set_description( N_("M3U playlist export") )
+        set_description( "M3U" )
         add_shortcut( "export-m3u" )
         set_capability( VLC_CAP_PLAYLIST_EXPORT, 0, Export_M3U , NULL )
 
     add_submodule ()
-        set_description( N_("M3U8 playlist export") )
+        set_description( "M3U8" )
         add_shortcut( "export-m3u8" )
         set_capability( VLC_CAP_PLAYLIST_EXPORT, 0, Export_M3U8, NULL )
 
     add_submodule ()
-        set_description( N_("XSPF playlist export") )
+        set_description( "XSPF" )
         add_shortcut( "export-xspf" )
         set_capability( VLC_CAP_PLAYLIST_EXPORT, 0, xspf_export_playlist , NULL )
 
     add_submodule ()
-        set_description( N_("HTML playlist export") )
+        set_description( "HTML" )
         add_shortcut( "export-html" )
         set_capability( VLC_CAP_PLAYLIST_EXPORT, 0, Export_HTML, NULL )
 

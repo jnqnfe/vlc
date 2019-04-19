@@ -54,8 +54,9 @@ static int OpenDecoder(decoder_t *dec);
 static void CloseDecoder(decoder_t *dec);
 
 vlc_plugin_begin()
-    set_shortname(N_("MMAL decoder"))
-    set_description(N_("MMAL-based decoder plugin for Raspberry Pi"))
+    set_shortname("MMAL")
+    set_description("MMAL")
+    set_help(N_("MMAL-based decoder for Raspberry Pi"))
     add_shortcut("mmal_decoder")
     set_capability(VLC_CAP_VIDEO_DECODER, 90, OpenDecoder, CloseDecoder)
 

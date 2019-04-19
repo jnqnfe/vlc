@@ -71,8 +71,9 @@ static int Open(vout_display_t *vd, const vout_display_cfg_t *cfg,
 static void Close(vout_display_t *vd);
 
 vlc_plugin_begin()
-    set_shortname(N_("MMAL vout"))
-    set_description(N_("MMAL-based vout plugin for Raspberry Pi"))
+    set_shortname("MMAL")
+    set_description("MMAL")
+    set_help(N_("MMAL-based vout for Raspberry Pi"))
     add_shortcut("mmal_vout")
     set_capability(VLC_CAP_VOUT_DISPLAY, 90, Open, Close)
 

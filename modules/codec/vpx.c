@@ -63,13 +63,13 @@ static block_t *Encode(encoder_t *p_enc, picture_t *p_pict);
  *****************************************************************************/
 
 vlc_plugin_begin ()
-    set_shortname("vpx")
-    set_description(N_("WebM video decoder"))
+    set_shortname("VPX")
+    set_description("WebM")
     set_capability(VLC_CAP_VIDEO_DECODER, 60, OpenDecoder, CloseDecoder)
 #ifdef ENABLE_SOUT
     add_submodule()
-    set_shortname("vpx")
-    set_description(N_("WebM video encoder"))
+    set_shortname("VPX")
+    set_description(N_("WebM"))
     set_capability(VLC_CAP_ENCODER, 60, OpenEncoder, CloseEncoder)
 
 #   define ENC_CFG_PREFIX "sout-vpx-"

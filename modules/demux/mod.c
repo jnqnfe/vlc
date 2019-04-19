@@ -65,7 +65,7 @@ static void Close ( demux_t * );
 
 vlc_plugin_begin ()
     set_shortname( "MOD")
-    set_description( N_("MOD demuxer (libmodplug)" ) )
+    set_description( "MOD (libmodplug)" )
     add_shortcut( "mod" )
     set_capability( VLC_CAP_DEMUX, 10, Open, Close )
 

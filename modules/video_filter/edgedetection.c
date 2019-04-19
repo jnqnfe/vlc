@@ -32,14 +32,6 @@
 #include <vlc_filter.h>
 #include <vlc_picture.h>
 
-/*****************************************************************************
- * Module descriptor
- *****************************************************************************/
-#define EDGE_DETECTION_DESCRIPTION N_( "Edge detection video filter" )
-#define EDGE_DETECTION_TEXT N_( "Edge detection" )
-#define EDGE_DETECTION_LONGTEXT N_( \
-    "Detects edges in the frame and highlights them in white." )
-
 #define WHITE 255
 
 /*****************************************************************************
@@ -66,9 +58,9 @@ static const signed char pi_kernel_y[3][3] = {
 };
 
 vlc_plugin_begin ()
-    set_help( EDGE_DETECTION_LONGTEXT )
-    set_description( EDGE_DETECTION_DESCRIPTION )
-    set_shortname( EDGE_DETECTION_TEXT )
+    set_help( N_( "Detects edges in the frame and highlights them in white." ) )
+    set_description( N_( "Edge detection" ) )
+    set_shortname( N_( "Edge detection" ) )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Open, Close )
     //set_subcategory( SUBCAT_VIDEO_VFILTER )
 vlc_plugin_end ()

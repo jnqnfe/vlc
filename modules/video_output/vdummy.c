@@ -45,7 +45,7 @@ static int OpenStats(vout_display_t *vd, const vout_display_cfg_t *cfg,
 
 vlc_plugin_begin ()
     set_shortname( N_("Dummy") )
-    set_description( N_("Dummy video output") )
+    set_description( N_("Dummy") )
     add_shortcut( "dummy" )
     set_capability( VLC_CAP_VOUT_DISPLAY, 0, OpenDummy, NULL )
 

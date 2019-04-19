@@ -139,7 +139,7 @@ static int yCallback( vlc_object_t *, char const *,
 
 vlc_plugin_begin ()
     set_shortname( N_( "Mosaic bridge" ) )
-    set_description(N_("Mosaic bridge stream output") )
+    set_description( N_("Mosaic bridge") )
     add_shortcut( "mosaic-bridge" )
     set_capability( VLC_CAP_SOUT_STREAM, 0, Open, Close )
 

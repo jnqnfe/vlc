@@ -1268,7 +1268,7 @@ Close(intf_thread_t *intf)
 
 vlc_plugin_begin ()
     set_shortname(N_("Hotkeys"))
-    set_description(N_("Hotkeys management interface"))
+    set_description(N_("Hotkey management"))
     set_capability(VLC_CAP_INTERFACE, 0, Open, Close)
     //set_subcategory(SUBCAT_INTERFACE_HOTKEYS)
 vlc_plugin_end ()

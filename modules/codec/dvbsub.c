@@ -117,14 +117,14 @@ static block_t *Encode  ( encoder_t *, subpicture_t * );
 
 vlc_plugin_begin ()
 #   define DVBSUB_CFG_PREFIX "dvbsub-"
-    set_description( N_("DVB subtitles decoder") )
-    set_shortname( N_("DVB subtitles") )
+    set_description( "DVB" )
+    set_shortname( "DVB" )
     set_capability( VLC_CAP_SPU_DECODER, 80, Open, Close )
 
 #ifdef ENABLE_SOUT
 #   define ENC_CFG_PREFIX "sout-dvbsub-"
     add_submodule ()
-    set_description( N_("DVB subtitles encoder") )
+    set_description( "DVB" )
     set_capability( VLC_CAP_ENCODER, 100, OpenEncoder, CloseEncoder )
 #endif
 

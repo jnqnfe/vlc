@@ -75,8 +75,8 @@ static void Close( stream_t * );
 #define SCAN_NIT_TEXT N_("Use NIT for scanning services")
 
 vlc_plugin_begin ()
-    set_shortname( N_("DVB") )
-    set_description( N_("DVB input with v4l2 support") )
+    set_shortname( "DVB" )
+    set_description( N_("DVB with v4l2 support") )
     add_shortcut( "dvb",                        /* Generic name */
                   "dvb-s", "qpsk", "satellite", /* Satellite */
                   "dvb-c", "cable",             /* Cable */

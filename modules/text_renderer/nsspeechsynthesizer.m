@@ -43,6 +43,7 @@ static int RenderText(filter_t *,
                       const vlc_fourcc_t *);
 
 vlc_plugin_begin ()
+    set_shortname(N_("Speech synthesis"))
     set_description(N_("Speech synthesis for Mac OS X"))
     set_capability(VLC_CAP_TEXT_RENDERER, 0, Create, Destroy)
     //set_subcategory(SUBCAT_VIDEO_SUBPIC)

@@ -40,7 +40,7 @@
 static int  Open ( demux_t * );
 
 vlc_plugin_begin ()
-    set_description( N_("VOC demuxer") )
+    set_description( "VOC" )
     set_capability( VLC_CAP_DEMUX, 10, Open, NULL )
     //set_subcategory( SUBCAT_INPUT_DEMUX )
 vlc_plugin_end ()

@@ -203,7 +203,7 @@ static void CloseDemux ( demux_t *p_demux )
 }
 
 vlc_plugin_begin ()
-    set_shortname( N_("Stats"))
+    set_shortname( N_("Stats") )
 #ifdef ENABLE_SOUT
     set_description( N_("Stats encoder function") )
     add_shortcut( "stats" )

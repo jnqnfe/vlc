@@ -45,8 +45,8 @@ static int  Create    ( filter_t * );
 static void Destroy   ( filter_t * );
 
 vlc_plugin_begin ()
-    set_description( N_("Magnify/Zoom interactive video filter") )
-    set_shortname( N_( "Magnify" ))
+    set_description( N_("Magnify/Zoom") )
+    set_shortname( N_( "Magnify" ) )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
     //set_subcategory( SUBCAT_VIDEO_VFILTER )
 vlc_plugin_end ()

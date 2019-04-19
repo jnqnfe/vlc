@@ -544,12 +544,12 @@ static void D3D11CloseAdjust(filter_t *filter)
 }
 
 vlc_plugin_begin()
-    set_description(N_("Direct3D11 adjust filter"))
+    set_description(N_("Direct3D11 adjust"))
     add_shortcut( "adjust" )
     set_capability(VLC_CAP_VIDEO_FILTER, 0, D3D11OpenAdjust, D3D11CloseAdjust)
 
     add_submodule()
-    set_description(N_("Direct3D11 deinterlace filter"))
+    set_description(N_("Direct3D11 deinterlace"))
     add_shortcut ("deinterlace")
     set_capability( VLC_CAP_VIDEO_FILTER, 0, D3D11OpenDeinterlace, D3D11CloseDeinterlace )
 

@@ -105,8 +105,8 @@ static const char *const ppsz_audioconns_text[] = {
     "Aspect ratio (4:3, 16:9). Default assumes square pixels.")
 
 vlc_plugin_begin ()
-    set_shortname(N_("DeckLink"))
-    set_description(N_("Blackmagic DeckLink SDI input"))
+    set_shortname("DeckLink")
+    set_description(N_("Blackmagic DeckLink SDI"))
     add_shortcut("decklink")
     set_capability(VLC_CAP_ACCESS, 0, Open, Close)
 

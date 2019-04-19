@@ -45,7 +45,7 @@ static int  Open( decoder_t * );
 static void Close( decoder_t * );
 
 vlc_plugin_begin ()
-    set_description( N_("A/52 audio packetizer") )
+    set_description( "A/52" )
     set_capability( VLC_CAP_PACKETIZER, 10, Open, Close )
     //set_subcategory(SUBCAT_SOUT_PACKETIZER)
 vlc_plugin_end ()

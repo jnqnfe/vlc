@@ -1128,8 +1128,8 @@ failed:
 /* Module descriptor */
 vlc_plugin_begin ()
 
-    set_shortname( N_("RIST") )
-    set_description( N_("RIST input") )
+    set_shortname( "RIST" )
+    set_description( "RIST" )
     add_shortcut( "rist", "tr06" )
     set_capability( VLC_CAP_ACCESS, 0, Open, Close )
 

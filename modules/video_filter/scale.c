@@ -44,7 +44,8 @@ static picture_t *Filter( filter_t *, picture_t * );
  * Module descriptor
  *****************************************************************************/
 vlc_plugin_begin ()
-    set_description( N_("Video scaling filter") )
+    set_shortname( N_("Scale") )
+    set_description( N_("Video scaling") )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 10, OpenFilter, NULL )
 vlc_plugin_end ()
 

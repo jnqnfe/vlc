@@ -242,7 +242,7 @@ static int  blurayOpen (demux_t *);
 static void blurayClose(demux_t *);
 
 vlc_plugin_begin ()
-    set_shortname(N_("Blu-ray"))
+    set_shortname("Blu-ray")
     set_description(N_("Blu-ray Disc support (libbluray)"))
     add_shortcut("bluray", "file")
     set_capability(VLC_CAP_ACCESS, 500, blurayOpen, blurayClose)

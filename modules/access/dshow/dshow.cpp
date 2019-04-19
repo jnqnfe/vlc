@@ -188,8 +188,8 @@ static void DemuxClose ( demux_t * );
 using namespace dshow;
 
 vlc_plugin_begin ()
-    set_shortname( N_("DirectShow") )
-    set_description( N_("DirectShow input") )
+    set_shortname( "DirectShow" )
+    set_description( "DirectShow" )
     add_shortcut( "dshow" )
     set_capability( VLC_CAP_ACCESS, 1, DemuxOpen, DemuxClose )
 

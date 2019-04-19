@@ -40,8 +40,8 @@ static void Close(demux_t *);
 
 vlc_plugin_begin ()
     set_help (HELP_TEXT)
-    set_shortname (N_("PulseAudio"))
-    set_description (N_("PulseAudio input"))
+    set_shortname ("PulseAudio")
+    set_description ("PulseAudio")
     add_shortcut ("pulse", "pulseaudio", "pa")
     set_capability (VLC_CAP_ACCESS, 0, Open, Close)
     //set_subcategory (SUBCAT_INPUT_ACCESS)

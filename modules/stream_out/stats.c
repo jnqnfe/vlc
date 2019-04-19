@@ -48,8 +48,9 @@ static void Close   ( sout_stream_t * );
 #define SOUT_CFG_PREFIX "sout-stats-"
 
 vlc_plugin_begin()
-    set_shortname( N_("Stats"))
-    set_description( N_("Writes statistic info about stream"))
+    set_shortname( N_("Stats") )
+    set_description( N_("Stats") )
+    set_help( N_("Writes statistic info about stream") )
     add_shortcut( "stats" )
     set_capability( VLC_CAP_SOUT_STREAM, 0, Open, Close )
 

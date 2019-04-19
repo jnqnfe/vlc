@@ -51,7 +51,7 @@ static void Close   ( sout_stream_t * );
 
 vlc_plugin_begin()
     set_shortname( N_("Delay"))
-    set_description( N_("Delay a stream"))
+    set_description( N_("Delayed stream"))
     add_shortcut( "delay" )
     set_capability( VLC_CAP_SOUT_STREAM, 50, Open, Close )
 

@@ -55,8 +55,8 @@ static int OpenResampler (filter_t *);
 static void Close (filter_t *);
 
 vlc_plugin_begin ()
-    set_shortname (N_("SRC resampler"))
-    set_description (N_("Secret Rabbit Code (libsamplerate) resampler") )
+    set_shortname ("SRC")
+    set_description (N_("Secret Rabbit Code (libsamplerate)") )
     set_capability (VLC_CAP_AUDIO_CONVERTER, 50, Open, Close)
 
     add_submodule ()

@@ -61,8 +61,8 @@ static void Close( demux_t * );
     "Aspect ratio (4:3, 16:9). Default assumes square pixels." )
 
 vlc_plugin_begin ()
-    set_shortname( "Raw Video" )
-    set_description( N_("Raw video demuxer") )
+    set_shortname( N_("Raw video") )
+    set_description( N_("Raw video") )
     add_shortcut( "rawvideo" )
     set_capability( VLC_CAP_DEMUX, 10, Open, Close )
 

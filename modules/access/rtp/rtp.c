@@ -92,8 +92,8 @@ static void Close (demux_t *);
  * Module descriptor
  */
 vlc_plugin_begin ()
-    set_shortname (N_("RTP"))
-    set_description (N_("Real-Time Protocol (RTP) input"))
+    set_shortname ("RTP")
+    set_description (N_("Real-Time Protocol (RTP)"))
     /*add_shortcut ("sctp")*/
     add_shortcut ("dccp", "rtptcp", /* "tcp" is already taken :( */
                   "rtp", "udplite")

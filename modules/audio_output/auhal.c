@@ -47,8 +47,9 @@ static int  Open  (audio_output_t *);
 static void Close (audio_output_t *);
 
 vlc_plugin_begin ()
-    set_shortname("auhal")
-    set_description(N_("HAL AudioUnit output"))
+    set_shortname("HAL AudioUnit")
+    set_description("HAL AudioUnit")
+    add_shortcut("auhal")
     set_capability(VLC_CAP_AUDIO_OUTPUT, 101, Open, Close)
 
     set_subcategory(SUBCAT_AUDIO_AOUT)

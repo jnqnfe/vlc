@@ -83,8 +83,8 @@ static const struct vlc_logger_operations *Open(vlc_object_t *obj, void **sysp)
 }
 
 vlc_plugin_begin()
-    set_shortname(N_("Android log"))
-    set_description(N_("Android log using logcat"))
+    set_shortname("Android")
+    set_description(N_("Android log (using logcat)"))
     set_capability(VLC_CAP_LOGGER, 30, Open, NULL)
     //set_subcategory(SUBCAT_ADVANCED_MISC)
 vlc_plugin_end ()

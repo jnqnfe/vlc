@@ -237,14 +237,15 @@ static void CloseAudio          (audio_output_t *);
 
 vlc_plugin_begin()
     set_shortname(N_("DecklinkOutput"))
-    set_description(N_("Output module to write to Blackmagic SDI card"))
+    set_description(N_("DecklinkOutput"))
+    set_help(N_("Output module to write to Blackmagic SDI card"))
 
     add_submodule ()
-    set_description (N_("DeckLink Video Output module"))
+    set_description (N_("DeckLink Video"))
     set_capability(VLC_CAP_VOUT_DISPLAY, 0, OpenVideo, CloseVideo)
 
     add_submodule ()
-    set_description (N_("DeckLink Audio Output module"))
+    set_description (N_("DeckLink Audio"))
     set_capability(VLC_CAP_AUDIO_OUTPUT, 0, OpenAudio, CloseAudio)
 
     /* disabled so that all options actually appear under video */

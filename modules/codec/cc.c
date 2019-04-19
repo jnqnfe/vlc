@@ -58,8 +58,8 @@ static void Close( decoder_t * );
 #define OPAQUE_LONGTEXT N_("Makes the text boxed and maybe easier to read." )
 
 vlc_plugin_begin ()
-    set_shortname( N_("CC 608/708"))
-    set_description( N_("Closed Captions decoder") )
+    set_shortname( "CC 608/708" )
+    set_description( N_("Closed Captions") )
     set_capability( VLC_CAP_SPU_DECODER, 50, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_SCODEC )

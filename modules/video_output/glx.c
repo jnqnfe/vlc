@@ -264,7 +264,7 @@ static void Close(vlc_gl_t *gl)
 }
 
 vlc_plugin_begin ()
-    set_shortname (N_("GLX"))
+    set_shortname ("GLX")
     set_description (N_("GLX extension for OpenGL"))
     set_capability (VLC_CAP_OPENGL, 20, Open, Close)
     //set_subcategory (SUBCAT_VIDEO_VOUT)

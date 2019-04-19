@@ -50,9 +50,9 @@ int  WindowOpen   ( vout_window_t * );
 
 vlc_plugin_begin ()
     /* Minimal interface. see intf.m */
-    set_shortname( "Minimal Macosx" )
+    set_shortname( N_("Minimal MacOSX") )
     add_shortcut( "minimal_macosx", "miosx" )
-    set_description( N_("Minimal Mac OS X interface") )
+    set_description( N_("Minimal Mac OS X") )
     set_capability( VLC_CAP_INTERFACE, 50, OpenIntf, CloseIntf )
 
     add_submodule ()

@@ -332,7 +332,7 @@ static inline NSString* CharsToNSString(char * _Nullable cStr)
 
 vlc_plugin_begin()
     set_shortname("OSX-Notifications")
-    set_description(N_("macOS notifications plugin"))
+    set_description("macOS")
     add_shortcut("growl") // Kept for backwards compatibility
     set_capability(VLC_CAP_INTERFACE, 0, Open, Close)
 

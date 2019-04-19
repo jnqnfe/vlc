@@ -88,8 +88,8 @@ static void CloseIn ( sout_stream_t * );
 #define SOUT_CFG_PREFIX_IN "sout-bridge-in-"
 
 vlc_plugin_begin ()
-    set_shortname( N_("Bridge"))
-    set_description( N_("Bridge stream output"))
+    set_shortname( "Bridge" )
+    set_description( "Bridge" )
 
     add_submodule ()
     add_shortcut( "bridge-out" )

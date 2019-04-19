@@ -33,7 +33,9 @@ static int Open (filter_t *);
 static int OpenScaler (filter_t *);
 
 vlc_plugin_begin ()
-    set_description (N_("OpenMAX DL image processing"))
+    set_shortname( "OpenMax DL" )
+    set_description( "OpenMax DL" )
+    set_help (N_("OpenMAX DL image processing"))
     set_capability (VLC_CAP_VIDEO_CONVERTER, 90, Open, NULL)
 vlc_plugin_end ()
 

@@ -1422,7 +1422,7 @@ static void Close( vlc_medialibrary_module_t* module )
                               "media from" )
 
 vlc_plugin_begin()
-    set_shortname(N_("media library"))
+    set_shortname(N_("Media library"))
     set_description(N_( "Organize your media" ))
     set_capability(VLC_CAP_MEDIALIBRARY, 100, Open, Close)
 

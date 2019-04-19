@@ -43,7 +43,7 @@ static void CloseDecoder( decoder_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("Dummy") )
-    set_description( N_("Dummy decoder") )
+    set_description( N_("Dummy") )
     add_shortcut( "dummy" )
     set_capability( VLC_CAP_SPU_DECODER, 0, OpenDecoder, CloseDecoder )
 
@@ -56,7 +56,7 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_AUDIO_DECODER, 0, OpenDecoder, CloseDecoder )
 
     add_submodule ()
-    set_description( N_("Dump decoder") )
+    set_description( N_("Dump") )
     add_shortcut( "dump" )
     set_capability( VLC_CAP_SPU_DECODER, -1, OpenDecoderDump, CloseDecoder )
 

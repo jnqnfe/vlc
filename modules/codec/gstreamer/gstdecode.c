@@ -96,7 +96,7 @@ vlc_plugin_begin( )
     add_shortcut( "gstdecode" )
 
     /* decoder main module */
-    set_description( N_( "GStreamer Based Decoder" ) )
+    set_description( "GStreamer" )
     set_capability( VLC_CAP_VIDEO_DECODER, 50, OpenDecoder, CloseDecoder )
 
     set_subcategory( SUBCAT_INPUT_VCODEC )

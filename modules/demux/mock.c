@@ -717,7 +717,8 @@ error:
     change_safe()
 
 vlc_plugin_begin()
-    set_description("mock access demux")
+    set_description("mock")
+    set_help("mock access-demux")
     add_shortcut("mock")
     set_capability(VLC_CAP_ACCESS, 0, Open, Close)
 

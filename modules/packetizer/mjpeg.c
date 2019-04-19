@@ -214,7 +214,7 @@ static int Open( decoder_t *p_dec )
  *****************************************************************************/
 
 vlc_plugin_begin ()
-    set_description( N_("MJPEG video packetizer") )
+    set_description( "MJPEG" )
     set_capability( VLC_CAP_PACKETIZER, 50, Open, Close )
     //set_subcategory( SUBCAT_SOUT_PACKETIZER )
 vlc_plugin_end ()

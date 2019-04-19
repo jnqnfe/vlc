@@ -238,7 +238,7 @@ static int  Open (stream_t *);
 static void Close (stream_t *);
 
 vlc_plugin_begin ()
-    set_shortname (N_("DTV"))
+    set_shortname ("DTV")
     set_description (N_("Digital Television and Radio"))
     add_shortcut ("dtv", "tv", "dvb", /* "radio", "dab",*/
                   "cable", "dvb-c", "cqam", "isdb-c",

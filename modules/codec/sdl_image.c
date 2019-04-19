@@ -54,8 +54,8 @@ static int DecodeBlock  ( decoder_t *, block_t * );
  * Module descriptor
  *****************************************************************************/
 vlc_plugin_begin ()
-    set_shortname( N_("SDL Image decoder"))
-    set_description( N_("SDL_image video decoder") )
+    set_shortname( "SDL" )
+    set_description( "SDL" )
     add_shortcut( "sdl_image" )
     set_capability( VLC_CAP_VIDEO_DECODER, 60, OpenDecoder, CloseDecoder )
     //set_subcategory( SUBCAT_INPUT_VCODEC )

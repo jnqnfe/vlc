@@ -57,8 +57,8 @@ static void Close        ( filter_t * );
 #define HEIGHT_LONGTEXT N_("The height of the video window.")
 
 vlc_plugin_begin ()
-    set_shortname( N_("vsxu"))
-    set_description( N_("vsxu") )
+    set_shortname( "Vovoid VSXu" )
+    set_description( "Vovoid VSXu" )
     add_shortcut( "vsxu" )
     set_capability( VLC_CAP_VISUALIZATION, 0, Open, Close )
 

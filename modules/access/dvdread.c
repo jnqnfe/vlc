@@ -73,8 +73,8 @@ static int  Open ( demux_t * );
 static void Close( demux_t * );
 
 vlc_plugin_begin ()
-    set_shortname( N_("DVD without menus") )
-    set_description( N_("DVDRead Input (no menu support)") )
+    set_shortname( "DVDread" )
+    set_description( N_("DVD without menus") )
     add_shortcut( "dvd", "dvdread", "dvdsimple" )
     set_capability( VLC_CAP_ACCESS, 0, Open, Close )
 

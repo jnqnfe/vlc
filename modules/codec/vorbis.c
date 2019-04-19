@@ -191,16 +191,16 @@ static block_t *Encode   ( encoder_t *, block_t * );
 
 vlc_plugin_begin ()
     set_shortname( "Vorbis" )
-    set_description( N_("Vorbis audio decoder") )
+    set_description( "Vorbis" )
     set_capability( VLC_CAP_AUDIO_DECODER, DEC_PRIO, OpenDecoder, CloseDecoder )
 
     add_submodule ()
-    set_description( N_("Vorbis audio packetizer") )
+    set_description( "Vorbis" )
     set_capability( VLC_CAP_PACKETIZER, 100, OpenPacketizer, CloseDecoder )
 
 #ifdef HAVE_VORBIS_ENCODER
     add_submodule ()
-    set_description( N_("Vorbis audio encoder") )
+    set_description( "Vorbis" )
     set_capability( VLC_CAP_ENCODER, 130, OpenEncoder, CloseEncoder )
 
 #   define ENC_CFG_PREFIX "sout-vorbis-"

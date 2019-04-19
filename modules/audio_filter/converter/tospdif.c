@@ -43,7 +43,7 @@ static int  Open( filter_t * );
 static void Close( filter_t * );
 
 vlc_plugin_begin ()
-    set_description( N_("Audio filter for A/52/DTS->S/PDIF encapsulation") )
+    set_description( N_("A/52/DTS to S/PDIF encapsulation") )
     set_capability( VLC_CAP_AUDIO_CONVERTER, 10, Open, Close )
     //set_subcategory( SUBCAT_AUDIO_AFILTER )
 vlc_plugin_end ()

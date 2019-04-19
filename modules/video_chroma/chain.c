@@ -42,7 +42,9 @@ static int       ActivateFilter     ( filter_t * );
 static void      Destroy            ( filter_t * );
 
 vlc_plugin_begin ()
-    set_description( N_("Video filtering using a chain of video filter modules") )
+    set_shortname( N_("Chain") )
+    set_description( N_("Chain converter") )
+    set_help( N_("Video filtering using a chain of video filter modules") )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 1, ActivateConverter, Destroy )
     add_submodule ()
         set_capability( VLC_CAP_VIDEO_FILTER, 0, ActivateFilter, Destroy )

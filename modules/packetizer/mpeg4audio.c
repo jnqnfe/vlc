@@ -224,7 +224,7 @@ static int Mpeg4ReadAudioSpecificConfig(bs_t *s, mpeg4_asc_t *p_cfg, bool);
  * Module descriptor
  *****************************************************************************/
 vlc_plugin_begin ()
-    set_description(N_("MPEG4 audio packetizer"))
+    set_description(N_("MPEG4 audio"))
     set_capability(VLC_CAP_PACKETIZER, 50, OpenPacketizer, ClosePacketizer)
     //set_subcategory(SUBCAT_SOUT_PACKETIZER)
 vlc_plugin_end ()

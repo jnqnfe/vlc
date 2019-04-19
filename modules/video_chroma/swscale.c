@@ -64,8 +64,9 @@ static const char *const ppsz_mode_descriptions[] =
   N_("SincR"), N_("Lanczos"), N_("Bicubic spline") };
 
 vlc_plugin_begin ()
-    set_description( N_("Video scaling filter") )
-    set_shortname( N_("Swscale" ) )
+    set_shortname( "Swscale" )
+    set_description( "Swscale" )
+    set_help( N_("Video scaling filter") )
     set_capability( VLC_CAP_VIDEO_CONVERTER, 150, OpenScaler, CloseScaler )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )

@@ -66,7 +66,7 @@ static int SharpenCallback( vlc_object_t *, char const *,
 vlc_plugin_begin ()
     set_help(SHARPEN_HELP)
 
-    set_description( N_("Sharpen video filter") )
+    set_description( N_("Sharpen") )
     set_shortname( N_("Sharpen") )
     add_shortcut( "sharpen" )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )

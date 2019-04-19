@@ -31,7 +31,8 @@
 #include <vlc_plugin.h>
 
 vlc_plugin_begin ()
-    set_description( N_("File input") )
+    set_help( N_("Simple file input") )
+    set_description( N_("File") )
     set_shortname( N_("File") )
     add_shortcut( "file", "fd", "stream" )
     set_capability( VLC_CAP_ACCESS, 50, FileOpen, FileClose )

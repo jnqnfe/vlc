@@ -143,7 +143,7 @@ vlc_plugin_begin()
     VLC_SD_PROBE_SUBMODULE
 
     add_submodule()
-        set_description( N_( "UPnP Renderer Discovery" ) )
+        set_description( "UPnP" )
         add_shortcut( "upnp_renderer" )
         set_capability( VLC_CAP_RENDERER_DISCOVERY, 0, RD::OpenRD, RD::CloseRD )
 
@@ -151,7 +151,7 @@ vlc_plugin_begin()
 
     add_submodule()
         set_shortname("dlna")
-        set_description(N_("UPnP/DLNA stream output"))
+        set_description("UPnP/DLNA")
         add_shortcut("dlna")
         set_capability(VLC_CAP_SOUT_STREAM, 0, DLNA::OpenSout, DLNA::CloseSout)
 

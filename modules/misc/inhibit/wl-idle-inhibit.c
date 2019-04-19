@@ -141,7 +141,7 @@ static void Close(vlc_inhibit_t *ih)
 }
 
 vlc_plugin_begin()
-    set_shortname(N_("WL idle"))
+    set_shortname(N_("Wayland idle"))
     set_description(N_("Wayland idle inhibitor"))
     set_capability(VLC_CAP_INHIBIT, 30, Open, Close)
     //set_subcategory(SUBCAT_ADVANCED_MISC)

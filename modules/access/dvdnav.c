@@ -79,13 +79,13 @@ static void Close( demux_t * );
 static int  DemuxOpen ( demux_t * );
 
 vlc_plugin_begin ()
-    set_shortname( N_("DVD with menus") )
-    set_description( N_("DVDnav Input") )
+    set_description( N_("DVD with menus") )
+    set_shortname( "DVDnav" )
     add_shortcut( "dvd", "dvdnav", "file" )
     set_capability( VLC_CAP_ACCESS, 305, AccessDemuxOpen, Close )
 
     add_submodule()
-        set_description( N_("DVDnav demuxer") )
+        set_description( N_("DVDnav") )
         set_capability( VLC_CAP_DEMUX, 5, DemuxOpen, Close )
         add_shortcut( "dvd", "iso" )
 

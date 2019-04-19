@@ -149,7 +149,7 @@ static int Open(vlc_gl_t *gl, unsigned width, unsigned height)
 
 vlc_plugin_begin()
     set_shortname("GL texture")
-    set_description("GL texture output")
+    set_description("GL texture")
     set_capability(VLC_CAP_OPENGL, 0, Open, Close)
     add_shortcut("vglmem")
 

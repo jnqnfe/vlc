@@ -191,7 +191,7 @@ static const char *const ts_standards_list_text[] =
 #define BLOCK_FLAG_NO_KEYFRAME (1 << BLOCK_FLAG_PRIVATE_SHIFT) /* This is not a key frame for bitrate shaping */
 
 vlc_plugin_begin ()
-    set_description( N_("TS muxer (libdvbpsi)") )
+    set_description( "TS (libdvbpsi)" )
     set_shortname( "MPEG-TS")
     add_shortcut( "ts" )
     set_capability( VLC_CAP_SOUT_MUX, 120, Open, Close )

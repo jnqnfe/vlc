@@ -57,7 +57,8 @@ static void Close  ( sout_mux_t * );
 #define CFG_KEYWORDS_TEXT   N_("Keywords")
 
 vlc_plugin_begin ()
-    set_description( N_("AVI muxer") )
+    set_description( "AVI" )
+    set_shortname( "AVI" )
     add_shortcut( "avi" )
     set_capability( VLC_CAP_SOUT_MUX, 5, Open, Close )
 

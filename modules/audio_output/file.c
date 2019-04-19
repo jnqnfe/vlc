@@ -109,7 +109,7 @@ static const int format_int[] = {
 #define FILE_LONGTEXT N_("File to which the audio samples will be written to (\"-\" for stdout).")
 
 vlc_plugin_begin ()
-    set_description( N_("File audio output") )
+    set_description( N_("File output") )
     set_shortname( N_("File") )
     add_shortcut( "file", "audiofile" )
     set_capability( VLC_CAP_AUDIO_OUTPUT, 0, Open, NULL )

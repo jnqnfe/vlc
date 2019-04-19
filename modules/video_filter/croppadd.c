@@ -76,7 +76,7 @@ static picture_t *Filter( filter_t *, picture_t * );
  *****************************************************************************/
 vlc_plugin_begin ()
     set_shortname( N_("Croppadd") )
-    set_description( N_("Video cropping filter") )
+    set_description( N_("Video cropping") )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, OpenFilter, CloseFilter )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER );

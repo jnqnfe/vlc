@@ -131,7 +131,7 @@ static const char *const ts_standards_list_text[] =
                               "This feature affects EPG information and subtitles." )
 
 vlc_plugin_begin ()
-    set_description( N_("MPEG Transport Stream demuxer") )
+    set_description( N_("MPEG Transport Stream (TS)") )
     set_shortname ( "MPEG-TS" )
     add_shortcut( "ts" )
     set_capability( VLC_CAP_DEMUX, 10, Open, Close )

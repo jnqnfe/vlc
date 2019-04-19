@@ -40,7 +40,8 @@ static int  Open (filter_t *);
 static void Close(filter_t *);
 
 vlc_plugin_begin()
-    set_description(N_("Video pictures blending"))
+    set_shortname(N_("Blend"))
+    set_description(N_("Video picture blending"))
     set_capability(VLC_CAP_VIDEO_BLENDING, 100, Open, Close)
 vlc_plugin_end()
 

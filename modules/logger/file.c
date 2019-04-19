@@ -227,8 +227,8 @@ static const char *const verbosity_text[] = { N_("Default"), N_("Info"), N_("Err
 "default to use the same verbosity given by --verbose.")
 
 vlc_plugin_begin()
-    set_shortname(N_("Logger"))
-    set_description(N_("File logger"))
+    set_shortname(N_("File"))
+    set_description(N_("File log"))
     set_capability(VLC_CAP_LOGGER, 15, Open, NULL)
 
     set_subcategory(SUBCAT_ADVANCED_MISC)

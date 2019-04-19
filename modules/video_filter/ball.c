@@ -124,8 +124,8 @@ static const char *const mode_list_text[] = { N_("Red"), N_("Green"),
 vlc_plugin_begin ()
     set_help(BALL_HELP)
 
-    set_description( N_("Ball video filter") )
-    set_shortname( N_( "Ball" ))
+    set_description( N_("Ball") )
+    set_shortname( N_("Ball") )
     add_shortcut( "ball" )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 

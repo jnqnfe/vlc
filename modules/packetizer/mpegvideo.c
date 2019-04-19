@@ -69,7 +69,7 @@ static int  Open ( decoder_t * );
 static void Close( decoder_t * );
 
 vlc_plugin_begin ()
-    set_description( N_("MPEG-I/II video packetizer") )
+    set_description( N_("MPEG-I/II video") )
     set_shortname( N_("MPEG Video") )
     set_capability( VLC_CAP_PACKETIZER, 50, Open, Close )
 

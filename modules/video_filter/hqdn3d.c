@@ -60,7 +60,7 @@ static int DenoiseCallback( vlc_object_t *p_this, char const *psz_var,
 
 vlc_plugin_begin()
     set_shortname(N_("HQ Denoiser 3D"))
-    set_description(N_("High Quality 3D Denoiser filter"))
+    set_description(N_("High Quality 3D Denoiser"))
     add_shortcut("hqdn3d")
     set_capability(VLC_CAP_VIDEO_FILTER, 0, Open, Close)
 

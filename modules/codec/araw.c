@@ -47,13 +47,13 @@ static int  EncoderOpen ( encoder_t * );
 
 vlc_plugin_begin ()
     /* audio decoder module */
-    set_description( N_("Raw/Log Audio decoder") )
+    set_description( N_("Raw audio") )
     set_capability( VLC_CAP_AUDIO_DECODER, 100, DecoderOpen, DecoderClose )
 
 #ifdef ENABLE_SOUT
     /* audio encoder submodule */
     add_submodule ()
-    set_description( N_("Raw audio encoder") )
+    set_description( N_("Raw audio") )
     set_capability( VLC_CAP_ENCODER, 150, EncoderOpen, NULL )
 #endif
 
