@@ -129,7 +129,7 @@ VLC_API module_t *module_find(const char *name) VLC_USED;
  *
  * \param module the module
  * \param psize the size of the configuration returned
- * \return the configuration as an array
+ * \return the configuration as an array, or NULL if the module has no config items
  */
 VLC_API module_config_t *module_config_get(const module_t *module,
                                            unsigned *restrict psize) VLC_USED;
