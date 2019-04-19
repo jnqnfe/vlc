@@ -927,7 +927,7 @@ static void decode_region_composition( decoder_t *p_dec, bs_t *s, uint16_t i_seg
             free( p_region->p_pixbuf );
         }
 
-        p_region->p_pixbuf = xmalloc( i_height * i_width );
+        p_region->p_pixbuf = (i_height && i_width) ? xmalloc( i_height * i_width ) : NULL;
         p_region->i_depth = 0;
         b_fill = true;
     }
