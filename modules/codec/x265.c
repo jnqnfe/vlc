@@ -210,8 +210,8 @@ static int Open(encoder_t *p_enc)
 
     p_enc->fmt_out.i_extra = i_extra;
 
-    uint8_t *p_extra = p_enc->fmt_out.p_extra = malloc(i_extra);
-    if (!p_extra) {
+    uint8_t *p_extra = p_enc->fmt_out.p_extra = (i_extra) ? malloc(i_extra) : NULL;
+    if (i_extra && !p_extra) {
         Close(p_enc);
         return VLC_ENOMEM;
     }
