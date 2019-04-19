@@ -212,8 +212,8 @@ static int Init( filter_t *p_filter, filter_sys_t * p_data
     {
         p_data->i_nb_atomic_operations += 2;
     }
-    p_data->p_atomic_operations = malloc( sizeof(struct atomic_operation_t)
-            * p_data->i_nb_atomic_operations );
+    p_data->p_atomic_operations = (p_data->i_nb_atomic_operations <= 0) ? NULL :
+        malloc( sizeof(struct atomic_operation_t) * p_data->i_nb_atomic_operations );
     if( p_data->p_atomic_operations == NULL )
         return -1;
 
@@ -311,7 +311,8 @@ static int Init( filter_t *p_filter, filter_sys_t * p_data
                 = p_data->p_atomic_operations[i].i_delay * 2 * sizeof (float);
         }
     }
-    p_data->p_overflow_buffer = malloc( p_data->i_overflow_buffer_size );
+    p_data->p_overflow_buffer = (p_data->i_overflow_buffer_size <= 0) ? NULL :
+        malloc( p_data->i_overflow_buffer_size );
     if( p_data->p_overflow_buffer == NULL )
     {
         free( p_data->p_atomic_operations );
