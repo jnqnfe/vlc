@@ -518,9 +518,8 @@ static int vlc_plugin_desc_cb(vlc_plugin_t *plugin, enum vlc_plugin_desc_actions
             (*item)->list.psz = dst;
 
             /* Copy textual descriptions */
-            /* XXX: item->list_text[len + 1] is probably useless. */
             const char *const *text = params->string_list.text;
-            const char **dtext = xmalloc (sizeof (const char *) * (len + 1));
+            const char **dtext = xmalloc (sizeof (const char *) * len);
 
             memcpy(dtext, text, sizeof (const char *) * len);
             (*item)->list_text = dtext;
