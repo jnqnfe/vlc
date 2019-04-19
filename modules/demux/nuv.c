@@ -769,7 +769,7 @@ static int SeekTableLoad( demux_t *p_demux, demux_sys_t *p_sys )
     }
 
     /* */
-    uint8_t *p_seek_table = malloc( fh.i_length );
+    uint8_t *p_seek_table = (fh.i_length) ? malloc( fh.i_length ) : NULL;
     if( p_seek_table == NULL )
         return VLC_ENOMEM;
 
