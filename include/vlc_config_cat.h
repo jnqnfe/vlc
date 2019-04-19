@@ -84,13 +84,13 @@
 
 #define INTF_HELP  N_( "Settings for VLC's interfaces" )
 
-#define INTF_GENERAL_HELP N_( "Main interfaces settings" )
+#define INTF_GENERAL_HELP N_( "Main interface settings" )
 
 #define INTF_MAIN_HELP N_( "Settings for the main interface" )
 
 #define INTF_CONTROL_HELP N_( "Settings for VLC's control interfaces" )
 
-#define INTF_HOTKEYS_HELP N_( "Hotkeys settings" )
+#define INTF_HOTKEYS_HELP N_( "Hotkey settings" )
 
 #define AUDIO_HELP N_( "Audio settings" )
 
@@ -205,7 +205,7 @@ static const struct config_category_t categories_array[] =
     { CAT_INTERFACE,               N_("Interface"),           INTF_HELP          },
     { SUBCAT_INTERFACE_GENERAL,    N_("Interface"),           INTF_GENERAL_HELP  },
     { SUBCAT_INTERFACE_CONTROL,    N_("Control interfaces"),  INTF_CONTROL_HELP  },
-    { SUBCAT_INTERFACE_HOTKEYS,    N_("Hotkeys settings"),    INTF_HOTKEYS_HELP  },
+    { SUBCAT_INTERFACE_HOTKEYS,    N_("Hotkey settings"),     INTF_HOTKEYS_HELP  },
     { SUBCAT_INTERFACE_MAIN,       N_("Main interfaces"),     INTF_MAIN_HELP     },
 
     { CAT_AUDIO,                   N_("Audio"),               AUDIO_HELP         },
