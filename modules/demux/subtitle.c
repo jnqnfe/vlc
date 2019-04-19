@@ -1707,7 +1707,7 @@ static int ParseMPSub( demux_t *p_demux, subs_properties_t *p_props,
                 break;
             }
 
-            psz_temp = malloc( strlen(s) );
+            psz_temp = malloc( strlen(s) + 1 );
             if( !psz_temp )
             {
                 free( psz_text );
