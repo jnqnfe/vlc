@@ -527,7 +527,7 @@ int sout_access_out_sys_t::url_cb(httpd_client_t *cl, httpd_message_t *answer,
         if (send_header)
             i_answer_size += m_header->i_buffer;
 
-        answer->p_body = (uint8_t *) malloc(i_answer_size);
+        answer->p_body = (i_answer_size) ? (uint8_t *) malloc(i_answer_size) : NULL;
         if (answer->p_body)
         {
             answer->i_body = i_answer_size;

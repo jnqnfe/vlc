@@ -262,7 +262,7 @@ int intf_sys_t::httpd_file_fill( uint8_t *psz_request, uint8_t **pp_data, int *p
         return VLC_EGENERIC;
     }
 
-    *pp_data = (uint8_t *)malloc( size );
+    *pp_data = (size) ? (uint8_t *)malloc( size ) : NULL;
     if( !*pp_data )
     {
         vlc_stream_Delete( s );
