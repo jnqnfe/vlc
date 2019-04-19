@@ -548,7 +548,7 @@ int (var_Change)(vlc_object_t *p_this, const char *psz_name, int i_action, ...)
             char ***texts = va_arg(ap, char ***);
 
             *count = p_var->choices_count;
-            *values = xmalloc(p_var->choices_count * sizeof (**values));
+            *values = (*count) ? xmalloc(p_var->choices_count * sizeof (**values)) : NULL;
 
             for (size_t i = 0; i < p_var->choices_count; i++)
             {
@@ -559,7 +559,7 @@ int (var_Change)(vlc_object_t *p_this, const char *psz_name, int i_action, ...)
 
             if( texts != NULL )
             {
-                char **tab = xmalloc(p_var->choices_count * sizeof (*tab));
+                char **tab = (*count) ? xmalloc(p_var->choices_count * sizeof (*tab)) : NULL;
                 *texts = tab;
 
                 for (size_t i = 0; i < p_var->choices_count; i++)
