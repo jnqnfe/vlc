@@ -140,7 +140,7 @@ static int build_lists(data_t* data)
     for (size_t i = 0; i < data->set_count; i++)
     {
         unsigned c1 = 0, c2 = 0; //c2 includes boolean negatives
-        module_config_item_t* config = vlc_module_config_get(mod_list[i], &c1);
+        module_config_item_t* config = vlc_module_config_get_ext(mod_list[i], &c1, false, false);
         data->sets[i] = config;
         c2 = c1;
 
