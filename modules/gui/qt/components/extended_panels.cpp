@@ -70,27 +70,25 @@ static bool filterIsPresent( const QString &filters, const QString &filter )
 
 static const char* GetVFilterType( struct intf_thread_t *p_intf, const char *psz_name )
 {
-    module_t *p_obj = vlc_module_find( psz_name );
-    if( !p_obj )
-    {
-        msg_Err( p_intf, "Unable to find filter module \"%s\".", psz_name );
-        return NULL;
-    }
-
-    enum vlc_module_cap cap = vlc_module_get_capability( p_obj );
-    if( cap == VLC_CAP_VIDEO_SPLITTER )
+    if (vlc_module_find_with(psz_name, VLC_CAP_VIDEO_SPLITTER))
         return "video-splitter";
-    else if( cap == VLC_CAP_VIDEO_FILTER )
+
+    if (vlc_module_find_with(psz_name, VLC_CAP_VIDEO_FILTER))
         return "video-filter";
-    else if( cap == VLC_CAP_SUB_SOURCE )
+
+    if (vlc_module_find_with(psz_name, VLC_CAP_SUB_SOURCE))
         return "sub-source";
-    else if( cap == VLC_CAP_SUB_FILTER )
+
+    if (vlc_module_find_with(psz_name, VLC_CAP_SUB_FILTER))
         return "sub-filter";
-    else
-    {
+
+    if (vlc_module_find(psz_name)) {
         msg_Err( p_intf, "Unknown video filter type." );
         return NULL;
     }
+
+    msg_Err( p_intf, "Unable to find filter module \"%s\".", psz_name );
+    return NULL;
 }
 
 static const QString ModuleFromWidgetName( QObject *obj )
