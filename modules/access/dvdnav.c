@@ -66,10 +66,6 @@
 /*****************************************************************************
  * Module descriptor
  *****************************************************************************/
-#define ANGLE_TEXT N_("DVD angle")
-#define ANGLE_LONGTEXT N_( \
-     "Default DVD angle." )
-
 #define MENU_TEXT N_("Start directly in menu")
 #define MENU_LONGTEXT N_( \
     "Start the DVD directly in the main menu. This "\
@@ -95,7 +91,7 @@ vlc_plugin_begin ()
 
     set_subcategory( SUBCAT_INPUT_ACCESS )
 
-    add_integer_with_range( "dvdnav-angle", 1, 1, INT_MAX, ANGLE_TEXT, ANGLE_LONGTEXT, false )
+    add_obsolete_integer( "dvdnav-angle" ) /* since 4.0.0 */
     add_bool( "dvdnav-menu", true, MENU_TEXT, MENU_LONGTEXT, false )
 
     //set_subcategory( SUBCAT_INPUT_DEMUX )
@@ -188,7 +184,6 @@ static int CommonOpen( demux_t *p_demux,
                        dvdnav_t *p_dvdnav, bool b_readahead )
 {
     demux_sys_t *p_sys;
-    int         i_angle;
     char        *psz_code;
 
     assert( p_dvdnav );
@@ -304,8 +299,6 @@ static int CommonOpen( demux_t *p_demux,
                     msg_Warn( p_demux, "cannot go to dvd menu" );
         }
     }
-
-    i_angle = var_CreateGetInteger( p_demux, "dvdnav-angle" );
 
     p_sys->still.b_enabled = false;
     vlc_mutex_init( &p_sys->still.lock );
