@@ -458,7 +458,10 @@ VLC_API const char *module_gettext(const module_t *m, const char *s) VLC_USED;
 
 VLC_USED static inline module_t *module_get_main (void)
 {
-    return module_find ("core");
+    module_t **module_list = NULL;
+    ssize_t count = vlc_module_list_cap( &module_list, VLC_CAP_CORE );
+    assert(count == 1);
+    return module_list[0];
 }
 #define module_get_main(a) module_get_main()
 
