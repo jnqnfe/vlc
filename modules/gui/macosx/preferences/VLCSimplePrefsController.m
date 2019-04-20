@@ -815,7 +815,6 @@ static inline const char * __config_GetLabel(vlc_object_t *p_this, const char *p
 
     /* Get the main Module */
     module_t *p_main = module_get_main();
-    assert(p_main);
     unsigned confsize;
     module_config_item_t *p_config;
 

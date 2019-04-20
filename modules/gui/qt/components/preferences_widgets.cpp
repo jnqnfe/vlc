@@ -1193,7 +1193,6 @@ void KeySelectorControl::finish()
 
     /* Get the main Module */
     module_t *p_main = module_get_main();
-    assert( p_main );
 
     /* Access to the module_config_item_t */
     unsigned confsize;

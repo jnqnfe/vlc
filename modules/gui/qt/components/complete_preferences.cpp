@@ -495,14 +495,10 @@ bool PrefsItemData::contains( const QString &text, Qt::CaseSensitivity cs )
     int id = 0;
 
     /* find our module */
-    module_t *p_module;
-    if( !is_core )
-        p_module = this->p_module;
-    else
-    {
-        p_module = module_get_main();
-        assert( p_module );
+    module_t *p_module = (is_core) ? module_get_main() : this->p_module;
 
+    if( is_core )
+    {
         if( this->i_type == TYPE_SUBCATEGORY )
             id = this->i_object_id;
         else // TYPE_CATSUBCAT
@@ -606,10 +602,7 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
     else if( data->i_type == PrefsItemData::TYPE_MODULE )
         p_module = data->p_module;
     else
-    {
         p_module = module_get_main();
-        assert( p_module );
-    }
 
     unsigned confsize;
     p_config = vlc_module_config_get( p_module, &confsize );
