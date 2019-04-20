@@ -101,6 +101,7 @@ vlc_plugin_begin()
 
     set_subcategory( SUBCAT_INPUT_ACCESS )
     add_integer( "linsys-sdi-link", 0, LINK_TEXT, LINK_LONGTEXT, true )
+        change_integer_range( 0, INT_MAX )
     add_integer( "linsys-sdi-id-video", 0, VIDEO_TEXT, VIDEO_LONGTEXT, true )
     add_string( "linsys-sdi-aspect-ratio", "", VIDEO_ASPECT_TEXT,
                 VIDEO_ASPECT_LONGTEXT, true )
