@@ -33,7 +33,7 @@
 
 + (const char *)getFilterType:(const char *)psz_name
 {
-    module_t *p_obj = module_find(psz_name);
+    module_t *p_obj = vlc_module_find(psz_name);
     if (!p_obj) {
         return NULL;
     }

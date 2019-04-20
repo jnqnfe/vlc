@@ -247,7 +247,7 @@ vlc_module_cap_get_desc
 vlc_module_cap_get_textid
 module_config_free
 vlc_module_config_get_ext
-module_find
+vlc_module_find_ext
 vlc_module_get_capability
 vlc_module_get_custom_capability
 module_get_help

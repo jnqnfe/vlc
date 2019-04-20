@@ -287,12 +287,17 @@ void module_unneed(vlc_object_t *obj, module_t *module)
     vlc_objres_clear(obj);
 }
 
-module_t *module_find (const char *name)
+module_t *vlc_module_find_ext(const char *name, enum vlc_module_cap cap, const char *custom_cap)
 {
-    size_t count;
-    module_t **list = module_list_get (&count);
-
     assert (name != NULL);
+
+    size_t count;
+    module_t **list;
+
+    if (cap != VLC_CAP_INVALID)
+        count = vlc_module_list_cap_ext (&list, cap, custom_cap);
+    else
+        list = module_list_get (&count);
 
     for (size_t i = 0; i < count; i++)
     {

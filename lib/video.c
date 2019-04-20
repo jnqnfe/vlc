@@ -557,7 +557,7 @@ static int get_filter_str( vlc_object_t *p_parent, const char *psz_name,
     char *psz_string;
     const char *psz_filter_var;
 
-    module_t *p_obj = module_find( psz_name );
+    module_t *p_obj = vlc_module_find( psz_name );
     if( !p_obj )
     {
         msg_Err( p_parent, "Unable to find filter module \"%s\".", psz_name );

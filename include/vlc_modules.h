@@ -201,10 +201,29 @@ VLC_API void module_unneed( vlc_object_t *, module_t * );
 /**
  * Get a pointer to a module_t given it's name.
  *
+ * The search can be targetted towards modules of a particular capability:
+ *  - For built-in capabilities, simply pass the capability in cap, and NULL
+ *    for custom_cap;
+ *  - For custom capabilities, pass VLC_CAP_CUSTOM in cap and the name of the
+ *    capability in custom_cap.
+ *  - If a search of the entire collection of modules is wanted, pass
+ *    VLC_CAP_INVALID as the cap and NULL for custom_cap.
+ *
  * \param name the name of the module
+ * \param cap a capability with which to filter the search to
+ * \param custom_cap the name of a custom capability
  * \return a pointer to the module or NULL in case of a failure
  */
-VLC_API module_t *module_find(const char *name) VLC_USED;
+VLC_API module_t *vlc_module_find_ext(const char *name, enum vlc_module_cap cap, const char *custom_cap) VLC_USED;
+#define vlc_module_find(n)               vlc_module_find_ext(n, VLC_CAP_INVALID, NULL)
+#define vlc_module_find_with(n,c)        vlc_module_find_ext(n, c, NULL)
+#define vlc_module_find_with_custom(n,c) vlc_module_find_ext(n, VLC_CAP_CUSTOM, c)
+
+/* deprecated */
+VLC_DEPRECATED static inline module_t *module_find(const char *name)
+{
+    return vlc_module_find(name);
+}
 
 /**
  * Checks if a module exists.
@@ -215,7 +234,7 @@ VLC_API module_t *module_find(const char *name) VLC_USED;
  */
 VLC_USED static inline bool vlc_module_exists (const char * name)
 {
-    return module_find(name) != NULL;
+    return vlc_module_find(name) != NULL;
 }
 
 /**
