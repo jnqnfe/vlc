@@ -1308,7 +1308,7 @@ void CaptureOpenPanel::enableAdvancedDialog( int i_index )
 {
     int i_devicetype = ui.deviceCombo->itemData( i_index ).toInt();
     module_t *p_module =
-        vlc_module_find( psz_devModule[i_devicetype] );
+        vlc_module_find_with( psz_devModule[i_devicetype], VLC_CAP_ACCESS );
     ui.advancedButton->setEnabled( NULL != p_module );
 }
 
@@ -1320,7 +1320,7 @@ void CaptureOpenPanel::advancedDialog()
 
     /* Get the corresponding module */
     module_t *p_module =
-        vlc_module_find( psz_devModule[i_devicetype] );
+        vlc_module_find_with( psz_devModule[i_devicetype], VLC_CAP_ACCESS );
     if( NULL == p_module ) return;
 
     /* Init */
