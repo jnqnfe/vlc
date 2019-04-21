@@ -116,6 +116,10 @@ PrefsDialog::PrefsDialog( QWidget *parent, intf_thread_t *_p_intf )
     advanced_split_widget->addWidget( advanced_tree_panel );
     advanced_split_widget->addWidget( advanced_panels_stack );
 
+    advanced_split_widget->setSizes(QList<int>() << 300 << 500);
+    advanced_tree_panel->sizePolicy().setHorizontalStretch(1);
+    advanced_panels_stack->sizePolicy().setHorizontalStretch(2);
+
     /* Layout  */
     main_layout->addWidget( stack, 0, 0, 3, 3 );
     main_layout->addWidget( types, 3, 0, 2, 1 );
