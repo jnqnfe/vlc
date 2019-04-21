@@ -91,23 +91,16 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
     {
         QIcon icon;
 
-        /* Work on a new item */
         module_config_item_t *p_item = p_config + i;
 
-        switch( p_item->i_type )
+        if( p_item->i_type == CONFIG_SUBCATEGORY )
         {
-        /* This is a category */
-        case CONFIG_CATEGORY:
-            break; /* ignore now */
-
-        /* This is a subcategory */
-        case CONFIG_SUBCATEGORY:
             int subcat = p_item->value.i;
-            if( subcat == SUBCAT_HIDDEN ) break;
+            if( subcat == SUBCAT_HIDDEN ) continue;
 
             /* Create top level cat node? */
             int cat = vlc_config_CategoryFromSubcategory(subcat);
-            if (last_cat != cat && cat != CAT_HIDDEN)
+            if (last_cat != cat)
             {
                 /* PrefsItemData Init */
                 data = new PrefsItemData( this );
@@ -175,9 +168,6 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
             /* Add it to the parent */
             assert( current_item );
             current_item->addChild( subcat_item );
-            break;
-
-        /* Other items don't need yet a place on the tree */
         }
     }
     module_config_free( p_config );
@@ -200,9 +190,6 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
         {
             const module_config_item_t *p_item = p_config + i;
 
-            if( p_item->i_type == CONFIG_CATEGORY )
-                continue; /* not used in plugins anymore, ignore */
-
             if( p_item->i_type == CONFIG_SUBCATEGORY )
             {
                 i_subcategory = p_item->value.i;
@@ -212,13 +199,13 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
             if( CONFIG_ITEM(p_item->i_type) )
                 b_options = true;
 
-            if( b_options && i_category != CAT_HIDDEN && i_subcategory != SUBCAT_HIDDEN )
+            if( b_options && i_subcategory != SUBCAT_HIDDEN )
                 break;
         }
         module_config_free (p_config);
 
         /* Dummy item, please proceed */
-        if( !b_options || i_category == CAT_HIDDEN || i_subcategory == SUBCAT_HIDDEN ) continue;
+        if( !b_options || i_subcategory == SUBCAT_HIDDEN ) continue;
 
 
         // Locate the category item;
@@ -561,9 +548,9 @@ bool PrefsItemData::contains( const QString &text, Qt::CaseSensitivity cs )
 
     do
     {
-        if ( p_item->i_type == CONFIG_CATEGORY || p_item->i_type == CONFIG_SUBCATEGORY )
+        if ( p_item->i_type == CONFIG_SUBCATEGORY )
         {
-            /* for core, if we hit a cat or subcat, stop */
+            /* for core, if we hit a subcat, stop */
             if ( is_core )
                 break;
             /* a module's options are grouped under one node; we can/should
@@ -685,8 +672,7 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
                 p_item->value.i != data->i_object_id ) ||
               ( data->i_type == PrefsItemData::TYPE_CATSUBCAT  &&
                 p_item->value.i != data->i_subcat_id ) ) &&
-            ( p_item->i_type == CONFIG_CATEGORY ||
-              p_item->i_type == CONFIG_SUBCATEGORY ) )
+            p_item->i_type == CONFIG_SUBCATEGORY )
             break;
         if( p_item->b_internal ) continue;
 
@@ -728,8 +714,7 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
     }
     while( !( ( data->i_type == PrefsItemData::TYPE_SUBCATEGORY ||
                data->i_type == PrefsItemData::TYPE_CATSUBCAT ) &&
-             ( p_item->i_type == CONFIG_CATEGORY ||
-               p_item->i_type == CONFIG_SUBCATEGORY ) )
+             p_item->i_type == CONFIG_SUBCATEGORY )
         && ( ++p_item < p_end ) );
 
     if( box && i_boxline > 0 )

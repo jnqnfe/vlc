@@ -37,7 +37,7 @@
 /**
  * Current plugin ABI version
  */
-#define PLUGIN_ABI_VERSION 4_0_10
+#define PLUGIN_ABI_VERSION 4_0_11
 
 /* Descriptor callback actions, ignore this! */
 enum vlc_plugin_desc_actions
@@ -267,7 +267,7 @@ typedef union
 {
     struct {
         uint16_t type;
-        int64_t id; /* cat/subcat ID */
+        int64_t id; /* subcat ID */
         const char *text; /* section/hint text */
         const char *longtext; /* section/hint longtext */
     } special;
@@ -389,18 +389,6 @@ typedef union
 }
 
 /* "Special" (hint) type entries */
-
-/* this is only needed by core now */
-#ifndef __PLUGIN__
-#define set_category( _id ) \
-    cfg_params = (config_item_params_t) { .special = { \
-        .type = CONFIG_CATEGORY, \
-        .id = (_id), \
-        .text = NULL, \
-        .longtext = NULL \
-    } }; \
-    add_special_type_inner()
-#endif
 
 #define set_subcategory( _id ) \
     cfg_params = (config_item_params_t) { .special = { \

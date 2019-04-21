@@ -360,7 +360,6 @@ static void print_item(const module_t *m, const module_config_item_t *item,
                                module_gettext(m, item->psz_longtext));
                     break;
 
-                case CONFIG_CATEGORY:
                 case CONFIG_SUBCATEGORY:
                     /* We ignore these here, using 'hints' instead */
                     break;

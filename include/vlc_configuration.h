@@ -60,9 +60,8 @@
 
 /* Configuration hint types */
 #define CONFIG_HINT_CATEGORY         (CONFIG_ITEM_CLASS_SPECIAL | 0x01) /* Set category (help output) */
-#define CONFIG_CATEGORY              (CONFIG_ITEM_CLASS_SPECIAL | 0x02) /* Set category (GUI) */
-#define CONFIG_SUBCATEGORY           (CONFIG_ITEM_CLASS_SPECIAL | 0x03) /* Set subcategory (GUI) */
-#define CONFIG_SECTION               (CONFIG_ITEM_CLASS_SPECIAL | 0x04) /* Start of new section */
+#define CONFIG_SUBCATEGORY           (CONFIG_ITEM_CLASS_SPECIAL | 0x02) /* Set subcategory (GUI) */
+#define CONFIG_SECTION               (CONFIG_ITEM_CLASS_SPECIAL | 0x03) /* Start of new section */
 
 /* Configuration item types */
 #define CONFIG_ITEM_INVALID          (CONFIG_ITEM_CLASS_INVALID | 0x00)
