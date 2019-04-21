@@ -81,9 +81,9 @@ static void GLConvClose(opengl_tex_converter_t *);
 #define HW_BLENDING_TEXT N_("Use hardware blending support")
 #define HW_BLENDING_LONGTEXT N_(\
     "Try to use hardware acceleration for subtitle/OSD blending.")
-#define HW_YUV_TEXT N_("Use hardware YUV->RGB conversions")
+#define HW_YUV_TEXT N_("Use hardware YUV to RGB conversions")
 #define HW_YUV_LONGTEXT N_(\
-    "Try to use hardware acceleration for YUV->RGB conversions. " \
+    "Try to use hardware acceleration for YUV to RGB conversions. " \
     "This option doesn't have any effect when using overlays.")
 
 #define PIXEL_SHADER_TEXT N_("Pixel Shader")
