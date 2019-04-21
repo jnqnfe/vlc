@@ -1486,8 +1486,8 @@ vlc_plugin_begin ()
     set_description( N_("core program") )
     set_capability( VLC_CAP_CORE, 0 )
 
-/* Audio options */
-    set_category( CAT_AUDIO )
+    /* Audio category */
+
     set_subcategory( SUBCAT_AUDIO_GENERAL )
     add_category_hint(N_("Audio"), AOUT_CAT_LONGTEXT)
 
@@ -1544,8 +1544,8 @@ vlc_plugin_begin ()
     add_module("audio-resampler", VLC_CAP_STR_AUDIO_RESAMPLER, NULL,
                AUDIO_RESAMPLER_TEXT, AUDIO_RESAMPLER_LONGTEXT)
 
-/* Video options */
-    set_category( CAT_VIDEO )
+    /* Video category */
+
     set_subcategory( SUBCAT_VIDEO_GENERAL )
     add_category_hint(N_("Video"), VOUT_CAT_LONGTEXT)
 
@@ -1664,7 +1664,7 @@ vlc_plugin_begin ()
     add_string( "pixel-ratio", "1", PIXEL_RATIO_TEXT, PIXEL_RATIO_TEXT )
 #endif
 
-/* Subpictures options */
+    /* Subpicture options */
     set_subcategory( SUBCAT_VIDEO_SUBPIC )
     set_section( N_("On Screen Display") , NULL )
     add_category_hint(N_("Subpictures"), SUB_CAT_LONGTEXT)
@@ -1711,8 +1711,8 @@ vlc_plugin_begin ()
     add_integer( "secondary-sub-margin", 100, SECONDARY_SUB_MARGIN_TEXT,
                  SECONDARY_SUB_MARGIN_LONGTEXT, true )
 
-/* Input options */
-    set_category( CAT_INPUT )
+    /* Input category */
+
     set_subcategory( SUBCAT_INPUT_GENERAL )
     add_category_hint( N_("Input"), INPUT_CAT_LONGTEXT )
 
@@ -1914,7 +1914,7 @@ vlc_plugin_begin ()
 
     add_bool( "lua", true, INPUT_LUA_TEXT, NULL, true );
 
-/* Decoder options */
+    /* Decoder options */
     add_category_hint(N_("Input access and codecs"), CODEC_CAT_LONGTEXT)
     set_subcategory( SUBCAT_INPUT_ACCESS )
 
@@ -1938,8 +1938,8 @@ vlc_plugin_begin ()
     add_module_list("stream-filter", VLC_CAP_STR_STREAM_FILTER, NULL,
                     STREAM_FILTER_TEXT, STREAM_FILTER_LONGTEXT)
 
-/* Stream output options */
-    set_category( CAT_SOUT )
+    /* Stream output category */
+
     set_subcategory( SUBCAT_SOUT_GENERAL )
     add_category_hint(N_("Stream output"), SOUT_CAT_LONGTEXT)
 
@@ -1982,8 +1982,8 @@ vlc_plugin_begin ()
 
     set_subcategory( SUBCAT_SOUT_VOD )
 
-/* Advanced options */
-    set_category( CAT_ADVANCED )
+    /* Advanced category */
+
     set_subcategory( SUBCAT_ADVANCED_MISC )
     add_category_hint(N_("Advanced"), NULL)
     set_section( N_("Special modules"), NULL )
@@ -2032,8 +2032,8 @@ vlc_plugin_begin ()
 
     set_subcategory( SUBCAT_ADVANCED_NETWORK )
 
-/* Playlist options */
-    set_category( CAT_PLAYLIST )
+    /* Playlist category */
+
     set_subcategory( SUBCAT_PLAYLIST_GENERAL )
     add_category_hint(N_("Playlist"), PLAYLIST_CAT_LONGTEXT)
     add_bool( "random", false, RANDOM_TEXT, RANDOM_LONGTEXT, false )
@@ -2128,8 +2128,8 @@ vlc_plugin_begin ()
     add_string( "bookmark10", NULL,
               BOOKMARK10_TEXT, BOOKMARK_LONGTEXT, false )
 
-/* Interface options */
-    set_category( CAT_INTERFACE )
+    /* Interface category */
+
     set_subcategory( SUBCAT_INTERFACE_GENERAL )
     add_category_hint( N_("Interface"), INTF_CAT_LONGTEXT )
     add_integer( "verbose", 0, VERBOSE_TEXT, VERBOSE_LONGTEXT,
@@ -2164,7 +2164,7 @@ vlc_plugin_begin ()
     add_module_list_cat("control", SUBCAT_INTERFACE_CONTROL, NULL,
                         CONTROL_TEXT, CONTROL_LONGTEXT)
 
-/* Hotkey options*/
+    /* Hotkey options*/
     set_subcategory( SUBCAT_INTERFACE_HOTKEYS )
     add_category_hint(N_("Hot keys"), HOTKEY_CAT_LONGTEXT)
 
@@ -2686,9 +2686,9 @@ vlc_plugin_begin ()
     add_key("key-subtitle-text-scale-down", KEY_SUBTEXT_SCALEDOWN,
             SUBTEXT_SCALEDOWN_KEY_TEXT, SUBTEXT_SCALE_KEY_LONGTEXT)
 
-/* Miscellaneous */
+    /* Miscellaneous category */
+
     /* Not displayed in GUI, listed in help output though */
-    set_category( CAT_HIDDEN )
     set_subcategory( SUBCAT_HIDDEN )
     add_category_hint(N_("Miscellaneous"), NULL)
 
