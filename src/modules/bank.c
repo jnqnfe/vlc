@@ -771,6 +771,8 @@ module_t **module_list_get (size_t *n)
     {
         for (module_t *m = lib->module; m != NULL; m = m->next)
         {
+            if (unlikely(m->capability == VLC_CAP_INVALID))
+                continue;
             assert(i < vlc_plugins_count);
             tab[i++] = m;
         }

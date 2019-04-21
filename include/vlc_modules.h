@@ -207,7 +207,9 @@ VLC_API void module_unneed( vlc_object_t *, module_t * );
  *  - For custom capabilities, pass VLC_CAP_CUSTOM in cap and the name of the
  *    capability in custom_cap.
  *  - If a search of the entire collection of modules is wanted, pass
- *    VLC_CAP_INVALID as the cap and NULL for custom_cap.
+ *    VLC_CAP_INVALID as the cap and NULL for custom_cap. (Note, modules that
+ *    actually have VLC_CAP_INVALID as their capability are filtered out, so
+ *    cannot be found via this function).
  *
  * \param name the name of the module
  * \param cap a capability with which to filter the search to
@@ -227,6 +229,8 @@ VLC_DEPRECATED static inline module_t *module_find(const char *name)
 
 /**
  * Checks if a module exists.
+  *
+ * Note that modules with capability of VLC_CAP_INVALID are ignored.
  *
  * \param name name of the module
  * \retval true if the module exists
@@ -282,6 +286,9 @@ VLC_API void module_list_free(module_t **);
 
 /**
  * Gets the flat list of VLC modules.
+ *
+ * Note that this is not quite the complete list, it deliberately
+ * excludes modules with capability of VLC_CAP_INVALID.
  *
  * \param n [OUT] pointer to the number of modules
  * \return table of module pointers (release with module_list_free()),
