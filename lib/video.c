@@ -555,31 +555,25 @@ static int get_filter_str( vlc_object_t *p_parent, const char *psz_name,
 {
     char *psz_parser;
     char *psz_string;
-    const char *psz_filter_var;
 
-    module_t *p_obj = vlc_module_find( psz_name );
-    if( !p_obj )
-    {
-        msg_Err( p_parent, "Unable to find filter module \"%s\".", psz_name );
+    module_t *p_obj = vlc_module_find_with(psz_name, VLC_CAP_VIDEO_FILTER);
+    const char *psz_filter_var = "video-filter";
+    if (p_obj == NULL) {
+        p_obj = vlc_module_find_with(psz_name, VLC_CAP_SUB_SOURCE);
+        psz_filter_var = "sub-source";
+    }
+    if (p_obj == NULL) {
+        p_obj = vlc_module_find_with(psz_name, VLC_CAP_SUB_FILTER);
+        psz_filter_var = "sub-filter";
+    }
+    if (p_obj == NULL && vlc_module_find(psz_name)) {
+        msg_Err( p_parent, "Unknown video filter type." );
         return VLC_EGENERIC;
     }
 
-    enum vlc_module_cap cap = vlc_module_get_capability( p_obj );
-    if( cap == VLC_CAP_VIDEO_FILTER )
+    if( p_obj == NULL )
     {
-        psz_filter_var = "video-filter";
-    }
-    else if( cap == VLC_CAP_SUB_SOURCE )
-    {
-        psz_filter_var = "sub-source";
-    }
-    else if( cap == VLC_CAP_SUB_FILTER )
-    {
-        psz_filter_var = "sub-filter";
-    }
-    else
-    {
-        msg_Err( p_parent, "Unknown video filter type." );
+        msg_Err( p_parent, "Unable to find filter module \"%s\".", psz_name );
         return VLC_EGENERIC;
     }
 
