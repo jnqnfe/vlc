@@ -939,7 +939,7 @@ void AudioFilterControlWidget::build()
 
 void AudioFilterControlWidget::enable( bool b_enable )
 {
-    module_t *p_obj = vlc_module_find( qtu(name) );
+    module_t *p_obj = vlc_module_find_with( qtu(name), VLC_CAP_AUDIO_FILTER );
     if( !p_obj )
     {
         msg_Err( p_intf, "Unable to find filter module \"%s\".", qtu(name) );
