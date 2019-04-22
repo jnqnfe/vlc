@@ -263,10 +263,16 @@ static int vlc_plugin_desc_cb(vlc_plugin_t *plugin, enum vlc_plugin_desc_actions
             switch (action)
             {
                 case VLC_CONFIG_CREATE_SPECIAL:
+                    if (unlikely(params->special.type == CONFIG_SUBCATEGORY &&
+                                 !vlc_config_IntSubcatIsValid((int)params->special.id)))
+                    {
+                        print_config_error(_("invalid subcategory"));
+                        ret = -1;
+                    }
                     type =
                     new_item->i_type = params->special.type;
                     new_item->orig.i = /* FIXME: old code put it in both of these */
-                    new_item->value.i = params->special.id;
+                    new_item->value.i = (int)params->special.id;
                     new_item->psz_text = params->special.text;
                     new_item->psz_longtext = params->special.longtext;
                     break;

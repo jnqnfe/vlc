@@ -24,60 +24,77 @@
 #ifndef VLC_CONFIG_CATS_H
 #define VLC_CONFIG_CATS_H
 
-/* Hidden categories and subcategories */
-/* Any options under this will be hidden in the GUI preferences, but will be
-   listed in cmdline help output. */
-#define CAT_HIDDEN -1
-#define SUBCAT_HIDDEN -1
+/* Config category */
+enum vlc_config_cat
+{
+    CAT_INVALID = -1,
 
-/* Categories and subcategories */
-#define CAT_INTERFACE 1
-#define SUBCAT_INTERFACE_GENERAL 101
-#define SUBCAT_INTERFACE_MAIN 102
-#define SUBCAT_INTERFACE_CONTROL 103
-#define SUBCAT_INTERFACE_HOTKEYS 104
+    CAT_INTERFACE = 0,
+    CAT_AUDIO,
+    CAT_VIDEO,
+    CAT_INPUT,
+    CAT_SOUT,
+    CAT_PLAYLIST,
+    CAT_ADVANCED,
+};
 
-#define CAT_AUDIO 2
-#define SUBCAT_AUDIO_GENERAL 201
-#define SUBCAT_AUDIO_AOUT 202
-#define SUBCAT_AUDIO_AFILTER 203
-#define SUBCAT_AUDIO_VISUAL 204
-#define SUBCAT_AUDIO_RESAMPLER 206
+/* Config subcategory */
+enum vlc_config_subcat
+{
+    SUBCAT_INVALID = -1,
 
-#define CAT_VIDEO 3
-#define SUBCAT_VIDEO_GENERAL 301
-#define SUBCAT_VIDEO_VOUT 302
-#define SUBCAT_VIDEO_VFILTER 303
-#define SUBCAT_VIDEO_SUBPIC 305
-#define SUBCAT_VIDEO_SPLITTER 306
+    SUBCAT_INTERFACE_GENERAL = 0,
+    SUBCAT_INTERFACE_CONTROL,
+    SUBCAT_INTERFACE_HOTKEYS,
+    SUBCAT_INTERFACE_MAIN,
 
-#define CAT_INPUT 4
-#define SUBCAT_INPUT_GENERAL 401
-#define SUBCAT_INPUT_ACCESS 402
-#define SUBCAT_INPUT_DEMUX 403
-#define SUBCAT_INPUT_VCODEC 404
-#define SUBCAT_INPUT_ACODEC 405
-#define SUBCAT_INPUT_SCODEC 406
-#define SUBCAT_INPUT_STREAM_FILTER 407
+    SUBCAT_AUDIO_GENERAL,
+    SUBCAT_AUDIO_AFILTER,
+    SUBCAT_AUDIO_AOUT,
+    SUBCAT_AUDIO_RESAMPLER,
+    SUBCAT_AUDIO_VISUAL,
 
-#define CAT_SOUT 5
-#define SUBCAT_SOUT_GENERAL 501
-#define SUBCAT_SOUT_STREAM 502
-#define SUBCAT_SOUT_MUX 503
-#define SUBCAT_SOUT_ACO 504
-#define SUBCAT_SOUT_PACKETIZER 505
-#define SUBCAT_SOUT_VOD 507
-#define SUBCAT_SOUT_RENDERER 508
+    SUBCAT_VIDEO_GENERAL,
+    SUBCAT_VIDEO_VFILTER,
+    SUBCAT_VIDEO_VOUT,
+    SUBCAT_VIDEO_SPLITTER,
+    SUBCAT_VIDEO_SUBPIC,
 
-#define CAT_ADVANCED 6
-#define SUBCAT_ADVANCED_MISC 602
-#define SUBCAT_ADVANCED_NETWORK 603
+    SUBCAT_INPUT_GENERAL,
+    SUBCAT_INPUT_ACCESS,
+    SUBCAT_INPUT_ACODEC,
+    SUBCAT_INPUT_DEMUX,
+    SUBCAT_INPUT_STREAM_FILTER,
+    SUBCAT_INPUT_SCODEC,
+    SUBCAT_INPUT_VCODEC,
 
-#define CAT_PLAYLIST 7
-#define SUBCAT_PLAYLIST_GENERAL 701
-#define SUBCAT_PLAYLIST_SD 702
-#define SUBCAT_PLAYLIST_EXPORT 703
+    SUBCAT_SOUT_GENERAL,
+    SUBCAT_SOUT_ACO,
+    SUBCAT_SOUT_MUX,
+    SUBCAT_SOUT_PACKETIZER,
+    SUBCAT_SOUT_RENDERER,
+    SUBCAT_SOUT_STREAM,
+    SUBCAT_SOUT_VOD,
 
+    SUBCAT_PLAYLIST_GENERAL,
+    SUBCAT_PLAYLIST_EXPORT,
+    SUBCAT_PLAYLIST_SD,
+
+    SUBCAT_ADVANCED_MISC,
+    SUBCAT_ADVANCED_NETWORK,
+
+    /* Hidden subcategory
+       Any options under this will be hidden in the GUI preferences, but will
+       be listed in cmdline help output. */
+    SUBCAT_HIDDEN,
+
+    SUBCAT_MAX,
+};
+
+static inline bool vlc_config_IntSubcatIsValid(int i)
+{
+    return (i >= 0 && i < (int)SUBCAT_MAX);
+}
 
 #define MAIN_TITLE N_( "VLC preferences" )
 #define MAIN_HELP N_( "Select \"Advanced Options\" to see all options." )
@@ -194,7 +211,14 @@
 
 struct config_category_t
 {
-    int         i_id;
+    enum vlc_config_cat cat;
+    const char *psz_name;
+    const char *psz_help;
+};
+
+struct config_subcategory_t
+{
+    enum vlc_config_subcat subcat;
     const char *psz_name;
     const char *psz_help;
 };
@@ -202,26 +226,35 @@ struct config_category_t
 static const struct config_category_t categories_array[] =
 {
     { CAT_INTERFACE,               N_("Interface"),           INTF_HELP          },
+    { CAT_AUDIO,                   N_("Audio"),               AUDIO_HELP         },
+    { CAT_VIDEO,                   N_("Video"),               VIDEO_HELP         },
+    { CAT_INPUT,                   N_("Input / Codecs"),      INPUT_HELP         },
+    { CAT_SOUT,                    N_("Stream output"),       SOUT_HELP          },
+    { CAT_PLAYLIST,                N_("Playlist") ,           PLAYLIST_HELP      },
+    { CAT_ADVANCED,                N_("Advanced"),            AADVANCED_HELP     },
+
+    { CAT_INVALID, NULL, NULL }
+};
+
+static const struct config_subcategory_t subcategories_array[] =
+{
     { SUBCAT_INTERFACE_GENERAL,    N_("Interface"),           INTF_GENERAL_HELP  },
     { SUBCAT_INTERFACE_CONTROL,    N_("Control interfaces"),  INTF_CONTROL_HELP  },
     { SUBCAT_INTERFACE_HOTKEYS,    N_("Hotkey settings"),     INTF_HOTKEYS_HELP  },
     { SUBCAT_INTERFACE_MAIN,       N_("Main interfaces"),     INTF_MAIN_HELP     },
 
-    { CAT_AUDIO,                   N_("Audio"),               AUDIO_HELP         },
     { SUBCAT_AUDIO_GENERAL,        N_("Audio"),               AUDIO_GENERAL_HELP },
     { SUBCAT_AUDIO_AFILTER,        N_("Filters"),             AFILTER_HELP       },
     { SUBCAT_AUDIO_AOUT,           N_("Output modules"),      AOUT_HELP          },
     { SUBCAT_AUDIO_RESAMPLER,      N_("Resampler"),           AFILTER_HELP       },
     { SUBCAT_AUDIO_VISUAL,         N_("Visualizations"),      AVISUAL_HELP       },
 
-    { CAT_VIDEO,                   N_("Video"),               VIDEO_HELP         },
     { SUBCAT_VIDEO_GENERAL,        N_("Video"),               VIDEO_GENERAL_HELP },
     { SUBCAT_VIDEO_VFILTER,        N_("Filters"),             VFILTER_HELP       },
     { SUBCAT_VIDEO_VOUT,           N_("Output modules"),      VOUT_HELP          },
     { SUBCAT_VIDEO_SPLITTER,       N_("Splitters"),           SPLITTER_HELP      },
     { SUBCAT_VIDEO_SUBPIC,         N_("Subtitles / OSD"),     SUBPIC_HELP        },
 
-    { CAT_INPUT,                   N_("Input / Codecs"),      INPUT_HELP         },
     { SUBCAT_INPUT_GENERAL,        N_("Input / Codecs"),      INPUT_HELP         },
     { SUBCAT_INPUT_ACCESS,         N_("Access modules"),      ACCESS_HELP        },
     { SUBCAT_INPUT_ACODEC,         N_("Audio codecs"),        ADEC_HELP          },
@@ -230,7 +263,6 @@ static const struct config_category_t categories_array[] =
     { SUBCAT_INPUT_SCODEC,         N_("Subtitle codecs"),     SDEC_HELP          },
     { SUBCAT_INPUT_VCODEC,         N_("Video codecs"),        VDEC_HELP          },
 
-    { CAT_SOUT,                    N_("Stream output"),       SOUT_HELP          },
     { SUBCAT_SOUT_GENERAL,         N_("Stream output"),       SOUT_GENERAL_HELP  },
     { SUBCAT_SOUT_ACO,             N_("Access output"),       SOUT_ACO_HELP      },
     { SUBCAT_SOUT_MUX,             N_("Muxers"),              SOUT_MUX_HELP      },
@@ -239,25 +271,38 @@ static const struct config_category_t categories_array[] =
     { SUBCAT_SOUT_STREAM,          N_("Sout stream"),         SOUT_STREAM_HELP   },
     { SUBCAT_SOUT_VOD,             N_("VoD"),                 SOUT_VOD_HELP      },
 
-    { CAT_PLAYLIST,                N_("Playlist") ,           PLAYLIST_HELP      },
     { SUBCAT_PLAYLIST_GENERAL,     N_("Playlist"),            PGENERAL_HELP      },
     { SUBCAT_PLAYLIST_EXPORT,      N_("Export"),              PEXPORT_HELP       },
     { SUBCAT_PLAYLIST_SD,          N_("Services discovery"),  SD_HELP            },
 
-    { CAT_ADVANCED,                N_("Advanced"),            AADVANCED_HELP     },
     { SUBCAT_ADVANCED_MISC,        N_("Advanced settings"),   AADVANCED_HELP     },
     { SUBCAT_ADVANCED_NETWORK,     N_("Network"),             ANETWORK_HELP      },
 
-    { -1, NULL, NULL }
+    { SUBCAT_INVALID, NULL, NULL }
 };
 
 VLC_USED
-static inline const char *config_CategoryNameGet( int i_value )
+static inline const char *vlc_config_SubcategoryNameGet( enum vlc_config_subcat subcat )
+{
+    int i = 0;
+    while( subcategories_array[i].psz_name != NULL )
+    {
+        if( subcategories_array[i].subcat == subcat )
+        {
+            return vlc_gettext(subcategories_array[i].psz_name);
+        }
+        i++;
+    }
+    return NULL;
+}
+
+VLC_USED
+static inline const char *vlc_config_CategoryNameGet( enum vlc_config_cat cat )
 {
     int i = 0;
     while( categories_array[i].psz_name != NULL )
     {
-        if( categories_array[i].i_id == i_value )
+        if( categories_array[i].cat == cat )
         {
             return vlc_gettext(categories_array[i].psz_name);
         }
@@ -267,12 +312,27 @@ static inline const char *config_CategoryNameGet( int i_value )
 }
 
 VLC_USED
-static inline const char *config_CategoryHelpGet( int i_value )
+static inline const char *vlc_config_SubcategoryHelpGet( enum vlc_config_subcat subcat )
+{
+    int i = 0;
+    while( subcategories_array[i].psz_help != NULL )
+    {
+        if( subcategories_array[i].subcat == subcat )
+        {
+            return vlc_gettext(subcategories_array[i].psz_help);
+        }
+        i++;
+    }
+    return NULL;
+}
+
+VLC_USED
+static inline const char *vlc_config_CategoryHelpGet( enum vlc_config_cat cat )
 {
     int i = 0;
     while( categories_array[i].psz_help != NULL )
     {
-        if( categories_array[i].i_id == i_value )
+        if( categories_array[i].cat == cat )
         {
             return vlc_gettext(categories_array[i].psz_help);
         }
@@ -282,7 +342,7 @@ static inline const char *config_CategoryHelpGet( int i_value )
 }
 
 VLC_USED
-static inline int vlc_config_CategoryFromSubcategory( int subcat )
+static inline enum vlc_config_cat vlc_config_CategoryFromSubcategory( enum vlc_config_subcat subcat )
 {
     switch (subcat)
     {
@@ -327,14 +387,14 @@ static inline int vlc_config_CategoryFromSubcategory( int subcat )
         case SUBCAT_PLAYLIST_EXPORT:
             return CAT_PLAYLIST;
         case SUBCAT_HIDDEN:
-            return CAT_HIDDEN;
+            return CAT_INVALID;
         default:
             unreachable();
     }
 }
 
 VLC_USED
-static inline bool vlc_config_SubcategoryIsGeneral(int subcat)
+static inline bool vlc_config_SubcategoryIsGeneral( enum vlc_config_subcat subcat )
 {
     if (subcat == SUBCAT_VIDEO_GENERAL ||
         subcat == SUBCAT_INPUT_GENERAL ||

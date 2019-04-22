@@ -267,7 +267,7 @@ typedef union
 {
     struct {
         uint16_t type;
-        int64_t id; /* subcat ID */
+        enum vlc_config_subcat id; /* subcat ID */
         const char *text; /* section/hint text */
         const char *longtext; /* section/hint longtext */
     } special;
@@ -286,7 +286,7 @@ typedef union
         uint16_t type;
         const char *name;
         const char *cap; /* string form of capability it relates to */
-        int subcategory; /* option subcategory ID, for a special core-only selection method */
+        enum vlc_config_subcat subcategory; /* for a special core-only selection method */
         module_value_t default_val;
         const char *text;
         const char *longtext;
@@ -402,7 +402,7 @@ typedef union
 #define set_section( _text, _longtext ) \
     cfg_params = (config_item_params_t) { .special = { \
         .type = CONFIG_SECTION, \
-        .id = 0, \
+        .id = SUBCAT_INVALID, \
         .text = (_text), \
         .longtext = (_longtext) \
     } }; \
@@ -413,7 +413,7 @@ typedef union
 #define add_category_hint( _text, _longtext ) \
     cfg_params = (config_item_params_t) { .special = { \
         .type = CONFIG_HINT_CATEGORY, \
-        .id = 0, \
+        .id = SUBCAT_INVALID, \
         .text = (_text), \
         .longtext = (_longtext) \
     } }; \

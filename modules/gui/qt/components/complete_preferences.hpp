@@ -29,6 +29,7 @@
 
 #include <vlc_common.h>
 #include <vlc_interface.h>
+#include <vlc_config_cat.h>
 
 #include <QTreeWidget>
 #include <QSet>
@@ -61,8 +62,8 @@ public:
     virtual ~PrefsItemData() { free( psz_shortcut ); };
     bool contains( const QString &text, Qt::CaseSensitivity cs );
     AdvPrefsPanel *panel;
-    int i_cat_id;
-    int i_subcat_id;
+    enum vlc_config_cat cat_id;
+    enum vlc_config_subcat subcat_id;
     enum prefsType
     {
         TYPE_CATEGORY,
