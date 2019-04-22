@@ -107,7 +107,7 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
                 data->name = qfu( config_CategoryNameGet( cat ) );
                 data->help = qfu( config_CategoryHelpGet( cat ) );
                 data->i_type = PrefsItemData::TYPE_CATEGORY;
-                data->i_object_id = cat;
+                data->i_cat_id = cat;
 
                 /* This is a category, put a nice icon */
                 switch( cat )
@@ -156,7 +156,7 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
             data_sub->name = qfu( config_CategoryNameGet( subcat ) );
             data_sub->help = qfu( config_CategoryHelpGet( subcat ) );
             data_sub->i_type = PrefsItemData::TYPE_SUBCATEGORY;
-            data_sub->i_object_id = subcat;
+            data_sub->i_subcat_id = subcat;
 
             /* Create a new TreeWidget */
             QTreeWidgetItem *subcat_item = new QTreeWidgetItem();
@@ -221,7 +221,7 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
                                              value<PrefsItemData *>();
 
             /* If we match the good category */
-            if( data->i_object_id == i_category )
+            if( data->i_cat_id == i_category )
             {
                 for( int i_sc_index = 0; i_sc_index < cat_item->childCount();
                          i_sc_index++ )
@@ -229,7 +229,7 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
                     subcat_item = cat_item->child( i_sc_index );
                     PrefsItemData *sc_data = subcat_item->data(0, Qt::UserRole).
                                                 value<PrefsItemData *>();
-                    if( sc_data && sc_data->i_object_id == i_subcategory )
+                    if( sc_data && sc_data->i_subcat_id == i_subcategory )
                     {
                         b_found = true;
                         break;
@@ -473,7 +473,7 @@ void PrefsTree::resizeColumns()
 PrefsItemData::PrefsItemData( QObject *_parent ) : QObject( _parent )
 {
     panel = NULL;
-    i_object_id = 0;
+    i_cat_id = 0;
     i_subcat_id = -1;
     psz_shortcut = NULL;
     b_loaded = false;
@@ -487,18 +487,10 @@ bool PrefsItemData::contains( const QString &text, Qt::CaseSensitivity cs )
         return false;
 
     bool is_core = this->i_type != TYPE_MODULE;
-    int id = 0;
+    int id = this->i_subcat_id;
 
     /* find our module */
     module_t *p_module = (is_core) ? module_get_main() : this->p_module;
-
-    if( is_core )
-    {
-        if( this->i_type == TYPE_SUBCATEGORY )
-            id = this->i_object_id;
-        else // TYPE_CATSUBCAT
-            id = this->i_subcat_id;
-    }
 
     /* check the node itself (its name/longname/helptext) */
 
@@ -610,10 +602,9 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
         while (p_item < p_end)
         {
             if(  p_item->i_type == CONFIG_SUBCATEGORY &&
-                 ( ( data->i_type == PrefsItemData::TYPE_SUBCATEGORY &&
-                     p_item->value.i == data->i_object_id ) ||
-                   ( data->i_type == PrefsItemData::TYPE_CATSUBCAT &&
-                     p_item->value.i == data->i_subcat_id ) ) )
+                 ( data->i_type == PrefsItemData::TYPE_SUBCATEGORY ||
+                   data->i_type == PrefsItemData::TYPE_CATSUBCAT ) &&
+                 p_item->value.i == data->i_subcat_id )
                 break;
             p_item++;
         }
@@ -668,11 +659,10 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 
     if( p_item ) do
     {
-        if( ( ( data->i_type == PrefsItemData::TYPE_SUBCATEGORY &&
-                p_item->value.i != data->i_object_id ) ||
-              ( data->i_type == PrefsItemData::TYPE_CATSUBCAT  &&
-                p_item->value.i != data->i_subcat_id ) ) &&
-            p_item->i_type == CONFIG_SUBCATEGORY )
+        if( p_item->i_type == CONFIG_SUBCATEGORY &&
+            ( data->i_type == PrefsItemData::TYPE_SUBCATEGORY ||
+              data->i_type == PrefsItemData::TYPE_CATSUBCAT ) &&
+            p_item->value.i != data->i_subcat_id )
             break;
         if( p_item->b_internal ) continue;
 
