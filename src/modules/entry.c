@@ -196,7 +196,7 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
 
 #ifdef HAVE_DYNAMIC_PLUGINS
 # define print_err_plugin_path \
-        const char* err_plugin_path = (plugin->path != NULL) ? plugin->path : "NULL"; \
+        const char* err_plugin_path = (plugin->abspath != NULL) ? plugin->abspath : "NULL"; \
         fprintf(stderr, "    %s: %s\n", _("plugin path"), err_plugin_path);
 #else
 # define print_err_plugin_path
@@ -540,17 +540,25 @@ static int vlc_plugin_desc_cb(void *ctx, void *tgt, int propid, ...)
  *
  * This loads the plug-in meta-data in memory.
  */
-vlc_plugin_t *vlc_plugin_describe(vlc_plugin_cb entry)
+vlc_plugin_t *vlc_plugin_describe(vlc_plugin_cb entry, const char *path)
 {
     vlc_plugin_t *plugin = vlc_plugin_create();
     if (unlikely(plugin == NULL))
         return NULL;
+
+    if (path) /* provide for descriptor callback error message use */
+        plugin->abspath = xstrdup(path);
 
     if (entry(vlc_plugin_desc_cb, plugin) != 0)
     {
         vlc_plugin_destroy(plugin); /* partially initialized plug-in... */
         plugin = NULL;
     }
+
+    /* guard against potential plugin modification */
+    free(plugin->abspath);
+    plugin->abspath = NULL;
+
     return plugin;
 }
 

@@ -220,7 +220,7 @@ static void vlc_plugin_store(vlc_plugin_t *lib)
 static vlc_plugin_t *module_InitStatic(vlc_plugin_cb entry)
 {
     /* Initializes the statically-linked library */
-    vlc_plugin_t *lib = vlc_plugin_describe (entry);
+    vlc_plugin_t *lib = vlc_plugin_describe(entry, "<static>");
     if (unlikely(lib == NULL))
         return NULL;
 
@@ -285,7 +285,7 @@ static vlc_plugin_t *module_InitDynamic(vlc_object_t *obj, const char *path,
     }
 
     /* We can now try to call the symbol */
-    vlc_plugin_t *plugin = vlc_plugin_describe(entry);
+    vlc_plugin_t *plugin = vlc_plugin_describe(entry, path);
     if (unlikely(plugin == NULL))
     {
         /* With a well-written module we shouldn't have to print an
