@@ -2051,6 +2051,8 @@ vlc_module_begin ()
         change_volatile()
 #endif
 
+    set_subcategory( SUBCAT_ADVANCED_NETWORK )
+
 /* Playlist options */
     set_category( CAT_PLAYLIST )
     set_subcategory( SUBCAT_PLAYLIST_GENERAL )
