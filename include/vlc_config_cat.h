@@ -238,7 +238,7 @@ static const struct config_category_t categories_array[] =
     { SUBCAT_SOUT_PACKETIZER,      N_("Packetizers"),         SOUT_PACKET_HELP   },
     { SUBCAT_SOUT_RENDERER,        N_("Renderers"),           SOUT_RENDER_HELP   },
     { SUBCAT_SOUT_STREAM,          N_("Sout stream"),         SOUT_STREAM_HELP   },
-    { SUBCAT_SOUT_VOD,             N_("VOD"),                 SOUT_VOD_HELP      },
+    { SUBCAT_SOUT_VOD,             N_("VoD"),                 SOUT_VOD_HELP      },
 
     { CAT_PLAYLIST,                N_("Playlist") ,           PLAYLIST_HELP      },
     { SUBCAT_PLAYLIST_GENERAL,     N_("Playlist"),            PGENERAL_HELP      },
