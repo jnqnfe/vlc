@@ -64,7 +64,6 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
     CONNECT( this, itemExpanded(QTreeWidgetItem*), this, resizeColumns() );
 
     enum vlc_config_cat last_cat = CAT_INVALID;
-    enum vlc_config_cat cat = CAT_INVALID;
     enum vlc_config_subcat subcat = SUBCAT_INVALID;
     QTreeWidgetItem *cat_item = NULL;
 
@@ -84,7 +83,7 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
             if( subcat == SUBCAT_HIDDEN ) continue;
 
             // Create top level cat node?
-            cat = vlc_config_CategoryFromSubcategory(subcat);
+            enum vlc_config_cat cat = vlc_config_CategoryFromSubcategory(subcat);
             if (last_cat != cat)
             {
                 cat_item = this->createCatNode( cat );
@@ -138,43 +137,11 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
         if( !b_options || subcat == SUBCAT_INVALID || subcat == SUBCAT_HIDDEN )
             continue;
 
-        cat = vlc_config_CategoryFromSubcategory( subcat );
+        // Locate the node
+        cat_item = this->findCatItem( vlc_config_CategoryFromSubcategory( subcat ) );
+        QTreeWidgetItem *subcat_item = this->findSubcatItem( cat_item, subcat );
 
-        // Locate the category item
-        QTreeWidgetItem *subcat_item = NULL;
-        bool b_found = false;
-
-        /* Get the treeWidgetItem that correspond to the category
-           If the subcat is not found, attach directly to the cat */
-        for( int i_cat_index = 0 ; i_cat_index < topLevelItemCount();
-                                   i_cat_index++ )
-        {
-            cat_item = topLevelItem( i_cat_index );
-            PrefsItemData *data = cat_item->data( 0, Qt::UserRole ).value<PrefsItemData *>();
-
-            if( data->cat_id == cat )
-            {
-                for( int i_sc_index = 0; i_sc_index < cat_item->childCount();
-                         i_sc_index++ )
-                {
-                    subcat_item = cat_item->child( i_sc_index );
-                    PrefsItemData *sc_data = subcat_item->data(0, Qt::UserRole).
-                                                value<PrefsItemData *>();
-                    if( sc_data && sc_data->subcat_id == subcat )
-                    {
-                        b_found = true;
-                        break;
-                    }
-                }
-                if( !b_found )
-                {
-                    subcat_item = cat_item;
-                    b_found = true;
-                }
-                break;
-            }
-        }
-        if( b_found )
+        if( subcat_item )
             this->createPluginNode( subcat_item, p_module );
     }
 
@@ -275,6 +242,46 @@ void PrefsTree::setCatGeneralSubcat( QTreeWidgetItem *cat, enum vlc_config_subca
     data->name = qfu( vlc_config_SubcategoryNameGet( subcat ) );
     data->help = qfu( vlc_config_SubcategoryHelpGet( subcat ) );
     cat->setData( 0, Qt::UserRole, QVariant::fromValue( data ) );
+}
+
+QTreeWidgetItem *PrefsTree::findCatItem( enum vlc_config_cat cat )
+{
+    for( int i = 0 ; i < topLevelItemCount(); i++ )
+    {
+        QTreeWidgetItem *item = topLevelItem( i );
+        PrefsItemData *data = item->data( 0, Qt::UserRole ).value<PrefsItemData *>();
+
+        if( data->cat_id == cat )
+            return item;
+    }
+    return NULL;
+}
+
+QTreeWidgetItem *PrefsTree::findSubcatItem( enum vlc_config_subcat subcat )
+{
+    enum vlc_config_cat cat = vlc_config_CategoryFromSubcategory( subcat );
+    QTreeWidgetItem *cat_item = this->findCatItem( cat );
+    return this->findSubcatItem( cat_item, subcat );
+}
+
+QTreeWidgetItem *PrefsTree::findSubcatItem( QTreeWidgetItem *cat, enum vlc_config_subcat subcat )
+{
+    if ( cat )
+    {
+        // If is general subcat, return the cat node itself, otherwise hunt through children
+        PrefsItemData *data = cat->data(0, Qt::UserRole).value<PrefsItemData *>();
+        if (subcat == data->subcat_id)
+            return cat;
+
+        for( int i = 0; i < cat->childCount(); i++ )
+        {
+            QTreeWidgetItem *item = cat->child( i );
+            data = item->data(0, Qt::UserRole).value<PrefsItemData *>();
+            if( data->subcat_id == subcat )
+                return item;
+        }
+    }
+    return NULL;
 }
 
 void PrefsTree::applyAll()

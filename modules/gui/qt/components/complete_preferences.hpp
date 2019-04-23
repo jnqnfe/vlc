@@ -99,6 +99,9 @@ private:
     void createSubcatNode( QTreeWidgetItem * cat, enum vlc_config_subcat subcat );
     void createPluginNode( QTreeWidgetItem * parent, module_t *module );
     void setCatGeneralSubcat( QTreeWidgetItem *cat, enum vlc_config_subcat subcat );
+    QTreeWidgetItem *findCatItem( enum vlc_config_cat cat );
+    QTreeWidgetItem *findSubcatItem( enum vlc_config_subcat subcat );
+    QTreeWidgetItem *findSubcatItem( QTreeWidgetItem *cat, enum vlc_config_subcat subcat );
     void doAll( bool );
     bool filterItems( QTreeWidgetItem *item, const QString &text, Qt::CaseSensitivity cs );
     bool collapseUnselectedItems( QTreeWidgetItem *item );
