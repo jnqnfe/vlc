@@ -1658,8 +1658,6 @@ vlc_plugin_begin ()
     add_module_list("video-filter", VLC_CAP_STR_VIDEO_FILTER, NULL,
                     VIDEO_FILTER_TEXT, VIDEO_FILTER_LONGTEXT)
 
-    set_subcategory( SUBCAT_VIDEO_SPLITTER )
-
 #if 0
     add_string( "pixel-ratio", "1", PIXEL_RATIO_TEXT, PIXEL_RATIO_TEXT )
 #endif
@@ -1925,14 +1923,16 @@ vlc_plugin_begin ()
     add_module("demux", VLC_CAP_STR_DEMUX, "any", DEMUX_TEXT, DEMUX_LONGTEXT)
     add_string( "demux-filter", NULL, DEMUX_FILTER_TEXT, DEMUX_FILTER_LONGTEXT, true )
 
-    set_subcategory( SUBCAT_INPUT_ACODEC )
+    //set_subcategory( SUBCAT_INPUT_ACODEC )
+
     set_subcategory( SUBCAT_INPUT_VCODEC )
 
     add_string( "codec", NULL, CODEC_TEXT, CODEC_LONGTEXT, true )
     add_string( "encoder",  NULL, ENCODER_TEXT, ENCODER_LONGTEXT, true )
     add_string( "dec-dev", NULL, DEC_DEV_TEXT, NULL, true )
 
-    set_subcategory( SUBCAT_INPUT_SCODEC )
+    //set_subcategory( SUBCAT_INPUT_SCODEC )
+
     set_subcategory( SUBCAT_INPUT_STREAM_FILTER )
 
     add_module_list("stream-filter", VLC_CAP_STR_STREAM_FILTER, NULL,
@@ -1979,8 +1979,6 @@ vlc_plugin_begin ()
     set_subcategory( SUBCAT_SOUT_PACKETIZER )
     add_module("packetizer", VLC_CAP_STR_PACKETIZER, NULL,
                PACKETIZER_TEXT, PACKETIZER_LONGTEXT)
-
-    set_subcategory( SUBCAT_SOUT_VOD )
 
     /* Advanced category */
 
@@ -2029,8 +2027,6 @@ vlc_plugin_begin ()
         change_string_cb( EnumClockSource )
         change_volatile()
 #endif
-
-    set_subcategory( SUBCAT_ADVANCED_NETWORK )
 
     /* Playlist category */
 
