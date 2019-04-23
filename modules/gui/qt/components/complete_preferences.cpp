@@ -64,6 +64,7 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
     CONNECT( this, itemExpanded(QTreeWidgetItem*), this, resizeColumns() );
 
     enum vlc_config_cat last_cat = CAT_INVALID;
+    enum vlc_config_cat cat = CAT_INVALID;
     enum vlc_config_subcat subcat = SUBCAT_INVALID;
     QTreeWidgetItem *cat_item = NULL;
 
@@ -83,7 +84,7 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
             if( subcat == SUBCAT_HIDDEN ) continue;
 
             // Create top level cat node?
-            enum vlc_config_cat cat = vlc_config_CategoryFromSubcategory(subcat);
+            cat = vlc_config_CategoryFromSubcategory(subcat);
             if (last_cat != cat)
             {
                 cat_item = this->createCatNode( cat );
@@ -137,12 +138,24 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
         if( !b_options || subcat == SUBCAT_INVALID || subcat == SUBCAT_HIDDEN )
             continue;
 
-        // Locate the node
-        cat_item = this->findCatItem( vlc_config_CategoryFromSubcategory( subcat ) );
-        QTreeWidgetItem *subcat_item = this->findSubcatItem( cat_item, subcat );
+        // Locate the category item
+        // If not found (unlikely), we will create it
+        cat = vlc_config_CategoryFromSubcategory( subcat );
+        cat_item = this->findCatItem( cat );
+        if ( !cat_item )
+        {
+            cat_item = this->createCatNode( cat );
+            // Merge general subcat properties
+            this->setCatGeneralSubcat( cat_item, vlc_config_CategoryGeneralSubcatGet( cat ) );
+        }
 
-        if( subcat_item )
-            this->createPluginNode( subcat_item, p_module );
+        // Locate the subcategory item
+        // If not found (quite possible), we will create it
+        QTreeWidgetItem *subcat_item = this->findSubcatItem( cat_item, subcat );
+        if( !subcat_item )
+            subcat_item = this->createSubcatNode( cat_item, subcat );
+
+        this->createPluginNode( subcat_item, p_module );
     }
 
     // We got everything, just sort a bit
@@ -188,7 +201,7 @@ QTreeWidgetItem *PrefsTree::createCatNode( enum vlc_config_cat cat )
     return item;
 }
 
-void PrefsTree::createSubcatNode( QTreeWidgetItem * cat, enum vlc_config_subcat subcat )
+QTreeWidgetItem *PrefsTree::createSubcatNode( QTreeWidgetItem * cat, enum vlc_config_subcat subcat )
 {
     assert( cat );
 
@@ -205,6 +218,8 @@ void PrefsTree::createSubcatNode( QTreeWidgetItem * cat, enum vlc_config_subcat 
     //item->setSizeHint( 0, QSize( -1, ITEM_HEIGHT ) );
 
     cat->addChild( item );
+
+    return item;
 }
 
 void PrefsTree::createPluginNode( QTreeWidgetItem * parent, module_t *module )
