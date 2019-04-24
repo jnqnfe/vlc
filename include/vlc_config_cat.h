@@ -110,8 +110,6 @@ static inline bool vlc_config_IntSubcatIsValid(int i)
 #define MAIN_TITLE N_( "VLC preferences" )
 #define MAIN_HELP N_( "Select \"Advanced Options\" to see all options." )
 
-#define INTF_HELP  N_( "Settings for VLC's interfaces" )
-
 #define INTF_GENERAL_HELP N_( "Main interface settings" )
 
 #define INTF_MAIN_HELP N_( "Settings for the main interface" )
@@ -120,8 +118,6 @@ static inline bool vlc_config_IntSubcatIsValid(int i)
 
 #define INTF_HOTKEYS_HELP N_( "Hotkey settings" )
 
-#define AUDIO_HELP N_( "Audio settings" )
-
 #define AUDIO_GENERAL_HELP N_("General audio settings")
 
 #define AFILTER_HELP N_( "Audio filters are used to process the audio stream." )
@@ -129,8 +125,6 @@ static inline bool vlc_config_IntSubcatIsValid(int i)
 #define AVISUAL_HELP N_( "Audio visualizations" )
 
 #define AOUT_HELP N_("General settings for audio output modules.")
-
-#define VIDEO_HELP N_("Video settings")
 
 #define VIDEO_GENERAL_HELP N_( "General video settings" )
 
@@ -143,7 +137,7 @@ static inline bool vlc_config_IntSubcatIsValid(int i)
 
 #define SPLITTER_HELP N_("Video splitters separate the stream into multiple videos.")
 
-#define INPUT_HELP N_( "Settings for input, demultiplexing, " \
+#define INPUT_GENERAL_HELP N_( "Settings for input, demultiplexing, " \
          "decoding and encoding")
 
 #define ACCESS_HELP N_( \
@@ -164,15 +158,6 @@ static inline bool vlc_config_IntSubcatIsValid(int i)
 #define SDEC_HELP N_( "Settings for subtitle, teletext and CC decoders and encoders." )
 
 #define ADVANCED_HELP N_( "General input settings. Use with care..." )
-
-#define SOUT_HELP N_( \
-      "Stream output settings are used when acting as a streaming server " \
-      "or when saving incoming streams.\n" \
-      "Streams are first muxed and then sent through an \"access output\" "\
-      "module that can either save the stream to a file, or stream " \
-      "it (UDP, HTTP, RTP/RTSP).\n" \
-      "Sout streams modules allow advanced stream processing (transcoding, "\
-      "duplicating...).")
 
 #define SOUT_GENERAL_HELP N_( "General stream output settings")
 
@@ -205,16 +190,12 @@ static inline bool vlc_config_IntSubcatIsValid(int i)
 
 #define SOUT_VOD_HELP N_( "VLC's implementation of Video On Demand" )
 
-#define PLAYLIST_HELP N_( "Settings related to playlist behaviour " \
-        "(e.g. playback mode) and to modules that automatically add "\
-        "items to the playlist (\"service discovery\" modules).")
-
-#define PGENERAL_HELP N_( "General playlist behaviour")
+#define PL_GENERAL_HELP N_( "General playlist behaviour")
 
 #define SD_HELP N_("Services discovery modules are facilities "\
         "that automatically add items to playlist.")
 
-#define PEXPORT_HELP N_( "Setting relating to exporting playlists" )
+#define PL_EXPORT_HELP N_( "Setting relating to exporting playlists" )
 
 #define AADVANCED_HELP N_( "Advanced settings. Use with care...")
 
@@ -265,7 +246,7 @@ static const struct vlc_config_subcat_data vlc_subcategory_data[] =
     /* SUBCAT_VIDEO_SPLITTER      */ { CAT_VIDEO,      N_("Splitters"),           SPLITTER_HELP      },
     /* SUBCAT_VIDEO_SUBPIC        */ { CAT_VIDEO,      N_("Subtitles / OSD"),     SUBPIC_HELP        },
 
-    /* SUBCAT_INPUT_GENERAL       */ { CAT_INPUT,      N_("Input / Codecs"),      INPUT_HELP         },
+    /* SUBCAT_INPUT_GENERAL       */ { CAT_INPUT,      N_("Input / Codecs"),      INPUT_GENERAL_HELP },
     /* SUBCAT_INPUT_ACCESS        */ { CAT_INPUT,      N_("Access modules"),      ACCESS_HELP        },
     /* SUBCAT_INPUT_ACODEC        */ { CAT_INPUT,      N_("Audio codecs"),        ADEC_HELP          },
     /* SUBCAT_INPUT_DEMUX         */ { CAT_INPUT,      N_("Demuxers"),            DEMUX_HELP         },
@@ -281,8 +262,8 @@ static const struct vlc_config_subcat_data vlc_subcategory_data[] =
     /* SUBCAT_SOUT_STREAM         */ { CAT_SOUT,       N_("Sout stream"),         SOUT_STREAM_HELP   },
     /* SUBCAT_SOUT_VOD            */ { CAT_SOUT,       N_("VoD"),                 SOUT_VOD_HELP      },
 
-    /* SUBCAT_PLAYLIST_GENERAL    */ { CAT_PLAYLIST,   N_("Playlist"),            PGENERAL_HELP      },
-    /* SUBCAT_PLAYLIST_EXPORT     */ { CAT_PLAYLIST,   N_("Export"),              PEXPORT_HELP       },
+    /* SUBCAT_PLAYLIST_GENERAL    */ { CAT_PLAYLIST,   N_("Playlist"),            PL_GENERAL_HELP    },
+    /* SUBCAT_PLAYLIST_EXPORT     */ { CAT_PLAYLIST,   N_("Export"),              PL_EXPORT_HELP     },
     /* SUBCAT_PLAYLIST_SD         */ { CAT_PLAYLIST,   N_("Services discovery"),  SD_HELP            },
 
     /* SUBCAT_ADVANCED_MISC       */ { CAT_ADVANCED,   N_("Advanced"),            AADVANCED_HELP     },
