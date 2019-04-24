@@ -66,7 +66,6 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
     setUniformRowHeights( true );
     CONNECT( this, itemExpanded(QTreeWidgetItem*), this, resizeColumns() );
 
-    enum vlc_config_cat last_cat = CAT_INVALID;
     enum vlc_config_cat cat = CAT_INVALID;
     enum vlc_config_subcat subcat = SUBCAT_INVALID;
     QTreeWidgetItem *cat_item = NULL;
@@ -88,18 +87,20 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
 
             // Create top level cat node?
             cat = vlc_config_CategoryFromSubcategory(subcat);
-            if (last_cat != cat)
+            if (this->findCatItem(cat) == NULL)
             {
                 cat_item = this->createCatNode( cat );
-                last_cat = cat;
                 // Merge general subcat properties
                 this->setCatGeneralSubcat( cat_item, vlc_config_CategoryGeneralSubcatGet( cat ) );
             }
 
-            if( !vlc_config_SubcategoryIsGeneral(subcat) )
-            {
+            // Create subcat node
+            // We expect that it will not exist (each used once in core set
+            // only), but we'll be cautious. Also, since we specifically
+            // merge/attach a general subcat to the cat when creating the cat
+            // item above, we don't need a special-case check here for it.
+            if (this->findSubcatItem( subcat ) == NULL)
                 this->createSubcatNode( cat_item, subcat );
-            }
         }
     }
     module_config_free( p_config );
