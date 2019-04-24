@@ -222,7 +222,6 @@ static inline bool vlc_config_IntSubcatIsValid(int i)
 
 struct vlc_config_cat_data
 {
-    const char *name;
     const char *help;
     enum vlc_config_subcat general;
 };
@@ -236,14 +235,14 @@ struct vlc_config_subcat_data
 
 static const struct vlc_config_cat_data vlc_category_data[] =
 {
-    /* CAT_INTERFACE */ { N_("Interface"),       INTF_HELP,       SUBCAT_INTERFACE_GENERAL },
-    /* CAT_AUDIO     */ { N_("Audio"),           AUDIO_HELP,      SUBCAT_AUDIO_GENERAL     },
-    /* CAT_VIDEO     */ { N_("Video"),           VIDEO_HELP,      SUBCAT_VIDEO_GENERAL     },
-    /* CAT_INPUT     */ { N_("Input / Codecs"),  INPUT_HELP,      SUBCAT_INPUT_GENERAL     },
-    /* CAT_SOUT      */ { N_("Stream output"),   SOUT_HELP,       SUBCAT_SOUT_GENERAL      },
-    /* CAT_PLAYLIST  */ { N_("Playlist") ,       PLAYLIST_HELP,   SUBCAT_PLAYLIST_GENERAL  },
-    /* CAT_ADVANCED  */ { N_("Advanced"),        AADVANCED_HELP,  SUBCAT_ADVANCED_MISC     },
-    /* CAT_HIDDEN    */ { NULL,                  NULL,            SUBCAT_HIDDEN            },
+    /* CAT_INTERFACE */ { INTF_HELP,       SUBCAT_INTERFACE_GENERAL },
+    /* CAT_AUDIO     */ { AUDIO_HELP,      SUBCAT_AUDIO_GENERAL     },
+    /* CAT_VIDEO     */ { VIDEO_HELP,      SUBCAT_VIDEO_GENERAL     },
+    /* CAT_INPUT     */ { INPUT_HELP,      SUBCAT_INPUT_GENERAL     },
+    /* CAT_SOUT      */ { SOUT_HELP,       SUBCAT_SOUT_GENERAL      },
+    /* CAT_PLAYLIST  */ { PLAYLIST_HELP,   SUBCAT_PLAYLIST_GENERAL  },
+    /* CAT_ADVANCED  */ { AADVANCED_HELP,  SUBCAT_ADVANCED_MISC     },
+    /* CAT_HIDDEN    */ { NULL,            SUBCAT_HIDDEN            },
 };
 
 static_assert(CAT_MAX == (sizeof (vlc_category_data) / sizeof (vlc_category_data[0])), "category data table size mismatch");
@@ -287,7 +286,7 @@ static const struct vlc_config_subcat_data vlc_subcategory_data[] =
     /* SUBCAT_PLAYLIST_EXPORT     */ { CAT_PLAYLIST,   N_("Export"),              PEXPORT_HELP       },
     /* SUBCAT_PLAYLIST_SD         */ { CAT_PLAYLIST,   N_("Services discovery"),  SD_HELP            },
 
-    /* SUBCAT_ADVANCED_MISC       */ { CAT_ADVANCED,   N_("Advanced settings"),   AADVANCED_HELP     },
+    /* SUBCAT_ADVANCED_MISC       */ { CAT_ADVANCED,   N_("Advanced"),            AADVANCED_HELP     },
     /* SUBCAT_ADVANCED_NETWORK    */ { CAT_ADVANCED,   N_("Network"),             ANETWORK_HELP      },
 
     /* SUBCAT_HIDDEN              */ { CAT_HIDDEN,     NULL,                      NULL               },
@@ -313,7 +312,7 @@ static inline const char *vlc_config_SubcategoryNameGet( enum vlc_config_subcat 
 VLC_USED
 static inline const char *vlc_config_CategoryNameGet( enum vlc_config_cat cat )
 {
-    return vlc_gettext(vlc_category_data[(int)cat].name);
+    return vlc_config_SubcategoryNameGet(vlc_category_data[(int)cat].general);
 }
 
 /** Get the help text for a subcategory */
