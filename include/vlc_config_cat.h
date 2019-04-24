@@ -222,6 +222,15 @@ static const enum vlc_config_subcat vlc_cat_to_general_subcat_map[] =
 
 static_assert(CAT_MAX == (sizeof (vlc_cat_to_general_subcat_map) / sizeof (vlc_cat_to_general_subcat_map[0])), "cat to general subcat map size mismatch");
 
+static const enum vlc_config_cat vlc_cat_preferred_order[] =
+{
+    CAT_PLAYLIST, CAT_INTERFACE, CAT_AUDIO, CAT_VIDEO, CAT_INPUT, CAT_SOUT, CAT_ADVANCED, CAT_HIDDEN,
+};
+
+static const unsigned vlc_cat_preferred_order_count = sizeof (vlc_cat_preferred_order) / sizeof (vlc_cat_preferred_order[0]);
+
+static_assert(CAT_MAX == (sizeof (vlc_cat_preferred_order) / sizeof (vlc_cat_preferred_order[0])), "cat preferred order table size mismatch");
+
 static const struct vlc_config_subcat_data vlc_subcategory_data[] =
 {
     /* SUBCAT_INTERFACE_GENERAL   */ { CAT_INTERFACE,  N_("Interface"),           INTF_GENERAL_HELP  },
