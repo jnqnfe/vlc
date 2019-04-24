@@ -88,17 +88,13 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
             // Create top level cat node?
             cat = vlc_config_CategoryFromSubcategory(subcat);
             if (this->findCatItem(cat) == NULL)
-            {
                 cat_item = this->createCatNode( cat );
-                // Merge general subcat properties
-                this->setCatGeneralSubcat( cat_item, vlc_config_CategoryGeneralSubcatGet( cat ) );
-            }
 
             // Create subcat node
             // We expect that it will not exist (each used once in core set
-            // only), but we'll be cautious. Also, since we specifically
-            // merge/attach a general subcat to the cat when creating the cat
-            // item above, we don't need a special-case check here for it.
+            // only), but we'll be cautious. Also, since we already merge/attach
+            // a general subcat to the cat when creating the cat item above, we
+            // don't need a special-case check here for it.
             if (this->findSubcatItem( subcat ) == NULL)
                 this->createSubcatNode( cat_item, subcat );
         }
@@ -144,11 +140,7 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
         cat = vlc_config_CategoryFromSubcategory( subcat );
         cat_item = this->findCatItem( cat );
         if ( !cat_item )
-        {
             cat_item = this->createCatNode( cat );
-            // Merge general subcat properties
-            this->setCatGeneralSubcat( cat_item, vlc_config_CategoryGeneralSubcatGet( cat ) );
-        }
 
         // Locate the subcategory item
         // If not found (quite possible), we will create it
@@ -167,10 +159,13 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
 
 QTreeWidgetItem *PrefsTree::createCatNode( enum vlc_config_cat cat )
 {
+    enum vlc_config_subcat subcat = vlc_config_CategoryGeneralSubcatGet( cat );
+    assert(subcat != SUBCAT_INVALID && subcat != SUBCAT_HIDDEN);
+
     PrefsItemData *data = new PrefsItemData( this );
-    data->i_type = PrefsItemData::TYPE_CATEGORY;
+    data->i_type = PrefsItemData::TYPE_CATSUBCAT;
     data->cat_id = cat;
-    data->subcat_id = SUBCAT_INVALID;
+    data->subcat_id = subcat;
     data->name = qfu( vlc_config_CategoryNameGet( cat ) );
     data->help = qfu( vlc_config_CategoryHelpGet( cat ) );
 
@@ -197,6 +192,7 @@ QTreeWidgetItem *PrefsTree::createCatNode( enum vlc_config_cat cat )
     item->setData( 0, Qt::UserRole, qVariantFromValue( data ) );
 
     this->catMap[(int)cat] = item;
+    this->subcatMap[(int)subcat] = item;
 
     addTopLevelItem( item );
     expandItem( item );
@@ -250,20 +246,6 @@ void PrefsTree::createPluginNode( QTreeWidgetItem * parent, module_t *module )
     //item->setSizeHint( 0, QSize( -1, ITEM_HEIGHT ) );
 
     parent->addChild( item );
-}
-
-void PrefsTree::setCatGeneralSubcat( QTreeWidgetItem *cat, enum vlc_config_subcat subcat )
-{
-    // Get data object of the cat
-    PrefsItemData *data = cat->data( 0, Qt::UserRole ).value<PrefsItemData *>();
-    // Adjust it
-    data->i_type = PrefsItemData::TYPE_CATSUBCAT;
-    data->subcat_id = subcat;
-    data->name = qfu( vlc_config_SubcategoryNameGet( subcat ) );
-    data->help = qfu( vlc_config_SubcategoryHelpGet( subcat ) );
-    cat->setData( 0, Qt::UserRole, QVariant::fromValue( data ) );
-
-    this->subcatMap[(int)subcat] = cat;
 }
 
 QTreeWidgetItem *PrefsTree::findCatItem( enum vlc_config_cat cat )

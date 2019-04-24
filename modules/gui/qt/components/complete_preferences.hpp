@@ -100,7 +100,6 @@ private:
     QTreeWidgetItem *createCatNode( enum vlc_config_cat cat );
     QTreeWidgetItem *createSubcatNode( QTreeWidgetItem * cat, enum vlc_config_subcat subcat );
     void createPluginNode( QTreeWidgetItem * parent, module_t *module );
-    void setCatGeneralSubcat( QTreeWidgetItem *cat, enum vlc_config_subcat subcat );
     QTreeWidgetItem *findCatItem( enum vlc_config_cat cat );
     QTreeWidgetItem *findSubcatItem( enum vlc_config_subcat subcat );
     void doAll( bool );
