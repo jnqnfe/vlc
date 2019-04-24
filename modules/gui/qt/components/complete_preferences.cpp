@@ -102,7 +102,6 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
     module_config_free( p_config );
 
     // Add nodes for plugins
-    // A plugin gets one node for its entire set, located based on the first used subcat
     for( size_t i = 0; i < count; i++ )
     {
         p_module = p_list[i];
@@ -113,42 +112,48 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
         unsigned confsize;
         module_config_item_t *const p_config = vlc_module_config_get (p_module, &confsize);
 
-        // Get the first (used) subcat
         subcat = SUBCAT_INVALID;
-        bool b_options = false;
+        bool node_creation_pending = false;
         for (size_t i = 0; i < confsize; i++)
         {
             const module_config_item_t *p_item = p_config + i;
 
+            // Note, we only want to create the node if there is at least one
+            // item under it, it is not the hidden subcat obviously, nor
+            // invalid, and we have not already created it (should a subcat be
+            // used multiple times in one set).
             if( p_item->i_type == CONFIG_SUBCATEGORY )
+            {
                 subcat = (enum vlc_config_subcat) p_item->value.i;
+                node_creation_pending = (subcat != SUBCAT_HIDDEN);
+                continue;
+            }
 
-            if( CONFIG_ITEM(p_item->i_type) )
-                b_options = true;
+            if( node_creation_pending && CONFIG_ITEM(p_item->i_type) )
+            {
+                // Locate the category item
+                // If not found (unlikely), we will create it.
+                cat = vlc_config_CategoryFromSubcategory( subcat );
+                cat_item = this->findCatItem( cat );
+                if ( !cat_item )
+                    cat_item = this->createCatNode( cat );
 
-            if( b_options && subcat != SUBCAT_INVALID )
-                break;
+                // Locate the subcategory item
+                // If not found (quite possible), we will create it.
+                QTreeWidgetItem *subcat_item = this->findSubcatItem( subcat );
+                if( !subcat_item )
+                    subcat_item = this->createSubcatNode( cat_item, subcat );
+
+                // Create a node for the plugin under this subcat, if not done
+                // already.
+                QTreeWidgetItem *plugin_item = this->findPluginItem( subcat_item, p_module );
+                if( !plugin_item )
+                    this->createPluginNode( subcat_item, p_module, subcat );
+
+                node_creation_pending = false;
+            }
         }
         module_config_free (p_config);
-
-        // Dummy item or hidden one, ignore
-        if( !b_options || subcat == SUBCAT_INVALID || subcat == SUBCAT_HIDDEN )
-            continue;
-
-        // Locate the category item
-        // If not found (unlikely), we will create it
-        cat = vlc_config_CategoryFromSubcategory( subcat );
-        cat_item = this->findCatItem( cat );
-        if ( !cat_item )
-            cat_item = this->createCatNode( cat );
-
-        // Locate the subcategory item
-        // If not found (quite possible), we will create it
-        QTreeWidgetItem *subcat_item = this->findSubcatItem( subcat );
-        if( !subcat_item )
-            subcat_item = this->createSubcatNode( cat_item, subcat );
-
-        this->createPluginNode( subcat_item, p_module );
     }
 
     // We got everything, just sort a bit
@@ -240,14 +245,14 @@ QTreeWidgetItem *PrefsTree::createSubcatNode( QTreeWidgetItem * cat, enum vlc_co
     return item;
 }
 
-void PrefsTree::createPluginNode( QTreeWidgetItem * parent, module_t *module )
+void PrefsTree::createPluginNode( QTreeWidgetItem * parent, module_t *module, enum vlc_config_subcat subcat )
 {
     assert( parent );
 
     PrefsItemData *data = new PrefsItemData( this );
     data->i_type = PrefsItemData::TYPE_PLUGIN;
     data->cat_id = CAT_INVALID;
-    data->subcat_id = SUBCAT_INVALID;
+    data->subcat_id = subcat;
     data->p_module = module;
     data->psz_shortcut = strdup( module_get_object( module ) );
     data->name = qtr( module_get_name( module, false ) );
@@ -273,6 +278,21 @@ QTreeWidgetItem *PrefsTree::findCatItem( enum vlc_config_cat cat )
 QTreeWidgetItem *PrefsTree::findSubcatItem( enum vlc_config_subcat subcat )
 {
     return this->subcatMap[(int)subcat];
+}
+
+QTreeWidgetItem *PrefsTree::findPluginItem( QTreeWidgetItem *subcat, module_t *module )
+{
+    if ( subcat )
+    {
+        for( int i = 0; i < subcat->childCount(); i++ )
+        {
+            QTreeWidgetItem *item = subcat->child( i );
+            PrefsItemData *data = item->data(0, Qt::UserRole).value<PrefsItemData *>();
+            if( data->p_module == module )
+                return item;
+        }
+    }
+    return NULL;
 }
 
 void PrefsTree::applyAll()
@@ -511,7 +531,7 @@ bool PrefsItemData::contains( const QString &text, Qt::CaseSensitivity cs )
         return true;
     }
 
-    /* check options belonging to this subcat or module */
+    /* check options belonging to this subcat or plugin */
 
     unsigned confsize;
     module_config_item_t *const p_config = vlc_module_config_get (p_module, &confsize),
@@ -522,52 +542,28 @@ bool PrefsItemData::contains( const QString &text, Qt::CaseSensitivity cs )
         return false;
 
     bool ret = false;
-
-    if( is_core )
-    {
-        /* find start of relevant option block */
-        while ( p_item < p_end )
-        {
-            if( p_item->i_type == CONFIG_SUBCATEGORY &&
-                p_item->value.i == id
-              )
-                break;
-            p_item++;
-        }
-        if( ++p_item >= p_end )
-        {
-            ret = false;
-            goto end;
-        }
-    }
-
+    bool show = false;
     do
     {
         if ( p_item->i_type == CONFIG_SUBCATEGORY )
-        {
-            /* for core, if we hit a subcat, stop */
-            if ( is_core )
-                break;
-            /* a module's options are grouped under one node; we can/should
-               ignore all cat/subcat entries. */
-            continue;
-        }
-
-        /* private options (hidden from GUI, but not --help) are not relevant */
-        if( p_item->b_internal ) continue;
-
+            show = (p_item->value.i == id);
         /* cat-hint items are not relevant, they are an alternate set of headings for help output */
-        if( p_item->i_type == CONFIG_HINT_CATEGORY ) continue;
-
-        if ( p_item->psz_text && qtr( p_item->psz_text ).contains( text, cs ) )
+        else if( p_item->i_type == CONFIG_HINT_CATEGORY )
+            continue;
+        else if (show)
         {
-            ret = true;
-            goto end;
+            /* private options (hidden from GUI, but not --help) are not relevant */
+            if( p_item->b_internal ) continue;
+
+            if ( p_item->psz_text && qtr( p_item->psz_text ).contains( text, cs ) )
+            {
+                ret = true;
+                break;
+            }
         }
     }
     while ( ++p_item < p_end );
 
-end:
     module_config_free( p_config );
     return ret;
 }
@@ -586,7 +582,6 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 {
     /* Find our module */
     module_t *p_module = NULL;
-    p_config = NULL;
     if( data->i_type == PrefsItemData::TYPE_PLUGIN )
         p_module = data->p_module;
     else
@@ -597,38 +592,17 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
     module_config_item_t *p_item = p_config,
                     *p_end = p_config + confsize;
 
-    if( data->i_type == PrefsItemData::TYPE_SUBCATEGORY ||
-        data->i_type == PrefsItemData::TYPE_CATEGORY )
-    {
-        while (p_item < p_end)
-        {
-            if(  p_item->i_type == CONFIG_SUBCATEGORY &&
-                 ( data->i_type == PrefsItemData::TYPE_SUBCATEGORY ||
-                   data->i_type == PrefsItemData::TYPE_CATEGORY ) &&
-                 (enum vlc_config_subcat) p_item->value.i == data->subcat_id )
-                break;
-            p_item++;
-        }
-    }
-
     /* Widgets now */
     global_layout = new QVBoxLayout();
     global_layout->setMargin( 2 );
+
+    QString help = QString( data->help );
+
     QString head;
-    QString help;
-
-    help = QString( data->help );
-
-    if( data->i_type == PrefsItemData::TYPE_SUBCATEGORY ||
-        data->i_type == PrefsItemData::TYPE_CATEGORY )
-    {
-        head = QString( data->name );
-        p_item++; // Why that ?
-    }
-    else
-    {
+    if( data->i_type == PrefsItemData::TYPE_PLUGIN )
         head = QString( qtr( module_GetLongName( p_module ) ) );
-    }
+    else
+        head = QString( data->name );
 
     QLabel *titleLabel = new QLabel( head );
     QFont titleFont = QApplication::font();
@@ -658,13 +632,20 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
     int i_line = 0, i_boxline = 0;
     bool has_hotkey = false;
 
-    if( p_item ) do
+    bool show = false;
+    do
     {
-        if( p_item->i_type == CONFIG_SUBCATEGORY &&
-            ( data->i_type == PrefsItemData::TYPE_SUBCATEGORY ||
-              data->i_type == PrefsItemData::TYPE_CATEGORY ) &&
-            (enum vlc_config_subcat) p_item->value.i != data->subcat_id )
-            break;
+        if( p_item->i_type == CONFIG_SUBCATEGORY )
+        {
+            show = ((enum vlc_config_subcat) p_item->value.i == data->subcat_id);
+            continue;
+        }
+        if (!show) continue;
+
+        /* cat-hint items are not relevant, they are an alternate set of headings for help output */
+        if( p_item->i_type == CONFIG_HINT_CATEGORY ) continue;
+
+        /* private options (hidden from GUI, but not --help) are not relevant */
         if( p_item->b_internal ) continue;
 
         if( p_item->i_type == CONFIG_SECTION )
@@ -682,7 +663,7 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
             boxlayout = new QGridLayout();
         }
         /* Only one hotkey control */
-        if( p_item->i_type == CONFIG_ITEM_KEY )
+        else if( p_item->i_type == CONFIG_ITEM_KEY )
         {
             if( has_hotkey )
                 continue;
@@ -703,10 +684,7 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
         else i_line++;
         controls.append( control );
     }
-    while( !( ( data->i_type == PrefsItemData::TYPE_SUBCATEGORY ||
-               data->i_type == PrefsItemData::TYPE_CATEGORY ) &&
-             p_item->i_type == CONFIG_SUBCATEGORY )
-        && ( ++p_item < p_end ) );
+    while( ++p_item < p_end );
 
     if( box && i_boxline > 0 )
     {

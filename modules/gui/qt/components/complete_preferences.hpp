@@ -35,23 +35,6 @@
 #include <QTreeWidgetItem>
 #include <QSet>
 
-/**
- * Notes:
- *
- * 1) Core's use of set_subcategory() defines the base tree, with its options
- *    spread across it.
- * 2) Certain subcats ('general' type) are not given a node under their cat,
- *    they represent the top level cat's option panel itself (otherwise cat
- *    entries would just have empty panels).
- * 3) Other modules (currently) have their options located under a single tree
- *    node attached to one of the core cat/subcat nodes. The location for this
- *    is chosen based upon the first subcat encountered in the module's option
- *    set; If the module's option set has options before the subcat hint entry,
- *    this does not matter; If no subcat hint is provided in the option set,
- *    then no node is created (i.e. that module's options will not be available
- *    in the prefs GUI).
- */
-
 class AdvPrefsPanel;
 class QVBoxLayout;
 
@@ -98,9 +81,10 @@ public:
 private:
     QTreeWidgetItem *createCatNode( enum vlc_config_cat cat );
     QTreeWidgetItem *createSubcatNode( QTreeWidgetItem * cat, enum vlc_config_subcat subcat );
-    void createPluginNode( QTreeWidgetItem * parent, module_t *module );
+    void createPluginNode( QTreeWidgetItem * parent, module_t *module, enum vlc_config_subcat subcat );
     QTreeWidgetItem *findCatItem( enum vlc_config_cat cat );
     QTreeWidgetItem *findSubcatItem( enum vlc_config_subcat subcat );
+    QTreeWidgetItem *findPluginItem( QTreeWidgetItem *subcat, module_t *module );
     void doAll( bool );
     bool filterItems( QTreeWidgetItem *item, const QString &text, Qt::CaseSensitivity cs );
     bool collapseUnselectedItems( QTreeWidgetItem *item );
