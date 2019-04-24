@@ -85,6 +85,8 @@ Q_DECLARE_METATYPE( PrefsItemData* );
 class PrefsTree : public QTreeWidget
 {
     Q_OBJECT
+    QTreeWidgetItem *catMap[CAT_MAX];
+    QTreeWidgetItem *subcatMap[SUBCAT_MAX];
 
 public:
     PrefsTree( intf_thread_t *, QWidget *, module_t **, size_t );
@@ -101,7 +103,6 @@ private:
     void setCatGeneralSubcat( QTreeWidgetItem *cat, enum vlc_config_subcat subcat );
     QTreeWidgetItem *findCatItem( enum vlc_config_cat cat );
     QTreeWidgetItem *findSubcatItem( enum vlc_config_subcat subcat );
-    QTreeWidgetItem *findSubcatItem( QTreeWidgetItem *cat, enum vlc_config_subcat subcat );
     void doAll( bool );
     bool filterItems( QTreeWidgetItem *item, const QString &text, Qt::CaseSensitivity cs );
     bool collapseUnselectedItems( QTreeWidgetItem *item );
