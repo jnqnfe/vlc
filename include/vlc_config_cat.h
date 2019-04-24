@@ -222,7 +222,6 @@ static inline bool vlc_config_IntSubcatIsValid(int i)
 
 struct vlc_config_cat_data
 {
-    const char *help;
     enum vlc_config_subcat general;
 };
 
@@ -235,14 +234,14 @@ struct vlc_config_subcat_data
 
 static const struct vlc_config_cat_data vlc_category_data[] =
 {
-    /* CAT_INTERFACE */ { INTF_HELP,       SUBCAT_INTERFACE_GENERAL },
-    /* CAT_AUDIO     */ { AUDIO_HELP,      SUBCAT_AUDIO_GENERAL     },
-    /* CAT_VIDEO     */ { VIDEO_HELP,      SUBCAT_VIDEO_GENERAL     },
-    /* CAT_INPUT     */ { INPUT_HELP,      SUBCAT_INPUT_GENERAL     },
-    /* CAT_SOUT      */ { SOUT_HELP,       SUBCAT_SOUT_GENERAL      },
-    /* CAT_PLAYLIST  */ { PLAYLIST_HELP,   SUBCAT_PLAYLIST_GENERAL  },
-    /* CAT_ADVANCED  */ { AADVANCED_HELP,  SUBCAT_ADVANCED_MISC     },
-    /* CAT_HIDDEN    */ { NULL,            SUBCAT_HIDDEN            },
+    /* CAT_INTERFACE */ { SUBCAT_INTERFACE_GENERAL },
+    /* CAT_AUDIO     */ { SUBCAT_AUDIO_GENERAL     },
+    /* CAT_VIDEO     */ { SUBCAT_VIDEO_GENERAL     },
+    /* CAT_INPUT     */ { SUBCAT_INPUT_GENERAL     },
+    /* CAT_SOUT      */ { SUBCAT_SOUT_GENERAL      },
+    /* CAT_PLAYLIST  */ { SUBCAT_PLAYLIST_GENERAL  },
+    /* CAT_ADVANCED  */ { SUBCAT_ADVANCED_MISC     },
+    /* CAT_HIDDEN    */ { SUBCAT_HIDDEN            },
 };
 
 static_assert(CAT_MAX == (sizeof (vlc_category_data) / sizeof (vlc_category_data[0])), "category data table size mismatch");
@@ -326,7 +325,7 @@ static inline const char *vlc_config_SubcategoryHelpGet( enum vlc_config_subcat 
 VLC_USED
 static inline const char *vlc_config_CategoryHelpGet( enum vlc_config_cat cat )
 {
-    return vlc_gettext(vlc_category_data[(int)cat].help);
+    return vlc_config_SubcategoryHelpGet(vlc_category_data[(int)cat].general);
 }
 
 /** Check if the given subcategory is a "general" one
