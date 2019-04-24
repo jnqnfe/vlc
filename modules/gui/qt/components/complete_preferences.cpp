@@ -92,14 +92,11 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
             {
                 cat_item = this->createCatNode( cat );
                 last_cat = cat;
+                // Merge general subcat properties
+                this->setCatGeneralSubcat( cat_item, vlc_config_CategoryGeneralSubcatGet( cat ) );
             }
 
-            // Special cases: move the main subcategories to the parent cat
-            if( vlc_config_SubcategoryIsGeneral(subcat) )
-            {
-                this->setCatGeneralSubcat( cat_item, subcat );
-            }
-            else // Normal Subcategories
+            if( !vlc_config_SubcategoryIsGeneral(subcat) )
             {
                 this->createSubcatNode( cat_item, subcat );
             }
