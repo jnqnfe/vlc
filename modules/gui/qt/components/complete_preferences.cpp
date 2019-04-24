@@ -245,7 +245,7 @@ void PrefsTree::createPluginNode( QTreeWidgetItem * parent, module_t *module )
     assert( parent );
 
     PrefsItemData *data = new PrefsItemData( this );
-    data->i_type = PrefsItemData::TYPE_MODULE;
+    data->i_type = PrefsItemData::TYPE_PLUGIN;
     data->cat_id = CAT_INVALID;
     data->subcat_id = SUBCAT_INVALID;
     data->p_module = module;
@@ -489,7 +489,7 @@ PrefsItemData::PrefsItemData( QObject *_parent ) : QObject( _parent )
  * also search the module name and head */
 bool PrefsItemData::contains( const QString &text, Qt::CaseSensitivity cs )
 {
-    bool is_core = this->i_type != TYPE_MODULE;
+    bool is_core = this->i_type != TYPE_PLUGIN;
     enum vlc_config_subcat id = this->subcat_id;
 
     /* find our module */
@@ -587,7 +587,7 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
     /* Find our module */
     module_t *p_module = NULL;
     p_config = NULL;
-    if( data->i_type == PrefsItemData::TYPE_MODULE )
+    if( data->i_type == PrefsItemData::TYPE_PLUGIN )
         p_module = data->p_module;
     else
         p_module = module_get_main();

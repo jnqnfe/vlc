@@ -69,7 +69,7 @@ public:
     {
         TYPE_CATEGORY,
         TYPE_SUBCATEGORY,
-        TYPE_MODULE
+        TYPE_PLUGIN
     };
     prefsType i_type;
     char *psz_shortcut;
