@@ -250,7 +250,7 @@ vlc_plugin_begin()
     set_callbacks (OpenAudio, CloseAudio)
 
     /* disabled so that all options actually appear under video */
-    //set_subcategory(SUBCAT_INPUT_GENERAL)
+    set_subcategory(SUBCAT_INPUT_GENERAL)
     set_section(N_("DeckLink General Options"), NULL)
     add_integer(CFG_PREFIX "card-index", 0,
                 CARD_INDEX_TEXT, CARD_INDEX_LONGTEXT, true)
