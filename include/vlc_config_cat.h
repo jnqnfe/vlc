@@ -201,11 +201,6 @@ static inline bool vlc_config_IntSubcatIsValid(int i)
 
 #define ANETWORK_HELP N_( "Advanced network settings." )
 
-struct vlc_config_cat_data
-{
-    enum vlc_config_subcat general;
-};
-
 struct vlc_config_subcat_data
 {
     enum vlc_config_cat cat;
@@ -213,19 +208,19 @@ struct vlc_config_subcat_data
     const char *help;
 };
 
-static const struct vlc_config_cat_data vlc_category_data[] =
+static const enum vlc_config_subcat vlc_cat_to_general_subcat_map[] =
 {
-    /* CAT_INTERFACE */ { SUBCAT_INTERFACE_GENERAL },
-    /* CAT_AUDIO     */ { SUBCAT_AUDIO_GENERAL     },
-    /* CAT_VIDEO     */ { SUBCAT_VIDEO_GENERAL     },
-    /* CAT_INPUT     */ { SUBCAT_INPUT_GENERAL     },
-    /* CAT_SOUT      */ { SUBCAT_SOUT_GENERAL      },
-    /* CAT_PLAYLIST  */ { SUBCAT_PLAYLIST_GENERAL  },
-    /* CAT_ADVANCED  */ { SUBCAT_ADVANCED_MISC     },
-    /* CAT_HIDDEN    */ { SUBCAT_HIDDEN            },
+    SUBCAT_INTERFACE_GENERAL, /* CAT_INTERFACE */
+    SUBCAT_AUDIO_GENERAL,     /* CAT_AUDIO     */
+    SUBCAT_VIDEO_GENERAL,     /* CAT_VIDEO     */
+    SUBCAT_INPUT_GENERAL,     /* CAT_INPUT     */
+    SUBCAT_SOUT_GENERAL,      /* CAT_SOUT      */
+    SUBCAT_PLAYLIST_GENERAL,  /* CAT_PLAYLIST  */
+    SUBCAT_ADVANCED_MISC,     /* CAT_ADVANCED  */
+    SUBCAT_HIDDEN,            /* CAT_HIDDEN    */
 };
 
-static_assert(CAT_MAX == (sizeof (vlc_category_data) / sizeof (vlc_category_data[0])), "category data table size mismatch");
+static_assert(CAT_MAX == (sizeof (vlc_cat_to_general_subcat_map) / sizeof (vlc_cat_to_general_subcat_map[0])), "cat to general subcat map size mismatch");
 
 static const struct vlc_config_subcat_data vlc_subcategory_data[] =
 {
@@ -292,7 +287,7 @@ static inline const char *vlc_config_SubcategoryNameGet( enum vlc_config_subcat 
 VLC_USED
 static inline const char *vlc_config_CategoryNameGet( enum vlc_config_cat cat )
 {
-    return vlc_config_SubcategoryNameGet(vlc_category_data[(int)cat].general);
+    return vlc_config_SubcategoryNameGet(vlc_cat_to_general_subcat_map[(int)cat]);
 }
 
 /** Get the help text for a subcategory */
@@ -306,7 +301,7 @@ static inline const char *vlc_config_SubcategoryHelpGet( enum vlc_config_subcat 
 VLC_USED
 static inline const char *vlc_config_CategoryHelpGet( enum vlc_config_cat cat )
 {
-    return vlc_config_SubcategoryHelpGet(vlc_category_data[(int)cat].general);
+    return vlc_config_SubcategoryHelpGet(vlc_cat_to_general_subcat_map[(int)cat]);
 }
 
 /** Check if the given subcategory is a "general" one
@@ -319,14 +314,14 @@ VLC_USED
 static inline bool vlc_config_SubcategoryIsGeneral( enum vlc_config_subcat subcat )
 {
     enum vlc_config_cat cat = vlc_config_CategoryFromSubcategory( subcat );
-    return (subcat == vlc_category_data[(int)cat].general);
+    return (subcat == vlc_cat_to_general_subcat_map[(int)cat]);
 }
 
 /** Get the "general" subcategory of a given category */
 VLC_USED
 static inline enum vlc_config_subcat vlc_config_CategoryGeneralSubcatGet( enum vlc_config_cat cat )
 {
-    return vlc_category_data[(int)cat].general;
+    return vlc_cat_to_general_subcat_map[(int)cat];
 }
 
 #endif /* VLC_CONFIG_CATS_H */
