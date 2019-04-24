@@ -152,7 +152,24 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
     }
 
     // We got everything, just sort a bit
+    // We allow the subcat and plugin nodes to be alphabetical, but we force
+    // the top-level cat nodes into a preferred order.
     sortItems( 0, Qt::AscendingOrder );
+    unsigned index = 0;
+    for (unsigned i = 0; i < vlc_cat_preferred_order_count; i++)
+    {
+        cat_item = this->findCatItem( vlc_cat_preferred_order[i] );
+        if ( cat_item )
+        {
+            unsigned cur_index = (unsigned)indexOfTopLevelItem( cat_item );
+            if (cur_index != index)
+            {
+                insertTopLevelItem( index, takeTopLevelItem( cur_index ) );
+                expandItem( cat_item );
+            }
+            ++index;
+        }
+    }
 
     resizeColumnToContents( 0 );
 }
