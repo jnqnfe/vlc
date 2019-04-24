@@ -180,7 +180,7 @@ QTreeWidgetItem *PrefsTree::createCatNode( enum vlc_config_cat cat )
     assert(subcat != SUBCAT_INVALID && subcat != SUBCAT_HIDDEN);
 
     PrefsItemData *data = new PrefsItemData( this );
-    data->i_type = PrefsItemData::TYPE_CATSUBCAT;
+    data->i_type = PrefsItemData::TYPE_CATEGORY;
     data->cat_id = cat;
     data->subcat_id = subcat;
     data->name = qfu( vlc_config_CategoryNameGet( cat ) );
@@ -489,9 +489,6 @@ PrefsItemData::PrefsItemData( QObject *_parent ) : QObject( _parent )
  * also search the module name and head */
 bool PrefsItemData::contains( const QString &text, Qt::CaseSensitivity cs )
 {
-    if( this->i_type == TYPE_CATEGORY )
-        return false;
-
     bool is_core = this->i_type != TYPE_MODULE;
     enum vlc_config_subcat id = this->subcat_id;
 
@@ -590,9 +587,7 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
     /* Find our module */
     module_t *p_module = NULL;
     p_config = NULL;
-    if( data->i_type == PrefsItemData::TYPE_CATEGORY )
-        return;
-    else if( data->i_type == PrefsItemData::TYPE_MODULE )
+    if( data->i_type == PrefsItemData::TYPE_MODULE )
         p_module = data->p_module;
     else
         p_module = module_get_main();
@@ -603,13 +598,13 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
                     *p_end = p_config + confsize;
 
     if( data->i_type == PrefsItemData::TYPE_SUBCATEGORY ||
-        data->i_type == PrefsItemData::TYPE_CATSUBCAT )
+        data->i_type == PrefsItemData::TYPE_CATEGORY )
     {
         while (p_item < p_end)
         {
             if(  p_item->i_type == CONFIG_SUBCATEGORY &&
                  ( data->i_type == PrefsItemData::TYPE_SUBCATEGORY ||
-                   data->i_type == PrefsItemData::TYPE_CATSUBCAT ) &&
+                   data->i_type == PrefsItemData::TYPE_CATEGORY ) &&
                  (enum vlc_config_subcat) p_item->value.i == data->subcat_id )
                 break;
             p_item++;
@@ -625,7 +620,7 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
     help = QString( data->help );
 
     if( data->i_type == PrefsItemData::TYPE_SUBCATEGORY ||
-        data->i_type == PrefsItemData::TYPE_CATSUBCAT )
+        data->i_type == PrefsItemData::TYPE_CATEGORY )
     {
         head = QString( data->name );
         p_item++; // Why that ?
@@ -667,7 +662,7 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
     {
         if( p_item->i_type == CONFIG_SUBCATEGORY &&
             ( data->i_type == PrefsItemData::TYPE_SUBCATEGORY ||
-              data->i_type == PrefsItemData::TYPE_CATSUBCAT ) &&
+              data->i_type == PrefsItemData::TYPE_CATEGORY ) &&
             (enum vlc_config_subcat) p_item->value.i != data->subcat_id )
             break;
         if( p_item->b_internal ) continue;
@@ -709,7 +704,7 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
         controls.append( control );
     }
     while( !( ( data->i_type == PrefsItemData::TYPE_SUBCATEGORY ||
-               data->i_type == PrefsItemData::TYPE_CATSUBCAT ) &&
+               data->i_type == PrefsItemData::TYPE_CATEGORY ) &&
              p_item->i_type == CONFIG_SUBCATEGORY )
         && ( ++p_item < p_end ) );
 
