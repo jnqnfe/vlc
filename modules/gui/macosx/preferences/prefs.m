@@ -113,9 +113,6 @@ enum VLCTreeBranchType {
     enum VLCTreeBranchType _branchType;
     enum vlc_config_cat _category;
     enum vlc_config_subcat _subcategory;
-    /* for plugin type */
-    module_config_item_t * _configItems;
-    unsigned int _configSize;
 }
 + (VLCTreeBranchItem *)newCategoryTreeBranch:(enum vlc_config_cat)category;
 + (VLCTreeBranchItem *)newSubcategoryTreeBranch:(enum vlc_config_subcat)subcategory;
@@ -130,8 +127,6 @@ enum VLCTreeBranchType {
 - (enum VLCTreeBranchType)branchType;
 - (enum vlc_config_cat)category;
 - (enum vlc_config_subcat)subcategory;
-- (module_config_item_t *)configItems;
-- (unsigned int)configSize;
 @end
 
 /* individual options. */
@@ -146,9 +141,18 @@ enum VLCTreeBranchType {
 
 @interface VLCTreeMainItem : VLCTreeItem
 {
-    module_config_item_t * _configItems;
+    NSMutableArray *_configSetOwners;
 }
 - (VLCTreeBranchItem *)childRepresentingCategory:(enum vlc_config_cat)category;
+- (NSMutableArray *)configSetOwners;
+@end
+
+@interface VLCTreeConfigSetOwner : NSObject
+{
+    module_config_item_t *_set;
+}
++ (VLCTreeConfigSetOwner *)newConfigSetOwner:(module_config_item_t*)set;
+- (id)initWithSet:(module_config_item_t*)set;
 @end
 
 #pragma mark -
@@ -475,26 +479,22 @@ enum VLCTreeBranchType {
         VLCTreeBranchItem * categoryItem = nil;
         VLCTreeBranchItem * subcategoryItem = nil;
         VLCTreeBranchItem * pluginItem = nil;
-        module_config_item_t *p_configs = NULL;
         enum vlc_config_cat cat = CAT_INVALID;
         enum vlc_config_subcat subcat = SUBCAT_INVALID;
         bool create_subcat_node_pending = false;
-        bool plugin_node_added = false;
         bool subcat_is_general = false;
-        unsigned int confsize;
 
         module_t * p_module = modules[i];
         bool mod_is_main = module_is_main(p_module);
 
-        if (mod_is_main) {
-            _configItems = vlc_module_config_get(p_module, &confsize);
-            p_configs = _configItems;
-        } else {
-            pluginItem = [VLCTreeBranchItem newPluginTreeBranch: p_module];
-            if (!pluginItem) continue;
-            confsize = [pluginItem configSize];
-            p_configs = [pluginItem configItems];
+        unsigned int confsize;
+        module_config_item_t *p_configs = vlc_module_config_get(p_module, &confsize);
+        VLCTreeConfigSetOwner* cfgSetOwner = [VLCTreeConfigSetOwner newConfigSetOwner:p_configs];
+        if (!cfgSetOwner) {
+            module_config_free(p_configs);
+            continue;
         }
+        [[self configSetOwners] addObject:cfgSetOwner];
 
         for (unsigned int j = 0; j < confsize; j++) {
             int configType = p_configs[j].i_type;
@@ -543,13 +543,15 @@ enum VLCTreeBranchType {
                 create_subcat_node_pending = false;
             }
 
-            if (!mod_is_main && !plugin_node_added) {
+            if (!mod_is_main && !pluginItem) {
+                pluginItem = [VLCTreePluginItem newPluginTreeBranch: p_module];
+                if (!pluginItem) continue;
+
                 if (subcat_is_general) {
                     [[categoryItem children] addObject:pluginItem];
                 } else {
                     [[subcategoryItem children] addObject:pluginItem];
                 }
-                plugin_node_added = true;
             }
 
             VLCTreeLeafItem *new_leaf = [VLCTreeLeafItem newTreeLeaf:&p_configs[j]];
@@ -568,10 +570,11 @@ enum VLCTreeBranchType {
     return _children;
 }
 
-- (void)dealloc
+- (NSMutableArray *)configSetOwners
 {
-    if (_configItems)
-        module_config_free(_configItems);
+    if (!_configSetOwners)
+        _configSetOwners = [[NSMutableArray alloc] init];
+    return _configSetOwners;
 }
 @end
 
@@ -599,8 +602,6 @@ enum VLCTreeBranchType {
         _branchType = VLCTreeBranchType::CategoryBranch;
         _category = category;
         _subcategory = SUBCAT_INVALID;
-        _configItems = nil;
-        _configSize = 0;
         //_help = [_NS(vlc_config_CategoryHelpGet(category)) retain];
     }
     return self;
@@ -613,8 +614,6 @@ enum VLCTreeBranchType {
         _branchType = VLCTreeBranchType::SubcategoryBranch;
         _category = CAT_INVALID;
         _subcategory = subcategory;
-        _configItems = nil;
-        _configSize = 0;
         //_help = [_NS(vlc_config_SubcategoryHelpGet(subcategory)) retain];
     }
     return self;
@@ -627,17 +626,10 @@ enum VLCTreeBranchType {
         _branchType = VLCTreeBranchType::PluginBranch;
         _category = CAT_INVALID;
         _subcategory = SUBCAT_INVALID;
-        _configItems = vlc_module_config_get(plugin, &_configSize);
         //_plugin = plugin;
         //_help = [_NS(vlc_config_SubcategoryHelpGet(subcategory)) retain];
     }
     return self;
-}
-
-- (void)dealloc
-{
-    if (_configItems)
-        module_config_free(_configItems);
 }
 
 - (VLCTreeBranchItem *)childRepresentingSubcategory:(enum vlc_config_subcat)subcategory
@@ -667,16 +659,6 @@ enum VLCTreeBranchType {
     return _subcategory;
 }
 
-- (module_config_item_t *)configItems
-{
-    return _configItems;
-}
-
-- (unsigned int)configSize
-{
-    return _configSize;
-}
-
 @end
 
 #pragma mark -
@@ -700,4 +682,26 @@ enum VLCTreeBranchType {
 {
     return _configItem;
 }
+@end
+
+#pragma mark -
+@implementation VLCTreeConfigSetOwner
++ (VLCTreeConfigSetOwner *)newConfigSetOwner:(module_config_item_t*)set
+{
+    return [[[self class] alloc] initWithSet:set];
+}
+
+- (id)initWithSet:(module_config_item_t*)set
+{
+    self = [super init];
+    if (self != nil)
+        _set = set;
+    return self;
+}
+
+- (void)dealloc
+{
+    module_config_free(_set);
+}
+
 @end
