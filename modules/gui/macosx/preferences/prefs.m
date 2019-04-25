@@ -102,39 +102,36 @@
 
 @end
 
-/* CONFIG_SUBCAT */
-@interface VLCTreeSubCategoryItem : VLCTreeItem
-{
-    enum vlc_config_subcat _subCategory;
-}
-+ (VLCTreeSubCategoryItem *)subCategoryTreeItemWithSubCategory:(enum vlc_config_subcat)subCategory;
-- (id)initWithSubCategory:(enum vlc_config_subcat)subCategory;
-- (enum vlc_config_subcat)subCategory;
-@end
+enum VLCTreeBranchType {
+    CategoryBranch = 0,
+    SubcategoryBranch = 1,
+    PluginBranch = 2,
+};
 
-/* Plugin daughters */
-@interface VLCTreePluginItem : VLCTreeItem
+@interface VLCTreeBranchItem : VLCTreeItem
 {
+    enum VLCTreeBranchType _branchType;
+    enum vlc_config_cat _category;
+    enum vlc_config_subcat _subcategory;
+    /* for plugin type */
     module_config_item_t * _configItems;
     unsigned int _configSize;
 }
-+ (VLCTreePluginItem *)pluginTreeItemWithPlugin:(module_t *)plugin;
++ (VLCTreeBranchItem *)newCategoryTreeBranch:(enum vlc_config_cat)category;
++ (VLCTreeBranchItem *)newSubcategoryTreeBranch:(enum vlc_config_subcat)subcategory;
++ (VLCTreeBranchItem *)newPluginTreeBranch:(module_t *)plugin;
+
+- (id)initWithCategory:(enum vlc_config_cat)category;
+- (id)initWithSubcategory:(enum vlc_config_subcat)subcategory;
 - (id)initWithPlugin:(module_t *)plugin;
 
+- (VLCTreeBranchItem *)childRepresentingSubcategory:(enum vlc_config_cat)category;
+
+- (enum VLCTreeBranchType)branchType;
+- (enum vlc_config_cat)category;
+- (enum vlc_config_subcat)subcategory;
 - (module_config_item_t *)configItems;
 - (unsigned int)configSize;
-@end
-
-/* CONFIG_CAT */
-@interface VLCTreeCategoryItem : VLCTreeItem
-{
-    enum vlc_config_cat _category;
-}
-+ (VLCTreeCategoryItem *)categoryTreeItemWithCategory:(enum vlc_config_cat)category;
-- (id)initWithCategory:(enum vlc_config_cat)category;
-
-- (enum vlc_config_cat)category;
-- (VLCTreeSubCategoryItem *)itemRepresentingSubCategory:(enum vlc_config_cat)category;
 @end
 
 /* individual options. */
@@ -146,8 +143,11 @@
 - (module_config_item_t *)configItem;
 @end
 
-@interface VLCTreeMainItem : VLCTreePluginItem
-- (VLCTreeCategoryItem *)itemRepresentingCategory:(enum vlc_config_cat)category;
+@interface VLCTreeMainItem : VLCTreeItem
+{
+    module_config_item_t * _configItems;
+}
+- (VLCTreeBranchItem *)childRepresentingCategory:(enum vlc_config_cat)category;
 @end
 
 #pragma mark -
@@ -445,13 +445,13 @@
 #pragma mark -
 @implementation VLCTreeMainItem
 
-- (VLCTreeCategoryItem *)itemRepresentingCategory:(enum vlc_config_cat)category
+- (VLCTreeBranchItem *)childRepresentingCategory:(enum vlc_config_cat)category
 {
     NSUInteger childrenCount = [[self children] count];
     for (int i = 0; i < childrenCount; i++) {
-        VLCTreeCategoryItem * categoryItem = [[self children] objectAtIndex:i];
-        if ([categoryItem category] == category)
-            return categoryItem;
+        VLCTreeBranchItem * item = [[self children] objectAtIndex:i];
+        if ([item branchType] == VLCTreeBranchType::CategoryBranch && [item category] == category)
+            return item;
     }
     return nil;
 }
@@ -471,9 +471,9 @@
     /* Build a tree of the plugins */
     /* Add the capabilities */
     for (i = 0; i < count; i++) {
-        VLCTreeCategoryItem * categoryItem = nil;
-        VLCTreeSubCategoryItem * subCategoryItem = nil;
-        VLCTreePluginItem * pluginItem = nil;
+        VLCTreeBranchItem * categoryItem = nil;
+        VLCTreeBranchItem * subcategoryItem = nil;
+        VLCTreeBranchItem * pluginItem = nil;
         module_config_item_t *p_configs = NULL;
         enum vlc_config_cat lastcat = CAT_INVALID;
         enum vlc_config_subcat lastsubcat = SUBCAT_INVALID;
@@ -483,14 +483,13 @@
         bool mod_is_main = module_is_main(p_module);
 
         if (mod_is_main) {
-            pluginItem = self;
             _configItems = vlc_module_config_get(p_module, &confsize);
-            _configSize = confsize;
+            p_configs = _configItems;
         } else {
-            pluginItem = [VLCTreePluginItem pluginTreeItemWithPlugin: p_module];
+            pluginItem = [VLCTreeBranchItem newPluginTreeBranch: p_module];
             confsize = [pluginItem configSize];
+            p_configs = [pluginItem configItems];
         }
-        p_configs = [pluginItem configItems];
 
         for (unsigned int j = 0; j < confsize; j++) {
             int configType = p_configs[j].i_type;
@@ -504,19 +503,19 @@
                 }
                 lastcat = vlc_config_CategoryFromSubcategory(lastsubcat);
 
-                categoryItem = [self itemRepresentingCategory:lastcat];
+                categoryItem = [self childRepresentingCategory:lastcat];
                 if (!categoryItem) {
-                    categoryItem = [VLCTreeCategoryItem categoryTreeItemWithCategory:lastcat];
+                    categoryItem = [VLCTreeBranchItem newCategoryTreeBranch:lastcat];
                     if (categoryItem)
                         [[self children] addObject:categoryItem];
                 }
 
                 if (categoryItem && !vlc_config_SubcategoryIsGeneral(lastsubcat)) {
-                    subCategoryItem = [categoryItem itemRepresentingSubCategory:lastsubcat];
-                    if (!subCategoryItem) {
-                        subCategoryItem = [VLCTreeSubCategoryItem subCategoryTreeItemWithSubCategory:lastsubcat];
-                        if (subCategoryItem)
-                            [[categoryItem children] addObject:subCategoryItem];
+                    subcategoryItem = [categoryItem childRepresentingSubcategory:lastsubcat];
+                    if (!subcategoryItem) {
+                        subcategoryItem = [VLCTreeBranchItem newSubcategoryTreeBranch:lastsubcat];
+                        if (subcategoryItem)
+                            [[categoryItem children] addObject:subcategoryItem];
                     }
                 }
                 continue;
@@ -528,13 +527,13 @@
             if (mod_is_main) {
                 if (categoryItem && vlc_config_SubcategoryIsGeneral(lastsubcat)) {
                     [[categoryItem options] addObject:[[VLCTreeLeafItem alloc] initWithConfigItem:&p_configs[j]]];
-                } else if (subCategoryItem && !vlc_config_SubcategoryIsGeneral(lastsubcat)) {
-                    [[subCategoryItem options] addObject:[[VLCTreeLeafItem alloc] initWithConfigItem:&p_configs[j]]];
+                } else if (subcategoryItem && !vlc_config_SubcategoryIsGeneral(lastsubcat)) {
+                    [[subcategoryItem options] addObject:[[VLCTreeLeafItem alloc] initWithConfigItem:&p_configs[j]]];
                 }
             }
             else {
-                if (subCategoryItem && ![[subCategoryItem children] containsObject: pluginItem]) {
-                    [[subCategoryItem children] addObject:pluginItem];
+                if (subcategoryItem && ![[subcategoryItem children] containsObject: pluginItem]) {
+                    [[subcategoryItem children] addObject:pluginItem];
                 }
 
                 if (pluginItem) {
@@ -546,35 +545,94 @@
     module_list_free(modules);
     return _children;
 }
+
+- (void)dealloc
+{
+    if (_configItems)
+        module_config_free(_configItems);
+}
 @end
 
 #pragma mark -
-@implementation VLCTreeCategoryItem
-+ (VLCTreeCategoryItem *)categoryTreeItemWithCategory:(enum vlc_config_cat)category
+@implementation VLCTreeBranchItem
++ (VLCTreeBranchItem *)newCategoryTreeBranch:(enum vlc_config_cat)category
 {
     return [[[self class] alloc] initWithCategory:category];
+}
+
++ (VLCTreeBranchItem *)newSubcategoryTreeBranch:(enum vlc_config_subcat)subcategory
+{
+    return [[[self class] alloc] initWithSubcategory:subcategory];
+}
+
++ (VLCTreeBranchItem *)newPluginTreeBranch:(module_t *)plugin
+{
+    return [[[self class] alloc] initWithPlugin:plugin];
 }
 
 - (id)initWithCategory:(enum vlc_config_cat)category
 {
     NSString * name = _NS(vlc_config_CategoryNameGet(category));
     if (self = [super initWithName:name]) {
+        _branchType = VLCTreeBranchType::CategoryBranch;
         _category = category;
+        _subcategory = SUBCAT_INVALID;
+        _configItems = nil;
+        _configSize = 0;
         //_help = [_NS(vlc_config_CategoryHelpGet(category)) retain];
     }
     return self;
 }
 
-- (VLCTreeSubCategoryItem *)itemRepresentingSubCategory:(enum vlc_config_subcat)subCategory
+- (id)initWithSubcategory:(enum vlc_config_subcat)subcategory
 {
-    assert([self isKindOfClass:[VLCTreeCategoryItem class]]);
+    NSString * name = _NS(config_SubcategoryNameGet(subcategory));
+    if (self = [super initWithName:name]) {
+        _branchType = VLCTreeBranchType::SubcategoryBranch;
+        _category = CAT_INVALID;
+        _subcategory = subcategory;
+        _configItems = nil;
+        _configSize = 0;
+        //_help = [_NS(vlc_config_SubcategoryHelpGet(subcategory)) retain];
+    }
+    return self;
+}
+
+- (id)initWithPlugin:(module_t *)plugin
+{
+    NSString * name = _NS(module_get_name(plugin, false));
+    if (self = [super initWithName:name]) {
+        _branchType = VLCTreeBranchType::PluginBranch;
+        _category = CAT_INVALID;
+        _subcategory = SUBCAT_INVALID;
+        _configItems = vlc_module_config_get(plugin, &_configSize);
+        //_plugin = plugin;
+        //_help = [_NS(vlc_config_SubcategoryHelpGet(subcategory)) retain];
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    if (_configItems)
+        module_config_free(_configItems);
+}
+
+- (VLCTreeBranchItem *)childRepresentingSubcategory:(enum vlc_config_subcat)subcategory
+{
+    assert([self isKindOfClass:[VLCTreeBranchItem class]]);
     NSUInteger childrenCount = [[self children] count];
     for (NSUInteger i = 0; i < childrenCount; i++) {
-        VLCTreeSubCategoryItem * subCategoryItem = [[self children] objectAtIndex:i];
-        if ([subCategoryItem subCategory] == subCategory)
-            return subCategoryItem;
+        VLCTreeBranchItem * item = [[self children] objectAtIndex:i];
+        if ([item branchType] == VLCTreeBranchType::SubcategoryBranch && [item subcategory] == subcategory)
+            return item;
     }
     return nil;
+}
+
+- (enum VLCTreeBranchType)branchType
+{
+    return _branchType;
 }
 
 - (enum vlc_config_cat)category
@@ -582,53 +640,9 @@
     return _category;
 }
 
-@end
-
-#pragma mark -
-@implementation VLCTreeSubCategoryItem
-- (id)initWithSubCategory:(enum vlc_config_subcat)subCategory
+- (enum vlc_config_subcat)subcategory
 {
-    NSString * name = _NS(vlc_config_SubcategoryNameGet(subCategory));
-    if (self = [super initWithName:name]) {
-        _subCategory = subCategory;
-        //_help = [_NS(vlc_config_SubcategoryHelpGet(subCategory)) retain];
-    }
-    return self;
-}
-
-+ (VLCTreeSubCategoryItem *)subCategoryTreeItemWithSubCategory:(enum vlc_config_subcat)subCategory
-{
-    return [[[self class] alloc] initWithSubCategory:subCategory];
-}
-
-- (enum vlc_config_subcat)subCategory
-{
-    return _subCategory;
-}
-
-@end
-
-#pragma mark -
-@implementation VLCTreePluginItem
-- (id)initWithPlugin:(module_t *)plugin
-{
-    NSString * name = _NS(module_get_name(plugin, false));
-    if (self = [super initWithName:name]) {
-        _configItems = vlc_module_config_get(plugin, &_configSize);
-        //_plugin = plugin;
-        //_help = [_NS(vlc_config_SubcategoryHelpGet(subCategory)) retain];
-    }
-    return self;
-}
-
-+ (VLCTreePluginItem *)pluginTreeItemWithPlugin:(module_t *)plugin
-{
-    return [[[self class] alloc] initWithPlugin:plugin];
-}
-
-- (void)dealloc
-{
-    module_config_free(_configItems);
+    return _subcategory;
 }
 
 - (module_config_item_t *)configItems
