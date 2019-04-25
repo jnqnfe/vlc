@@ -477,6 +477,7 @@ enum VLCTreeBranchType {
         module_config_item_t *p_configs = NULL;
         enum vlc_config_cat lastcat = CAT_INVALID;
         enum vlc_config_subcat lastsubcat = SUBCAT_INVALID;
+        bool plugin_node_added = false;
         unsigned int confsize;
 
         module_t * p_module = modules[i];
@@ -532,15 +533,13 @@ enum VLCTreeBranchType {
                 }
             }
             else {
-                if (vlc_config_SubcategoryIsGeneral(lastsubcat) && categoryItem &&
-                    ![[categoryItem children] containsObject: pluginItem])
-                {
+                if (vlc_config_SubcategoryIsGeneral(lastsubcat) && categoryItem && !plugin_node_added) {
                     [[categoryItem children] addObject:pluginItem];
+                    plugin_node_added = true;
                 }
-                else if (!vlc_config_SubcategoryIsGeneral(lastsubcat) && subcategoryItem &&
-                    ![[subcategoryItem children] containsObject: pluginItem])
-                {
+                else if (!vlc_config_SubcategoryIsGeneral(lastsubcat) && subcategoryItem && !plugin_node_added) {
                     [[subcategoryItem children] addObject:pluginItem];
+                    plugin_node_added = true;
                 }
 
                 if (pluginItem) {
