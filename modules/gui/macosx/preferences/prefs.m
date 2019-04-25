@@ -528,7 +528,7 @@
             if (mod_is_main) {
                 if (categoryItem && vlc_config_SubcategoryIsGeneral(lastsubcat)) {
                     [[categoryItem options] addObject:[[VLCTreeLeafItem alloc] initWithConfigItem:&p_configs[j]]];
-                } else if (subCategoryItem) {
+                } else if (subCategoryItem && !vlc_config_SubcategoryIsGeneral(lastsubcat)) {
                     [[subCategoryItem options] addObject:[[VLCTreeLeafItem alloc] initWithConfigItem:&p_configs[j]]];
                 }
             }
