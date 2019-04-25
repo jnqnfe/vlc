@@ -143,9 +143,8 @@ static const char *const ppsz_text_direction[] = {
 vlc_plugin_begin ()
     set_shortname( N_("Text renderer"))
     set_description( N_("Freetype2 font renderer") )
-    set_capability( VLC_CAP_TEXT_RENDERER, 100 )
     add_shortcut( "text" )
-    set_callbacks( Create, Destroy )
+    set_capability( VLC_CAP_TEXT_RENDERER, 100, Create, Destroy )
 
     set_subcategory( SUBCAT_VIDEO_SUBPIC )
 

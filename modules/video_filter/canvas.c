@@ -105,8 +105,7 @@ vlc_plugin_begin ()
 
     set_shortname( N_("Canvas") )
     set_description( N_("Canvas video filter") )
-    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
-    set_callbacks( Activate, Destroy )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0, Activate, Destroy )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )
 

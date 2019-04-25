@@ -65,9 +65,8 @@ static int AdjustCallback( vlc_object_t *p_this, char const *psz_var,
 vlc_plugin_begin ()
     set_description( N_("Dynamic video overlay") )
     set_shortname( N_("Overlay" ))
-    set_capability( VLC_CAP_SUB_SOURCE, 0 )
     add_shortcut( "overlay" )
-    set_callbacks( Create, Destroy )
+    set_capability( VLC_CAP_SUB_SOURCE, 0, Create, Destroy )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_loadfile("overlay-input", NULL, INPUT_TEXT, INPUT_LONGTEXT)

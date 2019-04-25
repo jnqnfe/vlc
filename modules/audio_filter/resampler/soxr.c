@@ -65,13 +65,11 @@ static void Close( vlc_object_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("SoX Resampler") )
-    set_capability ( VLC_CAP_AUDIO_CONVERTER, 51 )
-    set_callbacks( OpenConverter, Close )
+    set_capability ( VLC_CAP_AUDIO_CONVERTER, 51, OpenConverter, Close )
 
     add_submodule()
-    set_capability( VLC_CAP_AUDIO_RESAMPLER, 51 )
-    set_callbacks( OpenResampler, Close )
     add_shortcut( "soxr" )
+    set_capability( VLC_CAP_AUDIO_RESAMPLER, 51, OpenResampler, Close )
 
     set_subcategory( SUBCAT_AUDIO_RESAMPLER )
     add_integer( "soxr-resampler-quality", 2,

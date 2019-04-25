@@ -40,8 +40,7 @@ static int  OpenFilter( vlc_object_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Audio filter for simple channel mixing") )
-    set_capability( VLC_CAP_AUDIO_CONVERTER, 10 )
-    set_callbacks( OpenFilter, NULL )
+    set_capability( VLC_CAP_AUDIO_CONVERTER, 10, OpenFilter, NULL )
     //set_subcategory( SUBCAT_AUDIO_AFILTER )
 vlc_plugin_end ()
 

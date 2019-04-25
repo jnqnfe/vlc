@@ -45,8 +45,7 @@ static void Close( vlc_object_t * );
 
 vlc_plugin_begin ()
     set_description( N_("YUVP converter") )
-    set_capability( VLC_CAP_VIDEO_CONVERTER, 10 )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_VIDEO_CONVERTER, 10, Open, Close )
 vlc_plugin_end ()
 
 /****************************************************************************

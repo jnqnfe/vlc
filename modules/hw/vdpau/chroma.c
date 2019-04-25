@@ -928,11 +928,10 @@ static const char *const algo_names[] = {
 vlc_plugin_begin()
     set_shortname(N_("VDPAU"))
     set_description(N_("VDPAU surface conversions"))
-    set_capability(VLC_CAP_VIDEO_CONVERTER, 10)
-    set_callbacks(OutputOpen, OutputClose)
+    set_capability(VLC_CAP_VIDEO_CONVERTER, 10, OutputOpen, OutputClose)
 
     add_submodule()
-    set_callbacks(YCbCrOpen, NULL)
+    set_capability(VLC_CAP_VIDEO_CONVERTER, 10, YCbCrOpen, NULL)
 
     set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_integer("vdpau-deinterlace",

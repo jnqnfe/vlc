@@ -33,8 +33,7 @@ static int OpenRenderer( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname( N_("Dummy") )
     set_description( N_("Dummy font renderer") )
-    set_capability( VLC_CAP_TEXT_RENDERER, 1 )
-    set_callbacks( OpenRenderer, NULL )
+    set_capability( VLC_CAP_TEXT_RENDERER, 1, OpenRenderer, NULL )
 vlc_plugin_end ()
 
 

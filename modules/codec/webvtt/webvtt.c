@@ -36,28 +36,24 @@
  *****************************************************************************/
 
 vlc_plugin_begin ()
-    set_capability( VLC_CAP_SPU_DECODER, 10 )
     set_shortname( N_("WEBVTT decoder"))
     set_description( N_("WEBVTT subtitles decoder") )
-    set_callbacks( webvtt_OpenDecoder, webvtt_CloseDecoder )
+    set_capability( VLC_CAP_SPU_DECODER, 10, webvtt_OpenDecoder, webvtt_CloseDecoder )
 
     add_submodule()
         set_shortname( "WEBVTT" )
         set_description( N_("WEBVTT subtitles parser") )
-        set_capability( VLC_CAP_DEMUX, 11 )
-        set_callbacks( webvtt_OpenDemux, webvtt_CloseDemux )
         add_shortcut( "webvtt" )
+        set_capability( VLC_CAP_DEMUX, 11, webvtt_OpenDemux, webvtt_CloseDemux )
     add_submodule()
         set_shortname( "WEBVTT" )
         set_description( N_("WEBVTT subtitles parser") )
-        set_capability( VLC_CAP_DEMUX, 0 )
-        set_callbacks( webvtt_OpenDemuxStream, webvtt_CloseDemux )
         add_shortcut( "webvttstream" )
+        set_capability( VLC_CAP_DEMUX, 0, webvtt_OpenDemuxStream, webvtt_CloseDemux )
 #ifdef ENABLE_SOUT
     add_submodule()
         set_description( "WEBVTT text encoder" )
-        set_capability( VLC_CAP_ENCODER, 101 )
-        set_callbacks( webvtt_OpenEncoder, webvtt_CloseEncoder )
+        set_capability( VLC_CAP_ENCODER, 101, webvtt_OpenEncoder, webvtt_CloseEncoder )
 #endif
 
     //set_subcategory( SUBCAT_INPUT_SCODEC )

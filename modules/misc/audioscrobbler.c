@@ -129,8 +129,7 @@ static void *Run            (void *);
 vlc_plugin_begin ()
     set_shortname(N_("Audioscrobbler"))
     set_description(N_("Submission of played songs to last.fm"))
-    set_capability(VLC_CAP_INTERFACE, 0)
-    set_callbacks(Open, Close)
+    set_capability(VLC_CAP_INTERFACE, 0, Open, Close)
 
     set_subcategory(SUBCAT_INTERFACE_CONTROL)
     add_string("lastfm-username", "",

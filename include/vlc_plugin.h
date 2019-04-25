@@ -181,6 +181,33 @@ VLC_METADATA_EXPORTS
  * Macros for describing modules
  *****************************************************************************/
 
+/* Inner helpers, do not use directly in plugins */
+
+#define set_capability_inner( cap, score ) \
+{ \
+    enum vlc_module_cap _cap = (cap); \
+    int _score = (score); \
+    if (vlc_module_set_va (VLC_MODULE_CAPABILITY, _cap) \
+     || vlc_module_set_va (VLC_MODULE_SCORE, _score)) \
+        goto error; \
+}
+
+#define set_custom_capability_inner( cap, score ) \
+{ \
+    const char * _cap = (cap); \
+    int _score = (score); \
+    if (vlc_module_set_va (VLC_MODULE_CUSTOM_CAPABILITY, _cap) \
+     || vlc_module_set_va (VLC_MODULE_SCORE, _score)) \
+        goto error; \
+}
+
+#define set_callbacks_inner( a_name, d_name, a_cb, d_cb ) \
+    if (vlc_module_set_va(VLC_MODULE_CB_OPEN, a_name, a_cb) \
+     || vlc_module_set_va(VLC_MODULE_CB_CLOSE, d_name, d_cb)) \
+        goto error;
+
+/* Plugin authors, use this stuff! */
+
 #define add_submodule( ) \
     if (vlc_plugin_set_va (VLC_MODULE_CREATE, &module)) \
         goto error;
@@ -214,29 +241,13 @@ VLC_METADATA_EXPORTS
         goto error; \
 }
 
-#define set_capability( cap, score ) \
-{ \
-    enum vlc_module_cap _cap = (cap); \
-    int _score = (score); \
-    if (vlc_module_set_va (VLC_MODULE_CAPABILITY, _cap) \
-     || vlc_module_set_va (VLC_MODULE_SCORE, _score)) \
-        goto error; \
-}
+#define set_capability( cap, score, activate, deactivate ) \
+    set_capability_inner( cap, score ) \
+    set_callbacks_inner( #activate, #deactivate, activate, deactivate ) \
 
-#define set_custom_capability( cap, score ) \
-{ \
-    const char * _cap = (cap); \
-    int _score = (score); \
-    if (vlc_module_set_va (VLC_MODULE_CUSTOM_CAPABILITY, _cap) \
-     || vlc_module_set_va (VLC_MODULE_SCORE, _score)) \
-        goto error; \
-}
-
-#define set_callbacks( activate, deactivate ) \
-    if (vlc_module_set_va(VLC_MODULE_CB_OPEN, #activate, (void *)(activate)) \
-     || vlc_module_set_va(VLC_MODULE_CB_CLOSE, #deactivate, \
-                          (void *)(deactivate))) \
-        goto error;
+#define set_capability_custom( cap, score, activate, deactivate ) \
+    set_custom_capability_inner( cap, score ) \
+    set_callbacks_inner( #activate, #deactivate, activate, deactivate ) \
 
 #define cannot_unload_broken_library( ) \
     if (vlc_module_set(VLC_MODULE_NO_UNLOAD)) \

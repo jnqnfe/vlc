@@ -43,14 +43,12 @@ static block_t *EncoderEncode( encoder_t *, block_t * );
 
 vlc_plugin_begin ()
     set_description( N_("G.711 decoder") )
-    set_capability( VLC_CAP_AUDIO_DECODER, 100 )
-    set_callbacks( DecoderOpen, DecoderClose )
+    set_capability( VLC_CAP_AUDIO_DECODER, 100, DecoderOpen, DecoderClose )
 
 #ifdef ENABLE_SOUT
     add_submodule ()
     set_description( N_("G.711 encoder") )
-    set_capability( VLC_CAP_ENCODER, 150 )
-    set_callbacks( EncoderOpen, NULL )
+    set_capability( VLC_CAP_ENCODER, 150, EncoderOpen, NULL )
 #endif
 
     //set_subcategory( SUBCAT_INPUT_ACODEC )

@@ -79,26 +79,22 @@ vlc_plugin_begin ()
     set_description( N_("FFmpeg audio/video decoder") )
 
     add_shortcut("ffmpeg")
-    set_capability(VLC_CAP_VIDEO_DECODER, 70)
-    set_callbacks(InitVideoDec, EndVideoDec)
+    set_capability(VLC_CAP_VIDEO_DECODER, 70, InitVideoDec, EndVideoDec)
 
     add_submodule()
     add_shortcut("ffmpeg")
-    set_capability(VLC_CAP_AUDIO_DECODER, 70)
-    set_callbacks(InitAudioDec, EndAudioDec)
+    set_capability(VLC_CAP_AUDIO_DECODER, 70, InitAudioDec, EndAudioDec)
 
     add_submodule()
     add_shortcut("ffmpeg")
-    set_capability(VLC_CAP_SPU_DECODER, 70)
-    set_callbacks(InitSubtitleDec, EndSubtitleDec)
+    set_capability(VLC_CAP_SPU_DECODER, 70, InitSubtitleDec, EndSubtitleDec)
 
 #ifdef ENABLE_SOUT
     /* encoder submodule */
     add_submodule ()
     add_shortcut( "ffmpeg" )
     set_description( N_("FFmpeg audio/video encoder") )
-    set_capability( VLC_CAP_ENCODER, 100 )
-    set_callbacks( InitVideoEnc, EndVideoEnc )
+    set_capability( VLC_CAP_ENCODER, 100, InitVideoEnc, EndVideoEnc )
 #endif /* ENABLE_SOUT */
 
     set_subcategory( SUBCAT_INPUT_VCODEC )

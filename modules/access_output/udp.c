@@ -73,9 +73,8 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin ()
     set_description( N_("UDP stream output") )
     set_shortname( "UDP" )
-    set_capability( VLC_CAP_SOUT_ACCESS, 0 )
     add_shortcut( "udp" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_SOUT_ACCESS, 0, Open, Close )
 
     set_subcategory( SUBCAT_SOUT_ACO )
     add_integer( SOUT_CFG_PREFIX "caching", DEFAULT_PTS_DELAY / 1000, CACHING_TEXT, CACHING_LONGTEXT, true )

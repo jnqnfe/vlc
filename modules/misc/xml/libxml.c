@@ -264,15 +264,13 @@ static void ReaderClose( vlc_object_t *p_this )
 
 vlc_plugin_begin ()
     set_description( N_("XML Parser (using libxml2)") )
-    set_capability( VLC_CAP_XML, 10 )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_XML, 10, Open, Close )
 
 #ifdef _WIN32
     cannot_unload_broken_library()
 #endif
 
     add_submodule()
-    set_capability( VLC_CAP_XML_READER, 10 )
-    set_callbacks( ReaderOpen, ReaderClose )
+    set_capability( VLC_CAP_XML_READER, 10, ReaderOpen, ReaderClose )
 
 vlc_plugin_end ()

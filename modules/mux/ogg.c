@@ -57,9 +57,8 @@ static void Close  ( vlc_object_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Ogg/OGM muxer") )
-    set_capability( VLC_CAP_SOUT_MUX, 10 )
     add_shortcut( "ogg", "ogm" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_SOUT_MUX, 10, Open, Close )
 
     set_subcategory( SUBCAT_SOUT_MUX )
     add_integer_with_range( SOUT_CFG_PREFIX "indexintvl", 1000, 0, INT_MAX,

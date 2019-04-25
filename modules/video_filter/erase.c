@@ -68,9 +68,8 @@ vlc_plugin_begin ()
 
     set_description( N_("Erase video filter") )
     set_shortname( N_( "Erase" ))
-    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     add_shortcut( "erase" )
-    set_callbacks( Create, Destroy )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_loadfile(CFG_PREFIX "mask", NULL, MASK_TEXT, MASK_LONGTEXT)

@@ -46,12 +46,10 @@ static block_t *DoWork( filter_t *, block_t * );
  *****************************************************************************/
 vlc_plugin_begin ()
     set_description( N_("Nearest-neighbor audio resampler") )
-    set_capability( VLC_CAP_AUDIO_CONVERTER, 2 )
-    set_callbacks( Create, NULL )
+    set_capability( VLC_CAP_AUDIO_CONVERTER, 2, Create, NULL )
 
     add_submodule()
-    set_capability( VLC_CAP_AUDIO_RESAMPLER, 2 )
-    set_callbacks( CreateResampler, NULL )
+    set_capability( VLC_CAP_AUDIO_RESAMPLER, 2, CreateResampler, NULL )
 
     //set_subcategory( SUBCAT_AUDIO_RESAMPLER )
 vlc_plugin_end ()

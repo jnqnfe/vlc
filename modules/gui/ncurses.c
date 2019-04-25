@@ -77,9 +77,8 @@ static void Close          (vlc_object_t *);
 vlc_plugin_begin ()
     set_shortname("Ncurses")
     set_description(N_("Ncurses interface"))
-    set_capability(VLC_CAP_INTERFACE, 10)
-    set_callbacks(Open, Close)
     add_shortcut("curses")
+    set_capability(VLC_CAP_INTERFACE, 10, Open, Close)
 
     set_subcategory(SUBCAT_INTERFACE_MAIN)
     add_directory("browse-dir", NULL, BROWSE_TEXT, BROWSE_LONGTEXT)

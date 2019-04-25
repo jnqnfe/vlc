@@ -49,16 +49,14 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname( "H264")
     set_description( N_("H264 video demuxer" ) )
-    set_capability( VLC_CAP_DEMUX, 6 )
-    set_callbacks( OpenH264, Close )
     add_shortcut( "h264" )
+    set_capability( VLC_CAP_DEMUX, 6, OpenH264, Close )
 
     add_submodule()
         set_shortname( "HEVC")
         set_description( N_("HEVC/H.265 video demuxer" ) )
-        set_capability( VLC_CAP_DEMUX, 6 )
-        set_callbacks( OpenHEVC, Close )
         add_shortcut( "hevc", "h265" )
+        set_capability( VLC_CAP_DEMUX, 6, OpenHEVC, Close )
 
     set_subcategory( SUBCAT_INPUT_DEMUX )
 

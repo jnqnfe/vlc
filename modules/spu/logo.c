@@ -86,18 +86,16 @@ static void Close    ( vlc_object_t * );
 vlc_plugin_begin ()
     set_help(LOGO_HELP)
 
-    set_capability( VLC_CAP_SUB_SOURCE, 0 )
-    set_callbacks( OpenSub, Close )
     set_description( N_("Logo sub source") )
     set_shortname( N_("Logo overlay") )
     add_shortcut( "logo" )
+    set_capability( VLC_CAP_SUB_SOURCE, 0, OpenSub, Close )
 
     /* video output filter submodule */
     add_submodule ()
-    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
-    set_callbacks( OpenVideo, Close )
     set_description( N_("Logo video filter") )
     add_shortcut( "logo" )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0, OpenVideo, Close )
 
     set_subcategory( SUBCAT_VIDEO_SUBPIC )
     add_loadfile(CFG_PREFIX "file", NULL, FILE_TEXT, FILE_LONGTEXT)

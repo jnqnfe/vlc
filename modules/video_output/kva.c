@@ -64,9 +64,8 @@ static const char *const ppsz_kva_video_mode_text[] = {
 vlc_plugin_begin ()
     set_shortname( "KVA" )
     set_description( N_("K Video Acceleration video output") )
-    set_capability( VLC_CAP_VOUT_DISPLAY, 100 )
     add_shortcut( "kva" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_VOUT_DISPLAY, 100, Open, Close )
 
     set_subcategory( SUBCAT_VIDEO_VOUT )
     add_string( "kva-video-mode", ppsz_kva_video_mode[0], KVA_VIDEO_MODE_TEXT,

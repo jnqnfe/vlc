@@ -40,8 +40,7 @@ static void Destroy( vlc_object_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Audio filter for trivial channel mixing") )
-    set_capability( VLC_CAP_AUDIO_CONVERTER, 1 )
-    set_callbacks( Create, Destroy )
+    set_capability( VLC_CAP_AUDIO_CONVERTER, 1, Create, Destroy )
     //set_subcategory( SUBCAT_AUDIO_AFILTER )
 vlc_plugin_end ()
 

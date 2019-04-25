@@ -109,9 +109,8 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin ()
     set_description( N_("IceCAST output") )
     set_shortname( "Shoutcast" )
-    set_capability( VLC_CAP_SOUT_ACCESS, 0 )
     add_shortcut( "shout" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_SOUT_ACCESS, 0, Open, Close )
 
     set_subcategory( SUBCAT_SOUT_ACO )
     add_string( SOUT_CFG_PREFIX "name", "VLC media player - Live stream",

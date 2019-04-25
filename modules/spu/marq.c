@@ -138,11 +138,10 @@ static const char *const ppsz_pos_descriptions[] =
 vlc_plugin_begin ()
     set_help(MARQUEE_HELP)
 
-    set_capability( VLC_CAP_SUB_SOURCE, 0 )
     set_shortname( N_("Marquee" ))
     set_description( N_("Marquee display") )
-    set_callbacks( CreateFilter, DestroyFilter )
     add_shortcut( "time" )
+    set_capability( VLC_CAP_SUB_SOURCE, 0, CreateFilter, DestroyFilter )
 
     set_subcategory( SUBCAT_VIDEO_SUBPIC )
 

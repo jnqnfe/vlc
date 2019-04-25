@@ -64,8 +64,7 @@ vlc_plugin_begin ()
 
     set_description( N_("Sepia video filter") )
     set_shortname( N_("Sepia" ) )
-    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
-    set_callbacks( Create, Destroy )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_integer_with_range( CFG_PREFIX "intensity", 120, 0, 255,

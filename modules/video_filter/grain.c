@@ -63,8 +63,7 @@ vlc_plugin_begin()
     set_help(N_("Adds filtered gaussian noise"))
     set_description(N_("Grain video filter"))
     set_shortname( N_("Grain"))
-    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
-    set_callbacks(Open, Close)
+    set_capability( VLC_CAP_VIDEO_FILTER, 0, Open, Close)
 
     set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_float_with_range(CFG_PREFIX "variance", 2.0, VARIANCE_MIN, VARIANCE_MAX,

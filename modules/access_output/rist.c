@@ -858,9 +858,8 @@ vlc_plugin_begin()
 
     set_shortname( N_("RIST") )
     set_description( N_("RIST stream output") )
-    set_capability( VLC_CAP_SOUT_ACCESS, 0 )
     add_shortcut( "rist", "tr06" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_SOUT_ACCESS, 0, Open, Close )
 
     set_subcategory( SUBCAT_SOUT_ACO )
     add_integer( SOUT_CFG_PREFIX "packet-size", RIST_TARGET_PACKET_SIZE,

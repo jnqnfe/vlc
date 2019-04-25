@@ -176,9 +176,8 @@ vlc_plugin_begin ()
 
     set_shortname(N_("SDI output"))
     set_description(N_("SDI stream output"))
-    set_capability(VLC_CAP_SOUT_STREAM, 0)
     add_shortcut("sdiout")
-    set_callbacks(OpenSDIOutput, CloseSDIOutput)
+    set_capability(VLC_CAP_SOUT_STREAM, 0, OpenSDIOutput, CloseSDIOutput)
 
     set_subcategory(SUBCAT_SOUT_STREAM)
     set_section(N_("DeckLink General Options"), NULL)

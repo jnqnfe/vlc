@@ -54,10 +54,9 @@ vlc_plugin_begin ()
     set_help(CLONE_HELP)
 
     set_description( N_("Clone video filter") )
-    set_capability( VLC_CAP_VIDEO_SPLITTER, 0 )
     set_shortname( N_("Clone" ))
     add_shortcut( "clone" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_VIDEO_SPLITTER, 0, Open, Close )
 
     set_subcategory( SUBCAT_VIDEO_SPLITTER )
     add_integer( CFG_PREFIX "count", 2, COUNT_TEXT, COUNT_LONGTEXT, false )

@@ -44,8 +44,7 @@ static picture_t *RV24_RV32_Filter( filter_t *, picture_t * );
  *****************************************************************************/
 vlc_plugin_begin ()
     set_description( N_("RV32 conversion filter") )
-    set_capability( VLC_CAP_VIDEO_CONVERTER, 1 )
-    set_callbacks( OpenFilter, NULL )
+    set_capability( VLC_CAP_VIDEO_CONVERTER, 1, OpenFilter, NULL )
 vlc_plugin_end ()
 
 /*****************************************************************************

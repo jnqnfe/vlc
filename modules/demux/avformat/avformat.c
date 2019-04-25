@@ -37,16 +37,14 @@ vlc_plugin_begin ()
     add_shortcut( "ffmpeg", "avformat" )
     set_description( N_("Avformat demuxer" ) )
     set_shortname( N_("Avformat") )
-    set_capability( VLC_CAP_DEMUX, 2 )
-    set_callbacks( avformat_OpenDemux, avformat_CloseDemux )
+    set_capability( VLC_CAP_DEMUX, 2, avformat_OpenDemux, avformat_CloseDemux )
 
 #ifdef ENABLE_SOUT
     /* mux submodule */
     add_submodule ()
     add_shortcut( "ffmpeg", "avformat" )
     set_description( N_("Avformat muxer" ) )
-    set_capability( VLC_CAP_SOUT_MUX, 2 )
-    set_callbacks( avformat_OpenMux, avformat_CloseMux )
+    set_capability( VLC_CAP_SOUT_MUX, 2, avformat_OpenMux, avformat_CloseMux )
 #endif
 
     set_subcategory( SUBCAT_INPUT_DEMUX )

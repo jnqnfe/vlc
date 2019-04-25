@@ -56,8 +56,7 @@ static void Close    ( vlc_object_t * );
 vlc_plugin_begin ()
     set_description( N_("MPEG-I/II/4 / A52 / DTS / MLP audio" ) )
     set_shortname( N_("Audio ES") )
-    set_capability( VLC_CAP_DEMUX, 155 )
-    set_callbacks( OpenAudio, Close )
+    set_capability( VLC_CAP_DEMUX, 155, OpenAudio, Close )
 
     add_shortcut( "mpga", "mp3",
                   "m4a", "mp4a", "aac",
@@ -68,8 +67,7 @@ vlc_plugin_begin ()
 
     add_submodule()
     set_description( N_("MPEG-4 video" ) )
-    set_capability( VLC_CAP_DEMUX, 5 )
-    set_callbacks( OpenVideo, Close )
+    set_capability( VLC_CAP_DEMUX, 5, OpenVideo, Close )
 
     add_shortcut( "m4v" )
     add_shortcut( "mp4v" )

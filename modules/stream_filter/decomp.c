@@ -56,17 +56,16 @@ static void Close (vlc_object_t *);
 
 vlc_plugin_begin ()
     set_description (N_("LZMA decompression"))
-    set_capability (VLC_CAP_STREAM_FILTER, 320)
-    set_callbacks (OpenXZ, Close)
+    set_capability (VLC_CAP_STREAM_FILTER, 320, OpenXZ, Close)
 
     add_submodule ()
     set_description (N_("Burrows-Wheeler decompression"))
-    set_callbacks (OpenBzip2, Close)
+    set_capability (VLC_CAP_STREAM_FILTER, 320, OpenBzip2, Close)
     /* TODO: access shortnames for vlc_stream_NewURL() */
 
     add_submodule ()
     set_description (N_("gzip decompression"))
-    set_callbacks (OpenGzip, Close)
+    set_capability (VLC_CAP_STREAM_FILTER, 320, OpenGzip, Close)
 
     //set_subcategory (SUBCAT_INPUT_STREAM_FILTER)
 vlc_plugin_end ()

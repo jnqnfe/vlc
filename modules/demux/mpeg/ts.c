@@ -133,9 +133,8 @@ static const char *const ts_standards_list_text[] =
 vlc_plugin_begin ()
     set_description( N_("MPEG Transport Stream demuxer") )
     set_shortname ( "MPEG-TS" )
-    set_capability( VLC_CAP_DEMUX, 10 )
-    set_callbacks( Open, Close )
     add_shortcut( "ts" )
+    set_capability( VLC_CAP_DEMUX, 10, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_DEMUX )
 

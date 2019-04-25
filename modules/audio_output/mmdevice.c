@@ -1465,8 +1465,7 @@ static const char *const ppsz_mmdevice_passthrough_texts[] = {
 vlc_plugin_begin()
     set_shortname("MMDevice")
     set_description(N_("Windows Multimedia Device output"))
-    set_capability(VLC_CAP_AUDIO_OUTPUT, 150)
-    set_callbacks(Open, Close)
+    set_capability(VLC_CAP_AUDIO_OUTPUT, 150, Open, Close)
 
     set_subcategory(SUBCAT_AUDIO_AOUT)
     set_callbacks(Open, Close)

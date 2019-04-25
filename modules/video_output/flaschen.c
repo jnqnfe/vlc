@@ -58,9 +58,8 @@ static void Close(vout_display_t *vd);
 vlc_plugin_begin ()
     set_shortname( N_("Flaschen") )
     set_description( N_("Flaschen-Taschen video output") )
-    set_capability( VLC_CAP_VOUT_DISPLAY, 0 )
-    set_callbacks( Open, Close )
     add_shortcut( "flaschen" )
+    set_capability( VLC_CAP_VOUT_DISPLAY, 0, Open, Close )
 
     set_subcategory( SUBCAT_VIDEO_VOUT )
     add_string( "flaschen-display", NULL, T_FLDISPLAY, LT_FLDISPLAY, true )

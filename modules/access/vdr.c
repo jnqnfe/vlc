@@ -84,9 +84,8 @@ vlc_plugin_begin ()
 
     set_shortname( N_("VDR") )
     set_description( N_("VDR recordings") )
-    set_capability( VLC_CAP_ACCESS, 60 )
     add_shortcut( "vdr", "directory", "dir", "file" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_ACCESS, 60, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_ACCESS )
     add_integer( "vdr-chapter-offset", 0,

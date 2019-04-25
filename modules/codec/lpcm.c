@@ -55,20 +55,17 @@ static block_t *EncodeFrames( encoder_t *, block_t * );
 vlc_plugin_begin ()
 
     set_description( N_("Linear PCM audio decoder") )
-    set_capability( VLC_CAP_AUDIO_DECODER, 100 )
-    set_callbacks( OpenDecoder, CloseCommon )
+    set_capability( VLC_CAP_AUDIO_DECODER, 100, OpenDecoder, CloseCommon )
 
     add_submodule ()
     set_description( N_("Linear PCM audio packetizer") )
-    set_capability( VLC_CAP_PACKETIZER, 100 )
-    set_callbacks( OpenPacketizer, CloseCommon )
+    set_capability( VLC_CAP_PACKETIZER, 100, OpenPacketizer, CloseCommon )
 
 #ifdef ENABLE_SOUT
     add_submodule ()
     set_description( N_("Linear PCM audio encoder") )
-    set_capability( VLC_CAP_ENCODER, 100 )
-    set_callbacks( OpenEncoder, CloseEncoder )
     add_shortcut( "lpcm" )
+    set_capability( VLC_CAP_ENCODER, 100, OpenEncoder, CloseEncoder )
 #endif
 
     //set_subcategory( SUBCAT_INPUT_ACODEC )

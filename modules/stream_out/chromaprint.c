@@ -58,11 +58,11 @@ static int   Send( sout_stream_t *, void *, block_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Chromaprint stream output") )
-    set_capability( VLC_CAP_SOUT_STREAM, 0 )
     add_shortcut( "chromaprint" )
+    set_capability( VLC_CAP_SOUT_STREAM, 0, Open, Close )
+
     set_subcategory( SUBCAT_SOUT_STREAM )
     add_integer( "duration", 90, DURATION_TEXT, DURATION_LONGTEXT, true )
-    set_callbacks( Open, Close )
 vlc_plugin_end ()
 
 typedef struct sout_stream_id_sys_t sout_stream_id_sys_t;

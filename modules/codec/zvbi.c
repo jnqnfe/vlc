@@ -93,8 +93,7 @@ static const int level_zvbi_values[] =
 vlc_plugin_begin ()
     set_description( N_("VBI and Teletext decoder") )
     set_shortname( N_("VBI & Teletext") )
-    set_capability( VLC_CAP_SPU_DECODER, 51 )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_SPU_DECODER, 51, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_SCODEC )
     add_integer_with_range( "vbi-page", 100, 0, 'z' << 16,

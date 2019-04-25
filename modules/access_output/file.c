@@ -388,9 +388,8 @@ static void Close( vlc_object_t * p_this )
 vlc_plugin_begin ()
     set_description( N_("File stream output") )
     set_shortname( N_("File" ))
-    set_capability( VLC_CAP_SOUT_ACCESS, 50 )
     add_shortcut( "file", "stream", "fd" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_SOUT_ACCESS, 50, Open, Close )
 
     set_subcategory( SUBCAT_SOUT_ACO )
     add_bool( SOUT_CFG_PREFIX "overwrite", true, OVERWRITE_TEXT,

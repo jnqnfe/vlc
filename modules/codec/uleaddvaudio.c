@@ -38,8 +38,7 @@ static void Close(vlc_object_t *);
 
 vlc_plugin_begin()
     set_description(N_("Ulead DV audio decoder"))
-    set_capability(VLC_CAP_AUDIO_DECODER, 50)
-    set_callbacks(Open, Close)
+    set_capability(VLC_CAP_AUDIO_DECODER, 50, Open, Close)
     //set_subcategory(SUBCAT_INPUT_ACODEC)
 vlc_plugin_end()
 

@@ -40,9 +40,8 @@ static void Close(vlc_object_t *);
 
 vlc_plugin_begin()
     set_description(N_("EBU STL subtitles parser"))
-    set_capability(VLC_CAP_DEMUX, 1)
-    set_callbacks(Open, Close)
     add_shortcut("stl", "subtitle")
+    set_capability(VLC_CAP_DEMUX, 1, Open, Close)
     //set_subcategory(SUBCAT_INPUT_DEMUX)
 vlc_plugin_end()
 

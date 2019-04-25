@@ -133,14 +133,12 @@ static const char *const continue_playback_list_text[] = {
 
 vlc_plugin_begin()
     set_description(N_("Mac OS X interface"))
-    set_capability(VLC_CAP_INTERFACE, 200)
-    set_callbacks(OpenIntf, CloseIntf)
+    set_capability(VLC_CAP_INTERFACE, 200, OpenIntf, CloseIntf)
     cannot_unload_broken_library()
 
     add_submodule()
         set_description("Mac OS X Video Output Provider")
-        set_capability(VLC_CAP_VOUT_WINDOW, 100)
-        set_callbacks(WindowOpen, NULL)
+        set_capability(VLC_CAP_VOUT_WINDOW, 100, WindowOpen, NULL)
 
     set_subcategory(SUBCAT_INTERFACE_MAIN)
 

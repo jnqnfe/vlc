@@ -45,9 +45,9 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname( "VC-1")
     set_description( N_("VC1 video demuxer" ) )
-    set_capability( VLC_CAP_DEMUX, 0 )
-    set_callbacks( Open, Close )
     add_shortcut( "vc1" )
+    set_capability( VLC_CAP_DEMUX, 0, Open, Close )
+
     set_subcategory( SUBCAT_INPUT_DEMUX )
     add_float( "vc1-fps", 25.0, FPS_TEXT, FPS_LONGTEXT, true )
 vlc_plugin_end ()

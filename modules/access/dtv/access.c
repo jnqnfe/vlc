@@ -242,8 +242,6 @@ static void Close (vlc_object_t *);
 vlc_plugin_begin ()
     set_shortname (N_("DTV"))
     set_description (N_("Digital Television and Radio"))
-    set_capability (VLC_CAP_ACCESS, 0)
-    set_callbacks (Open, Close)
     add_shortcut ("dtv", "tv", "dvb", /* "radio", "dab",*/
                   "cable", "dvb-c", "cqam", "isdb-c",
                   "satellite", "dvb-s", "dvb-s2", "isdb-s",
@@ -252,6 +250,7 @@ vlc_plugin_begin ()
                   ,"dvbt"
 #endif
                  )
+    set_capability (VLC_CAP_ACCESS, 0, Open, Close)
 
     set_subcategory (SUBCAT_INPUT_ACCESS)
 #ifdef HAVE_LINUX_DVB

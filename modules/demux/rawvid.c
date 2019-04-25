@@ -61,9 +61,8 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname( "Raw Video" )
     set_description( N_("Raw video demuxer") )
-    set_capability( VLC_CAP_DEMUX, 10 )
-    set_callbacks( Open, Close )
     add_shortcut( "rawvideo" )
+    set_capability( VLC_CAP_DEMUX, 10, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_DEMUX )
     add_string( "rawvid-fps", NULL, FPS_TEXT, FPS_LONGTEXT, false )

@@ -55,9 +55,8 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin()
     set_description( N_("MTP input") )
     set_shortname( N_("MTP") )
-    set_capability( VLC_CAP_ACCESS, 0 )
     add_shortcut( "mtp" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_ACCESS, 0, Open, Close )
     //set_subcategory( SUBCAT_INPUT_ACCESS )
 vlc_plugin_end()
 

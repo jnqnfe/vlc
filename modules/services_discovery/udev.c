@@ -55,23 +55,20 @@ static int vlc_sd_probe_Open (vlc_object_t *);
 vlc_plugin_begin ()
     set_shortname (N_("Video capture"))
     set_description (N_("Video capture (Video4Linux)"))
-    set_capability (VLC_CAP_SERVICES_DISCOVERY, 0)
-    set_callbacks (OpenV4L, Close)
     add_shortcut ("v4l", "video")
+    set_capability (VLC_CAP_SERVICES_DISCOVERY, 0, OpenV4L, Close)
 #ifdef HAVE_ALSA
     add_submodule ()
     set_shortname (N_("Audio capture"))
     set_description (N_("Audio capture (ALSA)"))
-    set_capability (VLC_CAP_SERVICES_DISCOVERY, 0)
-    set_callbacks (OpenALSA, Close)
     add_shortcut ("alsa", "audio")
+    set_capability (VLC_CAP_SERVICES_DISCOVERY, 0, OpenALSA, Close)
 #endif
     add_submodule ()
     set_shortname (N_("Discs"))
     set_description (N_("Discs"))
-    set_capability (VLC_CAP_SERVICES_DISCOVERY, 0)
-    set_callbacks (OpenDisc, Close)
     add_shortcut ("disc")
+    set_capability (VLC_CAP_SERVICES_DISCOVERY, 0, OpenDisc, Close)
 
     VLC_SD_PROBE_SUBMODULE
 

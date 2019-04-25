@@ -90,8 +90,7 @@ static const char *const button_list_text[] =
 vlc_plugin_begin ()
     set_shortname( N_("Gestures"))
     set_description( N_("Mouse gestures control interface") )
-    set_capability( VLC_CAP_INTERFACE, 0 )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_INTERFACE, 0, Open, Close )
 
     set_subcategory( SUBCAT_INTERFACE_CONTROL )
     add_integer( "gestures-threshold", 30,

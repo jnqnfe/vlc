@@ -297,9 +297,8 @@ static void Close( vlc_object_t *p_this );
 vlc_plugin_begin ()
     set_description( N_("Deinterlacing video filter") )
     set_shortname( N_("Deinterlace" ))
-    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     add_shortcut( "deinterlace" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0, Open, Close )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_string( FILTER_CFG_PREFIX "mode", "blend", SOUT_MODE_TEXT,

@@ -47,9 +47,8 @@ static int   Send( sout_stream_t *, void *, block_t* );
  *****************************************************************************/
 vlc_plugin_begin ()
     set_description( N_("Dummy stream output") )
-    set_capability( VLC_CAP_SOUT_STREAM, 50 )
     add_shortcut( "dummy", "drop" )
-    set_callbacks( Open, NULL )
+    set_capability( VLC_CAP_SOUT_STREAM, 50, Open, NULL )
 vlc_plugin_end ()
 
 /*****************************************************************************

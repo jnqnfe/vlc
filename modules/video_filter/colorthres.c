@@ -70,8 +70,7 @@ vlc_plugin_begin ()
 
     set_description( N_("Color threshold filter") )
     set_shortname( N_("Color threshold" ))
-    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
-    set_callbacks( Create, Destroy )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_rgb(CFG_PREFIX "color", 0x00FF0000, COLOR_TEXT, COLOR_LONGTEXT)

@@ -153,8 +153,7 @@ static const struct vlc_logger_operations *Open(vlc_object_t *obj,
 vlc_plugin_begin()
     set_shortname(N_( "syslog" ))
     set_description(N_("System logger (syslog)"))
-    set_capability(VLC_CAP_LOGGER, 20)
-    set_callbacks(Open, NULL)
+    set_capability(VLC_CAP_LOGGER, 20, Open, NULL)
 
     set_subcategory(SUBCAT_ADVANCED_MISC)
     add_bool("syslog", false, SYSLOG_TEXT, SYSLOG_LONGTEXT,

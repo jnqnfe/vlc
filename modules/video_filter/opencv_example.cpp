@@ -76,9 +76,8 @@ static picture_t *Filter( filter_t *, picture_t * );
 vlc_plugin_begin ()
     set_description( N_("OpenCV face detection example filter") )
     set_shortname( N_( "OpenCV example" ))
-    set_custom_capability( "opencv internal filter", 1 )
     add_shortcut( "opencv_example" )
-    set_callbacks( OpenFilter, CloseFilter )
+    set_capability_custom( "opencv internal filter", 1, OpenFilter, CloseFilter )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_string( "opencv-haarcascade-file", "c:\\haarcascade_frontalface_alt.xml",

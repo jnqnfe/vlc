@@ -96,9 +96,8 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin ()
     set_description( N_("Screen Input") )
     set_shortname( N_("Screen" ))
-    set_capability( VLC_CAP_ACCESS, 0 )
     add_shortcut( "screen" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_ACCESS, 0, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_ACCESS )
 

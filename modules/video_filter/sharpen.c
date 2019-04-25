@@ -68,9 +68,8 @@ vlc_plugin_begin ()
 
     set_description( N_("Sharpen video filter") )
     set_shortname( N_("Sharpen") )
-    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     add_shortcut( "sharpen" )
-    set_callbacks( Create, Destroy )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_float_with_range( FILTER_PREFIX "sigma", 0.05, 0.0, 2.0,

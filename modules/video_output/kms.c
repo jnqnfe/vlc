@@ -780,8 +780,7 @@ static int Open(vout_display_t *vd, const vout_display_cfg_t *cfg,
 vlc_plugin_begin ()
     set_shortname("kms")
     set_description("Linux kernel mode setting video output")
-    set_capability(VLC_CAP_VOUT_DISPLAY, 30)
-    set_callbacks(Open, Close)
+    set_capability(VLC_CAP_VOUT_DISPLAY, 30, Open, Close)
 
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_loadfile(KMS_VAR, "/dev/dri/card0", DEVICE_TEXT, DEVICE_LONGTEXT)

@@ -44,5 +44,4 @@ void avparser_ClosePacketizer( vlc_object_t * );
 
 #define AVPARSER_MODULE \
     set_description( N_("avparser packetizer") ) \
-    set_capability( VLC_CAP_PACKETIZER, 20 ) \
-    set_callbacks( avparser_OpenPacketizer, avparser_ClosePacketizer )
+    set_capability( VLC_CAP_PACKETIZER, 20, avparser_OpenPacketizer, avparser_ClosePacketizer )

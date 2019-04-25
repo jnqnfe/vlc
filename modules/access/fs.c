@@ -33,18 +33,16 @@
 vlc_plugin_begin ()
     set_description( N_("File input") )
     set_shortname( N_("File") )
-    set_capability( VLC_CAP_ACCESS, 50 )
     add_shortcut( "file", "fd", "stream" )
-    set_callbacks( FileOpen, FileClose )
+    set_capability( VLC_CAP_ACCESS, 50, FileOpen, FileClose )
 
     add_submodule()
-    set_capability( VLC_CAP_ACCESS, 55 )
 #ifndef HAVE_FDOPENDIR
     add_shortcut( "file", "directory", "dir" )
 #else
     add_shortcut( "directory", "dir" )
 #endif
-    set_callbacks( DirOpen, DirClose )
+    set_capability( VLC_CAP_ACCESS, 55, DirOpen, DirClose )
 
     set_subcategory( SUBCAT_INPUT_ACCESS )
     set_section( N_("Directory" ), NULL )

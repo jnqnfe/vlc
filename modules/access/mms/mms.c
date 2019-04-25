@@ -60,9 +60,8 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname( "MMS" )
     set_description( N_("Microsoft Media Server (MMS) input") )
-    set_capability( VLC_CAP_ACCESS, -1 )
     add_shortcut( "mms", "mmsu", "mmst", "mmsh" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_ACCESS, -1, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_ACCESS )
     add_integer( "mms-timeout", 5000, TIMEOUT_TEXT, TIMEOUT_LONGTEXT, true )

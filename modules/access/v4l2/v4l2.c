@@ -275,21 +275,18 @@ vlc_plugin_begin ()
     set_shortname( N_("V4L") )
     set_description( N_("Video4Linux input") )
     add_shortcut( "v4l", "v4l2" )
-    set_capability( VLC_CAP_ACCESS, 2 )
-    set_callbacks( DemuxOpen, DemuxClose )
+    set_capability( VLC_CAP_ACCESS, 2, DemuxOpen, DemuxClose )
 
     add_submodule ()
     add_shortcut( "v4l", "v4l2", "v4l2c" )
     set_description( N_("Video4Linux compressed A/V input") )
-    set_capability( VLC_CAP_ACCESS, 0 )
     /* use these when open as access_demux fails; VLC will use another demux */
-    set_callbacks( AccessOpen, AccessClose )
+    set_capability( VLC_CAP_ACCESS, 0, AccessOpen, AccessClose )
 
     add_submodule ()
     add_shortcut ("radio" /*, "fm", "am" */)
     set_description (N_("Video4Linux radio tuner"))
-    set_capability (VLC_CAP_ACCESS, 1)
-    set_callbacks (RadioOpen, RadioClose)
+    set_capability (VLC_CAP_ACCESS, 1, RadioOpen, RadioClose)
 
     set_subcategory( SUBCAT_INPUT_ACCESS )
 

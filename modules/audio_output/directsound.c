@@ -69,13 +69,11 @@ static const char *const speaker_list[] = { "Windows default", "Mono", "Stereo",
 vlc_plugin_begin ()
     set_description( N_("DirectX audio output") )
     set_shortname( "DirectX" )
-    set_capability( VLC_CAP_AUDIO_OUTPUT, 100 )
     add_shortcut( "directx", "aout_directx", "directsound", "dsound" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_AUDIO_OUTPUT, 100, Open, Close )
 
     add_submodule()
-        set_capability( VLC_CAP_AOUT_STREAM, 30 )
-        set_callbacks( StreamStart, StreamStop )
+        set_capability( VLC_CAP_AOUT_STREAM, 30, StreamStart, StreamStop )
 
     set_subcategory( SUBCAT_AUDIO_AOUT )
     add_string( "directx-audio-device", NULL,

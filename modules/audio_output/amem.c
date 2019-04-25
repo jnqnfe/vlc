@@ -33,8 +33,7 @@ static void Close (vlc_object_t *);
 vlc_plugin_begin ()
     set_shortname (N_("Audio memory"))
     set_description (N_("Audio memory output"))
-    set_capability (VLC_CAP_AUDIO_OUTPUT, 0)
-    set_callbacks (Open, Close)
+    set_capability (VLC_CAP_AUDIO_OUTPUT, 0, Open, Close)
 
     set_subcategory (SUBCAT_AUDIO_AOUT)
     add_string ("amem-format", "S16N",

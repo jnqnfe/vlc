@@ -44,9 +44,8 @@ static picture_t *Filter( filter_t *p_filter, picture_t *p_picture);
 vlc_plugin_begin ()
     set_description( N_("FPS conversion video filter") )
     set_shortname( N_("FPS Converter" ))
-    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     add_shortcut( "fps" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0, Open, Close )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_string( CFG_PREFIX "fps", NULL, FPS_TEXT, NULL, false )

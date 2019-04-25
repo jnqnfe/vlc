@@ -48,9 +48,9 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname( "DV" )
     set_description( N_("DV (Digital Video) demuxer") )
-    set_capability( VLC_CAP_DEMUX, 3 )
-    set_callbacks( Open, Close )
     add_shortcut( "rawdv" )
+    set_capability( VLC_CAP_DEMUX, 3, Open, Close )
+
     set_subcategory( SUBCAT_INPUT_DEMUX )
     add_bool( "rawdv-hurry-up", false, HURRYUP_TEXT, HURRYUP_LONGTEXT, false )
 vlc_plugin_end ()

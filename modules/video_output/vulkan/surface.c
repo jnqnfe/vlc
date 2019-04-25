@@ -159,8 +159,7 @@ static const char * const present_text[] = {
 vlc_plugin_begin ()
     set_shortname ("Vulkan/" STR(PLATFORM_NAME))
     set_description ("Vulkan context (" STR(PLATFORM_NAME) ")")
-    set_capability (VLC_CAP_VULKAN, 10)
-    set_callbacks (Open, Close)
+    set_capability (VLC_CAP_VULKAN, 10, Open, Close)
 
     set_subcategory (SUBCAT_VIDEO_VOUT)
 

@@ -94,9 +94,8 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname( N_("Smem"))
     set_description( N_("Stream output to memory buffer") )
-    set_capability( VLC_CAP_SOUT_STREAM, 0 )
     add_shortcut( "smem" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_SOUT_STREAM, 0, Open, Close )
 
     set_subcategory( SUBCAT_SOUT_STREAM )
     add_string( SOUT_PREFIX_VIDEO "prerender-callback", "0", T_VIDEO_PRERENDER_CALLBACK, LT_VIDEO_PRERENDER_CALLBACK, true )

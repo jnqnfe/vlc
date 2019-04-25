@@ -51,8 +51,7 @@ static int Decode( decoder_t *, block_t * );
 vlc_plugin_begin ()
     set_description( N_("ARIB subtitles decoder") )
     set_shortname( N_("ARIB subtitles") )
-    set_capability( VLC_CAP_SPU_DECODER, 50 )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_SPU_DECODER, 50, Open, Close )
 
 #   define ARIBSUB_CFG_PREFIX "aribsub-"
     set_subcategory( SUBCAT_INPUT_SCODEC )

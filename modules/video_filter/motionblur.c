@@ -61,9 +61,8 @@ static int MotionBlurCallback( vlc_object_t *, char const *,
 vlc_plugin_begin ()
     set_shortname( N_("Motion blur") )
     set_description( N_("Motion blur filter") )
-    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     add_shortcut( "blur" )
-    set_callbacks( Create, Destroy )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_integer_with_range( FILTER_PREFIX "factor", 80, 1, 127,

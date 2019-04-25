@@ -43,11 +43,9 @@ static void      Destroy            ( vlc_object_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Video filtering using a chain of video filter modules") )
-    set_capability( VLC_CAP_VIDEO_CONVERTER, 1 )
-    set_callbacks( ActivateConverter, Destroy )
+    set_capability( VLC_CAP_VIDEO_CONVERTER, 1, ActivateConverter, Destroy )
     add_submodule ()
-        set_capability( VLC_CAP_VIDEO_FILTER, 0 )
-        set_callbacks( ActivateFilter, Destroy )
+        set_capability( VLC_CAP_VIDEO_FILTER, 0, ActivateFilter, Destroy )
 vlc_plugin_end ()
 
 /*****************************************************************************

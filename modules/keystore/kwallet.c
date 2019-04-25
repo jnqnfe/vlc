@@ -47,8 +47,7 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin()
     set_shortname( N_("KWallet keystore") )
     set_description( N_("Secrets are stored via KWallet") )
-    set_capability( VLC_CAP_KEYSTORE, 100 )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_KEYSTORE, 100, Open, Close )
     //set_subcategory( SUBCAT_ADVANCED_MISC )
 vlc_plugin_end()
 

@@ -66,9 +66,8 @@ static void Destroy   ( vlc_object_t * );
 vlc_plugin_begin ()
     set_description( N_("Antiflicker video filter") )
     set_shortname( N_( "antiflicker" ))
-    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     add_shortcut( "antiflicker" )
-    set_callbacks( Create, Destroy )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_integer_with_range( FILTER_PREFIX "window-size", 10, 0, MAX_WINDOW_SZ,

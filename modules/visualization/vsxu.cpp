@@ -57,9 +57,8 @@ static void Close        ( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname( N_("vsxu"))
     set_description( N_("vsxu") )
-    set_capability( VLC_CAP_VISUALIZATION, 0 )
     add_shortcut( "vsxu" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_VISUALIZATION, 0, Open, Close )
 
     set_subcategory( SUBCAT_AUDIO_VISUAL )
     add_integer( "vsxu-width", 1280, WIDTH_TEXT, WIDTH_LONGTEXT,

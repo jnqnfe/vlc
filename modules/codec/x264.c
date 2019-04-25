@@ -436,17 +436,16 @@ static const char *const framepacking_list_text[] =
 vlc_plugin_begin ()
 #ifdef PLUGIN_NAME_IS_x26410b
     set_description( N_("H.264/MPEG-4 Part 10/AVC encoder (x264 10-bit)"))
-    set_capability( VLC_CAP_ENCODER, 0 )
+    set_capability( VLC_CAP_ENCODER, 0, Open, Close )
 #endif
 #ifdef PLUGIN_NAME_IS_x262
     set_description( N_("H.262/MPEG-2 encoder (x262)"))
-    set_capability( VLC_CAP_ENCODER, 0 )
+    set_capability( VLC_CAP_ENCODER, 0, Open, Close )
 #endif
 #ifdef PLUGIN_NAME_IS_x264
     set_description( N_("H.264/MPEG-4 Part 10/AVC encoder (x264)"))
-    set_capability( VLC_CAP_ENCODER, 200 )
+    set_capability( VLC_CAP_ENCODER, 200, Open, Close )
 #endif
-    set_callbacks( Open, Close )
 
     set_subcategory( SUBCAT_INPUT_VCODEC )
 

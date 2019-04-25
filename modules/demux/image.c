@@ -76,8 +76,7 @@ static void Close(vlc_object_t *);
 vlc_plugin_begin()
     set_description(N_("Image demuxer"))
     set_shortname(N_("Image"))
-    set_capability(VLC_CAP_DEMUX, 10)
-    set_callbacks(Open, Close)
+    set_capability(VLC_CAP_DEMUX, 10, Open, Close)
 
     set_subcategory(SUBCAT_INPUT_DEMUX)
     add_integer("image-id", -1, ID_TEXT, ID_LONGTEXT, true)

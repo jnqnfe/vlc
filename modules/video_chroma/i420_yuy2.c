@@ -83,23 +83,22 @@ static picture_t *I420_Y211_Filter    ( filter_t *, picture_t * );
 vlc_plugin_begin ()
 #if defined (PLUGIN_NAME_IS_i420_yuy2)
     set_description( N_("Conversions from " SRC_FOURCC " to " DEST_FOURCC) )
-    set_capability( VLC_CAP_VIDEO_CONVERTER, 80 )
+    set_capability( VLC_CAP_VIDEO_CONVERTER, 80, Activate, NULL )
 # define vlc_CPU_capable() (true)
 #elif defined (PLUGIN_NAME_IS_i420_yuy2_sse2)
     set_description( N_("SSE2 conversions from " SRC_FOURCC " to " DEST_FOURCC) )
-    set_capability( VLC_CAP_VIDEO_CONVERTER, 250 )
+    set_capability( VLC_CAP_VIDEO_CONVERTER, 250, Activate, NULL )
 # define vlc_CPU_capable() vlc_CPU_SSE2()
 #elif defined (PLUGIN_NAME_IS_i420_yuy2_altivec)
     set_description(
             _("AltiVec conversions from " SRC_FOURCC " to " DEST_FOURCC) );
-    set_capability( VLC_CAP_VIDEO_CONVERTER, 250 )
+    set_capability( VLC_CAP_VIDEO_CONVERTER, 250, Activate, NULL )
 # define vlc_CPU_capable() vlc_CPU_ALTIVEC()
 #elif defined (PLUGIN_NAME_IS_i420_yuy2_avx2)
     set_description( N_("AVX2 conversions from " SRC_FOURCC " to " DEST_FOURCC) )
-    set_capability( VLC_CAP_VIDEO_CONVERTER, 260 )
+    set_capability( VLC_CAP_VIDEO_CONVERTER, 260, Activate, NULL )
 # define vlc_CPU_capable() vlc_CPU_AVX2()
 #endif
-    set_callbacks( Activate, NULL )
 vlc_plugin_end ()
 
 /*****************************************************************************

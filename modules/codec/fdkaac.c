@@ -104,9 +104,8 @@ static const char *const ppsz_aot_descriptions[] =
 vlc_plugin_begin ()
     set_shortname(N_("FDKAAC"))
     set_description(N_("FDK-AAC Audio encoder"))
-    set_capability(VLC_CAP_ENCODER, 150)
-    set_callbacks(OpenEncoder, CloseEncoder)
     add_shortcut("fdkaac")
+    set_capability(VLC_CAP_ENCODER, 150, OpenEncoder, CloseEncoder)
 
     set_subcategory(SUBCAT_INPUT_ACODEC)
     add_integer(ENC_CFG_PREFIX "profile", PROFILE_AAC_LC, AOT_TEXT,

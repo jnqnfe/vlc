@@ -144,9 +144,8 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname( N_("Transcode"))
     set_description( N_("Transcode stream output") )
-    set_capability( VLC_CAP_SOUT_STREAM, 50 )
     add_shortcut( "transcode" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_SOUT_STREAM, 50, Open, Close )
 
     set_subcategory( SUBCAT_SOUT_STREAM )
     set_section( N_("Video"), NULL )

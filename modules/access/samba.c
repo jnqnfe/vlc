@@ -372,9 +372,8 @@ vlc_plugin_begin()
 
     set_shortname("SMB")
     set_description(N_("SMB input"))
-    set_capability(VLC_CAP_ACCESS, 0)
     add_shortcut("smb")
-    set_callbacks(Open, Close)
+    set_capability(VLC_CAP_ACCESS, 0, Open, Close)
 
     set_subcategory(SUBCAT_INPUT_ACCESS)
     add_string("smb-user", NULL, SMB_USER_TEXT, SMB_USER_LONGTEXT, false)

@@ -66,8 +66,7 @@ static void Close   ( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname( N_("NT Service"))
     set_description( N_("Windows Service interface") )
-    set_capability( VLC_CAP_INTERFACE, 0 )
-    set_callbacks( Activate, Close )
+    set_capability( VLC_CAP_INTERFACE, 0, Activate, Close )
 
     set_subcategory( SUBCAT_INTERFACE_CONTROL )
     add_bool( "ntservice-install", false,

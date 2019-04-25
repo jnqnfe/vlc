@@ -46,8 +46,7 @@ static void Close(vout_window_t *);
 vlc_plugin_begin()
     set_shortname(N_("Android Window"))
     set_description(N_("Android native window"))
-    set_capability(VLC_CAP_VOUT_WINDOW, 10)
-    set_callbacks(Open, NULL)
+    set_capability(VLC_CAP_VOUT_WINDOW, 10, Open, NULL)
     //set_subcategory(SUBCAT_VIDEO_VOUT)
 vlc_plugin_end()
 

@@ -66,8 +66,8 @@ static const char *const ppsz_mode_descriptions[] =
 vlc_plugin_begin ()
     set_description( N_("Video scaling filter") )
     set_shortname( N_("Swscale" ) )
-    set_capability( VLC_CAP_VIDEO_CONVERTER, 150 )
-    set_callbacks( OpenScaler, CloseScaler )
+    set_capability( VLC_CAP_VIDEO_CONVERTER, 150, OpenScaler, CloseScaler )
+
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_integer( "swscale-mode", 2, SCALEMODE_TEXT, NULL, true )
         change_integer_list( pi_mode_values, ppsz_mode_descriptions )

@@ -92,14 +92,12 @@ vlc_plugin_begin ()
     set_description( N_("Bridge stream output"))
 
     add_submodule ()
-    set_capability( VLC_CAP_SOUT_STREAM, 50 )
     add_shortcut( "bridge-out" )
-    set_callbacks( OpenOut, CloseOut )
+    set_capability( VLC_CAP_SOUT_STREAM, 50, OpenOut, CloseOut )
 
     add_submodule ()
-    set_capability( VLC_CAP_SOUT_STREAM, 50 )
     add_shortcut( "bridge-in" )
-    set_callbacks( OpenIn, CloseIn )
+    set_capability( VLC_CAP_SOUT_STREAM, 50, OpenIn, CloseIn )
 
     /* Only usable with VLM. No category so not in gui preferences */
     //set_subcategory( SUBCAT_SOUT_STREAM )

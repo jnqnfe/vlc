@@ -50,9 +50,8 @@ static picture_t *Filter( filter_t *, picture_t * );
 vlc_plugin_begin ()
     set_description( N_("Wave video filter") )
     set_shortname( N_( "Wave" ))
-    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     add_shortcut( "wave" )
-    set_callbacks( Create, NULL )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, NULL )
     //set_subcategory( SUBCAT_VIDEO_VFILTER )
 vlc_plugin_end ()
 

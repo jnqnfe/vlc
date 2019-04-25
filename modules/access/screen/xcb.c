@@ -69,9 +69,8 @@ static void Close (vlc_object_t *);
 vlc_plugin_begin ()
     set_shortname (N_("Screen"))
     set_description (N_("Screen capture (with X11/XCB)"))
-    set_capability (VLC_CAP_ACCESS, 0)
-    set_callbacks (Open, Close)
     add_shortcut ("screen", "window")
+    set_capability (VLC_CAP_ACCESS, 0, Open, Close)
 
     set_subcategory (SUBCAT_INPUT_ACCESS)
     add_float ("screen-fps", 2.0, FPS_TEXT, FPS_LONGTEXT, true)

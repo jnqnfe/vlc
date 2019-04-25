@@ -52,9 +52,8 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname( N_("Display"))
     set_description( N_("Display stream output") )
-    set_capability( VLC_CAP_SOUT_STREAM, 50 )
     add_shortcut( "display" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_SOUT_STREAM, 50, Open, Close )
 
     set_subcategory( SUBCAT_SOUT_STREAM )
     add_bool( SOUT_CFG_PREFIX "audio", true, AUDIO_TEXT,

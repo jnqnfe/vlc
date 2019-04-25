@@ -38,10 +38,9 @@ static int  Open(vlc_object_t *);
 static void Close(vlc_object_t *);
 
 vlc_plugin_begin ()
-    set_capability (VLC_CAP_STREAM_FILTER, 0)
     add_shortcut("aribcam")
     set_description (N_("ARIB STD-B25 Cam module"))
-    set_callbacks (Open, Close)
+    set_capability (VLC_CAP_STREAM_FILTER, 0, Open, Close)
     //set_subcategory (SUBCAT_INPUT_STREAM_FILTER)
 vlc_plugin_end ()
 

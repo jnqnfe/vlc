@@ -61,13 +61,11 @@ static void CloseCommon   ( vlc_object_t * );
  *****************************************************************************/
 vlc_plugin_begin ()
     set_description( N_("Pseudo raw video decoder") )
-    set_capability( VLC_CAP_VIDEO_DECODER, 50 )
-    set_callbacks( OpenDecoder, CloseCommon )
+    set_capability( VLC_CAP_VIDEO_DECODER, 50, OpenDecoder, CloseCommon )
 
     add_submodule ()
     set_description( N_("Pseudo raw video packetizer") )
-    set_capability( VLC_CAP_PACKETIZER, 100 )
-    set_callbacks( OpenPacketizer, CloseCommon )
+    set_capability( VLC_CAP_PACKETIZER, 100, OpenPacketizer, CloseCommon )
 
     //set_subcategory( SUBCAT_INPUT_VCODEC )
 vlc_plugin_end ()

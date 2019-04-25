@@ -47,9 +47,8 @@ static int vlc_sd_probe_Open (vlc_object_t *);
 vlc_plugin_begin ()
     set_shortname (N_("Screen capture"))
     set_description (N_("Screen capture"))
-    set_capability (VLC_CAP_SERVICES_DISCOVERY, 0)
-    set_callbacks (Open, Close)
     add_shortcut ("apps", "screen")
+    set_capability (VLC_CAP_SERVICES_DISCOVERY, 0, Open, Close)
 
     VLC_SD_PROBE_SUBMODULE
 

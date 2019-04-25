@@ -65,9 +65,8 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin ()
     set_description( N_("Audio Spatializer") )
     set_shortname( N_("Spatializer" ) )
-    set_capability( VLC_CAP_AUDIO_FILTER, 0 )
-    set_callbacks( Open, Close )
     add_shortcut( "spatializer" )
+    set_capability( VLC_CAP_AUDIO_FILTER, 0, Open, Close )
 
     set_subcategory( SUBCAT_AUDIO_AFILTER )
     add_float_with_range( "spatializer-roomsize", 0.85, 0., 1.1,

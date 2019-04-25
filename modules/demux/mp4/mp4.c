@@ -60,14 +60,12 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin ()
     set_description( N_("MP4 stream demuxer") )
     set_shortname( N_("MP4") )
-    set_capability( VLC_CAP_DEMUX, 240 )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_DEMUX, 240, Open, Close )
 
     add_submodule()
         set_description( N_("HEIF demuxer") )
         set_shortname( "heif" )
-        set_capability( VLC_CAP_DEMUX, 239 )
-        set_callbacks( OpenHEIF, CloseHEIF )
+        set_capability( VLC_CAP_DEMUX, 239, OpenHEIF, CloseHEIF )
 
     set_subcategory( SUBCAT_INPUT_DEMUX )
 

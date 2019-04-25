@@ -68,8 +68,7 @@ static block_t *DoWork( filter_t *, block_t * );
 vlc_plugin_begin ()
     set_description( N_("Audio part of the BarGraph function") )
     set_shortname( N_("Audiobar Graph") )
-    set_capability( VLC_CAP_AUDIO_FILTER, 0 )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_AUDIO_FILTER, 0, Open, Close )
 
     set_subcategory( SUBCAT_AUDIO_AFILTER )
     add_integer( CFG_PREFIX "bargraph", 1, BARGRAPH_TEXT, BARGRAPH_LONGTEXT, false ) // FIXME: this is a bool

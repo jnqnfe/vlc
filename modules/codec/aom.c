@@ -66,14 +66,12 @@ static const char *const ppsz_enc_bitdepth_text [] =
 vlc_plugin_begin ()
     set_shortname("aom")
     set_description(N_("AOM video decoder"))
-    set_capability(VLC_CAP_VIDEO_DECODER, 100)
-    set_callbacks(OpenDecoder, CloseDecoder)
+    set_capability(VLC_CAP_VIDEO_DECODER, 100, OpenDecoder, CloseDecoder)
 #ifdef ENABLE_SOUT
     add_submodule()
         set_shortname("aom")
-        set_capability(VLC_CAP_ENCODER, 101)
         set_description(N_("AOM video encoder"))
-        set_callbacks(OpenEncoder, CloseEncoder)
+        set_capability(VLC_CAP_ENCODER, 101, OpenEncoder, CloseEncoder)
 
     set_subcategory(SUBCAT_INPUT_VCODEC)
     add_integer( SOUT_CFG_PREFIX "profile", 0, "Profile", NULL, true )

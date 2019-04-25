@@ -386,11 +386,11 @@ static int Control(vout_display_t *vd, int query, va_list ap)
 #define DISABLE_DR_TEXT "Disable direct rendering / zero-copy upload"
 #define DISABLE_DR_LONGTEXT "Direct rendering is a technique where image data is uploaded via a mapped buffer instead of via memcpy. On some platforms this might be very slow (due to poor readback performance from mapped memory), in which cases this flag would help."
 
-vlc_plugin_begin () set_shortname ("Vulkan")
+vlc_plugin_begin ()
+    set_shortname ("Vulkan")
     set_description (N_("Vulkan video output"))
-    set_capability (VLC_CAP_VOUT_DISPLAY, 0)
-    set_callbacks (Open, Close)
     add_shortcut ("vulkan", "vk")
+    set_capability (VLC_CAP_VOUT_DISPLAY, 0, Open, Close)
 
     set_subcategory (SUBCAT_VIDEO_VOUT)
     add_module ("vk", VLC_CAP_STR_VULKAN, NULL, VK_TEXT, PROVIDER_LONGTEXT)

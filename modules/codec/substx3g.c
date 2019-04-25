@@ -45,14 +45,12 @@ static block_t * Encode( encoder_t *, subpicture_t * );
 vlc_plugin_begin ()
     set_description( N_("tx3g subtitles decoder") )
     set_shortname( N_("tx3g subtitles") )
-    set_capability( VLC_CAP_SPU_DECODER, 100 )
-    set_callbacks( OpenDecoder, CloseDecoder )
+    set_capability( VLC_CAP_SPU_DECODER, 100, OpenDecoder, CloseDecoder )
 #ifdef ENABLE_SOUT
     add_submodule ()
         set_description( N_("tx3g subtitles encoder") )
         set_shortname( N_("tx3g subtitles encoder") )
-        set_capability( VLC_CAP_ENCODER, 101 )
-        set_callbacks( OpenEncoder, NULL )
+        set_capability( VLC_CAP_ENCODER, 101, OpenEncoder, NULL )
 #endif
     //set_subcategory( SUBCAT_INPUT_SCODEC )
 vlc_plugin_end ()

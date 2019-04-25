@@ -54,10 +54,9 @@ static void     Close   ( vlc_object_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Record stream output") )
-    set_capability( VLC_CAP_SOUT_STREAM, 0 )
     add_shortcut( "record" )
     set_shortname( N_("Record") )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_SOUT_STREAM, 0, Open, Close )
 
     set_subcategory( SUBCAT_SOUT_STREAM )
     add_string( SOUT_CFG_PREFIX "dst-prefix", "", DST_PREFIX_TEXT,

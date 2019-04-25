@@ -48,9 +48,8 @@ static void Close  ( vlc_object_t * );
 
 vlc_plugin_begin ()
     set_description( N_( "CAF demuxer" ))
-    set_capability( VLC_CAP_DEMUX, 140 )
-    set_callbacks( Open, Close )
     add_shortcut( "caf" )
+    set_capability( VLC_CAP_DEMUX, 140, Open, Close )
     //set_subcategory( SUBCAT_INPUT_DEMUX )
 vlc_plugin_end ()
 

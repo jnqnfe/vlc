@@ -51,9 +51,8 @@ static void Close(filter_t *filter);
 vlc_plugin_begin()
     set_shortname(N_("MMAL deinterlace"))
     set_description(N_("MMAL-based deinterlace filter plugin"))
-    set_capability(VLC_CAP_VIDEO_FILTER, 0)
-    set_callbacks(Open, Close)
     add_shortcut("deinterlace")
+    set_capability(VLC_CAP_VIDEO_FILTER, 0, Open, Close)
 
     set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_bool(MMAL_DEINTERLACE_QPU, false, MMAL_DEINTERLACE_QPU_TEXT,

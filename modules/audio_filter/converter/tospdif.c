@@ -44,8 +44,7 @@ static void Close( vlc_object_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Audio filter for A/52/DTS->S/PDIF encapsulation") )
-    set_capability( VLC_CAP_AUDIO_CONVERTER, 10 )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_AUDIO_CONVERTER, 10, Open, Close )
     //set_subcategory( SUBCAT_AUDIO_AFILTER )
 vlc_plugin_end ()
 

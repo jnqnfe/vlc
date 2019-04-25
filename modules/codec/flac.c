@@ -158,15 +158,13 @@ vlc_plugin_begin ()
 
     add_shortcut( "flac" )
     set_description( N_("Flac audio decoder") )
-    set_capability( VLC_CAP_AUDIO_DECODER, 100 )
-    set_callbacks( OpenDecoder, CloseDecoder )
+    set_capability( VLC_CAP_AUDIO_DECODER, 100, OpenDecoder, CloseDecoder )
 
 #ifdef ENABLE_SOUT
     add_submodule ()
     add_shortcut( "flac" )
     set_description( N_("Flac audio encoder") )
-    set_capability( VLC_CAP_ENCODER, 100 )
-    set_callbacks( OpenEncoder, CloseEncoder )
+    set_capability( VLC_CAP_ENCODER, 100, OpenEncoder, CloseEncoder )
 #endif
 
     //set_subcategory( SUBCAT_INPUT_ACODEC )

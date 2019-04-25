@@ -61,9 +61,8 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin()
     set_shortname( "Raw Audio" )
     set_description( N_("Raw audio demuxer") )
-    set_capability( VLC_CAP_DEMUX, 0 )
-    set_callbacks( Open, Close )
     add_shortcut( "rawaud" )
+    set_capability( VLC_CAP_DEMUX, 0, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_DEMUX )
     add_integer( "rawaud-channels", 2, CHANNELS_TEXT, CHANNELS_LONGTEXT, false )

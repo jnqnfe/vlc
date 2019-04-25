@@ -58,9 +58,8 @@ static void Close  ( vlc_object_t * );
 
 vlc_plugin_begin ()
     set_description( N_("AVI muxer") )
-    set_capability( VLC_CAP_SOUT_MUX, 5 )
     add_shortcut( "avi" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_SOUT_MUX, 5, Open, Close )
 
     set_subcategory( SUBCAT_SOUT_MUX )
     add_string( SOUT_CFG_PREFIX "artist", NULL,    CFG_ARTIST_TEXT, NULL, true )

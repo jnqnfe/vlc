@@ -38,8 +38,7 @@ static int Open( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname( N_("Dummy") )
     set_description( N_("Dummy interface") )
-    set_capability( VLC_CAP_INTERFACE, 0 )
-    set_callbacks( Open, NULL )
+    set_capability( VLC_CAP_INTERFACE, 0, Open, NULL )
 
     //set_subcategory( SUBCAT_INTERFACE_CONTROL )
 #if defined(_WIN32) && !VLC_WINSTORE_APP

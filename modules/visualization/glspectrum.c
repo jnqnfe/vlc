@@ -61,9 +61,8 @@ static void Close(vlc_object_t *);
 vlc_plugin_begin()
     set_shortname(N_("glSpectrum"))
     set_description(N_("3D OpenGL spectrum visualization"))
-    set_capability(VLC_CAP_VISUALIZATION, 0)
     add_shortcut("glspectrum")
-    set_callbacks(Open, Close)
+    set_capability(VLC_CAP_VISUALIZATION, 0, Open, Close)
 
     set_subcategory(SUBCAT_AUDIO_VISUAL)
     add_integer("glspectrum-width", 400, WIDTH_TEXT, WIDTH_LONGTEXT, false)

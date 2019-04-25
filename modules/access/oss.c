@@ -75,8 +75,7 @@ vlc_plugin_begin ()
     set_shortname( N_("OSS") )
     set_description( N_("OSS input") )
     add_shortcut( "oss" )
-    set_capability( VLC_CAP_ACCESS, 0 )
-    set_callbacks( DemuxOpen, DemuxClose )
+    set_capability( VLC_CAP_ACCESS, 0, DemuxOpen, DemuxClose )
 
     set_subcategory( SUBCAT_INPUT_ACCESS )
     add_bool( CFG_PREFIX "stereo", true, STEREO_TEXT, STEREO_LONGTEXT,

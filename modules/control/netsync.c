@@ -67,8 +67,7 @@ static void Close(vlc_object_t *);
 vlc_plugin_begin()
     set_shortname(N_("Network Sync"))
     set_description(N_("Network synchronization"))
-    set_capability(VLC_CAP_INTERFACE, 0)
-    set_callbacks(Open, Close)
+    set_capability(VLC_CAP_INTERFACE, 0, Open, Close)
 
     set_subcategory(SUBCAT_ADVANCED_MISC)
     add_bool("netsync-master", false,

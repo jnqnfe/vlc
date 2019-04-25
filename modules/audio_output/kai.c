@@ -108,8 +108,7 @@ static const char *const ppsz_kai_audio_device_text[] = {
 vlc_plugin_begin ()
     set_shortname( "KAI" )
     set_description( N_("K Audio Interface audio output") )
-    set_capability( VLC_CAP_AUDIO_OUTPUT, 100 )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_AUDIO_OUTPUT, 100, Open, Close )
 
     set_subcategory( SUBCAT_AUDIO_AOUT )
     add_string( "kai-audio-device", ppsz_kai_audio_device[0],

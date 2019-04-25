@@ -181,25 +181,21 @@ static void RemoveInflightPictures(decoder_t *);
 
 vlc_plugin_begin ()
     set_description("Video decoder using Android MediaCodec via NDK")
-    set_capability(VLC_CAP_VIDEO_DECODER, 800)
-    set_callbacks(OpenDecoderNdk, CloseDecoder)
     add_shortcut("mediacodec_ndk")
+    set_capability(VLC_CAP_VIDEO_DECODER, 800, OpenDecoderNdk, CloseDecoder)
 
     add_submodule ()
-        set_capability(VLC_CAP_AUDIO_DECODER, 0)
-        set_callbacks(OpenDecoderNdk, CloseDecoder)
         add_shortcut("mediacodec_ndk")
+        set_capability(VLC_CAP_AUDIO_DECODER, 0, OpenDecoderNdk, CloseDecoder)
 
     add_submodule ()
         set_description("Video decoder using Android MediaCodec via JNI")
-        set_capability(VLC_CAP_VIDEO_DECODER, 0)
-        set_callbacks(OpenDecoderJni, CloseDecoder)
         add_shortcut("mediacodec_jni")
+        set_capability(VLC_CAP_VIDEO_DECODER, 0, OpenDecoderJni, CloseDecoder)
 
     add_submodule ()
-        set_capability(VLC_CAP_AUDIO_DECODER, 0)
-        set_callbacks(OpenDecoderJni, CloseDecoder)
         add_shortcut("mediacodec_jni")
+        set_capability(VLC_CAP_AUDIO_DECODER, 0, OpenDecoderJni, CloseDecoder)
 
     set_subcategory(SUBCAT_INPUT_VCODEC)
     set_section(N_("Decoding"), NULL)

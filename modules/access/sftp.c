@@ -61,9 +61,8 @@ static void Close( vlc_object_t* );
 vlc_plugin_begin ()
     set_shortname( "SFTP" )
     set_description( N_("SFTP input") )
-    set_capability( VLC_CAP_ACCESS, 0 )
     add_shortcut( "sftp" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_ACCESS, 0, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_ACCESS )
     add_integer( "sftp-port", 22, PORT_TEXT, PORT_LONGTEXT, true )

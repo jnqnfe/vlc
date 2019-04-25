@@ -92,20 +92,17 @@ static const char * const ppsz_enc_mode_descriptions[] = {
 
 vlc_plugin_begin ()
     set_description( N_("Speex audio decoder") )
-    set_capability( VLC_CAP_AUDIO_DECODER, 100 )
     set_shortname( N_("Speex") )
-    set_callbacks( OpenDecoder, CloseDecoder )
+    set_capability( VLC_CAP_AUDIO_DECODER, 100, OpenDecoder, CloseDecoder )
 
     add_submodule ()
     set_description( N_("Speex audio packetizer") )
-    set_capability( VLC_CAP_PACKETIZER, 100 )
-    set_callbacks( OpenPacketizer, CloseDecoder )
+    set_capability( VLC_CAP_PACKETIZER, 100, OpenPacketizer, CloseDecoder )
 
 #ifdef ENABLE_SOUT
     add_submodule ()
     set_description( N_("Speex audio encoder") )
-    set_capability( VLC_CAP_ENCODER, 100 )
-    set_callbacks( OpenEncoder, CloseEncoder )
+    set_capability( VLC_CAP_ENCODER, 100, OpenEncoder, CloseEncoder )
 
     set_subcategory( SUBCAT_INPUT_ACODEC )
     add_integer( ENC_CFG_PREFIX "mode", 0, ENC_MODE_TEXT,

@@ -60,15 +60,13 @@ static void Close  ( vlc_object_t * );
 vlc_plugin_begin ()
     set_description( N_("MPEG-PS demuxer") )
     set_shortname( N_("PS") )
-    set_capability( VLC_CAP_DEMUX, 1 )
-    set_callbacks( OpenForce, Close )
     add_shortcut( "ps" )
+    set_capability( VLC_CAP_DEMUX, 1, OpenForce, Close )
 
     add_submodule ()
     set_description( N_("MPEG-PS demuxer") )
-    set_capability( VLC_CAP_DEMUX, 8 )
-    set_callbacks( Open, Close )
     add_shortcut( "ps" )
+    set_capability( VLC_CAP_DEMUX, 8, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_DEMUX )
     add_bool( "ps-trust-timestamps", true, TIME_TEXT,

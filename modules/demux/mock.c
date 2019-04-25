@@ -736,9 +736,8 @@ error:
 
 vlc_plugin_begin()
     set_description("mock access demux")
-    set_capability(VLC_CAP_ACCESS, 0)
-    set_callbacks(Open, Close)
     add_shortcut("mock")
+    set_capability(VLC_CAP_ACCESS, 0, Open, Close)
 
     set_subcategory(SUBCAT_INPUT_ACCESS)
     LIST_OPTIONS

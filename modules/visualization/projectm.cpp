@@ -89,9 +89,8 @@ static void Close        ( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname( N_("projectM"))
     set_description( N_("libprojectM effect") )
-    set_capability( VLC_CAP_VISUALIZATION, 0 )
     add_shortcut( "projectm" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_VISUALIZATION, 0, Open, Close )
 
     set_subcategory( SUBCAT_AUDIO_VISUAL )
 #ifndef HAVE_PROJECTM2

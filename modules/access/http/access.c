@@ -283,9 +283,8 @@ static void Close(vlc_object_t *obj)
 vlc_plugin_begin()
     set_description(N_("HTTPS input"))
     set_shortname(N_("HTTPS"))
-    set_capability(VLC_CAP_ACCESS, 2)
     add_shortcut("https", "http")
-    set_callbacks(Open, Close)
+    set_capability(VLC_CAP_ACCESS, 2, Open, Close)
 
     set_subcategory(SUBCAT_INPUT_ACCESS)
     add_bool("http-continuous", false, N_("Continuous stream"),

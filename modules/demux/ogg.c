@@ -59,9 +59,8 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname ( "OGG" )
     set_description( N_("OGG demuxer" ) )
-    set_capability( VLC_CAP_DEMUX, 50 )
-    set_callbacks( Open, Close )
     add_shortcut( "ogg" )
+    set_capability( VLC_CAP_DEMUX, 50, Open, Close )
     //set_subcategory( SUBCAT_INPUT_DEMUX )
 vlc_plugin_end ()
 

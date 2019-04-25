@@ -45,9 +45,8 @@ static void Close(vout_window_t *);
 vlc_plugin_begin ()
     set_shortname (N_("Drawable"))
     set_description (N_("Embedded window video"))
-    set_capability (VLC_CAP_VOUT_WINDOW, 70)
-    set_callbacks (Open, NULL)
     add_shortcut ("embed-hwnd")
+    set_capability (VLC_CAP_VOUT_WINDOW, 70, Open, NULL)
 
     set_subcategory (SUBCAT_VIDEO_VOUT)
     add_integer ("drawable-hwnd", 0, HWND_TEXT, HWND_LONGTEXT, true)

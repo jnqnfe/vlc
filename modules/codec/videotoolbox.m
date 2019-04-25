@@ -80,8 +80,7 @@ static void CloseDecoder(vlc_object_t *);
 
 vlc_plugin_begin()
 set_description(N_("VideoToolbox video decoder"))
-set_capability(VLC_CAP_VIDEO_DECODER, 800)
-set_callbacks(OpenDecoder, CloseDecoder)
+set_capability(VLC_CAP_VIDEO_DECODER, 800, OpenDecoder, CloseDecoder)
 
 set_subcategory(SUBCAT_INPUT_VCODEC)
 add_obsolete_bool("videotoolbox-temporal-deinterlacing") /* since 4.0.0 */

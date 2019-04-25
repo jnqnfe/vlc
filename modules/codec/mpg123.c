@@ -63,9 +63,8 @@ typedef struct
  *****************************************************************************/
 vlc_plugin_begin ()
     set_description( N_("MPEG audio decoder using mpg123") )
-    set_capability( VLC_CAP_AUDIO_DECODER, 100 )
     set_shortname( "mpg123" )
-    set_callbacks( OpenDecoder, CloseDecoder )
+    set_capability( VLC_CAP_AUDIO_DECODER, 100, OpenDecoder, CloseDecoder )
     //set_subcategory( SUBCAT_INPUT_ACODEC )
 vlc_plugin_end ()
 

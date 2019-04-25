@@ -60,15 +60,13 @@ static void SubpicturePrepare(vout_display_t *vd, subpicture_t *subpicture);
 
 vlc_plugin_begin()
     set_description("Android video output")
-    set_capability(VLC_CAP_VOUT_DISPLAY, 260)
     add_shortcut("android-display")
+    set_capability(VLC_CAP_VOUT_DISPLAY, 260, Open, Close)
 
-    set_callbacks(Open, Close)
     add_submodule ()
         set_description("Android opaque video output")
-        set_capability(VLC_CAP_VOUT_DISPLAY, 280)
         add_shortcut("android-opaque")
-        set_callbacks(OpenOpaque, Close)
+        set_capability(VLC_CAP_VOUT_DISPLAY, 280, OpenOpaque, Close)
 
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_string(CFG_PREFIX "chroma", NULL, CHROMA_TEXT, CHROMA_LONGTEXT, true)

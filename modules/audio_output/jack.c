@@ -98,8 +98,7 @@ static int  GraphChange  ( void *p_arg );
 vlc_plugin_begin ()
     set_shortname( "JACK" )
     set_description( N_("JACK audio output") )
-    set_capability( VLC_CAP_AUDIO_OUTPUT, 100 )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_AUDIO_OUTPUT, 100, Open, Close )
 
     set_subcategory( SUBCAT_AUDIO_AOUT )
     add_bool( AUTO_CONNECT_OPTION, true, AUTO_CONNECT_TEXT,

@@ -52,9 +52,8 @@ static void Close ( vlc_object_t * );
 
 vlc_plugin_begin ()
     set_description( N_("MusePack demuxer") )
-    set_capability( VLC_CAP_DEMUX, 145 )
-    set_callbacks( Open, Close )
     add_shortcut( "mpc" )
+    set_capability( VLC_CAP_DEMUX, 145, Open, Close )
     //set_subcategory( SUBCAT_INPUT_DEMUX )
 vlc_plugin_end ()
 

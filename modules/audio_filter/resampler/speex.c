@@ -41,13 +41,11 @@ static void Close (vlc_object_t *);
 vlc_plugin_begin ()
     set_shortname (N_("Speex resampler"))
     set_description (N_("Speex resampler") )
-    set_capability (VLC_CAP_AUDIO_CONVERTER, 0)
-    set_callbacks (Open, Close)
+    set_capability (VLC_CAP_AUDIO_CONVERTER, 0, Open, Close)
 
     add_submodule ()
-    set_capability (VLC_CAP_AUDIO_RESAMPLER, 0)
-    set_callbacks (OpenResampler, Close)
     add_shortcut ("speex")
+    set_capability (VLC_CAP_AUDIO_RESAMPLER, 0, OpenResampler, Close)
 
     set_subcategory (SUBCAT_AUDIO_RESAMPLER)
     add_integer ("speex-resampler-quality", 4,

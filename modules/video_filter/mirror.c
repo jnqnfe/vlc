@@ -80,8 +80,7 @@ vlc_plugin_begin ()
 
     set_description( N_("Mirror video filter") )
     set_shortname( N_("Mirror video" ))
-    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
-    set_callbacks( Create, Destroy )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_integer( CFG_PREFIX "split", 0, ORIENTATION_TEXT,

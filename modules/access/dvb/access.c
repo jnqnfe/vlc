@@ -77,12 +77,11 @@ static void Close( vlc_object_t *p_this );
 vlc_plugin_begin ()
     set_shortname( N_("DVB") )
     set_description( N_("DVB input with v4l2 support") )
-    set_capability( VLC_CAP_ACCESS, 0 )
     add_shortcut( "dvb",                        /* Generic name */
                   "dvb-s", "qpsk", "satellite", /* Satellite */
                   "dvb-c", "cable",             /* Cable */
                   "dvb-t", "terrestrial" )      /* Terrestrial */
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_ACCESS, 0, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_ACCESS )
     add_bool( "dvb-probe", true, PROBE_TEXT, PROBE_LONGTEXT, true )

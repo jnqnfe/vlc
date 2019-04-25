@@ -59,9 +59,8 @@ static int DecodeBlock  ( decoder_t *, block_t * );
  *****************************************************************************/
 vlc_plugin_begin ()
     set_description( N_("SVG video decoder") )
-    set_capability( VLC_CAP_VIDEO_DECODER, 100 )
-    set_callbacks( OpenDecoder, CloseDecoder )
     add_shortcut( "svg" )
+    set_capability( VLC_CAP_VIDEO_DECODER, 100, OpenDecoder, CloseDecoder )
 
     /* svg options */
     set_subcategory( SUBCAT_INPUT_VCODEC )

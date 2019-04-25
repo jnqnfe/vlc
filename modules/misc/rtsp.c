@@ -75,9 +75,8 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname( N_("RTSP VoD" ) )
     set_description( N_("Legacy RTSP VoD server") )
-    set_capability( VLC_CAP_VOD_SERVER, 1 )
-    set_callbacks( Open, Close )
     add_shortcut( "rtsp" )
+    set_capability( VLC_CAP_VOD_SERVER, 1, Open, Close )
 
     set_subcategory( SUBCAT_SOUT_VOD )
     add_string( "rtsp-raw-mux", "ts", RAWMUX_TEXT, NULL, true )

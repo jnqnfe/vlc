@@ -1192,27 +1192,30 @@ CloseDeinterlace(vlc_object_t * obj)
 vlc_plugin_begin()
     set_shortname(N_("VAAPI filters"))
     set_description(N_("Video Accelerated API filters"))
-    set_capability(VLC_CAP_VIDEO_FILTER, 0)
 
     add_submodule()
-    set_callbacks(OpenAdjust, CloseAdjust)
+    set_description(N_("VAAPI adjust"))
     add_shortcut("adjust")
+    set_capability(VLC_CAP_VIDEO_FILTER, 0, OpenAdjust, CloseAdjust)
 
     add_submodule()
-    set_callbacks(OpenDeinterlace, CloseDeinterlace)
+    set_description(N_("VAAPI deinterlace"))
     add_shortcut("deinterlace")
+    set_capability(VLC_CAP_VIDEO_FILTER, 0, OpenDeinterlace, CloseDeinterlace)
 
     add_submodule()
-    set_callbacks(OpenDenoiseFilter, CloseBasicFilter)
+    set_description(N_("VAAPI denoise"))
     add_shortcut("denoise")
+    set_capability(VLC_CAP_VIDEO_FILTER, 0, OpenDenoiseFilter, CloseBasicFilter)
 
     add_submodule()
-    set_callbacks(OpenSharpenFilter, CloseBasicFilter)
+    set_description(N_("VAAPI sharpen"))
     add_shortcut("sharpen")
+    set_capability(VLC_CAP_VIDEO_FILTER, 0, OpenSharpenFilter, CloseBasicFilter)
 
     add_submodule()
-    set_capability(VLC_CAP_VIDEO_CONVERTER, 10)
-    set_callbacks(vlc_vaapi_OpenChroma, vlc_vaapi_CloseChroma)
+    set_description(N_("VAAPI chroma converter"))
+    set_capability(VLC_CAP_VIDEO_CONVERTER, 10, vlc_vaapi_OpenChroma, vlc_vaapi_CloseChroma)
 
     set_subcategory(SUBCAT_VIDEO_VFILTER)
     add_float_with_range("denoise-sigma", 1.f, .0f, 0.f,

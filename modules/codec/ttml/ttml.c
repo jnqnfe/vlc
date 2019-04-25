@@ -41,17 +41,15 @@
  *****************************************************************************/
 
 vlc_plugin_begin ()
-    set_capability( VLC_CAP_SPU_DECODER, 10 )
     set_shortname( N_("TTML decoder"))
     set_description( N_("TTML subtitles decoder") )
-    set_callbacks( tt_OpenDecoder, tt_CloseDecoder )
+    set_capability( VLC_CAP_SPU_DECODER, 10, tt_OpenDecoder, tt_CloseDecoder )
 
     add_submodule()
         set_shortname( N_("TTML") )
         set_description( N_("TTML demuxer") )
-        set_capability( VLC_CAP_DEMUX, 11 )
-        set_callbacks( tt_OpenDemux, tt_CloseDemux )
         add_shortcut( "ttml" )
+        set_capability( VLC_CAP_DEMUX, 11, tt_OpenDemux, tt_CloseDemux )
 
     set_subcategory( SUBCAT_INPUT_SCODEC )
     add_integer( "ttml-align", 0, ALIGN_TEXT, ALIGN_LONGTEXT, false )

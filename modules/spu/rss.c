@@ -188,11 +188,10 @@ static const char *const ppsz_title_modes[] =
 vlc_plugin_begin ()
     set_help(RSS_HELP)
 
-    set_capability( VLC_CAP_SUB_SOURCE, 1 )
     set_shortname( N_("RSS / Atom") )
-    set_callbacks( CreateFilter, DestroyFilter )
     set_description( N_("RSS and Atom feed display") )
     add_shortcut( "rss", "atom" )
+    set_capability( VLC_CAP_SUB_SOURCE, 1, CreateFilter, DestroyFilter )
 
     set_subcategory( SUBCAT_VIDEO_SUBPIC )
     add_string( CFG_PREFIX "urls", NULL, MSG_TEXT, MSG_LONGTEXT, false )

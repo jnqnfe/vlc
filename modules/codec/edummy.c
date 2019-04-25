@@ -37,9 +37,8 @@ static void CloseEncoder( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname( N_("Dummy") )
     set_description( N_("Dummy encoder") )
-    set_capability( VLC_CAP_ENCODER, 0 )
-    set_callbacks( OpenEncoder, CloseEncoder )
     add_shortcut( "dummy" )
+    set_capability( VLC_CAP_ENCODER, 0, OpenEncoder, CloseEncoder )
 vlc_plugin_end ()
 
 

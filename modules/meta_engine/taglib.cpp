@@ -142,11 +142,9 @@ static int ReadMeta    ( vlc_object_t * );
 static int WriteMeta   ( vlc_object_t * );
 
 vlc_plugin_begin ()
-    set_capability( VLC_CAP_META_READER, 1000 )
-    set_callbacks( ReadMeta, NULL )
+    set_capability( VLC_CAP_META_READER, 1000, ReadMeta, NULL )
     add_submodule ()
-        set_capability( VLC_CAP_META_WRITER, 50 )
-        set_callbacks( WriteMeta, NULL )
+        set_capability( VLC_CAP_META_WRITER, 50, WriteMeta, NULL )
 vlc_plugin_end ()
 
 class VlcIostream : public IOStream

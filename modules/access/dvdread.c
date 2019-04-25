@@ -74,9 +74,8 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname( N_("DVD without menus") )
     set_description( N_("DVDRead Input (no menu support)") )
-    set_capability( VLC_CAP_ACCESS, 0 )
     add_shortcut( "dvd", "dvdread", "dvdsimple" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_ACCESS, 0, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_ACCESS )
     add_integer( "dvdread-angle", 1, ANGLE_TEXT, ANGLE_LONGTEXT, false )

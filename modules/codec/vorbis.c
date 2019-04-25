@@ -183,26 +183,25 @@ static block_t *Encode   ( encoder_t *, block_t * );
 #define ENC_CBR_LONGTEXT N_( \
   "Force a constant bitrate encoding (CBR)." )
 
+#ifdef PLUGIN_NAME_IS_tremor
+# define DEC_PRIO 90
+#else
+# define DEC_PRIO 100
+#endif
+
 vlc_plugin_begin ()
     set_shortname( "Vorbis" )
     set_description( N_("Vorbis audio decoder") )
-#ifdef PLUGIN_NAME_IS_tremor
-    set_capability( VLC_CAP_AUDIO_DECODER, 90 )
-#else
-    set_capability( VLC_CAP_AUDIO_DECODER, 100 )
-#endif
-    set_callbacks( OpenDecoder, CloseDecoder )
+    set_capability( VLC_CAP_AUDIO_DECODER, DEC_PRIO, OpenDecoder, CloseDecoder )
 
     add_submodule ()
     set_description( N_("Vorbis audio packetizer") )
-    set_capability( VLC_CAP_PACKETIZER, 100 )
-    set_callbacks( OpenPacketizer, CloseDecoder )
+    set_capability( VLC_CAP_PACKETIZER, 100, OpenPacketizer, CloseDecoder )
 
 #ifdef HAVE_VORBIS_ENCODER
     add_submodule ()
     set_description( N_("Vorbis audio encoder") )
-    set_capability( VLC_CAP_ENCODER, 130 )
-    set_callbacks( OpenEncoder, CloseEncoder )
+    set_capability( VLC_CAP_ENCODER, 130, OpenEncoder, CloseEncoder )
 
 #   define ENC_CFG_PREFIX "sout-vorbis-"
     set_subcategory( SUBCAT_INPUT_ACODEC )

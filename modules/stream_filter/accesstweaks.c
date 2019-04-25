@@ -34,11 +34,10 @@ static int  Open(vlc_object_t *);
 
 vlc_plugin_begin ()
     set_shortname("accesstweaks")
-    set_capability (VLC_CAP_STREAM_FILTER, 301)
     /* Developers only module, no translation please */
     set_description ("Access controls tweaking")
-    set_callbacks(Open, NULL)
     add_shortcut("tweaks")
+    set_capability (VLC_CAP_STREAM_FILTER, 301, Open, NULL)
 
     set_subcategory (SUBCAT_INPUT_STREAM_FILTER)
     add_bool("seek", true, "Expose seeking capability", NULL, false)

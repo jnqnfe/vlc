@@ -135,29 +135,25 @@ VLC_RD_PROBE_HELPER( "upnp_renderer", N_("UPnP Renderer Discovery") )
 vlc_plugin_begin()
     set_shortname( "UPnP" );
     set_description( N_( "Universal Plug'n'Play" ) );
-    set_capability( VLC_CAP_SERVICES_DISCOVERY, 0 );
-    set_callbacks( SD::OpenSD, SD::CloseSD );
+    set_capability( VLC_CAP_SERVICES_DISCOVERY, 0, SD::OpenSD, SD::CloseSD )
 
     add_submodule()
-        set_callbacks( Access::OpenAccess, Access::CloseAccess )
-        set_capability( VLC_CAP_ACCESS, 0 )
+        set_capability( VLC_CAP_ACCESS, 0, Access::OpenAccess, Access::CloseAccess )
 
     VLC_SD_PROBE_SUBMODULE
 
     add_submodule()
         set_description( N_( "UPnP Renderer Discovery" ) )
-        set_callbacks( RD::OpenRD, RD::CloseRD )
-        set_capability( VLC_CAP_RENDERER_DISCOVERY, 0 )
         add_shortcut( "upnp_renderer" )
+        set_capability( VLC_CAP_RENDERER_DISCOVERY, 0, RD::OpenRD, RD::CloseRD )
 
     VLC_RD_PROBE_SUBMODULE
 
     add_submodule()
         set_shortname("dlna")
         set_description(N_("UPnP/DLNA stream output"))
-        set_capability(VLC_CAP_SOUT_STREAM, 0)
         add_shortcut("dlna")
-        set_callbacks(DLNA::OpenSout, DLNA::CloseSout)
+        set_capability(VLC_CAP_SOUT_STREAM, 0, DLNA::OpenSout, DLNA::CloseSout)
 
     set_subcategory( SUBCAT_PLAYLIST_SD );
     add_string( "satip-channelist", "auto", SATIP_CHANNEL_LIST, NULL, false )

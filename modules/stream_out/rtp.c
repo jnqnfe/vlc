@@ -186,16 +186,14 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname( N_("RTP"))
     set_description( N_("RTP stream output") )
-    set_capability( VLC_CAP_SOUT_STREAM, 0 )
     add_shortcut( "rtp", "vod" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_SOUT_STREAM, 0, Open, Close )
 
     add_submodule ()
     set_shortname( N_("RTSP VoD" ) )
     set_description( N_("RTSP VoD server") )
-    set_capability( VLC_CAP_VOD_SERVER, 10 )
-    set_callbacks( OpenVoD, CloseVoD )
     add_shortcut( "rtsp" )
+    set_capability( VLC_CAP_VOD_SERVER, 10, OpenVoD, CloseVoD )
 
     set_subcategory( SUBCAT_SOUT_STREAM )
 

@@ -81,9 +81,8 @@ vlc_plugin_begin ()
 
     set_description( N_("Gradient video filter") )
     set_shortname( N_( "Gradient" ))
-    set_capability( VLC_CAP_VIDEO_FILTER, 0 )
     add_shortcut( "gradient" )
-    set_callbacks( Create, Destroy )
+    set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )
     add_string( FILTER_PREFIX "mode", "gradient",

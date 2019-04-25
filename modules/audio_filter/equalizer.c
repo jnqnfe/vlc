@@ -78,9 +78,8 @@ static void Close( vlc_object_t * );
 vlc_plugin_begin ()
     set_description( N_("Equalizer with 10 bands") )
     set_shortname( N_("Equalizer" ) )
-    set_capability( VLC_CAP_AUDIO_FILTER, 0 )
-    set_callbacks( Open, Close )
     add_shortcut( "equalizer" )
+    set_capability( VLC_CAP_AUDIO_FILTER, 0, Open, Close )
 
     set_subcategory( SUBCAT_AUDIO_AFILTER )
     add_string( "equalizer-preset", "flat", PRESET_TEXT,

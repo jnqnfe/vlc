@@ -231,8 +231,7 @@ static const char *const verbosity_text[] = { N_("Default"), N_("Info"), N_("Err
 vlc_plugin_begin()
     set_shortname(N_("Logger"))
     set_description(N_("File logger"))
-    set_capability(VLC_CAP_LOGGER, 15)
-    set_callbacks(Open, NULL)
+    set_capability(VLC_CAP_LOGGER, 15, Open, NULL)
 
     set_subcategory(SUBCAT_ADVANCED_MISC)
     add_bool("file-logging", false, FILE_LOG_TEXT, FILE_LOG_LONGTEXT, false)

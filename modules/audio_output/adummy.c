@@ -34,9 +34,8 @@ static int Open( vlc_object_t * p_this );
 vlc_plugin_begin ()
     set_shortname( N_("Dummy") )
     set_description( N_("Dummy audio output") )
-    set_capability( VLC_CAP_AUDIO_OUTPUT, 0 )
-    set_callbacks( Open, NULL )
     add_shortcut( "dummy" )
+    set_capability( VLC_CAP_AUDIO_OUTPUT, 0, Open, NULL )
 vlc_plugin_end ()
 
 #define A52_FRAME_NB 1536

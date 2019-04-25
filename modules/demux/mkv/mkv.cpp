@@ -51,9 +51,8 @@ using namespace mkv;
 vlc_plugin_begin ()
     set_shortname( "Matroska" )
     set_description( N_("Matroska stream demuxer" ) )
-    set_capability( VLC_CAP_DEMUX, 50 )
-    set_callbacks( Open, Close )
     add_shortcut( "mka", "mkv" )
+    set_capability( VLC_CAP_DEMUX, 50, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_DEMUX )
 

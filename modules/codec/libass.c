@@ -58,8 +58,7 @@ static void Destroy( vlc_object_t * );
 vlc_plugin_begin ()
     set_shortname( N_("Subtitles (advanced)"))
     set_description( N_("Subtitle renderers using libass") )
-    set_capability( VLC_CAP_SPU_DECODER, 100 )
-    set_callbacks( Create, Destroy )
+    set_capability( VLC_CAP_SPU_DECODER, 100, Create, Destroy )
     //set_subcategory( SUBCAT_INPUT_SCODEC )
 vlc_plugin_end ()
 

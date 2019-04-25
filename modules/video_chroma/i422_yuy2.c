@@ -68,21 +68,20 @@ static picture_t *I422_Y211_Filter  ( filter_t *, picture_t * );
 vlc_plugin_begin ()
 #if defined (PLUGIN_NAME_IS_i422_yuy2)
     set_description( N_("Conversions from " SRC_FOURCC " to " DEST_FOURCC) )
-    set_capability( VLC_CAP_VIDEO_CONVERTER, 80 )
+    set_capability( VLC_CAP_VIDEO_CONVERTER, 80, Activate, NULL )
 # define vlc_CPU_capable() (true)
 # define VLC_TARGET
 #elif defined (PLUGIN_NAME_IS_i422_yuy2_sse2)
     set_description( N_("SSE2 conversions from " SRC_FOURCC " to " DEST_FOURCC) )
-    set_capability( VLC_CAP_VIDEO_CONVERTER, 120 )
+    set_capability( VLC_CAP_VIDEO_CONVERTER, 120, Activate, NULL )
 # define vlc_CPU_capable() vlc_CPU_SSE2()
 # define VLC_TARGET VLC_SSE
 #elif defined (PLUGIN_NAME_IS_i422_yuy2_avx2)
     set_description( N_("AVX2 conversions from " SRC_FOURCC " to " DEST_FOURCC) )
-    set_capability( VLC_CAP_VIDEO_CONVERTER, 130 )
+    set_capability( VLC_CAP_VIDEO_CONVERTER, 130, Activate, NULL )
 # define vlc_CPU_capable() vlc_CPU_AVX2()
 # define VLC_TARGET VLC_AVX
 #endif
-    set_callbacks( Activate, NULL )
 vlc_plugin_end ()
 
 /*****************************************************************************

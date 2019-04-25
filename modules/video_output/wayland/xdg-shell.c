@@ -697,6 +697,12 @@ static void Close(vout_window_t *wnd)
 #define OUTPUT_LONGTEXT N_( \
     "Fullscreen mode with use the output with this name by default.")
 
+#ifdef XDG_SHELL
+# define PRIO 20
+#else
+# define PRIO 10
+#endif
+
 vlc_plugin_begin()
 #ifdef XDG_SHELL
     set_shortname(N_("XDG shell"))
@@ -705,12 +711,7 @@ vlc_plugin_begin()
     set_shortname(N_("WL shell"))
     set_description(N_("Wayland shell surface"))
 #endif
-#ifdef XDG_SHELL
-    set_capability(VLC_CAP_VOUT_WINDOW, 20)
-#else
-    set_capability(VLC_CAP_VOUT_WINDOW, 10)
-#endif
-    set_callbacks(Open, NULL)
+    set_capability(VLC_CAP_VOUT_WINDOW, PRIO, Open, NULL)
 
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_string("wl-display", NULL, DISPLAY_TEXT, DISPLAY_LONGTEXT, true)

@@ -754,14 +754,12 @@ static const char *const priorities_text[] = {
 vlc_plugin_begin ()
     set_shortname( "GNU TLS" )
     set_description( N_("GNU TLS transport layer security") )
-    set_capability( VLC_CAP_TLS_CLIENT, 1 )
-    set_callbacks(OpenClient, NULL)
+    set_capability( VLC_CAP_TLS_CLIENT, 1, OpenClient, NULL )
 
 #ifdef ENABLE_SOUT
     add_submodule ()
         set_description( N_("GNU TLS server") )
-        set_capability( VLC_CAP_TLS_SERVER, 1 )
-        set_callbacks(OpenServer, NULL)
+        set_capability( VLC_CAP_TLS_SERVER, 1, OpenServer, NULL )
 #endif
 
     set_subcategory( SUBCAT_ADVANCED_NETWORK )

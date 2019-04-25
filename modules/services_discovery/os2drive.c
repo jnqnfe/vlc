@@ -42,9 +42,8 @@ vlc_plugin_begin ()
     add_submodule ()
     set_shortname (N_("Discs"))
     set_description (N_("Discs"))
-    set_capability (VLC_CAP_SERVICES_DISCOVERY, 0)
-    set_callbacks (Open, NULL)
     add_shortcut ("disc")
+    set_capability (VLC_CAP_SERVICES_DISCOVERY, 0, Open, NULL)
 
     VLC_SD_PROBE_SUBMODULE
 

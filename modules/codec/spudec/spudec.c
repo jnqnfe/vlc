@@ -48,13 +48,11 @@ static void Close         ( vlc_object_t * );
 vlc_plugin_begin ()
     set_description( N_("DVD subtitles decoder") )
     set_shortname( N_("DVD subtitles") )
-    set_capability( VLC_CAP_SPU_DECODER, 75 )
-    set_callbacks( DecoderOpen, Close )
+    set_capability( VLC_CAP_SPU_DECODER, 75, DecoderOpen, Close )
 
     add_submodule ()
     set_description( N_("DVD subtitles packetizer") )
-    set_capability( VLC_CAP_PACKETIZER, 50 )
-    set_callbacks( PacketizerOpen, Close )
+    set_capability( VLC_CAP_PACKETIZER, 50, PacketizerOpen, Close )
 
     set_subcategory( SUBCAT_INPUT_SCODEC )
     add_bool( "dvdsub-transparency", false,

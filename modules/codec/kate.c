@@ -268,16 +268,14 @@ vlc_plugin_begin ()
 
     set_shortname( N_("Kate"))
     set_description( N_("Kate overlay decoder") )
-    set_capability( VLC_CAP_SPU_DECODER, 50 )
-    set_callbacks( OpenDecoder, CloseDecoder )
     add_shortcut( "kate" )
+    set_capability( VLC_CAP_SPU_DECODER, 50, OpenDecoder, CloseDecoder )
 
 #ifdef ENABLE_PACKETIZER
     add_submodule ()
     set_description( N_("Kate text subtitles packetizer") )
-    set_capability( VLC_CAP_PACKETIZER, 100 )
-    set_callbacks( OpenPacketizer, CloseDecoder )
     add_shortcut( "kate" )
+    set_capability( VLC_CAP_PACKETIZER, 100, OpenPacketizer, CloseDecoder )
 #endif
 
     set_subcategory( SUBCAT_INPUT_SCODEC )

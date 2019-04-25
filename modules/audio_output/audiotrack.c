@@ -181,9 +181,8 @@ typedef struct
 vlc_plugin_begin ()
     set_shortname( "AudioTrack" )
     set_description( "Android AudioTrack audio output" )
-    set_capability( VLC_CAP_AUDIO_OUTPUT, 180 )
     add_shortcut( "audiotrack" )
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_AUDIO_OUTPUT, 180, Open, Close )
 
     set_subcategory( SUBCAT_AUDIO_AOUT )
     add_integer( "audiotrack-session-id", 0,

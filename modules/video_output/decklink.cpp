@@ -241,13 +241,11 @@ vlc_plugin_begin()
 
     add_submodule ()
     set_description (N_("DeckLink Video Output module"))
-    set_capability(VLC_CAP_VOUT_DISPLAY, 0)
-    set_callbacks (OpenVideo, CloseVideo)
+    set_capability(VLC_CAP_VOUT_DISPLAY, 0, OpenVideo, CloseVideo)
 
     add_submodule ()
     set_description (N_("DeckLink Audio Output module"))
-    set_capability(VLC_CAP_AUDIO_OUTPUT, 0)
-    set_callbacks (OpenAudio, CloseAudio)
+    set_capability(VLC_CAP_AUDIO_OUTPUT, 0, OpenAudio, CloseAudio)
 
     /* disabled so that all options actually appear under video */
     set_subcategory(SUBCAT_INPUT_GENERAL)

@@ -43,9 +43,8 @@ static void Close  ( vlc_object_t * );
 
 vlc_plugin_begin ()
     set_description( N_("WAV muxer") )
-    set_capability( VLC_CAP_SOUT_MUX, 5 )
-    set_callbacks( Open, Close )
     add_shortcut( "wav" )
+    set_capability( VLC_CAP_SOUT_MUX, 5, Open, Close )
     //set_subcategory( SUBCAT_SOUT_MUX )
 vlc_plugin_end ()
 

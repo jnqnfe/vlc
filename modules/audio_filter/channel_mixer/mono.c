@@ -95,9 +95,8 @@ static const char *const ppsz_pos_descriptions[] =
  *****************************************************************************/
 vlc_plugin_begin ()
     set_description( N_("Stereo to mono downmixer") )
-    set_capability( VLC_CAP_AUDIO_FILTER, 0 )
-    set_callbacks( OpenFilter, CloseFilter )
     set_shortname( "Mono" )
+    set_capability( VLC_CAP_AUDIO_FILTER, 0, OpenFilter, CloseFilter )
 
     set_subcategory( SUBCAT_AUDIO_AFILTER )
     add_bool( MONO_CFG "downmix", true, MONO_DOWNMIX_TEXT,

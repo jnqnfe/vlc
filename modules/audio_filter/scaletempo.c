@@ -58,11 +58,10 @@ static block_t *DoPitchWork( filter_t *, block_t * );
 vlc_plugin_begin ()
     set_description( MODULE_DESC )
     set_shortname( MODULES_SHORTNAME )
-    set_capability( VLC_CAP_AUDIO_FILTER, 0 )
 #ifdef PITCH_SHIFTER
-    set_callbacks( OpenPitch, ClosePitch )
+    set_capability( VLC_CAP_AUDIO_FILTER, 0, OpenPitch, ClosePitch )
 #else
-    set_callbacks( Open, Close )
+    set_capability( VLC_CAP_AUDIO_FILTER, 0, Open, Close )
 #endif
 
     set_subcategory( SUBCAT_AUDIO_AFILTER )
