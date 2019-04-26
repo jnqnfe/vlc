@@ -352,10 +352,9 @@ static void Manage(vout_display_t *vd)
 /**
  * This function initializes libcaca vout method.
  */
-static int Open(vout_display_t *vd)
+static int Open(vout_display_t *vd, const vout_display_cfg_t *cfg,
+                 video_format_t *fmtp, vlc_video_context *ctx)
 {
-    const vout_display_cfg_t *cfg = vd->cfg;
-    video_format_t *fmtp = &vd->fmt;
     vout_display_sys_t *sys;
 
     if (vout_display_cfg_IsWindowed(cfg))
@@ -480,6 +479,7 @@ static int Open(vout_display_t *vd)
 
     Place(vd, cfg);
 
+    (void) ctx;
     return VLC_SUCCESS;
 
 error:
