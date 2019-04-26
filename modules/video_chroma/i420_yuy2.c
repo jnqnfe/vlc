@@ -90,8 +90,7 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_VIDEO_CONVERTER, 250, Activate, NULL )
 # define vlc_CPU_capable() vlc_CPU_SSE2()
 #elif defined (PLUGIN_NAME_IS_i420_yuy2_altivec)
-    set_description(
-            _("AltiVec conversions from " SRC_FOURCC " to " DEST_FOURCC) );
+    set_description( N_("AltiVec conversions from " SRC_FOURCC " to " DEST_FOURCC) );
     set_capability( VLC_CAP_VIDEO_CONVERTER, 250, Activate, NULL )
 # define vlc_CPU_capable() vlc_CPU_ALTIVEC()
 #elif defined (PLUGIN_NAME_IS_i420_yuy2_avx2)
