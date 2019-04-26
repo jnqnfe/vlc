@@ -639,7 +639,7 @@ static int vlclua_input_add_subtitle(lua_State *L, bool b_path)
     if (!lua_isstring(L, 1))
         return luaL_error( L, "vlc.player.add_subtitle() usage: (path)" );
 
-    bool autoselect;
+    bool autoselect = false;
     if (lua_gettop(L) >= 2)
         autoselect = lua_toboolean(L, 2);
 
