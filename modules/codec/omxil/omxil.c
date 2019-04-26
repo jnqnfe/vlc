@@ -1393,7 +1393,6 @@ static int DecodeVideo( decoder_t *p_dec, block_t *p_block )
 
     /* Loop as long as we haven't either got an input buffer (and cleared
      * *pp_block) or got an output picture */
-    int max_polling_attempts = 100;
     int attempts = 0;
     while( p_block ) {
         bool b_reconfig = false;
