@@ -662,8 +662,6 @@ static int vlc_plugin_symbol_compare(const void *a, const void *b)
 static int vlc_plugin_gpa_cb(vlc_plugin_t *plugin, enum vlc_plugin_desc_actions action, void *target, ...)
 {
     void **rootp = (void **) plugin;
-    const char *name;
-    void *addr;
     va_list ap;
     config_item_params_t *cfg_params;
 
@@ -672,39 +670,45 @@ static int vlc_plugin_gpa_cb(vlc_plugin_t *plugin, enum vlc_plugin_desc_actions 
     switch (action)
     {
         case VLC_MODULE_CB_OPEN:
-            va_start(ap, target);
-            name = va_arg(ap, const char *);
-            addr = (void *) va_arg(ap, vlc_activate_cb);
-            va_end (ap);
-            break;
         case VLC_MODULE_CB_CLOSE:
-            va_start(ap, target);
-            name = va_arg(ap, const char *);
-            addr = (void *) va_arg(ap, vlc_deactivate_cb);
-            va_end (ap);
-            break;
         case VLC_CONFIG_STRING_LIST_CB:
-            va_start(ap, target);
-            cfg_params = va_arg (ap, config_item_params_t *);
-            name = cfg_params->string_list_cb.name;
-            addr = (void *) cfg_params->string_list_cb.cb;
-            va_end (ap);
-            break;
         case VLC_CONFIG_INT_LIST_CB:
-            va_start(ap, target);
-            cfg_params = va_arg (ap, config_item_params_t *);
-            name = cfg_params->int_list_cb.name;
-            addr = (void *) cfg_params->int_list_cb.cb;
-            va_end (ap);
             break;
         default:
             return 0;
     }
 
-    struct vlc_plugin_symbol *sym = malloc(sizeof (*sym));
+    va_start(ap, target);
 
-    sym->name = name;
-    sym->addr = addr;
+    struct vlc_plugin_symbol *sym = malloc(sizeof (*sym));
+    if (unlikely(!sym)) return -1;
+
+    switch (action)
+    {
+        case VLC_MODULE_CB_OPEN:
+            sym->name = va_arg(ap, const char *);
+            sym->addr = (void *) va_arg(ap, vlc_activate_cb);
+            break;
+        case VLC_MODULE_CB_CLOSE:
+            sym->name = va_arg(ap, const char *);
+            sym->addr = (void *) va_arg(ap, vlc_deactivate_cb);
+            break;
+        case VLC_CONFIG_STRING_LIST_CB:
+            cfg_params = va_arg (ap, config_item_params_t *);
+            sym->name = cfg_params->string_list_cb.name;
+            sym->addr = (void *) cfg_params->string_list_cb.cb;
+            break;
+        case VLC_CONFIG_INT_LIST_CB:
+            cfg_params = va_arg (ap, config_item_params_t *);
+            sym->name = cfg_params->int_list_cb.name;
+            sym->addr = (void *) cfg_params->int_list_cb.cb;
+            break;
+        default:
+            unreachable();
+            break;
+    }
+
+    va_end (ap);
 
     struct vlc_plugin_symbol **symp = tsearch(sym, rootp,
                                               vlc_plugin_symbol_compare);
