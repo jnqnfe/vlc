@@ -274,7 +274,7 @@ static int vlc_plugin_desc_cb(vlc_plugin_t *plugin, enum vlc_plugin_desc_actions
                     type =
                     new_item->i_type = params->obsolete.type;
                     new_item->psz_name = params->obsolete.name;
-                    new_item->b_removed = 1;
+                    new_item->b_removed = true;
                     break;
                 case VLC_CONFIG_CREATE_COMMON:
                     type =

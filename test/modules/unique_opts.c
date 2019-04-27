@@ -186,7 +186,7 @@ static int build_lists(data_t* data)
             l_entry->name = strdup(config[j].psz_name);
             l_entry->mod = mod_list[i];
             l_entry->negative = false;
-            l_entry->obsolete = !!config[j].b_removed;
+            l_entry->obsolete = config[j].b_removed;
             l_entry->set_idx = i;
             l_entry->opt_idx = j;
 
@@ -211,7 +211,7 @@ static int build_lists(data_t* data)
                 }
                 l_entry->mod = mod_list[i];
                 l_entry->negative = true;
-                l_entry->obsolete = !!config[j].b_removed;
+                l_entry->obsolete = config[j].b_removed;
                 l_entry->set_idx = i;
                 l_entry->opt_idx = j;
             }

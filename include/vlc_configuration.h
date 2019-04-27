@@ -121,12 +121,12 @@ typedef int (*vlc_integer_list_cb)(const char *, int64_t **, char ***);
  */
 struct module_config_item_t
 {
-    uint16_t    i_type; /**< Item type */
-    char        i_short; /**< Optional short option name */
-    unsigned    b_internal:1; /**< Hidden from GUI preferences but not help */
-    unsigned    b_unsaveable:1; /**< Not stored in configuration */
-    unsigned    b_safe:1; /**< Safe for web plugins and playlist files */
-    unsigned    b_removed:1; /**< Obsolete */
+    uint16_t    i_type;       /**< Item type */
+    char        i_short;      /**< Optional short option name */
+    bool        b_internal;   /**< Hidden from GUI preferences but not help */
+    bool        b_unsaveable; /**< Not stored in configuration */
+    bool        b_safe;       /**< Safe for web plugins and playlist files */
+    bool        b_removed;    /**< Obsolete */
 
     const char *psz_type; /**< Configuration subtype */
     const char *psz_name; /**< Option name */
