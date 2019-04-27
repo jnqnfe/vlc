@@ -95,7 +95,6 @@
 
 /*************** Video filters **************/
 
-#define I_WAVE      N_("Waves")
 #define I_LONGHELP N_("<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /></head><body>" \
     "<h2>Welcome to VLC media player Help</h2>" \
         "<h3>Documentation</h3>" \
