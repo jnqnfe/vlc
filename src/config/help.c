@@ -702,6 +702,9 @@ static void ListModules (vlc_object_t *p_this, bool b_verbose)
     for (size_t j = 0; j < count; j++)
     {
         module_t *p_parser = list[j];
+        if (module_is_main(p_parser))
+            continue;
+
         const char *objname = module_get_object (p_parser);
         printf(color ? TS_GREEN_BOLD "  %-22s " TS_RESET_BOLD "%s\n" TS_RESET : "  %-22s %s\n",
                objname, module_gettext(p_parser, p_parser->psz_longname));
