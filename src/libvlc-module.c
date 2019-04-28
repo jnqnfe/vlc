@@ -60,12 +60,6 @@ static const char *const ppsz_snap_formats[] =
  * Intf
  ****************************************************************************/
 
-// DEPRECATED
-#define INTF_CAT_LONGTEXT N_( \
-    "These options allow you to configure the interfaces used by VLC. " \
-    "You can select the main interface, additional " \
-    "interface modules, and define various related options." )
-
 #define INTF_TEXT N_("Interface module")
 #define INTF_LONGTEXT N_( \
     "This is the main interface used by VLC. " \
@@ -106,14 +100,6 @@ static const char *const ppsz_snap_formats[] =
 /*****************************************************************************
  * Audio
  ****************************************************************************/
-
-// DEPRECATED
-#define AOUT_CAT_LONGTEXT N_( \
-    "These options allow you to modify the behavior of the audio " \
-    "subsystem, and to add audio filters which can be used for " \
-    "post processing or visual effects (spectrum analyzer, etc.). " \
-    "Enable these filters here, and configure them in the \"audio filters\" " \
-    "modules section.")
 
 #define AOUT_TEXT N_("Audio output module")
 #define AOUT_LONGTEXT N_( \
@@ -232,14 +218,6 @@ static const char *const ppsz_replay_gain_mode_text[] = {
 /*****************************************************************************
  * Video
  ****************************************************************************/
-
-// DEPRECATED
-#define VOUT_CAT_LONGTEXT N_( \
-    "These options allow you to modify the behavior of the video output " \
-    "subsystem. You can for example enable video filters (deinterlacing, " \
-    "image adjusting, etc.). Enable these filters here and configure " \
-    "them in the \"video filters\" modules section. You can also set many " \
-    "miscellaneous video options." )
 
 #define VOUT_TEXT N_("Video output module")
 #define VOUT_LONGTEXT N_( \
@@ -482,12 +460,6 @@ static const char *const screensaver_texts[] = {
  * Input
  ****************************************************************************/
 
-// Deprecated
-#define INPUT_CAT_LONGTEXT N_( \
-    "These options allow you to modify the behavior of the input " \
-    "subsystem, such as the DVD or VCD device, the network interface " \
-    "settings or the subtitle channel.")
-
 #define CACHING_TEXT N_("File caching (ms)")
 #define CACHING_LONGTEXT N_( \
     "Caching value for local files, in milliseconds." )
@@ -709,14 +681,6 @@ static const char *const ppsz_prefres[] = {
 
 #define INPUT_LUA_TEXT N_( "Disable all lua plugins" )
 
-// DEPRECATED
-#define SUB_CAT_LONGTEXT N_( \
-    "These options allow you to modify the behavior of the subpictures " \
-    "subsystem. You can for example enable subpictures sources (logo, etc.). " \
-    "Enable these filters here and configure them in the " \
-    "\"subsources filters\" modules section. You can also set many " \
-    "miscellaneous subpictures options." )
-
 #define SUB_MARGIN_TEXT N_("Force subtitle position")
 #define SUB_MARGIN_LONGTEXT N_( \
     "You can use this option to place the subtitles under the movie, " \
@@ -926,11 +890,6 @@ static const char *const ppsz_prefres[] = {
 #define META_URL_LONGTEXT N_( \
      "Allows you to specify a \"url\" metadata for an input.")
 
-// DEPRECATED
-#define CODEC_CAT_LONGTEXT N_( \
-    "These options allow you to control the preferred modules used for " \
-    "accessing, demuxing and decoding (or encoding) inputs." )
-
 #define CODEC_TEXT N_("Preferred decoders list")
 #define CODEC_LONGTEXT N_( \
     "List of codecs that VLC will use in " \
@@ -948,11 +907,6 @@ static const char *const ppsz_prefres[] = {
 /*****************************************************************************
  * Sout
  ****************************************************************************/
-
-// DEPRECATED
-#define SOUT_CAT_LONGTEXT N_( \
-    "These options allow you to set default global options for the " \
-    "stream output subsystem." )
 
 #define SOUT_TEXT N_("Default stream output chain")
 #define SOUT_LONGTEXT N_( \
@@ -1123,11 +1077,6 @@ static const char *const ppsz_prefres[] = {
  * Playlist
  ****************************************************************************/
 
-// DEPRECATED
-#define PLAYLIST_CAT_LONGTEXT N_( \
-     "These options define the behavior of the playlist. Some " \
-     "of them can be overridden in the playlist dialog box." )
-
 #define PREPARSE_TEXT N_( "Automatically preparse items")
 #define PREPARSE_LONGTEXT N_( \
     "Automatically preparse items added to the playlist " \
@@ -1228,10 +1177,6 @@ static const char *const psz_recursive_list_text[] = {
 /*****************************************************************************
  * Hotkeys
  ****************************************************************************/
-
-// DEPRECATED
-#define HOTKEY_CAT_LONGTEXT N_( "These settings are the global VLC key " \
-    "bindings, known as \"hotkeys\"." )
 
 static const int mouse_wheel_values[] = { -1, 0, 2, 3, };
 static const char *const mouse_wheel_texts[] = {
