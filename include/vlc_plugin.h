@@ -396,8 +396,8 @@ typedef union
     struct {
         uint16_t type;
         enum vlc_config_subcat id; /* subcat ID */
-        const char *text; /* section/hint text */
-        const char *longtext; /* section/hint longtext */
+        const char *text; /* section text */
+        const char *longtext; /* section longtext */
     } special;
     struct {
         uint16_t type;
@@ -535,18 +535,6 @@ typedef union
         .longtext = (_longtext) \
     } }; \
     add_special_type_inner()
-
-/* private, for alternate category headings in core help output */
-#ifndef __PLUGIN__
-#define add_category_hint( _text, _longtext ) \
-    cfg_params = (config_item_params_t) { .special = { \
-        .type = CONFIG_HINT_CATEGORY, \
-        .id = SUBCAT_INVALID, \
-        .text = (_text), \
-        .longtext = (_longtext) \
-    } }; \
-    add_special_type_inner()
-#endif
 
 /* Basic option items */
 
