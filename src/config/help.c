@@ -600,13 +600,12 @@ static bool plugin_show(const vlc_plugin_t *plugin)
 static void Usage (vlc_object_t *p_this, char const *psz_search, bool core_only)
 {
     bool found = false;
-    bool strict = core_only;
+    bool strict = false;
     if (psz_search != NULL && psz_search[0] == '=')
     {
         strict = true;
         psz_search++;
     }
-    if (core_only) psz_search = "core";
 
     bool color = false;
 #ifndef _WIN32
@@ -620,10 +619,14 @@ static void Usage (vlc_object_t *p_this, char const *psz_search, bool core_only)
     for (const vlc_plugin_t *p = vlc_plugins; p != NULL; p = p->next)
     {
         const module_t *m = p->module;
+        bool is_core = module_is_main(m);
+
+        if (core_only && !is_core)
+            continue;
+
         const module_config_item_t *subcat = NULL;
         const module_config_item_t *section = NULL;
         const char *objname = module_get_object(m);
-        bool is_core = module_is_main(m);
 
         if (psz_search == NULL && p->conf.count == 0)
             continue; /* Ignore modules without config options */
