@@ -204,6 +204,7 @@ static inline bool vlc_config_IntSubcatIsValid(int i)
 struct vlc_config_subcat_data
 {
     enum vlc_config_cat cat;
+    bool gui_hidden;
     const char *name;
     const char *help;
 };
@@ -233,47 +234,47 @@ static_assert(CAT_MAX == (sizeof (vlc_cat_preferred_order) / sizeof (vlc_cat_pre
 
 static const struct vlc_config_subcat_data vlc_subcategory_data[] =
 {
-    /* SUBCAT_INTERFACE_GENERAL   */ { CAT_INTERFACE,  N_("Interface"),           INTF_GENERAL_HELP  },
-    /* SUBCAT_INTERFACE_CONTROL   */ { CAT_INTERFACE,  N_("Control interfaces"),  INTF_CONTROL_HELP  },
-    /* SUBCAT_INTERFACE_HOTKEYS   */ { CAT_INTERFACE,  N_("Hotkey settings"),     INTF_HOTKEYS_HELP  },
-    /* SUBCAT_INTERFACE_MAIN      */ { CAT_INTERFACE,  N_("Main interfaces"),     INTF_MAIN_HELP     },
+    /* SUBCAT_INTERFACE_GENERAL   */ { CAT_INTERFACE,  false,  N_("Interface"),           INTF_GENERAL_HELP  },
+    /* SUBCAT_INTERFACE_CONTROL   */ { CAT_INTERFACE,  false,  N_("Control interfaces"),  INTF_CONTROL_HELP  },
+    /* SUBCAT_INTERFACE_HOTKEYS   */ { CAT_INTERFACE,  false,  N_("Hotkey settings"),     INTF_HOTKEYS_HELP  },
+    /* SUBCAT_INTERFACE_MAIN      */ { CAT_INTERFACE,  false,  N_("Main interfaces"),     INTF_MAIN_HELP     },
 
-    /* SUBCAT_AUDIO_GENERAL       */ { CAT_AUDIO,      N_("Audio"),               AUDIO_GENERAL_HELP },
-    /* SUBCAT_AUDIO_AFILTER       */ { CAT_AUDIO,      N_("Filters"),             AFILTER_HELP       },
-    /* SUBCAT_AUDIO_AOUT          */ { CAT_AUDIO,      N_("Output modules"),      AOUT_HELP          },
-    /* SUBCAT_AUDIO_RESAMPLER     */ { CAT_AUDIO,      N_("Resampler"),           AFILTER_HELP       },
-    /* SUBCAT_AUDIO_VISUAL        */ { CAT_AUDIO,      N_("Visualizations"),      AVISUAL_HELP       },
+    /* SUBCAT_AUDIO_GENERAL       */ { CAT_AUDIO,      false,  N_("Audio"),               AUDIO_GENERAL_HELP },
+    /* SUBCAT_AUDIO_AFILTER       */ { CAT_AUDIO,      false,  N_("Filters"),             AFILTER_HELP       },
+    /* SUBCAT_AUDIO_AOUT          */ { CAT_AUDIO,      false,  N_("Output modules"),      AOUT_HELP          },
+    /* SUBCAT_AUDIO_RESAMPLER     */ { CAT_AUDIO,      false,  N_("Resampler"),           AFILTER_HELP       },
+    /* SUBCAT_AUDIO_VISUAL        */ { CAT_AUDIO,      false,  N_("Visualizations"),      AVISUAL_HELP       },
 
-    /* SUBCAT_VIDEO_GENERAL       */ { CAT_VIDEO,      N_("Video"),               VIDEO_GENERAL_HELP },
-    /* SUBCAT_VIDEO_VFILTER       */ { CAT_VIDEO,      N_("Filters"),             VFILTER_HELP       },
-    /* SUBCAT_VIDEO_VOUT          */ { CAT_VIDEO,      N_("Output modules"),      VOUT_HELP          },
-    /* SUBCAT_VIDEO_SPLITTER      */ { CAT_VIDEO,      N_("Splitters"),           SPLITTER_HELP      },
-    /* SUBCAT_VIDEO_SUBPIC        */ { CAT_VIDEO,      N_("Subtitles / OSD"),     SUBPIC_HELP        },
+    /* SUBCAT_VIDEO_GENERAL       */ { CAT_VIDEO,      false,  N_("Video"),               VIDEO_GENERAL_HELP },
+    /* SUBCAT_VIDEO_VFILTER       */ { CAT_VIDEO,      false,  N_("Filters"),             VFILTER_HELP       },
+    /* SUBCAT_VIDEO_VOUT          */ { CAT_VIDEO,      false,  N_("Output modules"),      VOUT_HELP          },
+    /* SUBCAT_VIDEO_SPLITTER      */ { CAT_VIDEO,      false,  N_("Splitters"),           SPLITTER_HELP      },
+    /* SUBCAT_VIDEO_SUBPIC        */ { CAT_VIDEO,      false,  N_("Subtitles / OSD"),     SUBPIC_HELP        },
 
-    /* SUBCAT_INPUT_GENERAL       */ { CAT_INPUT,      N_("Input / Codecs"),      INPUT_GENERAL_HELP },
-    /* SUBCAT_INPUT_ACCESS        */ { CAT_INPUT,      N_("Access modules"),      ACCESS_HELP        },
-    /* SUBCAT_INPUT_ACODEC        */ { CAT_INPUT,      N_("Audio codecs"),        ADEC_HELP          },
-    /* SUBCAT_INPUT_DEMUX         */ { CAT_INPUT,      N_("Demuxers"),            DEMUX_HELP         },
-    /* SUBCAT_INPUT_STREAM_FILTER */ { CAT_INPUT,      N_("Stream filters"),      STREAM_FILTER_HELP },
-    /* SUBCAT_INPUT_SCODEC        */ { CAT_INPUT,      N_("Subtitle codecs"),     SDEC_HELP          },
-    /* SUBCAT_INPUT_VCODEC        */ { CAT_INPUT,      N_("Video codecs"),        VDEC_HELP          },
+    /* SUBCAT_INPUT_GENERAL       */ { CAT_INPUT,      false,  N_("Input / Codecs"),      INPUT_GENERAL_HELP },
+    /* SUBCAT_INPUT_ACCESS        */ { CAT_INPUT,      false,  N_("Access modules"),      ACCESS_HELP        },
+    /* SUBCAT_INPUT_ACODEC        */ { CAT_INPUT,      false,  N_("Audio codecs"),        ADEC_HELP          },
+    /* SUBCAT_INPUT_DEMUX         */ { CAT_INPUT,      false,  N_("Demuxers"),            DEMUX_HELP         },
+    /* SUBCAT_INPUT_STREAM_FILTER */ { CAT_INPUT,      false,  N_("Stream filters"),      STREAM_FILTER_HELP },
+    /* SUBCAT_INPUT_SCODEC        */ { CAT_INPUT,      false,  N_("Subtitle codecs"),     SDEC_HELP          },
+    /* SUBCAT_INPUT_VCODEC        */ { CAT_INPUT,      false,  N_("Video codecs"),        VDEC_HELP          },
 
-    /* SUBCAT_SOUT_GENERAL        */ { CAT_SOUT,       N_("Stream output"),       SOUT_GENERAL_HELP  },
-    /* SUBCAT_SOUT_ACO            */ { CAT_SOUT,       N_("Access output"),       SOUT_ACO_HELP      },
-    /* SUBCAT_SOUT_MUX            */ { CAT_SOUT,       N_("Muxers"),              SOUT_MUX_HELP      },
-    /* SUBCAT_SOUT_PACKETIZER     */ { CAT_SOUT,       N_("Packetizers"),         SOUT_PACKET_HELP   },
-    /* SUBCAT_SOUT_RENDERER       */ { CAT_SOUT,       N_("Renderers"),           SOUT_RENDER_HELP   },
-    /* SUBCAT_SOUT_STREAM         */ { CAT_SOUT,       N_("Sout stream"),         SOUT_STREAM_HELP   },
-    /* SUBCAT_SOUT_VOD            */ { CAT_SOUT,       N_("VoD"),                 SOUT_VOD_HELP      },
+    /* SUBCAT_SOUT_GENERAL        */ { CAT_SOUT,       false,  N_("Stream output"),       SOUT_GENERAL_HELP  },
+    /* SUBCAT_SOUT_ACO            */ { CAT_SOUT,       false,  N_("Access output"),       SOUT_ACO_HELP      },
+    /* SUBCAT_SOUT_MUX            */ { CAT_SOUT,       false,  N_("Muxers"),              SOUT_MUX_HELP      },
+    /* SUBCAT_SOUT_PACKETIZER     */ { CAT_SOUT,       false,  N_("Packetizers"),         SOUT_PACKET_HELP   },
+    /* SUBCAT_SOUT_RENDERER       */ { CAT_SOUT,       false,  N_("Renderers"),           SOUT_RENDER_HELP   },
+    /* SUBCAT_SOUT_STREAM         */ { CAT_SOUT,       false,  N_("Sout stream"),         SOUT_STREAM_HELP   },
+    /* SUBCAT_SOUT_VOD            */ { CAT_SOUT,       false,  N_("VoD"),                 SOUT_VOD_HELP      },
 
-    /* SUBCAT_PLAYLIST_GENERAL    */ { CAT_PLAYLIST,   N_("Playlist"),            PL_GENERAL_HELP    },
-    /* SUBCAT_PLAYLIST_EXPORT     */ { CAT_PLAYLIST,   N_("Export"),              PL_EXPORT_HELP     },
-    /* SUBCAT_PLAYLIST_SD         */ { CAT_PLAYLIST,   N_("Services discovery"),  SD_HELP            },
+    /* SUBCAT_PLAYLIST_GENERAL    */ { CAT_PLAYLIST,   false,  N_("Playlist"),            PL_GENERAL_HELP    },
+    /* SUBCAT_PLAYLIST_EXPORT     */ { CAT_PLAYLIST,   false,  N_("Export"),              PL_EXPORT_HELP     },
+    /* SUBCAT_PLAYLIST_SD         */ { CAT_PLAYLIST,   false,  N_("Services discovery"),  SD_HELP            },
 
-    /* SUBCAT_ADVANCED_MISC       */ { CAT_ADVANCED,   N_("Advanced"),            AADVANCED_HELP     },
-    /* SUBCAT_ADVANCED_NETWORK    */ { CAT_ADVANCED,   N_("Network"),             ANETWORK_HELP      },
+    /* SUBCAT_ADVANCED_MISC       */ { CAT_ADVANCED,   false,  N_("Advanced"),            AADVANCED_HELP     },
+    /* SUBCAT_ADVANCED_NETWORK    */ { CAT_ADVANCED,   false,  N_("Network"),             ANETWORK_HELP      },
 
-    /* SUBCAT_HIDDEN              */ { CAT_HIDDEN,     NULL,                      NULL               },
+    /* SUBCAT_HIDDEN              */ { CAT_HIDDEN,     true,   NULL,                      NULL               },
 };
 
 static_assert(SUBCAT_MAX == (sizeof (vlc_subcategory_data) / sizeof (vlc_subcategory_data[0])), "subcategory data table size mismatch");
@@ -332,6 +333,18 @@ VLC_USED
 static inline enum vlc_config_subcat vlc_config_CategoryGeneralSubcatGet( enum vlc_config_cat cat )
 {
     return vlc_cat_to_general_subcat_map[(int)cat];
+}
+
+/** Check if the given subcategory is a GUI-hidden one
+ *
+ * Certain subcategories are expected to be hidden in GUI preferences windows
+ * (but not from --help output). This returns TRUE if the given subcategory is
+ * a hidden one.
+ */
+VLC_USED
+static inline bool vlc_config_SubcategoryIsGUIHidden( enum vlc_config_subcat subcat )
+{
+    return vlc_subcategory_data[(int)subcat].gui_hidden;
 }
 
 #endif /* VLC_CONFIG_CATS_H */

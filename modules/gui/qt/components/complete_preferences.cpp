@@ -83,13 +83,13 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
             const module_config_item_t *p_item = p_config + j;
 
             // Note, we only want to create the node if there is at least one
-            // item under it, it is not the hidden subcat obviously, nor
-            // invalid, and we have not already created it (should a subcat be
-            // used multiple times in one set).
+            // item under it, it is not a hidden subcat obviously, nor invalid,
+            // and we have not already created it (should a subcat be used
+            // multiple times in one set).
             if( p_item->i_type == CONFIG_SUBCATEGORY )
             {
                 subcat = (enum vlc_config_subcat) p_item->value.i;
-                node_creation_pending = (subcat != SUBCAT_HIDDEN);
+                node_creation_pending = !vlc_config_SubcategoryIsGUIHidden(subcat);
                 continue;
             }
 
@@ -147,7 +147,7 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
 QTreeWidgetItem *PrefsTree::createCatNode( enum vlc_config_cat cat )
 {
     enum vlc_config_subcat subcat = vlc_config_CategoryGeneralSubcatGet( cat );
-    assert(subcat != SUBCAT_INVALID && subcat != SUBCAT_HIDDEN);
+    assert(subcat != SUBCAT_INVALID && !vlc_config_SubcategoryIsGUIHidden(subcat));
 
     PrefsItemData *data = new PrefsItemData( this );
     data->i_type = PrefsItemData::TYPE_CATEGORY;
