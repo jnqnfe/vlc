@@ -95,6 +95,8 @@ libqt_plugin_la_SOURCES = \
 	gui/qt/components/preferences_widgets.hpp \
 	gui/qt/components/complete_preferences.cpp \
 	gui/qt/components/complete_preferences.hpp \
+	gui/qt/components/expert_preferences.cpp \
+	gui/qt/components/expert_preferences.hpp \
 	gui/qt/components/simple_preferences.cpp \
 	gui/qt/components/simple_preferences.hpp \
 	gui/qt/components/open_panels.cpp gui/qt/components/open_panels.hpp \
@@ -249,6 +251,7 @@ nodist_libqt_plugin_la_SOURCES = \
 	gui/qt/components/player_controller.moc.cpp \
 	gui/qt/components/preferences_widgets.moc.cpp \
 	gui/qt/components/complete_preferences.moc.cpp \
+	gui/qt/components/expert_preferences.moc.cpp \
 	gui/qt/components/simple_preferences.moc.cpp \
 	gui/qt/components/open_panels.moc.cpp \
 	gui/qt/components/interface_widgets.moc.cpp \

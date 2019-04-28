@@ -229,6 +229,11 @@ void VStringConfigControl::doApply()
     config_PutPsz( getName(), qtu( getValue() ) );
 }
 
+void VStringConfigControl::storeValue()
+{
+    p_item->value.psz = (char*) qtu( getValue() );
+}
+
 /*********** String **************/
 StringConfigControl::StringConfigControl( module_config_item_t *_p_item,
                                           QWidget *_parent, bool pwd ) :
@@ -823,6 +828,11 @@ void VIntConfigControl::doApply()
     config_PutInt( getName(), getValue() );
 }
 
+void VIntConfigControl::storeValue()
+{
+    p_item->value.i = getValue();
+}
+
 /*********** Integer **************/
 IntegerConfigControl::IntegerConfigControl( module_config_item_t *_p_item,
                                             QWidget *p ) :
@@ -927,7 +937,6 @@ int IntegerRangeSliderConfigControl::getValue() const
 {
     return slider->value();
 }
-
 
 /********* Integer / choice list **********/
 IntegerListConfigControl::IntegerListConfigControl( module_config_item_t *_p_item,
@@ -1120,6 +1129,11 @@ void ColorConfigControl::selectColor()
 void VFloatConfigControl::doApply()
 {
     config_PutFloat( getName(), getValue() );
+}
+
+void VFloatConfigControl::storeValue()
+{
+    p_item->value.f = getValue();
 }
 
 /*********** Float **************/
@@ -1449,6 +1463,9 @@ void KeySelectorControl::doApply()
                        qtu( it->data( GLOBAL_HOTKEY_COL, Qt::UserRole ).toString() ) );
     }
 }
+
+void KeySelectorControl::storeValue()
+{}
 
 bool KeySelectorControl::eventFilter( QObject *obj, QEvent *e )
 {

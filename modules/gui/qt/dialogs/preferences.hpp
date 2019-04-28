@@ -27,8 +27,10 @@
 #include "components/simple_preferences.hpp"
 
 class PrefsTree;
+class PrefsTreeExpert;
 class SPrefsCatList;
 class SPrefsPanel;
+class ExpertPrefsEditDialog;
 class QTreeWidgetItem;
 class QGroupBox;
 class QRadioButton;
@@ -46,6 +48,7 @@ public:
     virtual ~PrefsDialog();
 
 private:
+    intf_thread_t *p_intf;
     size_t count;
     module_t **p_list;
 
@@ -53,9 +56,9 @@ private:
     QStackedWidget *stack;
 
     /* View selection */
-    enum { SIMPLE, ADVANCED };
+    enum { SIMPLE, ADVANCED, EXPERT };
     QGroupBox *types;
-    QRadioButton *simple, *all;
+    QRadioButton *simple, *all, *expert;
 
     /* Simple view components */
     QWidget *simple_split_widget;
@@ -72,13 +75,24 @@ private:
     PrefsTree *advanced_tree;
     QStackedWidget *advanced_panels_stack;
 
+    /* Expert view components */
+    QWidget *expert_widget;
+    QBoxLayout *expert_widget_layout;
+    SearchLineEdit *expert_tree_filter;
+    PrefsTreeExpert *expert_tree;
+    QLabel *expert_text;
+    QLabel *expert_longtext;
+
 private slots:
+    void setExpert();
     void setAdvanced();
     void setSimple();
 
+    void changeExpertDesc( QTreeWidgetItem * );
     void changeAdvPanel( QTreeWidgetItem * );
     void changeSimplePanel( int );
     void advancedTreeFilterChanged( const QString & );
+    void expertTreeFilterChanged( const QString & );
     void onlyLoadedToggled();
 
     void save();

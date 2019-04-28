@@ -30,6 +30,7 @@
 #include "dialogs/errors.hpp"
 
 #include "components/complete_preferences.hpp"
+#include "components/expert_preferences.hpp"
 #include "components/simple_preferences.hpp"
 #include "util/searchlineedit.hpp"
 #include "util/qvlcframe.hpp"
@@ -49,7 +50,7 @@
 #include <vlc_modules.h>
 
 PrefsDialog::PrefsDialog( QWidget *parent, intf_thread_t *_p_intf )
-            : QVLCDialog( parent, _p_intf )
+            : QVLCDialog( parent, _p_intf ), p_intf( _p_intf )
 {
     setWindowTitle( qtr( "Preferences" ) );
     setWindowRole( "vlc-preferences" );
@@ -72,10 +73,13 @@ PrefsDialog::PrefsDialog( QWidget *parent, intf_thread_t *_p_intf )
     types_l->setMargin( 3 );
     simple = new QRadioButton( qtr( "Simple" ), types );
     all = new QRadioButton( qtr("All"), types );
+    expert = new QRadioButton( qtr("Expert"), types );
     simple->setToolTip( qtr( "Switch to simple preferences view" ) );
     all->setToolTip( qtr( "Switch to full preferences view" ) );
+    expert->setToolTip( qtr( "Switch to expert preferences view" ) );
     types_l->addWidget( simple );
     types_l->addWidget( all );
+    types_l->addWidget( expert );
     types->setLayout( types_l );
     simple->setChecked( true );
 
@@ -132,6 +136,30 @@ PrefsDialog::PrefsDialog( QWidget *parent, intf_thread_t *_p_intf )
 
     stack->insertWidget( ADVANCED, advanced_split_widget );
 
+    /* Expert view (panel) */
+    expert_widget = new QWidget;
+    expert_widget_layout = new QVBoxLayout;
+    expert_widget->setLayout( expert_widget_layout );
+
+    expert_tree_filter = NULL;
+    expert_tree = NULL;
+
+    expert_text = new QLabel;
+    expert_longtext = new QLabel;
+
+    expert_text->setWordWrap(true);
+    expert_longtext->setWordWrap(true);
+
+    QFont textFont = QApplication::font();
+    textFont.setPointSize( textFont.pointSize() + 2 );
+    textFont.setUnderline( true );
+    expert_text->setFont( textFont );
+
+    expert_widget_layout->addWidget( expert_text );
+    expert_widget_layout->addWidget( expert_longtext );
+
+    stack->insertWidget( EXPERT, expert_widget );
+
     /* Layout  */
     main_layout->addWidget( stack, 0, 0, 3, 3 );
     main_layout->addWidget( types, 3, 0, 2, 1 );
@@ -150,6 +178,7 @@ PrefsDialog::PrefsDialog( QWidget *parent, intf_thread_t *_p_intf )
 
     BUTTONACT( simple, setSimple() );
     BUTTONACT( all, setAdvanced() );
+    BUTTONACT( expert, setExpert() );
 
     QVLCTools::restoreWidgetPosition( p_intf, "Preferences", this, QSize( 900, 700 ) );
 }
@@ -159,12 +188,49 @@ PrefsDialog::~PrefsDialog()
     module_list_free( p_list );
 }
 
+void PrefsDialog::setExpert()
+{
+    /* Lazy creation */
+    if( !expert_tree )
+    {
+        if ( !p_list )
+            p_list = vlc_module_list_have_config( &count );
+
+        expert_tree_filter = new SearchLineEdit( expert_widget );
+        expert_tree_filter->setMinimumHeight( 26 );
+
+        QShortcut *search = new QShortcut( QKeySequence( QKeySequence::Find ), expert_tree_filter );
+
+        expert_tree = new PrefsTreeExpert( p_intf, expert_widget, p_list, count );
+
+        expert_widget_layout->insertWidget( 0, expert_tree_filter );
+        expert_widget_layout->insertWidget( 1, expert_tree );
+//        expert_widget->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Minimum );
+
+        CONNECT( expert_tree,
+                 currentItemChanged( QTreeWidgetItem *, QTreeWidgetItem * ),
+                 this, changeExpertDesc( QTreeWidgetItem * ) );
+        CONNECT( expert_tree_filter, textChanged( const QString &  ),
+                 this, expertTreeFilterChanged( const QString & ) );
+        CONNECT( search, activated(), expert_tree_filter, setFocus() );
+
+        /* Set initial selection */
+        expert_tree->setCurrentIndex(
+                expert_tree->model()->index( 0, 0, QModelIndex() ) );
+    }
+
+    expert->setChecked( true );
+    stack->setCurrentIndex( EXPERT );
+    setWindowTitle( qtr( "Expert Preferences" ) );
+}
+
 void PrefsDialog::setAdvanced()
 {
     /* Lazy creation */
     if( !advanced_tree )
     {
-        p_list = vlc_module_list_have_config( &count );
+        if ( !p_list )
+            p_list = vlc_module_list_have_config( &count );
 
         tree_filter = new SearchLineEdit( advanced_tree_panel );
         tree_filter->setMinimumHeight( 26 );
@@ -243,10 +309,22 @@ void PrefsDialog::changeAdvPanel( QTreeWidgetItem *item )
     if( !data->panel )
     {
         data->panel = new AdvPrefsPanel( p_intf, advanced_panels_stack, data );
-        advanced_panels_stack->insertWidget( advanced_panels_stack->count(),
-                                             data->panel );
+        advanced_panels_stack->addWidget( data->panel );
     }
     advanced_panels_stack->setCurrentWidget( data->panel );
+}
+
+/* Changing from one Expert item description to another */
+void PrefsDialog::changeExpertDesc( QTreeWidgetItem *item )
+{
+    if( item == NULL ) return;
+    ExpertPrefsItemData *data = item->data( 0, Qt::UserRole ).value<ExpertPrefsItemData*>();
+
+    expert_text->setText( data->title );
+    if (data->item->psz_longtext)
+        expert_longtext->setText( qtr( data->item->psz_longtext ) );
+    else
+        expert_longtext->setText( qtr( data->item->psz_text ) );
 }
 
 /* Actual apply and save for the preferences */
@@ -264,6 +342,11 @@ void PrefsDialog::save()
     {
         msg_Dbg( p_intf, "Saving the advanced preferences" );
         advanced_tree->applyAll();
+    }
+    else if( expert->isChecked() && expert_tree->isVisible() )
+    {
+        msg_Dbg( p_intf, "Saving the expert preferences" );
+        expert_tree->applyAll();
     }
 
     /* Save to file */
@@ -311,6 +394,11 @@ void PrefsDialog::reset()
 
         accept();
     }
+}
+
+void PrefsDialog::expertTreeFilterChanged( const QString & text )
+{
+    expert_tree->filter( text );
 }
 
 void PrefsDialog::advancedTreeFilterChanged( const QString & text )
