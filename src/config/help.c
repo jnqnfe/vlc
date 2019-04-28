@@ -352,10 +352,6 @@ static void print_item(const module_t *m, const module_config_item_t *item,
         {
             switch (item->i_type)
             {
-                case CONFIG_HINT_CATEGORY:
-                    /* ignore now, we've ditched these */
-                    break;
-
                 case CONFIG_SUBCATEGORY:
                     *subcat = (is_core) ? item : NULL;
                     *section = NULL;

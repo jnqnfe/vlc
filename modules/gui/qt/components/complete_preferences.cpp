@@ -512,9 +512,6 @@ bool PrefsItemData::contains( const QString &text, Qt::CaseSensitivity cs )
     {
         if ( p_item->i_type == CONFIG_SUBCATEGORY )
             show = (p_item->value.i == id);
-        /* cat-hint items are not relevant, they are an alternate set of headings for help output */
-        else if( p_item->i_type == CONFIG_HINT_CATEGORY )
-            continue;
         else if (show)
         {
             if ( p_item->psz_text && qtr( p_item->psz_text ).contains( text, cs ) )
@@ -603,9 +600,6 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
             continue;
         }
         if (!show) continue;
-
-        /* cat-hint items are not relevant, they are an alternate set of headings for help output */
-        if( p_item->i_type == CONFIG_HINT_CATEGORY ) continue;
 
         if( p_item->i_type == CONFIG_SECTION )
         {

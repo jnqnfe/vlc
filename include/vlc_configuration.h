@@ -59,9 +59,8 @@
 #define CONFIG_ITEM_CLASS_STRING     0x2000 /* String data-value option */
 
 /* Configuration hint types */
-#define CONFIG_HINT_CATEGORY         (CONFIG_ITEM_CLASS_SPECIAL | 0x01) /* Set category (help output) */
-#define CONFIG_SUBCATEGORY           (CONFIG_ITEM_CLASS_SPECIAL | 0x02) /* Set subcategory (GUI) */
-#define CONFIG_SECTION               (CONFIG_ITEM_CLASS_SPECIAL | 0x03) /* Start of new section */
+#define CONFIG_SUBCATEGORY           (CONFIG_ITEM_CLASS_SPECIAL | 0x01) /* Set subcategory (GUI) */
+#define CONFIG_SECTION               (CONFIG_ITEM_CLASS_SPECIAL | 0x02) /* Start of new section */
 
 /* Configuration item types */
 #define CONFIG_ITEM_INVALID          (CONFIG_ITEM_CLASS_INVALID | 0x00)
