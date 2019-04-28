@@ -54,7 +54,7 @@ static void PauseConsole (void);
 #endif
 
 static void Help (vlc_object_t *, const char *);
-static void Usage (vlc_object_t *, const char *);
+static void Usage (vlc_object_t *, const char *, bool);
 static void Version (void);
 static void ListModules (vlc_object_t *, bool);
 
@@ -201,23 +201,23 @@ static void Help (vlc_object_t *p_this, char const *psz_help_name)
     if( psz_help_name && !strcmp( psz_help_name, "help" ) )
     {
         printf(_(vlc_usage), "vlc");
-        Usage( p_this, "=core" );
+        Usage( p_this, NULL, true );
         print_help_on_full_help();
     }
     else if( psz_help_name && !strcmp( psz_help_name, "longhelp" ) )
     {
         printf(_(vlc_usage), "vlc");
-        Usage( p_this, NULL );
+        Usage( p_this, NULL, false );
         print_help_on_full_help();
     }
     else if( psz_help_name && !strcmp( psz_help_name, "full-help" ) )
     {
         printf(_(vlc_usage), "vlc");
-        Usage( p_this, NULL );
+        Usage( p_this, NULL, false );
     }
     else if( psz_help_name )
     {
-        Usage( p_this, psz_help_name );
+        Usage( p_this, psz_help_name, false );
     }
 
     PauseConsole();
@@ -597,15 +597,16 @@ static bool plugin_show(const vlc_plugin_t *plugin)
     return false;
 }
 
-static void Usage (vlc_object_t *p_this, char const *psz_search)
+static void Usage (vlc_object_t *p_this, char const *psz_search, bool core_only)
 {
     bool found = false;
-    bool strict = false;
+    bool strict = core_only;
     if (psz_search != NULL && psz_search[0] == '=')
     {
         strict = true;
         psz_search++;
     }
+    if (core_only) psz_search = "core";
 
     bool color = false;
 #ifndef _WIN32
