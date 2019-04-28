@@ -615,7 +615,7 @@ static void Usage (vlc_object_t *p_this, char const *psz_search, bool core_only)
 
     const bool desc = var_InheritBool(p_this, "help-verbose");
 
-    if (!core_only)
+    if (!core_only && !psz_search)
         printf(color ? "\n" TS_GREEN_BOLD "%s" TS_RESET "\n" : "\n%s\n",
                _("PLUGIN OPTIONS:"));
 
@@ -626,6 +626,10 @@ static void Usage (vlc_object_t *p_this, char const *psz_search, bool core_only)
         bool is_core = module_is_main(m);
 
         if (core_only && !is_core)
+            continue;
+
+        /* no need for core to be discoverable through search, user have --help */
+        if (is_core && psz_search)
             continue;
 
         if (is_core)
