@@ -333,8 +333,9 @@ static int vlc_swidth(const char *str)
 }
 
 static void print_item(const module_t *m, const module_config_item_t *item,
+                       const module_config_item_t **subcat,
                        const module_config_item_t **section, bool color,
-                       bool desc)
+                       bool desc, bool is_core)
 {
 #ifndef _WIN32
 # define OPTION_VALUE_SEP " "
@@ -352,16 +353,12 @@ static void print_item(const module_t *m, const module_config_item_t *item,
             switch (item->i_type)
             {
                 case CONFIG_HINT_CATEGORY:
-                    printf(color ? TS_GREEN_BOLD "\n %s\n" TS_RESET : "\n %s\n",
-                           module_gettext(m, item->psz_text));
-
-                    if (desc && item->psz_longtext != NULL)
-                        printf(color ? TS_CYAN_BOLD " %s\n" TS_RESET : " %s\n",
-                               module_gettext(m, item->psz_longtext));
+                    /* ignore now, we've ditched these */
                     break;
 
                 case CONFIG_SUBCATEGORY:
-                    /* We ignore these here, using 'hints' instead */
+                    *subcat = (is_core) ? item : NULL;
+                    *section = NULL;
                     break;
 
                 case CONFIG_SECTION:
@@ -494,6 +491,26 @@ static void print_item(const module_t *m, const module_config_item_t *item,
             return;
     }
 
+    if (*subcat)
+    {
+        enum vlc_config_subcat subcat_id = (enum vlc_config_subcat) (*subcat)->value.i;
+        *subcat = NULL;
+        const char *subcat_help = vlc_config_SubcategoryHelpGet(subcat_id);
+
+        if (vlc_config_SubcategoryIsGeneral(subcat_id))
+            printf(color ? TS_GREEN_BOLD "\n %s\n" TS_RESET : "\n %s\n",
+                   module_gettext(m, vlc_config_SubcategoryNameGet(subcat_id)));
+        else
+            printf(color ? TS_GREEN_BOLD "\n %s :: %s\n" TS_RESET : "\n %s :: %s\n",
+                   module_gettext(m, vlc_config_CategoryNameGet(
+                        vlc_config_CategoryFromSubcategory(subcat_id))),
+                   module_gettext(m, vlc_config_SubcategoryNameGet(subcat_id)));
+
+        if (desc && subcat_help != NULL)
+            printf(color ? TS_CYAN_BOLD " %s\n" TS_RESET : " %s\n",
+                   module_gettext(m, subcat_help));
+    }
+
     print_section(m, section, color, desc);
 
     /* Add short option if any */
@@ -602,8 +619,10 @@ static void Usage (vlc_object_t *p_this, char const *psz_search)
     for (const vlc_plugin_t *p = vlc_plugins; p != NULL; p = p->next)
     {
         const module_t *m = p->module;
+        const module_config_item_t *subcat = NULL;
         const module_config_item_t *section = NULL;
         const char *objname = module_get_object(m);
+        bool is_core = module_is_main(m);
 
         if (psz_search == NULL && p->conf.count == 0)
             continue; /* Ignore modules without config options */
@@ -632,7 +651,7 @@ static void Usage (vlc_object_t *p_this, char const *psz_search)
             if (item->b_removed)
                 continue; /* Skip removed options */
 
-            print_item(m, item, &section, color, desc);
+            print_item(m, item, &subcat, &section, color, desc, is_core);
         }
     }
 
