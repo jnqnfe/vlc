@@ -303,7 +303,8 @@ static inline const char *vlc_config_CategoryNameGet( enum vlc_config_cat cat )
 VLC_USED
 static inline const char *vlc_config_SubcategoryHelpGet( enum vlc_config_subcat subcat )
 {
-    return vlc_gettext(vlc_subcategory_data[(int)subcat].help);
+    const char* help = vlc_subcategory_data[(int)subcat].help;
+    return (help) ? vlc_gettext(help) : NULL;
 }
 
 /** Get the help text for a category */
