@@ -40,6 +40,7 @@ enum vlc_config_cat
     CAT_SOUT,
     CAT_PLAYLIST,
     CAT_ADVANCED,
+    CAT_MISC,
 
     /* for table-lookup purposes only! */
     CAT_HIDDEN,
@@ -88,11 +89,14 @@ enum vlc_config_subcat
     SUBCAT_SOUT_VOD,
 
     SUBCAT_PLAYLIST_GENERAL,
+    SUBCAT_PLAYLIST_BOOKMARKS,
     SUBCAT_PLAYLIST_EXPORT,
     SUBCAT_PLAYLIST_SD,
 
     SUBCAT_ADVANCED_MISC,
     SUBCAT_ADVANCED_NETWORK,
+
+    SUBCAT_MISC_GENERAL,
 
     /* Hidden subcategory
        Any options under this will be hidden in the GUI preferences, but will
@@ -218,6 +222,7 @@ static const enum vlc_config_subcat vlc_cat_to_general_subcat_map[] =
     SUBCAT_SOUT_GENERAL,      /* CAT_SOUT      */
     SUBCAT_PLAYLIST_GENERAL,  /* CAT_PLAYLIST  */
     SUBCAT_ADVANCED_MISC,     /* CAT_ADVANCED  */
+    SUBCAT_MISC_GENERAL,      /* CAT_MISC      */
     SUBCAT_HIDDEN,            /* CAT_HIDDEN    */
 };
 
@@ -225,7 +230,7 @@ static_assert(CAT_MAX == (sizeof (vlc_cat_to_general_subcat_map) / sizeof (vlc_c
 
 static const enum vlc_config_cat vlc_cat_preferred_order[] =
 {
-    CAT_PLAYLIST, CAT_INTERFACE, CAT_AUDIO, CAT_VIDEO, CAT_INPUT, CAT_SOUT, CAT_ADVANCED, CAT_HIDDEN,
+    CAT_PLAYLIST, CAT_INTERFACE, CAT_AUDIO, CAT_VIDEO, CAT_INPUT, CAT_SOUT, CAT_ADVANCED, CAT_MISC, CAT_HIDDEN,
 };
 
 static const unsigned vlc_cat_preferred_order_count = sizeof (vlc_cat_preferred_order) / sizeof (vlc_cat_preferred_order[0]);
@@ -268,11 +273,14 @@ static const struct vlc_config_subcat_data vlc_subcategory_data[] =
     /* SUBCAT_SOUT_VOD            */ { CAT_SOUT,       false,  N_("VoD"),                 SOUT_VOD_HELP      },
 
     /* SUBCAT_PLAYLIST_GENERAL    */ { CAT_PLAYLIST,   false,  N_("Playlist"),            PL_GENERAL_HELP    },
+    /* SUBCAT_PLAYLIST_BOOKMARKS  */ { CAT_PLAYLIST,   true,   N_("Bookmarks"),           NULL               },
     /* SUBCAT_PLAYLIST_EXPORT     */ { CAT_PLAYLIST,   false,  N_("Export"),              PL_EXPORT_HELP     },
     /* SUBCAT_PLAYLIST_SD         */ { CAT_PLAYLIST,   false,  N_("Services discovery"),  SD_HELP            },
 
     /* SUBCAT_ADVANCED_MISC       */ { CAT_ADVANCED,   false,  N_("Advanced"),            AADVANCED_HELP     },
     /* SUBCAT_ADVANCED_NETWORK    */ { CAT_ADVANCED,   false,  N_("Network"),             ANETWORK_HELP      },
+
+    /* SUBCAT_MISC_GENERAL        */ { CAT_MISC,       true,   N_("Miscellaneous"),       NULL               },
 
     /* SUBCAT_HIDDEN              */ { CAT_HIDDEN,     true,   NULL,                      NULL               },
 };
