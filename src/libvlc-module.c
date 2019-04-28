@@ -1469,7 +1469,6 @@ static const char *const mouse_wheel_texts[] = {
 /*
  * Quick usage guide for the configuration options:
  *
- * add_category_hint(N_(text), N_(longtext))
  * add_string( option_name, value, N_(text), N_(longtext),
                b_advanced_option )
  * add_loadfile( option_name, psz_value, N_(text), N_(longtext) )
@@ -1489,7 +1488,6 @@ vlc_plugin_begin ()
     /* Audio category */
 
     set_subcategory( SUBCAT_AUDIO_GENERAL )
-    add_category_hint(N_("Audio"), AOUT_CAT_LONGTEXT)
 
     add_bool( "audio", true, AUDIO_TEXT, AUDIO_LONGTEXT, false )
         change_safe ()
@@ -1547,7 +1545,6 @@ vlc_plugin_begin ()
     /* Video category */
 
     set_subcategory( SUBCAT_VIDEO_GENERAL )
-    add_category_hint(N_("Video"), VOUT_CAT_LONGTEXT)
 
     add_bool( "video", true, VIDEO_TEXT, VIDEO_LONGTEXT, true )
         change_safe ()
@@ -1665,7 +1662,6 @@ vlc_plugin_begin ()
     /* Subpicture options */
     set_subcategory( SUBCAT_VIDEO_SUBPIC )
     set_section( N_("On Screen Display") , NULL )
-    add_category_hint(N_("Subpictures"), SUB_CAT_LONGTEXT)
 
     add_bool( "spu", true, SPU_TEXT, SPU_LONGTEXT, false )
         change_safe ()
@@ -1712,7 +1708,6 @@ vlc_plugin_begin ()
     /* Input category */
 
     set_subcategory( SUBCAT_INPUT_GENERAL )
-    add_category_hint( N_("Input"), INPUT_CAT_LONGTEXT )
 
     set_section( N_( "Track settings" ), NULL )
     add_integer( "program", 0,
@@ -1913,7 +1908,6 @@ vlc_plugin_begin ()
     add_bool( "lua", true, INPUT_LUA_TEXT, NULL, true );
 
     /* Decoder options */
-    add_category_hint(N_("Input access and codecs"), CODEC_CAT_LONGTEXT)
     set_subcategory( SUBCAT_INPUT_ACCESS )
 
     add_module("access", VLC_CAP_STR_ACCESS, NULL, ACCESS_TEXT, ACCESS_LONGTEXT)
@@ -1941,7 +1935,6 @@ vlc_plugin_begin ()
     /* Stream output category */
 
     set_subcategory( SUBCAT_SOUT_GENERAL )
-    add_category_hint(N_("Stream output"), SOUT_CAT_LONGTEXT)
 
     add_string( "sout", NULL, SOUT_TEXT, SOUT_LONGTEXT, true )
     add_bool( "sout-display", false, SOUT_DISPLAY_TEXT,
@@ -1983,7 +1976,6 @@ vlc_plugin_begin ()
     /* Advanced category */
 
     set_subcategory( SUBCAT_ADVANCED_MISC )
-    add_category_hint(N_("Advanced"), NULL)
     set_section( N_("Special modules"), NULL )
     add_module("vod-server", VLC_CAP_STR_VOD_SERVER, NULL,
                VOD_SERVER_TEXT, VOD_SERVER_LONGTEXT)
@@ -2031,7 +2023,6 @@ vlc_plugin_begin ()
     /* Playlist category */
 
     set_subcategory( SUBCAT_PLAYLIST_GENERAL )
-    add_category_hint(N_("Playlist"), PLAYLIST_CAT_LONGTEXT)
     add_bool( "random", false, RANDOM_TEXT, RANDOM_LONGTEXT, false )
         change_short('Z')
         change_safe()
@@ -2126,7 +2117,6 @@ vlc_plugin_begin ()
     /* Interface category */
 
     set_subcategory( SUBCAT_INTERFACE_GENERAL )
-    add_category_hint( N_("Interface"), INTF_CAT_LONGTEXT )
     add_integer( "verbose", 0, VERBOSE_TEXT, VERBOSE_LONGTEXT,
                  false )
         change_short('v')
@@ -2161,7 +2151,6 @@ vlc_plugin_begin ()
 
     /* Hotkey options*/
     set_subcategory( SUBCAT_INTERFACE_HOTKEYS )
-    add_category_hint(N_("Hot keys"), HOTKEY_CAT_LONGTEXT)
 
     add_integer( "hotkeys-y-wheel-mode", 0, MOUSE_Y_WHEEL_MODE_TEXT,
                  MOUSE_Y_WHEEL_MODE_LONGTEXT, false )
@@ -2685,7 +2674,6 @@ vlc_plugin_begin ()
 
     /* Not displayed in GUI, listed in help output though */
     set_subcategory( SUBCAT_MISC_GENERAL )
-    add_category_hint(N_("Miscellaneous"), NULL)
 
 #define HELP_TEXT \
     N_("Print help for VLC (can be combined with --help-verbose)")
