@@ -615,6 +615,10 @@ static void Usage (vlc_object_t *p_this, char const *psz_search, bool core_only)
 
     const bool desc = var_InheritBool(p_this, "help-verbose");
 
+    if (!core_only)
+        printf(color ? "\n" TS_GREEN_BOLD "%s" TS_RESET "\n" : "\n%s\n",
+               _("PLUGIN OPTIONS:"));
+
     /* Enumerate the config for each module */
     for (const vlc_plugin_t *p = vlc_plugins; p != NULL; p = p->next)
     {
@@ -623,6 +627,10 @@ static void Usage (vlc_object_t *p_this, char const *psz_search, bool core_only)
 
         if (core_only && !is_core)
             continue;
+
+        if (is_core)
+            printf(color ? "\n" TS_GREEN_BOLD "%s" TS_RESET "\n" : "\n%s\n",
+                   _("CORE OPTIONS:"));
 
         const module_config_item_t *subcat = NULL;
         const module_config_item_t *section = NULL;
@@ -637,17 +645,20 @@ static void Usage (vlc_object_t *p_this, char const *psz_search, bool core_only)
         if (psz_search == NULL && !plugin_show(p))
             continue;
 
-        /* Print name of module */
-        printf(color ? "\n " TS_GREEN_BOLD "%s" TS_RESET " (%s)\n" : "\n %s (%s)\n",
-               module_gettext(m, m->psz_longname), objname);
-        if (m->psz_help != NULL)
-            printf(color ? TS_CYAN_BOLD" %s\n" TS_RESET : " %s\n",
-                   module_gettext(m, m->psz_help));
+        /* Print name of plugin */
+        if (!is_core)
+        {
+            printf(color ? "\n " TS_GREEN_BOLD "%s" TS_RESET " (%s)\n" : "\n %s (%s)\n",
+                   module_gettext(m, m->psz_longname), objname);
+            if (m->psz_help != NULL)
+                printf(color ? TS_CYAN_BOLD" %s\n" TS_RESET : " %s\n",
+                       module_gettext(m, m->psz_help));
 
-        if (psz_search != NULL && p->conf.count == 0)
-            printf("  %s\n", _("This module has no options"));
+            if (psz_search != NULL && p->conf.count == 0)
+                printf("  %s\n", _("This module has no options"));
+        }
 
-        /* Print module options */
+        /* Print option set */
         for (size_t j = 0; j < p->conf.size; j++)
         {
             const module_config_item_t *item = p->conf.items + j;
