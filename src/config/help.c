@@ -649,7 +649,7 @@ static void Usage (vlc_object_t *p_this, char const *psz_search, bool core_only)
         if (!is_core)
         {
             printf(color ? "\n " TS_GREEN_BOLD "%s" TS_RESET " (%s)\n" : "\n %s (%s)\n",
-                   module_gettext(m, m->psz_longname), objname);
+                   module_gettext(m, module_GetLongName(m)), objname);
             if (m->psz_help != NULL)
                 printf(color ? TS_CYAN_BOLD" %s\n" TS_RESET : " %s\n",
                        module_gettext(m, m->psz_help));
@@ -707,7 +707,7 @@ static void ListModules (vlc_object_t *p_this, bool b_verbose)
 
         const char *objname = module_get_object (p_parser);
         printf(color ? TS_GREEN_BOLD "  %-22s " TS_RESET_BOLD "%s\n" TS_RESET : "  %-22s %s\n",
-               objname, module_gettext(p_parser, p_parser->psz_longname));
+               objname, module_gettext(p_parser, module_GetLongName(p_parser)));
 
         if( b_verbose )
         {
