@@ -517,9 +517,6 @@ bool PrefsItemData::contains( const QString &text, Qt::CaseSensitivity cs )
             continue;
         else if (show)
         {
-            /* private options (hidden from GUI, but not --help) are not relevant */
-            if( p_item->b_internal ) continue;
-
             if ( p_item->psz_text && qtr( p_item->psz_text ).contains( text, cs ) )
             {
                 ret = true;
@@ -609,9 +606,6 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 
         /* cat-hint items are not relevant, they are an alternate set of headings for help output */
         if( p_item->i_type == CONFIG_HINT_CATEGORY ) continue;
-
-        /* private options (hidden from GUI, but not --help) are not relevant */
-        if( p_item->b_internal ) continue;
 
         if( p_item->i_type == CONFIG_SECTION )
         {
