@@ -66,57 +66,21 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
     setUniformRowHeights( true );
     CONNECT( this, itemExpanded(QTreeWidgetItem*), this, resizeColumns() );
 
-    enum vlc_config_cat cat = CAT_INVALID;
-    enum vlc_config_subcat subcat = SUBCAT_INVALID;
     QTreeWidgetItem *cat_item = NULL;
 
-    /* Create base cat/subcat tree from core config set */
-
-    module_t *p_module = module_get_main();
-
-    unsigned confsize;
-    module_config_item_t *const p_config = vlc_module_config_get (p_module, &confsize);
-    for( size_t i = 0; i < confsize; i++ )
-    {
-        module_config_item_t *p_item = p_config + i;
-
-        if( p_item->i_type == CONFIG_SUBCATEGORY )
-        {
-            subcat = (enum vlc_config_subcat) p_item->value.i;
-            if( subcat == SUBCAT_HIDDEN ) continue;
-
-            // Create top level cat node?
-            cat = vlc_config_CategoryFromSubcategory(subcat);
-            if (this->findCatItem(cat) == NULL)
-                cat_item = this->createCatNode( cat );
-
-            // Create subcat node
-            // We expect that it will not exist (each used once in core set
-            // only), but we'll be cautious. Also, since we already merge/attach
-            // a general subcat to the cat when creating the cat item above, we
-            // don't need a special-case check here for it.
-            if (this->findSubcatItem( subcat ) == NULL)
-                this->createSubcatNode( cat_item, subcat );
-        }
-    }
-    module_config_free( p_config );
-
-    // Add nodes for plugins
     for( size_t i = 0; i < count; i++ )
     {
-        p_module = p_list[i];
-
-        // Main module already covered above
-        if( module_is_main( p_module) ) continue;
+        module_t *p_module = p_list[i];
+        bool is_core = module_is_main( p_module);
 
         unsigned confsize;
         module_config_item_t *const p_config = vlc_module_config_get (p_module, &confsize);
 
-        subcat = SUBCAT_INVALID;
+        enum vlc_config_subcat subcat = SUBCAT_INVALID;
         bool node_creation_pending = false;
-        for (size_t i = 0; i < confsize; i++)
+        for (size_t j = 0; j < confsize; j++)
         {
-            const module_config_item_t *p_item = p_config + i;
+            const module_config_item_t *p_item = p_config + j;
 
             // Note, we only want to create the node if there is at least one
             // item under it, it is not the hidden subcat obviously, nor
@@ -131,24 +95,25 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
 
             if( node_creation_pending && CONFIG_ITEM(p_item->i_type) )
             {
-                // Locate the category item
-                // If not found (unlikely), we will create it.
-                cat = vlc_config_CategoryFromSubcategory( subcat );
+                // Create the category item if does not exist
+                enum vlc_config_cat cat = vlc_config_CategoryFromSubcategory( subcat );
                 cat_item = this->findCatItem( cat );
                 if ( !cat_item )
                     cat_item = this->createCatNode( cat );
 
-                // Locate the subcategory item
-                // If not found (quite possible), we will create it.
+                // Create the subcategory item if does not exist
                 QTreeWidgetItem *subcat_item = this->findSubcatItem( subcat );
                 if( !subcat_item )
                     subcat_item = this->createSubcatNode( cat_item, subcat );
 
                 // Create a node for the plugin under this subcat, if not done
                 // already.
-                QTreeWidgetItem *plugin_item = this->findPluginItem( subcat_item, p_module );
-                if( !plugin_item )
-                    this->createPluginNode( subcat_item, p_module, subcat );
+                if (!is_core)
+                {
+                    QTreeWidgetItem *plugin_item = this->findPluginItem( subcat_item, p_module );
+                    if( !plugin_item )
+                        this->createPluginNode( subcat_item, p_module, subcat );
+                }
 
                 node_creation_pending = false;
             }
