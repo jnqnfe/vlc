@@ -427,8 +427,6 @@ static int vlc_plugin_desc_cb(vlc_plugin_t *plugin, enum vlc_plugin_desc_actions
             module->pp_shortcuts[0] = value;
             module->i_shortcuts = 1;
 
-            assert (module->psz_longname == NULL);
-            module->psz_longname = value;
             break;
         }
         case VLC_MODULE_SHORTNAME:
@@ -436,7 +434,6 @@ static int vlc_plugin_desc_cb(vlc_plugin_t *plugin, enum vlc_plugin_desc_actions
             break;
 
         case VLC_MODULE_DESCRIPTION:
-            // TODO: do not set this in VLC_MODULE_NAME
             module->psz_longname = va_arg (ap, const char *);
             break;
 
