@@ -38,7 +38,6 @@ static int OpenDemux( demux_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("Dummy") )
-    set_description( N_("Dummy") )
     set_capability( VLC_CAP_ACCESS, 0, OpenDemux, NULL )
     add_shortcut( "dummy", "vlc" )
 vlc_plugin_end ()

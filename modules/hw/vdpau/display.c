@@ -43,7 +43,6 @@ static void Close(vout_display_t *vd);
 
 vlc_plugin_begin()
     set_shortname("VDPAU")
-    set_description("VDPAU")
     add_shortcut("vdpau")
     set_capability(VLC_CAP_VOUT_DISPLAY, 0, Open, Close)
     //set_subcategory(SUBCAT_VIDEO_VOUT)

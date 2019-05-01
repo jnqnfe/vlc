@@ -66,7 +66,6 @@ static const char *const ppsz_filter_options[] = {
 vlc_plugin_begin ()
     set_help( N_("Posterize video by lowering the number of colors") )
 
-    set_description( N_("Posterize") )
     set_shortname( N_("Posterize") )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 

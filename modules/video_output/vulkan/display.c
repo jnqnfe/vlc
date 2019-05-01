@@ -389,7 +389,6 @@ static int Control(vout_display_t *vd, int query, va_list ap)
 
 vlc_plugin_begin ()
     set_shortname ("Vulkan")
-    set_description ("Vulkan")
     add_shortcut ("vulkan", "vk")
     set_capability (VLC_CAP_VOUT_DISPLAY, 0, Open, Close)
 

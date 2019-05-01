@@ -67,7 +67,6 @@ static const char *const speaker_list[] = { "Windows default", "Mono", "Stereo",
 #define VOLUME_LONGTEXT N_("Audio volume in hundredths of decibels (dB).")
 
 vlc_plugin_begin ()
-    set_description( "DirectX" )
     set_shortname( "DirectX" )
     add_shortcut( "directx", "aout_directx", "directsound", "dsound" )
     set_capability( VLC_CAP_AUDIO_OUTPUT, 100, Open, Close )

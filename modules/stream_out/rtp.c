@@ -185,7 +185,6 @@ static void Close( sout_stream_t * );
 
 vlc_plugin_begin ()
     set_shortname( "RTP" )
-    set_description( "RTP" )
     add_shortcut( "rtp", "vod" )
     set_capability( VLC_CAP_SOUT_STREAM, 0, Open, Close )
 

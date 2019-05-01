@@ -58,13 +58,11 @@ static int  Open   ( demux_t * );
 static void Close  ( demux_t * );
 
 vlc_plugin_begin ()
-    set_description( "MPEG-PS" )
     set_shortname( "MPEG-PS" )
     add_shortcut( "ps" )
     set_capability( VLC_CAP_DEMUX, 1, OpenForce, Close )
 
     add_submodule ()
-    set_description( N_("MPEG-PS demuxer") )
     add_shortcut( "ps" )
     set_capability( VLC_CAP_DEMUX, 8, Open, Close )
 

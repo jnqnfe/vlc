@@ -50,7 +50,6 @@ static int Open(vout_window_t *wnd)
 
 vlc_plugin_begin()
     set_shortname(N_("Dummy window"))
-    set_description(N_("Dummy window"))
     add_shortcut("dummy")
     set_capability(VLC_CAP_VOUT_WINDOW, 1, Open, NULL)
     //set_subcategory(SUBCAT_VIDEO_VOUT)

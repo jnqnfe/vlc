@@ -128,7 +128,6 @@ static void *Run            (void *);
 
 vlc_plugin_begin ()
     set_shortname("Audioscrobbler")
-    set_description("Audioscrobbler")
     set_help(N_("Submission of played songs to last.fm"))
     set_capability(VLC_CAP_INTERFACE, 0, Open, Close)
 

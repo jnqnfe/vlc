@@ -38,7 +38,6 @@ static void Close(vlc_keystore *);
 
 vlc_plugin_begin()
     set_shortname(N_("Memory keystore"))
-    set_description(N_("Memory keystore"))
     set_help(N_("Secrets are stored in memory"))
     add_shortcut("memory")
     set_capability(VLC_CAP_KEYSTORE, 0, Open, Close)

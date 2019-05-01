@@ -59,7 +59,6 @@ static const signed char pi_kernel_y[3][3] = {
 
 vlc_plugin_begin ()
     set_help( N_( "Detects edges in the frame and highlights them in white." ) )
-    set_description( N_( "Edge detection" ) )
     set_shortname( N_( "Edge detection" ) )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Open, Close )
     //set_subcategory( SUBCAT_VIDEO_VFILTER )

@@ -80,7 +80,6 @@ static void OutClose( sout_access_out_t * );
 
 vlc_plugin_begin ()
     set_shortname( "FTP" )
-    set_description( "FTP" )
     add_shortcut( "ftp", "ftps", "ftpes" )
     set_capability( VLC_CAP_ACCESS, 0, InOpen, InClose )
 

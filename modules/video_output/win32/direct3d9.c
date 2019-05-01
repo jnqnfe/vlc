@@ -102,7 +102,6 @@ vlc_plugin_begin ()
     set_help(D3D9_HELP)
 
     set_shortname("Direct3D9")
-    set_description("Direct3D9")
     add_shortcut("direct3d9", "direct3d")
     set_capability(VLC_CAP_VOUT_DISPLAY, 280, Open, Close)
 

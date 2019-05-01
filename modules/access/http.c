@@ -64,7 +64,6 @@ static void Close( stream_t * );
     "disconnect." )
 
 vlc_plugin_begin ()
-    set_description( "HTTP" )
     set_shortname( "HTTP(S)" )
     /* 'itpc' = iTunes Podcast */
     add_shortcut( "http", "unsv", "itpc", "icyx" )

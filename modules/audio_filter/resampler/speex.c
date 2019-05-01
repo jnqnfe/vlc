@@ -40,7 +40,6 @@ static void Close (filter_t *);
 
 vlc_plugin_begin ()
     set_shortname ("Speex")
-    set_description ("Speex")
     set_capability (VLC_CAP_AUDIO_CONVERTER, 0, Open, Close)
 
     add_submodule ()

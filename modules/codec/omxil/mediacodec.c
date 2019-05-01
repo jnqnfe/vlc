@@ -181,7 +181,6 @@ static void RemoveInflightPictures(decoder_t *);
 
 vlc_plugin_begin ()
     set_shortname("Android MediaCodec")
-    set_description("Android MediaCodec")
     set_help("Video decoder using Android MediaCodec via NDK")
     add_shortcut("mediacodec_ndk")
     set_capability(VLC_CAP_VIDEO_DECODER, 800, OpenDecoderNdk, CloseDecoder)

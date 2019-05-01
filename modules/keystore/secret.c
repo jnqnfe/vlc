@@ -37,7 +37,6 @@ static void Close(vlc_keystore *);
 
 vlc_plugin_begin()
     set_shortname("libsecret")
-    set_description("libsecret")
     set_help(N_("Secrets are stored via libsecret"))
     set_capability(VLC_CAP_KEYSTORE, 100, Open, Close)
     /* Since we can't destroy gdbus_shared_thread_func */

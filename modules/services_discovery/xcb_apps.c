@@ -46,7 +46,6 @@ static int vlc_sd_probe_Open (vlc_probe_t *);
  */
 vlc_plugin_begin ()
     set_shortname (N_("Screen capture"))
-    set_description (N_("Screen capture"))
     add_shortcut ("apps", "screen")
     set_capability (VLC_CAP_SERVICES_DISCOVERY, 0, Open, Close)
 

@@ -89,7 +89,6 @@ static void CloseIn ( sout_stream_t * );
 
 vlc_plugin_begin ()
     set_shortname( "Bridge" )
-    set_description( "Bridge" )
 
     add_submodule ()
     add_shortcut( "bridge-out" )

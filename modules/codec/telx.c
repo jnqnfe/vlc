@@ -68,7 +68,6 @@ static int  Decode( decoder_t *, block_t * );
         "your subtitles don't appear.")
 
 vlc_plugin_begin ()
-    set_description( "Teletext" )
     set_shortname( "Teletext" )
     set_capability( VLC_CAP_SPU_DECODER, 50, Open, Close )
 

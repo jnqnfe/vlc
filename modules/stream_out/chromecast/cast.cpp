@@ -212,7 +212,6 @@ static const char *const ppsz_sout_options[] = {
 vlc_plugin_begin ()
 
     set_shortname("Chromecast")
-    set_description("Chromecast")
     add_shortcut("chromecast")
     set_capability(VLC_CAP_SOUT_STREAM, 0, Open, Close)
 

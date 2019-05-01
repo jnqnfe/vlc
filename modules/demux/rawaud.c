@@ -60,7 +60,6 @@ static void Close( demux_t * );
 
 vlc_plugin_begin()
     set_shortname( N_("Raw audio") )
-    set_description( N_("Raw audio") )
     add_shortcut( "rawaud" )
     set_capability( VLC_CAP_DEMUX, 0, Open, Close )
 

@@ -85,7 +85,6 @@ static OMX_ERRORTYPE OmxFillBufferDone( OMX_HANDLETYPE, OMX_PTR,
 #define CFG_PREFIX "omxil-"
 vlc_plugin_begin ()
     set_shortname("OpenMAX IL")
-    set_description("OpenMAX IL")
     set_capability( VLC_CAP_VIDEO_DECODER, 80, OpenDecoder, CloseGeneric )
 
 #ifndef __ANDROID__

@@ -80,12 +80,10 @@ static picture_t* DecodePacket (decoder_t*, block_t*);
 
 vlc_plugin_begin ()
     set_shortname("OggSpots")
-    set_description("OggSpots")
     add_shortcut("oggspots")
     set_capability(VLC_CAP_VIDEO_DECODER, 10, OpenDecoder, CloseDecoder)
 
     add_submodule ()
-    set_description("OggSpots")
     add_shortcut("oggspots")
     set_capability(VLC_CAP_PACKETIZER, 10, OpenPacketizer, CloseDecoder)
 

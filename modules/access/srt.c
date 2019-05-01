@@ -413,7 +413,6 @@ static void Close(stream_t *p_stream)
 /* Module descriptor */
 vlc_plugin_begin ()
     set_shortname( "SRT" )
-    set_description( "SRT" )
     add_shortcut("srt")
     set_capability(VLC_CAP_ACCESS, 0, Open, Close)
 

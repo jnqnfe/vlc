@@ -69,7 +69,6 @@ static const char *const ppsz_indexes[] = { N_("Ask for action"),
 
 vlc_plugin_begin ()
     set_shortname( "AVI" )
-    set_description( "AVI" )
     set_capability( VLC_CAP_DEMUX, 212, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_DEMUX )

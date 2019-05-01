@@ -133,7 +133,6 @@ static const char *const continue_playback_list_text[] = {
 
 vlc_plugin_begin()
     set_shortname(N_("Mac OS X"))
-    set_description(N_("Mac OS X"))
     set_capability(VLC_CAP_INTERFACE, 200, OpenIntf, CloseIntf)
     cannot_unload_broken_library()
 

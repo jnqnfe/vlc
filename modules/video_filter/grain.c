@@ -61,7 +61,6 @@ static void Close(filter_t *);
 
 vlc_plugin_begin()
     set_help(N_("Adds filtered gaussian noise"))
-    set_description( N_("Grain") )
     set_shortname( N_("Grain") )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Open, Close)
 

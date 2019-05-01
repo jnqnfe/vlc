@@ -62,7 +62,6 @@ static void Close( demux_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("Raw video") )
-    set_description( N_("Raw video") )
     add_shortcut( "rawvideo" )
     set_capability( VLC_CAP_DEMUX, 10, Open, Close )
 

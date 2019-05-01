@@ -37,7 +37,6 @@ VLC_SD_PROBE_HELPER("disc", N_("Discs"), SD_CAT_DEVICES)
  */
 vlc_plugin_begin ()
     set_shortname (N_("Discs"))
-    set_description (N_("Discs"))
     add_shortcut ("disc")
     set_capability (VLC_CAP_SERVICES_DISCOVERY, 0, Open, NULL)
 

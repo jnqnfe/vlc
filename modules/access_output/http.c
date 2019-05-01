@@ -62,7 +62,6 @@ static void Close( sout_access_out_t * );
 
 
 vlc_plugin_begin ()
-    set_description( "HTTP" )
     set_shortname( "HTTP" )
     add_shortcut( "http", "https", "mmsh" )
     set_capability( VLC_CAP_SOUT_ACCESS, 0, Open, Close )

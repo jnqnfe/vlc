@@ -116,7 +116,6 @@ static int OpenInhibit (vlc_inhibit_t *ih)
 
 vlc_plugin_begin ()
     set_shortname (N_("Windows screensaver"))
-    set_description (N_("Windows screensaver"))
     set_help (N_("Windows screen saver inhibition"))
     set_capability (VLC_CAP_INHIBIT, 10, OpenInhibit, CloseInhibit)
     //set_subcategory (SUBCAT_ADVANCED_MISC)

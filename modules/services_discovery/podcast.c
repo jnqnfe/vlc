@@ -58,7 +58,6 @@ VLC_SD_PROBE_HELPER("podcast", N_("Podcasts"), SD_CAT_INTERNET)
 
 vlc_plugin_begin ()
     set_shortname( N_("Podcasts") )
-    set_description( N_("Podcasts") )
     set_capability( VLC_CAP_SERVICES_DISCOVERY, 0, Open, Close )
 
     VLC_SD_PROBE_SUBMODULE

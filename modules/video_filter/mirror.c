@@ -78,7 +78,6 @@ static const char *const ppsz_direction_descriptions[] = {
 vlc_plugin_begin ()
     set_help( N_("Splits video in two same parts, like in a mirror") )
 
-    set_description( N_("Mirror") )
     set_shortname( N_("Mirror" ))
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 

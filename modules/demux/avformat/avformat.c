@@ -35,7 +35,6 @@
 vlc_plugin_begin ()
 #endif /* MERGE_FFMPEG */
     add_shortcut( "ffmpeg", "avformat" )
-    set_description( "Avformat" )
     set_shortname( "Avformat" )
     set_capability( VLC_CAP_DEMUX, 2, avformat_OpenDemux, avformat_CloseDemux )
 
@@ -43,7 +42,6 @@ vlc_plugin_begin ()
     /* mux submodule */
     add_submodule ()
     add_shortcut( "ffmpeg", "avformat" )
-    set_description( "Avformat" )
     set_capability( VLC_CAP_SOUT_MUX, 2, avformat_OpenMux, avformat_CloseMux )
 #endif
 

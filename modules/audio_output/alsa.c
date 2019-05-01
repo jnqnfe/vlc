@@ -93,7 +93,6 @@ static const char *const passthrough_modes_text[] = {
 
 vlc_plugin_begin ()
     set_shortname( "ALSA" )
-    set_description( "ALSA" )
     set_capability( VLC_CAP_AUDIO_OUTPUT, 150, Open, Close )
 
     set_subcategory( SUBCAT_AUDIO_AOUT )

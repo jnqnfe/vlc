@@ -781,7 +781,6 @@ static int Open(vout_window_t *wnd)
 
 vlc_plugin_begin()
     set_shortname(N_("Win32 window"))
-    set_description(N_("Win32 window"))
     set_capability(VLC_CAP_VOUT_WINDOW, 10, Open, NULL)
     //set_subcategory(SUBCAT_VIDEO_VOUT)
 vlc_plugin_end()

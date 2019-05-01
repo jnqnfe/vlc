@@ -295,8 +295,7 @@ static void Close( filter_t * );
                                     "Default: Low.")
 
 vlc_plugin_begin ()
-    set_description( N_("Deinterlace") )
-    set_shortname( N_("Deinterlace" ))
+    set_shortname( N_("Deinterlace") )
     add_shortcut( "deinterlace" )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Open, Close )
 

@@ -51,7 +51,6 @@ static void CloseCrypt(vlc_keystore *);
 
 vlc_plugin_begin()
     set_shortname(N_("File keystore (plaintext)"))
-    set_description(N_("File keystore (plaintext)"))
     set_help(N_("Secrets are stored on a file without any encryption"))
     add_shortcut("file_plaintext")
     set_capability(VLC_CAP_KEYSTORE, 0, Open, Close)

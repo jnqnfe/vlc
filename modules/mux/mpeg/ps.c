@@ -62,7 +62,6 @@ static void    Close  ( sout_mux_t * );
 #define SOUT_CFG_PREFIX "sout-ps-"
 
 vlc_plugin_begin ()
-    set_description( "MPEG-PS" )
     set_shortname( "MPEG-PS" )
     add_shortcut( "ps", "mpeg1", "dvd" )
     set_capability( VLC_CAP_SOUT_MUX, 50, Open, Close )

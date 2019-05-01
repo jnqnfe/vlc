@@ -172,7 +172,6 @@ static const char *const ppsz_align_descriptions[] =
 #define CFG_PREFIX "mosaic-"
 
 vlc_plugin_begin ()
-    set_description( N_("Mosaic") )
     set_shortname( N_("Mosaic") )
     set_capability( VLC_CAP_SUB_SOURCE, 0, CreateFilter, DestroyFilter )
 

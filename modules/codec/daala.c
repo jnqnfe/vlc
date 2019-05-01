@@ -114,18 +114,15 @@ static const char *const enc_chromafmt_list_text[] = {
 
 vlc_plugin_begin ()
     set_shortname( "Daala" )
-    set_description( "Daala" )
     add_shortcut( "daala" )
     set_capability( VLC_CAP_VIDEO_DECODER, 100, OpenDecoder, CloseDecoder )
 
     add_submodule ()
-    set_description( "Daala" )
     add_shortcut( "daala" )
     set_capability( VLC_CAP_PACKETIZER, 100, OpenPacketizer, CloseDecoder )
 
 #ifdef ENABLE_SOUT
     add_submodule ()
-    set_description( "Daala" )
     add_shortcut( "daala" )
     set_capability( VLC_CAP_ENCODER, 150, OpenEncoder, CloseEncoder )
 

@@ -59,7 +59,6 @@ static int   Send( sout_stream_t *, void *, block_t * );
 
 vlc_plugin_begin ()
     set_shortname( "Chromaprint" )
-    set_description( "Chromaprint" )
     add_shortcut( "chromaprint" )
     set_capability( VLC_CAP_SOUT_STREAM, 0, Open, Close )
 

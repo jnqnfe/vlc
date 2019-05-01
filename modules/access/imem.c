@@ -115,7 +115,6 @@ static const char *cat_texts[] = {
 
 vlc_plugin_begin()
     set_shortname(N_("Memory input"))
-    set_description(N_("Memory input"))
     add_shortcut("imem")
     set_capability(VLC_CAP_ACCESS, 1, OpenDemux, CloseDemux)
 

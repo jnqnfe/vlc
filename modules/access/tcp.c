@@ -108,7 +108,6 @@ static void Close( stream_t *access )
  *****************************************************************************/
 vlc_plugin_begin ()
     set_shortname( "TCP" )
-    set_description( "TCP" )
     add_shortcut( "tcp" )
     set_capability( VLC_CAP_ACCESS, 0, Open, Close )
     //set_subcategory( SUBCAT_INPUT_ACCESS )

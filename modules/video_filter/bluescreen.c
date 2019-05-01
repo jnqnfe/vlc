@@ -76,7 +76,6 @@ static int BluescreenCallback( vlc_object_t *, char const *,
 vlc_plugin_begin ()
     set_help( BLUESCREEN_HELP )
 
-    set_description( N_("Bluescreen") )
     set_shortname( N_("Bluescreen") )
     add_shortcut( "bluescreen" )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )

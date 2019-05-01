@@ -67,7 +67,6 @@ vlc_plugin_begin()
     set_help(N_("Samba (Windows network shares) input via libsmb2"))
 
     set_shortname("SMB2 / SMB3")
-    set_description("SMB2 / SMB3")
     add_shortcut("smb", "smb2")
     set_capability(VLC_CAP_ACCESS, 21, Open, Close)
 

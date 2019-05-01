@@ -80,7 +80,6 @@ vlc_plugin_begin ()
     set_shortname( "FFmpeg" )
 
     /* decoder main module */
-    set_description( "FFmpeg" )
 
     add_shortcut("ffmpeg")
     set_capability(VLC_CAP_VIDEO_DECODER, 70, InitVideoDec, EndVideoDec)
@@ -97,7 +96,6 @@ vlc_plugin_begin ()
     /* encoder submodule */
     add_submodule ()
     add_shortcut( "ffmpeg" )
-    set_description( "FFmpeg" )
     set_capability( VLC_CAP_ENCODER, 100, InitVideoEnc, EndVideoEnc )
 #endif /* ENABLE_SOUT */
 

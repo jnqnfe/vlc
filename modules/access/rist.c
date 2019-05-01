@@ -1129,7 +1129,6 @@ failed:
 vlc_plugin_begin ()
 
     set_shortname( "RIST" )
-    set_description( "RIST" )
     add_shortcut( "rist", "tr06" )
     set_capability( VLC_CAP_ACCESS, 0, Open, Close )
 

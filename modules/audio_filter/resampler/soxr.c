@@ -64,7 +64,6 @@ static int OpenResampler( filter_t * );
 static void Close( filter_t * );
 
 vlc_plugin_begin ()
-    set_description( "SoX" )
     set_shortname( "SoX" )
     set_capability ( VLC_CAP_AUDIO_CONVERTER, 51, OpenConverter, Close )
 

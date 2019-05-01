@@ -488,7 +488,6 @@ void Close(demux_t *p_demux)
 
 vlc_plugin_begin ()
     set_shortname( "Chromecast" )
-    set_description( "Chromecast" )
     add_shortcut( "cc_demux" )
     set_capability( VLC_CAP_DEMUX_FILTER, 0, Open, Close )
     //set_subcategory( SUBCAT_INPUT_DEMUX )

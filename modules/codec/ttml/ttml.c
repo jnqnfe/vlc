@@ -42,12 +42,10 @@
 
 vlc_plugin_begin ()
     set_shortname( "TTML" )
-    set_description( "TTML" )
     set_capability( VLC_CAP_SPU_DECODER, 10, tt_OpenDecoder, tt_CloseDecoder )
 
     add_submodule()
         set_shortname( "TTML" )
-        set_description( "TTML" )
         add_shortcut( "ttml" )
         set_capability( VLC_CAP_DEMUX, 11, tt_OpenDemux, tt_CloseDemux )
 

@@ -58,7 +58,6 @@ static void Close( demux_t * );
     "A negative value means an unlimited play time.")
 
 vlc_plugin_begin ()
-    set_description( "MP4" )
     set_shortname( "MP4" )
     set_capability( VLC_CAP_DEMUX, 240, Open, Close )
 

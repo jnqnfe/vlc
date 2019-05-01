@@ -110,18 +110,15 @@ static block_t *Encode( encoder_t *p_enc, picture_t *p_pict );
 
 vlc_plugin_begin ()
     set_shortname( "Theora" )
-    set_description( "Theora" )
     add_shortcut( "theora" )
     set_capability( VLC_CAP_VIDEO_DECODER, 100, OpenDecoder, CloseDecoder )
 
     add_submodule ()
-    set_description( "Theora" )
     add_shortcut( "theora" )
     set_capability( VLC_CAP_PACKETIZER, 100, OpenPacketizer, CloseDecoder )
 
 #ifdef ENABLE_SOUT
     add_submodule ()
-    set_description( "Theora" )
     add_shortcut( "theora" )
     set_capability( VLC_CAP_ENCODER, 150, OpenEncoder, CloseEncoder )
 #endif

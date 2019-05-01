@@ -63,7 +63,6 @@ static block_t *DoWork( filter_t *, block_t * );
 
 vlc_plugin_begin ()
     set_help( N_("Audio part of the BarGraph function") )
-    set_description( N_("Audiobar Graph") )
     set_shortname( N_("Audiobar Graph") )
     set_capability( VLC_CAP_AUDIO_FILTER, 0, Open, Close )
 

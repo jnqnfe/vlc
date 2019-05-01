@@ -46,7 +46,6 @@ static void CloseDecoder  ( decoder_t * );
 
 vlc_plugin_begin ()
     set_shortname( "USF" )
-    set_description( "USF" )
     set_capability( VLC_CAP_SPU_DECODER, 40, OpenDecoder, CloseDecoder )
 
     set_subcategory( SUBCAT_INPUT_SCODEC )

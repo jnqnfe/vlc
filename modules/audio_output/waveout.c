@@ -148,7 +148,6 @@ struct aout_sys_t
 
 vlc_plugin_begin ()
     set_shortname( "WaveOut" )
-    set_description( "WaveOut" )
     set_capability( VLC_CAP_AUDIO_OUTPUT, 50, Open, Close )
 
     set_subcategory( SUBCAT_AUDIO_AOUT )

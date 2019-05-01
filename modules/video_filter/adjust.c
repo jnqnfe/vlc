@@ -75,7 +75,6 @@ static int AdjustCallback( vlc_object_t *p_this, char const *psz_var,
 
 vlc_plugin_begin ()
     set_help( N_("Image property adjustment") )
-    set_description( N_("Image adjust") )
     set_shortname( N_("Image adjust") )
     add_shortcut( "adjust" )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )

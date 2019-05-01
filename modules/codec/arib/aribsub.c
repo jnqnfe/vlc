@@ -49,7 +49,6 @@ static int Decode( decoder_t *, block_t * );
 #define USE_CORETEXT_LONGTEXT N_("Use Core Text renderer in the subtitle.")
 
 vlc_plugin_begin ()
-    set_description( N_("ARIB subtitles") )
     set_shortname( N_("ARIB subtitles") )
     set_capability( VLC_CAP_SPU_DECODER, 50, Open, Close )
 

@@ -60,7 +60,6 @@ vlc_plugin_begin ()
 # define API VLC_OPENGL
 # define MODULE_VARNAME "gl"
     set_shortname ("OpenGL")
-    set_description ("OpenGL")
     add_shortcut ("opengl", "gl")
     set_capability (VLC_CAP_VOUT_DISPLAY, 270, Open, Close)
 

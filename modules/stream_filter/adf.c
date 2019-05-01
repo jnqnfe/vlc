@@ -36,7 +36,6 @@ static int Open( stream_t * );
 
 vlc_plugin_begin()
     set_shortname( "ADF" )
-    set_description( "ADF" )
     set_capability( VLC_CAP_STREAM_FILTER, 330, Open, NULL )
     //set_subcategory( SUBCAT_INPUT_STREAM_FILTER )
 vlc_plugin_end()

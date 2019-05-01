@@ -58,7 +58,6 @@ static int DecodeBlock  ( decoder_t *, block_t * );
  * Module descriptor
  *****************************************************************************/
 vlc_plugin_begin ()
-    set_description( "SVG" )
     set_shortname( "SVG" )
     add_shortcut( "svg" )
     set_capability( VLC_CAP_VIDEO_DECODER, 100, OpenDecoder, CloseDecoder )

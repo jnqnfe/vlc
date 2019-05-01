@@ -118,8 +118,7 @@ static int  Open         ( filter_t * );
 static void Close        ( filter_t * );
 
 vlc_plugin_begin ()
-    set_shortname( N_("Visualizer"))
-    set_description( N_("Visualizer") )
+    set_shortname( N_("Visualizer") )
     add_shortcut( "visualizer")
     set_capability( VLC_CAP_VISUALIZATION, 0, Open, Close )
 

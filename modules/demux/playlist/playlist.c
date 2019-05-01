@@ -54,7 +54,6 @@ vlc_plugin_begin ()
     add_shortcut( "playlist" )
 
     set_shortname( N_("Playlist") )
-    set_description( N_("Playlist") )
     add_submodule ()
         set_description( N_("M3U playlist") )
         add_shortcut( "m3u", "m3u8" )

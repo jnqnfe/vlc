@@ -75,7 +75,6 @@ typedef struct
                "A value between 0.5 and 10 seems sensible." )
 
 vlc_plugin_begin ()
-    set_description( N_("Volume normalizer") )
     set_shortname( N_("Volume normalizer") )
     add_shortcut( "volnorm" )
     set_capability( VLC_CAP_AUDIO_FILTER, 0, Open, Close )

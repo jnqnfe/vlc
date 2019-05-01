@@ -54,14 +54,12 @@ VLC_RD_PROBE_HELPER( "microdns_renderer", "mDNS renderer Discovery" )
  */
 vlc_plugin_begin()
     set_shortname( "mDNS" )
-    set_description( "mDNS" )
     add_shortcut( "mdns", "microdns" )
     set_capability( VLC_CAP_SERVICES_DISCOVERY, 0, OpenSD, CloseSD )
 
     VLC_SD_PROBE_SUBMODULE
 
     add_submodule() \
-        set_description( "mDNS" )
         add_shortcut( "mdns_renderer", "microdns_renderer" )
         set_capability( VLC_CAP_RENDERER_DISCOVERY, 0, OpenRD, CloseRD )
 

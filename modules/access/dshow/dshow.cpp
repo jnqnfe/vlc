@@ -189,7 +189,6 @@ using namespace dshow;
 
 vlc_plugin_begin ()
     set_shortname( "DirectShow" )
-    set_description( "DirectShow" )
     add_shortcut( "dshow" )
     set_capability( VLC_CAP_ACCESS, 1, DemuxOpen, DemuxClose )
 

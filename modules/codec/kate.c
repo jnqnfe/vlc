@@ -265,7 +265,6 @@ vlc_plugin_begin ()
     set_help( HELP_TEXT )
 
     set_shortname( "Kate" )
-    set_description( "Kate" )
     add_shortcut( "kate" )
     set_capability( VLC_CAP_SPU_DECODER, 50, OpenDecoder, CloseDecoder )
 

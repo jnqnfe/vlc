@@ -38,7 +38,6 @@ static int  Open (decoder_t *);
 static void Close(decoder_t *);
 
 vlc_plugin_begin ()
-    set_description("SCTE-18")
     set_shortname("SCTE-18")
     set_capability( VLC_CAP_SPU_DECODER, 51, Open, Close)
     //set_subcategory(SUBCAT_INPUT_SCODEC)

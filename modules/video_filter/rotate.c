@@ -64,7 +64,6 @@ static int RotateCallback( vlc_object_t *p_this, char const *psz_var,
  * Module descriptor
  *****************************************************************************/
 vlc_plugin_begin ()
-    set_description( N_("Rotate") )
     set_shortname( N_("Rotate") )
     add_shortcut( "rotate" )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )

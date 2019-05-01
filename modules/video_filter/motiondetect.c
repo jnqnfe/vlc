@@ -44,7 +44,6 @@ static void Destroy   ( filter_t * );
 #define FILTER_PREFIX "motiondetect-"
 
 vlc_plugin_begin ()
-    set_description( N_("Motion detect") )
     set_shortname( N_("Motion Detect") )
     add_shortcut( "motion" )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
