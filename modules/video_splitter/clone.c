@@ -54,7 +54,6 @@ vlc_plugin_begin ()
     set_help(CLONE_HELP)
 
     set_shortname( N_("Clone") )
-    add_shortcut( "clone" )
     set_capability( VLC_CAP_VIDEO_SPLITTER, 0, Open, Close )
 
     set_subcategory( SUBCAT_VIDEO_SPLITTER )

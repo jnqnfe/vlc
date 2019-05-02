@@ -50,7 +50,7 @@ static void Close( demux_t * );
 using namespace mkv;
 vlc_plugin_begin ()
     set_shortname( "Matroska" )
-    add_shortcut( "mka", "mkv" )
+    add_shortcut( "mka" )
     set_capability( VLC_CAP_DEMUX, 50, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_DEMUX )

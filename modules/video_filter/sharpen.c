@@ -67,7 +67,6 @@ vlc_plugin_begin ()
     set_help(SHARPEN_HELP)
 
     set_shortname( N_("Sharpen") )
-    add_shortcut( "sharpen" )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )

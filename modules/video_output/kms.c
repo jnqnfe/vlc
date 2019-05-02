@@ -780,7 +780,6 @@ static int Open(vout_display_t *vd, const vout_display_cfg_t *cfg,
 vlc_plugin_begin ()
     set_shortname("KMS")
     set_help("Linux kernel mode setting video output")
-    add_shortcut( "kms" )
     set_capability(VLC_CAP_VOUT_DISPLAY, 30, Open, Close)
 
     set_subcategory(SUBCAT_VIDEO_VOUT)

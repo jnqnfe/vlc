@@ -42,7 +42,6 @@ static void Close ( demux_t * );
 
 vlc_plugin_begin ()
     set_shortname( "TTA" )
-    add_shortcut( "tta" )
     set_capability( VLC_CAP_DEMUX, 145, Open, Close )
     //set_subcategory( SUBCAT_INPUT_DEMUX )
 vlc_plugin_end ()

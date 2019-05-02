@@ -83,7 +83,6 @@ static const char *const depth_texts[] = {
 vlc_plugin_begin ()
     set_shortname ("Framebuffer")
     set_description (N_("Shared memory framebuffer"))
-    add_shortcut ("shm")
     set_capability (VLC_CAP_ACCESS, 0, Open, Close)
 
     set_subcategory (SUBCAT_INPUT_ACCESS)

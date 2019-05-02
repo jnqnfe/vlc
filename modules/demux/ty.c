@@ -58,7 +58,7 @@ static void Close( demux_t * );
 
 vlc_plugin_begin ()
     set_shortname( "TY" )
-    add_shortcut("ty", "tivo")
+    add_shortcut("tivo")
     /* FIXME: there seems to be a segfault when using PVR access
      * and TY demux has a bigger priority than PS
      * Something must be wrong.

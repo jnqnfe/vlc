@@ -46,7 +46,6 @@ static void Close( demux_t * );
 
 vlc_plugin_begin ()
     set_shortname( "VC-1")
-    add_shortcut( "vc1" )
     set_capability( VLC_CAP_DEMUX, 0, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_DEMUX )

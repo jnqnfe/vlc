@@ -61,10 +61,9 @@ vlc_plugin_begin ()
 #ifdef PLUGIN_NAME_IS_hevc
     set_shortname( "HEVC" )
     set_description( "HEVC/H.265" )
-    add_shortcut( "hevc", "h265" )
+    add_shortcut( "h265" )
 #else
     set_shortname( "H264")
-    add_shortcut( "h264" )
 #endif
     set_capability( VLC_CAP_DEMUX, 6, Open, Close )
 

@@ -50,7 +50,6 @@ static int   Send( sout_stream_t *, void *, block_t * );
  *****************************************************************************/
 vlc_plugin_begin ()
     set_description( N_("Description") )
-    add_shortcut( "description" )
     set_capability( VLC_CAP_SOUT_STREAM, 50, Open, Close )
 vlc_plugin_end ()
 

@@ -85,12 +85,10 @@ vlc_plugin_begin ()
     set_help(LOGO_HELP)
 
     set_shortname( N_("Logo") )
-    add_shortcut( "logo" )
     set_capability( VLC_CAP_SUB_SOURCE, 0, OpenSub, Close )
 
     /* video output filter submodule */
     add_submodule ()
-    add_shortcut( "logo" )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, OpenVideo, Close )
 
     set_subcategory( SUBCAT_VIDEO_SUBPIC )

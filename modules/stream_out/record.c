@@ -53,7 +53,6 @@ static void     Close   ( sout_stream_t * );
 #define SOUT_CFG_PREFIX "sout-record-"
 
 vlc_plugin_begin ()
-    add_shortcut( "record" )
     set_shortname( N_("Record") )
     set_capability( VLC_CAP_SOUT_STREAM, 0, Open, Close )
 

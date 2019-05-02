@@ -67,7 +67,6 @@ vlc_plugin_begin ()
     set_help(ERASE_HELP)
 
     set_shortname( N_("Erase") )
-    add_shortcut( "erase" )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )

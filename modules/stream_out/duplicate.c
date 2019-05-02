@@ -41,7 +41,7 @@ static void     Close   ( sout_stream_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Duplicate") )
-    add_shortcut( "duplicate", "dup" )
+    add_shortcut( "dup" )
     set_capability( VLC_CAP_SOUT_STREAM, 50, Open, Close )
     //set_subcategory( SUBCAT_SOUT_STREAM )
 vlc_plugin_end ()

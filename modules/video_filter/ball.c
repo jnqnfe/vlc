@@ -125,7 +125,6 @@ vlc_plugin_begin ()
     set_help(BALL_HELP)
 
     set_shortname( N_("Ball") )
-    add_shortcut( "ball" )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )

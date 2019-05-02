@@ -63,7 +63,7 @@ vlc_plugin_begin ()
     set_help( ALPHAMASK_HELP )
 
     set_shortname( N_("Alpha mask") )
-    add_shortcut( "alphamask", "mask" )
+    add_shortcut( "mask" )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
 
     set_subcategory( SUBCAT_VIDEO_VFILTER )

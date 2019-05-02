@@ -69,7 +69,7 @@ vlc_plugin_begin()
     set_shortname("satip")
     set_description( N_("SAT>IP receiver") )
     set_capability(VLC_CAP_ACCESS, 201, satip_open, satip_close)
-    add_shortcut("rtsp", "satip")
+    add_shortcut("rtsp")
 
     set_subcategory(SUBCAT_INPUT_ACCESS)
     add_integer("satip-buffer", 0x400000, BUFFER_TEXT, BUFFER_LONGTEXT, true)

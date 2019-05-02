@@ -265,13 +265,11 @@ vlc_plugin_begin ()
     set_help( HELP_TEXT )
 
     set_shortname( "Kate" )
-    add_shortcut( "kate" )
     set_capability( VLC_CAP_SPU_DECODER, 50, OpenDecoder, CloseDecoder )
 
 #ifdef ENABLE_PACKETIZER
     add_submodule ()
     set_description( "Kate" )
-    add_shortcut( "kate" )
     set_capability( VLC_CAP_PACKETIZER, 100, OpenPacketizer, CloseDecoder )
 #endif
 

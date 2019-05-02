@@ -1005,7 +1005,7 @@ vlc_plugin_begin ()
     set_help (HELP_TEXT)
 
     set_shortname( N_("Audio CD") )
-    add_shortcut( "cdda", "cddasimple" )
+    add_shortcut( "cddasimple" )
     set_capability( VLC_CAP_ACCESS, 0, Open, Close)
 
     set_subcategory( SUBCAT_INPUT_ACCESS )

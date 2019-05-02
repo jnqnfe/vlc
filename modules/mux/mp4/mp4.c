@@ -63,7 +63,7 @@ static void CloseFrag  (sout_mux_t *);
 vlc_plugin_begin ()
     set_description(N_("MP4/MOV"))
     set_shortname("MP4")
-    add_shortcut("mp4", "mov", "3gp")
+    add_shortcut("mov", "3gp")
     set_capability(VLC_CAP_SOUT_MUX, 5, Open, Close)
 
 add_submodule ()

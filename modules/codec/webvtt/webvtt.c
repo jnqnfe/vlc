@@ -40,7 +40,6 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_SPU_DECODER, 10, webvtt_OpenDecoder, webvtt_CloseDecoder )
 
     add_submodule()
-        add_shortcut( "webvtt" )
         set_capability( VLC_CAP_DEMUX, 11, webvtt_OpenDemux, webvtt_CloseDemux )
     add_submodule()
         add_shortcut( "webvttstream" )

@@ -63,7 +63,7 @@ static void    Close  ( sout_mux_t * );
 
 vlc_plugin_begin ()
     set_shortname( "MPEG-PS" )
-    add_shortcut( "ps", "mpeg1", "dvd" )
+    add_shortcut( "mpeg1", "dvd" )
     set_capability( VLC_CAP_SOUT_MUX, 50, Open, Close )
 
     set_subcategory( SUBCAT_SOUT_MUX )

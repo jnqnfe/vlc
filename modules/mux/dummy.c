@@ -42,7 +42,7 @@ static void Close  ( sout_mux_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Dummy/Raw") )
-    add_shortcut( "dummy", "raw", "es" )
+    add_shortcut( "raw", "es" )
     set_capability( VLC_CAP_SOUT_MUX, 5, Open, Close )
     //set_subcategory( SUBCAT_SOUT_MUX )
 vlc_plugin_end ()

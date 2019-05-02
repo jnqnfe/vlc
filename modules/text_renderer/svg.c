@@ -72,7 +72,6 @@ typedef struct
 
 vlc_plugin_begin ()
     set_shortname( "SVG" )
-    add_shortcut( "svg" )
     set_capability( VLC_CAP_TEXT_RENDERER, 99, Create, Destroy )
 
     set_subcategory( SUBCAT_INPUT_SCODEC )

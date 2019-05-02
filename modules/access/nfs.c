@@ -55,7 +55,6 @@ static void Close(stream_t *);
 
 vlc_plugin_begin()
     set_shortname("NFS")
-    add_shortcut("nfs")
     set_capability(VLC_CAP_ACCESS, 0, Open, Close)
 
     set_subcategory(SUBCAT_INPUT_ACCESS)

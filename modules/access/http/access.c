@@ -280,7 +280,7 @@ static void Close(stream_t *access)
 
 vlc_plugin_begin()
     set_shortname("HTTPS")
-    add_shortcut("https", "http")
+    add_shortcut("https")
     set_capability(VLC_CAP_ACCESS, 2, Open, Close)
 
     set_subcategory(SUBCAT_INPUT_ACCESS)

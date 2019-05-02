@@ -52,7 +52,6 @@ static picture_t *Filter( filter_t *, picture_t * );
 vlc_plugin_begin ()
     set_description( N_("Psychedelic effect") )
     set_shortname( N_( "Psychedelic" ) )
-    add_shortcut( "psychedelic" )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, Destroy )
     //set_subcategory( SUBCAT_VIDEO_VFILTER )
 vlc_plugin_end ()

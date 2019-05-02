@@ -31,13 +31,19 @@ void OutCloseAvio(sout_access_out_t *);
 #define AVIO_MODULE \
     set_shortname(N_("AVIO"))                                                    \
     set_description(N_("libavformat AVIO access") )                              \
-    add_shortcut("avio", "rtmp", "rtmpe", "rtmps", "rtmpt", "rtmpte", "rtmpts")  \
+    if (strcmp("avio", PLUGIN_STRING)) {                                         \
+        add_shortcut("avio")                                                     \
+    }                                                                            \
+    add_shortcut("rtmp", "rtmpe", "rtmps", "rtmpt", "rtmpte", "rtmpts")          \
     set_capability(VLC_CAP_ACCESS, -1, OpenAvio, CloseAvio)                      \
                                                                                  \
     add_submodule ()                                                             \
         set_shortname( "AVIO" )                                                  \
         set_description( N_("libavformat AVIO access output") )                  \
-        add_shortcut( "avio", "rtmp" )                                           \
+        if (strcmp("avio", PLUGIN_STRING)) {                                     \
+            add_shortcut("avio")                                                 \
+        }                                                                        \
+        add_shortcut( "rtmp" )                                                   \
         set_capability( VLC_CAP_SOUT_ACCESS, -1, OutOpenAvio, OutCloseAvio )     \
                                                                                  \
     set_subcategory(SUBCAT_INPUT_ACCESS)                                         \

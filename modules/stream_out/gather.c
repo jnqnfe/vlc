@@ -41,7 +41,6 @@ static void     Close   ( sout_stream_t * );
 
 vlc_plugin_begin ()
     set_description( N_("Gather") )
-    add_shortcut( "gather" )
     set_capability( VLC_CAP_SOUT_STREAM, 50, Open, Close )
 vlc_plugin_end ()
 

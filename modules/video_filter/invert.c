@@ -47,7 +47,6 @@ static picture_t *Filter( filter_t *, picture_t * );
 vlc_plugin_begin ()
     set_description( N_("Color inversion") )
     set_shortname( N_("Invert") )
-    add_shortcut( "invert" )
     set_capability( VLC_CAP_VIDEO_FILTER, 0, Create, NULL )
     //set_subcategory( SUBCAT_VIDEO_VFILTER )
 vlc_plugin_end ()

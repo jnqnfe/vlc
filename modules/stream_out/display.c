@@ -51,7 +51,6 @@ static void Close( sout_stream_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("Display") )
-    add_shortcut( "display" )
     set_capability( VLC_CAP_SOUT_STREAM, 50, Open, Close )
 
     set_subcategory( SUBCAT_SOUT_STREAM )

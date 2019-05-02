@@ -76,7 +76,6 @@ static void Close( demux_t * );
 
 vlc_plugin_begin()
     set_shortname( "VNC" )
-    add_shortcut( "vnc" )
     set_description( N_("VNC client access") )
     set_capability( VLC_CAP_ACCESS, 0, Open, Close )
 

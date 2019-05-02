@@ -64,7 +64,6 @@ static void Close( filter_t * );
 
 vlc_plugin_begin ()
     set_shortname( N_("Spatializer") )
-    add_shortcut( "spatializer" )
     set_capability( VLC_CAP_AUDIO_FILTER, 0, Open, Close )
 
     set_subcategory( SUBCAT_AUDIO_AFILTER )

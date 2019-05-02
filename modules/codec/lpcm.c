@@ -64,7 +64,6 @@ vlc_plugin_begin ()
 #ifdef ENABLE_SOUT
     add_submodule ()
     set_description( N_("Linear PCM") )
-    add_shortcut( "lpcm" )
     set_capability( VLC_CAP_ENCODER, 100, OpenEncoder, CloseEncoder )
 #endif
 

@@ -68,7 +68,6 @@ vlc_plugin_begin ()
     set_capability ( VLC_CAP_AUDIO_CONVERTER, 51, OpenConverter, Close )
 
     add_submodule()
-    add_shortcut( "soxr" )
     set_capability( VLC_CAP_AUDIO_RESAMPLER, 51, OpenResampler, Close )
 
     set_subcategory( SUBCAT_AUDIO_RESAMPLER )

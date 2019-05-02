@@ -79,7 +79,6 @@ vlc_plugin_begin()
 
     set_description( N_("Panoramix: wall with overlap") )
     set_shortname( N_("Panoramix" ))
-    add_shortcut( "panoramix" )
     set_capability( VLC_CAP_VIDEO_SPLITTER, 0, Open, Close )
 
     set_subcategory( SUBCAT_VIDEO_SPLITTER )

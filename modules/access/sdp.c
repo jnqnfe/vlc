@@ -34,7 +34,6 @@ static int Open (stream_t *);
 vlc_plugin_begin ()
     set_shortname ("SDP")
     set_description (N_("Session Description Protocol"))
-    add_shortcut ("sdp")
     set_capability (VLC_CAP_ACCESS, 0, Open, NULL)
     //set_subcategory (SUBCAT_INPUT_ACCESS)
 vlc_plugin_end()

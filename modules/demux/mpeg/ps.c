@@ -59,11 +59,9 @@ static void Close  ( demux_t * );
 
 vlc_plugin_begin ()
     set_shortname( "MPEG-PS" )
-    add_shortcut( "ps" )
     set_capability( VLC_CAP_DEMUX, 1, OpenForce, Close )
 
     add_submodule ()
-    add_shortcut( "ps" )
     set_capability( VLC_CAP_DEMUX, 8, Open, Close )
 
     set_subcategory( SUBCAT_INPUT_DEMUX )

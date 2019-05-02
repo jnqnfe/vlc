@@ -70,7 +70,7 @@ static void Close  ( sout_mux_t * );
 
 vlc_plugin_begin ()
     set_shortname( "ASF" )
-    add_shortcut( "asf", "asfh" )
+    add_shortcut( "asfh" )
     set_capability( VLC_CAP_SOUT_MUX, 5, Open, Close )
 
     set_subcategory( SUBCAT_SOUT_MUX )

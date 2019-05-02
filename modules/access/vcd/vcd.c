@@ -47,7 +47,7 @@ static void Close( stream_t * );
 vlc_plugin_begin ()
     set_help (HELP_TEXT)
     set_shortname( "VCD" )
-    add_shortcut( "vcd", "svcd" )
+    add_shortcut( "svcd" )
     set_capability( VLC_CAP_ACCESS, 0, Open, Close )
     //set_subcategory( SUBCAT_INPUT_ACCESS )
 vlc_plugin_end ()

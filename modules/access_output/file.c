@@ -386,7 +386,7 @@ static void Close( sout_access_out_t *p_access )
 vlc_plugin_begin ()
     set_description( N_("File output") )
     set_shortname( N_("File" ))
-    add_shortcut( "file", "stream", "fd" )
+    add_shortcut( "stream", "fd" )
     set_capability( VLC_CAP_SOUT_ACCESS, 50, Open, Close )
 
     set_subcategory( SUBCAT_SOUT_ACO )

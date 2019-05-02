@@ -60,7 +60,6 @@ static void Close( video_splitter_t * );
 vlc_plugin_begin()
     set_description( N_("Wall") )
     set_shortname( N_("Image wall") )
-    add_shortcut( "wall" )
     set_capability( VLC_CAP_VIDEO_SPLITTER, 0, Open, Close )
 
     set_subcategory( SUBCAT_VIDEO_SPLITTER )

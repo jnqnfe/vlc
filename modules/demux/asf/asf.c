@@ -57,7 +57,7 @@ static void Close ( demux_t * );
 
 vlc_plugin_begin ()
     set_description( "ASF/WMV" )
-    add_shortcut( "asf", "wmv" )
+    add_shortcut( "wmv" )
     set_capability( VLC_CAP_DEMUX, 200, Open, Close )
     //set_subcategory( SUBCAT_INPUT_DEMUX )
 vlc_plugin_end ()

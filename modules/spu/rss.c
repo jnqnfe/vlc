@@ -188,7 +188,7 @@ vlc_plugin_begin ()
 
     set_shortname( N_("RSS / Atom") )
     set_description( N_("RSS and Atom feed display") )
-    add_shortcut( "rss", "atom" )
+    add_shortcut( "atom" )
     set_capability( VLC_CAP_SUB_SOURCE, 1, CreateFilter, DestroyFilter )
 
     set_subcategory( SUBCAT_VIDEO_SUBPIC )

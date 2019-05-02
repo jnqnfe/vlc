@@ -44,7 +44,6 @@ static void Close   ( sout_stream_t * );
 vlc_plugin_begin ()
     set_shortname( N_("Autodel"))
     set_help( N_("Automatically add/delete input streams"))
-    add_shortcut( "autodel" )
     set_capability( VLC_CAP_SOUT_STREAM, 50, Open, Close )
 vlc_plugin_end ()
 

@@ -77,8 +77,7 @@ static void Close( stream_t * );
 vlc_plugin_begin ()
     set_shortname( "DVB" )
     set_description( N_("DVB with v4l2 support") )
-    add_shortcut( "dvb",                        /* Generic name */
-                  "dvb-s", "qpsk", "satellite", /* Satellite */
+    add_shortcut( "dvb-s", "qpsk", "satellite", /* Satellite */
                   "dvb-c", "cable",             /* Cable */
                   "dvb-t", "terrestrial" )      /* Terrestrial */
     set_capability( VLC_CAP_ACCESS, 0, Open, Close )

@@ -96,7 +96,7 @@ vlc_plugin_begin ()
     set_description (N_("Real-Time Protocol (RTP)"))
     /*add_shortcut ("sctp")*/
     add_shortcut ("dccp", "rtptcp", /* "tcp" is already taken :( */
-                  "rtp", "udplite")
+                  "udplite")
     set_capability (VLC_CAP_ACCESS, 0, Open, Close)
 
     set_subcategory (SUBCAT_INPUT_DEMUX)

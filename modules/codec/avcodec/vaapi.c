@@ -216,7 +216,6 @@ error:
 
 vlc_plugin_begin ()
     set_description( "VA-API" )
-    add_shortcut( "vaapi" )
     set_capability( VLC_CAP_HW_DECODER, 100, Create, Delete )
     //set_subcategory( SUBCAT_INPUT_VCODEC )
 vlc_plugin_end ()

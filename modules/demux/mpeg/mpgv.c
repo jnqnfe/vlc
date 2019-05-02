@@ -41,7 +41,6 @@ static void Close( demux_t * );
 
 vlc_plugin_begin ()
     set_description( N_("MPEG-I/II video" ) )
-    add_shortcut( "mpgv" )
     set_capability( VLC_CAP_DEMUX, 5, Open, Close )
     //set_subcategory( SUBCAT_INPUT_DEMUX )
 vlc_plugin_end ()

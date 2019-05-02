@@ -46,7 +46,6 @@ static void Close  ( demux_t * );
 
 vlc_plugin_begin ()
     set_description( "NullSoft" )
-    add_shortcut( "nsv" )
     set_capability( VLC_CAP_DEMUX, 10, Open, Close )
     //set_subcategory( SUBCAT_INPUT_DEMUX )
 vlc_plugin_end ()

@@ -235,7 +235,7 @@ static void Close( stream_t *p_access )
 
 vlc_plugin_begin()
     set_shortname("UDP")
-    add_shortcut("udp", "udpstream", "udp4", "udp6")
+    add_shortcut("udpstream", "udp4", "udp6")
     set_capability(VLC_CAP_ACCESS, 0, Open, Close)
 
     set_subcategory(SUBCAT_INPUT_ACCESS)

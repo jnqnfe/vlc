@@ -252,7 +252,6 @@ static const char *const psz_raise_list_text[] =
 /**********************************************************************/
 vlc_plugin_begin ()
     set_shortname( "Qt" )
-    add_shortcut("qt")
     set_capability( VLC_CAP_INTERFACE, 151, OpenIntf, Close )
 
     cannot_unload_broken_library()

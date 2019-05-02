@@ -80,14 +80,14 @@ static void OutClose( sout_access_out_t * );
 
 vlc_plugin_begin ()
     set_shortname( "FTP" )
-    add_shortcut( "ftp", "ftps", "ftpes" )
+    add_shortcut( "ftps", "ftpes" )
     set_capability( VLC_CAP_ACCESS, 0, InOpen, InClose )
 
 #ifdef ENABLE_SOUT
     add_submodule ()
         set_shortname( "FTP" )
         set_description( N_("FTP upload output") )
-        add_shortcut( "ftp", "ftps", "ftpes" )
+        add_shortcut( "ftps", "ftpes" )
         set_capability( VLC_CAP_SOUT_ACCESS, 0, OutOpen, OutClose )
 #endif
 

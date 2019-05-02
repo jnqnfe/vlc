@@ -49,7 +49,7 @@ vlc_plugin_begin ()
 # define MODULE_VARNAME "gles2"
     set_shortname ("OpenGL ES2")
     set_description (N_("OpenGL for Embedded Systems 2"))
-    add_shortcut ("opengles2", "gles2")
+    add_shortcut ("opengles2")
     set_capability (VLC_CAP_VOUT_DISPLAY, 265, Open, Close)
 
     set_subcategory (SUBCAT_VIDEO_VOUT)
@@ -60,7 +60,7 @@ vlc_plugin_begin ()
 # define API VLC_OPENGL
 # define MODULE_VARNAME "gl"
     set_shortname ("OpenGL")
-    add_shortcut ("opengl", "gl")
+    add_shortcut ("opengl")
     set_capability (VLC_CAP_VOUT_DISPLAY, 270, Open, Close)
 
     set_subcategory (SUBCAT_VIDEO_VOUT)
