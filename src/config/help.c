@@ -712,10 +712,10 @@ static void ListModules (vlc_object_t *p_this, bool b_verbose)
         if( b_verbose )
         {
             const char *const *pp_shortcuts = p_parser->pp_shortcuts;
-            for( unsigned i = 0; i < p_parser->i_shortcuts; i++ )
-                if( strcmp( pp_shortcuts[i], objname ) )
-                    printf(color ? TS_CYAN_BOLD "   s %s\n" TS_RESET : "   s %s\n",
-                           pp_shortcuts[i]);
+            /* note, we deliberately skip the first here (object name) */
+            for( unsigned i = 1; i < p_parser->i_shortcuts; i++ )
+                printf(color ? TS_CYAN_BOLD "   s %s\n" TS_RESET : "   s %s\n",
+                       pp_shortcuts[i]);
             const char *cap_text = vlc_module_get_capability_name(p_parser);
             if (cap_text != NULL)
                 printf(color ? TS_MAGENTA_BOLD "   c %s (%d)\n" TS_RESET : "   c %s (%d)\n",
