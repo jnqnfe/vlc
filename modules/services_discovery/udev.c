@@ -66,6 +66,7 @@ vlc_plugin_begin ()
 #endif
     add_submodule ()
     set_shortname (N_("Discs"))
+    set_description ( NULL )
     add_shortcut ("disc")
     set_capability (VLC_CAP_SERVICES_DISCOVERY, 0, OpenDisc, Close)
 
