@@ -33,6 +33,7 @@
 static int Activate (audio_volume_t *);
 
 vlc_plugin_begin ()
+    set_shortname(N_("Integer volume"))
     set_description (N_("Integer audio volume"))
     set_capability (VLC_CAP_AUDIO_VOLUME, 9, Activate, NULL)
     //set_subcategory (SUBCAT_AUDIO_AFILTER)

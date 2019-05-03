@@ -85,6 +85,7 @@ static int        OpenDecoder  ( decoder_t * );
 static void       CloseDecoder ( decoder_t * );
 
 vlc_plugin_begin ()
+    set_shortname( "Crystal HD" )
     set_description( N_("Crystal HD hardware video decoder") )
     set_capability( VLC_CAP_VIDEO_DECODER, 0, OpenDecoder, CloseDecoder )
     //set_subcategory( SUBCAT_INPUT_VCODEC )

@@ -50,6 +50,7 @@ static int  Open( decoder_t * );
 static void Close( decoder_t * );
 
 vlc_plugin_begin ()
+    set_shortname( "AAC" )
     set_description( N_("AAC (using libfaad2)") )
     set_capability( VLC_CAP_AUDIO_DECODER, 100, Open, Close )
     //set_subcategory( SUBCAT_INPUT_ACODEC )

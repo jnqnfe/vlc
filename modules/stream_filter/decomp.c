@@ -55,15 +55,18 @@ static int  OpenXZ (stream_t *);
 static void Close (stream_t *);
 
 vlc_plugin_begin ()
+    set_shortname ("LZMA")
     set_description (N_("LZMA decompression"))
     set_capability (VLC_CAP_STREAM_FILTER, 320, OpenXZ, Close)
 
     add_submodule ()
+    set_shortname ("Burrows-Wheeler")
     set_description (N_("Burrows-Wheeler decompression"))
     set_capability (VLC_CAP_STREAM_FILTER, 320, OpenBzip2, Close)
     /* TODO: access shortnames for vlc_stream_NewURL() */
 
     add_submodule ()
+    set_shortname ("GZIP")
     set_description (N_("gzip decompression"))
     set_capability (VLC_CAP_STREAM_FILTER, 320, OpenGzip, Close)
 

@@ -31,6 +31,7 @@
 static int OpenDecoder(decoder_t *);
 
 vlc_plugin_begin()
+    set_shortname("S/PDIF")
     set_description(N_("S/PDIF pass-through"))
     set_capability(VLC_CAP_AUDIO_DECODER, 120, OpenDecoder, NULL)
     //set_subcategory(SUBCAT_INPUT_ACODEC)

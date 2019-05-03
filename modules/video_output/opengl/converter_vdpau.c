@@ -200,7 +200,8 @@ DecoderContextOpen(vlc_decoder_device *device, vout_window_t *window)
 }
 
 vlc_plugin_begin ()
-    set_description("VDPAU OpenGL surface converter")
+    set_shortname(N_("VDPAU converter"))
+    set_description(N_("VDPAU OpenGL surface converter"))
     add_shortcut("vdpau")
     set_capability(VLC_CAP_GLCONV, 2, Open, Close)
 

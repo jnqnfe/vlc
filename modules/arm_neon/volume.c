@@ -33,6 +33,7 @@
 static int Probe(audio_volume_t *);
 
 vlc_plugin_begin()
+    set_shortname(N_("Volume NEON"))
     set_description(N_("ARM NEON audio volume"))
     set_capability(VLC_CAP_AUDIO_VOLUME, 10, Probe, NULL)
     //set_subcategory(SUBCAT_AUDIO_AFILTER)

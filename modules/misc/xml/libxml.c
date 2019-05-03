@@ -259,6 +259,7 @@ static void ReaderClose( xml_reader_t *p_reader )
 }
 
 vlc_plugin_begin ()
+    set_shortname( "XML" )
     set_description( N_("XML Parser (using libxml2)") )
     set_capability( VLC_CAP_XML, 10, Open, Close )
 

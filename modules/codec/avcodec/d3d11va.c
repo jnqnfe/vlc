@@ -63,6 +63,7 @@ static int Open(vlc_va_t *, AVCodecContext *, enum PixelFormat,
 static void Close(vlc_va_t *, void **);
 
 vlc_plugin_begin()
+    set_shortname("Direct3D11 VA")
     set_description(N_("Direct3D11 Video Acceleration"))
     set_capability(VLC_CAP_HW_DECODER, 110, Open, Close)
     //set_subcategory(SUBCAT_INPUT_VCODEC)

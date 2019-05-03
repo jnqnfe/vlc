@@ -59,6 +59,7 @@ static void CloseEncoder  ( encoder_t * );
 static block_t *EncodeFrame  ( encoder_t *, block_t * );
 
 vlc_plugin_begin()
+    set_shortname("Shine")
     set_description( N_("MP3 fixed point") )
     set_capability( VLC_CAP_ENCODER, 50, OpenEncoder, CloseEncoder )
     //set_subcategory( SUBCAT_INPUT_ACODEC )

@@ -42,6 +42,7 @@
 static int  DemuxOpen  ( demux_t * );
 
 vlc_plugin_begin ()
+    set_shortname( "NSC" )
     set_description( N_("Windows Media NSC") )
     set_capability( VLC_CAP_DEMUX, 3, DemuxOpen, NULL )
     //set_subcategory( SUBCAT_INPUT_DEMUX )

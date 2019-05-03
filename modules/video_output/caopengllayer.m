@@ -52,6 +52,7 @@ static int Open(vout_display_t *vd, const vout_display_cfg_t *cfg,
 static void Close(vout_display_t *vd);
 
 vlc_plugin_begin()
+    set_shortname("CA OpenGl")
     set_description(N_("Core Animation OpenGL Layer (Mac OS X)"))
     set_capability(VLC_CAP_VOUT_DISPLAY, 0, Open, Close)
     //set_subcategory(SUBCAT_VIDEO_VOUT)

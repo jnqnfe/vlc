@@ -225,6 +225,7 @@ static void Close(vlc_va_t *va, void **hwctx)
 }
 
 vlc_plugin_begin()
+    set_shortname("VDPAU")
     set_description(N_("VDPAU decoder device"))
     add_shortcut("vdpau")
     set_capability(VLC_CAP_HW_DECODER, 100, Open, Close)

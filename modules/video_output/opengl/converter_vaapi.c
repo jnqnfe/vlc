@@ -390,7 +390,8 @@ error:
 }
 
 vlc_plugin_begin ()
-    set_description("VA-API OpenGL surface converter")
+    set_shortname(N_("VA-API converter"))
+    set_description(N_("VA-API OpenGL surface converter"))
     add_shortcut("vaapi")
     set_capability(VLC_CAP_GLCONV, 1, Open, Close)
     //set_subcategory(SUBCAT_VIDEO_VOUT)

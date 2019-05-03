@@ -277,7 +277,8 @@ Open(opengl_tex_converter_t *tc)
 }
 
 vlc_plugin_begin ()
-    set_description("Apple OpenGL CVPX converter")
+    set_shortname(N_("CVPX converter"))
+    set_description(N_("Apple OpenGL CVPX converter"))
     set_capability(VLC_CAP_GLCONV, 1, Open, Close)
     //set_subcategory(SUBCAT_VIDEO_VOUT)
 vlc_plugin_end ()

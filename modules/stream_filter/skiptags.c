@@ -232,6 +232,7 @@ static void Close(stream_t *stream)
 }
 
 vlc_plugin_begin()
+    set_shortname("APE/ID3")
     set_description(N_("APE/ID3 tag-skipping"))
     set_capability(VLC_CAP_STREAM_FILTER, 330, Open, Close)
     //set_subcategory(SUBCAT_INPUT_STREAM_FILTER)

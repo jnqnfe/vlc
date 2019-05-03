@@ -43,6 +43,7 @@ static int  Open ( stream_t * );
 static void Close( stream_t * );
 
 vlc_plugin_begin()
+    set_shortname( N_("Record") )
     set_description( N_("Internal stream record") )
     set_capability( VLC_CAP_STREAM_FILTER, 0, Open, Close )
     //set_subcategory( SUBCAT_INPUT_STREAM_FILTER )

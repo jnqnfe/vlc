@@ -60,10 +60,12 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_SPU_DECODER, -1, OpenDecoderDump, CloseDecoder )
 
     add_submodule()
+    set_shortname( N_("Dump") )
     add_shortcut( "dump")
     set_capability( VLC_CAP_VIDEO_DECODER, 0, OpenDecoderDump, CloseDecoder )
 
     add_submodule()
+    set_shortname( N_("Dump") )
     add_shortcut( "dump")
     set_capability( VLC_CAP_AUDIO_DECODER, 0,OpenDecoderDump, CloseDecoder )
 

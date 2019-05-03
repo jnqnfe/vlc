@@ -49,6 +49,7 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_VOUT_DISPLAY, 0, OpenDummy, NULL )
 
     add_submodule ()
+    set_shortname( N_("Stats") )
     set_description( N_("Statistics video output") )
     add_shortcut( "stats" )
     set_capability( VLC_CAP_VOUT_DISPLAY, 0, OpenStats, NULL )

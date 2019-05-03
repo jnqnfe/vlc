@@ -274,7 +274,8 @@ Open(opengl_tex_converter_t *tc)
 }
 
 vlc_plugin_begin ()
-    set_description("Android OpenGL SurfaceTexture converter")
+    set_shortname(N_("Android converter"))
+    set_description(N_("Android OpenGL SurfaceTexture converter"))
     set_capability(VLC_CAP_GLCONV, 1, Open, Close)
     //set_subcategory(SUBCAT_VIDEO_VOUT)
 vlc_plugin_end ()

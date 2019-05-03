@@ -93,6 +93,7 @@ static int  OpenClient  (vlc_tls_client_t *);
 #endif
 
 vlc_plugin_begin ()
+    set_shortname("TLS")
     set_description(N_("TLS support for OS X and iOS"))
     set_capability(VLC_CAP_TLS_CLIENT, 2, OpenClient, NULL)
 

@@ -68,6 +68,7 @@ vlc_plugin_begin ()
 
     add_submodule()
     set_description( N_("MPEG-4 video" ) )
+    set_shortname( N_("Video ES") )
     set_capability( VLC_CAP_DEMUX, 5, OpenVideo, Close )
 
     add_shortcut( "m4v" )

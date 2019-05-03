@@ -107,7 +107,8 @@ vlc_plugin_begin ()
 
 #ifdef HAVE_GL
     add_submodule()
-    set_description("DX OpenGL surface converter for D3D9")
+    set_shortname(N_("D3D9 DX OpenGL"))
+    set_description(N_("DX OpenGL surface converter for D3D9"))
     set_capability(VLC_CAP_GLCONV, 1, GLConvOpen, GLConvClose)
 #endif
 

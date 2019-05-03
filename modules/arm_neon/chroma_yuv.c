@@ -32,6 +32,7 @@
 static int Open (filter_t *);
 
 vlc_plugin_begin ()
+    set_shortname (N_("YUV chroma NEON"))
     set_description (N_("ARM NEON video chroma conversions"))
     set_capability (VLC_CAP_VIDEO_CONVERTER, 250, Open, NULL)
 vlc_plugin_end ()

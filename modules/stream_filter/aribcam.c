@@ -39,6 +39,7 @@ static void Close(stream_t *);
 
 vlc_plugin_begin ()
     add_shortcut("aribcam")
+    set_shortname ("Aribcam")
     set_description (N_("ARIB STD-B25 Cam module"))
     set_capability (VLC_CAP_STREAM_FILTER, 0, Open, Close)
     //set_subcategory (SUBCAT_INPUT_STREAM_FILTER)

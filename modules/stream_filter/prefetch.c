@@ -539,6 +539,7 @@ static void Close (stream_t *stream)
 }
 
 vlc_plugin_begin()
+    set_shortname(N_("Prefetch"))
     set_description(N_("Stream prefetch"))
     set_capability(VLC_CAP_STREAM_FILTER, 0, Open, Close)
 

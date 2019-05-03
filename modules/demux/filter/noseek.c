@@ -70,6 +70,7 @@ static int Open(demux_t *demux)
 }
 
 vlc_plugin_begin ()
+    set_shortname(N_("No seek"))
     set_description(N_("Seek prevention demux filter"))
     set_capability(VLC_CAP_DEMUX_FILTER, 0, Open, NULL)
     //set_subcategory(SUBCAT_INPUT_STREAM_FILTER)

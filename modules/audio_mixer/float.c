@@ -43,6 +43,7 @@ static int Create( audio_volume_t * );
  * Module descriptor
  *****************************************************************************/
 vlc_plugin_begin ()
+    set_shortname(N_("Float volume"))
     set_description( N_("Single precision audio volume") )
     set_capability( VLC_CAP_AUDIO_VOLUME, 10, Create, NULL )
     //set_subcategory( SUBCAT_AUDIO_AFILTER )
