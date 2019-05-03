@@ -42,7 +42,7 @@ static int  Open( decoder_t * );
 static void Close( decoder_t * );
 
 vlc_plugin_begin ()
-    set_description( "DTS" )
+    set_shortname( "DTS" )
     set_capability( VLC_CAP_PACKETIZER, 10, Open, Close )
     //set_subcategory( SUBCAT_SOUT_PACKETIZER )
 vlc_plugin_end ()

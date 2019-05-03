@@ -726,7 +726,7 @@ static void Close (demux_t *p_demux)
 }
 
 vlc_plugin_begin ()
-    set_description ("SMF")
+    set_shortname ("SMF")
     set_capability (VLC_CAP_DEMUX, 20, Open, Close)
     //set_subcategory (SUBCAT_INPUT_DEMUX)
 vlc_plugin_end ()

@@ -46,7 +46,7 @@ static int  Open  ( demux_t * );
 static void Close ( demux_t * );
 
 vlc_plugin_begin ()
-    set_description( "Nuv" )
+    set_shortname( "Nuv" )
     set_capability( VLC_CAP_DEMUX, 145, Open, Close )
     //set_subcategory( SUBCAT_INPUT_DEMUX )
 vlc_plugin_end ()

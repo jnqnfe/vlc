@@ -42,7 +42,7 @@ static int  Open   ( sout_mux_t * );
 static void Close  ( sout_mux_t * );
 
 vlc_plugin_begin ()
-    set_description( "WAV" )
+    set_shortname( "WAV" )
     set_capability( VLC_CAP_SOUT_MUX, 5, Open, Close )
     //set_subcategory( SUBCAT_SOUT_MUX )
 vlc_plugin_end ()

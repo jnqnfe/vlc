@@ -137,7 +137,7 @@ static void Close(filter_t *filter)
 }
 
 vlc_plugin_begin()
-    set_description(N_("VDPAU sharpen"))
+    set_shortname(N_("VDPAU sharpen"))
     add_shortcut("sharpen")
     set_capability(VLC_CAP_VIDEO_FILTER, 0, Open, Close)
     //set_subcategory(SUBCAT_VIDEO_VFILTER)

@@ -62,7 +62,8 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_DEMUX, 240, Open, Close )
 
     add_submodule()
-        set_shortname( "heif" )
+        set_shortname( "HEIF" )
+        add_shortcut( "heif" )
         set_capability( VLC_CAP_DEMUX, 239, OpenHEIF, CloseHEIF )
 
     set_subcategory( SUBCAT_INPUT_DEMUX )

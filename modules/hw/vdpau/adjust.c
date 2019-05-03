@@ -181,7 +181,7 @@ static void Close(filter_t *filter)
 }
 
 vlc_plugin_begin()
-    set_description(N_("VDPAU adjust"))
+    set_shortname(N_("VDPAU adjust"))
     add_shortcut("adjust")
     set_capability(VLC_CAP_VIDEO_FILTER, 0, Open, Close)
     //set_subcategory(SUBCAT_VIDEO_VFILTER)

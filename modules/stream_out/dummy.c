@@ -46,7 +46,7 @@ static int   Send( sout_stream_t *, void *, block_t* );
  * Module descriptor
  *****************************************************************************/
 vlc_plugin_begin ()
-    set_description( N_("Dummy") )
+    set_shortname( N_("Dummy") )
     add_shortcut( "drop" )
     set_capability( VLC_CAP_SOUT_STREAM, 50, Open, NULL )
 vlc_plugin_end ()

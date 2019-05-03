@@ -41,11 +41,11 @@ static void Close         ( decoder_t * );
 
 vlc_plugin_begin ()
 
-    set_description( "AES3/SMPTE 302M" )
+    set_shortname( "AES3/SMPTE 302M" )
     set_capability( VLC_CAP_AUDIO_DECODER, 100, OpenDecoder, Close )
 
     add_submodule ()
-    set_description( "AES3/SMPTE 302M" )
+    set_shortname( "AES3/SMPTE 302M" )
     set_capability( VLC_CAP_PACKETIZER, 100, OpenPacketizer, Close )
 
     //set_subcategory( SUBCAT_INPUT_ACODEC )

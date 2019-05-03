@@ -79,7 +79,7 @@ static void CloseDecoder(decoder_t *);
     By Default, the best chroma is choosen by the VT decoder."
 
 vlc_plugin_begin()
-set_description("VideoToolbox")
+set_shortname("VideoToolbox")
 set_capability(VLC_CAP_VIDEO_DECODER, 800, OpenDecoder, CloseDecoder)
 
 set_subcategory(SUBCAT_INPUT_VCODEC)

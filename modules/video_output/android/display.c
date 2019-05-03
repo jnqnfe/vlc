@@ -59,7 +59,7 @@ static void Close(vout_display_t *vd);
 static void SubpicturePrepare(vout_display_t *vd, subpicture_t *subpicture);
 
 vlc_plugin_begin()
-    set_description("Android display")
+    set_shortname("Android display")
     add_shortcut("android-display")
     set_capability(VLC_CAP_VOUT_DISPLAY, 260, Open, Close)
 

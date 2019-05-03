@@ -318,7 +318,7 @@ static void Close(stream_t *s)
 
 vlc_plugin_begin()
     add_shortcut("cache")
-    set_description(N_("Block stream cache"))
+    set_shortname(N_("Block stream cache"))
     set_capability(VLC_CAP_STREAM_FILTER, 0, Open, Close)
     //set_subcategory(SUBCAT_INPUT_STREAM_FILTER)
 vlc_plugin_end()

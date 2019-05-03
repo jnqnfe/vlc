@@ -42,7 +42,7 @@ static int  Open (decoder_t *);
 static void Close(decoder_t *);
 
 vlc_plugin_begin()
-    set_description("EBU STL")
+    set_shortname("EBU STL")
     set_capability(VLC_CAP_SPU_DECODER, 10, Open, Close)
     //set_subcategory(SUBCAT_INPUT_SCODEC)
 vlc_plugin_end()

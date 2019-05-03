@@ -85,7 +85,7 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_ACCESS, 305, AccessDemuxOpen, Close )
 
     add_submodule()
-        set_description( N_("DVDnav") )
+        set_shortname( N_("DVDnav") )
         set_capability( VLC_CAP_DEMUX, 5, DemuxOpen, Close )
         add_shortcut( "dvd", "iso" )
 

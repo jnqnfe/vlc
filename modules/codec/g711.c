@@ -42,12 +42,12 @@ static block_t *EncoderEncode( encoder_t *, block_t * );
 #endif
 
 vlc_plugin_begin ()
-    set_description( "G.711" )
+    set_shortname( "G.711" )
     set_capability( VLC_CAP_AUDIO_DECODER, 100, DecoderOpen, DecoderClose )
 
 #ifdef ENABLE_SOUT
     add_submodule ()
-    set_description( "G.711" )
+    set_shortname( "G.711" )
     set_capability( VLC_CAP_ENCODER, 150, EncoderOpen, NULL )
 #endif
 

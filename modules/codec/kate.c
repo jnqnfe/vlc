@@ -269,7 +269,7 @@ vlc_plugin_begin ()
 
 #ifdef ENABLE_PACKETIZER
     add_submodule ()
-    set_description( "Kate" )
+    set_shortname( "Kate" )
     set_capability( VLC_CAP_PACKETIZER, 100, OpenPacketizer, CloseDecoder )
 #endif
 

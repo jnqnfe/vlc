@@ -67,7 +67,7 @@ static int LoadDMO( vlc_object_t *, HINSTANCE *, IMediaObject **,
 static void CopyPicture( picture_t *, uint8_t * );
 
 vlc_plugin_begin ()
-    set_description( N_("DirectMedia Object") )
+    set_shortname( N_("DirectMedia Object") )
     add_shortcut( "dmo" )
     set_capability( VLC_CAP_VIDEO_DECODER, 1, DecoderOpen, DecoderClose )
 
@@ -76,7 +76,7 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_AUDIO_DECODER, 1, DecoderOpen, DecoderClose )
 
     add_submodule ()
-    set_description( N_("DirectMedia Object") )
+    set_shortname( N_("DirectMedia Object") )
     add_shortcut( "dmo" )
     set_capability( VLC_CAP_ENCODER, 10, EncoderOpen, EncoderClose )
 

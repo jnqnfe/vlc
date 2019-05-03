@@ -85,12 +85,12 @@ static block_t *EncodeBlock(encoder_t *, picture_t *);
  * Module descriptor
  *****************************************************************************/
 vlc_plugin_begin ()
-    set_description( "PNG" )
+    set_shortname( "PNG" )
     set_capability( VLC_CAP_VIDEO_DECODER, 1000, OpenDecoder, CloseDecoder )
 
     /* encoder submodule */
     add_submodule()
-    set_description("PNG")
+    set_shortname("PNG")
     set_capability(VLC_CAP_ENCODER, 1000, OpenEncoder, CloseEncoder)
 
     //set_subcategory( SUBCAT_INPUT_VCODEC )

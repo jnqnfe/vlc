@@ -31,7 +31,7 @@
 static int  Open ( encoder_t * );
 
 vlc_plugin_begin ()
-    set_description( "T.140" )
+    set_shortname( "T.140" )
     set_capability( VLC_CAP_ENCODER, 100, Open, NULL )
 vlc_plugin_end ()
 

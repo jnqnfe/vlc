@@ -44,7 +44,7 @@ static int DecodeAudio( decoder_t *, block_t * );
 static void Flush( decoder_t * );
 
 vlc_plugin_begin ()
-    set_description( "ADPCM" )
+    set_shortname( "ADPCM" )
     set_capability( VLC_CAP_AUDIO_DECODER, 50, OpenDecoder, CloseDecoder )
     //set_subcategory( SUBCAT_INPUT_ACODEC )
 vlc_plugin_end ()

@@ -37,7 +37,7 @@ static int  Open(decoder_t *);
 static void Close(decoder_t *);
 
 vlc_plugin_begin()
-    set_description("Ulead DV")
+    set_shortname("Ulead DV")
     set_capability(VLC_CAP_AUDIO_DECODER, 50, Open, Close)
     //set_subcategory(SUBCAT_INPUT_ACODEC)
 vlc_plugin_end()

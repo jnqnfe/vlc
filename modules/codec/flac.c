@@ -156,12 +156,12 @@ static void Flush( decoder_t * );
  *****************************************************************************/
 vlc_plugin_begin ()
 
-    set_description( "Flac" )
+    set_shortname( "Flac" )
     set_capability( VLC_CAP_AUDIO_DECODER, 100, OpenDecoder, CloseDecoder )
 
 #ifdef ENABLE_SOUT
     add_submodule ()
-    set_description( "Flac" )
+    set_shortname( "Flac" )
     set_capability( VLC_CAP_ENCODER, 100, OpenEncoder, CloseEncoder )
 #endif
 

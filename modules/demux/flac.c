@@ -47,7 +47,7 @@ static int  Open  ( demux_t * );
 static void Close ( demux_t * );
 
 vlc_plugin_begin ()
-    set_description( "FLAC" )
+    set_shortname( "FLAC" )
     add_shortcut( "flac" )
     set_capability( VLC_CAP_DEMUX, 155, Open, Close )
     //set_subcategory( SUBCAT_INPUT_DEMUX )

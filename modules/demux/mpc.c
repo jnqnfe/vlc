@@ -51,7 +51,7 @@ static int  Open  ( demux_t * );
 static void Close ( demux_t * );
 
 vlc_plugin_begin ()
-    set_description( "MusePack" )
+    set_shortname( "MusePack" )
     add_shortcut( "mpc" )
     set_capability( VLC_CAP_DEMUX, 145, Open, Close )
     //set_subcategory( SUBCAT_INPUT_DEMUX )

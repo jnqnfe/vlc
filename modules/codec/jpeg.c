@@ -112,7 +112,7 @@ vlc_plugin_begin()
 
     /* encoder submodule */
     add_submodule()
-    set_description("JPEG")
+    set_shortname("JPEG")
     set_capability(VLC_CAP_ENCODER, 1000, OpenEncoder, CloseEncoder)
 
     set_subcategory(SUBCAT_INPUT_VCODEC)
