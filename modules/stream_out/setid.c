@@ -62,10 +62,9 @@ vlc_plugin_begin()
     set_help( N_("Change the ID of an elementary stream"))
     set_capability( VLC_CAP_SOUT_STREAM, 50, OpenId, Close )
 
-    add_submodule ()
+    add_submodule_name ( "setlang" )
     set_shortname( N_("Set Lang"))
     set_help( N_("Change the language of an elementary stream"))
-    add_shortcut( "setlang" )
     set_capability( VLC_CAP_SOUT_STREAM, 50, OpenLang, Close )
 
     set_subcategory( SUBCAT_SOUT_STREAM )
