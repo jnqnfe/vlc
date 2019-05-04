@@ -54,19 +54,16 @@ vlc_plugin_begin ()
     add_shortcut( "dummy" )
     set_capability( VLC_CAP_AUDIO_DECODER, 0, OpenDecoder, CloseDecoder )
 
-    add_submodule ()
+    add_submodule_name( "dump" )
     set_shortname( N_("Dump") )
-    add_shortcut( "dump" )
     set_capability( VLC_CAP_SPU_DECODER, -1, OpenDecoderDump, CloseDecoder )
 
-    add_submodule()
+    add_submodule_name( "dump" )
     set_shortname( N_("Dump") )
-    add_shortcut( "dump")
     set_capability( VLC_CAP_VIDEO_DECODER, 0, OpenDecoderDump, CloseDecoder )
 
-    add_submodule()
+    add_submodule_name( "dump" )
     set_shortname( N_("Dump") )
-    add_shortcut( "dump")
     set_capability( VLC_CAP_AUDIO_DECODER, 0,OpenDecoderDump, CloseDecoder )
 
     set_subcategory( SUBCAT_INPUT_SCODEC )
