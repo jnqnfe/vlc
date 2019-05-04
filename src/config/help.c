@@ -32,6 +32,7 @@
 
 #include <vlc_common.h>
 #include <vlc_modules.h>
+#include <vlc_module_caps.h>
 #include <vlc_plugin.h>
 #include <vlc_charset.h>
 #include "console.h"
@@ -56,7 +57,8 @@ static void PauseConsole (void);
 static void Help (vlc_object_t *, const char *);
 static void Usage (vlc_object_t *, const char *, bool);
 static void Version (void);
-static void ListModules (vlc_object_t *, bool);
+static void ListModules (vlc_object_t *);
+static void ListModulesVerbose (vlc_object_t *);
 
 /**
  * Returns the console width or a best guess.
@@ -136,13 +138,13 @@ bool config_PrintHelp (vlc_object_t *obj)
     /* Check for module list option */
     if (var_InheritBool (obj, "list"))
     {
-        ListModules (obj, false );
+        ListModules (obj);
         return true;
     }
 
     if (var_InheritBool (obj, "list-verbose"))
     {
-        ListModules (obj, true);
+        ListModulesVerbose (obj);
         return true;
     }
 
@@ -682,7 +684,7 @@ static void Usage (vlc_object_t *p_this, char const *psz_search, bool core_only)
  * Print a list of all available modules (builtins and plugins) and a short
  * description for each one.
  *****************************************************************************/
-static void ListModules (vlc_object_t *p_this, bool b_verbose)
+static void ListModules (vlc_object_t *p_this)
 {
     bool color = false;
 
@@ -699,31 +701,107 @@ static void ListModules (vlc_object_t *p_this, bool b_verbose)
     module_t **list = module_list_get (&count);
 
     /* Enumerate each module */
-    for (size_t j = 0; j < count; j++)
+    for (size_t i = 0; i < count; i++)
     {
-        module_t *p_parser = list[j];
-        if (module_is_main(p_parser))
+        module_t *p_module = list[i];
+        if (module_is_main(p_module))
             continue;
 
-        const char *objname = module_get_object (p_parser);
+        const char *objname = module_get_object (p_module);
         printf(color ? TS_GREEN_BOLD "  %-22s " TS_RESET_BOLD "%s\n" TS_RESET : "  %-22s %s\n",
-               objname, module_gettext(p_parser, vlc_module_GetLongName(p_parser)));
-
-        if( b_verbose )
-        {
-            const char *const *pp_shortcuts = p_parser->pp_shortcuts;
-            /* note, we deliberately skip the first here (object name) */
-            for( unsigned i = 1; i < p_parser->i_shortcuts; i++ )
-                printf(color ? TS_CYAN_BOLD "   s %s\n" TS_RESET : "   s %s\n",
-                       pp_shortcuts[i]);
-            const char *cap_text = vlc_module_get_capability_name(p_parser);
-            if (cap_text != NULL)
-                printf(color ? TS_MAGENTA_BOLD "   c %s (%d)\n" TS_RESET : "   c %s (%d)\n",
-                       cap_text, p_parser->i_score);
-        }
+               objname, module_gettext(p_module, vlc_module_GetLongName(p_module)));
     }
     module_list_free (list);
     PauseConsole();
+}
+
+static void print_ListModulesVerbose_module (module_t *p_module, bool color);
+/*****************************************************************************
+ * ListModulesVerbose: list the available modules with their description
+ *****************************************************************************
+ * Print a list of all available modules (builtins and plugins), and a short
+ * description for each one, organised per capability and sorted per score,
+ * along with the score and any shortcuts.
+ *****************************************************************************/
+static void ListModulesVerbose (vlc_object_t *p_this)
+{
+    bool color = false;
+
+    ShowConsole();
+#ifndef _WIN32
+    if (isatty(STDOUT_FILENO))
+        color = var_InheritBool(p_this, "color");
+#else
+    (void) p_this;
+#endif
+
+    size_t count;
+    module_t **list = NULL;
+
+    /* Standard capabilities */
+    printf("\n%s:\n", _("STANDARD CAPABILITIES"));
+
+    for (int c = 0; c < (int)VLC_CAP_MAX; c++)
+    {
+        enum vlc_module_cap cap = (enum vlc_module_cap) c;
+
+        if (cap == VLC_CAP_CORE) continue; /* not relevant here */
+        if (cap == VLC_CAP_CUSTOM) continue; /* dealt with separately and last */
+
+        /* get module list */
+        count = vlc_module_list_cap (&list, cap);
+
+        /* Print capability heading */
+        printf("\n%s %s:\n\n", vlc_gettext(vlc_module_cap_get_desc(cap)),
+               _("modules"));
+
+        /* Enumerate each module */
+        if (count == 0)
+            printf("  %s\n", _("None"));
+        for (size_t i = 0; i < count; i++)
+            print_ListModulesVerbose_module(list[i], color);
+        module_list_free (list);
+    }
+
+    /* Custom capabilities */
+    printf("\n%s:\n", _("CUSTOM CAPABILITIES"));
+
+    size_t caps_count = 0;
+    const char **custom_caps = module_cap_custom_names(&caps_count);
+
+    if (caps_count == 0)
+        printf("\n%s\n", _("None"));
+    for (size_t i = 0; i < caps_count; i++)
+    {
+        /* get list of all modules with custom capabilities */
+        count = vlc_module_list_cap_custom (&list, custom_caps[i]);
+
+        /* Print capability heading */
+        printf("\n\"%s\" %s:\n\n", custom_caps[i], _("modules"));
+
+        /* Enumerate each module */
+        if (count == 0)
+            printf("  %s\n", _("None"));
+        for (size_t j = 0; j < count; j++)
+            print_ListModulesVerbose_module(list[j], color);
+        module_list_free (list);
+    }
+    free(custom_caps);
+
+    PauseConsole();
+}
+
+static void print_ListModulesVerbose_module (module_t *p_module, bool color)
+{
+    const char *objname = module_get_object (p_module);
+    printf(color ? TS_GREEN_BOLD "  %-22s " TS_MAGENTA_BOLD " %5i " TS_RESET_BOLD "%s\n" TS_RESET : "  %-22s %5i %s\n",
+           objname, p_module->i_score, module_gettext(p_module, vlc_module_GetLongName(p_module)));
+
+    const char *const *pp_shortcuts = p_module->pp_shortcuts;
+    /* note, we deliberately skip the first here (object name) */
+    for( unsigned i = 1; i < p_module->i_shortcuts; i++ )
+        printf(color ? TS_CYAN_BOLD "    %s\n" TS_RESET : "    %s\n",
+               pp_shortcuts[i]);
 }
 
 /*****************************************************************************
