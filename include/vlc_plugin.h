@@ -329,6 +329,15 @@ VLC_METADATA_EXPORTS
     if (vlc_plugin_set_va (VLC_MODULE_CREATE, &module)) \
         goto error;
 
+/* for creating with a non-inherited internal module name */
+#define add_submodule_name( name ) \
+{ \
+    const char *_name = name; \
+    add_submodule() \
+    if (vlc_module_set_va (VLC_MODULE_NAME, _name)) \
+        goto error; \
+}
+
 #define add_shortcut( ... ) \
 { \
     const char *shortcuts[] = { __VA_ARGS__ }; \
