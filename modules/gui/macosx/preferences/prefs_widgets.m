@@ -1248,7 +1248,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
             /* Hack: required subcategory is stored in i_min */
             if (p_cfg->i_type == CONFIG_SUBCATEGORY &&
                 p_cfg->value.i == self.p_item->min.i) {
-                NSString *o_description = _NS(module_get_name(p_parser, TRUE));
+                NSString *o_description = _NS(module_GetLongName(p_parser));
                 if ([newval isEqualToString: o_description]) {
                     returnval = strdup(module_get_object(p_parser));
                     break;
@@ -1285,7 +1285,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
             /* Hack: required subcategory is stored in i_min */
             if (p_config->i_type == CONFIG_SUBCATEGORY &&
                 p_config->value.i == self.p_item->min.i) {
-                NSString *o_description = _NS(module_get_name(p_parser, TRUE));
+                NSString *o_description = _NS(module_GetLongName(p_parser));
                 [o_popup addItemWithTitle: o_description];
 
                 if (self.p_item->value.psz && !strcmp(self.p_item->value.psz,
@@ -1967,7 +1967,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
                 if (p_config->i_type == CONFIG_SUBCATEGORY &&
                     p_config->value.i == p_item->min.i) {
 
-                    o_modulelongname = toNSStr(module_get_name(p_parser, TRUE));
+                    o_modulelongname = toNSStr(module_GetLongName(p_parser));
                     o_modulename = toNSStr(module_get_object(p_parser));
 
                     if (p_item->value.psz &&
@@ -2007,7 +2007,7 @@ o_moduleenabled = [NSNumber numberWithBool:NO];\
 
         } else if (vlc_module_provides(p_parser, vlc_module_cap_from_textid( p_item->psz_type ), p_item->psz_type)) {
 
-            NSString *o_modulelongname = toNSStr(module_get_name(p_parser, TRUE));
+            NSString *o_modulelongname = toNSStr(module_GetLongName(p_parser));
             NSString *o_modulename = toNSStr(module_get_object(p_parser));
 
             NSNumber *o_moduleenabled = nil;

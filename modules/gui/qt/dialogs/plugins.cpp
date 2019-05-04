@@ -159,7 +159,7 @@ inline void PluginTab::FillTree()
         module_t *p_module = p_list[i];
 
         QStringList qs_item;
-        qs_item << qfu( module_get_name( p_module, true ) )
+        qs_item << qfu( module_GetLongName( p_module ) )
                 << qfu( vlc_module_get_capability_name( p_module ) )
                 << QString::number( module_get_score( p_module ) );
 #ifndef DEBUG

@@ -259,7 +259,7 @@ static filter_t *filter_chain_AppendInner( filter_chain_t *chain,
     chained->pending = NULL;
 
     msg_Dbg( parent, "Filter '%s' (%p) appended to chain",
-             (name != NULL) ? name : module_get_name(filter->p_module, false),
+             (name != NULL) ? name : module_GetShortName(filter->p_module),
              (void *)filter );
     return filter;
 

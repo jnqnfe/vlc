@@ -220,7 +220,7 @@ void PrefsTree::createPluginNode( QTreeWidgetItem * parent, module_t *module, en
     data->subcat_id = subcat;
     data->p_module = module;
     data->psz_shortcut = strdup( module_get_object( module ) );
-    data->name = qtr( module_get_name( module, false ) );
+    data->name = qtr( module_GetShortName( module ) );
     const char *help = module_get_help( module );
     if( help )
         data->help = qtr( help );
