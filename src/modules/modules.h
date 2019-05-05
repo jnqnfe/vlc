@@ -115,6 +115,9 @@ void module_LoadPlugins(vlc_object_t *);
 void module_EndBank (bool);
 int module_Map(struct vlc_logger *, vlc_plugin_t *);
 
+/** Get the list of unique custom capability names (free with free()) */
+const char **module_cap_custom_names(size_t*);
+
 int vlc_bindtextdomain (const char *);
 
 /* Low-level OS-dependent handler */

@@ -964,3 +964,42 @@ const char *vlc_module_cap_get_desc(enum vlc_module_cap cap)
     }
     vlc_assert_unreachable(); /* if reached, table is missing an entry! */
 }
+
+const char **module_cap_custom_names(size_t *count)
+{
+    assert(count != NULL);
+
+    const char **caps = NULL;
+
+    size_t n = 0;
+    for (vlc_plugin_t *lib = vlc_plugins; lib != NULL; lib = lib->next)
+    {
+        for (module_t *m = lib->module; m != NULL; m = m->next)
+        {
+            if (likely(m->capability != VLC_CAP_CUSTOM) ||
+                unlikely(m->capability == VLC_CAP_INVALID))
+                continue;
+
+            bool got = false;
+            for (size_t i = 0; i < n; i++)
+                if (!strcmp(m->psz_capability, caps[i]))
+                {
+                    got = true;
+                    break;
+                }
+            if (got) continue;
+
+            const char **caps_tmp = realloc(caps, (n+1) * sizeof(*caps));
+            if (!caps_tmp)
+            {
+                free(caps);
+                *count = 0;
+                return NULL;
+            }
+            caps = caps_tmp;
+            caps[n++] = m->psz_capability;
+        }
+    }
+    *count = n;
+    return caps;
+}
