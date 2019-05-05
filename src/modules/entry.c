@@ -237,9 +237,6 @@ static int vlc_plugin_desc_cb(vlc_plugin_t *plugin, enum vlc_plugin_desc_actions
 
             submodule->psz_shortname = super->psz_shortname;
             submodule->psz_longname = super->psz_longname;
-            submodule->capability = super->capability;
-            submodule->i_score = super->i_score;
-            submodule->psz_capability = super->psz_capability;
             break;
         }
 
