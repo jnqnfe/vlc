@@ -43,6 +43,15 @@ module_t *vlc_module_create(vlc_plugin_t *plugin)
     if (module == NULL)
         return NULL;
 
+    /* pre-alloc space for one shortcut (object name is stored in first) */
+    const char **shortcuts = malloc (sizeof ( *shortcuts ));
+    if (shortcuts == NULL)
+    {
+        free(module);
+        return NULL;
+    }
+    shortcuts[0] = NULL;
+
     /* NOTE XXX: For backward compatibility with preferences UIs, the first
      * module must stay first. That defines under which module, the
      * configuration items of the plugin belong. The order of the following
@@ -65,7 +74,7 @@ module_t *vlc_module_create(vlc_plugin_t *plugin)
     module->psz_shortname = NULL;
     module->psz_longname = NULL;
     module->psz_help = NULL;
-    module->pp_shortcuts = NULL;
+    module->pp_shortcuts = shortcuts;
     module->i_shortcuts = 0;
     module->i_score = 0;
     module->capability = VLC_CAP_INVALID;
@@ -228,7 +237,6 @@ static int vlc_plugin_desc_cb(vlc_plugin_t *plugin, enum vlc_plugin_desc_actions
                 break;
 
             /* Inheritance. Ugly!! */
-            submodule->pp_shortcuts = xmalloc (sizeof ( *submodule->pp_shortcuts ));
             submodule->pp_shortcuts[0] = super->pp_shortcuts[0];
             submodule->i_shortcuts = 1; /* object name */
 
@@ -415,18 +423,16 @@ static int vlc_plugin_desc_cb(vlc_plugin_t *plugin, enum vlc_plugin_desc_actions
 
         case VLC_MODULE_NAME:
         {
-            const char *value = va_arg (ap, const char *);
-
-            if (unlikely(module->i_shortcuts != 0))
+            const char *name = va_arg (ap, const char *);
+            if (unlikely(name == NULL || name[0] == '\0'))
             {
-                print_module_error(_("name already set"));
+                print_module_error(_("object name cannot be null or empty"));
                 ret = -1;
                 break;
             }
-            module->pp_shortcuts = malloc( sizeof( *module->pp_shortcuts ) );
-            module->pp_shortcuts[0] = value;
-            module->i_shortcuts = 1;
 
+            module->pp_shortcuts[0] = name;
+            module->i_shortcuts = 1;
             break;
         }
         case VLC_MODULE_SHORTNAME:
