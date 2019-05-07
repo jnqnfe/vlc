@@ -319,6 +319,42 @@ VLC_DEPRECATED static inline module_config_item_t *config_FindConfig(const char 
 }
 
 /**
+ * Check whether or not the config item is in a modified (non-default) state
+ *
+ * \param item Configuration item
+ * \return True if modified, False if unmodified (default).
+ */
+VLC_USED static inline bool vlc_config_ItemIsModified(const module_config_item_t *item)
+{
+    bool is_modified;
+    switch (CONFIG_CLASS(item->i_type))
+    {
+        case CONFIG_ITEM_CLASS_BOOL:
+            is_modified = (item->value.b != item->orig.b);
+            break;
+        case CONFIG_ITEM_CLASS_FLOAT:
+            is_modified = (item->value.f != item->orig.f);
+            break;
+        case CONFIG_ITEM_CLASS_INTEGER:
+            is_modified = (item->value.i != item->orig.i);
+            break;
+        case CONFIG_ITEM_CLASS_STRING: {
+            bool orig_is_empty = (item->orig.psz == NULL || item->orig.psz[0] == '\0');
+            bool curr_is_empty = (item->value.psz == NULL || item->value.psz[0] == '\0');
+            is_modified = (orig_is_empty) ? !curr_is_empty :
+                ( (curr_is_empty) ? true : (strcmp(item->value.psz, item->orig.psz) != 0) );
+            break;
+        }
+        case CONFIG_ITEM_CLASS_INFO:
+        case CONFIG_ITEM_CLASS_SPECIAL:
+        default:
+            is_modified = false;
+            break;
+    }
+    return is_modified;
+}
+
+/**
  * System directory identifiers
  */
 typedef enum vlc_system_dir
