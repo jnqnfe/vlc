@@ -1387,25 +1387,21 @@ void CaptureOpenPanel::advancedDialog()
 
             tempMRL += (i ? " :" : ":");
 
-            if( control->getType() == CONFIG_ITEM_BOOL )
+            if( CONFIG_CLASS(control->getType()) == CONFIG_ITEM_CLASS_BOOL )
                 if( !(qobject_cast<VIntConfigControl *>(control)->getValue() ) )
                     tempMRL += "no-";
 
             tempMRL += control->getName();
 
-            switch( control->getType() )
+            switch( CONFIG_CLASS(control->getType()) )
             {
-                case CONFIG_ITEM_STRING:
-                case CONFIG_ITEM_LOADFILE:
-                case CONFIG_ITEM_SAVEFILE:
-                case CONFIG_ITEM_DIRECTORY:
-                case CONFIG_ITEM_MODULE:
+                case CONFIG_ITEM_CLASS_STRING:
                     tempMRL += colon_escape( QString("=%1").arg( qobject_cast<VStringConfigControl *>(control)->getValue() ) );
                     break;
-                case CONFIG_ITEM_INTEGER:
+                case CONFIG_ITEM_CLASS_INTEGER:
                     tempMRL += QString("=%1").arg( qobject_cast<VIntConfigControl *>(control)->getValue() );
                     break;
-                case CONFIG_ITEM_FLOAT:
+                case CONFIG_ITEM_CLASS_FLOAT:
                     tempMRL += QString("=%1").arg( qobject_cast<VFloatConfigControl *>(control)->getValue() );
                     break;
             }
