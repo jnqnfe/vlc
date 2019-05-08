@@ -237,7 +237,7 @@ MainInterface::MainInterface( intf_thread_t *_p_intf ) : QVLCMW( _p_intf ),
     var_AddCallback( libvlc, "intf-popupmenu", PopupMenuCB, p_intf );
 
 
-    QVLCTools::restoreWidgetPosition( settings, this, QSize(600, 420) );
+    QVLCTools::restoreWidgetPosition( settings, this, QSize(800, 500) );
 
     b_interfaceFullScreen = isFullScreen();
 
