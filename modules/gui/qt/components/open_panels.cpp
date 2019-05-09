@@ -1358,8 +1358,9 @@ void CaptureOpenPanel::advancedDialog()
             continue;
 
         msg_Dbg( p_intf, "item %s", p_item->psz_name);
-        ConfigControl *config = ConfigControl::createControl(
-                        VLC_OBJECT( p_intf ), p_item, advFrame, gLayout, n );
+        ConfigControl *config = ConfigControl::createControl( p_intf, p_item,
+                                                              advFrame,
+                                                              gLayout, n );
         if( config )
             controls.append( config );
     }
