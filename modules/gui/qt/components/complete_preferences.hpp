@@ -33,17 +33,17 @@
 
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
+#include <QVBoxLayout>
 #include <QSet>
 
 class AdvPrefsPanel;
-class QVBoxLayout;
 
 class PrefsItemData : public QObject
 {
     Q_OBJECT
 public:
     PrefsItemData( QObject * );
-    virtual ~PrefsItemData() { free( psz_shortcut ); };
+    virtual ~PrefsItemData() { free( psz_shortcut ); }
     bool contains( const QString &text, Qt::CaseSensitivity cs );
     AdvPrefsPanel *panel;
     enum vlc_config_cat cat_id;
@@ -103,7 +103,7 @@ class AdvPrefsPanel : public QWidget
     Q_OBJECT
 public:
     AdvPrefsPanel( intf_thread_t *, QWidget *, PrefsItemData * );
-    AdvPrefsPanel( QWidget *);
+    AdvPrefsPanel( QWidget * );
     virtual ~AdvPrefsPanel();
     void apply();
     void clean();

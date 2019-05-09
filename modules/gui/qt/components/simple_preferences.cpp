@@ -356,7 +356,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
         /******************************
          * VIDEO Panel Implementation *
          ******************************/
-        START_SPREFS_CAT( Video , qtr("Video Settings") );
+        START_SPREFS_CAT( Video, qtr("Video Settings") );
             CONFIG_BOOL( "video", enableVideo );
             ui.videoZone->setEnabled( ui.enableVideo->isChecked() );
             CONNECT( ui.enableVideo, toggled( bool ),
@@ -376,7 +376,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
                 ui.fullscreenScreenBox->addItem( screen->name(), i_screenCount );
                 i_screenCount++;
             }
-            p_config =  vlc_config_FindItem( "qt-fullscreen-screennumber" );
+            p_config = vlc_config_FindItem( "qt-fullscreen-screennumber" );
             if( p_config )
             {
                 int i_defaultScreen = p_config->value.i + 1;
@@ -411,7 +411,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
                             snapshotsSequentialNumbering );
             CONFIG_GENERIC( "snapshot-format", StringList, ui.arLabel,
                             snapshotsFormat );
-         END_SPREFS_CAT;
+        END_SPREFS_CAT;
 
         /******************************
          * AUDIO Panel Implementation *
@@ -597,7 +597,9 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 
         END_SPREFS_CAT;
 
-        /* Input and Codecs Panel Implementation */
+        /*****************************************
+         * INPUT AND CODECS Panel Implementation *
+         *****************************************/
         START_SPREFS_CAT( InputAndCodecs, qtr("Input & Codecs Settings") );
 
             /* Disk Devices */
@@ -640,8 +642,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
             CONFIG_GENERIC( "avi-index", IntegerList, ui.aviLabel, AviRepair );
 
             /* live555 module prefs */
-            CONFIG_BOOL( "rtsp-tcp",
-                                live555TransportRTSP_TCPRadio );
+            CONFIG_BOOL( "rtsp-tcp", live555TransportRTSP_TCPRadio );
             if ( !vlc_module_exists( "live555" ) )
             {
                 ui.live555TransportRTSP_TCPRadio->hide();
@@ -688,15 +689,17 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
             TestCaC( "network-caching", 10/3 );
             TestCaC( "disc-caching", 1);
             TestCaC( "live-caching", 1 );
-            if( b_cache_equal == 1 )
+            if( b_cache_equal == 1 ) {
                 ui.cachingCombo->setCurrentIndex(
                 ui.cachingCombo->findData( QVariant( i_cache ) ) );
+            }
 #undef TestCaC
 
         END_SPREFS_CAT;
-        /*******************
-         * Interface Panel *
-         *******************/
+
+        /**********************************
+         * INTERFACE Panel Implementation *
+         **********************************/
         START_SPREFS_CAT( Interface, qtr("Interface Settings") );
 
 #ifndef _WIN32
@@ -818,8 +821,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
             {
                 CONFIG_BOOL( "one-instance", OneInterfaceMode );
                 CONFIG_BOOL( "playlist-enqueue", EnqueueOneInterfaceMode );
-                ui.EnqueueOneInterfaceMode->setEnabled(
-                                                       ui.OneInterfaceMode->isChecked() );
+                ui.EnqueueOneInterfaceMode->setEnabled( ui.OneInterfaceMode->isChecked() );
                 CONNECT( ui.OneInterfaceMode, toggled( bool ),
                          ui.EnqueueOneInterfaceMode, setEnabled( bool ) );
                 CONFIG_BOOL( "one-instance-when-started-from-file", oneInstanceFromFile );
@@ -837,6 +839,9 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 
         END_SPREFS_CAT;
 
+        /**********************************
+         * SUBTITLES Panel Implementation *
+         **********************************/
         START_SPREFS_CAT( Subtitles,
                             qtr("Subtitle & On Screen Display Settings") );
             CONFIG_BOOL( "osd", OSDBox);
@@ -877,6 +882,9 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
             CONFIG_GENERIC_NO_BOOL( "secondary-sub-margin", Integer, ui.secondarySubsPosLabel, secondarySubsPosition );
         END_SPREFS_CAT;
 
+        /********************************
+         * HOTKEYS Panel Implementation *
+         ********************************/
         case SPrefsHotkeys:
         {
             p_config = vlc_config_FindItem( "key-play" );
@@ -946,7 +954,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 }
 
 
-void SPrefsPanel::updateAudioOptions( int number)
+void SPrefsPanel::updateAudioOptions( int number )
 {
     QString value = qobject_cast<QComboBox *>(optionWidgets["audioOutCoB"])
                                             ->itemData( number ).toString();

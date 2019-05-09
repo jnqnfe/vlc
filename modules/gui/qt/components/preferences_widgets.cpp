@@ -165,7 +165,7 @@ void ConfigControl::insertIntoExistingGrid( QGridLayout *l, int line )
 /*******************************************************
  * Simple widgets
  *******************************************************/
-InterfacePreviewWidget::InterfacePreviewWidget ( QWidget *parent ) : QLabel( parent )
+InterfacePreviewWidget::InterfacePreviewWidget( QWidget *parent ) : QLabel( parent )
 {
     setGeometry( 0, 0, 128, 100 );
     setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
@@ -199,13 +199,11 @@ void InterfacePreviewWidget::setPreview( enum_style e_style )
     update();
 }
 
-
 /**************************************************************************
  * String-based controls
  *************************************************************************/
 
-void
-VStringConfigControl::doApply()
+void VStringConfigControl::doApply()
 {
     config_PutPsz( getName(), qtu( getValue() ) );
 }
@@ -454,7 +452,7 @@ StringListConfigControl::StringListConfigControl( vlc_object_t *_p_this,
 void StringListConfigControl::finish(module_config_item_t *p_module_config )
 {
     combo->setEditable( false );
-    CONNECT( combo, currentIndexChanged ( int ), this, comboIndexChanged( int ) );
+    CONNECT( combo, currentIndexChanged( int ), this, comboIndexChanged( int ) );
 
     if(!p_module_config) return;
 
@@ -474,7 +472,7 @@ void StringListConfigControl::finish(module_config_item_t *p_module_config )
     free( texts );
     free( values );
 
-    if( p_module_config->psz_longtext  )
+    if( p_module_config->psz_longtext )
     {
         QString tipText = qtr(p_module_config->psz_longtext);
         combo->setToolTip( formatTooltip(tipText) );
@@ -620,7 +618,7 @@ ModuleListConfigControl::ModuleListConfigControl( vlc_object_t *_p_this,
     /* Special Hack */
     if( !p_item->psz_text ) return;
 
-    groupBox = new QGroupBox ( qtr(p_item->psz_text), p );
+    groupBox = new QGroupBox( qtr(p_item->psz_text), p );
     text = new QLineEdit( p );
     QGridLayout *layoutGroupBox = new QGridLayout( groupBox );
 
@@ -768,8 +766,7 @@ void ModuleListConfigControl::onUpdate()
  * Integer-based controls
  *************************************************************************/
 
-void
-VIntConfigControl::doApply()
+void VIntConfigControl::doApply()
 {
     config_PutInt( getName(), getValue() );
 }
@@ -780,7 +777,8 @@ IntegerConfigControl::IntegerConfigControl( vlc_object_t *_p_this,
                            VIntConfigControl( _p_this, _p_item )
 {
     label = new QLabel( qtr(p_item->psz_text), p );
-    spin = new QSpinBox( p ); spin->setMinimumWidth( MINWIDTH_BOX );
+    spin = new QSpinBox( p );
+    spin->setMinimumWidth( MINWIDTH_BOX );
     spin->setAlignment( Qt::AlignRight );
     spin->setMaximumWidth( MINWIDTH_BOX );
     finish();
@@ -870,7 +868,7 @@ IntegerRangeSliderConfigControl::IntegerRangeSliderConfigControl(
 
 int IntegerRangeSliderConfigControl::getValue() const
 {
-        return slider->value();
+    return slider->value();
 }
 
 
@@ -1051,8 +1049,7 @@ void ColorConfigControl::selectColor()
  * Float-based controls
  *************************************************************************/
 
-void
-VFloatConfigControl::doApply()
+void VFloatConfigControl::doApply()
 {
     config_PutFloat( getName(), getValue() );
 }
@@ -1131,7 +1128,6 @@ void FloatRangeConfigControl::finish()
     spin->setMaximum( (double)p_item->max.f );
     spin->setMinimum( (double)p_item->min.f );
 }
-
 
 /**********************************************************************
  * Key selector widget
