@@ -69,11 +69,17 @@ vlc_plugin_begin ()
     set_subcategory( SUBCAT_AUDIO_AFILTER )
 
     add_bool( CFG_PREFIX "bargraph", true, BARGRAPH_TEXT, NULL, false )
-    add_integer( CFG_PREFIX "bargraph_repetition", 4, BARGRAPH_REPETITION_TEXT, BARGRAPH_REPETITION_LONGTEXT, false )
+    add_integer( CFG_PREFIX "bargraph-repetition", 4, BARGRAPH_REPETITION_TEXT, BARGRAPH_REPETITION_LONGTEXT, false )
     add_bool( CFG_PREFIX "silence", true, SILENCE_TEXT, NULL, false )
-    add_integer( CFG_PREFIX "time_window", 5000, TIME_WINDOW_TEXT, TIME_WINDOW_LONGTEXT, false )
-    add_float( CFG_PREFIX "alarm_threshold", 0.02, ALARM_THRESHOLD_TEXT, ALARM_THRESHOLD_LONGTEXT, false )
-    add_integer( CFG_PREFIX "repetition_time", 2000, REPETITION_TIME_TEXT, REPETITION_TIME_LONGTEXT, false )
+    add_integer( CFG_PREFIX "time-window", 5000, TIME_WINDOW_TEXT, TIME_WINDOW_LONGTEXT, false )
+    add_float( CFG_PREFIX "alarm-threshold", 0.02, ALARM_THRESHOLD_TEXT, ALARM_THRESHOLD_LONGTEXT, false )
+    add_integer( CFG_PREFIX "repetition-time", 2000, REPETITION_TIME_TEXT, REPETITION_TIME_LONGTEXT, false )
+
+    /* since 4.0.0 */
+    add_obsolete_integer( CFG_PREFIX "bargraph_repetition" )
+    add_obsolete_integer( CFG_PREFIX "time_window" )
+    add_obsolete_float( CFG_PREFIX "alarm_threshold" )
+    add_obsolete_integer( CFG_PREFIX "repetition_time" )
 vlc_plugin_end ()
 
 typedef struct ValueDate_t {
@@ -107,17 +113,17 @@ static int Open( filter_t *p_filter )
         return VLC_ENOMEM;
 
     static const char *const options[] = {
-        "bargraph", "bargraph_repetition", "silence", "time_window",
-        "alarm_threshold", "repetition_time", NULL
+        "bargraph", "bargraph-repetition", "silence", "time-window",
+        "alarm-threshold", "repetition-time", NULL
     };
     config_ChainParse(p_filter, CFG_PREFIX, options, p_filter->p_cfg);
 
     p_sys->bargraph = var_CreateGetBool(p_filter, CFG_PREFIX "bargraph");
-    p_sys->bargraph_repetition = var_CreateGetInteger(p_filter, CFG_PREFIX "bargraph_repetition");
+    p_sys->bargraph_repetition = var_CreateGetInteger(p_filter, CFG_PREFIX "bargraph-repetition");
     p_sys->silence = var_CreateGetBool(p_filter, CFG_PREFIX "silence");
-    p_sys->time_window = VLC_TICK_FROM_MS( var_CreateGetInteger(p_filter, CFG_PREFIX "time_window") );
-    p_sys->alarm_threshold = var_CreateGetFloat(p_filter, CFG_PREFIX "alarm_threshold");
-    p_sys->repetition_time = VLC_TICK_FROM_MS( var_CreateGetInteger(p_filter, CFG_PREFIX "repetition_time") );
+    p_sys->time_window = VLC_TICK_FROM_MS( var_CreateGetInteger(p_filter, CFG_PREFIX "time-window") );
+    p_sys->alarm_threshold = var_CreateGetFloat(p_filter, CFG_PREFIX "alarm-threshold");
+    p_sys->repetition_time = VLC_TICK_FROM_MS( var_CreateGetInteger(p_filter, CFG_PREFIX "repetition-time") );
     p_sys->counter = 0;
     p_sys->first = NULL;
     p_sys->last = NULL;
