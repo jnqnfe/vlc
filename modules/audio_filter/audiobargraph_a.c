@@ -74,12 +74,6 @@ vlc_plugin_begin ()
     add_integer( CFG_PREFIX "time-window", 5000, TIME_WINDOW_TEXT, TIME_WINDOW_LONGTEXT, false )
     add_float( CFG_PREFIX "alarm-threshold", 0.02, ALARM_THRESHOLD_TEXT, ALARM_THRESHOLD_LONGTEXT, false )
     add_integer( CFG_PREFIX "repetition-time", 2000, REPETITION_TIME_TEXT, REPETITION_TIME_LONGTEXT, false )
-
-    /* since 4.0.0 */
-    add_obsolete_integer( CFG_PREFIX "bargraph_repetition" )
-    add_obsolete_integer( CFG_PREFIX "time_window" )
-    add_obsolete_float( CFG_PREFIX "alarm_threshold" )
-    add_obsolete_integer( CFG_PREFIX "repetition_time" )
 vlc_plugin_end ()
 
 typedef struct ValueDate_t {

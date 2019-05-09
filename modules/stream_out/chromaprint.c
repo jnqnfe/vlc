@@ -65,7 +65,6 @@ vlc_plugin_begin ()
     set_subcategory( SUBCAT_SOUT_STREAM )
     add_integer( "chromaprint-duration", 90, DURATION_TEXT, DURATION_LONGTEXT, true )
         change_integer_range( 0, INT_MAX )
-    add_obsolete_integer( "duration" ) /* since 4.0.0 */
 vlc_plugin_end ()
 
 typedef struct sout_stream_id_sys_t sout_stream_id_sys_t;

@@ -172,8 +172,6 @@ vlc_plugin_begin()
     add_string(SOUT_CFG_PREFIX "base-url", NULL, BASE_URL_TEXT, BASE_URL_LONGTEXT, false)
     add_string(SOUT_CFG_PREFIX "url", NULL, URL_TEXT, URL_LONGTEXT, false)
     add_renderer_opts(SOUT_CFG_PREFIX)
-
-    add_obsolete_string(SOUT_CFG_PREFIX "base_url") /* since 4.0.0 */
 vlc_plugin_end()
 
 /*

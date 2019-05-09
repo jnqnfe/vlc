@@ -86,8 +86,6 @@ vlc_plugin_begin ()
         change_integer_range(0, INT_MAX)
     add_integer(CFG_PREFIX "barheight", 400, BARHEIGHT_TEXT, BARHEIGHT_LONGTEXT, true)
         change_integer_range(0, INT_MAX)
-    add_obsolete_integer(CFG_PREFIX "barWidth") /* since 4.0.0 */
-    add_obsolete_integer(CFG_PREFIX "barHeight") /* since 4.0.0 */
 vlc_plugin_end ()
 
 

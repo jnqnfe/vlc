@@ -1913,7 +1913,6 @@ vlc_plugin_begin ()
     set_subcategory( SUBCAT_SOUT_ACO )
     add_module("access-output", VLC_CAP_STR_SOUT_ACCESS, NULL,
                ACCESS_OUTPUT_TEXT, ACCESS_OUTPUT_LONGTEXT)
-    add_obsolete_string("access_output") /* since 4.0.0 */
     add_integer_with_range( "ttl", -1, -1, INT_MAX, TTL_TEXT, TTL_LONGTEXT, true )
     add_string( "miface", NULL, MIFACE_TEXT, MIFACE_LONGTEXT, true )
     add_integer( "dscp", 0, DSCP_TEXT, DSCP_LONGTEXT, true )

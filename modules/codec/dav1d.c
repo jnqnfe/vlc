@@ -65,8 +65,6 @@ vlc_plugin_begin ()
                 FRAME_DEC_THREADS_TEXT, FRAME_DEC_THREADS_LONGTEXT, false)
     add_integer_with_range("dav1d-tile-threads", 0, 0, 4,
                 TILE_DEC_THREADS_TEXT, TILE_DEC_THREADS_LONGTEXT, false)
-    add_obsolete_integer( "dav1d-thread-frames" ) /* since 4.0.0 */
-    add_obsolete_integer( "dav1d-thread-tiles" ) /* since 4.0.0 */
 vlc_plugin_end ()
 
 /*****************************************************************************
