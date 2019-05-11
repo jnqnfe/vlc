@@ -51,7 +51,6 @@
 PrefsDialog::PrefsDialog( QWidget *parent, intf_thread_t *_p_intf )
             : QVLCDialog( parent, _p_intf )
 {
-    QGridLayout *main_layout = new QGridLayout( this );
     setWindowTitle( qtr( "Preferences" ) );
     setWindowRole( "vlc-preferences" );
     setWindowModality( Qt::WindowModal );
@@ -60,36 +59,25 @@ PrefsDialog::PrefsDialog( QWidget *parent, intf_thread_t *_p_intf )
        consistency when reset */
     setAttribute( Qt::WA_DeleteOnClose );
 
-    /* Create Panels */
-    simple_tree_panel = new QWidget;
-    simple_tree_panel->setLayout( new QVBoxLayout );
+    p_list = NULL;
 
-    advanced_tree_panel = new QWidget;
-    advanced_tree_panel->setLayout( new QVBoxLayout );
+    QGridLayout *main_layout = new QGridLayout( this );
+    setLayout( main_layout );
 
-    /* Choice for types */
+    /* View (panel) selection */
     types = new QGroupBox( qtr("Show settings") );
     types->setAlignment( Qt::AlignHCenter );
     QHBoxLayout *types_l = new QHBoxLayout;
     types_l->setSpacing( 3 );
     types_l->setMargin( 3 );
     simple = new QRadioButton( qtr( "Simple" ), types );
-    simple->setToolTip( qtr( "Switch to simple preferences view" ) );
-    types_l->addWidget( simple );
     all = new QRadioButton( qtr("All"), types );
-    types_l->addWidget( all );
+    simple->setToolTip( qtr( "Switch to simple preferences view" ) );
     all->setToolTip( qtr( "Switch to full preferences view" ) );
+    types_l->addWidget( simple );
+    types_l->addWidget( all );
     types->setLayout( types_l );
     simple->setChecked( true );
-
-    /* Tree and panel initialisations */
-    advanced_tree = NULL;
-    p_list = NULL;
-    tree_filter = NULL;
-    current_filter = NULL;
-    simple_tree = NULL;
-    simple_panels_stack = new QStackedWidget;
-    advanced_panels_stack = new QStackedWidget;
 
     /* Buttons */
     QDialogButtonBox *buttonsBox = new QDialogButtonBox();
@@ -102,18 +90,38 @@ PrefsDialog::PrefsDialog( QWidget *parent, intf_thread_t *_p_intf )
     buttonsBox->addButton( cancel, QDialogButtonBox::RejectRole );
     buttonsBox->addButton( reset, QDialogButtonBox::ResetRole );
 
+    /* View (panel) stack */
+    stack = new QStackedWidget();
+
+    /* Simple view (panel) */
     simple_split_widget = new QWidget();
     simple_split_widget->setLayout( new QVBoxLayout );
 
-    advanced_split_widget = new QSplitter();
-
-    stack = new QStackedWidget();
-    stack->insertWidget( SIMPLE, simple_split_widget );
-    stack->insertWidget( ADVANCED, advanced_split_widget );
+    simple_tree_panel = new QWidget;
+    simple_tree_panel->setLayout( new QVBoxLayout );
+    simple_tree = NULL;
+    simple_panels_stack = new QStackedWidget;
+    for( int i = 0; i < SPrefsMax ; i++ )
+        simple_panels[i] = NULL;
 
     simple_split_widget->layout()->addWidget( simple_tree_panel );
     simple_split_widget->layout()->addWidget( simple_panels_stack );
+
+    simple_tree_panel->layout()->setMargin( 1 );
+    simple_panels_stack->layout()->setContentsMargins( 6, 0, 0, 3 );
     simple_split_widget->layout()->setMargin( 0 );
+
+    stack->insertWidget( SIMPLE, simple_split_widget );
+
+    /* Advanced view (panel) */
+    advanced_split_widget = new QSplitter();
+
+    advanced_tree_panel = new QWidget;
+    advanced_tree_panel->setLayout( new QVBoxLayout );
+    tree_filter = NULL;
+    current_filter = NULL;
+    advanced_tree = NULL;
+    advanced_panels_stack = new QStackedWidget;
 
     advanced_split_widget->addWidget( advanced_tree_panel );
     advanced_split_widget->addWidget( advanced_panels_stack );
@@ -122,19 +130,14 @@ PrefsDialog::PrefsDialog( QWidget *parent, intf_thread_t *_p_intf )
     advanced_tree_panel->sizePolicy().setHorizontalStretch(1);
     advanced_panels_stack->sizePolicy().setHorizontalStretch(2);
 
+    stack->insertWidget( ADVANCED, advanced_split_widget );
+
     /* Layout  */
     main_layout->addWidget( stack, 0, 0, 3, 3 );
     main_layout->addWidget( types, 3, 0, 2, 1 );
     main_layout->addWidget( buttonsBox, 4, 2, 1 ,1 );
     main_layout->setRowStretch( 2, 4 );
     main_layout->setMargin( 9 );
-    setLayout( main_layout );
-
-    /* Margins */
-    simple_tree_panel->layout()->setMargin( 1 );
-    simple_panels_stack->layout()->setContentsMargins( 6, 0, 0, 3 );
-
-    for( int i = 0; i < SPrefsMax ; i++ ) simple_panels[i] = NULL;
 
     if( var_InheritBool( p_intf, "qt-advanced-pref" ) )
         setAdvanced();
