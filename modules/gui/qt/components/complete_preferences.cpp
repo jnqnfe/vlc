@@ -530,10 +530,6 @@ bool PrefsItemData::contains( const QString &text, Qt::CaseSensitivity cs )
 /*********************************************************************
  * The Panel
  *********************************************************************/
-AdvPrefsPanel::AdvPrefsPanel( QWidget *_parent ) : QWidget( _parent )
-{
-    p_config = NULL;
-}
 
 AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
                         PrefsItemData * data ) :
