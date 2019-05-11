@@ -160,7 +160,7 @@ void PrefsDialog::setAdvanced()
 {
     if ( !tree_filter )
     {
-        tree_filter = new SearchLineEdit( simple_tree_panel );
+        tree_filter = new SearchLineEdit( advanced_tree_panel );
         tree_filter->setMinimumHeight( 26 );
 
         CONNECT( tree_filter, textChanged( const QString &  ),
@@ -184,7 +184,7 @@ void PrefsDialog::setAdvanced()
     {
         /* Creation */
         p_list = vlc_module_list_have_config( &count );
-        advanced_tree = new PrefsTree( p_intf, simple_tree_panel, p_list, count );
+        advanced_tree = new PrefsTree( p_intf, advanced_tree_panel, p_list, count );
         /* and connections */
         CONNECT( advanced_tree,
                  currentItemChanged( QTreeWidgetItem *, QTreeWidgetItem * ),
