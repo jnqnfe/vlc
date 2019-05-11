@@ -74,8 +74,7 @@ QString formatTooltip(const QString & tooltip)
 
 ConfigControl *ConfigControl::createControl( intf_thread_t *p_intf,
                                              module_config_item_t *p_item,
-                                             QWidget *parent,
-                                             QGridLayout *l, int line )
+                                             QWidget *parent )
 {
     ConfigControl *p_control = NULL;
 
@@ -142,7 +141,28 @@ ConfigControl *ConfigControl::createControl( intf_thread_t *p_intf,
     default:
         break;
     }
-    if ( p_control ) p_control->insertIntoExistingGrid( l, line );
+    return p_control;
+}
+
+ConfigControl *ConfigControl::createControl( intf_thread_t *p_intf,
+                                             module_config_item_t *p_item,
+                                             QWidget *parent,
+                                             QGridLayout *l, int line )
+{
+    ConfigControl *p_control = createControl( p_intf, p_item, parent );
+    if ( p_control )
+        p_control->insertIntoExistingGrid( l, line );
+    return p_control;
+}
+
+ConfigControl *ConfigControl::createControl( intf_thread_t *p_intf,
+                                             module_config_item_t *p_item,
+                                             QWidget *parent,
+                                             QBoxLayout *l, int line )
+{
+    ConfigControl *p_control = createControl( p_intf, p_item, parent );
+    if ( p_control )
+        p_control->insertIntoBox( l, line );
     return p_control;
 }
 
@@ -238,6 +258,12 @@ void StringConfigControl::fillGrid( QGridLayout *l, int line )
     l->addWidget( text, line, LAST_COLUMN, Qt::AlignRight );
 }
 
+void StringConfigControl::insertIntoBox( QBoxLayout *l, int line )
+{
+    l->insertWidget( line, label );
+    l->insertWidget( line + 1, text );
+}
+
 void StringConfigControl::finish()
 {
     text->setText( qfu(p_item->value.psz) );
@@ -308,6 +334,16 @@ void FileConfigControl::fillGrid( QGridLayout *l, int line )
     textAndButton->addWidget( text, 2 );
     textAndButton->addWidget( browse, 0 );
     l->addLayout( textAndButton, line, LAST_COLUMN, 0 );
+}
+
+void FileConfigControl::insertIntoBox( QBoxLayout *l, int line )
+{
+    l->insertWidget( line, label );
+    QHBoxLayout *textAndButton = new QHBoxLayout();
+    textAndButton->setMargin( 0 );
+    textAndButton->addWidget( text, 2 );
+    textAndButton->addWidget( browse, 0 );
+    l->insertLayout( line + 1, textAndButton );
 }
 
 void FileConfigControl::updateField()
@@ -398,6 +434,12 @@ void FontConfigControl::fillGrid( QGridLayout *l, int line )
     l->addWidget( font, line, 1, 1, -1 );
 }
 
+void FontConfigControl::insertIntoBox( QBoxLayout *l, int line )
+{
+    l->insertWidget( line, label );
+    l->insertWidget( line + 1, font );
+}
+
 /********* String / choice list **********/
 StringListConfigControl::StringListConfigControl( module_config_item_t *_p_item,
                                                   QWidget *p ) :
@@ -432,6 +474,12 @@ void StringListConfigControl::fillGrid( QGridLayout *l, int line )
 {
     l->addWidget( label, line, 0 );
     l->addWidget( combo, line, LAST_COLUMN, Qt::AlignRight );
+}
+
+void StringListConfigControl::insertIntoBox( QBoxLayout *l, int line )
+{
+    l->insertWidget( line, label );
+    l->insertWidget( line + 1, combo );
 }
 
 void StringListConfigControl::comboIndexChanged( int i_index )
@@ -546,6 +594,12 @@ void ModuleConfigControl::fillGrid( QGridLayout *l, int line )
     l->addWidget( combo, line, LAST_COLUMN, 0 );
 }
 
+void ModuleConfigControl::insertIntoBox( QBoxLayout *l, int line )
+{
+    l->insertWidget( line, label );
+    l->insertWidget( line + 1, combo );
+}
+
 void ModuleConfigControl::finish( )
 {
     combo->setEditable( false );
@@ -631,6 +685,11 @@ ModuleListConfigControl::ModuleListConfigControl( module_config_item_t *_p_item,
 void ModuleListConfigControl::fillGrid( QGridLayout *l, int line )
 {
     l->addWidget( groupBox, line, 0, 1, -1 );
+}
+
+void ModuleListConfigControl::insertIntoBox( QBoxLayout *l, int line )
+{
+    l->insertWidget( line, groupBox );
 }
 
 ModuleListConfigControl::~ModuleListConfigControl()
@@ -792,6 +851,12 @@ void IntegerConfigControl::fillGrid( QGridLayout *l, int line )
     l->addWidget( spin, line, LAST_COLUMN, Qt::AlignRight );
 }
 
+void IntegerConfigControl::insertIntoBox( QBoxLayout *l, int line )
+{
+    l->insertWidget( line, label );
+    l->insertWidget( line + 1, spin );
+}
+
 void IntegerConfigControl::finish()
 {
     spin->setMaximum( 2000000000 );
@@ -899,6 +964,12 @@ void IntegerListConfigControl::fillGrid( QGridLayout *l, int line )
     l->addWidget( combo, line, LAST_COLUMN, Qt::AlignRight );
 }
 
+void IntegerListConfigControl::insertIntoBox( QBoxLayout *l, int line )
+{
+    l->insertWidget( line, label );
+    l->insertWidget( line + 1, combo );
+}
+
 void IntegerListConfigControl::finish( module_config_item_t *p_module_config )
 {
     combo->setEditable( false );
@@ -957,6 +1028,11 @@ void BoolConfigControl::fillGrid( QGridLayout *l, int line )
     l->addWidget( checkbox, line, 0, 1, -1, 0 );
 }
 
+void BoolConfigControl::insertIntoBox( QBoxLayout *l, int line )
+{
+    l->insertWidget( line, checkbox );
+}
+
 void BoolConfigControl::finish()
 {
     checkbox->setChecked( p_item->value.i );
@@ -993,6 +1069,12 @@ void ColorConfigControl::fillGrid( QGridLayout *l, int line )
 {
     l->addWidget( label, line, 0 );
     l->addWidget( color_but, line, LAST_COLUMN, Qt::AlignRight );
+}
+
+void ColorConfigControl::insertIntoBox( QBoxLayout *l, int line )
+{
+    l->insertWidget( line, label );
+    l->insertWidget( line + 1, color_but );
 }
 
 void ColorConfigControl::finish()
@@ -1067,6 +1149,12 @@ void FloatConfigControl::fillGrid( QGridLayout *l, int line )
 {
     l->addWidget( label, line, 0 );
     l->addWidget( spin, line, LAST_COLUMN, Qt::AlignRight );
+}
+
+void FloatConfigControl::insertIntoBox( QBoxLayout *l, int line )
+{
+    l->insertWidget( line, label );
+    l->insertWidget( line + 1, spin );
 }
 
 void FloatConfigControl::finish()
@@ -1170,6 +1258,18 @@ void KeySelectorControl::fillGrid( QGridLayout *l, int line )
     gLayout->addWidget( searchOption, 1, 4, 1, 1 );
     gLayout->addWidget( table, 2, 0, 1, 5 );
     l->addLayout( gLayout, line, 0, 1, -1 );
+}
+
+void KeySelectorControl::insertIntoBox( QBoxLayout *l, int line )
+{
+    QGridLayout *gLayout = new QGridLayout();
+    gLayout->addWidget( label, 0, 0, 1, 5 );
+    gLayout->addWidget( searchLabel, 1, 0, 1, 2 );
+    gLayout->addWidget( actionSearch, 1, 2, 1, 1 );
+    gLayout->addWidget( searchOptionLabel, 1, 3, 1, 1 );
+    gLayout->addWidget( searchOption, 1, 4, 1, 1 );
+    gLayout->addWidget( table, 2, 0, 1, 5 );
+    l->insertLayout( line, gLayout );
 }
 
 void KeySelectorControl::buildAppHotkeysList( QWidget *rootWidget )

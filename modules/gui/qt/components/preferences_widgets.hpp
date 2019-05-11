@@ -84,8 +84,13 @@ public:
     void show() { changeVisibility( true ); }
     /* ConfigControl factory */
     static ConfigControl * createControl( intf_thread_t*,
+                                          module_config_item_t*, QWidget* );
+    static ConfigControl * createControl( intf_thread_t*,
                                           module_config_item_t*, QWidget*,
                                           QGridLayout *, int line = 0 );
+    static ConfigControl * createControl( intf_thread_t*,
+                                          module_config_item_t*, QWidget*,
+                                          QBoxLayout *, int line = 0 );
     /* Inserts control into another layout block, using a sublayout */
     void insertInto( QBoxLayout * );
     /* Inserts control into an existing grid layout */
@@ -96,6 +101,7 @@ protected:
     virtual void changeVisibility( bool ) { }
     module_config_item_t *p_item;
     virtual void fillGrid( QGridLayout*, int ) {}
+    virtual void insertIntoBox( QBoxLayout*, int ) {}
 signals:
     void changed();
 };
@@ -128,6 +134,7 @@ protected:
         if ( label ) label->setVisible( b );
     }
     void fillGrid( QGridLayout*, int ) Q_DECL_OVERRIDE;
+    void insertIntoBox( QBoxLayout*, int ) Q_DECL_OVERRIDE;
 private:
     QLabel *label;
     void finish();
@@ -176,6 +183,7 @@ protected:
         if ( label ) label->setVisible( b );
     }
     void fillGrid( QGridLayout*, int ) Q_DECL_OVERRIDE;
+    void insertIntoBox( QBoxLayout*, int ) Q_DECL_OVERRIDE;
 private:
     void finish( module_config_item_t * );
     QLabel *label;
@@ -195,6 +203,7 @@ protected:
         checkbox->setVisible( b );
     }
     void fillGrid( QGridLayout*, int ) Q_DECL_OVERRIDE;
+    void insertIntoBox( QBoxLayout*, int ) Q_DECL_OVERRIDE;
 private:
     QAbstractButton *checkbox;
     void finish();
@@ -215,6 +224,7 @@ protected:
         if ( label ) label->setVisible( b );
     }
     void fillGrid( QGridLayout*, int ) Q_DECL_OVERRIDE;
+    void insertIntoBox( QBoxLayout*, int ) Q_DECL_OVERRIDE;
 private:
     QLabel *label;
     QAbstractButton *color_but;
@@ -253,6 +263,7 @@ protected:
         if ( label ) label->setVisible( b );
     }
     void fillGrid( QGridLayout*, int ) Q_DECL_OVERRIDE;
+    void insertIntoBox( QBoxLayout*, int ) Q_DECL_OVERRIDE;
     QDoubleSpinBox *spin;
 
 private:
@@ -297,6 +308,7 @@ protected:
         if ( label ) label->setVisible( b );
     }
     void fillGrid( QGridLayout*, int ) Q_DECL_OVERRIDE;
+    void insertIntoBox( QBoxLayout*, int ) Q_DECL_OVERRIDE;
     QLineEdit *text;
     QLabel *label;
 private:
@@ -330,6 +342,7 @@ protected:
         if ( label ) label->setVisible( b );
     }
     void fillGrid( QGridLayout*, int ) Q_DECL_OVERRIDE;
+    void insertIntoBox( QBoxLayout*, int ) Q_DECL_OVERRIDE;
     void finish();
     QLineEdit *text;
     QLabel *label;
@@ -360,6 +373,7 @@ protected:
         if ( label ) label->setVisible( b );
     }
     void fillGrid( QGridLayout*, int ) Q_DECL_OVERRIDE;
+    void insertIntoBox( QBoxLayout*, int ) Q_DECL_OVERRIDE;
     QLabel *label;
     QFontComboBox *font;
 };
@@ -378,6 +392,7 @@ protected:
         if ( label ) label->setVisible( b );
     }
     void fillGrid( QGridLayout*, int ) Q_DECL_OVERRIDE;
+    void insertIntoBox( QBoxLayout*, int ) Q_DECL_OVERRIDE;
 private:
     void finish();
     QLabel *label;
@@ -403,6 +418,7 @@ public slots:
 protected:
     void changeVisibility( bool ) Q_DECL_OVERRIDE;
     void fillGrid( QGridLayout*, int ) Q_DECL_OVERRIDE;
+    void insertIntoBox( QBoxLayout*, int ) Q_DECL_OVERRIDE;
 private:
     void finish( bool );
     void checkbox_lists( module_t* );
@@ -426,6 +442,7 @@ protected:
         if ( label ) label->setVisible( b );
     }
     void fillGrid( QGridLayout*, int ) Q_DECL_OVERRIDE;
+    void insertIntoBox( QBoxLayout*, int ) Q_DECL_OVERRIDE;
     QComboBox *combo;
 private:
     void finish( module_config_item_t * );
@@ -455,6 +472,7 @@ protected:
         if ( label ) label->setVisible( b );
     }
     void fillGrid( QGridLayout*, int ) Q_DECL_OVERRIDE;
+    void insertIntoBox( QBoxLayout*, int ) Q_DECL_OVERRIDE;
 
 private:
     void buildAppHotkeysList( QWidget *rootWidget );
