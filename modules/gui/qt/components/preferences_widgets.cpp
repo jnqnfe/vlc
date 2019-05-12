@@ -229,9 +229,11 @@ void VStringConfigControl::doApply()
     config_PutPsz( getName(), qtu( getValue() ) );
 }
 
-void VStringConfigControl::storeValue()
+void VStringConfigControl::storeValue( bool owned )
 {
-    p_item->value.psz = (char*) qtu( getValue() );
+    clearOwnedStringVal();
+    p_item->value.psz = strdup( qtu( getValue() ) );
+    needs_freeing = owned;
 }
 
 /*********** String **************/
@@ -704,6 +706,7 @@ ModuleListConfigControl::~ModuleListConfigControl()
     qDeleteAll( modules );
     modules.clear();
     delete groupBox;
+    clearOwnedStringVal();
 }
 
 void ModuleListConfigControl::checkbox_lists( module_t *p_parser )
@@ -828,9 +831,10 @@ void VIntConfigControl::doApply()
     config_PutInt( getName(), getValue() );
 }
 
-void VIntConfigControl::storeValue()
+void VIntConfigControl::storeValue( bool owned )
 {
     p_item->value.i = getValue();
+    Q_UNUSED( owned );
 }
 
 /*********** Integer **************/
@@ -1131,9 +1135,10 @@ void VFloatConfigControl::doApply()
     config_PutFloat( getName(), getValue() );
 }
 
-void VFloatConfigControl::storeValue()
+void VFloatConfigControl::storeValue( bool owned )
 {
     p_item->value.f = getValue();
+    Q_UNUSED( owned );
 }
 
 /*********** Float **************/
@@ -1464,8 +1469,10 @@ void KeySelectorControl::doApply()
     }
 }
 
-void KeySelectorControl::storeValue()
-{}
+void KeySelectorControl::storeValue( bool owned )
+{
+    Q_UNUSED( owned );
+}
 
 bool KeySelectorControl::eventFilter( QObject *obj, QEvent *e )
 {

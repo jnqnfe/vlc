@@ -96,7 +96,7 @@ public:
     /* Inserts control into an existing grid layout */
     void insertIntoExistingGrid( QGridLayout*, int );
     virtual void doApply() = 0;
-    virtual void storeValue() = 0;
+    virtual void storeValue( bool owned = true ) = 0;
 protected:
     ConfigControl( module_config_item_t *_p_conf ) : p_item( _p_conf ) {}
     virtual void changeVisibility( bool ) { }
@@ -116,7 +116,7 @@ class VIntConfigControl : public ConfigControl
 public:
     virtual int getValue() const = 0;
     virtual void doApply() Q_DECL_OVERRIDE;
-    virtual void storeValue() Q_DECL_OVERRIDE;
+    virtual void storeValue( bool owned = true ) Q_DECL_OVERRIDE;
 protected:
     VIntConfigControl( module_config_item_t *i ) : ConfigControl(i) {}
 };
@@ -246,7 +246,7 @@ class VFloatConfigControl : public ConfigControl
 public:
     virtual float getValue() const = 0;
     void doApply() Q_DECL_OVERRIDE;
-    void storeValue() Q_DECL_OVERRIDE;
+    void storeValue( bool owned = true ) Q_DECL_OVERRIDE;
 protected:
     VFloatConfigControl( module_config_item_t *i ) : ConfigControl(i) {}
 };
@@ -293,9 +293,20 @@ class VStringConfigControl : public ConfigControl
 public:
     virtual QString getValue() const = 0;
     void doApply() Q_DECL_OVERRIDE;
-    void storeValue() Q_DECL_OVERRIDE;
+    void storeValue( bool owned = true ) Q_DECL_OVERRIDE;
+    void clearOwnedStringVal()
+    {
+        if (needs_freeing && p_item->value.psz) {
+            free(p_item->value.psz);
+            p_item->value.psz = NULL;
+            needs_freeing = false;
+        }
+    }
 protected:
-    VStringConfigControl( module_config_item_t *i ) : ConfigControl(i) {}
+    VStringConfigControl( module_config_item_t *item ) :
+        ConfigControl( item ), needs_freeing( false ) {}
+    virtual ~VStringConfigControl() { clearOwnedStringVal(); }
+    bool needs_freeing;
 };
 
 class StringConfigControl : public VStringConfigControl
@@ -467,7 +478,7 @@ class KeySelectorControl : public ConfigControl
 public:
     KeySelectorControl( intf_thread_t *, module_config_item_t *, QWidget * );
     void doApply() Q_DECL_OVERRIDE;
-    void storeValue() Q_DECL_OVERRIDE;
+    void storeValue( bool owned = true ) Q_DECL_OVERRIDE;
 
 protected:
     bool eventFilter( QObject *, QEvent * ) Q_DECL_OVERRIDE;

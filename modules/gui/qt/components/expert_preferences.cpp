@@ -448,6 +448,7 @@ ExpertPrefsItemData::ExpertPrefsItemData( QObject *_parent ) : QObject( _parent 
     value = "";
     item = NULL;
     is_modified = false;
+    owned_string = false;
 }
 
 /* search name and value columns */
@@ -521,7 +522,9 @@ void ExpertPrefsEditDialog::clearControl()
 
 void ExpertPrefsEditDialog::accept()
 {
-    control->storeValue();
+    data->clearOwnedStringVal();
+    control->storeValue( false ); //store and assert ownership (applies to string values)
+    data->owned_string = true;
     tree->updateDisplayedValue( tree_item, data );
     tree->setItemModifiedState( tree_item, vlc_config_ItemIsModified(data->item), data );
     clearControl();

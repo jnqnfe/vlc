@@ -50,12 +50,22 @@ class ExpertPrefsItemData : public QObject
     Q_OBJECT
 public:
     ExpertPrefsItemData( QObject * );
+    ~ExpertPrefsItemData() { clearOwnedStringVal(); }
     bool contains( const QString &text, Qt::CaseSensitivity cs );
+    void clearOwnedStringVal()
+    {
+        if (owned_string && item->value.psz) {
+            free(item->value.psz);
+            item->value.psz = NULL;
+            owned_string = false;
+        }
+    }
     QString name;
     QString value;
     QString title;
     module_config_item_t *item;
     bool is_modified;
+    bool owned_string;
 };
 
 Q_DECLARE_METATYPE( ExpertPrefsItemData* );
