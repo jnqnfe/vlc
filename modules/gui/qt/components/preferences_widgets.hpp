@@ -318,10 +318,21 @@ protected:
         if ( label ) label->setVisible( b );
     }
     void fillGrid( QGridLayout*, int ) Q_DECL_OVERRIDE;
-private:
-    void finish();
     QLineEdit *text;
     QLabel *label;
+private:
+    void finish();
+};
+
+class FourccConfigControl : public StringConfigControl
+{
+    Q_OBJECT
+public:
+    FourccConfigControl( vlc_object_t *, module_config_item_t *, QWidget * );
+    FourccConfigControl( vlc_object_t *, module_config_item_t *, QLabel *,
+                         QLineEdit* );
+private:
+    void finish();
 };
 
 class FileConfigControl : public VStringConfigControl

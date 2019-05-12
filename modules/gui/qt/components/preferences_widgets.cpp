@@ -94,8 +94,11 @@ ConfigControl *ConfigControl::createControl( vlc_object_t *p_this,
         p_control = new ModuleListConfigControl( p_this, p_item, parent, true );
         break;
     case CONFIG_ITEM_STRING:
+    case CONFIG_ITEM_FOURCC:
         if( p_item->list.psz_cb )
             p_control = new StringListConfigControl( p_this, p_item, parent );
+        else if (p_item->i_type == CONFIG_ITEM_FOURCC)
+            p_control = new FourccConfigControl( p_this, p_item, parent );
         else
             p_control = new StringConfigControl( p_this, p_item, parent, false );
         break;
@@ -250,6 +253,28 @@ void StringConfigControl::finish()
     }
     if( label )
         label->setBuddy( text );
+}
+
+/********* String / FourCC **********/
+FourccConfigControl::FourccConfigControl( vlc_object_t *_p_this,
+                                          module_config_item_t *_p_item,
+                                          QWidget *_parent ) :
+    StringConfigControl( _p_this, _p_item, _parent, false )
+{
+    finish();
+}
+
+FourccConfigControl::FourccConfigControl( vlc_object_t *_p_this,
+                                          module_config_item_t *_p_item,
+                                          QLabel *_label, QLineEdit *_text ):
+    StringConfigControl( _p_this, _p_item, _label, _text, false )
+{
+    finish();
+}
+
+void FourccConfigControl::finish()
+{
+    text->setMaxLength(4);
 }
 
 /*********** File **************/
