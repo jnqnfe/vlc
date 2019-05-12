@@ -106,6 +106,8 @@ static const int format_int[] = {
     VLC_CODEC_SPDIFL,
 };
 
+const int formats_count = sizeof(format_list) / sizeof(format_list[0]);
+
 #define FILE_TEXT N_("Output file")
 #define FILE_LONGTEXT N_("File to which the audio samples will be written to (\"-\" for stdout).")
 
@@ -129,7 +131,6 @@ vlc_plugin_end ()
 static int Start( audio_output_t *p_aout, audio_sample_format_t *restrict fmt )
 {
     char * psz_name, * psz_format;
-    const char * const * ppsz_compare = format_list;
     int i_channels, i = 0;
 
     if( aout_FormatNbChannels( fmt ) == 0 )
@@ -176,16 +177,15 @@ static int Start( audio_output_t *p_aout, audio_sample_format_t *restrict fmt )
         return VLC_EGENERIC;
     }
 
-    while ( *ppsz_compare != NULL )
+    for ( i = 0; i < formats_count; i++ )
     {
-        if ( !strncmp( *ppsz_compare, psz_format, strlen(*ppsz_compare) ) )
+        if ( !strncmp( format_list[i], psz_format, strlen(format_list[i]) ) )
         {
             break;
         }
-        ppsz_compare++; i++;
     }
 
-    if ( *ppsz_compare == NULL )
+    if ( i == formats_count )
     {
         msg_Err( p_aout, "cannot understand the format string (%s)",
                  psz_format );
