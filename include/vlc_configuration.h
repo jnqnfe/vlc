@@ -81,6 +81,7 @@
 #define CONFIG_ITEM_SAVEFILE         (CONFIG_ITEM_CLASS_STRING  | 0x08) /* Written file option */
 #define CONFIG_ITEM_DIRECTORY        (CONFIG_ITEM_CLASS_STRING  | 0x09) /* Directory option */
 #define CONFIG_ITEM_FONT             (CONFIG_ITEM_CLASS_STRING  | 0x0A) /* Font option */
+#define CONFIG_ITEM_FOURCC           (CONFIG_ITEM_CLASS_STRING  | 0x0B) /* FourCC option */
 
 #define CONFIG_CLASS(x) ((x) & CONFIG_ITEM_CLASS_MASK)
 
