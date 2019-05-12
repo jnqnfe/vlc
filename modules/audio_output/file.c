@@ -179,7 +179,7 @@ static int Start( audio_output_t *p_aout, audio_sample_format_t *restrict fmt )
 
     for ( i = 0; i < formats_count; i++ )
     {
-        if ( !strncmp( format_list[i], psz_format, strlen(format_list[i]) ) )
+        if ( !strcmp( format_list[i], psz_format ) )
         {
             break;
         }
