@@ -590,6 +590,9 @@ typedef union
 #define add_font( name, default, text, longtext ) \
     add_string_inner( name, CONFIG_ITEM_FONT, default, text, longtext )
 
+#define add_fourcc( name, default, text, longtext, advanced ) \
+    add_string_inner( name, CONFIG_ITEM_FOURCC, default, text, longtext )
+
 /* add --foo and --global-foo options */
 #define add_key( name, default, text, longtext ) \
     add_string_inner( "global-" name, CONFIG_ITEM_KEY, KEY_UNSET, text, longtext ) \
