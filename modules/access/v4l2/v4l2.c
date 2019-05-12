@@ -302,7 +302,7 @@ vlc_plugin_begin ()
                 STANDARD_TEXT, STANDARD_LONGTEXT, false )
         change_string_list( standards_vlc, standards_user )
         change_safe()
-    add_string( CFG_PREFIX "chroma", NULL, CHROMA_TEXT, CHROMA_LONGTEXT,
+    add_fourcc( CFG_PREFIX "chroma", NULL, CHROMA_TEXT, CHROMA_LONGTEXT,
                 true )
         change_safe()
     add_integer( CFG_PREFIX "input", 0, INPUT_TEXT, INPUT_LONGTEXT,

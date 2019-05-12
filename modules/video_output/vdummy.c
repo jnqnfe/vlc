@@ -55,7 +55,7 @@ vlc_plugin_begin ()
     set_capability( VLC_CAP_VOUT_DISPLAY, 0, OpenStats, NULL )
 
     set_subcategory( SUBCAT_VIDEO_VOUT )
-    add_string( "dummy-chroma", NULL, CHROMA_TEXT, CHROMA_LONGTEXT, true )
+    add_fourcc( "dummy-chroma", NULL, CHROMA_TEXT, CHROMA_LONGTEXT, true )
 vlc_plugin_end ()
 
 

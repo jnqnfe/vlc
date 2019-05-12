@@ -67,7 +67,7 @@ vlc_plugin_begin()
         change_safe()
     add_integer_with_range( "rawaud-samplerate", 48000, 1, 384000, SAMPLERATE_TEXT, SAMPLERATE_LONGTEXT, false )
         change_safe()
-    add_string( "rawaud-fourcc", FOURCC_DEFAULT,
+    add_fourcc( "rawaud-fourcc", FOURCC_DEFAULT,
                 FOURCC_TEXT, FOURCC_LONGTEXT, false )
         change_safe()
     add_string( "rawaud-lang", "eng", LANG_TEXT, LANG_LONGTEXT, false)

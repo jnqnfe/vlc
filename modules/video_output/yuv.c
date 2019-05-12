@@ -60,7 +60,7 @@ vlc_plugin_begin()
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_string(CFG_PREFIX "file", "stream.yuv",
                 YUV_FILE_TEXT, YUV_FILE_LONGTEXT, false)
-    add_string(CFG_PREFIX "chroma", NULL,
+    add_fourcc(CFG_PREFIX "chroma", NULL,
                 CHROMA_TEXT, CHROMA_LONGTEXT, true)
     add_bool  (CFG_PREFIX "yuv4mpeg2", false,
                 YUV4MPEG2_TEXT, YUV4MPEG2_LONGTEXT, true)

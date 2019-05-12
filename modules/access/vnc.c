@@ -96,7 +96,7 @@ vlc_plugin_begin()
         change_safe()
 
     add_float( CFG_PREFIX "fps", 5, RFB_FPS, RFB_FPS_LONGTEXT, true )
-    add_string( CFG_PREFIX "chroma", rgb_chromas_v[0], RFB_CHROMA, RFB_CHROMA_LONGTEXT, false )
+    add_fourcc( CFG_PREFIX "chroma", rgb_chromas_v[0], RFB_CHROMA, RFB_CHROMA_LONGTEXT, false )
         change_string_list (rgb_chromas_v, rgb_chromas)
         change_safe()
     add_integer( CFG_PREFIX "compress-level", 0, RFB_COMPRESS, RFB_COMPRESS_LONGTEXT, true )

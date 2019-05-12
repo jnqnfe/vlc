@@ -152,7 +152,7 @@ vlc_plugin_begin ()
     set_section( N_("Video"), NULL )
     add_module(SOUT_CFG_PREFIX "venc", VLC_CAP_STR_ENCODER, NULL,
                VENC_TEXT, VENC_LONGTEXT)
-    add_string( SOUT_CFG_PREFIX "vcodec", NULL, VCODEC_TEXT,
+    add_fourcc( SOUT_CFG_PREFIX "vcodec", NULL, VCODEC_TEXT,
                 VCODEC_LONGTEXT, false )
     add_integer( SOUT_CFG_PREFIX "vb", 0, VB_TEXT,
                  VB_LONGTEXT, false )
@@ -180,7 +180,7 @@ vlc_plugin_begin ()
     set_section( N_("Audio"), NULL )
     add_module(SOUT_CFG_PREFIX "aenc", VLC_CAP_STR_ENCODER, NULL,
                AENC_TEXT, AENC_LONGTEXT)
-    add_string( SOUT_CFG_PREFIX "acodec", NULL, ACODEC_TEXT,
+    add_fourcc( SOUT_CFG_PREFIX "acodec", NULL, ACODEC_TEXT,
                 ACODEC_LONGTEXT, false )
     add_integer( SOUT_CFG_PREFIX "ab", 96, AB_TEXT,
                  AB_LONGTEXT, false )
@@ -198,7 +198,7 @@ vlc_plugin_begin ()
     set_section( N_("Overlays/Subtitles"), NULL )
     add_module(SOUT_CFG_PREFIX "senc", VLC_CAP_STR_ENCODER, NULL,
                SENC_TEXT, SENC_LONGTEXT)
-    add_string( SOUT_CFG_PREFIX "scodec", NULL, SCODEC_TEXT,
+    add_fourcc( SOUT_CFG_PREFIX "scodec", NULL, SCODEC_TEXT,
                 SCODEC_LONGTEXT, false )
     add_bool( SOUT_CFG_PREFIX "soverlay", false, SOVERLAY_TEXT, NULL, false )
     add_module_list(SOUT_CFG_PREFIX "sfilter", VLC_CAP_STR_SUB_SOURCE, NULL,

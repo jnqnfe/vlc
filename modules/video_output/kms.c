@@ -784,8 +784,8 @@ vlc_plugin_begin ()
 
     set_subcategory(SUBCAT_VIDEO_VOUT)
     add_loadfile(KMS_VAR, "/dev/dri/card0", DEVICE_TEXT, DEVICE_LONGTEXT)
-    add_string( "kms-vlc-chroma", NULL, VLC_CHROMA_TEXT, VLC_CHROMA_LONGTEXT,
+    add_fourcc( "kms-vlc-chroma", NULL, VLC_CHROMA_TEXT, VLC_CHROMA_LONGTEXT,
                 true)
-    add_string( "kms-drm-chroma", NULL, DRM_CHROMA_TEXT, DRM_CHROMA_LONGTEXT,
+    add_fourcc( "kms-drm-chroma", NULL, DRM_CHROMA_TEXT, DRM_CHROMA_LONGTEXT,
                 true)
 vlc_plugin_end ()

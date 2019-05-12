@@ -153,7 +153,7 @@ vlc_plugin_begin ()
                 NULL, true )
     add_string( CFG_PREFIX "sar", "1:1", RATIO_TEXT,
                 RATIO_LONGTEXT, false )
-    add_string( CFG_PREFIX "chroma", NULL, CHROMA_TEXT, CHROMA_LONGTEXT,
+    add_fourcc( CFG_PREFIX "chroma", NULL, CHROMA_TEXT, CHROMA_LONGTEXT,
                 false )
 
     add_module_list(CFG_PREFIX "vfilter", VLC_CAP_STR_VIDEO_FILTER, NULL,
