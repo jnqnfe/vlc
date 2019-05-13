@@ -135,7 +135,7 @@
 
 static const char *const ppsz_deinterlace_type[] =
 {
-    "deinterlace", "ffmpeg-deinterlace"
+    N_("deinterlace"), N_("ffmpeg-deinterlace")
 };
 
 static int  Open ( sout_stream_t * );
