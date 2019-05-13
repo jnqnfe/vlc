@@ -286,7 +286,7 @@ static const char *enc_perceptual_weighting_list[] = {
 
 /* advanced option only */
 #define ENC_SCBLK_SIZE "codeblock-size"
-#define ENC_SCBLK_SIZE_TEXT N_("Size of code blocks in each subband")
+#define ENC_SCBLK_SIZE_TEXT N_("Size of code blocks in each subband. Automatic is best. Full uses one code block per subband.")
 
 static const char *enc_codeblock_size_list[] = {
   "automatic",
@@ -296,11 +296,11 @@ static const char *enc_codeblock_size_list[] = {
   "full"
 };
 static const char *const enc_codeblock_size_list_text[] =
-  { N_("automatic - let encoder decide based upon input (Best)"),
-    N_("small - use small code blocks"),
-    N_("medium - use medium sized code blocks"),
-    N_("large - use large code blocks"),
-    N_("full - One code block per subband"),
+  { N_("Automatic"),
+    N_("Small"),
+    N_("Medium"),
+    N_("Large"),
+    N_("Full"),
   };
 
 /* advanced option only */
