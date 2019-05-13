@@ -51,8 +51,8 @@ static HRESULT StreamStop( aout_stream_t * );
 static int ReloadDirectXDevices( const char *, char ***, char *** );
 static void * PlayedDataEraser( void * );
 /* Speaker setup override options list */
-static const char *const speaker_list[] = { "Windows default", "Mono", "Stereo",
-                                            "Quad", "5.1", "7.1" };
+static const char *const speaker_list[] = { N_("Windows default"), N_("Mono"), N_("Stereo"),
+                                            N_("Quad"), "5.1", "7.1" };
 
 /*****************************************************************************
  * Module descriptor
