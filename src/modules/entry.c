@@ -530,6 +530,11 @@ static int vlc_plugin_desc_cb(vlc_plugin_t *plugin, enum vlc_plugin_desc_actions
             }
 
             size_t len = params->string_list.count;
+
+            /* ignore null terminator entries, as may originate from 3rd-party arrays */
+            if (unlikely(len > 0 && !params->string_list.list[len-1] && !params->string_list.text[len-1]))
+                --len;
+
             if (unlikely(len == 0))
                 break; /* nothing to do */
 
