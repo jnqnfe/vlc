@@ -142,10 +142,10 @@ static const int present_values[] = {
 };
 
 static const char * const present_text[] = {
-    "Immediate (non-blocking, tearing)",
-    "Mailbox (non-blocking, non-tearing)",
-    "FIFO (blocking, non-tearing)",
-    "Relaxed FIFO (blocking, tearing)",
+    N_("Immediate (non-blocking, tearing)"),
+    N_("Mailbox (non-blocking, non-tearing)"),
+    N_("FIFO (blocking, non-tearing)"),
+    N_("Relaxed FIFO (blocking, tearing)"),
 };
 
 #define PRESENT_MODE_TEXT "Preferred present mode"
