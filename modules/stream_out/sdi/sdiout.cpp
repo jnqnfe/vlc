@@ -98,9 +98,9 @@ static const char *const ppsz_videoconns[] = {
 static const char *const ppsz_videoconns_text[] = {
     "SDI",
     "HDMI",
-    "Optical SDI",
-    "Component",
-    "Composite",
+    N_("Optical SDI"),
+    N_("Component"),
+    N_("Composite"),
     "S-video",
 };
 static const BMDVideoConnection rgbmd_videoconns[] =
@@ -119,17 +119,17 @@ static const int rgi_afd_values[] = {
     0, 2, 3, 4, 8, 9, 10, 11, 13, 14, 15,
 };
 static const char * const rgsz_afd_text[] = {
-    "Undefined",
-    "Box 16:9 (top aligned)",
-    "Box 14:9 (top aligned)",
-    "Box > 16:9 (centre aligned)",
-    "Same as coded frame (full frame)",
-    "4:3  (centre aligned)",
-    "16:9 (centre aligned)",
-    "14:9 (centre aligned)",
-    "4:3  (with shoot and protect 14:9 centre)",
-    "16:9 (with shoot and protect 14:9 centre)",
-    "16:9 (with shoot and protect  4:3 centre)",
+    N_("Undefined"),
+    N_("Box 16:9 (top aligned)"),
+    N_("Box 14:9 (top aligned)"),
+    N_("Box > 16:9 (centre aligned)"),
+    N_("Same as coded frame (full frame)"),
+    N_("4:3  (centre aligned)"),
+    N_("16:9 (centre aligned)"),
+    N_("14:9 (centre aligned)"),
+    N_("4:3  (with shoot and protect 14:9 centre)"),
+    N_("16:9 (with shoot and protect 14:9 centre)"),
+    N_("16:9 (with shoot and protect  4:3 centre)"),
 };
 static_assert(ARRAY_SIZE(rgi_afd_values) == ARRAY_SIZE(rgsz_afd_text), "afd arrays messed up");
 
