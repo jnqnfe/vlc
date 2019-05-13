@@ -83,7 +83,7 @@
     "out-of-band mappings (SDP)" )
 
 static const char *const dynamic_pt_list[] = { "theora" };
-static const char *const dynamic_pt_list_text[] = { "Theora Encoded Video" };
+static const char *const dynamic_pt_list_text[] = { N_("Theora Encoded Video") };
 
 static int  Open (demux_t *);
 static void Close (demux_t *);
