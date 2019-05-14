@@ -102,7 +102,7 @@ ConfigControl *ConfigControl::createControl( intf_thread_t *p_intf,
             p_control = new StringConfigControl( p_item, parent, false );
         break;
     case CONFIG_ITEM_PASSWORD:
-        p_control = new StringConfigControl( p_item, parent, true );
+        p_control = new PasswordConfigControl( p_item, parent );
         break;
     case CONFIG_ITEM_RGB:
     case CONFIG_ITEM_RGBA:
@@ -238,22 +238,20 @@ void VStringConfigControl::storeValue( bool owned )
 
 /*********** String **************/
 StringConfigControl::StringConfigControl( module_config_item_t *_p_item,
-                                          QWidget *_parent, bool pwd ) :
+                                          QWidget *_parent, bool ) :
     VStringConfigControl( _p_item )
 {
     label = new QLabel( p_item->psz_text ? qtr(p_item->psz_text) : "", _parent );
     text = new QLineEdit( p_item->value.psz ? qfu(p_item->value.psz) : "", _parent );
-    if( pwd ) text->setEchoMode( QLineEdit::Password );
     finish();
 }
 
 StringConfigControl::StringConfigControl( module_config_item_t *_p_item,
                                           QLabel *_label, QLineEdit *_text,
-                                          bool pwd ):
+                                          bool ):
     VStringConfigControl( _p_item )
 {
     text = _text;
-    if( pwd ) text->setEchoMode( QLineEdit::Password );
     label = _label;
     finish( );
 }
@@ -283,6 +281,26 @@ void StringConfigControl::finish()
     }
     if( label )
         label->setBuddy( text );
+}
+
+/********* String / Password **********/
+PasswordConfigControl::PasswordConfigControl( module_config_item_t *_p_item,
+                                          QWidget *_parent ) :
+    StringConfigControl( _p_item, _parent, false )
+{
+    finish();
+}
+
+PasswordConfigControl::PasswordConfigControl( module_config_item_t *_p_item,
+                                          QLabel *_label, QLineEdit *_text ):
+    StringConfigControl( _p_item, _label, _text, false )
+{
+    finish();
+}
+
+void PasswordConfigControl::finish()
+{
+    text->setEchoMode( QLineEdit::Password );
 }
 
 /********* String / FourCC **********/

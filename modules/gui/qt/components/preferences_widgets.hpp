@@ -313,8 +313,8 @@ class StringConfigControl : public VStringConfigControl
 {
     Q_OBJECT
 public:
-    StringConfigControl( module_config_item_t *, QWidget *, bool pwd );
-    StringConfigControl( module_config_item_t *, QLabel *, QLineEdit*, bool pwd );
+    StringConfigControl( module_config_item_t *, QWidget *, bool );
+    StringConfigControl( module_config_item_t *, QLabel *, QLineEdit*, bool );
     QString getValue() const Q_DECL_OVERRIDE { return text->text(); }
 protected:
     void changeVisibility( bool b ) Q_DECL_OVERRIDE
@@ -326,6 +326,16 @@ protected:
     void insertIntoBox( QBoxLayout*, int ) Q_DECL_OVERRIDE;
     QLineEdit *text;
     QLabel *label;
+private:
+    void finish();
+};
+
+class PasswordConfigControl : public StringConfigControl
+{
+    Q_OBJECT
+public:
+    PasswordConfigControl( module_config_item_t *, QWidget * );
+    PasswordConfigControl( module_config_item_t *, QLabel *, QLineEdit* );
 private:
     void finish();
 };
