@@ -1243,26 +1243,26 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
     NSString *newval = [o_popup titleOfSelectedItem];
     char *returnval = NULL;
     size_t i_module_index;
-    module_t *p_parser, **p_list;
+    module_t *p_module, **p_list;
 
     size_t count;
     p_list = module_list_get(&count);
     for (i_module_index = 0; i_module_index < count; i_module_index++) {
-        p_parser = p_list[i_module_index];
+        p_module = p_list[i_module_index];
 
-        if (module_is_main(p_parser))
+        if (module_is_main(p_module))
             continue;
 
         unsigned int confsize;
-        module_config_item_t *p_config = vlc_module_config_get(p_parser, &confsize);
+        module_config_item_t *p_config = vlc_module_config_get(p_module, &confsize);
         for (size_t i = 0; i < confsize; i++) {
             module_config_item_t *p_cfg = p_config + i;
             /* Hack: required subcategory is stored in i_min */
             if (p_cfg->i_type == CONFIG_SUBCATEGORY &&
                 p_cfg->value.i == self.p_item->min.i) {
-                NSString *o_description = _NS(vlc_module_GetLongName(p_parser));
+                NSString *o_description = _NS(vlc_module_GetLongName(p_module));
                 if ([newval isEqualToString: o_description]) {
-                    returnval = strdup(module_get_object(p_parser));
+                    returnval = strdup(module_get_object(p_module));
                     break;
                 }
             }
@@ -1280,28 +1280,28 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
 -(void)resetValues
 {
     /* build a list of available modules */
-    module_t *p_parser, **p_list;
+    module_t *p_module, **p_list;
 
     size_t count;
     p_list = module_list_get(&count);
     for (size_t i_index = 0; i_index < count; i_index++) {
-        p_parser = p_list[i_index];
+        p_module = p_list[i_index];
 
-        if (module_is_main(p_parser))
+        if (module_is_main(p_module))
             continue;
         unsigned int confsize;
 
-        module_config_item_t *p_configlist = vlc_module_config_get(p_parser, &confsize);
+        module_config_item_t *p_configlist = vlc_module_config_get(p_module, &confsize);
         for (size_t i = 0; i < confsize; i++) {
             module_config_item_t *p_config = &p_configlist[i];
             /* Hack: required subcategory is stored in i_min */
             if (p_config->i_type == CONFIG_SUBCATEGORY &&
                 p_config->value.i == self.p_item->min.i) {
-                NSString *o_description = _NS(vlc_module_GetLongName(p_parser));
+                NSString *o_description = _NS(vlc_module_GetLongName(p_module));
                 [o_popup addItemWithTitle: o_description];
 
                 if (self.p_item->value.psz && !strcmp(self.p_item->value.psz,
-                                                      module_get_object(p_parser)))
+                                                      module_get_object(p_module)))
                     [o_popup selectItem:[o_popup lastItem]];
             }
         }
@@ -1950,7 +1950,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
     BOOL b_by_cat = p_item->i_type == CONFIG_ITEM_MODULE_LIST_CAT;
 
     //Fill our array to know how may items we have...
-    module_t *p_parser, **p_list;
+    module_t *p_module, **p_list;
     size_t i_module_index;
     NSRect mainFrame = [parentView frame];
     NSString *labelString, *o_textfieldString, *toolTip;
@@ -1961,14 +1961,14 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
     p_list = module_list_get(&count);
     for (i_module_index = 0; i_module_index < count; i_module_index++) {
         int i;
-        p_parser = p_list[i_module_index];
+        p_module = p_list[i_module_index];
 
-        if (module_is_main(p_parser))
+        if (module_is_main(p_module))
             continue;
 
         if (b_by_cat) {
             unsigned int confsize;
-            module_config_item_t *p_configlist = vlc_module_config_get(p_parser, &confsize);
+            module_config_item_t *p_configlist = vlc_module_config_get(p_module, &confsize);
 
             for (i = 0; i < confsize; i++) {
                 module_config_item_t *p_config = &p_configlist[i];
@@ -1979,11 +1979,11 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
                 if (p_config->i_type == CONFIG_SUBCATEGORY &&
                     p_config->value.i == p_item->min.i) {
 
-                    o_modulelongname = toNSStr(vlc_module_GetLongName(p_parser));
-                    o_modulename = toNSStr(module_get_object(p_parser));
+                    o_modulelongname = toNSStr(vlc_module_GetLongName(p_module));
+                    o_modulename = toNSStr(module_get_object(p_module));
 
                     if (p_item->value.psz &&
-                        strstr(p_item->value.psz, module_get_object(p_parser)))
+                        strstr(p_item->value.psz, module_get_object(p_module)))
                         o_moduleenabled = [NSNumber numberWithBool:YES];
                     else
                         o_moduleenabled = [NSNumber numberWithBool:NO];
@@ -1997,7 +1997,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
                  * Selecting HTTP, RC and Telnet interfaces is difficult now
                  * since they are just the lua interface module */
                 if (p_config->i_type == CONFIG_SUBCATEGORY &&
-                    !strcmp(module_get_object(p_parser), "lua") &&
+                    !strcmp(module_get_object(p_module), "lua") &&
                     !strcmp(p_item->psz_name, "extraintf") &&
                     p_config->value.i == p_item->min.i) {
 
@@ -2017,14 +2017,14 @@ o_moduleenabled = [NSNumber numberWithBool:NO];\
             }
             module_config_free(p_configlist);
 
-        } else if (vlc_module_provides(p_parser, vlc_module_cap_from_textid( p_item->psz_type ), p_item->psz_type)) {
+        } else if (vlc_module_provides(p_module, vlc_module_cap_from_textid( p_item->psz_type ), p_item->psz_type)) {
 
-            NSString *o_modulelongname = toNSStr(vlc_module_GetLongName(p_parser));
-            NSString *o_modulename = toNSStr(module_get_object(p_parser));
+            NSString *o_modulelongname = toNSStr(vlc_module_GetLongName(p_module));
+            NSString *o_modulename = toNSStr(module_get_object(p_module));
 
             NSNumber *o_moduleenabled = nil;
             if (p_item->value.psz &&
-                strstr(p_item->value.psz, module_get_object(p_parser)))
+                strstr(p_item->value.psz, module_get_object(p_module)))
                 o_moduleenabled = [NSNumber numberWithBool:YES];
             else
                 o_moduleenabled = [NSNumber numberWithBool:NO];
