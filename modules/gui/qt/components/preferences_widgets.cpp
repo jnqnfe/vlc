@@ -617,14 +617,14 @@ void ModuleConfigControl::finish( )
     combo->addItem( qtr("Default") );
     for( size_t i = 0; i < count; i++ )
     {
-        module_t *p_parser = p_list[i];
+        module_t *p_module = p_list[i];
 
-        if( !strcmp( module_get_object( p_parser ), "core" ) ) continue;
+        if( !strcmp( module_get_object( p_module ), "core" ) ) continue;
 
         unsigned confsize;
         module_config_item_t *p_config;
 
-        p_config = vlc_module_config_get (p_parser, &confsize);
+        p_config = vlc_module_config_get (p_module, &confsize);
         for (size_t i = 0; i < confsize; i++)
         {
             /* Hack: required subcategory is stored in i_min */
@@ -632,10 +632,10 @@ void ModuleConfigControl::finish( )
             if( p_cfg->i_type == CONFIG_SUBCATEGORY &&
                 p_cfg->value.i == p_item->min.i )
             {
-                combo->addItem( qtr( vlc_module_GetLongName( p_parser )),
-                                QVariant( module_get_object( p_parser ) ) );
+                combo->addItem( qtr( vlc_module_GetLongName( p_module )),
+                                QVariant( module_get_object( p_module ) ) );
                 if( p_item->value.psz && !strcmp( p_item->value.psz,
-                                                  module_get_object( p_parser ) ) )
+                                                  module_get_object( p_module ) ) )
                     combo->setCurrentIndex( combo->count() - 1 );
                 break;
             }
@@ -709,12 +709,12 @@ ModuleListConfigControl::~ModuleListConfigControl()
     clearOwnedStringVal();
 }
 
-void ModuleListConfigControl::checkbox_lists( module_t *p_parser )
+void ModuleListConfigControl::checkbox_lists( module_t *p_module )
 {
-    const char *help = module_get_help( p_parser );
-    checkbox_lists( qtr( vlc_module_GetLongName( p_parser ) ),
+    const char *help = module_get_help( p_module );
+    checkbox_lists( qtr( vlc_module_GetLongName( p_module ) ),
                     help != NULL ? qtr( help ): "",
-                    module_get_object( p_parser ) );
+                    module_get_object( p_module ) );
 }
 
 void ModuleListConfigControl::checkbox_lists( QString label, QString help,
@@ -742,14 +742,14 @@ void ModuleListConfigControl::finish( bool bycat )
     module_t **p_list = module_list_get( &count );
     for( size_t i = 0; i < count; i++ )
     {
-        module_t *p_parser = p_list[i];
+        module_t *p_module = p_list[i];
 
         if( bycat )
         {
-            if( !strcmp( module_get_object( p_parser ), "core" ) ) continue;
+            if( !strcmp( module_get_object( p_module ), "core" ) ) continue;
 
             unsigned confsize;
-            module_config_item_t *p_config = vlc_module_config_get (p_parser, &confsize);
+            module_config_item_t *p_config = vlc_module_config_get (p_module, &confsize);
 
             for (size_t i = 0; i < confsize; i++)
             {
@@ -758,14 +758,14 @@ void ModuleListConfigControl::finish( bool bycat )
                 if( p_cfg->i_type == CONFIG_SUBCATEGORY &&
                         p_cfg->value.i == p_item->min.i )
                 {
-                    checkbox_lists( p_parser );
+                    checkbox_lists( p_module );
                 }
 
                 /* Parental Advisory HACK:
                  * Selecting HTTP, RC and Telnet interfaces is difficult now
                  * since they are just the lua interface module */
                 if( p_cfg->i_type == CONFIG_SUBCATEGORY &&
-                    !strcmp( module_get_object( p_parser ), "lua" ) &&
+                    !strcmp( module_get_object( p_module ), "lua" ) &&
                     !strcmp( p_item->psz_name, "extraintf" ) &&
                     p_cfg->value.i == p_item->min.i )
                 {
@@ -778,10 +778,10 @@ void ModuleListConfigControl::finish( bool bycat )
             }
             module_config_free (p_config);
         }
-        else if( vlc_module_provides( p_parser, vlc_module_cap_from_textid( p_item->psz_type ),
+        else if( vlc_module_provides( p_module, vlc_module_cap_from_textid( p_item->psz_type ),
                                   p_item->psz_type ) )
         {
-            checkbox_lists(p_parser);
+            checkbox_lists(p_module);
         }
     }
     module_list_free( p_list );
