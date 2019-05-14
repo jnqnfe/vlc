@@ -431,15 +431,15 @@ int config_SaveConfigFile (vlc_object_t *p_this)
     /* Look for the selected module, if NULL then save everything */
     for (vlc_plugin_t *p = vlc_plugins; p != NULL; p = p->next)
     {
-        module_t *p_parser = p->module;
+        module_t *p_module = p->module;
         module_config_item_t *p_item, *p_end;
 
         if (p->conf.count == 0)
             continue;
 
-        fprintf( file, "[%s]", module_get_object (p_parser) );
-        if( p_parser->psz_longname )
-            fprintf( file, " # %s\n\n", p_parser->psz_longname );
+        fprintf( file, "[%s]", module_get_object (p_module) );
+        if( p_module->psz_longname )
+            fprintf( file, " # %s\n\n", p_module->psz_longname );
         else
             fprintf( file, "\n\n" );
 
