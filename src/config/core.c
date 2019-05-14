@@ -278,7 +278,7 @@ static ssize_t config_ListModules (const char *cap, char ***restrict values,
 
     ssize_t i = 0;
 
-    vals[i] = strdup ("any");
+    vals[i] = NULL;
     txts[i] = strdup (_("Automatic"));
     if (!vals[i] || !txts[i])
         goto error;
