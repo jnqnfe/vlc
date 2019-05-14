@@ -1862,7 +1862,7 @@ vlc_plugin_begin ()
 
     set_subcategory( SUBCAT_INPUT_DEMUX )
 
-    add_module("demux", VLC_CAP_STR_DEMUX, "any", DEMUX_TEXT, DEMUX_LONGTEXT)
+    add_module("demux", VLC_CAP_STR_DEMUX, NULL, DEMUX_TEXT, DEMUX_LONGTEXT)
     add_string( "demux-filter", NULL, DEMUX_FILTER_TEXT, DEMUX_FILTER_LONGTEXT, true )
 
     //set_subcategory( SUBCAT_INPUT_ACODEC )
