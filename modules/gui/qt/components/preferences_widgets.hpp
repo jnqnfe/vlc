@@ -175,8 +175,8 @@ class IntegerListConfigControl : public VIntConfigControl
 {
 Q_OBJECT
 public:
-    IntegerListConfigControl( module_config_item_t *, QWidget *, bool );
-    IntegerListConfigControl( module_config_item_t *, QLabel *, QComboBox*, bool );
+    IntegerListConfigControl( module_config_item_t *, QWidget * );
+    IntegerListConfigControl( module_config_item_t *, QLabel *, QComboBox* );
     int getValue() const Q_DECL_OVERRIDE;
 protected:
     void changeVisibility( bool b ) Q_DECL_OVERRIDE
@@ -313,8 +313,8 @@ class StringConfigControl : public VStringConfigControl
 {
     Q_OBJECT
 public:
-    StringConfigControl( module_config_item_t *, QWidget *, bool );
-    StringConfigControl( module_config_item_t *, QLabel *, QLineEdit*, bool );
+    StringConfigControl( module_config_item_t *, QWidget * );
+    StringConfigControl( module_config_item_t *, QLabel *, QLineEdit* );
     QString getValue() const Q_DECL_OVERRIDE { return text->text(); }
 protected:
     void changeVisibility( bool b ) Q_DECL_OVERRIDE
@@ -458,7 +458,7 @@ class StringListConfigControl : public VStringConfigControl
     Q_OBJECT
 public:
     StringListConfigControl( module_config_item_t *, QWidget * );
-    StringListConfigControl( module_config_item_t *, QLabel *, QComboBox*, bool );
+    StringListConfigControl( module_config_item_t *, QLabel *, QComboBox* );
     QString getValue() const Q_DECL_OVERRIDE;
 protected:
     void changeVisibility( bool b ) Q_DECL_OVERRIDE

@@ -99,7 +99,7 @@ ConfigControl *ConfigControl::createControl( intf_thread_t *p_intf,
         else if (p_item->i_type == CONFIG_ITEM_FOURCC)
             p_control = new FourccConfigControl( p_item, parent );
         else
-            p_control = new StringConfigControl( p_item, parent, false );
+            p_control = new StringConfigControl( p_item, parent );
         break;
     case CONFIG_ITEM_PASSWORD:
         p_control = new PasswordConfigControl( p_item, parent );
@@ -110,7 +110,7 @@ ConfigControl *ConfigControl::createControl( intf_thread_t *p_intf,
         break;
     case CONFIG_ITEM_INTEGER:
         if( p_item->list.i_cb )
-            p_control = new IntegerListConfigControl( p_item, parent, false );
+            p_control = new IntegerListConfigControl( p_item, parent );
         else if( p_item->min.i || p_item->max.i )
             p_control = new IntegerRangeConfigControl( p_item, parent );
         else
@@ -238,7 +238,7 @@ void VStringConfigControl::storeValue( bool owned )
 
 /*********** String **************/
 StringConfigControl::StringConfigControl( module_config_item_t *_p_item,
-                                          QWidget *_parent, bool ) :
+                                          QWidget *_parent ) :
     VStringConfigControl( _p_item )
 {
     label = new QLabel( p_item->psz_text ? qtr(p_item->psz_text) : "", _parent );
@@ -247,8 +247,7 @@ StringConfigControl::StringConfigControl( module_config_item_t *_p_item,
 }
 
 StringConfigControl::StringConfigControl( module_config_item_t *_p_item,
-                                          QLabel *_label, QLineEdit *_text,
-                                          bool ):
+                                          QLabel *_label, QLineEdit *_text ):
     VStringConfigControl( _p_item )
 {
     text = _text;
@@ -286,14 +285,14 @@ void StringConfigControl::finish()
 /********* String / Password **********/
 PasswordConfigControl::PasswordConfigControl( module_config_item_t *_p_item,
                                           QWidget *_parent ) :
-    StringConfigControl( _p_item, _parent, false )
+    StringConfigControl( _p_item, _parent )
 {
     finish();
 }
 
 PasswordConfigControl::PasswordConfigControl( module_config_item_t *_p_item,
                                           QLabel *_label, QLineEdit *_text ):
-    StringConfigControl( _p_item, _label, _text, false )
+    StringConfigControl( _p_item, _label, _text )
 {
     finish();
 }
@@ -306,14 +305,14 @@ void PasswordConfigControl::finish()
 /********* String / FourCC **********/
 FourccConfigControl::FourccConfigControl( module_config_item_t *_p_item,
                                           QWidget *_parent ) :
-    StringConfigControl( _p_item, _parent, false )
+    StringConfigControl( _p_item, _parent )
 {
     finish();
 }
 
 FourccConfigControl::FourccConfigControl( module_config_item_t *_p_item,
                                           QLabel *_label, QLineEdit *_text ):
-    StringConfigControl( _p_item, _label, _text, false )
+    StringConfigControl( _p_item, _label, _text )
 {
     finish();
 }
@@ -483,7 +482,7 @@ StringListConfigControl::StringListConfigControl( module_config_item_t *_p_item,
 
 StringListConfigControl::StringListConfigControl( module_config_item_t *_p_item,
                                                   QLabel *_label,
-                                                  QComboBox *_combo, bool ) :
+                                                  QComboBox *_combo ) :
     VStringConfigControl( _p_item )
 {
     combo = _combo;
@@ -962,7 +961,7 @@ int IntegerRangeSliderConfigControl::getValue() const
 
 /********* Integer / choice list **********/
 IntegerListConfigControl::IntegerListConfigControl( module_config_item_t *_p_item,
-                                                    QWidget *p, bool ) :
+                                                    QWidget *p ) :
     VIntConfigControl( _p_item )
 {
     label = new QLabel( qtr(p_item->psz_text), p );
@@ -977,7 +976,7 @@ IntegerListConfigControl::IntegerListConfigControl( module_config_item_t *_p_ite
 
 IntegerListConfigControl::IntegerListConfigControl( module_config_item_t *_p_item,
                                                     QLabel *_label,
-                                                    QComboBox *_combo, bool ) :
+                                                    QComboBox *_combo ) :
     VIntConfigControl( _p_item )
 {
     combo = _combo;
