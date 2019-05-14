@@ -52,6 +52,7 @@
 #include <QColorDialog>
 #include <QAction>
 #include <QKeySequence>
+#include <QApplication> /* for QApplication::font() */
 
 #define MINWIDTH_BOX 90
 #define LAST_COLUMN 10
@@ -287,19 +288,63 @@ PasswordConfigControl::PasswordConfigControl( module_config_item_t *_p_item,
                                           QWidget *_parent ) :
     StringConfigControl( _p_item, _parent )
 {
+    visibility_toggle = new QPushButton( qtr( "👁" ), _parent );
+    visibility_toggle->setMaximumSize( 23, 23 );
+    visibility_toggle->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
+    QFont font = QApplication::font();
+    font.setPointSize( font.pointSize() - 4 );
+    visibility_toggle->setFont( font );
+    visibility_toggle->setToolTip( formatTooltip( qtr( "Toggle password visibility" ) ) );
+
+    visible = false;
+    BUTTONACT( visibility_toggle, toggleVisibility() );
     finish();
 }
 
 PasswordConfigControl::PasswordConfigControl( module_config_item_t *_p_item,
-                                          QLabel *_label, QLineEdit *_text ):
+                                          QLabel *_label, QLineEdit *_text,
+                                          QPushButton *_button ):
     StringConfigControl( _p_item, _label, _text )
 {
+    visibility_toggle = _button;
+    visible = false;
+    BUTTONACT( visibility_toggle, toggleVisibility() );
     finish();
+}
+
+void PasswordConfigControl::fillGrid( QGridLayout *l, int line )
+{
+    l->addWidget( label, line, 0 );
+    l->setColumnMinimumWidth( 1, 10 );
+    QHBoxLayout *textAndButton = new QHBoxLayout();
+    textAndButton->setMargin( 0 );
+    textAndButton->addWidget( text, 2 );
+    textAndButton->addWidget( visibility_toggle, 0 );
+    l->addLayout( textAndButton, line, LAST_COLUMN, 0 );
+}
+
+void PasswordConfigControl::insertIntoBox( QBoxLayout *l, int line )
+{
+    l->insertWidget( line, label );
+    QHBoxLayout *textAndButton = new QHBoxLayout();
+    textAndButton->setMargin( 0 );
+    textAndButton->addWidget( text, 2 );
+    textAndButton->addWidget( visibility_toggle, 0 );
+    l->insertLayout( line + 1, textAndButton );
 }
 
 void PasswordConfigControl::finish()
 {
     text->setEchoMode( QLineEdit::Password );
+}
+
+void PasswordConfigControl::toggleVisibility()
+{
+    if (visible)
+        text->setEchoMode( QLineEdit::Password );
+    else
+        text->setEchoMode( QLineEdit::Normal );
+    visible = !visible;
 }
 
 /********* String / FourCC **********/

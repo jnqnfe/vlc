@@ -335,9 +335,15 @@ class PasswordConfigControl : public StringConfigControl
     Q_OBJECT
 public:
     PasswordConfigControl( module_config_item_t *, QWidget * );
-    PasswordConfigControl( module_config_item_t *, QLabel *, QLineEdit* );
+    PasswordConfigControl( module_config_item_t *, QLabel *, QLineEdit*, QPushButton* );
+public slots:
+    virtual void toggleVisibility();
 private:
+    void fillGrid( QGridLayout*, int ) Q_DECL_OVERRIDE;
+    void insertIntoBox( QBoxLayout*, int ) Q_DECL_OVERRIDE;
     void finish();
+    QPushButton *visibility_toggle;
+    bool visible;
 };
 
 class FourccConfigControl : public StringConfigControl
