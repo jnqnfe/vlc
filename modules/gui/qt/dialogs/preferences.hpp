@@ -98,7 +98,6 @@ private slots:
     void save();
     void cancel();
     void reset();
-    void close() { save(); }
 };
 
 #endif
