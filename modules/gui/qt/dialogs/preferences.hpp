@@ -96,7 +96,7 @@ private slots:
     void onlyLoadedToggled();
 
     void save();
-    void cancel();
+    void close();
     void reset();
 };
 

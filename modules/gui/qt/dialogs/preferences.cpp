@@ -86,12 +86,11 @@ PrefsDialog::PrefsDialog( QWidget *parent, intf_thread_t *_p_intf )
     /* Buttons */
     QDialogButtonBox *buttonsBox = new QDialogButtonBox();
     QPushButton *save = new QPushButton( qtr( "&Save" ) );
-    save->setToolTip( qtr( "Save and close the dialog" ) );
-    QPushButton *cancel = new QPushButton( qtr( "&Cancel" ) );
+    QPushButton *close = new QPushButton( qtr( "&Close" ) );
     QPushButton *reset = new QPushButton( qtr( "&Reset Preferences" ) );
 
-    buttonsBox->addButton( save, QDialogButtonBox::AcceptRole );
-    buttonsBox->addButton( cancel, QDialogButtonBox::RejectRole );
+    buttonsBox->addButton( close, QDialogButtonBox::RejectRole );
+    buttonsBox->addButton( save, QDialogButtonBox::ApplyRole );
     buttonsBox->addButton( reset, QDialogButtonBox::ResetRole );
 
     /* View (panel) stack */
@@ -173,7 +172,7 @@ PrefsDialog::PrefsDialog( QWidget *parent, intf_thread_t *_p_intf )
         setSimple();
 
     BUTTONACT( save, save() );
-    BUTTONACT( cancel, cancel() );
+    BUTTONACT( close, close() );
     BUTTONACT( reset, reset() );
 
     BUTTONACT( simple, setSimple() );
@@ -358,14 +357,10 @@ void PrefsDialog::save()
 
     if( p_intf->p_sys->p_mi )
         p_intf->p_sys->p_mi->reloadPrefs();
-    accept();
-
-    QVLCTools::saveWidgetPosition( p_intf, "Preferences", this );
-
 }
 
 /* Clean the preferences, dunno if it does something really */
-void PrefsDialog::cancel()
+void PrefsDialog::close()
 {
     QVLCTools::saveWidgetPosition( p_intf, "Preferences", this );
 
