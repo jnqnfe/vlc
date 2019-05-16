@@ -302,7 +302,17 @@ void PrefsTreeExpert::applyAll()
                 config_PutFloat( data->item->psz_name, data->item->value.f );
                 break;
             case CONFIG_ITEM_CLASS_STRING:
+if (!data->owned_string && data->item->value.psz) {
+    data->item->value.psz = strdup( data->item->value.psz );
+    data->owned_string = true;
+}
+//if (data->owned_string) {
                 config_PutPsz( data->item->psz_name, data->item->value.psz );
+//} else if (data->item->value.psz) {
+//                config_PutPsz( data->item->psz_name, strdup( data->item->value.psz ) );
+//} else {
+//                config_PutPsz( data->item->psz_name, NULL );
+//}
                 break;
         }
     }
