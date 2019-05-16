@@ -52,7 +52,7 @@
 #define REPETITION_TIME_LONGTEXT N_("Time between two alarm messages in milliseconds. "\
                 "This value is used to avoid alarm saturation (default 2000)." )
 
-#define CFG_PREFIX "audiobargraph_a-"
+#define CFG_PREFIX "audiobargraph-a-"
 
 /*****************************************************************************
  * Module descriptor
