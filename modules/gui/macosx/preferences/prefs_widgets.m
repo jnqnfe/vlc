@@ -430,9 +430,11 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
     switch(i_curItem) {
         case CONFIG_ITEM_STRING:
         case CONFIG_ITEM_PASSWORD:
+        case CONFIG_ITEM_FOURCC:
             switch(i_lastItem) {
                 case CONFIG_ITEM_STRING:
                 case CONFIG_ITEM_PASSWORD:
+                case CONFIG_ITEM_FOURCC:
                     i_margin = 8;
                     break;
                 case CONFIG_ITEM_STRING_LIST:
@@ -469,6 +471,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
             switch(i_lastItem) {
                 case CONFIG_ITEM_STRING:
                 case CONFIG_ITEM_PASSWORD:
+                case CONFIG_ITEM_FOURCC:
                     i_margin = 8;
                     break;
                 case CONFIG_ITEM_STRING_LIST:
@@ -506,6 +509,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
             switch(i_lastItem) {
                 case CONFIG_ITEM_STRING:
                 case CONFIG_ITEM_PASSWORD:
+                case CONFIG_ITEM_FOURCC:
                     i_margin = 13;
                     break;
                 case CONFIG_ITEM_STRING_LIST:
@@ -542,6 +546,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
             switch(i_lastItem) {
                 case CONFIG_ITEM_STRING:
                 case CONFIG_ITEM_PASSWORD:
+                case CONFIG_ITEM_FOURCC:
                     i_margin = 8;
                     break;
                 case CONFIG_ITEM_STRING_LIST:
@@ -578,6 +583,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
             switch(i_lastItem) {
                 case CONFIG_ITEM_STRING:
                 case CONFIG_ITEM_PASSWORD:
+                case CONFIG_ITEM_FOURCC:
                     i_margin = 8;
                     break;
                 case CONFIG_ITEM_STRING_LIST:
@@ -614,6 +620,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
             switch(i_lastItem) {
                 case CONFIG_ITEM_STRING:
                 case CONFIG_ITEM_PASSWORD:
+                case CONFIG_ITEM_FOURCC:
                     i_margin = 8;
                     break;
                 case CONFIG_ITEM_STRING_LIST:
@@ -650,6 +657,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
             switch(i_lastItem) {
                 case CONFIG_ITEM_STRING:
                 case CONFIG_ITEM_PASSWORD:
+                case CONFIG_ITEM_FOURCC:
                     i_margin = 10;
                     break;
                 case CONFIG_ITEM_STRING_LIST:
@@ -686,6 +694,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
             switch(i_lastItem) {
                 case CONFIG_ITEM_STRING:
                 case CONFIG_ITEM_PASSWORD:
+                case CONFIG_ITEM_FOURCC:
                     i_margin = 8;
                     break;
                 case CONFIG_ITEM_STRING_LIST:
@@ -722,6 +731,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
             switch(i_lastItem) {
                 case CONFIG_ITEM_STRING:
                 case CONFIG_ITEM_PASSWORD:
+                case CONFIG_ITEM_FOURCC:
                     i_margin = 10;
                     break;
                 case CONFIG_ITEM_STRING_LIST:
@@ -769,6 +779,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
     switch(_p_item->i_type) {
         case CONFIG_ITEM_STRING:
         case CONFIG_ITEM_PASSWORD:
+        case CONFIG_ITEM_FOURCC:
             if (!_p_item->list_count) {
                 control = [[StringConfigControl alloc]
                              initWithItem: _p_item
@@ -862,6 +873,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
     switch(self.p_item->i_type) {
         case CONFIG_ITEM_STRING:
         case CONFIG_ITEM_PASSWORD:
+        case CONFIG_ITEM_FOURCC:
         case CONFIG_ITEM_LOADFILE:
         case CONFIG_ITEM_SAVEFILE:
         case CONFIG_ITEM_DIRECTORY:
