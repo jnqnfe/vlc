@@ -89,7 +89,7 @@ PrefsDialog::PrefsDialog( QWidget *parent, intf_thread_t *_p_intf )
     QPushButton *close = new QPushButton( qtr( "&Close" ) );
     QPushButton *reset = new QPushButton( qtr( "&Reset Preferences" ) );
 
-    buttonsBox->addButton( close, QDialogButtonBox::RejectRole );
+    buttonsBox->addButton( close, QDialogButtonBox::DestructiveRole );
     buttonsBox->addButton( save, QDialogButtonBox::ApplyRole );
     buttonsBox->addButton( reset, QDialogButtonBox::ResetRole );
 
