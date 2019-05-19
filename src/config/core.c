@@ -83,7 +83,7 @@ bool config_IsSafe( const char *name )
     return p_config != NULL && p_config->b_safe;
 }
 
-int64_t config_GetInt(const char *psz_name)
+int64_t vlc_config_GetInt(const char *psz_name, bool locked)
 {
     module_config_item_t *p_config = vlc_config_FindItem( psz_name );
 
@@ -93,13 +93,13 @@ int64_t config_GetInt(const char *psz_name)
 
     int64_t val;
 
-    config_GetReadLock();
+    if (!locked) config_GetReadLock();
     val = p_config->value.i;
-    config_ReleaseLock();
+    if (!locked) config_ReleaseLock();
     return val;
 }
 
-float config_GetFloat(const char *psz_name)
+float vlc_config_GetFloat(const char *psz_name, bool locked)
 {
     module_config_item_t *p_config;
 
@@ -111,13 +111,13 @@ float config_GetFloat(const char *psz_name)
 
     float val;
 
-    config_GetReadLock();
+    if (!locked) config_GetReadLock();
     val = p_config->value.f;
-    config_ReleaseLock();
+    if (!locked) config_ReleaseLock();
     return val;
 }
 
-char *config_GetPsz(const char *psz_name)
+char *vlc_config_GetPsz(const char *psz_name, bool locked)
 {
     module_config_item_t *p_config;
 
@@ -128,17 +128,16 @@ char *config_GetPsz(const char *psz_name)
     assert(IsConfigStringType (p_config->i_type));
 
     /* return a copy of the string */
-    config_GetReadLock();
+    if (!locked) config_GetReadLock();
     char *psz_value = strdupnull (p_config->value.psz);
-    config_ReleaseLock();
+    if (!locked) config_ReleaseLock();
 
     return psz_value;
 }
 
-void config_PutPsz(const char *psz_name, const char *psz_value)
+void vlc_config_SetPsz(const char *psz_name, const char *psz_value, bool locked)
 {
     module_config_item_t *p_config = vlc_config_FindItem( psz_name );
-
 
     /* sanity checks */
     assert(p_config != NULL);
@@ -150,16 +149,16 @@ void config_PutPsz(const char *psz_name, const char *psz_value)
     else
         str = NULL;
 
-    config_GetWriteLock();
+    if (!locked) config_GetWriteLock();
     oldstr = (char *)p_config->value.psz;
     p_config->value.psz = str;
     config_dirty = true;
-    config_ReleaseLock();
+    if (!locked) config_ReleaseLock();
 
     free (oldstr);
 }
 
-void config_PutInt(const char *psz_name, int64_t i_value )
+void vlc_config_SetInt(const char *psz_name, int64_t i_value, bool locked)
 {
     module_config_item_t *p_config = vlc_config_FindItem( psz_name );
 
@@ -172,13 +171,13 @@ void config_PutInt(const char *psz_name, int64_t i_value )
     if (i_value > p_config->max.i)
         i_value = p_config->max.i;
 
-    config_GetWriteLock();
+    if (!locked) config_GetWriteLock();
     p_config->value.i = i_value;
     config_dirty = true;
-    config_ReleaseLock();
+    if (!locked) config_ReleaseLock();
 }
 
-void config_PutFloat(const char *psz_name, float f_value)
+void vlc_config_SetFloat(const char *psz_name, float f_value, bool locked)
 {
     module_config_item_t *p_config = vlc_config_FindItem( psz_name );
 
@@ -194,10 +193,10 @@ void config_PutFloat(const char *psz_name, float f_value)
     else if (f_value > p_config->max.f)
         f_value = p_config->max.f;
 
-    config_GetWriteLock();
+    if (!locked) config_GetWriteLock();
     p_config->value.f = f_value;
     config_dirty = true;
-    config_ReleaseLock();
+    if (!locked) config_ReleaseLock();
 }
 
 ssize_t config_GetIntChoices(const char *name,

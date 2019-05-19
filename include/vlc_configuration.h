@@ -198,10 +198,13 @@ VLC_API int config_GetType(const char *name) VLC_USED;
  * not of integer or boolean type.
  *
  * \param name Configuration item name
+ * \param locked If true, signals that you already hold the config read lock
  * \return The configuration item value or -1 if not found.
  * \bug A legitimate integer value of -1 cannot be distinguished from an error.
  */
-VLC_API int64_t config_GetInt(const char *name) VLC_USED;
+VLC_API int64_t vlc_config_GetInt(const char *name, bool locked) VLC_USED;
+#define config_GetInt(n)        vlc_config_GetInt(n, false)
+#define config_GetInt_locked(n) vlc_config_GetInt(n, true)
 
 /**
  * Sets an integer configuration item's value.
@@ -217,8 +220,11 @@ VLC_API int64_t config_GetInt(const char *name) VLC_USED;
  *
  * \param name Configuration item name
  * \param val New value
+ * \param locked If true, signals that you already hold the config write lock
  */
-VLC_API void config_PutInt(const char *name, int64_t val);
+VLC_API void vlc_config_SetInt(const char *name, int64_t val, bool locked);
+#define config_PutInt(n, v)        vlc_config_SetInt(n, v, false)
+#define config_PutInt_locked(n, v) vlc_config_SetInt(n, v, true)
 
 /**
  * Gets a floating point configuration item's value.
@@ -230,11 +236,14 @@ VLC_API void config_PutInt(const char *name, int64_t val);
  * not of floating point type.
  *
  * \param name Configuration item name
+ * \param locked If true, signals that you already hold the config read lock
  * \return The configuration item value or -1 if not found.
  * \bug A legitimate floating point value of -1 cannot be distinguished from an
  * error.
  */
-VLC_API float config_GetFloat(const char *name) VLC_USED;
+VLC_API float vlc_config_GetFloat(const char *name, bool locked) VLC_USED;
+#define config_GetFloat(n)        vlc_config_GetFloat(n, false)
+#define config_GetFloat_locked(n) vlc_config_GetFloat(n, true)
 
 /**
  * Sets a floating point configuration item's value.
@@ -250,8 +259,11 @@ VLC_API float config_GetFloat(const char *name) VLC_USED;
  *
  * \param name Configuration item name
  * \param val New value
+ * \param locked If true, signals that you already hold the config write lock
  */
-VLC_API void config_PutFloat(const char *name, float val);
+VLC_API void vlc_config_SetFloat(const char *name, float val, bool locked);
+#define config_PutFloat(n, v)        vlc_config_SetFloat(n, v, false)
+#define config_PutFloat_locked(n, v) vlc_config_SetFloat(n, v, true)
 
 /**
  * Gets a string configuration item's value.
@@ -268,12 +280,15 @@ VLC_API void config_PutFloat(const char *name, float val);
  * not of string type.
  *
  * \param name Configuration item name
+ * \param locked If true, signals that you already hold the config read lock
  * \return Normally, a heap-allocated copy of the configuration item value.
  * If the value is the empty string, if the configuration does not exist,
  * or if an error occurs, NULL is returned.
  * \bug The empty string value cannot be distinguished from an error.
  */
-VLC_API char *config_GetPsz(const char *name) VLC_USED VLC_MALLOC;
+VLC_API char *vlc_config_GetPsz(const char *name, bool locked) VLC_USED VLC_MALLOC;
+#define config_GetPsz(n)        vlc_config_GetPsz(n, false)
+#define config_GetPsz_locked(n) vlc_config_GetPsz(n, true)
 
 /**
  * Sets a string configuration item's value.
@@ -289,9 +304,12 @@ VLC_API char *config_GetPsz(const char *name) VLC_USED VLC_MALLOC;
  *
  * \param name Configuration item name
  * \param val New value (will be copied)
+ * \param locked If true, signals that you already hold the config write lock
  * \bug This function allocates memory but errors cannot be detected.
  */
-VLC_API void config_PutPsz(const char *name, const char *val);
+VLC_API void vlc_config_SetPsz(const char *name, const char *val, bool locked);
+#define config_PutPsz(n, v)        vlc_config_SetPsz(n, v, false)
+#define config_PutPsz_locked(n, v) vlc_config_SetPsz(n, v, true)
 
 /**
  * Enumerates integer configuration choices.
