@@ -296,10 +296,10 @@ void PrefsTreeExpert::applyAll()
         {
             case CONFIG_ITEM_CLASS_BOOL:
             case CONFIG_ITEM_CLASS_INTEGER:
-                config_PutInt( data->item->psz_name, data->item->value.i );
+                config_PutInt_locked( data->item->psz_name, data->item->value.i );
                 break;
             case CONFIG_ITEM_CLASS_FLOAT:
-                config_PutFloat( data->item->psz_name, data->item->value.f );
+                config_PutFloat_locked( data->item->psz_name, data->item->value.f );
                 break;
             case CONFIG_ITEM_CLASS_STRING:
 if (!data->owned_string && data->item->value.psz) {
@@ -307,11 +307,11 @@ if (!data->owned_string && data->item->value.psz) {
     data->owned_string = true;
 }
 //if (data->owned_string) {
-                config_PutPsz( data->item->psz_name, data->item->value.psz );
+                config_PutPsz_locked( data->item->psz_name, data->item->value.psz );
 //} else if (data->item->value.psz) {
-//                config_PutPsz( data->item->psz_name, strdup( data->item->value.psz ) );
+//                config_PutPsz_locked( data->item->psz_name, strdup( data->item->value.psz ) );
 //} else {
-//                config_PutPsz( data->item->psz_name, NULL );
+//                config_PutPsz_locked( data->item->psz_name, NULL );
 //}
                 break;
         }

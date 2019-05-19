@@ -323,6 +323,8 @@ void PrefsDialog::changeExpertDesc( QTreeWidgetItem *item )
 /* Actual apply and save for the preferences */
 void PrefsDialog::save()
 {
+    vlc_config_GetWriteLock();
+
     if( simple->isChecked() && simple_tree->isVisible() )
     {
         msg_Dbg( p_intf, "Saving the simple preferences" );
@@ -341,6 +343,8 @@ void PrefsDialog::save()
         msg_Dbg( p_intf, "Saving the expert preferences" );
         expert_tree->applyAll();
     }
+
+    vlc_config_ReleaseLock();
 
     /* Save to file */
     if( config_SaveConfigFile( p_intf ) != 0 )

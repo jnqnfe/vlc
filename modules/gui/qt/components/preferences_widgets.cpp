@@ -227,7 +227,7 @@ void InterfacePreviewWidget::setPreview( enum_style e_style )
 
 void VStringConfigControl::doApply()
 {
-    config_PutPsz( getName(), qtu( getValue() ) );
+    config_PutPsz_locked( getName(), qtu( getValue() ) );
 }
 
 void VStringConfigControl::storeValue( bool owned )
@@ -890,7 +890,7 @@ void ModuleListConfigControl::onUpdate()
 
 void VIntConfigControl::doApply()
 {
-    config_PutInt( getName(), getValue() );
+    config_PutInt_locked( getName(), getValue() );
 }
 
 void VIntConfigControl::storeValue( bool owned )
@@ -1194,7 +1194,7 @@ void ColorConfigControl::selectColor()
 
 void VFloatConfigControl::doApply()
 {
-    config_PutFloat( getName(), getValue() );
+    config_PutFloat_locked( getName(), getValue() );
 }
 
 void VFloatConfigControl::storeValue( bool owned )
@@ -1523,10 +1523,10 @@ void KeySelectorControl::doApply()
     {
         it = table->topLevelItem(i);
         if( it->data( HOTKEY_COL, Qt::UserRole ).toInt() >= 0 )
-            config_PutPsz( qtu( it->data( ACTION_COL, Qt::UserRole ).toString() ),
+            config_PutPsz_locked( qtu( it->data( ACTION_COL, Qt::UserRole ).toString() ),
                            qtu( it->data( HOTKEY_COL, Qt::UserRole ).toString() ) );
 
-        config_PutPsz( qtu( "global-" + it->data( ACTION_COL, Qt::UserRole ).toString() ),
+        config_PutPsz_locked( qtu( "global-" + it->data( ACTION_COL, Qt::UserRole ).toString() ),
                        qtu( it->data( GLOBAL_HOTKEY_COL, Qt::UserRole ).toString() ) );
     }
 }

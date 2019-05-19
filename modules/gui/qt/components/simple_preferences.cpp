@@ -1036,12 +1036,12 @@ void SPrefsPanel::apply()
             qobject_cast<QComboBox *>(optionWidgets["inputLE"])->currentText().toUtf8();
         if( devicepath.size() > 0 )
         {
-            config_PutPsz( "dvd", devicepath );
-            config_PutPsz( "vcd", devicepath );
-            config_PutPsz( "cd-audio", devicepath );
+            config_PutPsz_locked( "dvd", devicepath );
+            config_PutPsz_locked( "vcd", devicepath );
+            config_PutPsz_locked( "cd-audio", devicepath );
         }
 
-#define CaC( name, factor ) config_PutInt( name, i_comboValue * factor )
+#define CaC( name, factor ) config_PutInt_locked( name, i_comboValue * factor )
         /* Caching */
         QComboBox *cachingCombo = qobject_cast<QComboBox *>(optionWidgets["cachingCoB"]);
         int i_comboValue = cachingCombo->itemData( cachingCombo->currentIndex() ).toInt();
@@ -1060,10 +1060,10 @@ void SPrefsPanel::apply()
     case SPrefsInterface:
     {
         if( qobject_cast<QRadioButton *>(optionWidgets["skinRB"])->isChecked() )
-            config_PutPsz( "intf", "skins2,any" );
+            config_PutPsz_locked( "intf", "skins2,any" );
         else
         //if( qobject_cast<QRadioButton *>(optionWidgets[qtRB])->isChecked() )
-            config_PutPsz( "intf", "" );
+            config_PutPsz_locked( "intf", "" );
         if( qobject_cast<QComboBox *>(optionWidgets["styleCB"]) )
             getSettings()->setValue( "MainWindow/QtStyle",
                 qobject_cast<QComboBox *>(optionWidgets["styleCB"])->currentText() );
@@ -1076,7 +1076,7 @@ void SPrefsPanel::apply()
     case SPrefsVideo:
     {
         int i_fullscreenScreen =  qobject_cast<QComboBox *>(optionWidgets["fullscreenScreenB"])->currentData().toInt();
-        config_PutInt( "qt-fullscreen-screennumber", i_fullscreenScreen );
+        config_PutInt_locked( "qt-fullscreen-screennumber", i_fullscreenScreen );
         break;
     }
 
@@ -1089,7 +1089,7 @@ void SPrefsPanel::apply()
         if( !b_checked && qs_filter.contains( "normvol" ) )
             qs_filter.removeAll( "normvol" );
 
-        config_PutPsz( "audio-filter", qtu( qs_filter.join( ":" ) ) );
+        config_PutPsz_locked( "audio-filter", qtu( qs_filter.join( ":" ) ) );
 
         /* Default volume */
         int i_volume =
@@ -1107,29 +1107,29 @@ void SPrefsPanel::apply()
 #if defined( _WIN32 )
         VLC_UNUSED( f_gain );
         if( save_vol_aout( "mmdevice" ) )
-            config_PutFloat( "mmdevice-volume", i_volume / 100.f );
+            config_PutFloat_locked( "mmdevice-volume", i_volume / 100.f );
         if( save_vol_aout( "directsound" ) )
-            config_PutFloat( "directx-volume", i_volume / 100.f );
+            config_PutFloat_locked( "directx-volume", i_volume / 100.f );
         if( save_vol_aout( "waveout" ) )
-            config_PutFloat( "waveout-volume", i_volume / 100.f );
+            config_PutFloat_locked( "waveout-volume", i_volume / 100.f );
 #elif defined( Q_OS_MAC )
         VLC_UNUSED( f_gain );
         if( save_vol_aout( "auhal" ) )
-            config_PutFloat( "auhal-volume", i_volume / 100.f
+            config_PutFloat_locked( "auhal-volume", i_volume / 100.f
                     * AOUT_VOLUME_DEFAULT );
 #elif defined( __OS2__ )
         if( save_vol_aout( "kai" ) )
-            config_PutFloat( "kai-gain",  f_gain );
+            config_PutFloat_locked( "kai-gain",  f_gain );
 #else
         if( save_vol_aout( "alsa" ) )
-            config_PutFloat( "alsa-gain", f_gain );
+            config_PutFloat_locked( "alsa-gain", f_gain );
         if( save_vol_aout( "jack" ) )
-            config_PutFloat( "jack-gain", f_gain );
+            config_PutFloat_locked( "jack-gain", f_gain );
 #endif
 #undef save_vol_aout
         free( psz_aout );
 
-        config_PutInt( "volume-save", !b_reset_volume );
+        config_PutInt_locked( "volume-save", !b_reset_volume );
 
         break;
     }
@@ -1137,18 +1137,18 @@ void SPrefsPanel::apply()
     {
         bool b_checked = qobject_cast<QCheckBox *>(optionWidgets["shadowCB"])->isChecked();
         if( b_checked && config_GetInt( "freetype-shadow-opacity" ) == 0 ) {
-            config_PutInt( "freetype-shadow-opacity", 128 );
+            config_PutInt_locked( "freetype-shadow-opacity", 128 );
         }
         else if (!b_checked ) {
-            config_PutInt( "freetype-shadow-opacity", 0 );
+            config_PutInt_locked( "freetype-shadow-opacity", 0 );
         }
 
         b_checked = qobject_cast<QCheckBox *>(optionWidgets["backgroundCB"])->isChecked();
         if( b_checked && config_GetInt( "freetype-background-opacity" ) == 0 ) {
-            config_PutInt( "freetype-background-opacity", 128 );
+            config_PutInt_locked( "freetype-background-opacity", 128 );
         }
         else if (!b_checked ) {
-            config_PutInt( "freetype-background-opacity", 0 );
+            config_PutInt_locked( "freetype-background-opacity", 0 );
         }
 
     }
