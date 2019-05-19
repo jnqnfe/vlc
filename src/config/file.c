@@ -43,6 +43,7 @@
 #include <vlc_actions.h>
 #include <vlc_modules.h>
 #include <vlc_plugin.h>
+#include "vlc_configuration.h"
 
 #include "configuration.h"
 #include "modules/modules.h"
@@ -185,7 +186,7 @@ int config_LoadConfigFile( vlc_object_t *p_this )
     locale_t loc = newlocale (LC_NUMERIC_MASK, "C", NULL);
     locale_t baseloc = uselocale (loc);
 
-    vlc_rwlock_wrlock (&config_lock);
+    config_GetWriteLock();
     while ((linelen = getline (&line, &bufsize, file)) != -1)
     {
         line[linelen - 1] = '\0'; /* trim newline */
@@ -249,7 +250,7 @@ int config_LoadConfigFile( vlc_object_t *p_this )
                 break;
         }
     }
-    vlc_rwlock_unlock (&config_lock);
+    config_ReleaseLock();
     free (line);
 
     if (ferror (file))
@@ -385,7 +386,7 @@ int config_SaveConfigFile (vlc_object_t *p_this)
     }
 
     /* Configuration lock must be taken before vlcrc serializer below. */
-    vlc_rwlock_rdlock (&config_lock);
+    config_GetReadLock();
 
     /* The temporary configuration file is per-PID. Therefore this function
      * should be serialized against itself within a given process. */
@@ -395,7 +396,7 @@ int config_SaveConfigFile (vlc_object_t *p_this)
     int fd = vlc_open (temporary, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR|S_IWUSR);
     if (fd == -1)
     {
-        vlc_rwlock_unlock (&config_lock);
+        config_ReleaseLock();
         vlc_mutex_unlock (&lock);
         goto error;
     }
@@ -404,7 +405,7 @@ int config_SaveConfigFile (vlc_object_t *p_this)
     {
         msg_Err (p_this, "cannot create configuration file: %s",
                  vlc_strerror_c(errno));
-        vlc_rwlock_unlock (&config_lock);
+        config_ReleaseLock();
         vlc_close (fd);
         vlc_mutex_unlock (&lock);
         goto error;
@@ -426,7 +427,7 @@ int config_SaveConfigFile (vlc_object_t *p_this)
 
     /* We would take the config lock here. But this would cause a lock
      * inversion with the serializer above and config_AutoSaveConfigFile().
-    vlc_rwlock_rdlock (&config_lock);*/
+    config_GetReadLock();*/
 
     /* Look for the selected module, if NULL then save everything */
     for (vlc_plugin_t *p = vlc_plugins; p != NULL; p = p->next)
@@ -485,7 +486,7 @@ int config_SaveConfigFile (vlc_object_t *p_this)
             }
         }
     }
-    vlc_rwlock_unlock (&config_lock);
+    config_ReleaseLock();
 
     if (loc != (locale_t)0)
     {
@@ -537,14 +538,14 @@ int config_AutoSaveConfigFile( vlc_object_t *p_this )
 
     assert( p_this );
 
-    vlc_rwlock_rdlock (&config_lock);
+    config_GetReadLock();
     if (config_dirty)
     {
         /* Note: this will get the read lock recursively. Ok. */
         ret = config_SaveConfigFile (p_this);
         config_dirty = (ret != 0);
     }
-    vlc_rwlock_unlock (&config_lock);
+    config_ReleaseLock();
 
     return ret;
 }
