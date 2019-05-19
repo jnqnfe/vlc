@@ -192,7 +192,7 @@ playlist_bookmark_Set(intf_thread_t *intf,
     if (item)
     {
         char *uri = input_item_GetURI(item);
-        config_PutPsz(name, uri);
+        vlc_config_SetNamedPsz(name, uri);
         msg_Info(intf, "setting playlist bookmark %i to %s", id, uri);
         free(uri);
     }

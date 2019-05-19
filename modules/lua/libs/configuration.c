@@ -42,26 +42,26 @@
 static int vlclua_config_get( lua_State *L )
 {
     const char *psz_name = luaL_checkstring( L, 1 );
-    switch( config_GetType( psz_name ) )
+    switch( vlc_config_GetType_ByName( psz_name ) )
     {
         case VLC_VAR_STRING:
         {
-            char *psz = config_GetPsz( psz_name );
+            char *psz = vlc_config_GetNamedPsz( psz_name );
             lua_pushstring( L, psz );
             free( psz );
             break;
         }
 
         case VLC_VAR_INTEGER:
-            lua_pushinteger( L, config_GetInt( psz_name ) );
+            lua_pushinteger( L, vlc_config_GetNamedInt( psz_name ) );
             break;
 
         case VLC_VAR_BOOL:
-            lua_pushboolean( L, config_GetInt( psz_name ) );
+            lua_pushboolean( L, vlc_config_GetNamedInt( psz_name ) );
             break;
 
         case VLC_VAR_FLOAT:
-            lua_pushnumber( L, config_GetFloat( psz_name ) );
+            lua_pushnumber( L, vlc_config_GetNamedFloat( psz_name ) );
             break;
 
         default:
@@ -74,22 +74,22 @@ static int vlclua_config_get( lua_State *L )
 static int vlclua_config_set( lua_State *L )
 {
     const char *psz_name = luaL_checkstring( L, 1 );
-    switch( config_GetType( psz_name ) )
+    switch( vlc_config_GetType_ByName( psz_name ) )
     {
         case VLC_VAR_STRING:
-            config_PutPsz( psz_name, luaL_checkstring( L, 2 ) );
+            vlc_config_SetNamedPsz( psz_name, luaL_checkstring( L, 2 ) );
             break;
 
         case VLC_VAR_INTEGER:
-            config_PutInt( psz_name, luaL_checkinteger( L, 2 ) );
+            vlc_config_SetNamedInt( psz_name, luaL_checkinteger( L, 2 ) );
             break;
 
         case VLC_VAR_BOOL:
-            config_PutInt( psz_name, luaL_checkboolean( L, 2 ) );
+            vlc_config_SetNamedInt( psz_name, luaL_checkboolean( L, 2 ) );
             break;
 
         case VLC_VAR_FLOAT:
-            config_PutFloat( psz_name, luaL_checknumber( L, 2 ) );
+            vlc_config_SetNamedFloat( psz_name, luaL_checknumber( L, 2 ) );
             break;
 
         default:

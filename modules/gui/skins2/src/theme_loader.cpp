@@ -119,7 +119,7 @@ bool ThemeLoader::load( const std::string &fileName )
     getIntf()->p_sys->p_theme->loadConfig();
 
     // Retain new loaded skins in config
-    config_PutPsz( "skins2-last", fileName.c_str() );
+    vlc_config_SetNamedPsz( "skins2-last", fileName.c_str() );
 
     return true;
 }

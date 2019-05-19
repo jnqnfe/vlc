@@ -330,7 +330,7 @@ DiscOpenPanel::DiscOpenPanel( QWidget *_parent, intf_thread_t *_p_intf ) :
     /* Get the default configuration path for the devices */
     psz_dvddiscpath = var_InheritString( p_intf, "dvd" );
     psz_vcddiscpath = var_InheritString( p_intf, "vcd" );
-    psz_cddadiscpath = config_GetType("cd-audio") ?
+    psz_cddadiscpath = vlc_config_GetType_ByName("cd-audio") ?
                        var_InheritString( p_intf, "cd-audio" ) : NULL;
 
     /* State to avoid overwritting the users changes with the configuration */
@@ -350,7 +350,7 @@ DiscOpenPanel::DiscOpenPanel( QWidget *_parent, intf_thread_t *_p_intf ) :
     };
     QComboBox *discCombo = ui.deviceCombo; /* avoid namespacing in macro */
     POPULATE_WITH_DEVS( ppsz_discdevices, discCombo );
-    char *psz_config = config_GetPsz( "dvd" );
+    char *psz_config = vlc_config_GetNamedPsz( "dvd" );
     int temp = ui.deviceCombo->findData( psz_config, Qt::UserRole, Qt::MatchStartsWith );
     free( psz_config );
     if( temp != -1 )
@@ -415,7 +415,7 @@ void DiscOpenPanel::onFocus()
         SetThreadErrorMode(oldMode, NULL);
     }
 
-    char *psz_config = config_GetPsz( "dvd" );
+    char *psz_config = vlc_config_GetNamedPsz( "dvd" );
     int temp = ui.deviceCombo->findData( psz_config, Qt::UserRole, Qt::MatchStartsWith );
     free( psz_config );
     if( temp != -1 )

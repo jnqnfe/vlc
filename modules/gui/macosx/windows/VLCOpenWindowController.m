@@ -260,8 +260,8 @@ NSString *const VLCOpenTextFieldWasClicked = @"VLCOpenTextFieldWasClicked";
     [[_netModeMatrix cellAtRow:0 column:0] setTitle: _NS("Unicast")];
     [[_netModeMatrix cellAtRow:1 column:0] setTitle: _NS("Multicast")];
 
-    [_netUDPPortTextField setIntegerValue: config_GetInt("server-port")];
-    [_netUDPPortStepper setIntegerValue: config_GetInt("server-port")];
+    [_netUDPPortTextField setIntegerValue: vlc_config_GetNamedInt("server-port")];
+    [_netUDPPortStepper setIntegerValue: vlc_config_GetNamedInt("server-port")];
 
     [_captureModePopup removeAllItems];
     [_captureModePopup addItemWithTitle: _NS("Input Devices")];
@@ -1014,7 +1014,7 @@ NSString *const VLCOpenTextFieldWasClicked = @"VLCOpenTextFieldWasClicked";
             else
                 mrlString = @"rtp://";
 
-            if (port != config_GetInt("server-port")) {
+            if (port != vlc_config_GetNamedInt("server-port")) {
                 mrlString =
                 [mrlString stringByAppendingFormat: @"@:%i", port];
             }
@@ -1028,7 +1028,7 @@ NSString *const VLCOpenTextFieldWasClicked = @"VLCOpenTextFieldWasClicked";
             else
                 mrlString = [NSString stringWithFormat: @"rtp://@%@", oAddress];
 
-            if (iPort != config_GetInt("server-port")) {
+            if (iPort != vlc_config_GetNamedInt("server-port")) {
                 mrlString =
                 [mrlString stringByAppendingFormat: @":%i", iPort];
             }
@@ -1060,7 +1060,7 @@ NSString *const VLCOpenTextFieldWasClicked = @"VLCOpenTextFieldWasClicked";
             else
                 mrlString = @"rtp://";
 
-            if (port != config_GetInt("server-port")) {
+            if (port != vlc_config_GetNamedInt("server-port")) {
                 mrlString =
                 [mrlString stringByAppendingFormat: @"@:%i", port];
             }
@@ -1074,7 +1074,7 @@ NSString *const VLCOpenTextFieldWasClicked = @"VLCOpenTextFieldWasClicked";
             else
                 mrlString = [NSString stringWithFormat: @"rtp://@%@", oAddress];
 
-            if (iPort != config_GetInt("server-port")) {
+            if (iPort != vlc_config_GetNamedInt("server-port")) {
                 mrlString =
                 [mrlString stringByAppendingFormat: @":%i", iPort];
             }
@@ -1095,15 +1095,15 @@ NSString *const VLCOpenTextFieldWasClicked = @"VLCOpenTextFieldWasClicked";
         [_captureTabView selectTabViewItemAtIndex:1];
 
         [self setMRL: @"screen://"];
-        [_screenHeightTextField setIntegerValue: config_GetInt("screen-height")];
-        [_screenWidthTextField setIntegerValue: config_GetInt("screen-width")];
-        [_screenFPSTextField setFloatValue: config_GetFloat("screen-fps")];
-        [_screenLeftTextField setIntegerValue: config_GetInt("screen-left")];
-        [_screenTopTextField setIntegerValue: config_GetInt("screen-top")];
-        [_screenFollowMouseCheckbox setIntegerValue: config_GetInt("screen-follow-mouse")];
+        [_screenHeightTextField setIntegerValue: vlc_config_GetNamedInt("screen-height")];
+        [_screenWidthTextField setIntegerValue: vlc_config_GetNamedInt("screen-width")];
+        [_screenFPSTextField setFloatValue: vlc_config_GetNamedFloat("screen-fps")];
+        [_screenLeftTextField setIntegerValue: vlc_config_GetNamedInt("screen-left")];
+        [_screenTopTextField setIntegerValue: vlc_config_GetNamedInt("screen-top")];
+        [_screenFollowMouseCheckbox setIntegerValue: vlc_config_GetNamedInt("screen-follow-mouse")];
 
-        NSInteger screenIindex = config_GetInt("screen-index");
-        NSInteger displayID = config_GetInt("screen-display-id");
+        NSInteger screenIindex = vlc_config_GetNamedInt("screen-index");
+        NSInteger displayID = vlc_config_GetNamedInt("screen-display-id");
         unsigned int displayCount = 0;
         CGError returnedError;
         VLCOpenDisplayInformation *displayInformation;

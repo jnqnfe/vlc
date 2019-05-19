@@ -41,7 +41,7 @@ PodcastConfigDialog::PodcastConfigDialog( intf_thread_t *_p_intf)
     CONNECT( ui.podcastDelete, clicked(), this, remove() );
     CONNECT( okButton, clicked(), this, close() );
 
-    char *psz_urls = config_GetPsz( "podcast-urls" );
+    char *psz_urls = vlc_config_GetNamedPsz( "podcast-urls" );
     if( psz_urls )
     {
         char *psz_url = psz_urls;
@@ -69,7 +69,7 @@ void PodcastConfigDialog::accept()
         urls +=  ui.podcastList->item(i)->text();
         if( i != ui.podcastList->count()-1 ) urls += "|";
     }
-    config_PutPsz( "podcast-urls", qtu( urls ) );
+    vlc_config_SetNamedPsz( "podcast-urls", qtu( urls ) );
 
     //FIXME IsServicesDiscoveryLoaded is uninplmented
     //if( playlist_IsServicesDiscoveryLoaded( THEPL, "podcast" ) )

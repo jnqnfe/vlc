@@ -269,7 +269,7 @@ bool fixIntfSettings(void)
     BOOL b_needsRestart = NO;
 
     #define fixpref(pref) \
-    o_workString = [[NSMutableString alloc] initWithFormat:@"%s", config_GetPsz(pref)]; \
+    o_workString = [[NSMutableString alloc] initWithFormat:@"%s", vlc_config_GetNamedPsz(pref)]; \
     if ([o_workString length] > 0) \
     { \
         returnedRange = [o_workString rangeOfString:@"macosx" options: NSCaseInsensitiveSearch]; \
@@ -282,7 +282,7 @@ bool fixIntfSettings(void)
             fullRange = NSMakeRange(0, [o_workString length]); \
             [o_workString replaceOccurrencesOfString:@"macosx:" withString:@"" options: NSCaseInsensitiveSearch range: fullRange]; \
             \
-            config_PutPsz(pref, [o_workString UTF8String]); \
+            vlc_config_SetNamedPsz(pref, [o_workString UTF8String]); \
             b_needsRestart = YES; \
         } \
     }

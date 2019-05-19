@@ -636,7 +636,7 @@ MediaServerList::parseSatipServer( IXML_Element* p_device_element, const char *p
 {
     SD::MediaServerDesc* p_server = NULL;
 
-    char *psz_satip_channellist = config_GetPsz("satip-channelist");
+    char *psz_satip_channellist = vlc_config_GetNamedPsz("satip-channelist");
     if( !psz_satip_channellist ) {
         psz_satip_channellist = strdup("Auto");
     }
@@ -649,7 +649,7 @@ MediaServerList::parseSatipServer( IXML_Element* p_device_element, const char *p
 
     /* Part 1: a user may have provided a custom playlist url */
     if (strcmp(psz_satip_channellist, "CustomList") == 0) {
-        char *psz_satip_playlist_url = config_GetPsz( "satip-channellist-url" );
+        char *psz_satip_playlist_url = vlc_config_GetNamedPsz( "satip-channellist-url" );
         if ( psz_satip_playlist_url ) {
             p_server = new(std::nothrow) SD::MediaServerDesc( psz_udn, psz_friendly_name, psz_satip_playlist_url, iconUrl );
 

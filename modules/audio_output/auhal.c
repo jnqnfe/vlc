@@ -918,7 +918,7 @@ VolumeSet(audio_output_t * p_aout, float volume)
     }
 
     if (var_InheritBool(p_aout, "volume-save"))
-        config_PutInt("auhal-volume", lroundf(volume * AOUT_VOLUME_DEFAULT));
+        vlc_config_SetNamedInt("auhal-volume", lroundf(volume * AOUT_VOLUME_DEFAULT));
 
     return ostatus;
 }
@@ -1038,7 +1038,7 @@ WarnConfiguration(audio_output_t *p_aout)
                      warned_devices ? ";" : "",
                      warned_devices ? warned_devices : "") != -1)
         {
-            config_PutPsz("auhal-warned-devices", new_warned_devices);
+            vlc_config_SetNamedPsz("auhal-warned-devices", new_warned_devices);
             var_SetString(p_aout, "auhal-warned-devices", new_warned_devices);
             free(new_warned_devices);
         }
@@ -1671,7 +1671,7 @@ static void Close(audio_output_t *p_aout)
     CFRelease(p_sys->device_list);
 
     char *psz_device = aout_DeviceGet(p_aout);
-    config_PutPsz("auhal-audio-device", psz_device);
+    vlc_config_SetNamedPsz("auhal-audio-device", psz_device);
     free(psz_device);
 
     vlc_mutex_destroy(&p_sys->selected_device_lock);

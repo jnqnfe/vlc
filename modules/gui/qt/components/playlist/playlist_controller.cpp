@@ -522,7 +522,7 @@ void PlaylistControllerModel::toggleRandom()
     else
         new_order = VLC_PLAYLIST_PLAYBACK_ORDER_RANDOM;
     vlc_playlist_SetPlaybackOrder( d->m_playlist, new_order );
-    config_PutInt( "random", new_order );
+    vlc_config_SetNamedInt( "random", new_order );
 }
 
 void PlaylistControllerModel::toggleRepeatMode()
@@ -546,7 +546,7 @@ void PlaylistControllerModel::toggleRepeatMode()
         PlaylistLocker lock{ d->m_playlist };
         vlc_playlist_SetPlaybackRepeat( d->m_playlist, new_repeat );
     }
-    config_PutInt( "repeat", new_repeat );
+    vlc_config_SetNamedInt( "repeat", new_repeat );
 }
 
 void PlaylistControllerModel::clear()

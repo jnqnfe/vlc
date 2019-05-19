@@ -143,7 +143,7 @@
 
         // Sync status bar visibility with VLC setting
         msg_Dbg(getIntf(), "Status bar icon visibility changed to %i", isVisible);
-        config_PutInt("macosx-statusicon", isVisible ? 1 : 0);
+        vlc_config_SetNamedInt("macosx-statusicon", isVisible ? 1 : 0);
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }

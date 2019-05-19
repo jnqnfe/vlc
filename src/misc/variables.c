@@ -930,7 +930,7 @@ void var_OptionParse( vlc_object_t *p_obj, const char *psz_option,
     if( psz_value != NULL )
         *psz_value++ = '\0';
 
-    i_type = config_GetType( psz_name );
+    i_type = vlc_config_GetType_ByName( psz_name );
     if( !i_type && !psz_value )
     {
         /* check for "no-foo" or "nofoo" */
@@ -945,7 +945,7 @@ void var_OptionParse( vlc_object_t *p_obj, const char *psz_option,
         else goto cleanup;           /* Option doesn't exist */
 
         b_isno = true;
-        i_type = config_GetType( psz_name );
+        i_type = vlc_config_GetType_ByName( psz_name );
     }
     if( !i_type ) goto cleanup; /* Option doesn't exist */
 
@@ -953,7 +953,7 @@ void var_OptionParse( vlc_object_t *p_obj, const char *psz_option,
         ( !psz_value || !*psz_value ) ) goto cleanup; /* Invalid value */
 
     /* check if option is unsafe */
-    if( !trusted && !config_IsSafe( psz_name ) )
+    if( !trusted && !config_IsSafe_ByName( psz_name ) )
     {
         msg_Err( p_obj, "unsafe option \"%s\" has been ignored for "
                         "security reasons", psz_name );
@@ -1048,17 +1048,17 @@ int var_Inherit( vlc_object_t *p_this, const char *psz_name, int i_type,
     switch( i_type & VLC_VAR_CLASS )
     {
         case VLC_VAR_STRING:
-            p_val->psz_string = config_GetPsz( psz_name );
+            p_val->psz_string = vlc_config_GetNamedPsz( psz_name );
             if( !p_val->psz_string ) p_val->psz_string = strdup("");
             break;
         case VLC_VAR_FLOAT:
-            p_val->f_float = config_GetFloat( psz_name );
+            p_val->f_float = vlc_config_GetNamedFloat( psz_name );
             break;
         case VLC_VAR_INTEGER:
-            p_val->i_int = config_GetInt( psz_name );
+            p_val->i_int = vlc_config_GetNamedInt( psz_name );
             break;
         case VLC_VAR_BOOL:
-            p_val->b_bool = config_GetInt( psz_name ) > 0;
+            p_val->b_bool = vlc_config_GetNamedInt( psz_name ) > 0;
             break;
         default:
             vlc_assert_unreachable();

@@ -97,7 +97,7 @@ int Theme::readConfig()
     msg_Dbg( getIntf(), "reading theme configuration");
 
     // Get config from vlcrc file
-    char *save = config_GetPsz( "skins2-config" );
+    char *save = vlc_config_GetNamedPsz( "skins2-config" );
     if( !save || !*save )
     {
         free( save );
@@ -203,7 +203,7 @@ void Theme::saveConfig()
     }
 
     // Save config to file
-    config_PutPsz( "skins2-config", outStream.str().c_str() );
+    vlc_config_SetNamedPsz( "skins2-config", outStream.str().c_str() );
 }
 
 

@@ -244,7 +244,7 @@ static void *Run( void * p_obj )
     }
 
     // Load a theme
-    skin_last = config_GetPsz( "skins2-last" );
+    skin_last = vlc_config_GetNamedPsz( "skins2-last" );
     pLoader = new ThemeLoader( p_intf );
 
     if( !skin_last || !pLoader->load( skin_last ) )

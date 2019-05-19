@@ -296,10 +296,10 @@ void PrefsTreeExpert::applyAll()
         {
             case CONFIG_ITEM_CLASS_BOOL:
             case CONFIG_ITEM_CLASS_INTEGER:
-                config_PutInt_locked( data->item->psz_name, data->item->value.i );
+                vlc_config_SetNamedInt_locked( data->item->psz_name, data->item->value.i );
                 break;
             case CONFIG_ITEM_CLASS_FLOAT:
-                config_PutFloat_locked( data->item->psz_name, data->item->value.f );
+                vlc_config_SetNamedFloat_locked( data->item->psz_name, data->item->value.f );
                 break;
             case CONFIG_ITEM_CLASS_STRING:
 if (!data->owned_string && data->item->value.psz) {
@@ -307,11 +307,11 @@ if (!data->owned_string && data->item->value.psz) {
     data->owned_string = true;
 }
 //if (data->owned_string) {
-                config_PutPsz_locked( data->item->psz_name, data->item->value.psz );
+                vlc_config_SetNamedPsz_locked( data->item->psz_name, data->item->value.psz );
 //} else if (data->item->value.psz) {
-//                config_PutPsz_locked( data->item->psz_name, strdup( data->item->value.psz ) );
+//                vlc_config_SetNamedPsz_locked( data->item->psz_name, strdup( data->item->value.psz ) );
 //} else {
-//                config_PutPsz_locked( data->item->psz_name, NULL );
+//                vlc_config_SetNamedPsz_locked( data->item->psz_name, NULL );
 //}
                 break;
         }

@@ -1645,12 +1645,12 @@ static const struct vlc_player_aout_cbs player_aout_callbacks = {
 
 - (void)setAspectRatioIsLocked:(BOOL)b_value
 {
-    config_PutInt("macosx-lock-aspect-ratio", b_value);
+    vlc_config_SetNamedInt("macosx-lock-aspect-ratio", b_value);
 }
 
 - (BOOL)aspectRatioIsLocked
 {
-    return config_GetInt("macosx-lock-aspect-ratio");
+    return vlc_config_GetNamedInt("macosx-lock-aspect-ratio");
 }
 
 #pragma mark - audio specific delegation

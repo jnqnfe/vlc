@@ -1099,7 +1099,7 @@ static char *GetDiscDevice(const char *name)
         size_t n = devs[i].n;
         if (!strncmp(name, devs[i].s, n)) {
             if (name[n] == '@' || name[n] == '\0')
-                return config_GetPsz(devs[i].v);
+                return vlc_config_GetNamedPsz(devs[i].v);
             /* Omit the beginning MRL-selector characters */
             return strdup(name + n);
         }

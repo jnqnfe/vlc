@@ -371,7 +371,7 @@ static void print_item(const module_t *m, const module_config_item_t *item,
 
             char **ppsz_values, **ppsz_texts;
 
-            ssize_t i_count = config_GetPszChoices(item->psz_name, &ppsz_values, &ppsz_texts);
+            ssize_t i_count = vlc_config_GetNamedPszChoices(item->psz_name, &ppsz_values, &ppsz_texts);
 
             if (i_count > 0)
             {
@@ -415,7 +415,7 @@ static void print_item(const module_t *m, const module_config_item_t *item,
             int64_t *pi_values;
             char **ppsz_texts;
 
-            ssize_t i_count = config_GetIntChoices(item->psz_name, &pi_values, &ppsz_texts);
+            ssize_t i_count = vlc_config_GetNamedIntChoices(item->psz_name, &pi_values, &ppsz_texts);
 
             if (i_count > 0)
             {

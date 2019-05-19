@@ -263,27 +263,27 @@
                 [_playerController togglePlayPause];
             break;
         case kRemoteButtonVolume_Plus:
-            if (config_GetInt("macosx-appleremote-sysvol")) {
+            if (vlc_config_GetNamedInt("macosx-appleremote-sysvol")) {
                 [NSSound increaseSystemVolume];
             } else {
                 [_playerController incrementVolume];
             }
             break;
         case kRemoteButtonVolume_Minus:
-            if (config_GetInt("macosx-appleremote-sysvol")) {
+            if (vlc_config_GetNamedInt("macosx-appleremote-sysvol")) {
                 [NSSound decreaseSystemVolume];
             } else {
                 [_playerController decrementVolume];
             }
             break;
         case kRemoteButtonRight:
-            if (config_GetInt("macosx-appleremote-prevnext"))
+            if (vlc_config_GetNamedInt("macosx-appleremote-prevnext"))
                 [_playerController jumpForwardShort];
             else
                 [_playlistController playNextItem];
             break;
         case kRemoteButtonLeft:
-            if (config_GetInt("macosx-appleremote-prevnext"))
+            if (vlc_config_GetNamedInt("macosx-appleremote-prevnext"))
                 [_playerController jumpBackwardShort];
             else
                 [_playlistController playPreviousItem];

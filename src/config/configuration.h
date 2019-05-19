@@ -58,7 +58,8 @@ static inline void config_ReleaseLock()
     vlc_rwlock_unlock (&config_lock);
 }
 
-bool config_IsSafe (const char *);
+bool config_IsSafe (module_config_item_t *);
+#define config_IsSafe_ByName(n) config_IsSafe(vlc_config_FindItem(n))
 
 /**
  * Gets the arch-specific installation directory.

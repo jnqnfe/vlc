@@ -179,12 +179,12 @@ libvlc_audio_output_device_list_get( libvlc_instance_t *p_instance,
                                                            >= sizeof(varname) )
         return NULL;
 
-    if( config_GetType(varname) != VLC_VAR_STRING )
+    if( vlc_config_GetType_ByName(varname) != VLC_VAR_STRING )
         return NULL;
 
     libvlc_audio_output_device_t *list = NULL, **pp = &list;
     char **values, **texts;
-    ssize_t count = config_GetPszChoices( varname, &values, &texts );
+    ssize_t count = vlc_config_GetNamedPszChoices( varname, &values, &texts );
     for( ssize_t i = 0; i < count; i++ )
     {
         libvlc_audio_output_device_t *item = malloc( sizeof(*item) );

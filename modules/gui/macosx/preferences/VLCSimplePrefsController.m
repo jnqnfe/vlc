@@ -493,7 +493,7 @@ static inline const char * __config_GetLabel(vlc_object_t *p_this, const char *p
     assert(p_item);
 
     char **values, **texts;
-    ssize_t count = config_GetPszChoices(name, &values, &texts);
+    ssize_t count = vlc_config_GetNamedPszChoices(name, &values, &texts);
     if (count < 0) {
         msg_Err(p_intf, "Cannot get choices for %s", name);
         return;
@@ -542,7 +542,7 @@ static inline const char * __config_GetLabel(vlc_object_t *p_this, const char *p
 
     int64_t *values;
     char **texts;
-    ssize_t count = config_GetIntChoices(name, &values, &texts);
+    ssize_t count = vlc_config_GetNamedIntChoices(name, &values, &texts);
     for (ssize_t i = 0; i < count; i++) {
         NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle: toNSStr(texts[i]) action: NULL keyEquivalent: @""];
         [mi setRepresentedObject:[NSNumber numberWithInteger:values[i]]];
@@ -561,13 +561,13 @@ static inline const char * __config_GetLabel(vlc_object_t *p_this, const char *p
 
 - (void)setupButton: (NSButton *)object forBoolValue: (const char *)name
 {
-    [object setState: config_GetInt(name)];
+    [object setState: vlc_config_GetNamedInt(name)];
     [object setToolTip: _NS(config_GetLabel(p_intf, name))];
 }
 
 - (void)setupField:(NSTextField *)object forOption:(const char *)psz_option
 {
-    char *psz_tmp = config_GetPsz(psz_option);
+    char *psz_tmp = vlc_config_GetNamedPsz(psz_option);
     [object setStringValue: toNSStr(psz_tmp)];
     [object setToolTip: _NS(config_GetLabel(p_intf, psz_option))];
     free(psz_tmp);
@@ -575,7 +575,7 @@ static inline const char * __config_GetLabel(vlc_object_t *p_this, const char *p
 
 - (BOOL)hasModule:(NSString *)moduleName inConfig:(NSString *)config
 {
-    char *value = config_GetPsz([config UTF8String]);
+    char *value = vlc_config_GetNamedPsz([config UTF8String]);
     NSString *modules = toNSStr(value);
     free(value);
 
@@ -584,7 +584,7 @@ static inline const char * __config_GetLabel(vlc_object_t *p_this, const char *p
 
 - (void)changeModule:(NSString *)moduleName inConfig:(NSString *)config enable:(BOOL)enable
 {
-    char *value = config_GetPsz([config UTF8String]);
+    char *value = vlc_config_GetNamedPsz([config UTF8String]);
     NSString *modules = toNSStr(value);
     free(value);
 
@@ -600,7 +600,7 @@ static inline const char * __config_GetLabel(vlc_object_t *p_this, const char *p
     // trim empty entries
     [components removeObject:@""];
 
-    config_PutPsz([config UTF8String], [[components componentsJoinedByString:@":"] UTF8String]);
+    vlc_config_SetNamedPsz([config UTF8String], [[components componentsJoinedByString:@":"] UTF8String]);
 }
 
 - (void)resetControls
@@ -663,7 +663,7 @@ static inline const char * __config_GetLabel(vlc_object_t *p_this, const char *p
      ******************/
     [self setupButton:_audio_enableCheckbox forBoolValue: "audio"];
 
-    if (config_GetInt("volume-save")) {
+    if (vlc_config_GetNamedInt("volume-save")) {
         [_audio_autosavevol_yesButtonCell setState: NSOnState];
         [_audio_autosavevol_noButtonCell setState: NSOffState];
         [_audio_volTextField setEnabled: NO];
@@ -729,7 +729,7 @@ static inline const char * __config_GetLabel(vlc_object_t *p_this, const char *p
         i++;
     }
     [_video_devicePopup selectItemAtIndex: 0];
-    [_video_devicePopup selectItemWithTag: config_GetInt("macosx-vdev")];
+    [_video_devicePopup selectItemWithTag: vlc_config_GetNamedInt("macosx-vdev")];
 
     [self setupField:_video_snap_folderTextField forOption:"snapshot-path"];
     [self setupField:_video_snap_prefixTextField forOption:"snapshot-prefix"];
@@ -768,11 +768,11 @@ static inline const char * __config_GetLabel(vlc_object_t *p_this, const char *p
 
     #define TestCaC(name, factor) \
     cache_equal = cache_equal && \
-    (i_cache * factor == config_GetInt(name));
+    (i_cache * factor == vlc_config_GetNamedInt(name));
 
     /* Select the accurate value of the PopupButton */
     bool cache_equal = true;
-    int i_cache = (int)config_GetInt("file-caching");
+    int i_cache = (int)config_GetNamedInt("file-caching");
 
     TestCaC("network-caching", 10/3);
     TestCaC("disc-caching", 1);
@@ -797,7 +797,7 @@ static inline const char * __config_GetLabel(vlc_object_t *p_this, const char *p
     [self setupField:_osd_fontTextField forOption: "freetype-font"];
     [self setupButton:_osd_font_colorPopup forIntList: "freetype-color"];
     [self setupButton:_osd_font_sizePopup forIntList: "freetype-rel-fontsize"];
-    i = config_GetInt("freetype-opacity") * 100.0 / 255.0 + 0.5;
+    i = vlc_config_GetNamedInt("freetype-opacity") * 100.0 / 255.0 + 0.5;
     [_osd_opacityTextField setIntValue: i];
     [_osd_opacitySlider setIntValue: i];
     [_osd_opacitySlider setToolTip: _NS(config_GetLabel(p_intf, "freetype-opacity"))];
@@ -925,7 +925,7 @@ static inline void save_int_list(intf_thread_t * p_intf, id object, const char *
     NSNumber *p_valueobject = (NSNumber *)[[object selectedItem] representedObject];
     if (p_valueobject) {
         assert([p_valueobject isKindOfClass:[NSNumber class]]);
-        config_PutInt(name, [p_valueobject intValue]);
+        vlc_config_SetNamedInt(name, [p_valueobject intValue]);
     }
 }
 
@@ -934,7 +934,7 @@ static inline void save_string_list(intf_thread_t * p_intf, id object, const cha
     NSString *p_stringobject = (NSString *)[[object selectedItem] representedObject];
     if (p_stringobject) {
         assert([p_stringobject isKindOfClass:[NSString class]]);
-        config_PutPsz(name, [p_stringobject UTF8String]);
+        vlc_config_SetNamedPsz(name, [p_stringobject UTF8String]);
     }
 }
 
@@ -976,15 +976,15 @@ static inline void save_string_list(intf_thread_t * p_intf, id object, const cha
         [defaults setObject:toNSStr(language_map[index].iso) forKey:@"language"];
         [VLCSimplePrefsController updateRightToLeftSettings];
 
-        config_PutInt("metadata-network-access", [_intf_artCheckbox state]);
+        vlc_config_SetNamedInt("metadata-network-access", [_intf_artCheckbox state]);
 
-        config_PutInt("macosx-statusicon", [_intf_statusIconCheckbox state]);
-        config_PutInt("macosx-large-text", [_intf_largeFontInListsCheckbox state]);
+        vlc_config_SetNamedInt("macosx-statusicon", [_intf_statusIconCheckbox state]);
+        vlc_config_SetNamedInt("macosx-large-text", [_intf_largeFontInListsCheckbox state]);
 
         [self changeModule:@"growl" inConfig:@"control" enable:[_intf_enableNotificationsCheckbox state] == NSOnState];
 
         [self changeModule:@"http" inConfig:@"extraintf" enable:[_intf_enableluahttpCheckbox state] == NSOnState];
-        config_PutPsz("http-password", [[_intf_luahttppwdTextField stringValue] UTF8String]);
+        vlc_config_SetNamedPsz("http-password", [[_intf_luahttppwdTextField stringValue] UTF8String]);
 
         SaveIntList(_intf_pauseitunesPopup, "macosx-control-itunes");
         SaveIntList(_intf_continueplaybackPopup, "macosx-continue-playback");
@@ -995,13 +995,13 @@ static inline void save_string_list(intf_thread_t * p_intf, id object, const cha
      * audio settings *
      ******************/
     if (_audioSettingChanged) {
-        config_PutInt("audio", [_audio_enableCheckbox state]);
-        config_PutInt("volume-save", [_audio_autosavevol_yesButtonCell state]);
+        vlc_config_SetNamedInt("audio", [_audio_enableCheckbox state]);
+        vlc_config_SetNamedInt("volume-save", [_audio_autosavevol_yesButtonCell state]);
         var_SetBool(p_intf, "volume-save", [_audio_autosavevol_yesButtonCell state]);
         if ([_audio_volTextField isEnabled])
-            config_PutInt("auhal-volume", ([_audio_volTextField intValue] * AOUT_VOLUME_MAX) / 200);
+            vlc_config_SetNamedInt("auhal-volume", ([_audio_volTextField intValue] * AOUT_VOLUME_MAX) / 200);
 
-        config_PutPsz("audio-language", [[_audio_langTextField stringValue] UTF8String]);
+        vlc_config_SetNamedPsz("audio-language", [[_audio_langTextField stringValue] UTF8String]);
 
         SaveModuleList(_audio_visualPopup, "audio-visual");
 
@@ -1013,8 +1013,8 @@ static inline void save_string_list(intf_thread_t * p_intf, id object, const cha
             else
                 config_RemoveIntf("audioscrobbler");
 
-            config_PutPsz("lastfm-username", [[_audio_lastuserTextField stringValue] UTF8String]);
-            config_PutPsz("lastfm-password", [[_audio_lastpwdSecureTextField stringValue] UTF8String]);
+            vlc_config_SetNamedPsz("lastfm-username", [[_audio_lastuserTextField stringValue] UTF8String]);
+            vlc_config_SetNamedPsz("lastfm-password", [[_audio_lastpwdSecureTextField stringValue] UTF8String]);
         }
         else
             [_audio_lastCheckbox setEnabled: NO];
@@ -1025,22 +1025,22 @@ static inline void save_string_list(intf_thread_t * p_intf, id object, const cha
      * video settings *
      ******************/
     if (_videoSettingChanged) {
-        config_PutInt("video", [_video_enableCheckbox state]);
-        config_PutInt("fullscreen", [_video_startInFullscreenCheckbox state]);
-        config_PutInt("video-deco", [_video_videodecoCheckbox state]);
-        config_PutInt("video-on-top", [_video_onTopCheckbox state]);
-        config_PutInt("macosx-black", [_video_blackScreenCheckbox state]);
+        vlc_config_SetNamedInt("video", [_video_enableCheckbox state]);
+        vlc_config_SetNamedInt("fullscreen", [_video_startInFullscreenCheckbox state]);
+        vlc_config_SetNamedInt("video-deco", [_video_videodecoCheckbox state]);
+        vlc_config_SetNamedInt("video-on-top", [_video_onTopCheckbox state]);
+        vlc_config_SetNamedInt("macosx-black", [_video_blackScreenCheckbox state]);
 
-        config_PutInt("macosx-pause-minimized", [_video_pauseWhenMinimizedCheckbox state]);
-        config_PutInt("macosx-video-autoresize", [_video_resizeToNativeSizeCheckbox state]);
+        vlc_config_SetNamedInt("macosx-pause-minimized", [_video_pauseWhenMinimizedCheckbox state]);
+        vlc_config_SetNamedInt("macosx-video-autoresize", [_video_resizeToNativeSizeCheckbox state]);
 
-        config_PutInt("embedded-video", [_video_embeddedCheckbox state]);
-        config_PutInt("macosx-nativefullscreenmode", [_video_nativeFullscreenCheckbox state]);
-        config_PutInt("macosx-vdev", [[_video_devicePopup selectedItem] tag]);
+        vlc_config_SetNamedInt("embedded-video", [_video_embeddedCheckbox state]);
+        vlc_config_SetNamedInt("macosx-nativefullscreenmode", [_video_nativeFullscreenCheckbox state]);
+        vlc_config_SetNamedInt("macosx-vdev", [[_video_devicePopup selectedItem] tag]);
 
-        config_PutPsz("snapshot-path", [[_video_snap_folderTextField stringValue] UTF8String]);
-        config_PutPsz("snapshot-prefix", [[_video_snap_prefixTextField stringValue] UTF8String]);
-        config_PutInt("snapshot-sequential", [_video_snap_seqnumCheckbox state]);
+        vlc_config_SetNamedPsz("snapshot-path", [[_video_snap_folderTextField stringValue] UTF8String]);
+        vlc_config_SetNamedPsz("snapshot-prefix", [[_video_snap_prefixTextField stringValue] UTF8String]);
+        vlc_config_SetNamedInt("snapshot-sequential", [_video_snap_seqnumCheckbox state]);
         SaveStringList(_video_snap_formatPopup, "snapshot-format");
         SaveIntList(_video_deinterlacePopup, "deinterlace");
         SaveStringList(_video_deinterlace_modePopup, "deinterlace-mode");
@@ -1051,17 +1051,17 @@ static inline void save_string_list(intf_thread_t * p_intf, id object, const cha
      * input & codecs settings *
      ***************************/
     if (_inputSettingChanged) {
-        config_PutPsz("input-record-path", [[_input_recordTextField stringValue] UTF8String]);
+        vlc_config_SetNamedPsz("input-record-path", [[_input_recordTextField stringValue] UTF8String]);
 
-        config_PutInt("videotoolbox", [_input_hardwareAccelerationCheckbox state]);
-        config_PutInt("skip-frames", [_input_skipFramesCheckbox state]);
-        config_PutInt("input-fast-seek", [_input_fastSeekCheckbox state]);
+        vlc_config_SetNamedInt("videotoolbox", [_input_hardwareAccelerationCheckbox state]);
+        vlc_config_SetNamedInt("skip-frames", [_input_skipFramesCheckbox state]);
+        vlc_config_SetNamedInt("input-fast-seek", [_input_fastSeekCheckbox state]);
 
         SaveIntList(_input_aviPopup, "avi-index");
 
         SaveIntList(_input_skipLoopPopup, "avcodec-skiploopfilter");
 
-        #define CaC(name, factor) config_PutInt(name, [[_input_cachelevelPopup selectedItem] tag] * factor)
+        #define CaC(name, factor) vlc_config_SetNamedInt(name, [[_input_cachelevelPopup selectedItem] tag] * factor)
         if ([[_input_cachelevelPopup selectedItem] tag] == 0) {
             msg_Dbg(p_intf, "Custom chosen, not adjusting cache values");
         } else {
@@ -1079,20 +1079,20 @@ static inline void save_string_list(intf_thread_t * p_intf, id object, const cha
      * subtitles settings *
      **********************/
     if (_osdSettingChanged) {
-        config_PutInt("osd", [_osd_osdCheckbox state]);
+        vlc_config_SetNamedInt("osd", [_osd_osdCheckbox state]);
 
         if ([_osd_encodingPopup indexOfSelectedItem] >= 0)
             SaveStringList(_osd_encodingPopup, "subsdec-encoding");
         else
-            config_PutPsz("subsdec-encoding", "");
+            vlc_config_SetNamedPsz("subsdec-encoding", "");
 
-        config_PutPsz("sub-language", [[_osd_langTextField stringValue] UTF8String]);
+        vlc_config_SetNamedPsz("sub-language", [[_osd_langTextField stringValue] UTF8String]);
 
-        config_PutPsz("freetype-font", [[_osd_fontTextField stringValue] UTF8String]);
+        vlc_config_SetNamedPsz("freetype-font", [[_osd_fontTextField stringValue] UTF8String]);
         SaveIntList(_osd_font_colorPopup, "freetype-color");
         SaveIntList(_osd_font_sizePopup, "freetype-rel-fontsize");
-        config_PutInt("freetype-opacity", [_osd_opacityTextField intValue] * 255.0 / 100.0 + 0.5);
-        config_PutInt("freetype-bold", [_osd_forceboldCheckbox state]);
+        vlc_config_SetNamedInt("freetype-opacity", [_osd_opacityTextField intValue] * 255.0 / 100.0 + 0.5);
+        vlc_config_SetNamedInt("freetype-bold", [_osd_forceboldCheckbox state]);
         SaveIntList(_osd_outline_colorPopup, "freetype-outline-color");
         SaveIntList(_osd_outline_thicknessPopup, "freetype-outline-thickness");
         _osdSettingChanged = NO;
@@ -1104,7 +1104,7 @@ static inline void save_string_list(intf_thread_t * p_intf, id object, const cha
     if (_hotkeyChanged) {
         NSUInteger hotKeyCount = [_hotkeySettings count];
         for (NSUInteger i = 0; i < hotKeyCount; i++)
-            config_PutPsz([[_hotkeyNames objectAtIndex:i] UTF8String], [[_hotkeySettings objectAtIndex:i]UTF8String]);
+            vlc_config_SetNamedPsz([[_hotkeyNames objectAtIndex:i] UTF8String], [[_hotkeySettings objectAtIndex:i]UTF8String]);
         _hotkeyChanged = NO;
 
         config_PutInt("macosx-mediakeys", [_hotkeys_mediakeysCheckbox state]);
@@ -1273,7 +1273,7 @@ static inline void save_string_list(intf_thread_t * p_intf, id object, const cha
 
 - (IBAction)showFontPicker:(id)sender
 {
-    char * font = config_GetPsz("freetype-font");
+    char * font = vlc_config_GetNamedPsz("freetype-font");
     NSString * fontName = font ? toNSStr(font) : nil;
     free(font);
     if (fontName) {

@@ -99,8 +99,8 @@ static const int kCurrentPreferencesVersion = 4;
         // In VLC 3.0, this is no longer the case and VLCs config is not touched anymore. Therefore,
         // disable filter in VLCs config in this transition.
 
-        config_PutPsz("audio-filter", "");
-        config_PutPsz("video-filter", "");
+        vlc_config_SetNamedPsz("audio-filter", "");
+        vlc_config_SetNamedPsz("video-filter", "");
         config_SaveConfigFile(getIntf());
     } else {
         NSArray *libraries = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,

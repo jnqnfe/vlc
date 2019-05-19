@@ -1023,7 +1023,7 @@ bool sout_stream_sys_t::UpdateOutput( sout_stream_t *p_stream )
                  return false;
             perf_warning_shown = true;
             if ( res == 2 )
-                config_PutInt(RENDERER_CFG_PREFIX "show-perf-warning", (int)false );
+                vlc_config_SetNamedInt(RENDERER_CFG_PREFIX "show-perf-warning", (int)false );
         }
 
         const int i_quality = var_InheritInteger( p_stream, SOUT_CFG_PREFIX "conversion-quality" );

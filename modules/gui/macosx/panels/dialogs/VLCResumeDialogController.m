@@ -129,7 +129,7 @@
 {
     int newState = [sender state] == NSOnState ? 1 : 0;
     msg_Dbg(getIntf(), "Changing resume setting to %i", newState);
-    config_PutInt("macosx-continue-playback", newState);
+    vlc_config_SetNamedInt("macosx-continue-playback", newState);
 }
 
 - (void)updateCocoaWindowLevel:(NSNotification *)aNotification

@@ -135,7 +135,7 @@ static int getDefaultAudioVolume(const char *aout)
          * saving. In case of automatic mode, we'll save the last volume for
          * every modules. Therefore, all volumes variable we be the same and we
          * can use the first one (mmdevice). */
-        return config_GetFloat("mmdevice-volume") * 100.f + .5f;
+        return vlc_config_GetNamedFloat("mmdevice-volume") * 100.f + .5f;
 #else
         return -1;
 #endif
@@ -147,32 +147,32 @@ static int getDefaultAudioVolume(const char *aout)
 
 #ifdef __linux__
     if (!strcmp(aout, "alsa") && vlc_module_exists("alsa"))
-        return cbrtf(config_GetFloat("alsa-gain")) * 100.f + .5f;
+        return cbrtf(vlc_config_GetNamedFloat("alsa-gain")) * 100.f + .5f;
 #endif
 #ifdef _WIN32
     if (!strcmp(aout, "mmdevice"))
-        return config_GetFloat("mmdevice-volume") * 100.f + .5f;
+        return vlc_config_GetNamedFloat("mmdevice-volume") * 100.f + .5f;
 #endif
 #ifdef __APPLE__
     if (!strcmp(aout, "auhal") && vlc_module_exists("auhal"))
-        return (config_GetFloat("auhal-volume") * 100.f + .5f)
+        return (vlc_config_GetNamedFloat("auhal-volume") * 100.f + .5f)
                  / AOUT_VOLUME_DEFAULT;
 #endif
 #ifdef _WIN32
     if (!strcmp(aout, "directsound") && vlc_module_exists("directsound"))
-        return config_GetFloat("directx-volume") * 100.f + .5f;
+        return vlc_config_GetNamedFloat("directx-volume") * 100.f + .5f;
 #endif
 
     if (!strcmp(aout, "jack"))
-        return cbrtf(config_GetFloat("jack-gain")) * 100.f + 0.5f;
+        return cbrtf(vlc_config_GetNamedFloat("jack-gain")) * 100.f + 0.5f;
 
 #ifdef __OS2__
     if (!strcmp(aout, "kai"))
-        return cbrtf(config_GetFloat("kai-gain")) * 100.f + .5f;
+        return cbrtf(vlc_config_GetNamedFloat("kai-gain")) * 100.f + .5f;
 #endif
 #ifdef _WIN32
     if (!strcmp(aout, "waveout"))
-        return config_GetFloat("waveout-volume") * 100.f + .5f;
+        return vlc_config_GetNamedFloat("waveout-volume") * 100.f + .5f;
 #endif
 
     return -1;
@@ -503,7 +503,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 #undef audioControl
 #undef audioCommon
 
-            int i_max_volume = config_GetInt( "qt-max-volume" );
+            int i_max_volume = vlc_config_GetNamedInt( "qt-max-volume" );
 
             /* Audio Options */
             ui.volumeValue->setMaximum( i_max_volume );
@@ -580,7 +580,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
             CONNECT( ui.volNormBox, toggled( bool ), ui.volNormSpin,
                      setEnabled( bool ) );
 
-            char* psz = config_GetPsz( "audio-filter" );
+            char* psz = vlc_config_GetNamedPsz( "audio-filter" );
             qs_filter = qfu( psz ).split( ':', QString::SkipEmptyParts );
             free( psz );
 
@@ -605,9 +605,9 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
                          "for DVD, VCD, and CDDA are set.\n"
                          "You can define a unique one or configure them \n"
                          "individually in the advanced preferences." ) );
-                char *psz_dvddiscpath = config_GetPsz( "dvd" );
-                char *psz_vcddiscpath = config_GetPsz( "vcd" );
-                char *psz_cddadiscpath = config_GetPsz( "cd-audio" );
+                char *psz_dvddiscpath = vlc_config_GetNamedPsz( "dvd" );
+                char *psz_vcddiscpath = vlc_config_GetNamedPsz( "vcd" );
+                char *psz_cddadiscpath = vlc_config_GetNamedPsz( "cd-audio" );
                 if( psz_dvddiscpath && psz_vcddiscpath && psz_cddadiscpath )
                 if( !strcmp( psz_cddadiscpath, psz_dvddiscpath ) &&
                     !strcmp( psz_dvddiscpath, psz_vcddiscpath ) )
@@ -677,10 +677,10 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 
 #define TestCaC( name, factor ) \
     b_cache_equal =  b_cache_equal && \
-     ( i_cache * factor == config_GetInt( name ) );
+     ( i_cache * factor == vlc_config_GetNamedInt( name ) );
             /* Select the accurate value of the ComboBox */
             bool b_cache_equal = true;
-            int i_cache = config_GetInt( "file-caching" );
+            int i_cache = vlc_config_GetNamedInt( "file-caching" );
 
             TestCaC( "network-caching", 10/3 );
             TestCaC( "disc-caching", 1);
@@ -734,7 +734,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 #endif
 
             /* interface */
-            char *psz_intf = config_GetPsz( "intf" );
+            char *psz_intf = vlc_config_GetNamedPsz( "intf" );
             if( psz_intf )
             {
                 if( strstr( psz_intf, "skin" ) )
@@ -868,8 +868,8 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 
             CONFIG_GENERIC_NO_BOOL( "sub-margin", Integer, ui.subsPosLabel, subsPosition );
 
-            ui.shadowCheck->setChecked( config_GetInt( "freetype-shadow-opacity" ) > 0 );
-            ui.backgroundCheck->setChecked( config_GetInt( "freetype-background-opacity" ) > 0 );
+            ui.shadowCheck->setChecked( vlc_config_GetNamedInt( "freetype-shadow-opacity" ) > 0 );
+            ui.backgroundCheck->setChecked( vlc_config_GetNamedInt( "freetype-background-opacity" ) > 0 );
             optionWidgets["shadowCB"] = ui.shadowCheck;
             optionWidgets["backgroundCB"] = ui.backgroundCheck;
 
@@ -989,7 +989,7 @@ void SPrefsPanel::updateAudioOptions( int number )
     bool save = true;
 
     if (volume >= 0)
-        save = config_GetInt("volume-save");
+        save = vlc_config_GetNamedInt("volume-save");
 
     QCheckBox *resetVolumeCheckBox =
         qobject_cast<QCheckBox *>(optionWidgets["resetVolumeCheckbox"]);
@@ -1036,12 +1036,12 @@ void SPrefsPanel::apply()
             qobject_cast<QComboBox *>(optionWidgets["inputLE"])->currentText().toUtf8();
         if( devicepath.size() > 0 )
         {
-            config_PutPsz_locked( "dvd", devicepath );
-            config_PutPsz_locked( "vcd", devicepath );
-            config_PutPsz_locked( "cd-audio", devicepath );
+            vlc_config_SetNamedPsz_locked( "dvd", devicepath );
+            vlc_config_SetNamedPsz_locked( "vcd", devicepath );
+            vlc_config_SetNamedPsz_locked( "cd-audio", devicepath );
         }
 
-#define CaC( name, factor ) config_PutInt_locked( name, i_comboValue * factor )
+#define CaC( name, factor ) vlc_config_SetNamedInt_locked( name, i_comboValue * factor )
         /* Caching */
         QComboBox *cachingCombo = qobject_cast<QComboBox *>(optionWidgets["cachingCoB"]);
         int i_comboValue = cachingCombo->itemData( cachingCombo->currentIndex() ).toInt();
@@ -1060,10 +1060,10 @@ void SPrefsPanel::apply()
     case SPrefsInterface:
     {
         if( qobject_cast<QRadioButton *>(optionWidgets["skinRB"])->isChecked() )
-            config_PutPsz_locked( "intf", "skins2,any" );
+            vlc_config_SetNamedPsz_locked( "intf", "skins2,any" );
         else
         //if( qobject_cast<QRadioButton *>(optionWidgets[qtRB])->isChecked() )
-            config_PutPsz_locked( "intf", "" );
+            vlc_config_SetNamedPsz_locked( "intf", "" );
         if( qobject_cast<QComboBox *>(optionWidgets["styleCB"]) )
             getSettings()->setValue( "MainWindow/QtStyle",
                 qobject_cast<QComboBox *>(optionWidgets["styleCB"])->currentText() );
@@ -1076,7 +1076,7 @@ void SPrefsPanel::apply()
     case SPrefsVideo:
     {
         int i_fullscreenScreen =  qobject_cast<QComboBox *>(optionWidgets["fullscreenScreenB"])->currentData().toInt();
-        config_PutInt_locked( "qt-fullscreen-screennumber", i_fullscreenScreen );
+        vlc_config_SetNamedInt_locked( "qt-fullscreen-screennumber", i_fullscreenScreen );
         break;
     }
 
@@ -1089,14 +1089,14 @@ void SPrefsPanel::apply()
         if( !b_checked && qs_filter.contains( "normvol" ) )
             qs_filter.removeAll( "normvol" );
 
-        config_PutPsz_locked( "audio-filter", qtu( qs_filter.join( ":" ) ) );
+        vlc_config_SetNamedPsz_locked( "audio-filter", qtu( qs_filter.join( ":" ) ) );
 
         /* Default volume */
         int i_volume =
             qobject_cast<QSlider *>(optionWidgets["defaultVolume"])->value();
         bool b_reset_volume =
             qobject_cast<QCheckBox *>(optionWidgets["resetVolumeCheckbox"])->isChecked();
-        char *psz_aout = config_GetPsz( "aout" );
+        char *psz_aout = vlc_config_GetNamedPsz_locked( "aout" );
 
         float f_gain = powf( i_volume / 100.f, 3 );
 
@@ -1107,50 +1107,49 @@ void SPrefsPanel::apply()
 #if defined( _WIN32 )
         VLC_UNUSED( f_gain );
         if( save_vol_aout( "mmdevice" ) )
-            config_PutFloat_locked( "mmdevice-volume", i_volume / 100.f );
+            vlc_config_SetNamedFloat_locked( "mmdevice-volume", i_volume / 100.f );
         if( save_vol_aout( "directsound" ) )
-            config_PutFloat_locked( "directx-volume", i_volume / 100.f );
+            vlc_config_SetNamedFloat_locked( "directx-volume", i_volume / 100.f );
         if( save_vol_aout( "waveout" ) )
-            config_PutFloat_locked( "waveout-volume", i_volume / 100.f );
+            vlc_config_SetNamedFloat_locked( "waveout-volume", i_volume / 100.f );
 #elif defined( Q_OS_MAC )
         VLC_UNUSED( f_gain );
         if( save_vol_aout( "auhal" ) )
-            config_PutFloat_locked( "auhal-volume", i_volume / 100.f
+            vlc_config_SetNamedFloat_locked( "auhal-volume", i_volume / 100.f
                     * AOUT_VOLUME_DEFAULT );
 #elif defined( __OS2__ )
         if( save_vol_aout( "kai" ) )
-            config_PutFloat_locked( "kai-gain",  f_gain );
+            vlc_config_SetNamedFloat_locked( "kai-gain",  f_gain );
 #else
         if( save_vol_aout( "alsa" ) )
-            config_PutFloat_locked( "alsa-gain", f_gain );
+            vlc_config_SetNamedFloat_locked( "alsa-gain", f_gain );
         if( save_vol_aout( "jack" ) )
-            config_PutFloat_locked( "jack-gain", f_gain );
+            vlc_config_SetNamedFloat_locked( "jack-gain", f_gain );
 #endif
 #undef save_vol_aout
         free( psz_aout );
 
-        config_PutInt_locked( "volume-save", !b_reset_volume );
+        vlc_config_SetNamedInt_locked( "volume-save", !b_reset_volume );
 
         break;
     }
     case SPrefsSubtitles:
     {
         bool b_checked = qobject_cast<QCheckBox *>(optionWidgets["shadowCB"])->isChecked();
-        if( b_checked && config_GetInt( "freetype-shadow-opacity" ) == 0 ) {
-            config_PutInt_locked( "freetype-shadow-opacity", 128 );
+        if( b_checked && vlc_config_GetNamedInt_locked( "freetype-shadow-opacity" ) == 0 ) {
+            vlc_config_SetNamedInt_locked( "freetype-shadow-opacity", 128 );
         }
         else if (!b_checked ) {
-            config_PutInt_locked( "freetype-shadow-opacity", 0 );
+            vlc_config_SetNamedInt_locked( "freetype-shadow-opacity", 0 );
         }
 
         b_checked = qobject_cast<QCheckBox *>(optionWidgets["backgroundCB"])->isChecked();
-        if( b_checked && config_GetInt( "freetype-background-opacity" ) == 0 ) {
-            config_PutInt_locked( "freetype-background-opacity", 128 );
+        if( b_checked && vlc_config_GetNamedInt_locked( "freetype-background-opacity" ) == 0 ) {
+            vlc_config_SetNamedInt_locked( "freetype-background-opacity", 128 );
         }
         else if (!b_checked ) {
-            config_PutInt_locked( "freetype-background-opacity", 0 );
+            vlc_config_SetNamedInt_locked( "freetype-background-opacity", 0 );
         }
-
     }
     }
 }

@@ -137,7 +137,7 @@ static int vlclua_var_inherit( lua_State *L )
     }
     const char *psz_var = luaL_checkstring( L, 2 );
 
-    int i_type = config_GetType( psz_var );
+    int i_type = vlc_config_GetType_ByName( psz_var );
     if( var_Inherit( p_obj, psz_var, i_type, &val ) != VLC_SUCCESS )
         return 0;
 

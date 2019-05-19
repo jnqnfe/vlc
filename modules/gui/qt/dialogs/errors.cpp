@@ -98,6 +98,6 @@ void ErrorsDialog::dontShow()
 {
     if( stopShowing->isChecked() )
     {
-        config_PutInt( "qt-error-dialogs", 0 );
+        vlc_config_SetNamedInt( "qt-error-dialogs", 0 );
     }
 }

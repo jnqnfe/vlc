@@ -349,7 +349,7 @@ int WindowOpen(vout_window_t *p_wnd)
         [newVideoWindow makeKeyAndOrderFront: self];
     }
 
-    [newVideoWindow setAlphaValue: config_GetFloat("macosx-opaqueness")];
+    [newVideoWindow setAlphaValue: vlc_config_GetNamedFloat("macosx-opaqueness")];
 
     [voutView setVoutThread:(vout_thread_t *)vlc_object_parent(p_wnd)];
     [newVideoWindow setHasActiveVideo: YES];

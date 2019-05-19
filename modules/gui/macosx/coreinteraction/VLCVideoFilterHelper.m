@@ -133,7 +133,7 @@
 
     i_type = var_Type(vout, psz_property);
     if (!i_type)
-        i_type = config_GetType(psz_property);
+        i_type = vlc_config_GetType_ByName(psz_property);
 
     i_type &= VLC_VAR_CLASS;
     var_SetChecked(vout, psz_property, i_type, value);

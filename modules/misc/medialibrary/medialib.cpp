@@ -389,7 +389,7 @@ bool MediaLibrary::Start()
             varValue += std::string{ ";" } + folderMrl.get();
         }
         if ( varValue.empty() == false )
-            config_PutPsz( "ml-folders", varValue.c_str()+1 ); /* skip initial ';' */
+            vlc_config_SetNamedPsz( "ml-folders", varValue.c_str()+1 ); /* skip initial ';' */
     }
     m_ml = std::move( ml );
     return true;

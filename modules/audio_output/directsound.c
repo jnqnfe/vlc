@@ -938,7 +938,7 @@ static int VolumeSet( audio_output_t *p_aout, float volume )
     aout_VolumeReport( p_aout, volume );
 
     if( var_InheritBool( p_aout, "volume-save" ) )
-        config_PutFloat( "directx-volume", volume );
+        vlc_config_SetNamedFloat( "directx-volume", volume );
     return ret;
 }
 

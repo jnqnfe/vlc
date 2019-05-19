@@ -167,7 +167,7 @@
     if (!lastPosition || lastPosition.intValue <= 0)
         return;
 
-    int settingValue = (int)config_GetInt("macosx-continue-playback");
+    int settingValue = (int)vlc_config_GetNamedInt("macosx-continue-playback");
     if (settingValue == 2) // never resume
         return;
 

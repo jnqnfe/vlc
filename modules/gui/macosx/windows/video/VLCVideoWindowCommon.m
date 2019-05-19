@@ -889,7 +889,7 @@ NSString *VLCWindowShouldShowController = @"VLCWindowShouldShowController";
     [[[VLCMain sharedInstance] voutProvider] updateWindowLevelForHelperWindows: i_originalLevel];
     [self setLevel:i_originalLevel];
 
-    [self setAlphaValue: config_GetFloat("macosx-opaqueness")];
+    [self setAlphaValue: vlc_config_GetNamedFloat("macosx-opaqueness")];
 }
 
 - (void)animationDidEnd:(NSAnimation*)animation

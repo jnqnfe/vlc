@@ -57,9 +57,9 @@ config_ExistIntf
 vlc_config_FindItem
 config_GetSysPath
 config_GetUserDir
-config_GetIntChoices
-config_GetPszChoices
-config_GetType
+vlc_config_GetIntChoices
+vlc_config_GetPszChoices
+vlc_config_GetType
 vlc_config_GetFloat
 vlc_config_GetInt
 vlc_config_GetPsz

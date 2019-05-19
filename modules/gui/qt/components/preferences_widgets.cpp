@@ -227,7 +227,7 @@ void InterfacePreviewWidget::setPreview( enum_style e_style )
 
 void VStringConfigControl::doApply()
 {
-    config_PutPsz_locked( getName(), qtu( getValue() ) );
+    vlc_config_SetNamedPsz_locked( getName(), qtu( getValue() ) );
 }
 
 void VStringConfigControl::storeValue( bool owned )
@@ -565,7 +565,7 @@ void StringListConfigControl::finish( module_config_item_t *p_module_config )
     if(!p_module_config) return;
 
     char **values, **texts;
-    ssize_t count = config_GetPszChoices( p_item->psz_name, &values, &texts );
+    ssize_t count = vlc_config_GetNamedPszChoices( p_item->psz_name, &values, &texts );
     for( ssize_t i = 0; i < count && texts; i++ )
     {
         if( texts[i] == NULL || values[i] == NULL )
@@ -605,7 +605,7 @@ void setfillVLCConfigCombo( const char *configname, QComboBox *combo )
     if( (p_config->i_type & 0xF0) == CONFIG_ITEM_STRING )
     {
         char **values, **texts;
-        ssize_t count = config_GetPszChoices(configname, &values, &texts);
+        ssize_t count = vlc_config_GetNamedPszChoices(configname, &values, &texts);
         for( ssize_t i = 0; i < count; i++ )
         {
             combo->addItem( qtr(texts[i]), QVariant(qfu(values[i])) );
@@ -621,7 +621,7 @@ void setfillVLCConfigCombo( const char *configname, QComboBox *combo )
     {
         int64_t *values;
         char **texts;
-        ssize_t count = config_GetIntChoices(configname, &values, &texts);
+        ssize_t count = vlc_config_GetNamedIntChoices(configname, &values, &texts);
         for( ssize_t i = 0; i < count; i++ )
         {
             combo->addItem( qtr(texts[i]), QVariant(qlonglong(values[i])) );
@@ -890,7 +890,7 @@ void ModuleListConfigControl::onUpdate()
 
 void VIntConfigControl::doApply()
 {
-    config_PutInt_locked( getName(), getValue() );
+    vlc_config_SetNamedInt_locked( getName(), getValue() );
 }
 
 void VIntConfigControl::storeValue( bool owned )
@@ -1053,7 +1053,7 @@ void IntegerListConfigControl::finish( module_config_item_t *p_module_config )
 
     int64_t *values;
     char **texts;
-    ssize_t count = config_GetIntChoices( p_module_config->psz_name,
+    ssize_t count = vlc_config_GetNamedIntChoices( p_module_config->psz_name,
                                           &values, &texts );
     for( ssize_t i = 0; i < count; i++ )
     {
@@ -1194,7 +1194,7 @@ void ColorConfigControl::selectColor()
 
 void VFloatConfigControl::doApply()
 {
-    config_PutFloat_locked( getName(), getValue() );
+    vlc_config_SetNamedFloat_locked( getName(), getValue() );
 }
 
 void VFloatConfigControl::storeValue( bool owned )
@@ -1523,10 +1523,10 @@ void KeySelectorControl::doApply()
     {
         it = table->topLevelItem(i);
         if( it->data( HOTKEY_COL, Qt::UserRole ).toInt() >= 0 )
-            config_PutPsz_locked( qtu( it->data( ACTION_COL, Qt::UserRole ).toString() ),
+            vlc_config_SetNamedPsz_locked( qtu( it->data( ACTION_COL, Qt::UserRole ).toString() ),
                            qtu( it->data( HOTKEY_COL, Qt::UserRole ).toString() ) );
 
-        config_PutPsz_locked( qtu( "global-" + it->data( ACTION_COL, Qt::UserRole ).toString() ),
+        vlc_config_SetNamedPsz_locked( qtu( "global-" + it->data( ACTION_COL, Qt::UserRole ).toString() ),
                        qtu( it->data( GLOBAL_HOTKEY_COL, Qt::UserRole ).toString() ) );
     }
 }

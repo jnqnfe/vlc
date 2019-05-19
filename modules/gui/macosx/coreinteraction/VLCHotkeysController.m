@@ -147,7 +147,7 @@
 
 - (BOOL)isEvent:(NSEvent *)anEvent forKey:(const char *)keyString
 {
-    char *key = config_GetPsz(keyString);
+    char *key = vlc_config_GetNamedPsz(keyString);
     unsigned int keyModifiers = VLCModifiersToCocoa(key);
     NSString *vlcKeyString = VLCKeyToString(key);
     FREENULL(key);

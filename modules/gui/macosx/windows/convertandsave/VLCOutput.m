@@ -382,7 +382,7 @@
 
 - (void)TTLChanged:(NSNotification *)notification
 {
-    config_PutInt("ttl", [self.streamTTLTextField intValue]);
+    vlc_config_SetNamedInt("ttl", [self.streamTTLTextField intValue]);
 }
 
 - (IBAction)outputFileBrowse:(id)sender

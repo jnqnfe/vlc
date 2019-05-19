@@ -47,7 +47,7 @@ static int aout_SoftVolumeSet(audio_output_t *aout, float volume)
         return -1;
     sys->soft_gain = gain;
     if (var_InheritBool(aout, "volume-save"))
-        config_PutFloat(PLUGIN_STRING"-gain", gain);
+        vlc_config_SetNamedFloat(PLUGIN_STRING"-gain", gain);
 
     aout_VolumeReport(aout, volume);
     return 0;

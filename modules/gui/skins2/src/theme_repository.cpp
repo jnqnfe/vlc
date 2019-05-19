@@ -99,7 +99,7 @@ ThemeRepository::ThemeRepository( intf_thread_t *pIntf ): SkinObject( pIntf )
         current = itdefault->second;
 
     // save this valid skins for reuse
-    config_PutPsz( "skins2-last", current.c_str() );
+    vlc_config_SetNamedPsz( "skins2-last", current.c_str() );
 
     // Update repository
     updateRepository();
@@ -204,7 +204,7 @@ void ThemeRepository::updateRepository()
     vlc_value_t val;
 
     // retrieve the current skin
-    char* psz_current = config_GetPsz( "skins2-last" );
+    char* psz_current = vlc_config_GetNamedPsz( "skins2-last" );
     if( !psz_current )
         return;
 

@@ -36,7 +36,7 @@ void config_AddIntf( const char *psz_intf )
     char *psz_config, *psz_parser;
     size_t i_len = strlen( psz_intf );
 
-    psz_config = psz_parser = config_GetPsz( "control" );
+    psz_config = psz_parser = vlc_config_GetNamedPsz( "control" );
     while( psz_parser )
     {
         if( !strncmp( psz_intf, psz_parser, i_len ) )
@@ -49,7 +49,7 @@ void config_AddIntf( const char *psz_intf )
     }
     free( psz_config );
 
-    psz_config = psz_parser = config_GetPsz( "extraintf" );
+    psz_config = psz_parser = vlc_config_GetNamedPsz( "extraintf" );
     while( psz_parser )
     {
         if( !strncmp( psz_intf, psz_parser, i_len ) )
@@ -67,12 +67,12 @@ void config_AddIntf( const char *psz_intf )
         char *psz_newconfig;
         if( asprintf( &psz_newconfig, "%s:%s", psz_config, psz_intf ) != -1 )
         {
-            config_PutPsz( "extraintf", psz_newconfig );
+            vlc_config_SetNamedPsz( "extraintf", psz_newconfig );
             free( psz_newconfig );
         }
     }
     else
-        config_PutPsz( "extraintf", psz_intf );
+        vlc_config_SetNamedPsz( "extraintf", psz_intf );
 
     free( psz_config );
 }
@@ -85,7 +85,7 @@ void config_RemoveIntf( const char *psz_intf )
     char *psz_config, *psz_parser;
     size_t i_len = strlen( psz_intf );
 
-    psz_config = psz_parser = config_GetPsz( "extraintf" );
+    psz_config = psz_parser = vlc_config_GetNamedPsz( "extraintf" );
     while( psz_parser )
     {
         if( !strncmp( psz_intf, psz_parser, i_len ) )
@@ -96,7 +96,7 @@ void config_RemoveIntf( const char *psz_intf )
             *psz_parser = '\0';
             if( asprintf( &psz_newconfig, "%s%s", psz_config, psz_end ) != -1 )
             {
-                config_PutPsz( "extraintf", psz_newconfig );
+                vlc_config_SetNamedPsz( "extraintf", psz_newconfig );
                 free( psz_newconfig );
             }
             break;
@@ -106,7 +106,7 @@ void config_RemoveIntf( const char *psz_intf )
     }
     free( psz_config );
 
-    psz_config = psz_parser = config_GetPsz( "control" );
+    psz_config = psz_parser = vlc_config_GetNamedPsz( "control" );
     while( psz_parser )
     {
         if( !strncmp( psz_intf, psz_parser, i_len ) )
@@ -117,7 +117,7 @@ void config_RemoveIntf( const char *psz_intf )
             *psz_parser = '\0';
             if( asprintf( &psz_newconfig, "%s%s", psz_config, psz_end ) != -1 )
             {
-                config_PutPsz( "control", psz_newconfig );
+                vlc_config_SetNamedPsz( "control", psz_newconfig );
                 free( psz_newconfig );
             }
             break;
@@ -139,7 +139,7 @@ bool config_ExistIntf( const char *psz_intf )
     char *psz_config, *psz_parser;
     size_t i_len = strlen( psz_intf );
 
-    psz_config = psz_parser = config_GetPsz( "extraintf" );
+    psz_config = psz_parser = vlc_config_GetNamedPsz( "extraintf" );
     while( psz_parser )
     {
         if( !strncmp( psz_parser, psz_intf, i_len ) )
@@ -152,7 +152,7 @@ bool config_ExistIntf( const char *psz_intf )
     }
     free( psz_config );
 
-    psz_config = psz_parser = config_GetPsz( "control" );
+    psz_config = psz_parser = vlc_config_GetNamedPsz( "control" );
     while( psz_parser )
     {
         if( !strncmp( psz_parser, psz_intf, i_len ) )

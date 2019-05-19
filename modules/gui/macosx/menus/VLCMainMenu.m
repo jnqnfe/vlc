@@ -244,12 +244,12 @@ typedef NS_ENUM(NSInteger, VLCObjectType) {
         [mitem setTag:x];
         [mitem setTarget:self];
     }
-    char *psz_config = config_GetPsz("video-filter");
+    char *psz_config = vlc_config_GetNamedPsz("video-filter");
     if (psz_config) {
         if (!strstr(psz_config, "postproc"))
             [[_postprocessingMenu itemAtIndex:0] setState:NSOnState];
         else
-            [[_postprocessingMenu itemWithTag:config_GetInt("postproc-q")] setState:NSOnState];
+            [[_postprocessingMenu itemWithTag:vlc_config_GetNamedInt("postproc-q")] setState:NSOnState];
         free(psz_config);
     } else
         [[_postprocessingMenu itemAtIndex:0] setState:NSOnState];
@@ -268,7 +268,7 @@ typedef NS_ENUM(NSInteger, VLCObjectType) {
     var_Create(p_playlist, "freetype-outline-thickness", VLC_VAR_INTEGER | VLC_VAR_DOINHERIT);
 
     [self setupMenu: _subtitle_textcolorMenu withIntList:"freetype-color" andSelector:@selector(switchSubtitleOption:)];
-    [_subtitle_bgopacity_sld setIntegerValue: config_GetInt("freetype-background-opacity")];
+    [_subtitle_bgopacity_sld setIntegerValue: vlc_config_GetNamedInt("freetype-background-opacity")];
     [self setupMenu: _subtitle_bgcolorMenu withIntList:"freetype-background-color" andSelector:@selector(switchSubtitleOption:)];
     [self setupMenu: _subtitle_outlinethicknessMenu withIntList:"freetype-outline-thickness" andSelector:@selector(switchSubtitleOption:)];
 #endif
@@ -505,79 +505,79 @@ typedef NS_ENUM(NSInteger, VLCObjectType) {
 {
     char *key;
 
-    key = config_GetPsz("key-quit");
+    key = vlc_config_GetNamedPsz("key-quit");
     [_quit setKeyEquivalent: VLCKeyToString(key)];
     [_quit setKeyEquivalentModifierMask: VLCModifiersToCocoa(key)];
     FREENULL(key);
 
     // do not assign play/pause key
 
-    key = config_GetPsz("key-stop");
+    key = vlc_config_GetNamedPsz("key-stop");
     [_stop setKeyEquivalent: VLCKeyToString(key)];
     [_stop setKeyEquivalentModifierMask: VLCModifiersToCocoa(key)];
     FREENULL(key);
 
-    key = config_GetPsz("key-prev");
+    key = vlc_config_GetNamedPsz("key-prev");
     [_previous setKeyEquivalent: VLCKeyToString(key)];
     [_previous setKeyEquivalentModifierMask: VLCModifiersToCocoa(key)];
     FREENULL(key);
 
-    key = config_GetPsz("key-next");
+    key = vlc_config_GetNamedPsz("key-next");
     [_next setKeyEquivalent: VLCKeyToString(key)];
     [_next setKeyEquivalentModifierMask: VLCModifiersToCocoa(key)];
     FREENULL(key);
 
-    key = config_GetPsz("key-jump+short");
+    key = vlc_config_GetNamedPsz("key-jump+short");
     [_fwd setKeyEquivalent: VLCKeyToString(key)];
     [_fwd setKeyEquivalentModifierMask: VLCModifiersToCocoa(key)];
     FREENULL(key);
 
-    key = config_GetPsz("key-jump-short");
+    key = vlc_config_GetNamedPsz("key-jump-short");
     [_bwd setKeyEquivalent: VLCKeyToString(key)];
     [_bwd setKeyEquivalentModifierMask: VLCModifiersToCocoa(key)];
     FREENULL(key);
 
-    key = config_GetPsz("key-vol-up");
+    key = vlc_config_GetNamedPsz("key-vol-up");
     [_vol_up setKeyEquivalent: VLCKeyToString(key)];
     [_vol_up setKeyEquivalentModifierMask: VLCModifiersToCocoa(key)];
     FREENULL(key);
 
-    key = config_GetPsz("key-vol-down");
+    key = vlc_config_GetNamedPsz("key-vol-down");
     [_vol_down setKeyEquivalent: VLCKeyToString(key)];
     [_vol_down setKeyEquivalentModifierMask: VLCModifiersToCocoa(key)];
     FREENULL(key);
 
-    key = config_GetPsz("key-vol-mute");
+    key = vlc_config_GetNamedPsz("key-vol-mute");
     [_mute setKeyEquivalent: VLCKeyToString(key)];
     [_mute setKeyEquivalentModifierMask: VLCModifiersToCocoa(key)];
     FREENULL(key);
 
-    key = config_GetPsz("key-toggle-fullscreen");
+    key = vlc_config_GetNamedPsz("key-toggle-fullscreen");
     [_fullscreenItem setKeyEquivalent: VLCKeyToString(key)];
     [_fullscreenItem setKeyEquivalentModifierMask: VLCModifiersToCocoa(key)];
     FREENULL(key);
 
-    key = config_GetPsz("key-snapshot");
+    key = vlc_config_GetNamedPsz("key-snapshot");
     [_snapshot setKeyEquivalent: VLCKeyToString(key)];
     [_snapshot setKeyEquivalentModifierMask: VLCModifiersToCocoa(key)];
     FREENULL(key);
 
-    key = config_GetPsz("key-random");
+    key = vlc_config_GetNamedPsz("key-random");
     [_random setKeyEquivalent: VLCKeyToString(key)];
     [_random setKeyEquivalentModifierMask: VLCModifiersToCocoa(key)];
     FREENULL(key);
 
-    key = config_GetPsz("key-zoom-half");
+    key = vlc_config_GetNamedPsz("key-zoom-half");
     [_half_window setKeyEquivalent: VLCKeyToString(key)];
     [_half_window setKeyEquivalentModifierMask: VLCModifiersToCocoa(key)];
     FREENULL(key);
 
-    key = config_GetPsz("key-zoom-original");
+    key = vlc_config_GetNamedPsz("key-zoom-original");
     [_normal_window setKeyEquivalent: VLCKeyToString(key)];
     [_normal_window setKeyEquivalentModifierMask: VLCModifiersToCocoa(key)];
     FREENULL(key);
 
-    key = config_GetPsz("key-zoom-double");
+    key = vlc_config_GetNamedPsz("key-zoom-double");
     [_double_window setKeyEquivalent: VLCKeyToString(key)];
     [_double_window setKeyEquivalentModifierMask: VLCModifiersToCocoa(key)];
     FREENULL(key);
@@ -1153,7 +1153,7 @@ typedef NS_ENUM(NSInteger, VLCObjectType) {
 
 - (void)toggleFullscreenDevice:(id)sender
 {
-    config_PutInt("macosx-vdev", [sender tag]);
+    vlc_config_SetNamedInt("macosx-vdev", [sender tag]);
     [self refreshVoutDeviceMenu: nil];
 }
 

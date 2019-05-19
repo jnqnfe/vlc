@@ -414,7 +414,7 @@ NSString *VLCVideoEffectsProfileNamesKey = @"VideoEffectProfileNames";
     intf_thread_t *p_intf = getIntf();
 
     vlc_value_t val;
-    int i_type = config_GetType(psz_option) & VLC_VAR_CLASS;
+    int i_type = vlc_config_GetType_ByName(psz_option) & VLC_VAR_CLASS;
     switch (i_type)
     {
     case VLC_VAR_BOOL:

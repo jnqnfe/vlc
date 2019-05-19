@@ -205,15 +205,15 @@ void ExtendedDialog::saveConfig()
         switch( static_cast<QMetaType::Type>(value.type()) )
         {
             case QMetaType::QString:
-                config_PutPsz( qtu(i.key()), qtu(value.toString()) );
+                vlc_config_SetNamedPsz( qtu(i.key()), qtu(value.toString()) );
                 break;
             case QMetaType::Int:
             case QMetaType::Bool:
-                config_PutInt( qtu(i.key()), value.toInt() ) ;
+                vlc_config_SetNamedInt( qtu(i.key()), value.toInt() ) ;
                 break;
             case QMetaType::Double:
             case QMetaType::Float:
-                config_PutFloat( qtu(i.key()), value.toFloat() ) ;
+                vlc_config_SetNamedFloat( qtu(i.key()), value.toFloat() ) ;
                 break;
             default:
                 vlc_assert_unreachable();

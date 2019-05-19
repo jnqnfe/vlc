@@ -51,10 +51,8 @@ static inline char *strdupnull (const char *src)
     return src ? strdup (src) : NULL;
 }
 
-int config_GetType(const char *psz_name)
+int vlc_config_GetType(module_config_item_t *p_config)
 {
-    module_config_item_t *p_config = vlc_config_FindItem(psz_name);
-
     /* sanity checks */
     if( !p_config )
     {
@@ -77,16 +75,14 @@ int config_GetType(const char *psz_name)
     }
 }
 
-bool config_IsSafe( const char *name )
+bool config_IsSafe( module_config_item_t *p_config )
 {
-    module_config_item_t *p_config = vlc_config_FindItem( name );
     return p_config != NULL && p_config->b_safe;
 }
 
-int64_t vlc_config_GetInt(const char *psz_name, bool locked)
+#undef vlc_config_GetInt
+int64_t vlc_config_GetInt(module_config_item_t *p_config, bool locked)
 {
-    module_config_item_t *p_config = vlc_config_FindItem( psz_name );
-
     /* sanity checks */
     assert(p_config != NULL);
     assert(IsConfigIntegerBasedType(p_config->i_type));
@@ -99,12 +95,9 @@ int64_t vlc_config_GetInt(const char *psz_name, bool locked)
     return val;
 }
 
-float vlc_config_GetFloat(const char *psz_name, bool locked)
+#undef vlc_config_GetFloat
+float vlc_config_GetFloat(module_config_item_t *p_config, bool locked)
 {
-    module_config_item_t *p_config;
-
-    p_config = vlc_config_FindItem( psz_name );
-
     /* sanity checks */
     assert(p_config != NULL);
     assert(IsConfigFloatType(p_config->i_type));
@@ -117,12 +110,9 @@ float vlc_config_GetFloat(const char *psz_name, bool locked)
     return val;
 }
 
-char *vlc_config_GetPsz(const char *psz_name, bool locked)
+#undef vlc_config_GetPsz
+char *vlc_config_GetPsz(module_config_item_t *p_config, bool locked)
 {
-    module_config_item_t *p_config;
-
-    p_config = vlc_config_FindItem( psz_name );
-
     /* sanity checks */
     assert(p_config != NULL);
     assert(IsConfigStringType (p_config->i_type));
@@ -135,10 +125,9 @@ char *vlc_config_GetPsz(const char *psz_name, bool locked)
     return psz_value;
 }
 
-void vlc_config_SetPsz(const char *psz_name, const char *psz_value, bool locked)
+#undef vlc_config_SetPsz
+void vlc_config_SetPsz(module_config_item_t *p_config, const char *psz_value, bool locked)
 {
-    module_config_item_t *p_config = vlc_config_FindItem( psz_name );
-
     /* sanity checks */
     assert(p_config != NULL);
     assert(IsConfigStringType(p_config->i_type));
@@ -158,10 +147,9 @@ void vlc_config_SetPsz(const char *psz_name, const char *psz_value, bool locked)
     free (oldstr);
 }
 
-void vlc_config_SetInt(const char *psz_name, int64_t i_value, bool locked)
+#undef vlc_config_SetInt
+void vlc_config_SetInt(module_config_item_t *p_config, int64_t i_value, bool locked)
 {
-    module_config_item_t *p_config = vlc_config_FindItem( psz_name );
-
     /* sanity checks */
     assert(p_config != NULL);
     assert(IsConfigIntegerBasedType(p_config->i_type));
@@ -177,10 +165,9 @@ void vlc_config_SetInt(const char *psz_name, int64_t i_value, bool locked)
     if (!locked) config_ReleaseLock();
 }
 
-void vlc_config_SetFloat(const char *psz_name, float f_value, bool locked)
+#undef vlc_config_SetFloat
+void vlc_config_SetFloat(module_config_item_t *p_config, float f_value, bool locked)
 {
-    module_config_item_t *p_config = vlc_config_FindItem( psz_name );
-
     /* sanity checks */
     assert(p_config != NULL);
     assert(IsConfigFloatType(p_config->i_type));
@@ -199,13 +186,12 @@ void vlc_config_SetFloat(const char *psz_name, float f_value, bool locked)
     if (!locked) config_ReleaseLock();
 }
 
-ssize_t config_GetIntChoices(const char *name,
+ssize_t vlc_config_GetIntChoices(module_config_item_t *cfg,
                              int64_t **restrict values, char ***restrict texts)
 {
     *values = NULL;
     *texts = NULL;
 
-    module_config_item_t *cfg = vlc_config_FindItem(name);
     assert(cfg != NULL);
 
     size_t count = cfg->list_count;
@@ -222,7 +208,7 @@ ssize_t config_GetIntChoices(const char *name,
 
         if (cfg->list.i_cb == NULL)
             return 0;
-        return cfg->list.i_cb(name, values, texts);
+        return cfg->list.i_cb(cfg->psz_name, values, texts);
     }
 
     int64_t *vals = vlc_alloc (count, sizeof (*vals));
@@ -319,12 +305,11 @@ error:
     return -1;
 }
 
-ssize_t config_GetPszChoices(const char *name,
+ssize_t vlc_config_GetPszChoices(module_config_item_t *cfg,
                              char ***restrict values, char ***restrict texts)
 {
     *values = *texts = NULL;
 
-    module_config_item_t *cfg = vlc_config_FindItem(name);
     if (cfg == NULL)
     {
         errno = ENOENT;
@@ -358,7 +343,7 @@ ssize_t config_GetPszChoices(const char *name,
 
         if (cfg->list.psz_cb == NULL)
             return 0;
-        return cfg->list.psz_cb(name, values, texts);
+        return cfg->list.psz_cb(cfg->psz_name, values, texts);
     }
 
     char **vals = malloc (sizeof (*vals) * count);

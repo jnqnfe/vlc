@@ -394,7 +394,7 @@ void ExtVideo::initComboBoxItems( QObject *widget )
     {
         int64_t *values;
         char **texts;
-        ssize_t count = config_GetIntChoices( qtu( option ), &values, &texts );
+        ssize_t count = vlc_config_GetNamedIntChoices( qtu( option ), &values, &texts );
         for( ssize_t i = 0; i < count; i++ )
         {
             combobox->addItem( qtr( texts[i] ), qlonglong(values[i]) );
@@ -407,7 +407,7 @@ void ExtVideo::initComboBoxItems( QObject *widget )
     {
         char **values;
         char **texts;
-        ssize_t count = config_GetPszChoices( qtu( option ), &values, &texts );
+        ssize_t count = vlc_config_GetNamedPszChoices( qtu( option ), &values, &texts );
         for( ssize_t i = 0; i < count; i++ )
         {
             combobox->addItem( qtr( texts[i] ), qfu(values[i]) );
@@ -427,7 +427,7 @@ void ExtVideo::setWidgetValue( QObject *widget )
     //std::cout << "Option name: " << option.toStdString() << std::endl;
 
     vlc_value_t val;
-    int i_type = config_GetType( qtu( option ) ) & VLC_VAR_CLASS;
+    int i_type = vlc_config_GetType_ByName( qtu( option ) ) & VLC_VAR_CLASS;
     switch( i_type )
     {
         case VLC_VAR_INTEGER:
@@ -501,7 +501,7 @@ void ExtVideo::setFilterOption( const char *psz_module, const char *psz_option,
 
     i_type = var_Type( p_vout.get(), psz_option );
     if( i_type == 0 )
-        i_type = config_GetType( psz_option );
+        i_type = vlc_config_GetType_ByName( psz_option );
 
     vlc_value_t val;
     i_type &= VLC_VAR_CLASS;
@@ -860,7 +860,7 @@ float FilterSliderData::initialValue()
     if ( ! vlc_config_FindItem( qtu(p_data->name) ) )
         return f;
 
-    f = config_GetFloat( qtu(p_data->name) );
+    f = vlc_config_GetNamedFloat( qtu(p_data->name) );
     return f;
 }
 
@@ -999,7 +999,7 @@ QStringList EqualizerSliderData::getBandsFromAout() const
     if ( ! vlc_config_FindItem( qtu(p_data->name) ) )
         return bands;
 
-    char *psz_bands = config_GetPsz( qtu(p_data->name) );
+    char *psz_bands = vlc_config_GetNamedPsz( qtu(p_data->name) );
     if ( psz_bands )
     {
         bands = QString( psz_bands ).split( " ", QString::SkipEmptyParts );
