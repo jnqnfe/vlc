@@ -344,6 +344,8 @@ VLC_API int config_SaveConfigFile( vlc_object_t * );
  *
  * This function resets all configuration items to their respective
  * compile-time default value.
+ *
+ * Note, locking is already done internally.
  */
 VLC_API void config_ResetAll(void);
 
