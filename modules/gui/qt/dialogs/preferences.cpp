@@ -60,7 +60,7 @@ PrefsDialog::PrefsDialog( QWidget *parent, intf_thread_t *_p_intf )
        consistency when reset */
     setAttribute( Qt::WA_DeleteOnClose );
 
-    p_list = NULL;
+    p_list = vlc_module_list_have_config( &count );
 
     QGridLayout *main_layout = new QGridLayout( this );
     setLayout( main_layout );
@@ -192,9 +192,6 @@ void PrefsDialog::setExpert()
     /* Lazy creation */
     if( !expert_tree )
     {
-        if ( !p_list )
-            p_list = vlc_module_list_have_config( &count );
-
         expert_tree_filter = new SearchLineEdit( expert_widget );
         expert_tree_filter->setMinimumHeight( 26 );
 
@@ -228,9 +225,6 @@ void PrefsDialog::setAdvanced()
     /* Lazy creation */
     if( !advanced_tree )
     {
-        if ( !p_list )
-            p_list = vlc_module_list_have_config( &count );
-
         tree_filter = new SearchLineEdit( advanced_tree_panel );
         tree_filter->setMinimumHeight( 26 );
 
