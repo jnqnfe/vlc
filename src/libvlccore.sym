@@ -71,6 +71,9 @@ config_ResetAll
 config_SaveConfigFile
 config_StringEscape
 config_StringUnescape
+vlc_config_GetWriteLock
+vlc_config_GetReadLock
+vlc_config_ReleaseLock
 date_Change
 date_Decrement
 date_Increment

@@ -153,6 +153,33 @@ struct module_config_item_t
 };
 
 /**
+ * Locks the config for writing
+ *
+ * Release with vlc_config_ReleaseLock().
+ *
+ * This is only necessary for attributes that can change during runtime, i.e.
+ * the value, (and where not already done internally by a function).
+ */
+VLC_API void vlc_config_GetWriteLock(void);
+
+/**
+ * Locks the config for reading
+ *
+ * Release with vlc_config_ReleaseLock().
+ *
+ * This is only necessary for attributes that can change during runtime, i.e.
+ * the value, (and where not already done internally by a function).
+ */
+VLC_API void vlc_config_GetReadLock(void);
+
+/**
+ * Releases the config read/write lock
+ *
+ * I.e. release the lock taken with vlc_config_GetWriteLock() or vlc_config_GetReadLock().
+ */
+VLC_API void vlc_config_ReleaseLock(void);
+
+/**
  * Gets a configuration item type in VLC_VAR_* form
  *
  * This function checks the type of configuration item by name.

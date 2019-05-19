@@ -41,6 +41,19 @@
 vlc_rwlock_t config_lock = VLC_STATIC_RWLOCK;
 bool config_dirty = false;
 
+void vlc_config_GetWriteLock()
+{
+    vlc_rwlock_wrlock (&config_lock);
+}
+void vlc_config_GetReadLock()
+{
+    vlc_rwlock_rdlock (&config_lock);
+}
+void vlc_config_ReleaseLock()
+{
+    vlc_rwlock_unlock (&config_lock);
+}
+
 static inline char *strdupnull (const char *src)
 {
     return src ? strdup (src) : NULL;
