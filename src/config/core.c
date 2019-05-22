@@ -75,12 +75,6 @@ int vlc_config_GetType(module_config_item_t *p_config)
     }
 }
 
-bool config_IsSafe( module_config_item_t *p_config )
-{
-    assert(p_config != NULL);
-    return p_config->b_safe;
-}
-
 #undef vlc_config_GetInt
 int64_t vlc_config_GetInt(module_config_item_t *p_config, bool locked)
 {

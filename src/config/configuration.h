@@ -21,6 +21,8 @@
 #ifndef LIBVLC_CONFIGURATION_H
 # define LIBVLC_CONFIGURATION_H 1
 
+#include <assert.h>
+
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -58,7 +60,11 @@ static inline void config_ReleaseLock()
     vlc_rwlock_unlock (&config_lock);
 }
 
-bool config_IsSafe (module_config_item_t *);
+static inline bool config_IsSafe( module_config_item_t *p_config )
+{
+    assert(p_config != NULL);
+    return p_config->b_safe;
+}
 #define config_IsSafe_ByName(n) config_IsSafe(vlc_config_FindItem(n))
 
 /**
