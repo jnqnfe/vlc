@@ -213,9 +213,6 @@ VLC_API int64_t vlc_config_GetInt(const char *name, bool locked) VLC_USED;
  *
  * \warning The configuration item must be of integer or boolean type.
  *
- * \note If no configuration item by the specified exist, the function has no
- * effects.
- *
  * \param name Configuration item name
  * \param val New value
  * \param locked If true, signals that you already hold the config write lock
@@ -249,9 +246,6 @@ VLC_API float vlc_config_GetFloat(const char *name, bool locked) VLC_USED;
  * floating point type (\ref CONFIG_ITEM_CLASS_FLOAT).
  *
  * \warning The configuration item must be of floating point type.
- *
- * \note If no configuration item by the specified exist, the function has no
- * effects.
  *
  * \param name Configuration item name
  * \param val New value
@@ -292,9 +286,6 @@ VLC_API char *vlc_config_GetPsz(const char *name, bool locked) VLC_USED VLC_MALL
  * string type (e.g. \ref CONFIG_ITEM_CLASS_STRING).
  *
  * \warning The configuration item must be of string type.
- *
- * \note If no configuration item by the specified exist, the function has no
- * effects.
  *
  * \param name Configuration item name
  * \param val New value (will be copied)
