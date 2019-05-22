@@ -285,6 +285,8 @@ VLC_API char *vlc_config_GetPsz(const char *name, bool locked) VLC_USED VLC_MALL
  * This function changes the current value of a configuration item of
  * string type (e.g. \ref CONFIG_ITEM_CLASS_STRING).
  *
+ * The provided string is copied (strdup()) and the existing string freed.
+ *
  * \warning The configuration item must be of string type.
  *
  * \param name Configuration item name
