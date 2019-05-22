@@ -270,11 +270,50 @@ module_config_item_t *module_config_get(const module_t *module, unsigned *restri
 }
 
 /**
+ * Gets references to the set of module configuration items.
+ *
+ * Unlike vlc_module_config_get_ext() which returns *copies* of the config
+ * items, this returns a set of references to the real items. Beware the below
+ * warning regarding modifications.
+ *
+ * \note Most users of this function will not be interested in 'private'
+ * options (those not displayed in the GUI, like --help), nor obsolete items.
+ * You can filter those out using true for both of the latter parameters, or
+ * use the vlc_module_config_get_refs() convenience macro.
+ *
+ * \note Use vlc_module_config_refs_free() to release the allocated memory.
+ *
+ * \warning Config items should **never** be modified except for their *value*
+ * attribute, and any change to the *value* attribute should be done with the
+ * config lock held (for writing), which can either be done explicitly with
+ * vlc_config_GetWriteLock(), or implicitly through the vlc_config_Set*()
+ * functions.
+ *
+ * \param module the module
+ * \param psize the size of the configuration returned
+ * \param fpriv whether or not to filter private options (true = filtered out)
+ * \param fobs whether or not to filter obsolete options (true = filtered out)
+ * \return a pointer to the ref set as an array, or NULL if the module has no
+ * config items
+ */
+VLC_API module_config_item_t **vlc_module_config_get_refs_ext(const module_t *module,
+                                                              unsigned *restrict psize,
+                                                              bool fpriv, bool fobs) VLC_USED;
+#define vlc_module_config_get_refs(m, s) vlc_module_config_get_refs_ext(m, s, true, true)
+
+/**
  * Releases a configuration items table.
  *
  * \param tab base address of a table returned by vlc_module_config_get_ext()
  */
 VLC_API void module_config_free( module_config_item_t *tab);
+
+/**
+ * Releases a configuration item refs table.
+ *
+ * \param tab base address of a table returned by vlc_module_config_get_refs_ext()
+ */
+VLC_API void vlc_module_config_refs_free( module_config_item_t **tab);
 
 /**
  * Frees a list of VLC modules.

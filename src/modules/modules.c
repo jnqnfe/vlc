@@ -356,7 +356,51 @@ module_config_item_t *vlc_module_config_get_ext( const module_t *module,
     return config;
 }
 
+module_config_item_t **vlc_module_config_get_refs_ext( const module_t *module,
+                                                       unsigned *restrict psize,
+                                                       bool fpriv, bool fobs )
+{
+    const vlc_plugin_t *plugin = module->plugin;
+
+    assert( psize != NULL );
+    *psize = 0;
+
+    if (plugin->module != module)
+    {   /* For backward compatibility, pretend non-first modules have no
+         * configuration items. */
+        return NULL;
+    }
+
+    size_t size = plugin->conf.size;
+    if (size == 0)
+        return NULL;
+
+    module_config_item_t **config = vlc_alloc( size, sizeof( *config ) );
+    if( !config )
+        return NULL;
+
+    unsigned i, j;
+    for( i = 0, j = 0; i < size; i++ )
+    {
+        module_config_item_t *item = plugin->conf.items + i;
+        if( fpriv && item->b_internal ) /* internal option */
+            continue;
+        if( fobs && item->b_removed ) /* removed option */
+            continue;
+
+        config[j++] = item;
+    }
+    *psize = j;
+
+    return config;
+}
+
 void module_config_free( module_config_item_t *config )
+{
+    free( config );
+}
+
+void vlc_module_config_refs_free( module_config_item_t **config )
 {
     free( config );
 }
