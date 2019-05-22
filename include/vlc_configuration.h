@@ -361,6 +361,11 @@ VLC_API void config_ResetAll(void);
  * Where possible, this should be avoided in favor of more specific function
  * calls.
  *
+ * \warning Config items should **never** be modified except for their *value*
+ * attribute, and any change to the *value* attribute should be done with the
+ * config lock held (for writing), which can either be done explicitly with
+ * config_GetWriteLock(), or implicitly through the config_Put*() functions.
+ *
  * \param name Configuration item name
  * \return The internal structure, or NULL if not found.
  */
