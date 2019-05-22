@@ -153,7 +153,7 @@ struct module_config_item_t
 };
 
 /**
- * Gets a configuration item type
+ * Gets a configuration item type in VLC_VAR_* form
  *
  * This function checks the type of configuration item by name.
  * \param name Configuration item name
