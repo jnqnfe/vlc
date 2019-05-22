@@ -271,7 +271,7 @@ VLC_API void vlc_config_SetFloat(const char *name, float val, bool locked);
  * \param name Configuration item name
  * \param locked If true, signals that you already hold the config read lock
  * \return Normally, a heap-allocated copy of the configuration item value.
- * If the value is the empty string, if the configuration does not exist,
+ * If the value is the empty string,
  * or if an error occurs, NULL is returned.
  * \bug The empty string value cannot be distinguished from an error.
  */
