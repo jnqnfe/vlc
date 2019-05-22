@@ -194,8 +194,7 @@ VLC_API int config_GetType(const char *name) VLC_USED;
  * This function retrieves the current value of a configuration item of
  * integral type (\ref CONFIG_ITEM_CLASS_INTEGER and \ref CONFIG_ITEM_CLASS_BOOL).
  *
- * \warning The behaviour is undefined if the configuration item exists but is
- * not of integer or boolean type.
+ * \warning The configuration item must be of integer or boolean type.
  *
  * \param name Configuration item name
  * \param locked If true, signals that you already hold the config read lock
@@ -212,8 +211,7 @@ VLC_API int64_t vlc_config_GetInt(const char *name, bool locked) VLC_USED;
  * This function changes the current value of a configuration item of
  * integral type (\ref CONFIG_ITEM_CLASS_INTEGER and \ref CONFIG_ITEM_CLASS_BOOL).
  *
- * \warning The behaviour is undefined if the configuration item exists but is
- * not of integer or boolean type.
+ * \warning The configuration item must be of integer or boolean type.
  *
  * \note If no configuration item by the specified exist, the function has no
  * effects.
@@ -232,8 +230,7 @@ VLC_API void vlc_config_SetInt(const char *name, int64_t val, bool locked);
  * This function retrieves the current value of a configuration item of
  * floating point type (\ref CONFIG_ITEM_CLASS_FLOAT).
  *
- * \warning The behaviour is undefined if the configuration item exists but is
- * not of floating point type.
+ * \warning The configuration item must be of floating point type.
  *
  * \param name Configuration item name
  * \param locked If true, signals that you already hold the config read lock
@@ -251,8 +248,7 @@ VLC_API float vlc_config_GetFloat(const char *name, bool locked) VLC_USED;
  * This function changes the current value of a configuration item of
  * floating point type (\ref CONFIG_ITEM_CLASS_FLOAT).
  *
- * \warning The behaviour is undefined if the configuration item exists but is
- * not of floating point type.
+ * \warning The configuration item must be of floating point type.
  *
  * \note If no configuration item by the specified exist, the function has no
  * effects.
@@ -276,8 +272,7 @@ VLC_API void vlc_config_SetFloat(const char *name, float val, bool locked);
  * current value internally as it can be modified at any time by any other
  * thread.
  *
- * \warning The behaviour is undefined if the configuration item exists but is
- * not of string type.
+ * \warning The configuration item must be of string type.
  *
  * \param name Configuration item name
  * \param locked If true, signals that you already hold the config read lock
@@ -296,8 +291,7 @@ VLC_API char *vlc_config_GetPsz(const char *name, bool locked) VLC_USED VLC_MALL
  * This function changes the current value of a configuration item of
  * string type (e.g. \ref CONFIG_ITEM_CLASS_STRING).
  *
- * \warning The behaviour is undefined if the configuration item exists but is
- * not of a string type.
+ * \warning The configuration item must be of string type.
  *
  * \note If no configuration item by the specified exist, the function has no
  * effects.
