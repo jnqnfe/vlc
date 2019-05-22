@@ -162,7 +162,7 @@ struct module_config_item_t
 VLC_API int config_GetType(const char *name) VLC_USED;
 
 /**
- * Gets an integer configuration item.
+ * Gets an integer configuration item's value.
  *
  * This function retrieves the current value of a configuration item of
  * integral type (\ref CONFIG_ITEM_CLASS_INTEGER and \ref CONFIG_ITEM_CLASS_BOOL).
@@ -177,7 +177,7 @@ VLC_API int config_GetType(const char *name) VLC_USED;
 VLC_API int64_t config_GetInt(const char *name) VLC_USED;
 
 /**
- * Sets an integer configuration item.
+ * Sets an integer configuration item's value.
  *
  * This function changes the current value of a configuration item of
  * integral type (\ref CONFIG_ITEM_CLASS_INTEGER and \ref CONFIG_ITEM_CLASS_BOOL).
@@ -194,7 +194,7 @@ VLC_API int64_t config_GetInt(const char *name) VLC_USED;
 VLC_API void config_PutInt(const char *name, int64_t val);
 
 /**
- * Gets an floating point configuration item.
+ * Gets a floating point configuration item's value.
  *
  * This function retrieves the current value of a configuration item of
  * floating point type (\ref CONFIG_ITEM_CLASS_FLOAT).
@@ -210,7 +210,7 @@ VLC_API void config_PutInt(const char *name, int64_t val);
 VLC_API float config_GetFloat(const char *name) VLC_USED;
 
 /**
- * Sets an floating point configuration item.
+ * Sets a floating point configuration item's value.
  *
  * This function changes the current value of a configuration item of
  * floating point type (\ref CONFIG_ITEM_CLASS_FLOAT).
@@ -227,7 +227,7 @@ VLC_API float config_GetFloat(const char *name) VLC_USED;
 VLC_API void config_PutFloat(const char *name, float val);
 
 /**
- * Gets an string configuration item.
+ * Gets a string configuration item's value.
  *
  * This function retrieves the current value of a configuration item of
  * string type (\ref CONFIG_ITEM_CLASS_STRING).
@@ -249,7 +249,7 @@ VLC_API void config_PutFloat(const char *name, float val);
 VLC_API char *config_GetPsz(const char *name) VLC_USED VLC_MALLOC;
 
 /**
- * Sets an string configuration item.
+ * Sets a string configuration item's value.
  *
  * This function changes the current value of a configuration item of
  * string type (e.g. \ref CONFIG_ITEM_CLASS_STRING).
