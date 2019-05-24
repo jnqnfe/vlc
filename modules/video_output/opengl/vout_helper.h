@@ -81,7 +81,7 @@
     "Force a \"glconv\" module.")
 
 #define add_glopts() \
-    add_module("glconv", VLC_CAP_STR_GLCONV, NULL, GLCONV_TEXT, GLCONV_LONGTEXT) \
+    add_module("glconv", VLC_CAP_GLCONV, NULL, GLCONV_TEXT, GLCONV_LONGTEXT) \
     add_glopts_placebo ()
 
 typedef struct vout_display_opengl_t vout_display_opengl_t;

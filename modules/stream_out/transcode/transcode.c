@@ -150,7 +150,7 @@ vlc_plugin_begin ()
 
     set_subcategory( SUBCAT_SOUT_STREAM )
     set_section( N_("Video"), NULL )
-    add_module(SOUT_CFG_PREFIX "venc", VLC_CAP_STR_ENCODER, NULL,
+    add_module(SOUT_CFG_PREFIX "venc", VLC_CAP_ENCODER, NULL,
                VENC_TEXT, VENC_LONGTEXT)
     add_fourcc( SOUT_CFG_PREFIX "vcodec", NULL, VCODEC_TEXT,
                 VCODEC_LONGTEXT, false )
@@ -174,11 +174,11 @@ vlc_plugin_begin ()
                  MAXWIDTH_LONGTEXT, true )
     add_integer( SOUT_CFG_PREFIX "maxheight", 0, MAXHEIGHT_TEXT,
                  MAXHEIGHT_LONGTEXT, true )
-    add_module_list(SOUT_CFG_PREFIX "vfilter", VLC_CAP_STR_VIDEO_FILTER, NULL,
+    add_module_list(SOUT_CFG_PREFIX "vfilter", VLC_CAP_VIDEO_FILTER, NULL,
                     VFILTER_TEXT, VFILTER_LONGTEXT)
 
     set_section( N_("Audio"), NULL )
-    add_module(SOUT_CFG_PREFIX "aenc", VLC_CAP_STR_ENCODER, NULL,
+    add_module(SOUT_CFG_PREFIX "aenc", VLC_CAP_ENCODER, NULL,
                AENC_TEXT, AENC_LONGTEXT)
     add_fourcc( SOUT_CFG_PREFIX "acodec", NULL, ACODEC_TEXT,
                 ACODEC_LONGTEXT, false )
@@ -192,16 +192,16 @@ vlc_plugin_begin ()
     add_integer( SOUT_CFG_PREFIX "samplerate", 0, ARATE_TEXT,
                  ARATE_LONGTEXT, true )
         change_integer_range( 0, 48000 )
-    add_module_list(SOUT_CFG_PREFIX "afilter",  VLC_CAP_STR_AUDIO_FILTER, NULL,
+    add_module_list(SOUT_CFG_PREFIX "afilter", VLC_CAP_AUDIO_FILTER, NULL,
                     AFILTER_TEXT, AFILTER_LONGTEXT)
 
     set_section( N_("Overlays/Subtitles"), NULL )
-    add_module(SOUT_CFG_PREFIX "senc", VLC_CAP_STR_ENCODER, NULL,
+    add_module(SOUT_CFG_PREFIX "senc", VLC_CAP_ENCODER, NULL,
                SENC_TEXT, SENC_LONGTEXT)
     add_fourcc( SOUT_CFG_PREFIX "scodec", NULL, SCODEC_TEXT,
                 SCODEC_LONGTEXT, false )
     add_bool( SOUT_CFG_PREFIX "soverlay", false, SOVERLAY_TEXT, NULL, false )
-    add_module_list(SOUT_CFG_PREFIX "sfilter", VLC_CAP_STR_SUB_SOURCE, NULL,
+    add_module_list(SOUT_CFG_PREFIX "sfilter", VLC_CAP_SUB_SOURCE, NULL,
                     SFILTER_TEXT, SFILTER_LONGTEXT)
 
     set_section( N_("Miscellaneous"), NULL )

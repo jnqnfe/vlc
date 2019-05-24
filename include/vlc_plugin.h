@@ -37,7 +37,7 @@
 /**
  * Current plugin ABI version
  */
-#define PLUGIN_ABI_VERSION 4_0_13
+#define PLUGIN_ABI_VERSION 4_0_14
 
 /* Descriptor callback actions, ignore this! */
 enum vlc_plugin_desc_actions
@@ -422,7 +422,8 @@ typedef union
     struct {
         uint16_t type;
         const char *name;
-        const char *cap; /* string form of capability it relates to */
+        enum vlc_module_cap cap; /* capability it relates to */
+        const char *capcustom; /* string form of custom capability it relates to */
         enum vlc_config_subcat subcategory; /* for a special core-only selection method */
         module_value_t default_val;
         const char *text;
@@ -510,13 +511,14 @@ typedef union
     } }; \
     add_common_type_inner()
 
-#define add_module_inner( _name, subtype, _cap, _subcategory, default, _text, _longtext ) \
+#define add_module_inner( _name, subtype, _cap, _capcustom, _subcategory, default, _text, _longtext ) \
 { \
     const char *_str = (default); \
     cfg_params = (config_item_params_t) { .mod_select_item = { \
         .type = (subtype), \
         .name = (_name), \
         .cap = (_cap), \
+        .capcustom = (_capcustom), \
         .subcategory = (_subcategory), \
         .default_val = { .psz = (char*)_str }, \
         .text = (_text), \
@@ -627,18 +629,24 @@ typedef union
 /* Module selection option items */
 
 #define add_module( name, cap, default, text, longtext ) \
-    add_module_inner( name, CONFIG_ITEM_MODULE, cap, 0, default, text, longtext )
+    add_module_inner( name, CONFIG_ITEM_MODULE, cap, NULL, 0, default, text, longtext )
 
 #define add_module_list( name, cap, default, text, longtext ) \
-    add_module_inner( name, CONFIG_ITEM_MODULE_LIST, cap, 0, default, text, longtext )
+    add_module_inner( name, CONFIG_ITEM_MODULE_LIST, cap, NULL, 0, default, text, longtext )
+
+#define add_module_customcap( name, cap, default, text, longtext ) \
+    add_module_inner( name, CONFIG_ITEM_MODULE, VLC_CAP_CUSTOM, cap, 0, default, text, longtext )
+
+#define add_module_list_customcap( name, cap, default, text, longtext ) \
+    add_module_inner( name, CONFIG_ITEM_MODULE_LIST, VLC_CAP_CUSTOM, cap, 0, default, text, longtext )
 
 /* private to core, for special selection via 'category' use */
 #ifndef __PLUGIN__
 #define add_module_cat( name, subcategory, default, text, longtext ) \
-    add_module_inner( name, CONFIG_ITEM_MODULE_CAT, NULL, subcategory, default, text, longtext )
+    add_module_inner( name, CONFIG_ITEM_MODULE_CAT, VLC_CAP_INVALID, NULL, subcategory, default, text, longtext )
 
 #define add_module_list_cat( name, subcategory, default, text, longtext ) \
-    add_module_inner( name, CONFIG_ITEM_MODULE_LIST_CAT, NULL, subcategory, default, text, longtext )
+    add_module_inner( name, CONFIG_ITEM_MODULE_LIST_CAT, VLC_CAP_INVALID, NULL, subcategory, default, text, longtext )
 #endif
 
 /* For removed options */

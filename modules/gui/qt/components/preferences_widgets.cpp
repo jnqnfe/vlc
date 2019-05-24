@@ -840,8 +840,8 @@ void ModuleListConfigControl::finish( bool bycat )
             }
             module_config_free (p_config);
         }
-        else if( vlc_module_provides( p_module, vlc_module_cap_from_textid( p_item->min.psz ),
-                                  p_item->min.psz ) )
+        else if( vlc_module_provides( p_module, (enum vlc_module_cap) p_item->min.i,
+                                      p_item->max.psz ) )
         {
             checkbox_lists(p_module);
         }

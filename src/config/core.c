@@ -240,11 +240,12 @@ error:
 }
 
 
-static ssize_t config_ListModules (const char *cap, char ***restrict values,
+static ssize_t config_ListModules (enum vlc_module_cap cap, const char *custom_cap,
+                                   char ***restrict values,
                                    char ***restrict texts)
 {
     module_t **list;
-    ssize_t n = vlc_module_list_cap_ext (&list, vlc_module_cap_from_textid(cap), cap);
+    ssize_t n = vlc_module_list_cap_ext (&list, cap, custom_cap);
     if (unlikely(n < 0))
     {
         *values = *texts = NULL;
@@ -314,7 +315,8 @@ ssize_t vlc_config_GetPszChoices(module_config_item_t *cfg,
     switch (cfg->i_type)
     {
         case CONFIG_ITEM_MODULE:
-            return config_ListModules (cfg->min.psz, values, texts);
+            return config_ListModules( (enum vlc_module_cap) cfg->min.i,
+                                       cfg->max.psz, values, texts );
         default:
             if (!IsConfigStringType (cfg->i_type))
             {

@@ -310,14 +310,37 @@ static int vlc_plugin_desc_cb(vlc_plugin_t *plugin, enum vlc_plugin_desc_actions
                     }
                     break;
                 case VLC_CONFIG_CREATE_MOD_SELECT:
-                    type =
-                    new_item->i_type = params->mod_select_item.type;
-                    new_item->psz_name = params->mod_select_item.name;
+                    type = params->mod_select_item.type;
+
                     if (type != CONFIG_ITEM_MODULE_CAT && type != CONFIG_ITEM_MODULE_LIST_CAT)
-                        new_item->min.psz = params->mod_select_item.cap;
-                    else
+                    {
+                        if (unlikely(params->mod_select_item.cap != VLC_CAP_CUSTOM &&
+                                     !vlc_module_int_is_valid_cap((int)params->mod_select_item.cap)))
+                        {
+                            print_config_error(_("invalid capability"));
+                            ret = -1;
+                        }
+                        if (unlikely(params->mod_select_item.cap == VLC_CAP_CUSTOM &&
+                                     (params->mod_select_item.capcustom == NULL ||
+                                      *params->mod_select_item.capcustom == '\0')))
+                        {
+                            print_config_error(_("invalid custom capability"));
+                            ret = -1;
+                        }
+                        new_item->min.i = (int)params->mod_select_item.cap;
+                        new_item->max.psz = (char*)params->mod_select_item.capcustom;
+                    } else {
+                        if (unlikely(!vlc_config_IntSubcatIsValid((int)params->mod_select_item.subcategory)))
+                        {
+                            print_config_error(_("invalid subcategory"));
+                            ret = -1;
+                        }
                         new_item->min.i = params->mod_select_item.subcategory;
-                    new_item->max.i = 0;
+                        new_item->max.i = 0;
+                    }
+
+                    new_item->i_type = type;
+                    new_item->psz_name = params->mod_select_item.name;
                     new_item->psz_text = params->mod_select_item.text;
                     new_item->psz_longtext = params->mod_select_item.longtext;
                     break;

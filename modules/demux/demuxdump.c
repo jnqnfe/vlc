@@ -47,7 +47,7 @@ vlc_plugin_begin ()
     add_shortcut( "dump" )
 
     set_subcategory( SUBCAT_INPUT_DEMUX )
-    add_module("demuxdump-access", VLC_CAP_STR_SOUT_ACCESS, "file",
+    add_module("demuxdump-access", VLC_CAP_SOUT_ACCESS, "file",
                ACCESS_TEXT, NULL)
     add_savefile("demuxdump-file", "stream-demux.dump",
                  FILE_TEXT, FILE_LONGTEXT)

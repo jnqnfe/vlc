@@ -53,7 +53,7 @@ vlc_plugin_begin ()
     set_capability (VLC_CAP_VOUT_DISPLAY, 265, Open, Close)
 
     set_subcategory (SUBCAT_VIDEO_VOUT)
-    add_module("gles2", "opengl es2", NULL, GLES2_TEXT, PROVIDER_LONGTEXT)
+    add_module_customcap("gles2", "opengl es2", NULL, GLES2_TEXT, PROVIDER_LONGTEXT)
 
 #else
 
@@ -64,7 +64,7 @@ vlc_plugin_begin ()
     set_capability (VLC_CAP_VOUT_DISPLAY, 270, Open, Close)
 
     set_subcategory (SUBCAT_VIDEO_VOUT)
-    add_module("gl", VLC_CAP_STR_OPENGL, NULL, GL_TEXT, PROVIDER_LONGTEXT)
+    add_module("gl", VLC_CAP_OPENGL, NULL, GL_TEXT, PROVIDER_LONGTEXT)
 #endif
 
     add_glopts ()

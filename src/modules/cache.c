@@ -56,7 +56,7 @@
 #ifdef HAVE_DYNAMIC_PLUGINS
 /* Sub-version number
  * (only used to avoid breakage in dev version when cache structure changes) */
-#define CACHE_SUBVERSION_NUM 37
+#define CACHE_SUBVERSION_NUM 38
 
 /* Cache filename */
 #define CACHE_NAME "plugins.dat"
@@ -246,8 +246,12 @@ static int vlc_cache_load_config(module_config_item_t *cfg, block_t *file)
         if (cfg->i_type == CONFIG_ITEM_MODULE ||
             cfg->i_type == CONFIG_ITEM_MODULE_LIST)
         {
-            LOAD_STRING (psz);
-            cfg->min.psz = (char *)psz;
+            LOAD_IMMEDIATE (cfg->min.i);
+            if ((enum vlc_module_cap) cfg->min.i == VLC_CAP_CUSTOM)
+            {
+                LOAD_STRING (psz);
+                cfg->max.psz = (char *)psz;
+            }
         }
 
         if (cfg->list_count)
@@ -626,7 +630,9 @@ static int CacheSaveConfig (FILE *file, const module_config_item_t *cfg)
         if (cfg->i_type == CONFIG_ITEM_MODULE ||
             cfg->i_type == CONFIG_ITEM_MODULE_LIST)
         {
-            SAVE_STRING (cfg->min.psz);
+            SAVE_IMMEDIATE (cfg->min.i);
+            if ((enum vlc_module_cap) cfg->min.i == VLC_CAP_CUSTOM)
+                SAVE_STRING (cfg->max.psz);
         }
 
         if (cfg->list_count == 0)

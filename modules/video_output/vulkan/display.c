@@ -394,7 +394,7 @@ vlc_plugin_begin ()
     set_capability (VLC_CAP_VOUT_DISPLAY, 0, Open, Close)
 
     set_subcategory (SUBCAT_VIDEO_VOUT)
-    add_module ("vk", VLC_CAP_STR_VULKAN, NULL, VK_TEXT, PROVIDER_LONGTEXT)
+    add_module ("vk", VLC_CAP_VULKAN, NULL, VK_TEXT, PROVIDER_LONGTEXT)
 
     set_section("Scaling", NULL)
     add_integer("upscaler-preset", SCALE_BUILTIN,

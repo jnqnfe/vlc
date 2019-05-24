@@ -101,6 +101,7 @@ static void ParseOption(const module_config_item_t *item)
     std::string list;
     std::pair<mcmap::iterator, mcmap::iterator> range;
     std::pair<mumap::iterator, mumap::iterator> range_mod;
+    enum vlc_module_cap cap;
 
     if (item->b_removed)
         return;
@@ -108,7 +109,10 @@ static void ParseOption(const module_config_item_t *item)
     switch(item->i_type)
     {
     case CONFIG_ITEM_MODULE:
-        range_mod = capabilities.equal_range(item->min.psz ? item->min.psz : "");
+        cap = (enum vlc_module_cap) item->min.i;
+        range_mod = capabilities.equal_range(cap != VLC_CAP_CUSTOM ?
+                                             vlc_module_cap_get_textid(cap) :
+                                             item->max.psz ? item->max.psz : "");
         args = "(" + (*range_mod.first).second;
         while (range_mod.first++ != range_mod.second)
             args += " " + range_mod.first->second;
