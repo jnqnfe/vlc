@@ -251,6 +251,11 @@ VLC_USED static inline bool vlc_module_exists (const char * name)
  *
  * \note Use module_config_free() to release the allocated memory.
  *
+ * \warning This does **not** itself hold the config read lock whilst copying
+ * config items, you must hold it yourself. Also, this performs a simple memcpy
+ * of items only, thus just copying pointers of string values, so you must make
+ * a copy of them before releasing said lock.
+ *
  * \param module the module
  * \param psize the size of the configuration returned
  * \param fpriv whether or not to filter private options (true = filtered out)
