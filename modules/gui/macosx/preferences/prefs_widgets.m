@@ -881,7 +881,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
         case CONFIG_ITEM_MODULE_LIST:
         case CONFIG_ITEM_MODULE_LIST_CAT: {
             char *psz_val = [self stringValue];
-            config_PutPsz(psz_name, psz_val);
+            config_PutPsz_locked(psz_name, psz_val);
             free(psz_val);
             break;
         }
@@ -891,10 +891,10 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
             var_Set(vlc_object_instance(getIntf()), psz_name, val);
         case CONFIG_ITEM_INTEGER:
         case CONFIG_ITEM_BOOL:
-            config_PutInt(psz_name, [self intValue]);
+            config_PutInt_locked(psz_name, [self intValue]);
             break;
         case CONFIG_ITEM_FLOAT:
-            config_PutFloat(psz_name, [self floatValue]);
+            config_PutFloat_locked(psz_name, [self floatValue]);
             break;
     }
 }

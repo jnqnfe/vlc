@@ -220,9 +220,11 @@ enum VLCTreeBranchType {
 
 - (IBAction)savePrefs: (id)sender
 {
+    vlc_config_GetWriteLock();
     /* TODO: call savePrefs on Root item */
     [_rootTreeItem applyChanges];
     fixIntfSettings();
+    vlc_config_ReleaseLock();
     config_SaveConfigFile(getIntf());
     [[NSNotificationCenter defaultCenter] postNotificationName:VLCConfigurationChangedNotification object:nil];
     [self.window orderOut:self];
