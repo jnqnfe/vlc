@@ -907,7 +907,7 @@ void (var_DelListCallback)(vlc_object_t *p_this, const char *psz_name,
 void var_OptionParse( vlc_object_t *p_obj, const char *psz_option,
                       bool trusted )
 {
-    char *psz_opt, *psz_name, *psz_value;
+    const char *psz_opt, *psz_name, *psz_value;
     int  i_type;
     bool b_isno = false;
     vlc_value_t val;
@@ -922,14 +922,16 @@ void var_OptionParse( vlc_object_t *p_obj, const char *psz_option,
     if( !psz_option[0] )
         return;
 
-    psz_name = strdup( psz_option );
-    if( psz_name == NULL )
-        return;
-
-    psz_opt = psz_name;
-    psz_value = strchr( psz_name, '=' );
+    psz_name = psz_option;
+    psz_value = strchr( psz_option, '=' );
     if( psz_value != NULL )
-        *psz_value++ = '\0';
+    {
+        psz_name = strndup( psz_name, psz_value - psz_name );
+        if( psz_name == NULL )
+            return;
+        ++psz_value; /* skip the '=' */
+    }
+    psz_opt = psz_name;
 
     module_config_item_t *cfg = vlc_config_FindItem( psz_opt );
 
@@ -991,7 +993,7 @@ void var_OptionParse( vlc_object_t *p_obj, const char *psz_option,
         break;
 
     case VLC_VAR_STRING:
-        val.psz_string = psz_value;
+        val.psz_string = (char *) psz_value;
         break;
 
     default:
@@ -1001,7 +1003,8 @@ void var_OptionParse( vlc_object_t *p_obj, const char *psz_option,
     var_Set( p_obj, psz_opt, val );
 
 cleanup:
-    free( psz_name );
+    if( psz_value != NULL )
+        free( (char *) psz_name );
 }
 
 int (var_LocationParse)(vlc_object_t *obj, const char *mrl, const char *pref)
