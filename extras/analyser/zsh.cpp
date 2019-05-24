@@ -207,16 +207,16 @@ static void PrintModule(const module_t *mod)
     // although we are looking at the volatile value attribute here, we are
     // only doing so for subcat hint items, which are never changed (use of
     // the value attribute for them is considered a hack).
-    module_config_item_t *cfg_list = vlc_module_config_get_ext(mod, &cfg_size, false, true);
+    module_config_item_t **cfg_list = vlc_module_config_get_refs_ext(mod, &cfg_size, false, true);
 
     for (unsigned int j = 0; j < cfg_size; ++j)
     {
-        const module_config_item_t *cfg = cfg_list + j;
+        const module_config_item_t *cfg = (*cfg_list)[j];
         if (cfg->i_type == CONFIG_SUBCATEGORY)
             categories.insert(mcpair(cfg->value.i, name));
     }
 
-    module_config_free(cfg_list);
+    vlc_module_config_refs_free(cfg_list);
 
     if (mnames.find(name) == mnames.end())
     {
@@ -230,16 +230,16 @@ static void ParseModule(const module_t *mod)
     unsigned int cfg_size = 0;
     // Note, we deliberately ignore locking the config for reading here, since
     // we ignore all volatile attributes (value).
-    module_config_item_t *cfg_list = vlc_module_config_get_ext(mod, &cfg_size, false, true);
+    module_config_item_t **cfg_list = vlc_module_config_get_refs_ext(mod, &cfg_size, false, true);
 
     for (unsigned int j = 0; j < cfg_size; ++j)
     {
-        const module_config_item_t *cfg = cfg_list + j;
+        const module_config_item_t *cfg = (*cfg_list)[j];
         if (CONFIG_ITEM(cfg->i_type))
             ParseOption(cfg);
     }
 
-    module_config_free(cfg_list);
+    vlc_module_config_refs_free(cfg_list);
 }
 
 int main(int argc, const char **argv)
