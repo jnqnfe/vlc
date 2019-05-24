@@ -56,7 +56,7 @@
 #ifdef HAVE_DYNAMIC_PLUGINS
 /* Sub-version number
  * (only used to avoid breakage in dev version when cache structure changes) */
-#define CACHE_SUBVERSION_NUM 36
+#define CACHE_SUBVERSION_NUM 37
 
 /* Cache filename */
 #define CACHE_NAME "plugins.dat"
@@ -181,23 +181,73 @@ static int vlc_cache_load_align(size_t align, block_t *file)
 static int vlc_cache_load_config(module_config_item_t *cfg, block_t *file)
 {
     LOAD_IMMEDIATE (cfg->i_type);
-    LOAD_IMMEDIATE (cfg->i_short);
-    LOAD_FLAG (cfg->b_internal);
-    LOAD_FLAG (cfg->b_unsaveable);
-    LOAD_FLAG (cfg->b_safe);
-    LOAD_FLAG (cfg->b_removed);
-    LOAD_STRING (cfg->psz_type);
-    LOAD_STRING (cfg->psz_name);
-    LOAD_STRING (cfg->psz_text);
-    LOAD_STRING (cfg->psz_longtext);
-    LOAD_IMMEDIATE (cfg->list_count);
 
-    if (IsConfigStringType (cfg->i_type))
+    if (CONFIG_ITEM(cfg->i_type))
+    {
+        LOAD_IMMEDIATE (cfg->i_short);
+        LOAD_FLAG (cfg->b_internal);
+        LOAD_FLAG (cfg->b_unsaveable);
+        LOAD_FLAG (cfg->b_safe);
+        LOAD_FLAG (cfg->b_removed);
+        LOAD_STRING (cfg->psz_name);
+        LOAD_IMMEDIATE (cfg->list_count);
+    }
+
+    if (cfg->i_type != CONFIG_SUBCATEGORY)
+    {
+        LOAD_STRING (cfg->psz_text);
+        LOAD_STRING (cfg->psz_longtext);
+    }
+
+    switch (CONFIG_CLASS(cfg->i_type))
+    {
+    case CONFIG_ITEM_CLASS_SPECIAL:
+        LOAD_IMMEDIATE (cfg->orig.i);
+        break;
+    case CONFIG_ITEM_CLASS_INFO:
+        LOAD_IMMEDIATE (cfg->orig.b); /* likely unnecessary */
+        break;
+    case CONFIG_ITEM_CLASS_BOOL:
+        LOAD_IMMEDIATE (cfg->orig.b);
+        cfg->value.b = cfg->orig.b;
+        LOAD_IMMEDIATE (cfg->min.b);
+        LOAD_IMMEDIATE (cfg->max.b);
+        break;
+    case CONFIG_ITEM_CLASS_FLOAT:
+        LOAD_IMMEDIATE (cfg->orig.f);
+        cfg->value.f = cfg->orig.f;
+        LOAD_IMMEDIATE (cfg->min.f);
+        LOAD_IMMEDIATE (cfg->max.f);
+        break;
+    case CONFIG_ITEM_CLASS_INTEGER:
+        LOAD_IMMEDIATE (cfg->orig.i);
+        cfg->value.i = cfg->orig.i;
+        LOAD_IMMEDIATE (cfg->min.i);
+        LOAD_IMMEDIATE (cfg->max.i);
+
+        if (cfg->list_count > 0)
+        {
+            LOAD_ALIGNOF (*cfg->list.i);
+            cfg->list_cb_name = NULL;
+        }
+        else
+            LOAD_STRING (cfg->list_cb_name);
+
+        LOAD_ARRAY(cfg->list.i, cfg->list_count);
+
+        break;
+    case CONFIG_ITEM_CLASS_STRING:
     {
         const char *psz;
-        LOAD_STRING(psz);
+        LOAD_STRING (psz);
         cfg->orig.psz = (char *)psz;
         cfg->value.psz = (psz != NULL) ? strdup (cfg->orig.psz) : NULL;
+
+        if (cfg->i_type == CONFIG_ITEM_MODULE ||
+            cfg->i_type == CONFIG_ITEM_MODULE_LIST)
+        {
+            LOAD_STRING (cfg->psz_type);
+        }
 
         if (cfg->list_count)
         {
@@ -206,7 +256,7 @@ static int vlc_cache_load_config(module_config_item_t *cfg, block_t *file)
         }
         else
         {
-            LOAD_STRING(cfg->list_cb_name);
+            LOAD_STRING (cfg->list_cb_name);
             cfg->list.psz = NULL;
         }
         for (unsigned i = 0; i < cfg->list_count; i++)
@@ -216,22 +266,11 @@ static int vlc_cache_load_config(module_config_item_t *cfg, block_t *file)
              && (cfg->list.psz[i] = calloc (1, 1)) == NULL)
                 goto error;
         }
+        break;
     }
-    else
-    {
-        LOAD_IMMEDIATE (cfg->orig);
-        LOAD_IMMEDIATE (cfg->min);
-        LOAD_IMMEDIATE (cfg->max);
-        cfg->value = cfg->orig;
-
-        if (cfg->list_count)
-        {
-            LOAD_ALIGNOF(*cfg->list.i);
-        }
-        else
-            LOAD_STRING(cfg->list_cb_name);
-
-        LOAD_ARRAY(cfg->list.i, cfg->list_count);
+    case CONFIG_ITEM_CLASS_INVALID:
+    default:
+        unreachable();
     }
 
     cfg->list_text = (cfg->list_count) ? xmalloc (cfg->list_count * sizeof (char *)) : NULL;
@@ -528,42 +567,79 @@ static int CacheSaveAlign(FILE *file, size_t align)
 static int CacheSaveConfig (FILE *file, const module_config_item_t *cfg)
 {
     SAVE_IMMEDIATE (cfg->i_type);
-    SAVE_IMMEDIATE (cfg->i_short);
-    SAVE_FLAG (cfg->b_internal);
-    SAVE_FLAG (cfg->b_unsaveable);
-    SAVE_FLAG (cfg->b_safe);
-    SAVE_FLAG (cfg->b_removed);
-    SAVE_STRING (cfg->psz_type);
-    SAVE_STRING (cfg->psz_name);
-    SAVE_STRING (cfg->psz_text);
-    SAVE_STRING (cfg->psz_longtext);
-    SAVE_IMMEDIATE (cfg->list_count);
 
-    if (IsConfigStringType (cfg->i_type))
+    if (CONFIG_ITEM(cfg->i_type))
     {
-        SAVE_STRING (cfg->orig.psz);
-        if (cfg->list_count == 0)
-            SAVE_STRING(cfg->list_cb_name);
-
-        for (unsigned i = 0; i < cfg->list_count; i++)
-            SAVE_STRING (cfg->list.psz[i]);
+        SAVE_IMMEDIATE (cfg->i_short);
+        SAVE_FLAG (cfg->b_internal);
+        SAVE_FLAG (cfg->b_unsaveable);
+        SAVE_FLAG (cfg->b_safe);
+        SAVE_FLAG (cfg->b_removed);
+        SAVE_STRING (cfg->psz_name);
+        SAVE_IMMEDIATE (cfg->list_count);
     }
-    else
+
+    if (cfg->i_type != CONFIG_SUBCATEGORY)
     {
-        SAVE_IMMEDIATE (cfg->orig);
-        SAVE_IMMEDIATE (cfg->min);
-        SAVE_IMMEDIATE (cfg->max);
+        SAVE_STRING (cfg->psz_text);
+        SAVE_STRING (cfg->psz_longtext);
+    }
+
+    switch (CONFIG_CLASS(cfg->i_type))
+    {
+    case CONFIG_ITEM_CLASS_SPECIAL:
+        SAVE_IMMEDIATE (cfg->orig.i);
+        break;
+    case CONFIG_ITEM_CLASS_INFO:
+        SAVE_IMMEDIATE (cfg->orig.b); /* likely unnecessary */
+        break;
+    case CONFIG_ITEM_CLASS_BOOL:
+        SAVE_IMMEDIATE (cfg->orig.b);
+        SAVE_IMMEDIATE (cfg->min.b);
+        SAVE_IMMEDIATE (cfg->max.b);
+        break;
+    case CONFIG_ITEM_CLASS_FLOAT:
+        SAVE_IMMEDIATE (cfg->orig.f);
+        SAVE_IMMEDIATE (cfg->min.f);
+        SAVE_IMMEDIATE (cfg->max.f);
+        break;
+    case CONFIG_ITEM_CLASS_INTEGER:
+        SAVE_IMMEDIATE (cfg->orig.i);
+        SAVE_IMMEDIATE (cfg->min.i);
+        SAVE_IMMEDIATE (cfg->max.i);
 
         if (cfg->list_count > 0)
         {
-            SAVE_ALIGNOF(*cfg->list.i);
+            SAVE_ALIGNOF (*cfg->list.i);
         }
         else
-            SAVE_STRING(cfg->list_cb_name);
+            SAVE_STRING (cfg->list_cb_name);
 
         for (unsigned i = 0; i < cfg->list_count; i++)
-             SAVE_IMMEDIATE (cfg->list.i[i]);
+            SAVE_IMMEDIATE (cfg->list.i[i]);
+
+        break;
+    case CONFIG_ITEM_CLASS_STRING:
+        SAVE_STRING (cfg->orig.psz);
+
+        if (cfg->i_type == CONFIG_ITEM_MODULE ||
+            cfg->i_type == CONFIG_ITEM_MODULE_LIST)
+        {
+            SAVE_STRING (cfg->psz_type);
+        }
+
+        if (cfg->list_count == 0)
+            SAVE_STRING (cfg->list_cb_name);
+
+        for (unsigned i = 0; i < cfg->list_count; i++)
+            SAVE_STRING (cfg->list.psz[i]);
+
+        break;
+    case CONFIG_ITEM_CLASS_INVALID:
+    default:
+        unreachable();
     }
+
     for (unsigned i = 0; i < cfg->list_count; i++)
         SAVE_STRING (cfg->list_text[i]);
 
