@@ -314,7 +314,7 @@ ssize_t vlc_config_GetPszChoices(module_config_item_t *cfg,
     switch (cfg->i_type)
     {
         case CONFIG_ITEM_MODULE:
-            return config_ListModules (cfg->psz_type, values, texts);
+            return config_ListModules (cfg->min.psz, values, texts);
         default:
             if (!IsConfigStringType (cfg->i_type))
             {

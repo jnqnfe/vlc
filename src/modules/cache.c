@@ -246,7 +246,8 @@ static int vlc_cache_load_config(module_config_item_t *cfg, block_t *file)
         if (cfg->i_type == CONFIG_ITEM_MODULE ||
             cfg->i_type == CONFIG_ITEM_MODULE_LIST)
         {
-            LOAD_STRING (cfg->psz_type);
+            LOAD_STRING (psz);
+            cfg->min.psz = (char *)psz;
         }
 
         if (cfg->list_count)
@@ -625,7 +626,7 @@ static int CacheSaveConfig (FILE *file, const module_config_item_t *cfg)
         if (cfg->i_type == CONFIG_ITEM_MODULE ||
             cfg->i_type == CONFIG_ITEM_MODULE_LIST)
         {
-            SAVE_STRING (cfg->psz_type);
+            SAVE_STRING (cfg->min.psz);
         }
 
         if (cfg->list_count == 0)

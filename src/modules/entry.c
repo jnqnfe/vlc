@@ -313,8 +313,10 @@ static int vlc_plugin_desc_cb(vlc_plugin_t *plugin, enum vlc_plugin_desc_actions
                     type =
                     new_item->i_type = params->mod_select_item.type;
                     new_item->psz_name = params->mod_select_item.name;
-                    new_item->psz_type = params->mod_select_item.cap;
-                    new_item->min.i = params->mod_select_item.subcategory;
+                    if (type != CONFIG_ITEM_MODULE_CAT && type != CONFIG_ITEM_MODULE_LIST_CAT)
+                        new_item->min.psz = params->mod_select_item.cap;
+                    else
+                        new_item->min.i = params->mod_select_item.subcategory;
                     new_item->max.i = 0;
                     new_item->psz_text = params->mod_select_item.text;
                     new_item->psz_longtext = params->mod_select_item.longtext;

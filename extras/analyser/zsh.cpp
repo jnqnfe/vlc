@@ -108,7 +108,7 @@ static void ParseOption(const module_config_item_t *item)
     switch(item->i_type)
     {
     case CONFIG_ITEM_MODULE:
-        range_mod = capabilities.equal_range(item->psz_type ? item->psz_type : "");
+        range_mod = capabilities.equal_range(item->min.psz ? item->min.psz : "");
         args = "(" + (*range_mod.first).second;
         while (range_mod.first++ != range_mod.second)
             args += " " + range_mod.first->second;

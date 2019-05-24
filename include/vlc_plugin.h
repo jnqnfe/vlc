@@ -37,7 +37,7 @@
 /**
  * Current plugin ABI version
  */
-#define PLUGIN_ABI_VERSION 4_0_12
+#define PLUGIN_ABI_VERSION 4_0_13
 
 /* Descriptor callback actions, ignore this! */
 enum vlc_plugin_desc_actions

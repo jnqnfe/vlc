@@ -128,7 +128,6 @@ struct module_config_item_t
     bool        b_safe;       /**< Safe for web plugins and playlist files */
     bool        b_removed;    /**< Obsolete */
 
-    const char *psz_type; /**< Configuration subtype */
     const char *psz_name; /**< Option name */
     const char *psz_text; /**< Short comment on the configuration option */
     const char *psz_longtext; /**< Long comment on the configuration option */

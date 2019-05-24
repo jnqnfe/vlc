@@ -2017,7 +2017,7 @@ o_moduleenabled = [NSNumber numberWithBool:NO];\
             }
             module_config_free(p_configlist);
 
-        } else if (vlc_module_provides(p_module, vlc_module_cap_from_textid( p_item->psz_type ), p_item->psz_type)) {
+        } else if (vlc_module_provides(p_module, vlc_module_cap_from_textid( p_item->min.psz ), p_item->min.psz)) {
 
             NSString *o_modulelongname = toNSStr(vlc_module_GetLongName(p_module));
             NSString *o_modulename = toNSStr(module_get_object(p_module));
