@@ -65,7 +65,6 @@ static inline bool config_IsSafe( module_config_item_t *p_config )
     assert(p_config != NULL);
     return p_config->b_safe;
 }
-#define config_IsSafe_ByName(n) config_IsSafe(vlc_config_FindItem(n))
 
 /**
  * Gets the arch-specific installation directory.

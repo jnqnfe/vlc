@@ -930,8 +930,9 @@ void var_OptionParse( vlc_object_t *p_obj, const char *psz_option,
     if( psz_value != NULL )
         *psz_value++ = '\0';
 
-    i_type = vlc_config_GetType_ByName( psz_name );
-    if( !i_type && !psz_value )
+    module_config_item_t *cfg = vlc_config_FindItem( psz_name );
+
+    if( !cfg && !psz_value )
     {
         /* check for "no-foo" or "nofoo" */
         if( !strncmp( psz_name, "no-", 3 ) )
@@ -945,15 +946,16 @@ void var_OptionParse( vlc_object_t *p_obj, const char *psz_option,
         else goto cleanup;           /* Option doesn't exist */
 
         b_isno = true;
-        i_type = vlc_config_GetType_ByName( psz_name );
+        cfg = vlc_config_FindItem( psz_name );
     }
-    if( !i_type ) goto cleanup; /* Option doesn't exist */
+    if ( !cfg ) goto cleanup; /* Option doesn't exist */
 
+    i_type = vlc_config_GetType( cfg );
     if( ( i_type != VLC_VAR_BOOL ) &&
         ( !psz_value || !*psz_value ) ) goto cleanup; /* Invalid value */
 
     /* check if option is unsafe */
-    if( !trusted && !config_IsSafe_ByName( psz_name ) )
+    if( !trusted && !config_IsSafe( cfg ) )
     {
         msg_Err( p_obj, "unsafe option \"%s\" has been ignored for "
                         "security reasons", psz_name );
