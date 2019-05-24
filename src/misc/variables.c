@@ -907,7 +907,7 @@ void (var_DelListCallback)(vlc_object_t *p_this, const char *psz_name,
 void var_OptionParse( vlc_object_t *p_obj, const char *psz_option,
                       bool trusted )
 {
-    char *psz_name, *psz_value;
+    char *psz_opt, *psz_name, *psz_value;
     int  i_type;
     bool b_isno = false;
     vlc_value_t val;
@@ -926,27 +926,25 @@ void var_OptionParse( vlc_object_t *p_obj, const char *psz_option,
     if( psz_name == NULL )
         return;
 
+    psz_opt = psz_name;
     psz_value = strchr( psz_name, '=' );
     if( psz_value != NULL )
         *psz_value++ = '\0';
 
-    module_config_item_t *cfg = vlc_config_FindItem( psz_name );
+    module_config_item_t *cfg = vlc_config_FindItem( psz_opt );
 
     if( !cfg && !psz_value )
     {
         /* check for "no-foo" or "nofoo" */
         if( !strncmp( psz_name, "no-", 3 ) )
-        {
-            memmove( psz_name, psz_name + 3, strlen(psz_name) + 1 - 3 );
-        }
+            psz_opt += 3;
         else if( !strncmp( psz_name, "no", 2 ) )
-        {
-            memmove( psz_name, psz_name + 2, strlen(psz_name) + 1 - 2 );
-        }
-        else goto cleanup;           /* Option doesn't exist */
+            psz_opt += 2;
+        else
+            goto cleanup; /* Option doesn't exist */
 
         b_isno = true;
-        cfg = vlc_config_FindItem( psz_name );
+        cfg = vlc_config_FindItem( psz_opt );
     }
     if ( !cfg ) goto cleanup; /* Option doesn't exist */
 
@@ -958,15 +956,14 @@ void var_OptionParse( vlc_object_t *p_obj, const char *psz_option,
     if( !trusted && !config_IsSafe( cfg ) )
     {
         msg_Err( p_obj, "unsafe option \"%s\" has been ignored for "
-                        "security reasons", psz_name );
-        free( psz_name );
-        return;
+                        "security reasons", psz_opt );
+        goto cleanup;
     }
 
     /* Create the variable in the input object.
      * Children of the input object will be able to retrieve this value
      * thanks to the inheritance property of the object variables. */
-    var_Create( p_obj, psz_name, i_type );
+    var_Create( p_obj, psz_opt, i_type );
 
     switch( i_type )
     {
@@ -1001,7 +998,7 @@ void var_OptionParse( vlc_object_t *p_obj, const char *psz_option,
         goto cleanup;
     }
 
-    var_Set( p_obj, psz_name, val );
+    var_Set( p_obj, psz_opt, val );
 
 cleanup:
     free( psz_name );
