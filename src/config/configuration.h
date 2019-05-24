@@ -44,6 +44,20 @@ void config_UnsortConfig (void);
 extern vlc_rwlock_t config_lock;
 extern bool config_dirty;
 
+/* internal inline impls */
+static inline void config_GetWriteLock()
+{
+    vlc_rwlock_wrlock (&config_lock);
+}
+static inline void config_GetReadLock()
+{
+    vlc_rwlock_rdlock (&config_lock);
+}
+static inline void config_ReleaseLock()
+{
+    vlc_rwlock_unlock (&config_lock);
+}
+
 bool config_IsSafe (const char *);
 
 /**
