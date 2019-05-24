@@ -956,7 +956,7 @@ void var_OptionParse( vlc_object_t *p_obj, const char *psz_option,
     if( !trusted && !config_IsSafe( cfg ) )
     {
         msg_Err( p_obj, "unsafe option \"%s\" has been ignored for "
-                        "security reasons", psz_opt );
+                        "security reasons", psz_name );
         goto cleanup;
     }
 
