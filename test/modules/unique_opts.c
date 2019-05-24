@@ -59,9 +59,9 @@ typedef struct
 {
     size_t l_count;
     size_t s_count;
-    long_t* l_opts;
-    short_t* s_opts;
-    module_config_item_t** sets;
+    long_t *l_opts;
+    short_t *s_opts;
+    module_config_item_t ***sets;
     size_t set_count;
 } data_t;
 
@@ -142,7 +142,7 @@ static int build_lists(data_t* data)
         unsigned c1 = 0, c2 = 0; //c2 includes boolean negatives
         // Note, we deliberately ignore locking the config for reading here,
         // since we ignore all volatile attributes (value).
-        module_config_item_t* config = vlc_module_config_get_ext(mod_list[i], &c1, false, false);
+        module_config_item_t **config = vlc_module_config_get_refs_ext(mod_list[i], &c1, false, false);
         data->sets[i] = config;
         c2 = c1;
 
@@ -155,7 +155,7 @@ static int build_lists(data_t* data)
         // Check for booleans, for which we will want an extra entry
         for (unsigned j = 0; j < c1; j++)
         {
-            if (config[j].i_type == CONFIG_ITEM_CLASS_BOOL)
+            if (config[j]->i_type == CONFIG_ITEM_CLASS_BOOL)
                 c2++;
         }
 
@@ -171,7 +171,7 @@ static int build_lists(data_t* data)
             if (temp == NULL)
             {
                 fprintf(stderr, "ERROR: FAILED TO REALLOC\n");
-                module_config_free(config);
+                vlc_module_config_refs_free(config);
                 module_list_free(mod_list);
                 return -1;
             }
@@ -181,59 +181,59 @@ static int build_lists(data_t* data)
         for (unsigned j = 0; j < c1; j++)
         {
             // Skip over special cat/subcat/hint type entries
-            if (!CONFIG_ITEM(config[j].i_type))
+            if (!CONFIG_ITEM(config[j]->i_type))
                 continue;
 
             long_t* l_entry = &(data->l_opts)[(data->l_count)++];
-            l_entry->name = strdup(config[j].psz_name);
+            l_entry->name = strdup(config[j]->psz_name);
             l_entry->mod = mod_list[i];
             l_entry->negative = false;
-            l_entry->obsolete = config[j].b_removed;
+            l_entry->obsolete = config[j]->b_removed;
             l_entry->set_idx = i;
             l_entry->opt_idx = j;
 
             if (l_entry->name == NULL)
             {
                 fprintf(stderr, "ERROR: FAILED TO ALLOCATE STRING\n");
-                module_config_free(config);
+                vlc_module_config_refs_free(config);
                 module_list_free(mod_list);
                 return -1;
             }
 
             // Add --no-foo
-            if (config[j].i_type == CONFIG_ITEM_CLASS_BOOL)
+            if (config[j]->i_type == CONFIG_ITEM_CLASS_BOOL)
             {
                 l_entry = &(data->l_opts)[(data->l_count)++];
-                if (asprintf(&l_entry->name, "no-%s", config[j].psz_name) == -1)
+                if (asprintf(&l_entry->name, "no-%s", config[j]->psz_name) == -1)
                 {
                     fprintf(stderr, "ERROR: FAILED TO ALLOCATE STRING\n");
-                    module_config_free(config);
+                    vlc_module_config_refs_free(config);
                     module_list_free(mod_list);
                     return -1;
                 }
                 l_entry->mod = mod_list[i];
                 l_entry->negative = true;
-                l_entry->obsolete = config[j].b_removed;
+                l_entry->obsolete = config[j]->b_removed;
                 l_entry->set_idx = i;
                 l_entry->opt_idx = j;
             }
 
             //deal with short option if present
-            if (config[j].i_short != '\0')
+            if (config[j]->i_short != '\0')
             {
                 //alloc some more space (there are so few we will just do one at a time on demand
                 short_t* temp = realloc(data->s_opts, (data->s_count + 1) * sizeof(*temp));
                 if (temp == NULL)
                 {
                     fprintf(stderr, "ERROR: FAILED TO REALLOC\n");
-                    module_config_free(config);
+                    vlc_module_config_refs_free(config);
                     module_list_free(mod_list);
                     return -1;
                 }
                 data->s_opts = temp;
 
                 short_t* s_entry = &(data->s_opts)[(data->s_count)++];
-                s_entry->ch = config[j].i_short;
+                s_entry->ch = config[j]->i_short;
                 s_entry->mod = mod_list[i];
                 s_entry->set_idx = i;
                 s_entry->opt_idx = j;
@@ -248,12 +248,12 @@ static int build_lists(data_t* data)
 
 static inline module_config_item_t *get_option_long(data_t *data, size_t index)
 {
-    return &data->sets[data->l_opts[index].set_idx][data->l_opts[index].opt_idx];
+    return data->sets[data->l_opts[index].set_idx][data->l_opts[index].opt_idx];
 }
 
 static inline module_config_item_t *get_option_short(data_t *data, size_t index)
 {
-    return &data->sets[data->s_opts[index].set_idx][data->s_opts[index].opt_idx];
+    return data->sets[data->s_opts[index].set_idx][data->s_opts[index].opt_idx];
 }
 
 /* returns true if problem identified worthy of test failure (error worthy, not just warn condition) */
@@ -489,7 +489,7 @@ destroy:
     {
         for (size_t i = 0; i < data.set_count; i++)
         {
-            module_config_free(data.sets[i]);
+            vlc_module_config_refs_free(data.sets[i]);
         }
         free(data.sets);
         data.sets = NULL;
