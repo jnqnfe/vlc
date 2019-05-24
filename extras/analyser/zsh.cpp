@@ -203,6 +203,10 @@ static void PrintModule(const module_t *mod)
         capabilities.insert(mpair(cap, name));
 
     unsigned int cfg_size = 0;
+    // Note, we deliberately ignore locking the config for reading here, since
+    // although we are looking at the volatile value attribute here, we are
+    // only doing so for subcat hint items, which are never changed (use of
+    // the value attribute for them is considered a hack).
     module_config_item_t *cfg_list = vlc_module_config_get_ext(mod, &cfg_size, false, true);
 
     for (unsigned int j = 0; j < cfg_size; ++j)
@@ -224,6 +228,8 @@ static void PrintModule(const module_t *mod)
 static void ParseModule(const module_t *mod)
 {
     unsigned int cfg_size = 0;
+    // Note, we deliberately ignore locking the config for reading here, since
+    // we ignore all volatile attributes (value).
     module_config_item_t *cfg_list = vlc_module_config_get_ext(mod, &cfg_size, false, true);
 
     for (unsigned int j = 0; j < cfg_size; ++j)
