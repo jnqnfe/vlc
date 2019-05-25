@@ -220,7 +220,7 @@ void PrefsTree::createPluginNode( QTreeWidgetItem * parent, module_t *module, en
     data->subcat_id = subcat;
     data->p_module = module;
     data->psz_shortcut = strdup( module_get_object( module ) );
-    data->name = qtr( module_GetShortName( module ) );
+    data->name = qtr( vlc_module_GetShortName( module ) );
     const char *help = module_get_help( module );
     if( help )
         data->help = qtr( help );
@@ -486,7 +486,7 @@ bool PrefsItemData::contains( const QString &text, Qt::CaseSensitivity cs )
     if( is_core )
         head.clear();
     else
-        head = QString( qtr( module_GetLongName( p_module ) ) );
+        head = QString( qtr( vlc_module_GetLongName( p_module ) ) );
 
     if ( name.contains( text, cs )
          || (!is_core && head.contains( text, cs ))
@@ -559,7 +559,7 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 
     QString head;
     if( data->i_type == PrefsItemData::TYPE_PLUGIN )
-        head = QString( qtr( module_GetLongName( p_module ) ) );
+        head = QString( qtr( vlc_module_GetLongName( p_module ) ) );
     else
         head = QString( data->name );
 

@@ -186,8 +186,8 @@ static libvlc_module_description_t *module_description_list_get(
             p_list = p_actual;
 
         const char* name = module_get_object( p_module );
-        const char* shortname = module_GetShortName( p_module );
-        const char* longname = module_GetLongName( p_module );
+        const char* shortname = vlc_module_GetShortName( p_module );
+        const char* longname = vlc_module_GetLongName( p_module );
         const char* help = module_get_help( p_module );
         p_actual->psz_name = name ? strdup( name ) : NULL;
         p_actual->psz_shortname = shortname ? strdup( shortname ) : NULL;

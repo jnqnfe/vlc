@@ -635,7 +635,7 @@ enum VLCTreeBranchType {
 
 - (id)initWithPlugin:(module_t *)plugin
 {
-    NSString * name = _NS(module_GetShortName(plugin));
+    NSString * name = _NS(vlc_module_GetShortName(plugin));
     if (self = [super initWithName:name]) {
         _branchType = VLCTreeBranchType::PluginBranch;
         _category = CAT_INVALID;

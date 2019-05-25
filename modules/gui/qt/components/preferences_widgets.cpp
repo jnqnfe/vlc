@@ -557,7 +557,7 @@ void ModuleConfigControl::finish( )
             if( p_cfg->i_type == CONFIG_SUBCATEGORY &&
                 p_cfg->value.i == p_item->min.i )
             {
-                combo->addItem( qtr( module_GetLongName( p_parser )),
+                combo->addItem( qtr( vlc_module_GetLongName( p_parser )),
                                 QVariant( module_get_object( p_parser ) ) );
                 if( p_item->value.psz && !strcmp( p_item->value.psz,
                                                   module_get_object( p_parser ) ) )
@@ -631,7 +631,7 @@ ModuleListConfigControl::~ModuleListConfigControl()
 void ModuleListConfigControl::checkbox_lists( module_t *p_parser )
 {
     const char *help = module_get_help( p_parser );
-    checkbox_lists( qtr( module_GetLongName( p_parser ) ),
+    checkbox_lists( qtr( vlc_module_GetLongName( p_parser ) ),
                     help != NULL ? qtr( help ): "",
                     module_get_object( p_parser ) );
 }
