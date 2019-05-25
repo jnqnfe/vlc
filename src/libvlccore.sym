@@ -251,7 +251,7 @@ vlc_module_find_ext
 vlc_module_get_capability
 vlc_module_get_custom_capability
 module_get_help
-module_get_name
+vlc_module_get_name
 module_get_object
 module_get_score
 module_gettext

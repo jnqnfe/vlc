@@ -50,7 +50,7 @@ const char *module_get_object( const module_t *m )
     return m->pp_shortcuts[0];
 }
 
-const char *module_get_name( const module_t *m, bool long_name )
+const char *vlc_module_get_name( const module_t *m, bool long_name )
 {
     if( long_name && ( m->psz_longname != NULL) )
         return m->psz_longname;

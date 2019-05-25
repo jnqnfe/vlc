@@ -344,9 +344,9 @@ VLC_API const char * module_get_object(const module_t *m) VLC_USED;
  * \param longname TRUE to have the long name of the module
  * \return the short or long name of the module
  */
-VLC_API const char *module_get_name(const module_t *m, bool longname) VLC_USED;
-#define vlc_module_GetShortName( m ) module_get_name( m, false )
-#define vlc_module_GetLongName( m ) module_get_name( m, true )
+VLC_API const char *vlc_module_get_name(const module_t *m, bool longname) VLC_USED;
+#define vlc_module_GetShortName( m ) vlc_module_get_name( m, false )
+#define vlc_module_GetLongName( m ) vlc_module_get_name( m, true )
 
 /**
  * Gets the help text for a module.
