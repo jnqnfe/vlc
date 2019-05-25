@@ -124,7 +124,7 @@ int libvlc_audio_output_set( libvlc_media_player_t *mp, const char *psz_name )
 {
     char *value;
 
-    if( !module_exists( psz_name )
+    if( !vlc_module_exists( psz_name )
      || asprintf( &value, "%s,none", psz_name ) == -1 )
         return -1;
     var_SetString( mp, "aout", value );

@@ -146,7 +146,7 @@ static int getDefaultAudioVolume(const char *aout)
         return -1;
     else
 #ifdef __linux__
-    if (!strcmp(aout, "alsa") && module_exists("alsa"))
+    if (!strcmp(aout, "alsa") && vlc_module_exists("alsa"))
         return cbrtf(config_GetFloat("alsa-gain")) * 100.f + .5f;
     else
 #endif
@@ -156,13 +156,13 @@ static int getDefaultAudioVolume(const char *aout)
     else
 #endif
 #ifdef __APPLE__
-    if (!strcmp(aout, "auhal") && module_exists("auhal"))
+    if (!strcmp(aout, "auhal") && vlc_module_exists("auhal"))
         return (config_GetFloat("auhal-volume") * 100.f + .5f)
                  / AOUT_VOLUME_DEFAULT;
     else
 #endif
 #ifdef _WIN32
-    if (!strcmp(aout, "directsound") && module_exists("directsound"))
+    if (!strcmp(aout, "directsound") && vlc_module_exists("directsound"))
         return config_GetFloat("directx-volume") * 100.f + .5f;
     else
 #endif
@@ -465,7 +465,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
             CONFIG_GENERIC_NO_UI( "kai-audio-device", StringList, kaiLabel,
                     kaiDevice );
 #else
-            if( module_exists( "alsa" ) )
+            if( vlc_module_exists( "alsa" ) )
             {
                 audioControl( alsa );
                 optionWidgets["alsaL"] = alsaLabel;
@@ -473,7 +473,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
                 CONFIG_GENERIC_NO_UI( "alsa-audio-device" , StringList, alsaLabel,
                                 alsaDevice );
             }
-            if( module_exists( "oss" ) )
+            if( vlc_module_exists( "oss" ) )
             {
                 audioControl2( OSS );
                 optionWidgets["ossL"] = OSSLabel;
@@ -553,7 +553,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
             updateAudioOptions( ui.outputModule->currentIndex() );
 
             /* LastFM */
-            if( module_exists( "audioscrobbler" ) )
+            if( vlc_module_exists( "audioscrobbler" ) )
             {
                 CONFIG_GENERIC( "lastfm-username", String, ui.lastfm_user_label,
                         lastfm_user_edit );
@@ -640,7 +640,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
             /* live555 module prefs */
             CONFIG_BOOL( "rtsp-tcp",
                                 live555TransportRTSP_TCPRadio );
-            if ( !module_exists( "live555" ) )
+            if ( !vlc_module_exists( "live555" ) )
             {
                 ui.live555TransportRTSP_TCPRadio->hide();
                 ui.live555TransportHTTPRadio->hide();
@@ -809,7 +809,7 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 #endif
             /* ONE INSTANCE options */
 #if !defined( _WIN32 ) && !defined(__APPLE__) && !defined(__OS2__)
-            if( !module_exists( "dbus" ) )
+            if( !vlc_module_exists( "dbus" ) )
                 ui.OneInterfaceBox->hide();
             else
 #endif
@@ -1097,7 +1097,7 @@ void SPrefsPanel::apply()
         float f_gain = powf( i_volume / 100.f, 3 );
 
 #define save_vol_aout( name ) \
-            module_exists( name ) && ( !psz_aout || !strcmp( psz_aout, name ) || !strcmp( psz_aout, "any" ) )
+            vlc_module_exists( name ) && ( !psz_aout || !strcmp( psz_aout, name ) || !strcmp( psz_aout, "any" ) )
 
         //FIXME this is moot
 #if defined( _WIN32 )

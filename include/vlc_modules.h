@@ -213,7 +213,7 @@ VLC_API module_t *module_find(const char *name) VLC_USED;
  * \retval true if the module exists
  * \retval false if the module does not exist (in the running installation)
  */
-VLC_USED static inline bool module_exists (const char * name)
+VLC_USED static inline bool vlc_module_exists (const char * name)
 {
     return module_find(name) != NULL;
 }

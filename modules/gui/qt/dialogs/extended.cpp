@@ -109,7 +109,7 @@ ExtendedDialog::ExtendedDialog( intf_thread_t *_p_intf )
     syncW = new SyncControls( p_intf, videoTab );
     mainTabW->insertTab( SYNCHRO_TAB, syncW, qtr( "Synchronization" ) );
 
-    if( module_exists( "v4l2" ) )
+    if( vlc_module_exists( "v4l2" ) )
     {
         ExtV4l2 *v4l2 = new ExtV4l2( p_intf, mainTabW );
         mainTabW->insertTab( V4L2_TAB, v4l2, qtr( "v4l2 controls" ) );

@@ -517,7 +517,7 @@ static int ParseImageAttachments( decoder_t *p_dec )
                     video_format_Init( &fmt_out, VLC_CODEC_YUVA );
 
                     /* Find a suitable decoder module */
-                    if( module_exists( "sdl_image" ) )
+                    if( vlc_module_exists( "sdl_image" ) )
                     {
                         /* ffmpeg thinks it can handle bmp properly but it can't (at least
                          * not all of them), so use sdl_image if it is available */

@@ -908,7 +908,7 @@ sout_stream_sys_t::GetAcodecOption( sout_stream_t *p_stream, vlc_fourcc_t *p_cod
     }
 
     if ( !b_audio_mp3
-      && p_aud->i_channels > 2 && module_exists( "vorbis" ) )
+      && p_aud->i_channels > 2 && vlc_module_exists( "vorbis" ) )
         *p_codec_audio = VLC_CODEC_VORBIS;
     else
         *p_codec_audio = VLC_CODEC_MP3;

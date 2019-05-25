@@ -271,25 +271,25 @@ audio_output_t *aout_New (vlc_object_t *parent)
     val.psz_string = (char *)"vuMeter";
     var_Change(aout, "visual", VLC_VAR_ADDCHOICE, val, _("VU meter"));
     /* Look for goom plugin */
-    if (module_exists ("goom"))
+    if (vlc_module_exists ("goom"))
     {
         val.psz_string = (char *)"goom";
         var_Change(aout, "visual", VLC_VAR_ADDCHOICE, val, "Goom");
     }
     /* Look for libprojectM plugin */
-    if (module_exists ("projectm"))
+    if (vlc_module_exists ("projectm"))
     {
         val.psz_string = (char *)"projectm";
         var_Change(aout, "visual", VLC_VAR_ADDCHOICE, val, "projectM");
     }
     /* Look for VSXu plugin */
-    if (module_exists ("vsxu"))
+    if (vlc_module_exists ("vsxu"))
     {
         val.psz_string = (char *)"vsxu";
         var_Change(aout, "visual", VLC_VAR_ADDCHOICE, val, "Vovoid VSXU");
     }
     /* Look for glspectrum plugin */
-    if (module_exists ("glspectrum"))
+    if (vlc_module_exists ("glspectrum"))
     {
         val.psz_string = (char *)"glspectrum";
         var_Change(aout, "visual", VLC_VAR_ADDCHOICE, val, "3D spectrum");

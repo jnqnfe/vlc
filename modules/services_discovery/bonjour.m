@@ -190,7 +190,7 @@ NSString *const VLCBonjourRendererDemux         = @"VLCBonjourRendererDemux";
     msg_Info(_p_this, "starting discovery");
     for (NSDictionary *protocol in VLCSupportedProtocols) {
         /* Only discover services if we actually have a module that can handle those */
-        if (!module_exists([[protocol objectForKey: VLCBonjourProtocolName] UTF8String]) && !_isRendererDiscovery) {
+        if (!vlc_module_exists([[protocol objectForKey: VLCBonjourProtocolName] UTF8String]) && !_isRendererDiscovery) {
             msg_Dbg(_p_this, "no module for %s, skipping", [[protocol objectForKey: VLCBonjourProtocolName] UTF8String]);
             continue;
         }

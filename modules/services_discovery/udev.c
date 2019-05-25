@@ -92,7 +92,7 @@ static int vlc_sd_probe_Open (vlc_object_t *obj)
     {
         vlc_sd_probe_Add (probe, "v4l", N_("Video capture"), SD_CAT_DEVICES);
 #ifdef HAVE_ALSA
-        if (!module_exists ("pulselist"))
+        if (!vlc_module_exists ("pulselist"))
             vlc_sd_probe_Add (probe, "alsa", N_("Audio capture"),
                               SD_CAT_DEVICES);
 #endif

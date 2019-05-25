@@ -305,7 +305,7 @@ main(int i_argc, char *ppsz_argv[])
 
     setenv("VLC_PLUGIN_PATH", "../modules", 1);
 
-    /* Create a dummy libvlc to initialize module bank, needed by module_exists */
+    /* Create a dummy libvlc to initialize module bank, needed by vlc_module_exists */
     libvlc_instance_t *p_libvlc = libvlc_new(0, NULL);
     assert(p_libvlc != NULL);
 
@@ -314,7 +314,7 @@ main(int i_argc, char *ppsz_argv[])
         const char *psz_module = keystore_args[i].psz_module;
 
         if ((b_test_all || keystore_args[i].b_test_default)
-         && module_exists(psz_module))
+         && vlc_module_exists(psz_module))
         {
             int i_vlc_argc = 1;
             char *ppsz_vlc_argv[2] = { 0 };

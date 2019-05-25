@@ -688,7 +688,7 @@ static inline const char * __config_GetLabel(vlc_object_t *p_this, const char *p
     [self setupButton:_audio_visualPopup forModuleList: "audio-visual"];
 
     /* Last.FM is optional */
-    if (module_exists("audioscrobbler")) {
+    if (vlc_module_exists("audioscrobbler")) {
         [self setupField:_audio_lastuserTextField forOption:"lastfm-username"];
         [self setupField:_audio_lastpwdSecureTextField forOption:"lastfm-password"];
 
@@ -1007,7 +1007,7 @@ static inline void save_string_list(intf_thread_t * p_intf, id object, const cha
         SaveModuleList(_audio_visualPopup, "audio-visual");
 
         /* Last.FM is optional */
-        if (module_exists("audioscrobbler")) {
+        if (vlc_module_exists("audioscrobbler")) {
             [_audio_lastCheckbox setEnabled: YES];
             if ([_audio_lastCheckbox state] == NSOnState)
                 config_AddIntf("audioscrobbler");

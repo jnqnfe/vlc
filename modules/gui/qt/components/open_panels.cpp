@@ -781,7 +781,7 @@ void CaptureOpenPanel::initialize()
     /*********************
      * DirectShow Stuffs *
      *********************/
-    if( module_exists( "dshow" ) ){
+    if( vlc_module_exists( "dshow" ) ){
     addModuleAndLayouts( DSHOW_DEVICE, dshow, "DirectShow", QGridLayout );
 
     /* dshow Main */
@@ -820,7 +820,7 @@ void CaptureOpenPanel::initialize()
     char const * const ppsz_v4lvdevices[] = {
         "video*"
     };
-    if( module_exists( "v4l2" ) ){
+    if( vlc_module_exists( "v4l2" ) ){
     addModuleAndLayouts( V4L2_DEVICE, v4l2, "Video camera", QGridLayout );
 
     /* V4L2 main panel */
@@ -873,7 +873,7 @@ void CaptureOpenPanel::initialize()
     /*******
      * JACK *
      *******/
-    if( module_exists( "jack" ) ){
+    if( vlc_module_exists( "jack" ) ){
     addModuleAndLayouts( JACK_DEVICE, jack, "JACK Audio Connection Kit",
                          QGridLayout);
 
@@ -919,7 +919,7 @@ void CaptureOpenPanel::initialize()
     /*************
      * DVB Stuff *
      *************/
-    if( module_exists( "dtv" ) ){
+    if( vlc_module_exists( "dtv" ) ){
     addModuleAndLayouts( DTV_DEVICE, dvb, N_("TV - digital"), QGridLayout );
 
     /* DVB Main */
@@ -1040,7 +1040,7 @@ void CaptureOpenPanel::initialize()
     /************
      * PVR      *
      ************/
-    if( module_exists( "v4l2" ) ){
+    if( vlc_module_exists( "v4l2" ) ){
     addModuleAndLayouts( PVR_DEVICE, pvr, N_("TV - analog"), QGridLayout );
 
     /* PVR Main panel */

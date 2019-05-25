@@ -68,7 +68,7 @@ bool Chromaprint::enqueue( input_item_t *p_item )
 
 bool Chromaprint::isSupported( QString uri )
 {
-    if ( !module_exists( "stream_out_chromaprint" ) )
+    if ( !vlc_module_exists( "stream_out_chromaprint" ) )
         return false;
     else
     return ( uri.startsWith( "file://" ) || uri.startsWith( "/" ) );
