@@ -83,7 +83,7 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
     PrefsItemData *data_sub = NULL;
     QTreeWidgetItem *current_item = NULL;
     unsigned confsize;
-    module_config_item_t *const p_config = module_config_get (p_module, &confsize);
+    module_config_item_t *const p_config = vlc_module_config_get (p_module, &confsize);
 
     /* Go through the list of conf */
     for( size_t i = 0; i < confsize; i++ )
@@ -192,7 +192,7 @@ PrefsTree::PrefsTree( intf_thread_t *_p_intf, QWidget *_parent,
         int i_subcategory = SUBCAT_HIDDEN, i_category = CAT_HIDDEN;
 
         bool b_options = false;
-        module_config_item_t *const p_config = module_config_get (p_module, &confsize);
+        module_config_item_t *const p_config = vlc_module_config_get (p_module, &confsize);
 
         /* Loop through the configurations items */
         for (size_t i = 0; i < confsize; i++)
@@ -531,7 +531,7 @@ bool PrefsItemData::contains( const QString &text, Qt::CaseSensitivity cs )
     /* check options belonging to this subcat or module */
 
     unsigned confsize;
-    module_config_item_t *const p_config = module_config_get (p_module, &confsize),
+    module_config_item_t *const p_config = vlc_module_config_get (p_module, &confsize),
                     *p_item = p_config,
                     *p_end = p_config + confsize;
 
@@ -615,7 +615,7 @@ AdvPrefsPanel::AdvPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
     }
 
     unsigned confsize;
-    p_config = module_config_get( p_module, &confsize );
+    p_config = vlc_module_config_get( p_module, &confsize );
     module_config_item_t *p_item = p_config,
                     *p_end = p_config + confsize;
 

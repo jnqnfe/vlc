@@ -496,7 +496,7 @@
 
         if (mod_is_main) {
             pluginItem = self;
-            _configItems = module_config_get(p_module, &confsize);
+            _configItems = vlc_module_config_get(p_module, &confsize);
             _configSize = confsize;
         } else {
             pluginItem = [VLCTreePluginItem pluginTreeItemWithPlugin: p_module];
@@ -636,7 +636,7 @@
 {
     NSString * name = _NS(module_get_name(plugin, false));
     if (self = [super initWithName:name]) {
-        _configItems = module_config_get(plugin, &_configSize);
+        _configItems = vlc_module_config_get(plugin, &_configSize);
         //_plugin = plugin;
         //_help = [_NS(config_CategoryHelpGet(subCategory)) retain];
     }

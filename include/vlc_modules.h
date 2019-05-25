@@ -237,7 +237,14 @@ VLC_USED static inline bool vlc_module_exists (const char * name)
 VLC_API module_config_item_t *vlc_module_config_get_ext(const module_t *module,
                                                         unsigned *restrict psize,
                                                         bool fpriv, bool fobs) VLC_USED;
-#define module_config_get(m, s) vlc_module_config_get_ext(m, s, true, true)
+#define vlc_module_config_get(m, s) vlc_module_config_get_ext(m, s, true, true)
+
+/* deprecated */
+VLC_DEPRECATED static inline
+module_config_item_t *module_config_get(const module_t *module, unsigned *restrict psize)
+{
+    return vlc_module_config_get(module, psize);
+}
 
 /**
  * Releases a configuration items table.

@@ -549,7 +549,7 @@ void ModuleConfigControl::finish( )
         unsigned confsize;
         module_config_item_t *p_config;
 
-        p_config = module_config_get (p_parser, &confsize);
+        p_config = vlc_module_config_get (p_parser, &confsize);
         for (size_t i = 0; i < confsize; i++)
         {
             /* Hack: required subcategory is stored in i_min */
@@ -667,7 +667,7 @@ void ModuleListConfigControl::finish( bool bycat )
             if( !strcmp( module_get_object( p_parser ), "core" ) ) continue;
 
             unsigned confsize;
-            module_config_item_t *p_config = module_config_get (p_parser, &confsize);
+            module_config_item_t *p_config = vlc_module_config_get (p_parser, &confsize);
 
             for (size_t i = 0; i < confsize; i++)
             {
@@ -1208,7 +1208,7 @@ void KeySelectorControl::finish()
     unsigned confsize;
     module_config_item_t *p_config;
 
-    p_config = module_config_get (p_main, &confsize);
+    p_config = vlc_module_config_get (p_main, &confsize);
 
     QMap<QString, QString> global_keys;
     for (size_t i = 0; i < confsize; i++)

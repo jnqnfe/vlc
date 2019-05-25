@@ -1329,7 +1329,7 @@ void CaptureOpenPanel::advancedDialog()
     /* Get the confsize  */
     unsigned int i_confsize;
     module_config_item_t *p_config;
-    p_config = module_config_get( p_module, &i_confsize );
+    p_config = vlc_module_config_get( p_module, &i_confsize );
 
     /* New Adv Prop dialog */
     adv = new QDialog( this );

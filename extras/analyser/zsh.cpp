@@ -203,7 +203,7 @@ static void PrintModule(const module_t *mod)
         capabilities.insert(mpair(cap, name));
 
     unsigned int cfg_size = 0;
-    module_config_item_t *cfg_list = module_config_get(mod, &cfg_size);
+    module_config_item_t *cfg_list = vlc_module_config_get(mod, &cfg_size);
 
     for (unsigned int j = 0; j < cfg_size; ++j)
     {
@@ -224,7 +224,7 @@ static void PrintModule(const module_t *mod)
 static void ParseModule(const module_t *mod)
 {
     unsigned int cfg_size = 0;
-    module_config_item_t *cfg_list = module_config_get(mod, &cfg_size);
+    module_config_item_t *cfg_list = vlc_module_config_get(mod, &cfg_size);
 
     for (unsigned int j = 0; j < cfg_size; ++j)
     {

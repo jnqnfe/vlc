@@ -59,7 +59,7 @@
     unsigned confsize;
     module_config_item_t *p_config;
 
-    p_config = module_config_get(p_main, &confsize);
+    p_config = vlc_module_config_get(p_main, &confsize);
 
     for (size_t i = 0; i < confsize; i++) {
         module_config_item_t *p_item = p_config + i;

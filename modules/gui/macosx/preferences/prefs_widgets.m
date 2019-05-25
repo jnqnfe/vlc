@@ -1242,7 +1242,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
             continue;
 
         unsigned int confsize;
-        module_config_item_t *p_config = module_config_get(p_parser, &confsize);
+        module_config_item_t *p_config = vlc_module_config_get(p_parser, &confsize);
         for (size_t i = 0; i < confsize; i++) {
             module_config_item_t *p_cfg = p_config + i;
             /* Hack: required subcategory is stored in i_min */
@@ -1279,7 +1279,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
             continue;
         unsigned int confsize;
 
-        module_config_item_t *p_configlist = module_config_get(p_parser, &confsize);
+        module_config_item_t *p_configlist = vlc_module_config_get(p_parser, &confsize);
         for (size_t i = 0; i < confsize; i++) {
             module_config_item_t *p_config = &p_configlist[i];
             /* Hack: required subcategory is stored in i_min */
@@ -1956,7 +1956,7 @@ o_textfield = [[NSSecureTextField alloc] initWithFrame: s_rc];              \
 
         if (b_by_cat) {
             unsigned int confsize;
-            module_config_item_t *p_configlist = module_config_get(p_parser, &confsize);
+            module_config_item_t *p_configlist = vlc_module_config_get(p_parser, &confsize);
 
             for (i = 0; i < confsize; i++) {
                 module_config_item_t *p_config = &p_configlist[i];
