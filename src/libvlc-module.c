@@ -1459,7 +1459,11 @@ vlc_plugin_begin ()
                  DESYNC_LONGTEXT, true )
         change_safe ()
 
+    add_bool( "audio-time-stretch", true,
+              AUDIO_TIME_STRETCH_TEXT, AUDIO_TIME_STRETCH_LONGTEXT, false )
+
     /* FIXME TODO create a subcat replay gain ? */
+    set_section( N_("Replay gain") , NULL )
     add_string( "audio-replay-gain-mode", ppsz_replay_gain_mode[0], AUDIO_REPLAY_GAIN_MODE_TEXT,
                 NULL, false )
         change_string_list( ppsz_replay_gain_mode, ppsz_replay_gain_mode_text )
@@ -1469,9 +1473,6 @@ vlc_plugin_begin ()
                AUDIO_REPLAY_GAIN_DEFAULT_TEXT, AUDIO_REPLAY_GAIN_DEFAULT_LONGTEXT, false )
     add_bool( "audio-replay-gain-peak-protection", true,
               AUDIO_REPLAY_GAIN_PEAK_PROTECTION_TEXT, AUDIO_REPLAY_GAIN_PEAK_PROTECTION_LONGTEXT, true )
-
-    add_bool( "audio-time-stretch", true,
-              AUDIO_TIME_STRETCH_TEXT, AUDIO_TIME_STRETCH_LONGTEXT, false )
 
     set_subcategory( SUBCAT_AUDIO_AOUT )
     add_module("aout", VLC_CAP_AUDIO_OUTPUT, NULL, AOUT_TEXT, AOUT_LONGTEXT)
