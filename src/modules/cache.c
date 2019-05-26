@@ -202,7 +202,7 @@ static int vlc_cache_load_config(module_config_item_t *cfg, block_t *file)
     switch (CONFIG_CLASS(cfg->i_type))
     {
     case CONFIG_ITEM_CLASS_SPECIAL:
-        LOAD_IMMEDIATE (cfg->orig.i);
+        LOAD_IMMEDIATE (cfg->value.i);
         break;
     case CONFIG_ITEM_CLASS_INFO:
         LOAD_IMMEDIATE (cfg->orig.b); /* likely unnecessary */
@@ -593,7 +593,7 @@ static int CacheSaveConfig (FILE *file, const module_config_item_t *cfg)
     switch (CONFIG_CLASS(cfg->i_type))
     {
     case CONFIG_ITEM_CLASS_SPECIAL:
-        SAVE_IMMEDIATE (cfg->orig.i);
+        SAVE_IMMEDIATE (cfg->value.i);
         break;
     case CONFIG_ITEM_CLASS_INFO:
         SAVE_IMMEDIATE (cfg->orig.b); /* likely unnecessary */

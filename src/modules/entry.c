@@ -273,7 +273,8 @@ static int vlc_plugin_desc_cb(vlc_plugin_t *plugin, enum vlc_plugin_desc_actions
                     }
                     type =
                     new_item->i_type = params->special.type;
-                    new_item->orig.i = /* FIXME: old code put it in both of these */
+                    /* subcat hint items have a subcat id, store as int,
+                       section hint items have text+longtext */
                     new_item->value.i = (int)params->special.id;
                     new_item->psz_text = params->special.text;
                     new_item->psz_longtext = params->special.longtext;
