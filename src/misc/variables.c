@@ -951,8 +951,14 @@ void var_OptionParse( vlc_object_t *p_obj, const char *psz_option,
     if ( !cfg ) goto cleanup; /* Option doesn't exist */
 
     i_type = vlc_config_GetType( cfg );
-    if( ( i_type != VLC_VAR_BOOL ) &&
-        ( !psz_value || !*psz_value ) ) goto cleanup; /* Invalid value */
+
+    /* Invalid use:
+       - Missing value (no '=' separator found) when not boolean
+       - Empty value when not string (or boolean - a hack allows data type usage)
+     */
+    if( i_type != VLC_VAR_BOOL &&
+        ( !psz_value || ( i_type != VLC_VAR_STRING && !*psz_value ) ) )
+        goto cleanup;
 
     /* check if option is unsafe */
     if( !trusted && !config_IsSafe( cfg ) )
