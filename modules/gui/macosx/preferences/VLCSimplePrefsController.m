@@ -825,7 +825,7 @@ static inline const char * __config_GetLabel(vlc_object_t *p_this, const char *p
 
         if (p_item->i_type == CONFIG_ITEM_KEY
            && p_item->psz_name != NULL
-           && !strncmp(p_item->psz_name , "key-", 4)
+           && strncmp(p_item->psz_name , "global-", 7) != 0
            && !EMPTY_STR(p_item->psz_text)) {
             [tempArray_desc addObject: _NS(p_item->psz_text)];
             [tempArray_names addObject: toNSStr(p_item->psz_name)];
