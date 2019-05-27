@@ -823,7 +823,8 @@ static inline const char * __config_GetLabel(vlc_object_t *p_this, const char *p
     for (size_t i = 0; i < confsize; i++) {
         module_config_item_t *p_item = p_config + i;
 
-        if (CONFIG_ITEM(p_item->i_type) && p_item->psz_name != NULL
+        if (p_item->i_type == CONFIG_ITEM_KEY
+           && p_item->psz_name != NULL
            && !strncmp(p_item->psz_name , "key-", 4)
            && !EMPTY_STR(p_item->psz_text)) {
             [tempArray_desc addObject: _NS(p_item->psz_text)];
