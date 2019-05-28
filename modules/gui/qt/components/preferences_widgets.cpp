@@ -1481,8 +1481,7 @@ void KeySelectorControl::selectKey( QTreeWidgetItem *keyItem, int column )
     bool b_global = ( column == GLOBAL_HOTKEY_COL );
 
     /* Launch a small dialog to ask for a new key */
-    KeyInputDialog *d = new KeyInputDialog( table, keyItem->text( ACTION_COL ),
-                                            table, b_global );
+    KeyInputDialog *d = new KeyInputDialog( table, keyItem, table, b_global );
     d->setExistingkeysSet( &existingkeys );
     d->exec();
 
@@ -1574,7 +1573,7 @@ bool KeySelectorControl::eventFilter( QObject *obj, QEvent *e )
  * Class KeyInputDialog
  **/
 KeyInputDialog::KeyInputDialog( QTreeWidget *_table,
-                                const QString& keyToChange,
+                                QTreeWidgetItem * _keyitem,
                                 QWidget *_parent,
                                 bool _b_global ) :
                                 QDialog( _parent ), keyValue(0), b_global( _b_global )
@@ -1584,13 +1583,14 @@ KeyInputDialog::KeyInputDialog( QTreeWidget *_table,
     existingkeys = NULL;
 
     table = _table;
+    keyitem = _keyitem;
     setWindowTitle( ( b_global ? qtr( "Global" ) + QString(" ") : "" )
                     + qtr( "Hotkey change" ) );
     setWindowRole( "vlc-key-input" );
 
     QVBoxLayout *vLayout = new QVBoxLayout( this );
     selected = new QLabel( qtr( "Press the new key or combination for " )
-                           + QString("<b>%1</b>").arg( keyToChange ) );
+                           + QString("<b>%1</b>").arg( keyitem->text( 0 ) ) );
     vLayout->addWidget( selected , Qt::AlignCenter );
 
     warning = new QLabel;
@@ -1630,6 +1630,7 @@ void KeyInputDialog::checkForConflicts( int i_vlckey, const QString &sequence )
                           b_global ? 2 : 1 );
 
     if( conflictList.count() &&
+        conflictList[0] != keyitem &&
         !conflictList[0]->data( b_global ? 2 : 1, Qt::UserRole ).toString().isEmpty() &&
          conflictList[0]->data( b_global ? 2 : 1, Qt::UserRole ).toString() != "Unset" )
     {

@@ -536,7 +536,7 @@ class KeyInputDialog : public QDialog
     Q_OBJECT
 
 public:
-    KeyInputDialog( QTreeWidget *, const QString&, QWidget *, bool b_global = false );
+    KeyInputDialog( QTreeWidget *, QTreeWidgetItem *, QWidget *, bool b_global = false );
     int keyValue;
     bool conflicts;
     void setExistingkeysSet( const QSet<QString> *keyset = NULL );
@@ -549,6 +549,7 @@ private:
     void checkForConflicts( int i_vlckey, const QString &sequence );
     void keyPressEvent( QKeyEvent *);
     void wheelEvent( QWheelEvent *);
+    QTreeWidgetItem *keyitem;
     bool b_global;
     const QSet<QString> *existingkeys;
 
