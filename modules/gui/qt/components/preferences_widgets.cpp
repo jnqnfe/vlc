@@ -40,6 +40,7 @@
 #include <vlc_plugin.h>
 
 #include <QString>
+#include <QStringList>
 #include <QVariant>
 #include <QGridLayout>
 #include <QSlider>
@@ -1487,15 +1488,17 @@ void KeySelectorControl::selectKey( QTreeWidgetItem *keyItem, int column )
         /* In case of conflict, reset other keys*/
         if( d->conflicts )
         {
-            QTreeWidgetItem *it;
             for( int i = 0; i < table->topLevelItemCount() ; i++ )
             {
-                it = table->topLevelItem(i);
-                if( ( keyItem != it ) &&
-                    ( it->data( column, Qt::UserRole ).toString() == newKey ) )
+                QTreeWidgetItem *it = table->topLevelItem(i);
+                if ( keyItem == it )
+                    continue;
+                QStringList it_keys = it->data( column, Qt::UserRole ).toString().split( "\t" );
+                if ( it_keys.removeAll( newKey ) )
                 {
-                    it->setText( column, NULL );
-                    it->setData( column, Qt::UserRole, QVariant() );
+                    QString it_edited = it_keys.join( "\t" );
+                    it->setText( column, it_edited );
+                    it->setData( column, Qt::UserRole, it_edited );
                 }
             }
         }
@@ -1630,9 +1633,12 @@ void KeyInputDialog::checkForConflicts( int i_vlckey, const QString &sequence )
     {
         QTreeWidgetItem *it = table->topLevelItem(i);
 
-        if( it == keyitem ||
-            vlckey.compare( it->text( b_global ? 2 : 1 ) ) != 0 )
+        if ( it == keyitem )
             continue;
+
+        if ( !it->text( column ).split( "\t" ).contains( vlckey ) )
+            continue;
+
         if( !it->data( column, Qt::UserRole ).toString().isEmpty() &&
              it->data( column, Qt::UserRole ).toString() != "Unset" )
         {
