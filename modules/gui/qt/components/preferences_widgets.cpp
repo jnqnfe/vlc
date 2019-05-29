@@ -1624,20 +1624,21 @@ void KeyInputDialog::setExistingkeysSet( const QSet<QString> *keyset )
 
 void KeyInputDialog::checkForConflicts( int i_vlckey, const QString &sequence )
 {
-    QList<QTreeWidgetItem *> conflictList =
-        table->findItems( VLCKeyToString( i_vlckey, true ), Qt::MatchExactly,
-                          column );
+    QString vlckey = VLCKeyToString( i_vlckey, true );
 
-    for (int i = 0; i < conflictList.count(); i++)
+    for (int i = 0; i < table->topLevelItemCount(); i++)
     {
-        if (conflictList[i] == keyitem)
+        QTreeWidgetItem *it = table->topLevelItem(i);
+
+        if( it == keyitem ||
+            vlckey.compare( it->text( b_global ? 2 : 1 ) ) != 0 )
             continue;
-        if( !conflictList[i]->data( column, Qt::UserRole ).toString().isEmpty() &&
-             conflictList[i]->data( column, Qt::UserRole ).toString() != "Unset" )
+        if( !it->data( column, Qt::UserRole ).toString().isEmpty() &&
+             it->data( column, Qt::UserRole ).toString() != "Unset" )
         {
             warning->setText( qtr("Warning: this key or combination is already assigned to ") +
                     QString( "\"<b>%1</b>\"" )
-                    .arg( conflictList[i]->text( KeySelectorControl::ACTION_COL ) ) );
+                    .arg( it->text( KeySelectorControl::ACTION_COL ) ) );
             warning->show();
             ok->show();
             unset->hide();
