@@ -99,7 +99,7 @@ local options = {
       <br>
       <b><u>Usage:</u></b><br>
       <br>
-      Start your video. If you use Vlsub witout playing a video
+      Start your video. If you use Vlsub without playing a video
       you will get a link to download the subtitles in your browser
       but the subtitles won't be saved and loaded automatically.<br>
       <br>

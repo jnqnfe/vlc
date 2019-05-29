@@ -1143,7 +1143,7 @@ static void LoadSlaves( input_thread_t *p_input )
         {
             var_SetString( p_input, "sub-description", a->psz_description ? a->psz_description : "");
 
-            /* Force the first subtitle from attachment if there is no
+            /* Force the first subtitle from attachment if there are no
              * subtitles already forced */
             if( input_SlaveSourceAdd( p_input, SLAVE_TYPE_SPU, psz_mrl,
                                       p_forced[ SLAVE_TYPE_SPU ] ?

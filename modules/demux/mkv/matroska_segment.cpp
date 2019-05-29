@@ -1133,8 +1133,8 @@ bool matroska_segment_c::ESCreate()
             }
         }
 
-        /* Turn on a subtitles track if it has been flagged as default -
-         * but only do this if no subtitles track has already been engaged,
+        /* Turn on a subtitle track if it has been flagged as default -
+         * but only do this if no subtitle track has already been engaged,
          * either by an earlier 'default track' (??) or by default
          * language choice behaviour.
          */

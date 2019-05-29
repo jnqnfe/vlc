@@ -1,5 +1,5 @@
 /*****************************************************************************
- * subtitles.c : subtitles detection
+ * subtitles.c : subtitle detection
  *****************************************************************************
  * Copyright (C) 2003-2009 VLC authors and VideoLAN
  *
@@ -203,7 +203,7 @@ static char **paths_to_list( const char *psz_dir, char *psz_path )
  * When called this function will split up the psz_name string into a
  * directory, filename and extension. It then opens the directory
  * in which the file resides and tries to find possible matches of
- * subtitles files.
+ * subtitle files.
  *
  * \ingroup Demux
  * \param p_this the calling \ref input_thread_t

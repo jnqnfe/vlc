@@ -736,7 +736,7 @@ void VLCMenuBar::PopupMenuStaticEntries( QMenu *menu )
                       SLOT( quit() ), "Ctrl+Q", QAction::QuitRole );
 }
 
-/* Video Tracks and Subtitles tracks */
+/* Video Tracks and Subtitle tracks */
 QMenu* VLCMenuBar::VideoPopupMenu( intf_thread_t *p_intf, bool show )
 {
     QMenu* menu = new QMenu();

@@ -689,11 +689,11 @@ static const char *const ppsz_prefres[] = {
 
 #define SUB_MARGIN_TEXT N_("Force subtitle position")
 #define SUB_MARGIN_LONGTEXT N_( \
-    "You can use this option to place the subtitles under the movie, " \
+    "You can use this option to place subtitles under the movie, " \
     "instead of over the movie. Try several positions.")
 
 #define SUB_TEXT_SCALE_TEXT N_("Subtitles text scaling factor")
-#define SUB_TEXT_SCALE_LONGTEXT N_("Changes the subtitles size where possible")
+#define SUB_TEXT_SCALE_LONGTEXT N_("Changes the size of subtitles where possible")
 
 #define SPU_TEXT N_("Enable sub-pictures")
 #define SPU_LONGTEXT N_( \

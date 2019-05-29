@@ -759,7 +759,7 @@ static int DrawHelp(intf_thread_t *intf)
     H(_(" <space>                Pause/Play"));
     H(_(" f                      Toggle Fullscreen"));
     H(_(" c                      Cycle through audio tracks"));
-    H(_(" v                      Cycle through subtitles tracks"));
+    H(_(" v                      Cycle through subtitle tracks"));
     H(_(" b                      Cycle through video tracks"));
     H(_(" n, p                   Next/Previous playlist item"));
     H(_(" [, ]                   Next/Previous title"));

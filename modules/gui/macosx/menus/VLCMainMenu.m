@@ -438,8 +438,8 @@ typedef NS_ENUM(NSInteger, VLCObjectType) {
 
     [_subtitlesMenu setTitle:_NS("Subtitles")];
     [_openSubtitleFile setTitle: _NS("Add Subtitle File...")];
-    [_subtitle_track setTitle: _NS("Subtitles Track")];
-    [_subtitle_tracksMenu setTitle: _NS("Subtitles Track")];
+    [_subtitle_track setTitle: _NS("Subtitle Track")];
+    [_subtitle_tracksMenu setTitle: _NS("Subtitle Track")];
     [_subtitle_size setTitle: _NS("Text Size")];
     [_subtitle_textcolor setTitle: _NS("Text Color")];
     [_subtitle_outlinethickness setTitle: _NS("Outline Thickness")];

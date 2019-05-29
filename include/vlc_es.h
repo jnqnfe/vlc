@@ -593,7 +593,7 @@ static inline video_transform_t transform_Inverse( video_transform_t transform )
 }
 
 /**
- * subtitles format description
+ * subtitle format description
  */
 struct subs_format_t
 {
