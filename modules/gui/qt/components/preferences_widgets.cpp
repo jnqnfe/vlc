@@ -1366,9 +1366,6 @@ void KeySelectorControl::buildAppHotkeysList( QWidget *rootWidget )
 
 void KeySelectorControl::finish()
 {
-    if( label && p_item->psz_longtext )
-        label->setToolTip( formatTooltip( qtr( p_item->psz_longtext ) ) );
-
     /* Fill the table */
 
     /* Get the main Module */
