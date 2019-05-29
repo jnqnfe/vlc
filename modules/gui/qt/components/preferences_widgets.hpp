@@ -495,6 +495,13 @@ public:
     KeySelectorControl( intf_thread_t *, QWidget * );
     void doApply() Q_DECL_OVERRIDE;
     void storeValue( bool owned = true ) Q_DECL_OVERRIDE;
+    enum
+    {
+        ACTION_COL = 0,
+        HOTKEY_COL = 1,
+        GLOBAL_HOTKEY_COL = 2,
+        ANY_COL = 3 // == count()
+    };
 
 protected:
     bool eventFilter( QObject *, QEvent * ) Q_DECL_OVERRIDE;
@@ -518,13 +525,6 @@ private:
     QTreeWidget *table;
     QList<module_config_item_t *> values;
     QSet<QString> existingkeys;
-    enum
-    {
-        ACTION_COL = 0,
-        HOTKEY_COL = 1,
-        GLOBAL_HOTKEY_COL = 2,
-        ANY_COL = 3 // == count()
-    };
 
 private slots:
     void selectKey( QTreeWidgetItem * = NULL, int column = 1 );
@@ -545,6 +545,7 @@ private:
     QTreeWidget *table;
     QLabel *selected, *warning;
     QPushButton *ok, *unset;
+    int column;
 
     void checkForConflicts( int i_vlckey, const QString &sequence );
     void keyPressEvent( QKeyEvent *);

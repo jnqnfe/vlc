@@ -1435,7 +1435,7 @@ void KeySelectorControl::finish()
 
     module_config_free (p_config);
 
-    table->resizeColumnToContents( 0 );
+    table->resizeColumnToContents( ACTION_COL );
 
     CONNECT( table, itemActivated( QTreeWidgetItem *, int ),
              this, selectKey( QTreeWidgetItem *, int ) );
@@ -1577,6 +1577,9 @@ KeyInputDialog::KeyInputDialog( QTreeWidget *_table,
     conflicts = false;
     existingkeys = NULL;
 
+    column = b_global ? KeySelectorControl::GLOBAL_HOTKEY_COL
+                      : KeySelectorControl::HOTKEY_COL;
+
     table = _table;
     keyitem = _keyitem;
     setWindowTitle( ( b_global ? qtr( "Global" ) + QString(" ") : "" )
@@ -1585,7 +1588,8 @@ KeyInputDialog::KeyInputDialog( QTreeWidget *_table,
 
     QVBoxLayout *vLayout = new QVBoxLayout( this );
     selected = new QLabel( qtr( "Press the new key or combination for " )
-                           + QString("<b>%1</b>").arg( keyitem->text( 0 ) ) );
+                           + QString("<b>%1</b>")
+                           .arg( keyitem->text( KeySelectorControl::ACTION_COL ) ) );
     vLayout->addWidget( selected , Qt::AlignCenter );
 
     warning = new QLabel;
@@ -1622,15 +1626,16 @@ void KeyInputDialog::checkForConflicts( int i_vlckey, const QString &sequence )
 {
     QList<QTreeWidgetItem *> conflictList =
         table->findItems( VLCKeyToString( i_vlckey, true ), Qt::MatchExactly,
-                          b_global ? 2 : 1 );
+                          column );
 
     if( conflictList.count() &&
         conflictList[0] != keyitem &&
-        !conflictList[0]->data( b_global ? 2 : 1, Qt::UserRole ).toString().isEmpty() &&
-         conflictList[0]->data( b_global ? 2 : 1, Qt::UserRole ).toString() != "Unset" )
+        !conflictList[0]->data( column, Qt::UserRole ).toString().isEmpty() &&
+         conflictList[0]->data( column, Qt::UserRole ).toString() != "Unset" )
     {
         warning->setText( qtr("Warning: this key or combination is already assigned to ") +
-                QString( "\"<b>%1</b>\"" ).arg( conflictList[0]->text( 0 ) ) );
+                QString( "\"<b>%1</b>\"" )
+                .arg( conflictList[0]->text( KeySelectorControl::ACTION_COL ) ) );
         warning->show();
         ok->show();
         unset->hide();
