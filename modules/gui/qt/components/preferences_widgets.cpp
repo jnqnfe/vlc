@@ -1601,7 +1601,7 @@ KeyInputDialog::KeyInputDialog( QTreeWidget *_table,
     setWindowRole( "vlc-key-input" );
 
     QVBoxLayout *vLayout = new QVBoxLayout( this );
-    selected = new QLabel( qtr( "Press the new key or combination for " )
+    selected = new QLabel( qtr( "Editing assigned key combinations for action: " )
                            + QString("<b>%1</b>")
                            .arg( keyitem->text( KeySelectorControl::ACTION_COL ) ) );
     vLayout->addWidget( selected , Qt::AlignCenter );
@@ -1619,12 +1619,16 @@ KeyInputDialog::KeyInputDialog( QTreeWidget *_table,
     buttonBox->addButton( cancel, QDialogButtonBox::RejectRole );
     ok->setDefault( true );
 
+    edit = new QKeySequenceEdit( this );
+    edit->setToolTip( qtr("Type the new keys and/or key combinations to assign to the action.") );
+    vLayout->insertWidget( 1, edit );
+
     ok->setFocusPolicy(Qt::NoFocus);
     unset->setFocusPolicy(Qt::NoFocus);
     cancel->setFocusPolicy(Qt::NoFocus);
 
     vLayout->addWidget( buttonBox );
-    ok->hide();
+//    ok->hide();
 
     CONNECT( buttonBox, accepted(), this, accept() );
     CONNECT( buttonBox, rejected(), this, reject() );
@@ -1662,7 +1666,7 @@ void KeyInputDialog::checkForConflicts( int i_vlckey, const QString &sequence )
                 QString( "\"<b>%1</b>\"" )
                 .arg( it->text( KeySelectorControl::ACTION_COL ) ) );
         warning->show();
-        ok->show();
+//        ok->show();
         unset->hide();
 
         conflicts = true;
@@ -1678,7 +1682,7 @@ void KeyInputDialog::checkForConflicts( int i_vlckey, const QString &sequence )
                         .arg( sequence )
             );
             warning->show();
-            ok->show();
+//            ok->show();
             unset->hide();
 
             conflicts = true;

@@ -44,6 +44,7 @@
 #include <QPushButton>
 #include <QDialog>
 #include <QFontComboBox>
+#include <QKeySequenceEdit>
 
 class QTreeWidget;
 class QTreeWidgetItem;
@@ -545,6 +546,7 @@ private:
     QTreeWidget *table;
     QLabel *selected, *warning;
     QPushButton *ok, *unset;
+    QKeySequenceEdit *edit;
     int column;
 
     void checkForConflicts( int i_vlckey, const QString &sequence );
