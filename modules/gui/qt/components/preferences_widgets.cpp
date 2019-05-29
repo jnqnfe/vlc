@@ -1628,34 +1628,42 @@ void KeyInputDialog::checkForConflicts( int i_vlckey, const QString &sequence )
         table->findItems( VLCKeyToString( i_vlckey, true ), Qt::MatchExactly,
                           column );
 
-    if( conflictList.count() &&
-        conflictList[0] != keyitem &&
-        !conflictList[0]->data( column, Qt::UserRole ).toString().isEmpty() &&
-         conflictList[0]->data( column, Qt::UserRole ).toString() != "Unset" )
+    for (int i = 0; i < conflictList.count(); i++)
     {
-        warning->setText( qtr("Warning: this key or combination is already assigned to ") +
-                QString( "\"<b>%1</b>\"" )
-                .arg( conflictList[0]->text( KeySelectorControl::ACTION_COL ) ) );
-        warning->show();
-        ok->show();
-        unset->hide();
+        if (conflictList[i] == keyitem)
+            continue;
+        if( !conflictList[i]->data( column, Qt::UserRole ).toString().isEmpty() &&
+             conflictList[i]->data( column, Qt::UserRole ).toString() != "Unset" )
+        {
+            warning->setText( qtr("Warning: this key or combination is already assigned to ") +
+                    QString( "\"<b>%1</b>\"" )
+                    .arg( conflictList[i]->text( KeySelectorControl::ACTION_COL ) ) );
+            warning->show();
+            ok->show();
+            unset->hide();
 
-        conflicts = true;
+            conflicts = true;
+            break;
+        }
     }
-    else if( existingkeys && !sequence.isEmpty()
-             && existingkeys->contains( sequence ) )
+    if( !conflicts )
     {
-        warning->setText(
-            qtr( "Warning: <b>%1</b> is already an application menu shortcut" )
-                    .arg( sequence )
-        );
-        warning->show();
-        ok->show();
-        unset->hide();
+        if( existingkeys && !sequence.isEmpty()
+                 && existingkeys->contains( sequence ) )
+        {
+            warning->setText(
+                qtr( "Warning: <b>%1</b> is already an application menu shortcut" )
+                        .arg( sequence )
+            );
+            warning->show();
+            ok->show();
+            unset->hide();
 
-        conflicts = true;
+            conflicts = true;
+        }
+        else
+            accept();
     }
-    else accept();
 }
 
 void KeyInputDialog::keyPressEvent( QKeyEvent *e )
