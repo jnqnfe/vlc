@@ -1629,6 +1629,12 @@ void KeyInputDialog::checkForConflicts( int i_vlckey, const QString &sequence )
 {
     QString vlckey = VLCKeyToString( i_vlckey, true );
 
+    if ( vlckey.isEmpty() || vlckey == "Unset" )
+    {
+        accept();
+        return;
+    }
+
     for (int i = 0; i < table->topLevelItemCount(); i++)
     {
         QTreeWidgetItem *it = table->topLevelItem(i);
@@ -1639,19 +1645,15 @@ void KeyInputDialog::checkForConflicts( int i_vlckey, const QString &sequence )
         if ( !it->text( column ).split( "\t" ).contains( vlckey ) )
             continue;
 
-        if( !it->data( column, Qt::UserRole ).toString().isEmpty() &&
-             it->data( column, Qt::UserRole ).toString() != "Unset" )
-        {
-            warning->setText( qtr("Warning: this key or combination is already assigned to ") +
-                    QString( "\"<b>%1</b>\"" )
-                    .arg( it->text( KeySelectorControl::ACTION_COL ) ) );
-            warning->show();
-            ok->show();
-            unset->hide();
+        warning->setText( qtr("Warning: this key or combination is already assigned to ") +
+                QString( "\"<b>%1</b>\"" )
+                .arg( it->text( KeySelectorControl::ACTION_COL ) ) );
+        warning->show();
+        ok->show();
+        unset->hide();
 
-            conflicts = true;
-            break;
-        }
+        conflicts = true;
+        break;
     }
     if( !conflicts )
     {
