@@ -492,7 +492,7 @@ class KeySelectorControl : public ConfigControl
     Q_OBJECT
 
 public:
-    KeySelectorControl( intf_thread_t *, module_config_item_t *, QWidget * );
+    KeySelectorControl( intf_thread_t *, QWidget * );
     void doApply() Q_DECL_OVERRIDE;
     void storeValue( bool owned = true ) Q_DECL_OVERRIDE;
 

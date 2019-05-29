@@ -128,7 +128,7 @@ ConfigControl *ConfigControl::createControl( intf_thread_t *p_intf,
         p_control = new FontConfigControl( p_item, parent );
         break;
     case CONFIG_ITEM_KEY:
-        p_control = new KeySelectorControl( p_intf, p_item, parent );
+        p_control = new KeySelectorControl( p_intf, parent );
         break;
     case CONFIG_ITEM_BOOL:
         p_control = new BoolConfigControl( p_item, parent );
@@ -1285,10 +1285,8 @@ void FloatRangeConfigControl::finish()
 /**********************************************************************
  * Key selector widget
  **********************************************************************/
-KeySelectorControl::KeySelectorControl( intf_thread_t *_p_intf,
-                                        module_config_item_t *_p_item,
-                                        QWidget *p ) :
-    ConfigControl( _p_item ), p_intf( _p_intf )
+KeySelectorControl::KeySelectorControl( intf_thread_t *_p_intf, QWidget *p ) :
+    ConfigControl( NULL ), p_intf( _p_intf )
 {
     label = new QLabel(
         qtr( "Select or double click an action to change the associated "

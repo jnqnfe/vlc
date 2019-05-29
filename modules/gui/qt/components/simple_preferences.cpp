@@ -883,14 +883,12 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
          ********************************/
         case SPrefsHotkeys:
         {
-            p_config = vlc_config_FindItem( "key-play" );
-
             QGridLayout *gLayout = new QGridLayout;
             panel->setLayout( gLayout );
             int line = 0;
 
             panel_label->setText( qtr( "Configure Hotkeys" ) );
-            control = new KeySelectorControl( p_intf, p_config, this );
+            control = new KeySelectorControl( p_intf, this );
             control->insertIntoExistingGrid( gLayout, line );
             controls.append( control );
 
