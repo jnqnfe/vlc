@@ -30,7 +30,7 @@
 #include "qt.hpp"
 #include "components/interface_widgets.hpp"
 #include "dialogs_provider.hpp"
-#include "util/customwidgets.hpp"               // qtEventToVLCKey, QVLCStackedWidget
+#include "util/customwidgets.hpp"               // qtEventToVLCKey
 
 #include <QLabel>
 #include <QToolButton>

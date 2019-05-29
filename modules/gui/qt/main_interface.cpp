@@ -32,7 +32,7 @@
 #include "components/player_controller.hpp"                    // Creation
 #include "managers/renderer_manager.hpp"
 
-#include "util/customwidgets.hpp"               // qtEventToVLCKey, QVLCStackedWidget
+#include "util/customwidgets.hpp"               // qtEventToVLCKey
 #include "util/qt_dirs.hpp"                     // toNativeSeparators
 #include "util/imagehelper.hpp"
 
