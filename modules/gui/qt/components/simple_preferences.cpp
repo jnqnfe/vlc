@@ -894,12 +894,6 @@ SPrefsPanel::SPrefsPanel( intf_thread_t *_p_intf, QWidget *_parent,
 
             line++;
 
-            QFrame *sepline = new QFrame;
-            sepline->setFrameStyle(QFrame::HLine | QFrame::Sunken);
-            gLayout->addWidget( sepline, line, 0, 1, -1 );
-
-            line++;
-
             p_config = vlc_config_FindItem( "hotkeys-y-wheel-mode" );
             control = new IntegerListConfigControl( p_config, this );
             control->insertIntoExistingGrid( gLayout, line );
