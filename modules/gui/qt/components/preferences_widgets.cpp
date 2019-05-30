@@ -1290,8 +1290,8 @@ KeySelectorControl::KeySelectorControl( intf_thread_t *_p_intf, QWidget *p ) :
     ConfigControl( NULL ), p_intf( _p_intf )
 {
     label = new QLabel(
-        qtr( "Select or double click an action to change the associated "
-             "hotkey. Use delete key to remove hotkeys."), p );
+        qtr( "Action hotkey mappings. Double-click (or select and press Enter) "
+             "to change an action's hotkey. The delete key will unset."), p );
 
     label->setWordWrap( true );
     searchLabel = new QLabel( qtr( "Search" ), p );
