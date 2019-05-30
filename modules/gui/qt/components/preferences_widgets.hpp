@@ -528,7 +528,7 @@ private:
 
 private slots:
     void selectKey( QTreeWidgetItem * = NULL, int column = 1 );
-    void filter( const QString & );
+    void filter();
 };
 
 class KeyInputDialog : public QDialog
