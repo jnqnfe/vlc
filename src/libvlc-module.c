@@ -1320,6 +1320,7 @@ static const char *const mouse_wheel_texts[] = {
 #define ZOOM_HALF_KEY_TEXT N_("Zoom 1:2 (half)")
 #define ZOOM_ORIGINAL_KEY_TEXT N_("Zoom 1:1 (original)")
 #define ZOOM_DOUBLE_KEY_TEXT N_("Zoom 2:1 (double)")
+#define ZOOM_LEVEL_KEY_LONGTEXT N_("Hotkey for zooming to a specific level.")
 
 #define PLAY_BOOKMARK1_KEY_TEXT N_("Play playlist bookmark 1")
 #define PLAY_BOOKMARK2_KEY_TEXT N_("Play playlist bookmark 2")
@@ -1347,24 +1348,35 @@ static const char *const mouse_wheel_texts[] = {
 #define PLAY_CLEAR_KEY_LONGTEXT N_("Select the hotkey to use to clear the current playlist.")
 
 #define AUDIO_TRACK_KEY_TEXT N_("Audio track (language) next")
+#define AUDIO_TRACK_KEY_LONGTEXT N_("Select the hotkey to use to cycle through audio tracks (languages).")
 #define SUBTITLE_REVERSE_TRACK_KEY_TEXT N_("Subtitle track previous")
+#define SUBTITLE_REVERSE_TRACK_KEY_LONGTEXT N_("Select the hotkey to use to cycle through subtitle tracks in reverse order.")
 #define SUBTITLE_TRACK_KEY_TEXT N_("Subtitle track next")
+#define SUBTITLE_TRACK_KEY_LONGTEXT N_("Select the hotkey to use to cycle through subtitle tracks.")
 #define SUBTITLE_TOGGLE_KEY_TEXT N_("Subtitle visibility toggle")
+#define SUBTITLE_TOGGLE_KEY_LONGTEXT N_("Select the hotkey to use to toggle subtitle visibility on/off.")
 #define SUBTITLE_CONTROL_SECONDARY_KEY_TEXT N_("Subtitle secondary control toggle")
-#define SUBTITLE_CONTROL_SECONDARY_KEY_LONGTEXT N_("Use original subtitle controls to manage secondary subtitles.")
+#define SUBTITLE_CONTROL_SECONDARY_KEY_LONGTEXT N_("Select the hotkey to use to toggle use of original subtitle controls to manage secondary subtitles on/off.")
 #define PROGRAM_SID_NEXT_KEY_TEXT N_("Program Service ID next")
 #define PROGRAM_SID_NEXT_KEY_LONGTEXT N_("Select the hotkey to use to cycle through the available program Service IDs (SIDs).")
 #define PROGRAM_SID_PREV_KEY_TEXT N_("Program Service ID previous")
 #define PROGRAM_SID_PREV_KEY_LONGTEXT N_("Select the hotkey to use to cycle through the available program Service IDs (SIDs) in reverse.")
 #define ASPECT_RATIO_KEY_TEXT N_("Source aspect ratio next")
+#define ASPECT_RATIO_KEY_LONGTEXT N_("Select the hotkey to use to cycle through available source aspect ratios.")
 #define CROP_FMT_KEY_TEXT N_("Video crop format next")
 #define CROP_FMT_KEY_LONGTEXT N_("Select the hotkey to use to cycle through a predefined list of crop formats.")
 #define TOGGLE_AUTOSCALE_KEY_TEXT N_("Autoscaling toggle")
+#define TOGGLE_AUTOSCALE_KEY_LONGTEXT N_("Select the hotkey to use to toggle autoscaling on/off.")
 #define SCALE_UP_KEY_TEXT N_("Scale factor increase")
+#define SCALE_UP_KEY_LONGTEXT N_("Select the hotkey to use to increase the scale factor.")
 #define SCALE_DOWN_KEY_TEXT N_("Scale factor decrease")
+#define SCALE_DOWN_KEY_LONGTEXT N_("Select the hotkey to use to decrease the scale factor.")
 #define DEINTERLACE_KEY_TEXT N_("Deinterlacing toggle")
+#define DEINTERLACE_KEY_LONGTEXT N_("Select the hotkey to use to toggle deinterlacing on/off.")
 #define DEINTERLACE_MODE_KEY_TEXT N_("Deinterlace mode next")
+#define DEINTERLACE_MODE_KEY_LONGTEXT N_("Select the hotkey to use to cycle through deinterlace modes.")
 #define INTF_TOGGLE_FSC_KEY_TEXT N_("Fullscreen controls visibility toggle")
+#define INTF_TOGGLE_FSC_KEY_LONGTEXT N_("Select the hotkey to use to toggle visibility of controls in fullscreen mode on/off.")
 #define INTF_BOSS_KEY_TEXT N_("Boss state toggle")
 #define INTF_BOSS_KEY_LONGTEXT N_("Select the hotkey to use to toggle 'boss mode' on/off. Boss mode hides the interface and pauses playback.")
 #define INTF_POPUP_MENU_KEY_TEXT N_("Context menu")
@@ -1383,6 +1395,8 @@ static const char *const mouse_wheel_texts[] = {
 
 #define ZOOM_KEY_TEXT N_("Zoom in")
 #define UNZOOM_KEY_TEXT N_("Zoom out")
+#define ZOOM_KEY_LONGTEXT N_("Select the hotkey to use to zoom in (closer).")
+#define UNZOOM_KEY_LONGTEXT N_("Select the hotkey to use to zoom out (unzoom).")
 
 #define CROP_TOP_KEY_TEXT N_("Crop one pixel, top")
 #define CROP_LEFT_KEY_TEXT N_("Crop one pixel, left")
@@ -1394,15 +1408,24 @@ static const char *const mouse_wheel_texts[] = {
 #define UNCROP_BOTTOM_KEY_TEXT N_("Uncrop one pixel, bottom")
 #define UNCROP_RIGHT_KEY_TEXT N_("Uncrop one pixel, right")
 
+#define CROP_KEY_LONGTEXT N_("Select the hotkey to use to crop one pixel from a certain edge.")
+#define UNCROP_KEY_LONGTEXT N_("Select the hotkey to use to uncrop one pixel from a certain edge.")
+
 /* 360° Viewpoint */
 #define VIEWPOINT_FOV_IN_KEY_TEXT N_("Viewpoint (360°) field of view shrink")
+#define VIEWPOINT_FOV_IN_KEY_LONGTEXT N_("Select the hotkey to use to shrink the viewpoint (360°) field of view.")
 #define VIEWPOINT_FOV_OUT_KEY_TEXT N_("Viewpoint (360°) field of view expand")
+#define VIEWPOINT_FOV_OUT_KEY_LONGTEXT N_("Select the hotkey to use to expand the viewpoint (360°) field of view.")
 #define VIEWPOINT_ROLL_CLOCK_KEY_TEXT N_("Viewpoint (360°) clockwise roll")
+#define VIEWPOINT_ROLL_CLOCK_KEY_LONGTEXT N_("Select the hotkey to use for viewpoint (360°) clockwise roll.")
 #define VIEWPOINT_ROLL_ANTICLOCK_KEY_TEXT N_("Viewpoint (360°) anti-clockwise roll")
+#define VIEWPOINT_ROLL_ANTICLOCK_KEY_LONGTEXT N_("Select the hotkey to use for viewpoint (360°) anti-clockwise roll.")
 
 #define WALLPAPER_KEY_TEXT N_("Wallpaper mode toggle")
+#define WALLPAPER_KEY_LONGTEXT N_("Select the hotkey to use to toggle wallpaper mode on/off.")
 
 #define AUDIO_DEVICE_CYCLE_KEY_TEXT N_("Audio device next")
+#define AUDIO_DEVICE_CYCLE_KEY_LONGTEXT N_("Select the hotkey to use to cycle through audio devices.")
 
 /*
  * Quick usage guide for the configuration options:
@@ -2485,15 +2508,15 @@ vlc_plugin_begin ()
     add_key("key-audiodelay-down", KEY_AUDIODELAY_DOWN,
             AUDIODELAY_DOWN_KEY_TEXT, AUDIODELAY_DOWN_KEY_LONGTEXT)
     add_key("key-audio-track", KEY_AUDIO_TRACK, AUDIO_TRACK_KEY_TEXT,
-            NULL)
+            AUDIO_TRACK_KEY_LONGTEXT)
     add_key("key-audiodevice-cycle", KEY_AUDIODEVICE_CYCLE,
-            AUDIO_DEVICE_CYCLE_KEY_TEXT, NULL)
+            AUDIO_DEVICE_CYCLE_KEY_TEXT, AUDIO_DEVICE_CYCLE_KEY_LONGTEXT)
     add_key("key-subtitle-revtrack", KEY_SUBTITLE_REVTRACK,
-            SUBTITLE_REVERSE_TRACK_KEY_TEXT, NULL)
+            SUBTITLE_REVERSE_TRACK_KEY_TEXT, SUBTITLE_REVERSE_TRACK_KEY_LONGTEXT)
     add_key("key-subtitle-track", KEY_SUBTITLE_TRACK,
-            SUBTITLE_TRACK_KEY_TEXT, NULL)
+            SUBTITLE_TRACK_KEY_TEXT, SUBTITLE_TRACK_KEY_LONGTEXT)
     add_key("key-subtitle-toggle", KEY_SUBTITLE_TOGGLE,
-            SUBTITLE_TOGGLE_KEY_TEXT, NULL)
+            SUBTITLE_TOGGLE_KEY_TEXT, SUBTITLE_TOGGLE_KEY_LONGTEXT)
     add_key("key-subtitle-control-secondary", KEY_SUBTITLE_CONTROL_S,
             SUBTITLE_CONTROL_SECONDARY_KEY_TEXT, SUBTITLE_CONTROL_SECONDARY_KEY_LONGTEXT)
     add_key("key-program-sid-next", KEY_PROGRAM_SID_NEXT,
@@ -2501,21 +2524,21 @@ vlc_plugin_begin ()
     add_key("key-program-sid-prev", KEY_PROGRAM_SID_PREV,
             PROGRAM_SID_PREV_KEY_TEXT, PROGRAM_SID_PREV_KEY_LONGTEXT)
     add_key("key-aspect-ratio", KEY_ASPECT_RATIO,
-            ASPECT_RATIO_KEY_TEXT, NULL)
+            ASPECT_RATIO_KEY_TEXT, ASPECT_RATIO_KEY_LONGTEXT)
     add_key("key-crop", KEY_CROP,
             CROP_FMT_KEY_TEXT, CROP_FMT_KEY_LONGTEXT)
     add_key("key-toggle-autoscale", KEY_TOGGLE_AUTOSCALE,
-            TOGGLE_AUTOSCALE_KEY_TEXT, NULL)
+            TOGGLE_AUTOSCALE_KEY_TEXT, TOGGLE_AUTOSCALE_KEY_LONGTEXT)
     add_key("key-incr-scalefactor", KEY_SCALE_UP,
-            SCALE_UP_KEY_TEXT, NULL)
+            SCALE_UP_KEY_TEXT, SCALE_UP_KEY_LONGTEXT)
     add_key("key-decr-scalefactor", KEY_SCALE_DOWN,
-            SCALE_DOWN_KEY_TEXT, NULL)
+            SCALE_DOWN_KEY_TEXT, SCALE_DOWN_KEY_LONGTEXT)
     add_key("key-deinterlace", KEY_DEINTERLACE,
-            DEINTERLACE_KEY_TEXT, NULL)
+            DEINTERLACE_KEY_TEXT, DEINTERLACE_KEY_LONGTEXT)
     add_key("key-deinterlace-mode", KEY_DEINTERLACE_MODE,
-            DEINTERLACE_MODE_KEY_TEXT, NULL)
+            DEINTERLACE_MODE_KEY_TEXT, DEINTERLACE_MODE_KEY_LONGTEXT)
     add_key("key-intf-show", KEY_INTF_TOGGLE_FSC,
-            INTF_TOGGLE_FSC_KEY_TEXT, NULL)
+            INTF_TOGGLE_FSC_KEY_TEXT, INTF_TOGGLE_FSC_KEY_LONGTEXT)
 
     add_key("key-intf-boss", KEY_INTF_BOSS,
             INTF_BOSS_KEY_TEXT, INTF_BOSS_KEY_LONGTEXT)
@@ -2523,35 +2546,34 @@ vlc_plugin_begin ()
             INTF_POPUP_MENU_KEY_TEXT, INTF_POPUP_MENU_KEY_LONGTEXT)
     add_key("key-snapshot", KEY_SNAPSHOT, SNAP_KEY_TEXT, SNAP_KEY_LONGTEXT)
     add_key("key-record", KEY_RECORD, RECORD_KEY_TEXT, RECORD_KEY_LONGTEXT)
-    add_key("key-zoom", KEY_ZOOM, ZOOM_KEY_TEXT, NULL)
-    add_key("key-unzoom", KEY_UNZOOM, UNZOOM_KEY_TEXT, NULL)
-    add_key("key-wallpaper", KEY_WALLPAPER, WALLPAPER_KEY_TEXT, NULL)
+    add_key("key-zoom", KEY_ZOOM, ZOOM_KEY_TEXT, ZOOM_KEY_LONGTEXT)
+    add_key("key-unzoom", KEY_UNZOOM, UNZOOM_KEY_TEXT, UNZOOM_KEY_LONGTEXT)
+    add_key("key-wallpaper", KEY_WALLPAPER, WALLPAPER_KEY_TEXT, WALLPAPER_KEY_LONGTEXT)
 
-    add_key("key-crop-top", KEY_CROP_TOP, CROP_TOP_KEY_TEXT, NULL)
-    add_key("key-uncrop-top", KEY_UNCROP_TOP, UNCROP_TOP_KEY_TEXT, NULL)
-    add_key("key-crop-left", KEY_CROP_LEFT, CROP_LEFT_KEY_TEXT, NULL)
-    add_key("key-uncrop-left", KEY_UNCROP_LEFT, UNCROP_LEFT_KEY_TEXT, NULL)
-    add_key("key-crop-bottom", KEY_CROP_BOTTOM, CROP_BOTTOM_KEY_TEXT, NULL)
-    add_key("key-uncrop-bottom", KEY_UNCROP_BOTTOM, UNCROP_BOTTOM_KEY_TEXT, NULL)
-    add_key("key-crop-right", KEY_CROP_RIGHT, CROP_RIGHT_KEY_TEXT, NULL)
-    add_key("key-uncrop-right", KEY_UNCROP_RIGHT, UNCROP_RIGHT_KEY_TEXT, NULL)
+    add_key("key-crop-top", KEY_CROP_TOP, CROP_TOP_KEY_TEXT, CROP_KEY_LONGTEXT)
+    add_key("key-uncrop-top", KEY_UNCROP_TOP, UNCROP_TOP_KEY_TEXT, UNCROP_KEY_LONGTEXT)
+    add_key("key-crop-left", KEY_CROP_LEFT, CROP_LEFT_KEY_TEXT, CROP_KEY_LONGTEXT)
+    add_key("key-uncrop-left", KEY_UNCROP_LEFT, UNCROP_LEFT_KEY_TEXT, UNCROP_KEY_LONGTEXT)
+    add_key("key-crop-bottom", KEY_CROP_BOTTOM, CROP_BOTTOM_KEY_TEXT, CROP_KEY_LONGTEXT)
+    add_key("key-uncrop-bottom", KEY_UNCROP_BOTTOM, UNCROP_BOTTOM_KEY_TEXT, UNCROP_KEY_LONGTEXT)
+    add_key("key-crop-right", KEY_CROP_RIGHT, CROP_RIGHT_KEY_TEXT, CROP_KEY_LONGTEXT)
+    add_key("key-uncrop-right", KEY_UNCROP_RIGHT, UNCROP_RIGHT_KEY_TEXT, UNCROP_KEY_LONGTEXT)
     add_key("key-random", KEY_RANDOM, RANDOM_KEY_TEXT, RANDOM_KEY_LONGTEXT)
     add_key("key-loop", KEY_LOOP, LOOP_KEY_TEXT, LOOP_KEY_LONGTEXT)
 
     add_key("key-viewpoint-fov-in", KEY_VIEWPOINT_FOV_IN,
-            VIEWPOINT_FOV_IN_KEY_TEXT, NULL)
+            VIEWPOINT_FOV_IN_KEY_TEXT, VIEWPOINT_FOV_IN_KEY_LONGTEXT)
     add_key("key-viewpoint-fov-out", KEY_VIEWPOINT_FOV_OUT,
-            VIEWPOINT_FOV_OUT_KEY_TEXT, NULL)
+            VIEWPOINT_FOV_OUT_KEY_TEXT, VIEWPOINT_FOV_OUT_KEY_LONGTEXT)
     add_key("key-viewpoint-roll-clock", NULL,
-            VIEWPOINT_ROLL_CLOCK_KEY_TEXT, NULL)
+            VIEWPOINT_ROLL_CLOCK_KEY_TEXT, VIEWPOINT_ROLL_CLOCK_KEY_LONGTEXT)
     add_key("key-viewpoint-roll-anticlock", NULL,
-            VIEWPOINT_ROLL_ANTICLOCK_KEY_TEXT, NULL)
+            VIEWPOINT_ROLL_ANTICLOCK_KEY_TEXT, VIEWPOINT_ROLL_ANTICLOCK_KEY_LONGTEXT)
 
-    add_key("key-zoom-quarter", KEY_ZOOM_QUARTER, ZOOM_QUARTER_KEY_TEXT, NULL)
-    add_key("key-zoom-half", KEY_ZOOM_HALF, ZOOM_HALF_KEY_TEXT, NULL)
-    add_key("key-zoom-original", KEY_ZOOM_ORIGINAL,
-            ZOOM_ORIGINAL_KEY_TEXT, NULL)
-    add_key("key-zoom-double", KEY_ZOOM_DOUBLE, ZOOM_DOUBLE_KEY_TEXT, NULL)
+    add_key("key-zoom-quarter", KEY_ZOOM_QUARTER, ZOOM_QUARTER_KEY_TEXT, ZOOM_LEVEL_KEY_LONGTEXT)
+    add_key("key-zoom-half", KEY_ZOOM_HALF, ZOOM_HALF_KEY_TEXT, ZOOM_LEVEL_KEY_LONGTEXT)
+    add_key("key-zoom-original", KEY_ZOOM_ORIGINAL, ZOOM_ORIGINAL_KEY_TEXT, ZOOM_LEVEL_KEY_LONGTEXT)
+    add_key("key-zoom-double", KEY_ZOOM_DOUBLE, ZOOM_DOUBLE_KEY_TEXT, ZOOM_LEVEL_KEY_LONGTEXT)
 
     set_section ( N_("Jump sizes" ), NULL )
     add_integer( "extrashort-jump-size", 3, JIEXTRASHORT_TEXT, NULL, false )
