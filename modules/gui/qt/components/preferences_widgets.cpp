@@ -1623,10 +1623,6 @@ KeyInputDialog::KeyInputDialog( QTreeWidget *_table,
     edit->setToolTip( qtr("Type the new keys and/or key combinations to assign to the action.") );
     vLayout->insertWidget( 1, edit );
 
-    ok->setFocusPolicy(Qt::NoFocus);
-    unset->setFocusPolicy(Qt::NoFocus);
-    cancel->setFocusPolicy(Qt::NoFocus);
-
     vLayout->addWidget( buttonBox );
 //    ok->hide();
 
