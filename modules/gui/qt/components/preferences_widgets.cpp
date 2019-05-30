@@ -1397,6 +1397,8 @@ void KeySelectorControl::finish()
             treeItem->setText( ACTION_COL, qtr( p_config_item->psz_text ) );
             treeItem->setData( ACTION_COL, Qt::UserRole,
                                QVariant( qfu( p_config_item->psz_name ) ) );
+            if (p_config_item->psz_longtext)
+                treeItem->setToolTip( ACTION_COL, qtr(p_config_item->psz_longtext) );
 
             QString keys = qfu(p_config_item->value.psz ? _(p_config_item->value.psz) : "");
             treeItem->setText( HOTKEY_COL, keys );
