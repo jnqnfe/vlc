@@ -1419,6 +1419,8 @@ void KeySelectorControl::finish()
         }
     }
 
+    table->sortItems( ACTION_COL, Qt::AscendingOrder );
+
     QMap<QString, QString>::const_iterator i = global_keys.constBegin();
     while (i != global_keys.constEnd())
     {
