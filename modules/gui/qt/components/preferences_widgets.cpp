@@ -1443,6 +1443,12 @@ void KeySelectorControl::finish()
     table->resizeColumnToContents( ACTION_COL );
     table->resizeColumnToContents( HOTKEY_COL );
 
+    for( int i = 0 ; i < table->topLevelItemCount(); i++ )
+    {
+        QTreeWidgetItem *item = table->topLevelItem( i );
+        item->setSizeHint( 0, QSize( -1, 22 ) );
+    }
+
     CONNECT( table, itemActivated( QTreeWidgetItem *, int ),
              this, selectKey( QTreeWidgetItem *, int ) );
 }
