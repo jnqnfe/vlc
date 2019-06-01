@@ -244,8 +244,16 @@ void PrefsTreeExpert::updateDisplayedValue( QTreeWidgetItem *item,
             }
             break;
         case CONFIG_ITEM_CLASS_STRING:
-            data->value = qfu((data->item->i_type == CONFIG_ITEM_PASSWORD) ?
-                "•••••" : data->item->value.psz);
+            switch (data->item->i_type) {
+                case CONFIG_ITEM_PASSWORD:
+                    data->value = qfu("•••••");
+                    break;
+                case CONFIG_ITEM_KEY:
+                    data->value = qfu(data->item->value.psz).replace( "\t", ", " );
+                    break;
+                default:
+                    data->value = qfu(data->item->value.psz);
+            }
             break;
         case CONFIG_ITEM_CLASS_INFO:
         case CONFIG_ITEM_CLASS_SPECIAL:
