@@ -1688,31 +1688,6 @@ void KeyInputDialog::checkForConflicts( int i_vlckey, const QString &sequence )
     }
 }
 
-void KeyInputDialog::keyPressEvent( QKeyEvent *e )
-{
-    if( e->key() == Qt::Key_Tab ||
-        e->key() == Qt::Key_Shift ||
-        e->key() == Qt::Key_Control ||
-        e->key() == Qt::Key_Meta ||
-        e->key() == Qt::Key_Alt ||
-        e->key() == Qt::Key_AltGr )
-        return;
-    int i_vlck = qtEventToVLCKey( e );
-    QKeySequence sequence( e->key() | e->modifiers() );
-    selected->setText( qtr( "Key or combination: " )
-                + QString("<b>%1</b>").arg( VLCKeyToString( i_vlck, true ) ) );
-    checkForConflicts( i_vlck, sequence.toString() );
-    keyValue = i_vlck;
-}
-
-void KeyInputDialog::wheelEvent( QWheelEvent *e )
-{
-    int i_vlck = qtWheelEventToVLCKey( e );
-    selected->setText( qtr( "Key: " ) + VLCKeyToString( i_vlck, true ) );
-    checkForConflicts( i_vlck, QString() );
-    keyValue = i_vlck;
-}
-
 void KeyInputDialog::unsetAction() {
     keyitem->setText( column, NULL );
     keyitem->setData( column, Qt::UserRole, QVariant() );

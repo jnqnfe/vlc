@@ -550,8 +550,6 @@ private:
     int column;
 
     void checkForConflicts( int i_vlckey, const QString &sequence );
-    void keyPressEvent( QKeyEvent *);
-    void wheelEvent( QWheelEvent *);
     QTreeWidgetItem *keyitem;
     bool b_global;
     const QSet<QString> *existingkeys;
