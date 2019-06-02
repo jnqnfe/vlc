@@ -1645,6 +1645,8 @@ void KeyInputDialog::checkForConflicts( int i_vlckey, const QString &sequence )
 {
     QString vlckey = VLCKeyToString( i_vlckey, true );
 
+    conflicts = false;
+
     if ( vlckey.isEmpty() || vlckey == "Unset" )
     {
         accept();
