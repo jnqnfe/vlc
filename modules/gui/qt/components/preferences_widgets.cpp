@@ -1621,12 +1621,13 @@ KeyInputDialog::KeyInputDialog( QTreeWidget *_table,
     edit->setToolTip( qtr("Enter the new keys and/or key combinations to assign to the action.") );
     vLayout->insertWidget( 1, edit );
 
-    vLayout->addWidget( buttonBox );
-
     /* widget to contain any conflict warnings */
     warnings = new QWidget;
     warnings->setLayout( new QVBoxLayout );
     vLayout->addWidget( warnings );
+    warnings->hide();
+
+    vLayout->addWidget( buttonBox );
 
     CONNECT( buttonBox, accepted(), this, accept() );
     CONNECT( buttonBox, rejected(), this, reject() );
@@ -1666,7 +1667,6 @@ void KeyInputDialog::checkForConflicts( int i_vlckey, const QString &sequence )
                 .arg( it->text( KeySelectorControl::ACTION_COL ) )
         );
         warnings->layout()->addWidget( warning );
-//        warnings->show();
 
         conflicts = true;
         break;
@@ -1681,13 +1681,13 @@ void KeyInputDialog::checkForConflicts( int i_vlckey, const QString &sequence )
                         .arg( sequence )
             );
             warnings->layout()->addWidget( warning );
-//            warnings->show();
 
             conflicts = true;
         }
         else
             accept();
     }
+    warnings->setVisible( conflicts );
 }
 
 void KeyInputDialog::unsetAction() {
