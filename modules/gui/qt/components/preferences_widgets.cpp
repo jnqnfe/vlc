@@ -1606,10 +1606,6 @@ KeyInputDialog::KeyInputDialog( QTreeWidget *_table,
                            .arg( keyitem->text( KeySelectorControl::ACTION_COL ) ) );
     vLayout->addWidget( selected , Qt::AlignCenter );
 
-    warning = new QLabel;
-    warning->hide();
-    vLayout->insertWidget( 1, warning );
-
     QDialogButtonBox *buttonBox = new QDialogButtonBox;
     ok = new QPushButton( qtr("Assign") );
     QPushButton *cancel = new QPushButton( qtr("Cancel") );
@@ -1667,7 +1663,7 @@ void KeyInputDialog::checkForConflicts( int i_vlckey, const QString &sequence )
         QLabel *warning = new QLabel(
             qtr("Warning: this key or combination is already assigned to ") +
                 QString( "\"<b>%1</b>\"" )
-                .arg( it->text( KeySelectorControl::ACTION_COL ) ) )
+                .arg( it->text( KeySelectorControl::ACTION_COL ) )
         );
         warnings->layout()->addWidget( warning );
 //        warnings->show();
