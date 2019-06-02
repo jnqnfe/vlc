@@ -1614,17 +1614,23 @@ KeyInputDialog::KeyInputDialog( QTreeWidget *_table,
     ok = new QPushButton( qtr("Assign") );
     QPushButton *cancel = new QPushButton( qtr("Cancel") );
     unset = new QPushButton( qtr("Unset") );
+    unset->setToolTip( qtr("Clear all assigned hotkeys for this action.") );
     buttonBox->addButton( ok, QDialogButtonBox::AcceptRole );
     buttonBox->addButton( unset, QDialogButtonBox::ActionRole );
     buttonBox->addButton( cancel, QDialogButtonBox::RejectRole );
     ok->setDefault( true );
 
+    QKeySequence seq = QKeySequence();
     edit = new QKeySequenceEdit( this );
-    edit->setToolTip( qtr("Type the new keys and/or key combinations to assign to the action.") );
+    edit->setToolTip( qtr("Enter the new keys and/or key combinations to assign to the action.") );
     vLayout->insertWidget( 1, edit );
 
     vLayout->addWidget( buttonBox );
-//    ok->hide();
+
+    /* widget to contain any conflict warnings */
+    warnings = new QWidget;
+    warnings->setLayout( new QVBoxLayout );
+    vLayout->addWidget( warnings );
 
     CONNECT( buttonBox, accepted(), this, accept() );
     CONNECT( buttonBox, rejected(), this, reject() );
@@ -1658,12 +1664,13 @@ void KeyInputDialog::checkForConflicts( int i_vlckey, const QString &sequence )
         if ( !it->text( column ).split( "\t" ).contains( vlckey ) )
             continue;
 
-        warning->setText( qtr("Warning: this key or combination is already assigned to ") +
+        QLabel *warning = new QLabel(
+            qtr("Warning: this key or combination is already assigned to ") +
                 QString( "\"<b>%1</b>\"" )
-                .arg( it->text( KeySelectorControl::ACTION_COL ) ) );
-        warning->show();
-//        ok->show();
-        unset->hide();
+                .arg( it->text( KeySelectorControl::ACTION_COL ) ) )
+        );
+        warnings->layout()->addWidget( warning );
+//        warnings->show();
 
         conflicts = true;
         break;
@@ -1673,13 +1680,12 @@ void KeyInputDialog::checkForConflicts( int i_vlckey, const QString &sequence )
         if( existingkeys && !sequence.isEmpty()
                  && existingkeys->contains( sequence ) )
         {
-            warning->setText(
+            QLabel *warning = new QLabel(
                 qtr( "Warning: <b>%1</b> is already an application menu shortcut" )
                         .arg( sequence )
             );
-            warning->show();
-//            ok->show();
-            unset->hide();
+            warnings->layout()->addWidget( warning );
+//            warnings->show();
 
             conflicts = true;
         }

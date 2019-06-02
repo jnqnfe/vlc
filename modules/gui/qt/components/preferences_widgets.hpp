@@ -544,9 +544,10 @@ public:
 
 private:
     QTreeWidget *table;
-    QLabel *selected, *warning;
+    QLabel *selected;
     QPushButton *ok, *unset;
     QKeySequenceEdit *edit;
+    QWidget *warnings;
     int column;
 
     void checkForConflicts( int i_vlckey, const QString &sequence );
