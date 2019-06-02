@@ -1522,11 +1522,6 @@ void KeySelectorControl::selectKey( QTreeWidgetItem *keyItem, int column )
         keyItem->setText( column, VLCKeyToString( d->keyValue, true ) );
         keyItem->setData( column, Qt::UserRole, newKey );
     }
-    else if( d->result() == 2 )
-    {
-        keyItem->setText( column, NULL );
-        keyItem->setData( column, Qt::UserRole, QVariant() );
-    }
 
     delete d;
 }
@@ -1718,4 +1713,8 @@ void KeyInputDialog::wheelEvent( QWheelEvent *e )
     keyValue = i_vlck;
 }
 
-void KeyInputDialog::unsetAction() { done( 2 ); }
+void KeyInputDialog::unsetAction() {
+    keyitem->setText( column, NULL );
+    keyitem->setData( column, Qt::UserRole, QVariant() );
+    accept();
+}
