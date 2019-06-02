@@ -1616,8 +1616,8 @@ KeyInputDialog::KeyInputDialog( QTreeWidget *_table,
     buttonBox->addButton( cancel, QDialogButtonBox::RejectRole );
     ok->setDefault( true );
 
-    QKeySequence seq = QKeySequence();
-    edit = new QKeySequenceEdit( this );
+    QKeySequence seq = QKeySequence( keyitem->text( column ) );
+    edit = new QKeySequenceEdit( seq, this );
     edit->setToolTip( qtr("Enter the new keys and/or key combinations to assign to the action.") );
     vLayout->insertWidget( 1, edit );
 
