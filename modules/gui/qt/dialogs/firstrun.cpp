@@ -44,11 +44,6 @@ void FirstRun::save()
 #endif
     vlc_config_SetNamedInt( "qt-privacy-ask", 0 );
 
-    /* FIXME Should not save here. This will not work as expected if another
-     * plugin overwrote items of its own. */
-#warning FIXME
-    /* We have to save here because the user may not launch Prefs */
-    config_SaveConfigFile( p_intf );
     close();
 }
 
