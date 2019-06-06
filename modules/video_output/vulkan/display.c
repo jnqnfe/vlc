@@ -520,6 +520,7 @@ vlc_plugin_begin ()
 
     set_section("Performance tweaks / debugging", NULL)
     add_bool("skip-aa", false, SKIP_AA_TEXT, SKIP_AA_LONGTEXT, false)
+//FIXME: this default does not work, saving advanced preferences without changing value does change it, per range clipping, thus showing up as modified in the new Qt expert preferences view
     add_float_with_range("polar-cutoff", 0.001,
             0., 1., POLAR_CUTOFF_TEXT, POLAR_CUTOFF_LONGTEXT, false)
     add_bool("overlay-direct", false, OVERLAY_DIRECT_TEXT, OVERLAY_DIRECT_LONGTEXT, false)
