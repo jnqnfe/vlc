@@ -93,9 +93,9 @@ typedef struct
 #define FILE_TEXT N_("Text file")
 #define FILE_LONGTEXT N_("File to read the marquee text from.")
 #define POSX_TEXT N_("X offset")
-#define POSX_LONGTEXT N_("X offset, from the left screen edge." )
+#define POSX_LONGTEXT N_("X offset, from the left screen edge. Use this with 'Absolute' position." )
 #define POSY_TEXT N_("Y offset")
-#define POSY_LONGTEXT N_("Y offset, down from the top." )
+#define POSY_LONGTEXT N_("Y offset, down from the top. Use this with 'Absolute' position." )
 #define TIMEOUT_TEXT N_("Timeout (ms)")
 #define TIMEOUT_LONGTEXT N_("Number of milliseconds the marquee must remain " \
                             "displayed. Default value is " \
@@ -119,11 +119,12 @@ typedef struct
 
 #define POS_TEXT N_("Marquee position")
 #define POS_LONGTEXT N_( \
-  "You can enforce the marquee position on the video.")
+  "You can enforce the marquee position on the video. Use 'Absolute' (-1) with x/y position options for absolute positioning.")
 
-static const int pi_pos_values[] = { 0, 1, 2, 4, 8, 5, 6, 9, 10 };
+static const int pi_pos_values[] = { -1, 0, 1, 2, 4, 8, 5, 6, 9, 10 };
 static const char *const ppsz_pos_descriptions[] =
-     { N_("Center"), N_("Left"), N_("Right"), N_("Top"), N_("Bottom"),
+     { N_("Absolute"),
+     N_("Center"), N_("Left"), N_("Right"), N_("Top"), N_("Bottom"),
      N_("Top-Left"), N_("Top-Right"), N_("Bottom-Left"), N_("Bottom-Right") };
 
 #define CFG_PREFIX "marq-"
