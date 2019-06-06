@@ -139,9 +139,9 @@ typedef struct
 #define IMAGE_LONGTEXT N_("Display feed images if available.")
 
 #define POSX_TEXT N_("X offset")
-#define POSX_LONGTEXT N_("X offset, from the left screen edge." )
+#define POSX_LONGTEXT N_("X offset, from the left screen edge. Use this with 'Absolute' position." )
 #define POSY_TEXT N_("Y offset")
-#define POSY_LONGTEXT N_("Y offset, down from the top." )
+#define POSY_LONGTEXT N_("Y offset, down from the top. Use this with 'Absolute' position." )
 #define OPACITY_TEXT N_("Opacity")
 #define OPACITY_LONGTEXT N_("Opacity (inverse of transparency) of " \
     "overlay text. 0 = transparent, 255 = totally opaque." )
@@ -157,16 +157,18 @@ typedef struct
     " #00FF00 = green, #FFFF00 = yellow (red + green), #FFFFFF = white" )
 
 #define POS_TEXT N_("Text position")
-#define POS_LONGTEXT N_("You can enforce the text position on the video.")
+#define POS_LONGTEXT N_("You can enforce the text position on the video. " \
+    "Use 'Absolute' (-1) with x/y position options for absolute positioning.")
 
 #define TITLE_TEXT N_("Title display mode")
 #define TITLE_LONGTEXT N_("Title display mode. Default is 0 (hidden) if the feed has an image and feed images are enabled, 1 otherwise.")
 
 #define RSS_HELP N_("Display a RSS or ATOM feed on your video")
 
-static const int pi_pos_values[] = { 0, 1, 2, 4, 8, 5, 6, 9, 10 };
+static const int pi_pos_values[] = { -1, 0, 1, 2, 4, 8, 5, 6, 9, 10 };
 static const char *const ppsz_pos_descriptions[] =
-     { N_("Center"), N_("Left"), N_("Right"), N_("Top"), N_("Bottom"),
+     { N_("Absolute"),
+     N_("Center"), N_("Left"), N_("Right"), N_("Top"), N_("Bottom"),
      N_("Top-Left"), N_("Top-Right"), N_("Bottom-Left"), N_("Bottom-Right") };
 
 enum title_modes {
