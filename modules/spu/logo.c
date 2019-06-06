@@ -58,23 +58,25 @@
 
 #define POSX_TEXT N_("X coordinate")
 #define POSX_LONGTEXT N_("X coordinate of the logo. You can move the logo " \
-                "by left-clicking it." )
+                "by left-clicking it. Use this with 'Absolute' position." )
 #define POSY_TEXT N_("Y coordinate")
 #define POSY_LONGTEXT N_("Y coordinate of the logo. You can move the logo " \
-                "by left-clicking it." )
+                "by left-clicking it. Use this with 'Absolute' position." )
 #define OPACITY_TEXT N_("Opacity of the logo")
 #define OPACITY_LONGTEXT N_("Logo opacity value " \
   "(from 0 for full transparency to 255 for full opacity)." )
 #define POS_TEXT N_("Logo position")
-#define POS_LONGTEXT N_("Enforce the logo position on the video.")
+#define POS_LONGTEXT N_("Enforce the logo position on the video. " \
+  "Use 'Absolute' (-1) with x/y position options for absolute positioning.")
 
 #define LOGO_HELP N_("Use a local picture as logo on the video")
 
 #define CFG_PREFIX "logo-"
 
-static const int pi_pos_values[] = { 0, 1, 2, 4, 8, 5, 6, 9, 10 };
+static const int pi_pos_values[] = { -1, 0, 1, 2, 4, 8, 5, 6, 9, 10 };
 static const char *const ppsz_pos_descriptions[] =
-{ N_("Center"), N_("Left"), N_("Right"), N_("Top"), N_("Bottom"),
+{ N_("Absolute"),
+  N_("Center"), N_("Left"), N_("Right"), N_("Top"), N_("Bottom"),
   N_("Top-Left"), N_("Top-Right"), N_("Bottom-Left"), N_("Bottom-Right") };
 
 static int  OpenSub  ( filter_t * );
