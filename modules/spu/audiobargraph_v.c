@@ -80,7 +80,7 @@ vlc_plugin_begin ()
     add_integer(CFG_PREFIX "y", 0, POSY_TEXT, POSY_LONGTEXT, true)
     add_integer_with_range(CFG_PREFIX "transparency", 255, 0, 255,
         TRANS_TEXT, TRANS_LONGTEXT, false)
-    add_integer(CFG_PREFIX "position", -1, POS_TEXT, POS_LONGTEXT, false)
+    add_integer(CFG_PREFIX "position", 0, POS_TEXT, POS_LONGTEXT, false)
         change_integer_list(pi_pos_values, ppsz_pos_descriptions)
     add_integer(CFG_PREFIX "barwidth", 10, BARWIDTH_TEXT, BARWIDTH_LONGTEXT, true)
         change_integer_range(0, INT_MAX)
