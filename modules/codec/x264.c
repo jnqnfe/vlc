@@ -883,6 +883,11 @@ static int  Open ( encoder_t *p_enc )
         free(psz_preset);
         psz_preset = NULL;
     }
+    if( *psz_tune == '\0' )
+    {
+        free(psz_tune);
+        psz_tune = NULL;
+    }
 #ifdef PLUGIN_NAME_IS_x262
     p_sys->param.b_mpeg2 = true;
     x264_param_default_mpeg2( &p_sys->param );
