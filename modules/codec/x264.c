@@ -427,6 +427,41 @@ static const int framepacking_list[] =
 static const char *const framepacking_list_text[] =
   { "unset", N_("checkerboard"), N_("column alternation"), N_("row alternation"), N_("side by side"), N_("top bottom"), N_("frame alternation"), N_("2D") };
 
+static const char *const preset_names_list[] =
+  { NULL,
+    x264_preset_names[0], x264_preset_names[1], x264_preset_names[2], x264_preset_names[3],
+    x264_preset_names[4], x264_preset_names[5], x264_preset_names[6], x264_preset_names[7],
+    x264_preset_names[8], x264_preset_names[9] };
+static const char *const preset_names_list_text[] =
+  { "null",
+    x264_preset_names[0], x264_preset_names[1], x264_preset_names[2], x264_preset_names[3],
+    x264_preset_names[4], x264_preset_names[5], x264_preset_names[6], x264_preset_names[7],
+    x264_preset_names[8], x264_preset_names[9] };
+/* basic check for changes in x264 header */
+static_assert((sizeof(x264_preset_names) / sizeof(*x264_preset_names)) == 11, "x264.h x264_preset_names changed");
+
+static const char *const tune_names_list[] =
+  { NULL,
+    x264_tune_names[0], x264_tune_names[1], x264_tune_names[2], x264_tune_names[3],
+    x264_tune_names[4], x264_tune_names[5], x264_tune_names[6], x264_tune_names[7] };
+static const char *const tune_names_list_text[] =
+  { "null",
+    x264_tune_names[0], x264_tune_names[1], x264_tune_names[2], x264_tune_names[3],
+    x264_tune_names[4], x264_tune_names[5], x264_tune_names[6], x264_tune_names[7] };
+/* basic check for changes in x264 header */
+static_assert((sizeof(x264_tune_names) / sizeof(*x264_tune_names)) == 9, "x264.h x264_tune_names changed");
+
+static const char *const profile_names_list[] =
+  { NULL,
+    x264_profile_names[0], x264_profile_names[1], x264_profile_names[2],
+    x264_profile_names[3], x264_profile_names[4], x264_profile_names[5] };
+static const char *const profile_names_list_text[] =
+  { "null",
+    x264_profile_names[0], x264_profile_names[1], x264_profile_names[2],
+    x264_profile_names[3], x264_profile_names[4], x264_profile_names[5] };
+/* basic check for changes in x264 header */
+static_assert((sizeof(x264_profile_names) / sizeof(*x264_profile_names)) == 7, "x264.h x264_profile_names changed");
+
 vlc_plugin_begin ()
 #ifdef PLUGIN_NAME_IS_x26410b
     set_shortname( N_("H.264 10bit") )
@@ -505,7 +540,7 @@ vlc_plugin_begin ()
 
     add_string( SOUT_CFG_PREFIX "profile", "high", PROFILE_TEXT,
                PROFILE_LONGTEXT, false )
-        change_string_list( x264_profile_names, x264_profile_names )
+        change_string_list( profile_names_list, profile_names_list_text )
 
 
     add_bool( SOUT_CFG_PREFIX "interlaced", false, INTERLACED_TEXT, INTERLACED_LONGTEXT,
@@ -697,10 +732,10 @@ vlc_plugin_begin ()
     add_string( SOUT_CFG_PREFIX "stats", "x264_2pass.log", STATS_TEXT,
                 STATS_LONGTEXT, true )
 
-    add_string( SOUT_CFG_PREFIX "preset", NULL , PRESET_TEXT , NULL, false )
-        change_string_list( x264_preset_names, x264_preset_names )
-    add_string( SOUT_CFG_PREFIX "tune", NULL , TUNE_TEXT, NULL, false )
-        change_string_list( x264_tune_names, x264_tune_names )
+    add_string( SOUT_CFG_PREFIX "preset", NULL, PRESET_TEXT , NULL, false )
+        change_string_list( preset_names_list, preset_names_list_text )
+    add_string( SOUT_CFG_PREFIX "tune", NULL, TUNE_TEXT, NULL, false )
+        change_string_list( tune_names_list, tune_names_list_text )
 
     add_string( SOUT_CFG_PREFIX "options", NULL, X264_OPTIONS_TEXT,
                 X264_OPTIONS_LONGTEXT, true )
