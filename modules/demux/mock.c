@@ -66,6 +66,7 @@ var_InheritFourcc(vlc_object_t *obj, const char *name)
     memcpy(&fourcc, value, 4);
     return fourcc;
 }
+#define var_InheritFourcc(o, n) var_InheritFourcc(VLC_OBJECT(o), n)
 
 /* X:  var_name, default_value,           type, module_header_type, getter */
 /* XR: var_name, default_value, min, max, type, module_header_type, getter */
