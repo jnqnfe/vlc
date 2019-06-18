@@ -2638,7 +2638,7 @@ vlc_player_ChangeRate(vlc_player_t *player, float rate)
     else
         vlc_player_SendEvent(player, on_rate_changed, rate);
 
-    vlc_player_vout_OSDMessage(player, ("Speed: %.2fx"), rate);
+    vlc_player_vout_OSDMessage(player, _("Speed: %.2fx"), rate);
 }
 
 static void
