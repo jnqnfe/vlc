@@ -742,16 +742,16 @@ spu_SelectSubpictures(spu_t *spu, vlc_tick_t system_now,
             const int64_t ephemer_order = current->b_subtitle ? ephemer_subtitle_order : ephemer_system_order;
 
             /* Destroy late and obsolete ephemer subpictures */
-            bool is_rejeted = is_late && render_entry->stop  <= stop_date;
+            bool is_rejected = is_late && render_entry->stop  <= stop_date;
             if (current->b_ephemer) {
                 if (render_entry->start < ephemer_date)
-                    is_rejeted = true;
+                    is_rejected = true;
                 else if (render_entry->start == ephemer_date &&
                          current->i_order < ephemer_order)
-                    is_rejeted = true;
+                    is_rejected = true;
             }
 
-            if (is_rejeted)
+            if (is_rejected)
                 spu_channel_DeleteSubpicture(channel, current);
             else
             {
