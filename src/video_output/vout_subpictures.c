@@ -257,7 +257,7 @@ static filter_t *SpuRenderCreateAndLoadText(spu_t *spu)
 
     text->pf_get_attachments = spu_get_attachments;
 
-    text->p_module = module_need_var(text, VLC_CAP_TEXT_RENDERER, "text-renderer");
+    text->p_module = vlc_module_need_var(text, VLC_CAP_TEXT_RENDERER, "text-renderer");
     if (!text->p_module)
     {
         vlc_object_delete(text);
