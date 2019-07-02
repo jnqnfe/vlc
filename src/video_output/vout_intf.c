@@ -271,7 +271,6 @@ void vout_CreateVars( vout_thread_t *p_vout )
     /* Add secondary-sub-margin variable (dual subtitles) */
     var_Create( p_vout, "secondary-sub-margin",
                 VLC_VAR_INTEGER | VLC_VAR_DOINHERIT | VLC_VAR_ISCOMMAND );
-    var_AddCallback( p_vout, "secondary-sub-margin", SecondarySubMarginCallback, NULL );
 
     /* Mouse coordinates */
     var_Create( p_vout, "mouse-button-down", VLC_VAR_INTEGER );
@@ -304,6 +303,7 @@ void vout_IntfInit( vout_thread_t *p_vout )
     var_AddCallback( p_vout, "sub-source", SubSourceCallback, NULL );
     var_AddCallback( p_vout, "sub-filter", SubFilterCallback, NULL );
     var_AddCallback( p_vout, "sub-margin", SubMarginCallback, NULL );
+    var_AddCallback( p_vout, "secondary-sub-margin", SecondarySubMarginCallback, NULL );
     var_AddCallback( p_vout, "viewpoint", ViewpointCallback, NULL );
 }
 
